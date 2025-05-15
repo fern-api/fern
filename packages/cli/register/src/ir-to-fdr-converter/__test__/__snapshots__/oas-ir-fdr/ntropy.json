@@ -5150,59 +5150,56 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "xbx8YP14g565Xk",
-                  "description": "SQ* STARBUCKS NW 43RD",
-                  "date": "2024-03-30",
-                  "amount": 10,
-                  "entry_type": "outgoing",
-                  "currency": "USD",
-                  "entities": {
-                    "counterparty": {
-                      "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
-                      "name": "Starbucks",
-                      "website": "starbucks.com",
-                      "logo": "https://logos.ntropy.com/starbucks.com",
-                      "mccs": [
-                        5814
-                      ],
-                      "type": "organization"
-                    },
-                    "intermediaries": [
-                      {
-                        "id": "916bc837-55ef-3106-88f6-5a8269ca9f2a",
-                        "name": "Square",
-                        "website": "squareup.com",
-                        "logo": "https://logos.ntropy.com/squareup.com",
-                        "mccs": [],
-                        "type": "payment_processor"
-                      }
-                    ]
+                "id": "xbx8YP14g565Xk",
+                "description": "SQ* STARBUCKS NW 43RD",
+                "date": "2024-03-30",
+                "amount": 10,
+                "entry_type": "outgoing",
+                "currency": "USD",
+                "entities": {
+                  "counterparty": {
+                    "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
+                    "name": "Starbucks",
+                    "website": "starbucks.com",
+                    "logo": "https://logos.ntropy.com/starbucks.com",
+                    "mccs": [
+                      5814
+                    ],
+                    "type": "organization"
                   },
-                  "categories": {
-                    "general": "outgoing - coffee shops"
-                  },
-                  "location": {
-                    "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
-                    "structured": {
-                      "street": "Nw 43rd Street 5480",
-                      "city": "Gainesville",
-                      "state": "Florida",
-                      "postcode": "32653",
-                      "country_code": "US",
-                      "country": "United States",
-                      "latitude": 29.704558,
-                      "longitude": -82.389277,
-                      "google_maps_url": "https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277",
-                      "apple_maps_url": "https://maps.apple.com/?q=29.704558,-82.389277"
+                  "intermediaries": [
+                    {
+                      "id": "916bc837-55ef-3106-88f6-5a8269ca9f2a",
+                      "name": "Square",
+                      "website": "squareup.com",
+                      "logo": "https://logos.ntropy.com/squareup.com",
+                      "mccs": [],
+                      "type": "payment_processor"
                     }
-                  },
-                  "created_at": "2024-03-30T00:00:00",
-                  "account_holder_id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
-                  "recurrence": {
-                    "type": "recurring"
+                  ]
+                },
+                "categories": {
+                  "general": "outgoing - coffee shops"
+                },
+                "location": {
+                  "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
+                  "structured": {
+                    "street": "Nw 43rd Street 5480",
+                    "city": "Gainesville",
+                    "state": "Florida",
+                    "postcode": "32653",
+                    "country_code": "US",
+                    "country": "United States",
+                    "latitude": 29.704558,
+                    "longitude": -82.389277,
+                    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277",
+                    "apple_maps_url": "https://maps.apple.com/?q=29.704558,-82.389277"
                   }
+                },
+                "created_at": "2024-03-30T00:00:00",
+                "account_holder_id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
+                "recurrence": {
+                  "type": "recurring"
                 }
               },
               "responseBodyV3": {
@@ -5494,65 +5491,62 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "XjdHaksD",
-                  "data": [
-                    {
-                      "id": "xbx8YP14g565Xk",
-                      "description": "SQ* STARBUCKS NW 43RD",
-                      "date": "2024-03-30",
-                      "amount": 10,
-                      "entry_type": "outgoing",
-                      "currency": "USD",
-                      "entities": {
-                        "counterparty": {
-                          "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
-                          "name": "Starbucks",
-                          "website": "starbucks.com",
-                          "logo": "https://logos.ntropy.com/starbucks.com",
-                          "mccs": [
-                            5814
-                          ],
-                          "type": "organization"
-                        },
-                        "intermediaries": [
-                          {
-                            "id": "916bc837-55ef-3106-88f6-5a8269ca9f2a",
-                            "name": "Square",
-                            "website": "squareup.com",
-                            "logo": "https://logos.ntropy.com/squareup.com",
-                            "mccs": [],
-                            "type": "payment_processor"
-                          }
-                        ]
+                "next_cursor": "XjdHaksD",
+                "data": [
+                  {
+                    "id": "xbx8YP14g565Xk",
+                    "description": "SQ* STARBUCKS NW 43RD",
+                    "date": "2024-03-30",
+                    "amount": 10,
+                    "entry_type": "outgoing",
+                    "currency": "USD",
+                    "entities": {
+                      "counterparty": {
+                        "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
+                        "name": "Starbucks",
+                        "website": "starbucks.com",
+                        "logo": "https://logos.ntropy.com/starbucks.com",
+                        "mccs": [
+                          5814
+                        ],
+                        "type": "organization"
                       },
-                      "categories": {
-                        "general": "outgoing - coffee shops"
-                      },
-                      "location": {
-                        "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
-                        "structured": {
-                          "street": "Nw 43rd Street 5480",
-                          "city": "Gainesville",
-                          "state": "Florida",
-                          "postcode": "32653",
-                          "country_code": "US",
-                          "country": "United States",
-                          "latitude": 29.704558,
-                          "longitude": -82.389277,
-                          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277",
-                          "apple_maps_url": "https://maps.apple.com/?q=29.704558,-82.389277"
+                      "intermediaries": [
+                        {
+                          "id": "916bc837-55ef-3106-88f6-5a8269ca9f2a",
+                          "name": "Square",
+                          "website": "squareup.com",
+                          "logo": "https://logos.ntropy.com/squareup.com",
+                          "mccs": [],
+                          "type": "payment_processor"
                         }
-                      },
-                      "created_at": "2024-03-30T00:00:00",
-                      "account_holder_id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
-                      "recurrence": {
-                        "type": "recurring"
+                      ]
+                    },
+                    "categories": {
+                      "general": "outgoing - coffee shops"
+                    },
+                    "location": {
+                      "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
+                      "structured": {
+                        "street": "Nw 43rd Street 5480",
+                        "city": "Gainesville",
+                        "state": "Florida",
+                        "postcode": "32653",
+                        "country_code": "US",
+                        "country": "United States",
+                        "latitude": 29.704558,
+                        "longitude": -82.389277,
+                        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277",
+                        "apple_maps_url": "https://maps.apple.com/?q=29.704558,-82.389277"
                       }
+                    },
+                    "created_at": "2024-03-30T00:00:00",
+                    "account_holder_id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
+                    "recurrence": {
+                      "type": "recurring"
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -5728,12 +5722,21 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "transactions": [
-                    {
-                      "entities": {
-                        "counterparty": {
+                "transactions": [
+                  {
+                    "entities": {
+                      "counterparty": {
+                        "id": "foo",
+                        "name": "foo",
+                        "website": "foo",
+                        "logo": "foo",
+                        "mccs": [
+                          42
+                        ],
+                        "type": "person"
+                      },
+                      "intermediaries": [
+                        {
                           "id": "foo",
                           "name": "foo",
                           "website": "foo",
@@ -5741,50 +5744,38 @@
                           "mccs": [
                             42
                           ],
-                          "type": "person"
-                        },
-                        "intermediaries": [
-                          {
-                            "id": "foo",
-                            "name": "foo",
-                            "website": "foo",
-                            "logo": "foo",
-                            "mccs": [
-                              42
-                            ],
-                            "type": "delivery_service"
-                          }
-                        ]
-                      },
-                      "categories": {
-                        "general": "foo",
-                        "accounting": "operational expenses"
-                      },
-                      "location": {
-                        "raw_address": "foo",
-                        "structured": {
-                          "street": "foo",
-                          "city": "foo",
-                          "state": "foo",
-                          "postcode": "foo",
-                          "country_code": "foo",
-                          "country": "foo",
-                          "latitude": 42,
-                          "longitude": 42,
-                          "google_maps_url": "foo",
-                          "apple_maps_url": "foo",
-                          "store_number": "foo"
+                          "type": "delivery_service"
                         }
-                      },
-                      "error": {
-                        "code": "account_holder_not_found",
-                        "message": "foo"
-                      },
-                      "created_at": "foo",
-                      "id": "foo"
-                    }
-                  ]
-                }
+                      ]
+                    },
+                    "categories": {
+                      "general": "foo",
+                      "accounting": "operational expenses"
+                    },
+                    "location": {
+                      "raw_address": "foo",
+                      "structured": {
+                        "street": "foo",
+                        "city": "foo",
+                        "state": "foo",
+                        "postcode": "foo",
+                        "country_code": "foo",
+                        "country": "foo",
+                        "latitude": 42,
+                        "longitude": 42,
+                        "google_maps_url": "foo",
+                        "apple_maps_url": "foo",
+                        "store_number": "foo"
+                      }
+                    },
+                    "error": {
+                      "code": "account_holder_not_found",
+                      "message": "foo"
+                    },
+                    "created_at": "foo",
+                    "id": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -5970,59 +5961,56 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "xbx8YP14g565Xk",
-                  "description": "SQ* STARBUCKS NW 43RD",
-                  "date": "2024-03-30",
-                  "amount": 10,
-                  "entry_type": "outgoing",
-                  "currency": "USD",
-                  "entities": {
-                    "counterparty": {
-                      "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
-                      "name": "Starbucks",
-                      "website": "starbucks.com",
-                      "logo": "https://logos.ntropy.com/starbucks.com",
-                      "mccs": [
-                        5814
-                      ],
-                      "type": "organization"
-                    },
-                    "intermediaries": [
-                      {
-                        "id": "916bc837-55ef-3106-88f6-5a8269ca9f2a",
-                        "name": "Square",
-                        "website": "squareup.com",
-                        "logo": "https://logos.ntropy.com/squareup.com",
-                        "mccs": [],
-                        "type": "payment_processor"
-                      }
-                    ]
+                "id": "xbx8YP14g565Xk",
+                "description": "SQ* STARBUCKS NW 43RD",
+                "date": "2024-03-30",
+                "amount": 10,
+                "entry_type": "outgoing",
+                "currency": "USD",
+                "entities": {
+                  "counterparty": {
+                    "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
+                    "name": "Starbucks",
+                    "website": "starbucks.com",
+                    "logo": "https://logos.ntropy.com/starbucks.com",
+                    "mccs": [
+                      5814
+                    ],
+                    "type": "organization"
                   },
-                  "categories": {
-                    "general": "outgoing - coffee shops"
-                  },
-                  "location": {
-                    "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
-                    "structured": {
-                      "street": "Nw 43rd Street 5480",
-                      "city": "Gainesville",
-                      "state": "Florida",
-                      "postcode": "32653",
-                      "country_code": "US",
-                      "country": "United States",
-                      "latitude": 29.704558,
-                      "longitude": -82.389277,
-                      "google_maps_url": "https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277",
-                      "apple_maps_url": "https://maps.apple.com/?q=29.704558,-82.389277"
+                  "intermediaries": [
+                    {
+                      "id": "916bc837-55ef-3106-88f6-5a8269ca9f2a",
+                      "name": "Square",
+                      "website": "squareup.com",
+                      "logo": "https://logos.ntropy.com/squareup.com",
+                      "mccs": [],
+                      "type": "payment_processor"
                     }
-                  },
-                  "created_at": "2024-03-30T00:00:00",
-                  "account_holder_id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
-                  "recurrence": {
-                    "type": "recurring"
+                  ]
+                },
+                "categories": {
+                  "general": "outgoing - coffee shops"
+                },
+                "location": {
+                  "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
+                  "structured": {
+                    "street": "Nw 43rd Street 5480",
+                    "city": "Gainesville",
+                    "state": "Florida",
+                    "postcode": "32653",
+                    "country_code": "US",
+                    "country": "United States",
+                    "latitude": 29.704558,
+                    "longitude": -82.389277,
+                    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277",
+                    "apple_maps_url": "https://maps.apple.com/?q=29.704558,-82.389277"
                   }
+                },
+                "created_at": "2024-03-30T00:00:00",
+                "account_holder_id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
+                "recurrence": {
+                  "type": "recurring"
                 }
               },
               "responseBodyV3": {
@@ -6231,20 +6219,17 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "XjdHaksD",
-                  "data": [
-                    {
-                      "id": "203613d2-83c8-4130-8809-d14206eeec20",
-                      "status": "processing",
-                      "created_at": "2024-01-01T00:00:00",
-                      "updated_at": "2024-01-01T00:00:30",
-                      "progress": 0,
-                      "total": 4000
-                    }
-                  ]
-                }
+                "next_cursor": "XjdHaksD",
+                "data": [
+                  {
+                    "id": "203613d2-83c8-4130-8809-d14206eeec20",
+                    "status": "processing",
+                    "created_at": "2024-01-01T00:00:00",
+                    "updated_at": "2024-01-01T00:00:30",
+                    "progress": 0,
+                    "total": 4000
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6375,15 +6360,12 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "203613d2-83c8-4130-8809-d14206eeec20",
-                  "status": "processing",
-                  "created_at": "2024-01-01T00:00:00",
-                  "updated_at": "2024-01-01T00:00:30",
-                  "progress": 0,
-                  "total": 4000
-                }
+                "id": "203613d2-83c8-4130-8809-d14206eeec20",
+                "status": "processing",
+                "created_at": "2024-01-01T00:00:00",
+                "updated_at": "2024-01-01T00:00:30",
+                "progress": 0,
+                "total": 4000
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6498,15 +6480,12 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "203613d2-83c8-4130-8809-d14206eeec20",
-                  "status": "processing",
-                  "created_at": "2024-01-01T00:00:00",
-                  "updated_at": "2024-01-01T00:00:30",
-                  "progress": 0,
-                  "total": 4000
-                }
+                "id": "203613d2-83c8-4130-8809-d14206eeec20",
+                "status": "processing",
+                "created_at": "2024-01-01T00:00:00",
+                "updated_at": "2024-01-01T00:00:30",
+                "progress": 0,
+                "total": 4000
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6622,16 +6601,25 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "total": 42,
-                  "status": "processing",
-                  "results": {
-                    "transactions": [
-                      {
-                        "entities": {
-                          "counterparty": {
+                "id": "foo",
+                "total": 42,
+                "status": "processing",
+                "results": {
+                  "transactions": [
+                    {
+                      "entities": {
+                        "counterparty": {
+                          "id": "foo",
+                          "name": "foo",
+                          "website": "foo",
+                          "logo": "foo",
+                          "mccs": [
+                            42
+                          ],
+                          "type": "person"
+                        },
+                        "intermediaries": [
+                          {
                             "id": "foo",
                             "name": "foo",
                             "website": "foo",
@@ -6639,50 +6627,38 @@
                             "mccs": [
                               42
                             ],
-                            "type": "person"
-                          },
-                          "intermediaries": [
-                            {
-                              "id": "foo",
-                              "name": "foo",
-                              "website": "foo",
-                              "logo": "foo",
-                              "mccs": [
-                                42
-                              ],
-                              "type": "delivery_service"
-                            }
-                          ]
-                        },
-                        "categories": {
-                          "general": "foo",
-                          "accounting": "operational expenses"
-                        },
-                        "location": {
-                          "raw_address": "foo",
-                          "structured": {
-                            "street": "foo",
-                            "city": "foo",
-                            "state": "foo",
-                            "postcode": "foo",
-                            "country_code": "foo",
-                            "country": "foo",
-                            "latitude": 42,
-                            "longitude": 42,
-                            "google_maps_url": "foo",
-                            "apple_maps_url": "foo",
-                            "store_number": "foo"
+                            "type": "delivery_service"
                           }
-                        },
-                        "error": {
-                          "code": "account_holder_not_found",
-                          "message": "foo"
-                        },
-                        "created_at": "foo",
-                        "id": "foo"
-                      }
-                    ]
-                  }
+                        ]
+                      },
+                      "categories": {
+                        "general": "foo",
+                        "accounting": "operational expenses"
+                      },
+                      "location": {
+                        "raw_address": "foo",
+                        "structured": {
+                          "street": "foo",
+                          "city": "foo",
+                          "state": "foo",
+                          "postcode": "foo",
+                          "country_code": "foo",
+                          "country": "foo",
+                          "latitude": 42,
+                          "longitude": 42,
+                          "google_maps_url": "foo",
+                          "apple_maps_url": "foo",
+                          "store_number": "foo"
+                        }
+                      },
+                      "error": {
+                        "code": "account_holder_not_found",
+                        "message": "foo"
+                      },
+                      "created_at": "foo",
+                      "id": "foo"
+                    }
+                  ]
                 }
               },
               "responseBodyV3": {
@@ -6899,22 +6875,19 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "XjdHaksD",
-                  "data": [
-                    {
-                      "id": "7f8dceac-2848-472d-b5c3-55cdbaf35a9b",
-                      "name": "2014-01-01_2014-02-01_statement.pdf",
-                      "status": "processing",
-                      "created_at": "2024-01-01T00:00:00",
-                      "file": {
-                        "no_pages": 1,
-                        "size": 4096
-                      }
+                "next_cursor": "XjdHaksD",
+                "data": [
+                  {
+                    "id": "7f8dceac-2848-472d-b5c3-55cdbaf35a9b",
+                    "name": "2014-01-01_2014-02-01_statement.pdf",
+                    "status": "processing",
+                    "created_at": "2024-01-01T00:00:00",
+                    "file": {
+                      "no_pages": 1,
+                      "size": 4096
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7037,16 +7010,13 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "7f8dceac-2848-472d-b5c3-55cdbaf35a9b",
-                  "name": "2014-01-01_2014-02-01_statement.pdf",
-                  "status": "processing",
-                  "created_at": "2024-01-01T00:00:00",
-                  "file": {
-                    "no_pages": 1,
-                    "size": 4096
-                  }
+                "id": "7f8dceac-2848-472d-b5c3-55cdbaf35a9b",
+                "name": "2014-01-01_2014-02-01_statement.pdf",
+                "status": "processing",
+                "created_at": "2024-01-01T00:00:00",
+                "file": {
+                  "no_pages": 1,
+                  "size": 4096
                 }
               },
               "responseBodyV3": {
@@ -7164,16 +7134,13 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "7f8dceac-2848-472d-b5c3-55cdbaf35a9b",
-                  "name": "2014-01-01_2014-02-01_statement.pdf",
-                  "status": "processing",
-                  "created_at": "2024-01-01T00:00:00",
-                  "file": {
-                    "no_pages": 1,
-                    "size": 4096
-                  }
+                "id": "7f8dceac-2848-472d-b5c3-55cdbaf35a9b",
+                "name": "2014-01-01_2014-02-01_statement.pdf",
+                "status": "processing",
+                "created_at": "2024-01-01T00:00:00",
+                "file": {
+                  "no_pages": 1,
+                  "size": 4096
                 }
               },
               "responseBodyV3": {
@@ -7382,32 +7349,29 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "institution": "Well's Fargo",
-                  "start_date": "2024-01-01",
-                  "end_date": "2024-02-01",
-                  "account_holder": {
-                    "type": "consumer",
-                    "name": "John Doe",
-                    "address": {
-                      "street": "601 Rosebud Avenue",
-                      "postcode": "77901",
-                      "city": "Victoria",
-                      "state": "Texas",
-                      "country": "United States"
-                    }
-                  },
-                  "accounts": [
-                    {
-                      "type": "checking",
-                      "number": "83721",
-                      "opening_balance": 1000,
-                      "closing_balance": 1500,
-                      "iso_currency_code": "USD"
-                    }
-                  ]
-                }
+                "institution": "Well's Fargo",
+                "start_date": "2024-01-01",
+                "end_date": "2024-02-01",
+                "account_holder": {
+                  "type": "consumer",
+                  "name": "John Doe",
+                  "address": {
+                    "street": "601 Rosebud Avenue",
+                    "postcode": "77901",
+                    "city": "Victoria",
+                    "state": "Texas",
+                    "country": "United States"
+                  }
+                },
+                "accounts": [
+                  {
+                    "type": "checking",
+                    "number": "83721",
+                    "opening_balance": 1000,
+                    "closing_balance": 1500,
+                    "iso_currency_code": "USD"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7540,32 +7504,29 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "accounts": [
-                    {
-                      "number": "foo",
-                      "opening_balance": 42,
-                      "closing_balance": 42,
-                      "start_date": "foo",
-                      "end_date": "foo",
-                      "is_balance_reconciled": true,
-                      "total_incoming": 42,
-                      "total_outgoing": 42,
-                      "transactions": [
-                        {
-                          "id": "foo",
-                          "description": "foo",
-                          "date": "foo",
-                          "amount": 42,
-                          "entry_type": "incoming",
-                          "currency": "EUR",
-                          "running_balance": 42
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "accounts": [
+                  {
+                    "number": "foo",
+                    "opening_balance": 42,
+                    "closing_balance": 42,
+                    "start_date": "foo",
+                    "end_date": "foo",
+                    "is_balance_reconciled": true,
+                    "total_incoming": 42,
+                    "total_outgoing": 42,
+                    "transactions": [
+                      {
+                        "id": "foo",
+                        "description": "foo",
+                        "date": "foo",
+                        "amount": 42,
+                        "entry_type": "incoming",
+                        "currency": "EUR",
+                        "running_balance": 42
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7707,13 +7668,10 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
-                  "type": "consumer",
-                  "name": "John Doe",
-                  "created_at": "2024-03-30T00:00:00"
-                }
+                "id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
+                "type": "consumer",
+                "name": "John Doe",
+                "created_at": "2024-03-30T00:00:00"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7943,18 +7901,15 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "XjdHaksD",
-                  "data": [
-                    {
-                      "id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
-                      "type": "consumer",
-                      "name": "John Doe",
-                      "created_at": "2024-03-30T00:00:00"
-                    }
-                  ]
-                }
+                "next_cursor": "XjdHaksD",
+                "data": [
+                  {
+                    "id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
+                    "type": "consumer",
+                    "name": "John Doe",
+                    "created_at": "2024-03-30T00:00:00"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -8076,13 +8031,10 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
-                  "type": "consumer",
-                  "name": "John Doe",
-                  "created_at": "2024-03-30T00:00:00"
-                }
+                "id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
+                "type": "consumer",
+                "name": "John Doe",
+                "created_at": "2024-03-30T00:00:00"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -8208,37 +8160,34 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
+              "responseBody": [
+                {
+                  "id": "foo",
+                  "start_date": "foo",
+                  "end_date": "foo",
+                  "total_amount": 42,
+                  "average_amount": 42,
+                  "periodicity_in_days": 42,
+                  "periodicity": "daily",
+                  "counterparty": {
                     "id": "foo",
-                    "start_date": "foo",
-                    "end_date": "foo",
-                    "total_amount": 42,
-                    "average_amount": 42,
-                    "periodicity_in_days": 42,
-                    "periodicity": "daily",
-                    "counterparty": {
-                      "id": "foo",
-                      "name": "foo",
-                      "website": "foo",
-                      "logo": "foo",
-                      "mccs": [
-                        42
-                      ],
-                      "type": "person"
-                    },
-                    "categories": {
-                      "general": "foo",
-                      "accounting": "operational expenses"
-                    },
-                    "transaction_ids": [
-                      "foo"
-                    ]
-                  }
-                ]
-              },
+                    "name": "foo",
+                    "website": "foo",
+                    "logo": "foo",
+                    "mccs": [
+                      42
+                    ],
+                    "type": "person"
+                  },
+                  "categories": {
+                    "general": "foo",
+                    "accounting": "operational expenses"
+                  },
+                  "transaction_ids": [
+                    "foo"
+                  ]
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -8351,23 +8300,20 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "XjdHaksD",
-                  "data": [
-                    {
-                      "url": "https://example.com:5689",
-                      "events": [
-                        "batches.completed",
-                        "batches.error"
-                      ],
-                      "token": "hunter2",
-                      "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
-                      "created_at": "2024-10-03T02:53:30.167953",
-                      "enabled": true
-                    }
-                  ]
-                }
+                "next_cursor": "XjdHaksD",
+                "data": [
+                  {
+                    "url": "https://example.com:5689",
+                    "events": [
+                      "batches.completed",
+                      "batches.error"
+                    ],
+                    "token": "hunter2",
+                    "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
+                    "created_at": "2024-10-03T02:53:30.167953",
+                    "enabled": true
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -8487,18 +8433,15 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "url": "https://example.com:5689",
-                  "events": [
-                    "batches.completed",
-                    "batches.error"
-                  ],
-                  "token": "hunter2",
-                  "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
-                  "created_at": "2024-10-03T02:53:30.167953",
-                  "enabled": true
-                }
+                "url": "https://example.com:5689",
+                "events": [
+                  "batches.completed",
+                  "batches.error"
+                ],
+                "token": "hunter2",
+                "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
+                "created_at": "2024-10-03T02:53:30.167953",
+                "enabled": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -8605,18 +8548,15 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "url": "https://example.com:5689",
-                  "events": [
-                    "batches.completed",
-                    "batches.error"
-                  ],
-                  "token": "hunter2",
-                  "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
-                  "created_at": "2024-10-03T02:53:30.167953",
-                  "enabled": true
-                }
+                "url": "https://example.com:5689",
+                "events": [
+                  "batches.completed",
+                  "batches.error"
+                ],
+                "token": "hunter2",
+                "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
+                "created_at": "2024-10-03T02:53:30.167953",
+                "enabled": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -8832,18 +8772,15 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "url": "https://example.com:5689",
-                  "events": [
-                    "batches.completed",
-                    "batches.error"
-                  ],
-                  "token": "hunter2",
-                  "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
-                  "created_at": "2024-10-03T02:53:30.167953",
-                  "enabled": true
-                }
+                "url": "https://example.com:5689",
+                "events": [
+                  "batches.completed",
+                  "batches.error"
+                ],
+                "token": "hunter2",
+                "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
+                "created_at": "2024-10-03T02:53:30.167953",
+                "enabled": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -8939,40 +8876,37 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "if": {
-                      "&&": [
-                        {
-                          "&&": [
-                            null
-                          ]
-                        }
-                      ]
-                    },
-                    "then": [
+              "responseBody": [
+                {
+                  "if": {
+                    "&&": [
                       {
-                        "if": {
-                          "&&": [
-                            {}
-                          ]
-                        }
-                      }
-                    ],
-                    "else": [
-                      {
-                        "if": {
-                          "&&": [
-                            {}
-                          ]
-                        }
+                        "&&": [
+                          null
+                        ]
                       }
                     ]
-                  }
-                ]
-              },
+                  },
+                  "then": [
+                    {
+                      "if": {
+                        "&&": [
+                          {}
+                        ]
+                      }
+                    }
+                  ],
+                  "else": [
+                    {
+                      "if": {
+                        "&&": [
+                          {}
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -9699,23 +9633,20 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "foo",
-                  "data": [
-                    {
-                      "transaction_id": "foo",
-                      "description": "foo",
-                      "fields": [
-                        "foo"
-                      ],
-                      "id": "foo",
-                      "created_at": "foo",
-                      "status": "open",
-                      "rejection_reason": "foo"
-                    }
-                  ]
-                }
+                "next_cursor": "foo",
+                "data": [
+                  {
+                    "transaction_id": "foo",
+                    "description": "foo",
+                    "fields": [
+                      "foo"
+                    ],
+                    "id": "foo",
+                    "created_at": "foo",
+                    "status": "open",
+                    "rejection_reason": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -9837,17 +9768,14 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "transaction_id": "xbx8YP14g565Xk",
-                  "description": "lorem ipsum",
-                  "fields": [
-                    ".entities.counterparty"
-                  ],
-                  "id": "a652285d-de1b-4a6f-b6ce-45efa9be7952",
-                  "created_at": "2024-10-03T02:53:30.167953+00:00",
-                  "status": "open"
-                }
+                "transaction_id": "xbx8YP14g565Xk",
+                "description": "lorem ipsum",
+                "fields": [
+                  ".entities.counterparty"
+                ],
+                "id": "a652285d-de1b-4a6f-b6ce-45efa9be7952",
+                "created_at": "2024-10-03T02:53:30.167953+00:00",
+                "status": "open"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -9965,17 +9893,14 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "transaction_id": "xbx8YP14g565Xk",
-                  "description": "lorem ipsum",
-                  "fields": [
-                    ".entities.counterparty"
-                  ],
-                  "id": "a652285d-de1b-4a6f-b6ce-45efa9be7952",
-                  "created_at": "2024-10-03T02:53:30.167953+00:00",
-                  "status": "open"
-                }
+                "transaction_id": "xbx8YP14g565Xk",
+                "description": "lorem ipsum",
+                "fields": [
+                  ".entities.counterparty"
+                ],
+                "id": "a652285d-de1b-4a6f-b6ce-45efa9be7952",
+                "created_at": "2024-10-03T02:53:30.167953+00:00",
+                "status": "open"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -10180,36 +10105,33 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "incoming": [
-                    "transfer from investment app",
-                    "transfer from stock broker",
-                    "transfer from crypto broker",
-                    "chargeback",
-                    "freelance income",
-                    "rideshare or delivery income",
-                    "paycheck",
-                    "benefits",
-                    "interest earned",
-                    "stock dividend"
-                  ],
-                  "outgoing": [
-                    "digital content and streaming",
-                    "vending machine",
-                    "reversal",
-                    "transfer to investment app",
-                    "transfer to stock broker",
-                    "transfer to crypto broker",
-                    "adjustment",
-                    "intra account transfer",
-                    "inter account transfer",
-                    "peer to peer transfer",
-                    "funeral service",
-                    "ATM withdrawal",
-                    "teller withdrawal"
-                  ]
-                }
+                "incoming": [
+                  "transfer from investment app",
+                  "transfer from stock broker",
+                  "transfer from crypto broker",
+                  "chargeback",
+                  "freelance income",
+                  "rideshare or delivery income",
+                  "paycheck",
+                  "benefits",
+                  "interest earned",
+                  "stock dividend"
+                ],
+                "outgoing": [
+                  "digital content and streaming",
+                  "vending machine",
+                  "reversal",
+                  "transfer to investment app",
+                  "transfer to stock broker",
+                  "transfer to crypto broker",
+                  "adjustment",
+                  "intra account transfer",
+                  "inter account transfer",
+                  "peer to peer transfer",
+                  "funeral service",
+                  "ATM withdrawal",
+                  "teller withdrawal"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -10374,20 +10296,17 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "incoming": [
-                    "salary",
-                    "investment income",
-                    "other income"
-                  ],
-                  "outgoing": [
-                    "rent",
-                    "utilities",
-                    "groceries",
-                    "entertainment"
-                  ]
-                }
+                "incoming": [
+                  "salary",
+                  "investment income",
+                  "other income"
+                ],
+                "outgoing": [
+                  "rent",
+                  "utilities",
+                  "groceries",
+                  "entertainment"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -10494,36 +10413,33 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "incoming": [
-                    "transfer from investment app",
-                    "transfer from stock broker",
-                    "transfer from crypto broker",
-                    "chargeback",
-                    "freelance income",
-                    "rideshare or delivery income",
-                    "paycheck",
-                    "benefits",
-                    "interest earned",
-                    "stock dividend"
-                  ],
-                  "outgoing": [
-                    "digital content and streaming",
-                    "vending machine",
-                    "reversal",
-                    "transfer to investment app",
-                    "transfer to stock broker",
-                    "transfer to crypto broker",
-                    "adjustment",
-                    "intra account transfer",
-                    "inter account transfer",
-                    "peer to peer transfer",
-                    "funeral service",
-                    "ATM withdrawal",
-                    "teller withdrawal"
-                  ]
-                }
+                "incoming": [
+                  "transfer from investment app",
+                  "transfer from stock broker",
+                  "transfer from crypto broker",
+                  "chargeback",
+                  "freelance income",
+                  "rideshare or delivery income",
+                  "paycheck",
+                  "benefits",
+                  "interest earned",
+                  "stock dividend"
+                ],
+                "outgoing": [
+                  "digital content and streaming",
+                  "vending machine",
+                  "reversal",
+                  "transfer to investment app",
+                  "transfer to stock broker",
+                  "transfer to crypto broker",
+                  "adjustment",
+                  "intra account transfer",
+                  "inter account transfer",
+                  "peer to peer transfer",
+                  "funeral service",
+                  "ATM withdrawal",
+                  "teller withdrawal"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -10702,16 +10618,13 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
-                  "name": "Starbucks",
-                  "website": "starbucks.com",
-                  "logo": "https://logos.ntropy.com/starbucks.com",
-                  "mccs": [
-                    5814
-                  ]
-                }
+                "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
+                "name": "Starbucks",
+                "website": "starbucks.com",
+                "logo": "https://logos.ntropy.com/starbucks.com",
+                "mccs": [
+                  5814
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -10841,16 +10754,13 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
-                  "name": "Starbucks",
-                  "website": "starbucks.com",
-                  "logo": "https://logos.ntropy.com/starbucks.com",
-                  "mccs": [
-                    5814
-                  ]
-                }
+                "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
+                "name": "Starbucks",
+                "website": "starbucks.com",
+                "logo": "https://logos.ntropy.com/starbucks.com",
+                "mccs": [
+                  5814
+                ]
               },
               "responseBodyV3": {
                 "type": "json",

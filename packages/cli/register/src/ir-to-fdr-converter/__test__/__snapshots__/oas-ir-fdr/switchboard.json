@@ -1922,34 +1922,31 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": [
-                    {
-                      "date_created": "foo",
-                      "id": "73df0106-1781-4b03-a288-e749e1a43481",
-                      "name": "Special Widget",
-                      "upload_uri": "foo"
-                    }
-                  ],
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ],
-                  "meta": {
-                    "requestId": "foo"
-                  },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                "data": [
+                  {
+                    "date_created": "foo",
+                    "id": "73df0106-1781-4b03-a288-e749e1a43481",
+                    "name": "Special Widget",
+                    "upload_uri": "foo"
+                  }
+                ],
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "requestId": "foo"
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2059,32 +2056,29 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "date_created": "foo",
-                    "id": "73df0106-1781-4b03-a288-e749e1a43481",
-                    "name": "Special Widget",
-                    "upload_uri": "foo"
-                  },
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ],
-                  "meta": {
-                    "requestId": "foo"
-                  },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                "data": {
+                  "date_created": "foo",
+                  "id": "73df0106-1781-4b03-a288-e749e1a43481",
+                  "name": "Special Widget",
+                  "upload_uri": "foo"
+                },
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "requestId": "foo"
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2294,32 +2288,29 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "date_created": "foo",
-                    "id": "73df0106-1781-4b03-a288-e749e1a43481",
-                    "name": "Special Widget",
-                    "upload_uri": "foo"
-                  },
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ],
-                  "meta": {
-                    "requestId": "foo"
-                  },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                "data": {
+                  "date_created": "foo",
+                  "id": "73df0106-1781-4b03-a288-e749e1a43481",
+                  "name": "Special Widget",
+                  "upload_uri": "foo"
+                },
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "requestId": "foo"
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2452,36 +2443,33 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": [
-                    {
-                      "name": "Acme corp login",
-                      "status": "foo",
-                      "tags": [
-                        "foo"
-                      ],
-                      "upload_uri": "foo"
-                    }
-                  ],
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ],
-                  "meta": {
-                    "requestId": "foo"
-                  },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                "data": [
+                  {
+                    "name": "Acme corp login",
+                    "status": "foo",
+                    "tags": [
+                      "foo"
+                    ],
+                    "upload_uri": "foo"
+                  }
+                ],
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "requestId": "foo"
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2593,34 +2581,31 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "name": "Acme corp login",
-                    "status": "foo",
-                    "tags": [
-                      "foo"
-                    ],
-                    "upload_uri": "foo"
-                  },
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
+                "data": {
+                  "name": "Acme corp login",
+                  "status": "foo",
+                  "tags": [
+                    "foo"
                   ],
-                  "meta": {
-                    "requestId": "foo"
-                  },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                  "upload_uri": "foo"
+                },
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "requestId": "foo"
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2851,34 +2836,31 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "name": "Acme corp login",
-                    "status": "foo",
-                    "tags": [
-                      "foo"
-                    ],
-                    "upload_uri": "foo"
-                  },
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
+                "data": {
+                  "name": "Acme corp login",
+                  "status": "foo",
+                  "tags": [
+                    "foo"
                   ],
-                  "meta": {
-                    "requestId": "foo"
-                  },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                  "upload_uri": "foo"
+                },
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "requestId": "foo"
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3081,64 +3063,61 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "pagination": {
-                      "currentLimit": 42,
-                      "currentPage": 42,
-                      "finalCount": 42,
-                      "hasMore": true,
-                      "initialCount": 42,
-                      "nextOffset": 42,
-                      "numberOfPages": 42,
-                      "totalItems": 42
-                    },
-                    "sessions": [
-                      {
-                        "cdp_url": "foo",
-                        "cdp_ws_url": "foo",
-                        "chromedriver_url": "foo",
-                        "configuration": {
-                          "persist_profile": true,
-                          "persist_profile_name": "default",
-                          "persist_profile_tags": [
-                            "foo"
-                          ],
-                          "profile_id": "linkedin",
-                          "timeoutMinutes": 10
-                        },
-                        "current_usage": 42,
-                        "date_created": "foo",
-                        "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                        "last_activity": "foo",
-                        "live_view": {
-                          "airtop_browser_url": "foo",
-                          "token": "foo"
-                        },
-                        "status": "active",
-                        "url": "foo"
-                      }
-                    ]
+                "data": {
+                  "pagination": {
+                    "currentLimit": 42,
+                    "currentPage": 42,
+                    "finalCount": 42,
+                    "hasMore": true,
+                    "initialCount": 42,
+                    "nextOffset": 42,
+                    "numberOfPages": 42,
+                    "totalItems": 42
                   },
-                  "errors": [
+                  "sessions": [
                     {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ],
-                  "meta": {
-                    "requestId": "foo"
-                  },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
+                      "cdp_url": "foo",
+                      "cdp_ws_url": "foo",
+                      "chromedriver_url": "foo",
+                      "configuration": {
+                        "persist_profile": true,
+                        "persist_profile_name": "default",
+                        "persist_profile_tags": [
+                          "foo"
+                        ],
+                        "profile_id": "linkedin",
+                        "timeoutMinutes": 10
+                      },
+                      "current_usage": 42,
+                      "date_created": "foo",
+                      "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+                      "last_activity": "foo",
+                      "live_view": {
+                        "airtop_browser_url": "foo",
+                        "token": "foo"
+                      },
+                      "status": "active",
+                      "url": "foo"
                     }
                   ]
-                }
+                },
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "requestId": "foo"
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3274,50 +3253,47 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "cdp_url": "foo",
-                    "cdp_ws_url": "foo",
-                    "chromedriver_url": "foo",
-                    "configuration": {
-                      "persist_profile": true,
-                      "persist_profile_name": "default",
-                      "persist_profile_tags": [
-                        "foo"
-                      ],
-                      "profile_id": "linkedin",
-                      "timeoutMinutes": 10
-                    },
-                    "current_usage": 42,
-                    "date_created": "foo",
-                    "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                    "last_activity": "foo",
-                    "live_view": {
-                      "airtop_browser_url": "foo",
-                      "token": "foo"
-                    },
-                    "status": "active",
-                    "url": "foo"
+                "data": {
+                  "cdp_url": "foo",
+                  "cdp_ws_url": "foo",
+                  "chromedriver_url": "foo",
+                  "configuration": {
+                    "persist_profile": true,
+                    "persist_profile_name": "default",
+                    "persist_profile_tags": [
+                      "foo"
+                    ],
+                    "profile_id": "linkedin",
+                    "timeoutMinutes": 10
                   },
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ],
-                  "meta": {
-                    "requestId": "foo"
+                  "current_usage": 42,
+                  "date_created": "foo",
+                  "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+                  "last_activity": "foo",
+                  "live_view": {
+                    "airtop_browser_url": "foo",
+                    "token": "foo"
                   },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                  "status": "active",
+                  "url": "foo"
+                },
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "requestId": "foo"
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3484,50 +3460,47 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "cdp_url": "foo",
-                    "cdp_ws_url": "foo",
-                    "chromedriver_url": "foo",
-                    "configuration": {
-                      "persist_profile": true,
-                      "persist_profile_name": "default",
-                      "persist_profile_tags": [
-                        "foo"
-                      ],
-                      "profile_id": "linkedin",
-                      "timeoutMinutes": 10
-                    },
-                    "current_usage": 42,
-                    "date_created": "foo",
-                    "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                    "last_activity": "foo",
-                    "live_view": {
-                      "airtop_browser_url": "foo",
-                      "token": "foo"
-                    },
-                    "status": "active",
-                    "url": "foo"
+                "data": {
+                  "cdp_url": "foo",
+                  "cdp_ws_url": "foo",
+                  "chromedriver_url": "foo",
+                  "configuration": {
+                    "persist_profile": true,
+                    "persist_profile_name": "default",
+                    "persist_profile_tags": [
+                      "foo"
+                    ],
+                    "profile_id": "linkedin",
+                    "timeoutMinutes": 10
                   },
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ],
-                  "meta": {
-                    "requestId": "foo"
+                  "current_usage": 42,
+                  "date_created": "foo",
+                  "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+                  "last_activity": "foo",
+                  "live_view": {
+                    "airtop_browser_url": "foo",
+                    "token": "foo"
                   },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                  "status": "active",
+                  "url": "foo"
+                },
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "requestId": "foo"
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3756,18 +3729,15 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "event": "foo",
-                    "eventTimeMillis": 42,
-                    "id": "foo",
-                    "status": "awaiting_capacity"
-                  },
+                "data": {
                   "event": "foo",
-                  "id": 42,
-                  "retry": 42
-                }
+                  "eventTimeMillis": 42,
+                  "id": "foo",
+                  "status": "awaiting_capacity"
+                },
+                "event": "foo",
+                "id": 42,
+                "retry": 42
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3932,31 +3902,28 @@
               "headers": {},
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "liveViewUrl": "foo",
-                    "token": "foo",
-                    "windowId": "foo"
-                  },
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ],
-                  "meta": {
-                    "requestId": "foo"
-                  },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                "data": {
+                  "liveViewUrl": "foo",
+                  "token": "foo",
+                  "windowId": "foo"
+                },
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "requestId": "foo"
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -4105,38 +4072,35 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "modelResponse": "foo"
+                "data": {
+                  "modelResponse": "foo"
+                },
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "clientProvided": {
+                    "clientRequestId": "foo",
+                    "timeThresholdMs": 42
                   },
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ],
-                  "meta": {
-                    "clientProvided": {
-                      "clientRequestId": "foo",
-                      "timeThresholdMs": 42
-                    },
-                    "requestId": "foo",
-                    "status": "success",
-                    "usage": {
-                      "credits": 42,
-                      "id": "foo"
-                    }
-                  },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                  "requestId": "foo",
+                  "status": "success",
+                  "usage": {
+                    "credits": 42,
+                    "id": "foo"
+                  }
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -4270,45 +4234,42 @@
               "headers": {},
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "modelResponse": {
-                      "scrapedContent": {
-                        "contentType": "foo",
-                        "text": "foo"
-                      },
-                      "selectedText": "foo",
-                      "title": "foo"
-                    }
-                  },
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ],
-                  "meta": {
-                    "clientProvided": {
-                      "clientRequestId": "foo",
-                      "timeThresholdMs": 42
+                "data": {
+                  "modelResponse": {
+                    "scrapedContent": {
+                      "contentType": "foo",
+                      "text": "foo"
                     },
-                    "requestId": "foo",
-                    "status": "success",
-                    "usage": {
-                      "credits": 42,
-                      "id": "foo"
-                    }
+                    "selectedText": "foo",
+                    "title": "foo"
+                  }
+                },
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "clientProvided": {
+                    "clientRequestId": "foo",
+                    "timeThresholdMs": 42
                   },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                  "requestId": "foo",
+                  "status": "success",
+                  "usage": {
+                    "credits": 42,
+                    "id": "foo"
+                  }
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -4467,38 +4428,35 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "modelResponse": "foo"
+                "data": {
+                  "modelResponse": "foo"
+                },
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "clientProvided": {
+                    "clientRequestId": "foo",
+                    "timeThresholdMs": 42
                   },
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ],
-                  "meta": {
-                    "clientProvided": {
-                      "clientRequestId": "foo",
-                      "timeThresholdMs": 42
-                    },
-                    "requestId": "foo",
-                    "status": "success",
-                    "usage": {
-                      "credits": 42,
-                      "id": "foo"
-                    }
-                  },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                  "requestId": "foo",
+                  "status": "success",
+                  "usage": {
+                    "credits": 42,
+                    "id": "foo"
+                  }
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",

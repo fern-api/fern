@@ -144,10 +144,7 @@
               "value": {}
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"
@@ -232,10 +229,7 @@
               "value": null
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"

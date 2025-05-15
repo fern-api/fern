@@ -200,13 +200,10 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "boolField1": true,
-                "boolField2": true,
-                "stringField": "defaultValue",
-                "numberField": 3.14
-              }
+              "boolField1": true,
+              "boolField2": true,
+              "stringField": "defaultValue",
+              "numberField": 3.14
             },
             "responseBodyV3": {
               "type": "json",

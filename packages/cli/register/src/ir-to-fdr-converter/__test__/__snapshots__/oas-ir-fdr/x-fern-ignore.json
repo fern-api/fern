@@ -184,20 +184,17 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "meta": {
-                  "hasMore": true
-                },
-                "users": [
-                  {
-                    "id": "foo",
-                    "name": "foo",
-                    "email": "foo",
-                    "age": 42
-                  }
-                ]
-              }
+              "meta": {
+                "hasMore": true
+              },
+              "users": [
+                {
+                  "id": "foo",
+                  "name": "foo",
+                  "email": "foo",
+                  "age": 42
+                }
+              ]
             },
             "responseBodyV3": {
               "type": "json",

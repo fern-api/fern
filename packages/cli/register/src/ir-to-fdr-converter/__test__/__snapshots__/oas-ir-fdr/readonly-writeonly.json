@@ -311,20 +311,17 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "name": "foo",
-                "email": "foo",
-                "createdAt": "foo",
-                "settings": {
-                  "theme": "foo",
-                  "notifications": true
-                },
-                "stats": {
-                  "totalLogins": 42,
-                  "lastLoginTime": "foo"
-                }
+              "id": "foo",
+              "name": "foo",
+              "email": "foo",
+              "createdAt": "foo",
+              "settings": {
+                "theme": "foo",
+                "notifications": true
+              },
+              "stats": {
+                "totalLogins": 42,
+                "lastLoginTime": "foo"
               }
             },
             "responseBodyV3": {
@@ -413,20 +410,17 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "name": "foo",
-                "email": "foo",
-                "createdAt": "foo",
-                "settings": {
-                  "theme": "foo",
-                  "notifications": true
-                },
-                "stats": {
-                  "totalLogins": 42,
-                  "lastLoginTime": "foo"
-                }
+              "id": "foo",
+              "name": "foo",
+              "email": "foo",
+              "createdAt": "foo",
+              "settings": {
+                "theme": "foo",
+                "notifications": true
+              },
+              "stats": {
+                "totalLogins": 42,
+                "lastLoginTime": "foo"
               }
             },
             "responseBodyV3": {

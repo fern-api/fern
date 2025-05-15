@@ -130,15 +130,12 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "associatedPersons": [
-                  {
-                    "id": "foo"
-                  }
-                ]
-              }
+              "id": "foo",
+              "associatedPersons": [
+                {
+                  "id": "foo"
+                }
+              ]
             },
             "responseBodyV3": {
               "type": "json",

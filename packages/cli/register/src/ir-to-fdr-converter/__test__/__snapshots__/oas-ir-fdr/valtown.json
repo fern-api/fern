@@ -3275,35 +3275,32 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": [
-                    {
-                      "name": "foo",
+                "data": [
+                  {
+                    "name": "foo",
+                    "id": "foo",
+                    "version": 42,
+                    "code": "foo",
+                    "public": true,
+                    "createdAt": "foo",
+                    "privacy": "public",
+                    "type": "interval",
+                    "url": "foo",
+                    "links": {
+                      "self": "foo",
+                      "versions": "foo",
+                      "module": "foo"
+                    },
+                    "author": {
                       "id": "foo",
-                      "version": 42,
-                      "code": "foo",
-                      "public": true,
-                      "createdAt": "foo",
-                      "privacy": "public",
-                      "type": "interval",
-                      "url": "foo",
-                      "links": {
-                        "self": "foo",
-                        "versions": "foo",
-                        "module": "foo"
-                      },
-                      "author": {
-                        "id": "foo",
-                        "username": "foo"
-                      }
+                      "username": "foo"
                     }
-                  ],
-                  "links": {
-                    "self": "foo",
-                    "prev": "foo",
-                    "next": "foo"
                   }
+                ],
+                "links": {
+                  "self": "foo",
+                  "prev": "foo",
+                  "next": "foo"
                 }
               },
               "responseBodyV3": {
@@ -3426,16 +3423,13 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "00000000-0000-0000-0000-000000000000",
-                  "bio": "Hello world",
-                  "username": "tmcw",
-                  "profileImageUrl": null,
-                  "url": "https://val.town/u/tmcw",
-                  "links": {
-                    "self": "foo"
-                  }
+                "id": "00000000-0000-0000-0000-000000000000",
+                "bio": "Hello world",
+                "username": "tmcw",
+                "profileImageUrl": null,
+                "url": "https://val.town/u/tmcw",
+                "links": {
+                  "self": "foo"
                 }
               },
               "responseBodyV3": {
@@ -3548,30 +3542,27 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
+                "name": "foo",
+                "id": "foo",
+                "version": 42,
+                "code": "foo",
+                "public": true,
+                "createdAt": "foo",
+                "privacy": "public",
+                "type": "interval",
+                "url": "foo",
+                "links": {
+                  "self": "foo",
+                  "versions": "foo",
+                  "module": "foo"
+                },
+                "author": {
                   "id": "foo",
-                  "version": 42,
-                  "code": "foo",
-                  "public": true,
-                  "createdAt": "foo",
-                  "privacy": "public",
-                  "type": "interval",
-                  "url": "foo",
-                  "links": {
-                    "self": "foo",
-                    "versions": "foo",
-                    "module": "foo"
-                  },
-                  "author": {
-                    "id": "foo",
-                    "username": "foo"
-                  },
-                  "likeCount": 42,
-                  "referenceCount": 42,
-                  "readme": "foo"
-                }
+                  "username": "foo"
+                },
+                "likeCount": 42,
+                "referenceCount": 42,
+                "readme": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3666,19 +3657,16 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "00000000-0000-0000-0000-000000000000",
-                  "bio": "Hello world",
-                  "username": "tmcw",
-                  "profileImageUrl": null,
-                  "url": "foo",
-                  "links": {
-                    "self": "foo"
-                  },
-                  "tier": "pro",
-                  "email": "example@example.com"
-                }
+                "id": "00000000-0000-0000-0000-000000000000",
+                "bio": "Hello world",
+                "username": "tmcw",
+                "profileImageUrl": null,
+                "url": "foo",
+                "links": {
+                  "self": "foo"
+                },
+                "tier": "pro",
+                "email": "example@example.com"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3781,35 +3769,32 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": [
-                    {
-                      "name": "foo",
+                "data": [
+                  {
+                    "name": "foo",
+                    "id": "foo",
+                    "version": 42,
+                    "code": "foo",
+                    "public": true,
+                    "createdAt": "foo",
+                    "privacy": "public",
+                    "type": "interval",
+                    "url": "foo",
+                    "links": {
+                      "self": "foo",
+                      "versions": "foo",
+                      "module": "foo"
+                    },
+                    "author": {
                       "id": "foo",
-                      "version": 42,
-                      "code": "foo",
-                      "public": true,
-                      "createdAt": "foo",
-                      "privacy": "public",
-                      "type": "interval",
-                      "url": "foo",
-                      "links": {
-                        "self": "foo",
-                        "versions": "foo",
-                        "module": "foo"
-                      },
-                      "author": {
-                        "id": "foo",
-                        "username": "foo"
-                      }
+                      "username": "foo"
                     }
-                  ],
-                  "links": {
-                    "self": "foo",
-                    "prev": "foo",
-                    "next": "foo"
                   }
+                ],
+                "links": {
+                  "self": "foo",
+                  "prev": "foo",
+                  "next": "foo"
                 }
               },
               "responseBodyV3": {
@@ -3967,34 +3952,31 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": [
-                    {
-                      "comment": "foo",
+                "data": [
+                  {
+                    "comment": "foo",
+                    "id": "foo",
+                    "createdAt": "foo",
+                    "author": {
                       "id": "foo",
-                      "createdAt": "foo",
+                      "username": "foo"
+                    },
+                    "val": {
+                      "name": "foo",
+                      "id": "foo",
+                      "version": 42,
+                      "privacy": "public",
                       "author": {
                         "id": "foo",
                         "username": "foo"
-                      },
-                      "val": {
-                        "name": "foo",
-                        "id": "foo",
-                        "version": 42,
-                        "privacy": "public",
-                        "author": {
-                          "id": "foo",
-                          "username": "foo"
-                        }
                       }
                     }
-                  ],
-                  "links": {
-                    "self": "foo",
-                    "prev": "foo",
-                    "next": "foo"
                   }
+                ],
+                "links": {
+                  "self": "foo",
+                  "prev": "foo",
+                  "next": "foo"
                 }
               },
               "responseBodyV3": {
@@ -4142,30 +4124,27 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": [
-                    {
-                      "reference": {
-                        "id": "foo",
-                        "username": "foo",
-                        "author_id": "foo",
-                        "name": "foo"
-                      },
-                      "dependsOn": {
-                        "id": "foo",
-                        "username": "foo",
-                        "author_id": "foo",
-                        "name": "foo"
-                      },
-                      "referencedAt": "foo"
-                    }
-                  ],
-                  "links": {
-                    "self": "foo",
-                    "prev": "foo",
-                    "next": "foo"
+                "data": [
+                  {
+                    "reference": {
+                      "id": "foo",
+                      "username": "foo",
+                      "author_id": "foo",
+                      "name": "foo"
+                    },
+                    "dependsOn": {
+                      "id": "foo",
+                      "username": "foo",
+                      "author_id": "foo",
+                      "name": "foo"
+                    },
+                    "referencedAt": "foo"
                   }
+                ],
+                "links": {
+                  "self": "foo",
+                  "prev": "foo",
+                  "next": "foo"
                 }
               },
               "responseBodyV3": {
@@ -4278,16 +4257,13 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "key": "hello_world",
-                    "size": 20,
-                    "lastModified": "2024-06-24T20:00:59.702Z"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "key": "hello_world",
+                  "size": 20,
+                  "lastModified": "2024-06-24T20:00:59.702Z"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -4620,16 +4596,13 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "00000000-0000-0000-0000-000000000000",
-                  "bio": "Hello world",
-                  "username": "tmcw",
-                  "profileImageUrl": null,
-                  "url": "https://val.town/u/tmcw",
-                  "links": {
-                    "self": "foo"
-                  }
+                "id": "00000000-0000-0000-0000-000000000000",
+                "bio": "Hello world",
+                "username": "tmcw",
+                "profileImageUrl": null,
+                "url": "https://val.town/u/tmcw",
+                "links": {
+                  "self": "foo"
                 }
               },
               "responseBodyV3": {
@@ -4752,35 +4725,32 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": [
-                    {
-                      "name": "foo",
+                "data": [
+                  {
+                    "name": "foo",
+                    "id": "foo",
+                    "version": 42,
+                    "code": "foo",
+                    "public": true,
+                    "createdAt": "foo",
+                    "privacy": "public",
+                    "type": "interval",
+                    "url": "foo",
+                    "links": {
+                      "self": "foo",
+                      "versions": "foo",
+                      "module": "foo"
+                    },
+                    "author": {
                       "id": "foo",
-                      "version": 42,
-                      "code": "foo",
-                      "public": true,
-                      "createdAt": "foo",
-                      "privacy": "public",
-                      "type": "interval",
-                      "url": "foo",
-                      "links": {
-                        "self": "foo",
-                        "versions": "foo",
-                        "module": "foo"
-                      },
-                      "author": {
-                        "id": "foo",
-                        "username": "foo"
-                      }
+                      "username": "foo"
                     }
-                  ],
-                  "links": {
-                    "self": "foo",
-                    "prev": "foo",
-                    "next": "foo"
                   }
+                ],
+                "links": {
+                  "self": "foo",
+                  "prev": "foo",
+                  "next": "foo"
                 }
               },
               "responseBodyV3": {
@@ -4911,22 +4881,19 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "columns": [
-                    "foo"
-                  ],
-                  "columnTypes": [
-                    "foo"
-                  ],
-                  "rows": [
-                    [
-                      null
-                    ]
-                  ],
-                  "rowsAffected": 42,
-                  "lastInsertRowid": "foo"
-                }
+                "columns": [
+                  "foo"
+                ],
+                "columnTypes": [
+                  "foo"
+                ],
+                "rows": [
+                  [
+                    null
+                  ]
+                ],
+                "rowsAffected": 42,
+                "lastInsertRowid": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -4975,22 +4942,19 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "columns": [
-                    "foo"
-                  ],
-                  "columnTypes": [
-                    "foo"
-                  ],
-                  "rows": [
-                    [
-                      null
-                    ]
-                  ],
-                  "rowsAffected": 42,
-                  "lastInsertRowid": "foo"
-                }
+                "columns": [
+                  "foo"
+                ],
+                "columnTypes": [
+                  "foo"
+                ],
+                "rows": [
+                  [
+                    null
+                  ]
+                ],
+                "rowsAffected": 42,
+                "lastInsertRowid": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -5117,25 +5081,22 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "columns": [
-                      "id"
-                    ],
-                    "columnTypes": [
-                      "number"
-                    ],
-                    "rows": [
-                      [
-                        null
-                      ]
-                    ],
-                    "rowsAffected": 0
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "columns": [
+                    "id"
+                  ],
+                  "columnTypes": [
+                    "number"
+                  ],
+                  "rows": [
+                    [
+                      null
+                    ]
+                  ],
+                  "rowsAffected": 0
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -5283,10 +5244,7 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
                 "value": {}
@@ -5315,10 +5273,7 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
                 "value": {}
@@ -5431,10 +5386,7 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
                 "value": {}
@@ -5777,30 +5729,27 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
+                "name": "foo",
+                "id": "foo",
+                "version": 42,
+                "code": "foo",
+                "public": true,
+                "createdAt": "foo",
+                "privacy": "public",
+                "type": "interval",
+                "url": "foo",
+                "links": {
+                  "self": "foo",
+                  "versions": "foo",
+                  "module": "foo"
+                },
+                "author": {
                   "id": "foo",
-                  "version": 42,
-                  "code": "foo",
-                  "public": true,
-                  "createdAt": "foo",
-                  "privacy": "public",
-                  "type": "interval",
-                  "url": "foo",
-                  "links": {
-                    "self": "foo",
-                    "versions": "foo",
-                    "module": "foo"
-                  },
-                  "author": {
-                    "id": "foo",
-                    "username": "foo"
-                  },
-                  "likeCount": 42,
-                  "referenceCount": 42,
-                  "readme": "foo"
-                }
+                  "username": "foo"
+                },
+                "likeCount": 42,
+                "referenceCount": 42,
+                "readme": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6000,30 +5949,27 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
+                "name": "foo",
+                "id": "foo",
+                "version": 42,
+                "code": "foo",
+                "public": true,
+                "createdAt": "foo",
+                "privacy": "public",
+                "type": "interval",
+                "url": "foo",
+                "links": {
+                  "self": "foo",
+                  "versions": "foo",
+                  "module": "foo"
+                },
+                "author": {
                   "id": "foo",
-                  "version": 42,
-                  "code": "foo",
-                  "public": true,
-                  "createdAt": "foo",
-                  "privacy": "public",
-                  "type": "interval",
-                  "url": "foo",
-                  "links": {
-                    "self": "foo",
-                    "versions": "foo",
-                    "module": "foo"
-                  },
-                  "author": {
-                    "id": "foo",
-                    "username": "foo"
-                  },
-                  "likeCount": 42,
-                  "referenceCount": 42,
-                  "readme": "foo"
-                }
+                  "username": "foo"
+                },
+                "likeCount": 42,
+                "referenceCount": 42,
+                "readme": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6401,20 +6347,17 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": [
-                    {
-                      "val_id": "foo",
-                      "version": 42,
-                      "createdAt": "foo"
-                    }
-                  ],
-                  "links": {
-                    "self": "foo",
-                    "prev": "foo",
-                    "next": "foo"
+                "data": [
+                  {
+                    "val_id": "foo",
+                    "version": 42,
+                    "createdAt": "foo"
                   }
+                ],
+                "links": {
+                  "self": "foo",
+                  "prev": "foo",
+                  "next": "foo"
                 }
               },
               "responseBodyV3": {
@@ -6606,30 +6549,27 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
+                "name": "foo",
+                "id": "foo",
+                "version": 42,
+                "code": "foo",
+                "public": true,
+                "createdAt": "foo",
+                "privacy": "public",
+                "type": "interval",
+                "url": "foo",
+                "links": {
+                  "self": "foo",
+                  "versions": "foo",
+                  "module": "foo"
+                },
+                "author": {
                   "id": "foo",
-                  "version": 42,
-                  "code": "foo",
-                  "public": true,
-                  "createdAt": "foo",
-                  "privacy": "public",
-                  "type": "interval",
-                  "url": "foo",
-                  "links": {
-                    "self": "foo",
-                    "versions": "foo",
-                    "module": "foo"
-                  },
-                  "author": {
-                    "id": "foo",
-                    "username": "foo"
-                  },
-                  "likeCount": 42,
-                  "referenceCount": 42,
-                  "readme": "foo"
-                }
+                  "username": "foo"
+                },
+                "likeCount": 42,
+                "referenceCount": 42,
+                "readme": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6785,30 +6725,27 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
+                "name": "foo",
+                "id": "foo",
+                "version": 42,
+                "code": "foo",
+                "public": true,
+                "createdAt": "foo",
+                "privacy": "public",
+                "type": "interval",
+                "url": "foo",
+                "links": {
+                  "self": "foo",
+                  "versions": "foo",
+                  "module": "foo"
+                },
+                "author": {
                   "id": "foo",
-                  "version": 42,
-                  "code": "foo",
-                  "public": true,
-                  "createdAt": "foo",
-                  "privacy": "public",
-                  "type": "interval",
-                  "url": "foo",
-                  "links": {
-                    "self": "foo",
-                    "versions": "foo",
-                    "module": "foo"
-                  },
-                  "author": {
-                    "id": "foo",
-                    "username": "foo"
-                  },
-                  "likeCount": 42,
-                  "referenceCount": 42,
-                  "readme": "foo"
-                }
+                  "username": "foo"
+                },
+                "likeCount": 42,
+                "referenceCount": 42,
+                "readme": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7051,10 +6988,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "found": true
-                }
+                "found": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7276,10 +7210,7 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "message": "foo"
-                }
+                "message": "foo"
               },
               "responseBodyV3": {
                 "type": "json",

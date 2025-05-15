@@ -127,12 +127,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "status": "success",
-                "message": "foo",
-                "custom_fields": {}
-              }
+              "status": "success",
+              "message": "foo",
+              "custom_fields": {}
             },
             "responseBodyV3": {
               "type": "json",

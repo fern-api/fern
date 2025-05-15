@@ -182,13 +182,10 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 50,
-                "age": 50,
-                "name": "type",
-                "value": 1.1
-              }
+              "id": 50,
+              "age": 50,
+              "name": "type",
+              "value": 1.1
             },
             "responseBodyV3": {
               "type": "json",

@@ -7101,20 +7101,17 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "key": "foo",
-                    "id": "foo",
-                    "is_enterprise": true,
-                    "created_at": "foo",
-                    "updated_at": "foo",
-                    "name": "foo",
-                    "settings": {}
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "key": "foo",
+                  "id": "foo",
+                  "is_enterprise": true,
+                  "created_at": "foo",
+                  "updated_at": "foo",
+                  "name": "foo",
+                  "settings": {}
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -7224,18 +7221,15 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "foo",
-                  "id": "foo",
-                  "is_enterprise": true,
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "settings": {},
-                  "api_key_id": "foo",
-                  "api_key_secret": "foo"
-                }
+                "key": "foo",
+                "id": "foo",
+                "is_enterprise": true,
+                "created_at": "foo",
+                "updated_at": "foo",
+                "name": "foo",
+                "settings": {},
+                "api_key_id": "foo",
+                "api_key_secret": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7343,16 +7337,13 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "foo",
-                  "id": "foo",
-                  "is_enterprise": true,
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "settings": {}
-                }
+                "key": "foo",
+                "id": "foo",
+                "is_enterprise": true,
+                "created_at": "foo",
+                "updated_at": "foo",
+                "name": "foo",
+                "settings": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7556,16 +7547,13 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "foo",
-                  "id": "foo",
-                  "is_enterprise": true,
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "settings": {}
-                }
+                "key": "foo",
+                "id": "foo",
+                "is_enterprise": true,
+                "created_at": "foo",
+                "updated_at": "foo",
+                "name": "foo",
+                "settings": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7650,16 +7638,13 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "foo",
-                  "id": "foo",
-                  "is_enterprise": true,
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "settings": {}
-                }
+                "key": "foo",
+                "id": "foo",
+                "is_enterprise": true,
+                "created_at": "foo",
+                "updated_at": "foo",
+                "name": "foo",
+                "settings": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7788,23 +7773,20 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "key": "foo",
-                    "urn_namespace": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo",
-                    "name": "foo",
-                    "description": "foo",
-                    "settings": {},
-                    "active_policy_repo_id": "foo"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "key": "foo",
+                  "urn_namespace": "foo",
+                  "id": "foo",
+                  "organization_id": "foo",
+                  "created_at": "foo",
+                  "updated_at": "foo",
+                  "name": "foo",
+                  "description": "foo",
+                  "settings": {},
+                  "active_policy_repo_id": "foo"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -7917,19 +7899,16 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "foo",
-                  "urn_namespace": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "description": "foo",
-                  "settings": {},
-                  "active_policy_repo_id": "foo"
-                }
+                "key": "foo",
+                "urn_namespace": "foo",
+                "id": "foo",
+                "organization_id": "foo",
+                "created_at": "foo",
+                "updated_at": "foo",
+                "name": "foo",
+                "description": "foo",
+                "settings": {},
+                "active_policy_repo_id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -8038,19 +8017,16 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "foo",
-                  "urn_namespace": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "description": "foo",
-                  "settings": {},
-                  "active_policy_repo_id": "foo"
-                }
+                "key": "foo",
+                "urn_namespace": "foo",
+                "id": "foo",
+                "organization_id": "foo",
+                "created_at": "foo",
+                "updated_at": "foo",
+                "name": "foo",
+                "description": "foo",
+                "settings": {},
+                "active_policy_repo_id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -8257,19 +8233,16 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "foo",
-                  "urn_namespace": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "description": "foo",
-                  "settings": {},
-                  "active_policy_repo_id": "foo"
-                }
+                "key": "foo",
+                "urn_namespace": "foo",
+                "id": "foo",
+                "organization_id": "foo",
+                "created_at": "foo",
+                "updated_at": "foo",
+                "name": "foo",
+                "description": "foo",
+                "settings": {},
+                "active_policy_repo_id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -8406,96 +8379,93 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "project_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "description": "foo",
-                  "custom_branch_name": "foo",
-                  "jwks": {
-                    "keys": [
-                      {}
-                    ]
-                  },
-                  "settings": {},
-                  "pdp_configs": [
+                "key": "foo",
+                "id": "foo",
+                "organization_id": "foo",
+                "project_id": "foo",
+                "created_at": "foo",
+                "updated_at": "foo",
+                "name": "foo",
+                "description": "foo",
+                "custom_branch_name": "foo",
+                "jwks": {
+                  "keys": [
+                    {}
+                  ]
+                },
+                "settings": {},
+                "pdp_configs": [
+                  {
+                    "id": "foo",
+                    "name": "foo",
+                    "organization_id": "foo",
+                    "project_id": "foo",
+                    "environment_id": "foo",
+                    "client_secret": "foo"
+                  }
+                ],
+                "stats": {
+                  "roles": 42,
+                  "users": 42,
+                  "policies": 42,
+                  "resources": 42,
+                  "tenants": 42,
+                  "has_decision_logs": true,
+                  "members": [
                     {
                       "id": "foo",
+                      "email": "foo",
+                      "email_verified": true,
                       "name": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "client_secret": "foo"
-                    }
-                  ],
-                  "stats": {
-                    "roles": 42,
-                    "users": 42,
-                    "policies": 42,
-                    "resources": 42,
-                    "tenants": 42,
-                    "has_decision_logs": true,
-                    "members": [
-                      {
-                        "id": "foo",
-                        "email": "foo",
-                        "email_verified": true,
-                        "name": "foo",
-                        "given_name": "foo",
-                        "family_name": "foo",
-                        "picture": "foo",
-                        "is_superuser": true,
-                        "is_onboarding": true,
-                        "onboarding_step": "create_organization",
-                        "created_at": "foo",
-                        "last_login": "foo",
-                        "last_ip": "0.0.0.0",
-                        "logins_count": 0,
-                        "identities": [
-                          {
-                            "user_id": "foo",
-                            "provider": "foo",
-                            "sub": "foo",
-                            "email": "foo",
-                            "email_verified": true,
-                            "auth0_info": {}
-                          }
-                        ],
-                        "invite": {
-                          "member_id": "foo",
+                      "given_name": "foo",
+                      "family_name": "foo",
+                      "picture": "foo",
+                      "is_superuser": true,
+                      "is_onboarding": true,
+                      "onboarding_step": "create_organization",
+                      "created_at": "foo",
+                      "last_login": "foo",
+                      "last_ip": "0.0.0.0",
+                      "logins_count": 0,
+                      "identities": [
+                        {
+                          "user_id": "foo",
+                          "provider": "foo",
+                          "sub": "foo",
                           "email": "foo",
-                          "role": "admin",
-                          "id": "foo",
+                          "email_verified": true,
+                          "auth0_info": {}
+                        }
+                      ],
+                      "invite": {
+                        "member_id": "foo",
+                        "email": "foo",
+                        "role": "admin",
+                        "id": "foo",
+                        "organization_id": "foo",
+                        "invite_code": "foo",
+                        "created_at": "foo",
+                        "status": "pending",
+                        "failed_reason": "foo"
+                      },
+                      "settings": {},
+                      "grants": [
+                        {
                           "organization_id": "foo",
-                          "invite_code": "foo",
-                          "created_at": "foo",
-                          "status": "pending",
-                          "failed_reason": "foo"
-                        },
-                        "settings": {},
-                        "grants": [
-                          {
-                            "organization_id": "foo",
-                            "project_id": "foo",
-                            "environment_id": "foo",
-                            "object_type": "org",
-                            "access_level": "admin",
-                            "organization_key": "foo",
-                            "project_key": "foo",
-                            "environment_key": "foo",
-                            "organization_name": "foo",
-                            "project_name": "foo",
-                            "environment_name": "foo"
-                          }
-                        ]
-                      }
-                    ]
-                  }
+                          "project_id": "foo",
+                          "environment_id": "foo",
+                          "object_type": "org",
+                          "access_level": "admin",
+                          "organization_key": "foo",
+                          "project_key": "foo",
+                          "environment_key": "foo",
+                          "organization_name": "foo",
+                          "project_name": "foo",
+                          "environment_name": "foo"
+                        }
+                      ]
+                    }
+                  ]
                 }
               },
               "responseBodyV3": {
@@ -8717,28 +8687,25 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "key": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo",
-                    "name": "foo",
-                    "description": "foo",
-                    "custom_branch_name": "foo",
-                    "jwks": {
-                      "keys": [
-                        {}
-                      ]
-                    },
-                    "settings": {}
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "key": "foo",
+                  "id": "foo",
+                  "organization_id": "foo",
+                  "project_id": "foo",
+                  "created_at": "foo",
+                  "updated_at": "foo",
+                  "name": "foo",
+                  "description": "foo",
+                  "custom_branch_name": "foo",
+                  "jwks": {
+                    "keys": [
+                      {}
+                    ]
+                  },
+                  "settings": {}
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -8877,24 +8844,21 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "project_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "description": "foo",
-                  "custom_branch_name": "foo",
-                  "jwks": {
-                    "keys": [
-                      {}
-                    ]
-                  },
-                  "settings": {}
-                }
+                "key": "foo",
+                "id": "foo",
+                "organization_id": "foo",
+                "project_id": "foo",
+                "created_at": "foo",
+                "updated_at": "foo",
+                "name": "foo",
+                "description": "foo",
+                "custom_branch_name": "foo",
+                "jwks": {
+                  "keys": [
+                    {}
+                  ]
+                },
+                "settings": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -9027,24 +8991,21 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "project_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "description": "foo",
-                  "custom_branch_name": "foo",
-                  "jwks": {
-                    "keys": [
-                      {}
-                    ]
-                  },
-                  "settings": {}
-                }
+                "key": "foo",
+                "id": "foo",
+                "organization_id": "foo",
+                "project_id": "foo",
+                "created_at": "foo",
+                "updated_at": "foo",
+                "name": "foo",
+                "description": "foo",
+                "custom_branch_name": "foo",
+                "jwks": {
+                  "keys": [
+                    {}
+                  ]
+                },
+                "settings": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -9294,24 +9255,21 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "project_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "description": "foo",
-                  "custom_branch_name": "foo",
-                  "jwks": {
-                    "keys": [
-                      {}
-                    ]
-                  },
-                  "settings": {}
-                }
+                "key": "foo",
+                "id": "foo",
+                "organization_id": "foo",
+                "project_id": "foo",
+                "created_at": "foo",
+                "updated_at": "foo",
+                "name": "foo",
+                "description": "foo",
+                "custom_branch_name": "foo",
+                "jwks": {
+                  "keys": [
+                    {}
+                  ]
+                },
+                "settings": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -9466,24 +9424,21 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "foo",
-                  "id": "foo",
-                  "organization_id": "foo",
-                  "project_id": "foo",
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "description": "foo",
-                  "custom_branch_name": "foo",
-                  "jwks": {
-                    "keys": [
-                      {}
-                    ]
-                  },
-                  "settings": {}
-                }
+                "key": "foo",
+                "id": "foo",
+                "organization_id": "foo",
+                "project_id": "foo",
+                "created_at": "foo",
+                "updated_at": "foo",
+                "name": "foo",
+                "description": "foo",
+                "custom_branch_name": "foo",
+                "jwks": {
+                  "keys": [
+                    {}
+                  ]
+                },
+                "settings": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -9699,28 +9654,25 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": [
-                    {
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "created_at": "foo",
-                      "updated_at": "foo",
-                      "name": "foo",
-                      "urn": "foo",
-                      "description": "foo",
-                      "actions": {},
-                      "attributes": {},
-                      "action_groups": {}
-                    }
-                  ],
-                  "total_count": 42,
-                  "page_count": 0
-                }
+                "data": [
+                  {
+                    "key": "foo",
+                    "id": "foo",
+                    "organization_id": "foo",
+                    "project_id": "foo",
+                    "environment_id": "foo",
+                    "created_at": "foo",
+                    "updated_at": "foo",
+                    "name": "foo",
+                    "urn": "foo",
+                    "description": "foo",
+                    "actions": {},
+                    "attributes": {},
+                    "action_groups": {}
+                  }
+                ],
+                "total_count": 42,
+                "page_count": 0
               },
               "responseBodyV3": {
                 "type": "json",
@@ -9911,40 +9863,37 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "repository",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z",
-                  "name": "Repository",
-                  "urn": "prn:github:scm:repository",
-                  "description": "a git repository stored on github",
-                  "actions": {
-                    "clone": {
-                      "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1"
-                    },
-                    "read": {
-                      "id": "2bc27751-6115-43c0-b68c-928cb46e34bc"
-                    },
-                    "push": {
-                      "id": "e06da336-6e03-41d6-a495-40b0d7537b2a"
-                    }
+                "key": "repository",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z",
+                "name": "Repository",
+                "urn": "prn:github:scm:repository",
+                "description": "a git repository stored on github",
+                "actions": {
+                  "clone": {
+                    "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1"
                   },
-                  "attributes": {
-                    "created": {
-                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
-                      "type": "time",
-                      "description": "the time (timestamp) the repository was created"
-                    },
-                    "private": {
-                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
-                      "type": "bool",
-                      "description": "whether the repo is private (if false, the repo is public)"
-                    }
+                  "read": {
+                    "id": "2bc27751-6115-43c0-b68c-928cb46e34bc"
+                  },
+                  "push": {
+                    "id": "e06da336-6e03-41d6-a495-40b0d7537b2a"
+                  }
+                },
+                "attributes": {
+                  "created": {
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                    "type": "time",
+                    "description": "the time (timestamp) the repository was created"
+                  },
+                  "private": {
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                    "type": "bool",
+                    "description": "whether the repo is private (if false, the repo is public)"
                   }
                 }
               },
@@ -10116,40 +10065,37 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "repository",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z",
-                  "name": "Repository",
-                  "urn": "prn:github:scm:repository",
-                  "description": "a git repository stored on github",
-                  "actions": {
-                    "clone": {
-                      "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1"
-                    },
-                    "read": {
-                      "id": "2bc27751-6115-43c0-b68c-928cb46e34bc"
-                    },
-                    "push": {
-                      "id": "e06da336-6e03-41d6-a495-40b0d7537b2a"
-                    }
+                "key": "repository",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z",
+                "name": "Repository",
+                "urn": "prn:github:scm:repository",
+                "description": "a git repository stored on github",
+                "actions": {
+                  "clone": {
+                    "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1"
                   },
-                  "attributes": {
-                    "created": {
-                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
-                      "type": "time",
-                      "description": "the time (timestamp) the repository was created"
-                    },
-                    "private": {
-                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
-                      "type": "bool",
-                      "description": "whether the repo is private (if false, the repo is public)"
-                    }
+                  "read": {
+                    "id": "2bc27751-6115-43c0-b68c-928cb46e34bc"
+                  },
+                  "push": {
+                    "id": "e06da336-6e03-41d6-a495-40b0d7537b2a"
+                  }
+                },
+                "attributes": {
+                  "created": {
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                    "type": "time",
+                    "description": "the time (timestamp) the repository was created"
+                  },
+                  "private": {
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                    "type": "bool",
+                    "description": "whether the repo is private (if false, the repo is public)"
                   }
                 }
               },
@@ -10345,40 +10291,37 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "repository",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z",
-                  "name": "Repository",
-                  "urn": "prn:github:scm:repository",
-                  "description": "a git repository stored on github",
-                  "actions": {
-                    "clone": {
-                      "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1"
-                    },
-                    "read": {
-                      "id": "2bc27751-6115-43c0-b68c-928cb46e34bc"
-                    },
-                    "push": {
-                      "id": "e06da336-6e03-41d6-a495-40b0d7537b2a"
-                    }
+                "key": "repository",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z",
+                "name": "Repository",
+                "urn": "prn:github:scm:repository",
+                "description": "a git repository stored on github",
+                "actions": {
+                  "clone": {
+                    "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1"
                   },
-                  "attributes": {
-                    "created": {
-                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
-                      "type": "time",
-                      "description": "the time (timestamp) the repository was created"
-                    },
-                    "private": {
-                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
-                      "type": "bool",
-                      "description": "whether the repo is private (if false, the repo is public)"
-                    }
+                  "read": {
+                    "id": "2bc27751-6115-43c0-b68c-928cb46e34bc"
+                  },
+                  "push": {
+                    "id": "e06da336-6e03-41d6-a495-40b0d7537b2a"
+                  }
+                },
+                "attributes": {
+                  "created": {
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                    "type": "time",
+                    "description": "the time (timestamp) the repository was created"
+                  },
+                  "private": {
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                    "type": "bool",
+                    "description": "whether the repo is private (if false, the repo is public)"
                   }
                 }
               },
@@ -10686,40 +10629,37 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "repository",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z",
-                  "name": "Repository",
-                  "urn": "prn:github:scm:repository",
-                  "description": "a git repository stored on github",
-                  "actions": {
-                    "clone": {
-                      "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1"
-                    },
-                    "read": {
-                      "id": "2bc27751-6115-43c0-b68c-928cb46e34bc"
-                    },
-                    "push": {
-                      "id": "e06da336-6e03-41d6-a495-40b0d7537b2a"
-                    }
+                "key": "repository",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z",
+                "name": "Repository",
+                "urn": "prn:github:scm:repository",
+                "description": "a git repository stored on github",
+                "actions": {
+                  "clone": {
+                    "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1"
                   },
-                  "attributes": {
-                    "created": {
-                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
-                      "type": "time",
-                      "description": "the time (timestamp) the repository was created"
-                    },
-                    "private": {
-                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
-                      "type": "bool",
-                      "description": "whether the repo is private (if false, the repo is public)"
-                    }
+                  "read": {
+                    "id": "2bc27751-6115-43c0-b68c-928cb46e34bc"
+                  },
+                  "push": {
+                    "id": "e06da336-6e03-41d6-a495-40b0d7537b2a"
+                  }
+                },
+                "attributes": {
+                  "created": {
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                    "type": "time",
+                    "description": "the time (timestamp) the repository was created"
+                  },
+                  "private": {
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                    "type": "bool",
+                    "description": "whether the repo is private (if false, the repo is public)"
                   }
                 }
               },
@@ -10935,25 +10875,22 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "name": "foo",
-                    "description": "foo",
-                    "attributes": {},
-                    "key": "foo",
-                    "id": "foo",
-                    "permission_name": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "resource_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "name": "foo",
+                  "description": "foo",
+                  "attributes": {},
+                  "key": "foo",
+                  "id": "foo",
+                  "permission_name": "foo",
+                  "organization_id": "foo",
+                  "project_id": "foo",
+                  "environment_id": "foo",
+                  "resource_id": "foo",
+                  "created_at": "foo",
+                  "updated_at": "foo"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -11129,20 +11066,17 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "read",
-                  "description": "read a document",
-                  "key": "read",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "permission_name": "document:read",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z"
-                }
+                "name": "read",
+                "description": "read a document",
+                "key": "read",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "permission_name": "document:read",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -11309,20 +11243,17 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "read",
-                  "description": "read a document",
-                  "key": "read",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "permission_name": "document:read",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z"
-                }
+                "name": "read",
+                "description": "read a document",
+                "key": "read",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "permission_name": "document:read",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -11648,20 +11579,17 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "read",
-                  "description": "read a document",
-                  "key": "read",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "permission_name": "document:read",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z"
-                }
+                "name": "read",
+                "description": "read a document",
+                "key": "read",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "permission_name": "document:read",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -11853,27 +11781,24 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "name": "foo",
-                    "description": "foo",
-                    "attributes": {},
-                    "actions": [
-                      "foo"
-                    ],
-                    "key": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "resource_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "name": "foo",
+                  "description": "foo",
+                  "attributes": {},
+                  "actions": [
+                    "foo"
+                  ],
+                  "key": "foo",
+                  "id": "foo",
+                  "organization_id": "foo",
+                  "project_id": "foo",
+                  "environment_id": "foo",
+                  "resource_id": "foo",
+                  "created_at": "foo",
+                  "updated_at": "foo"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -12059,23 +11984,20 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "Writer",
-                  "description": "Writer Action Group",
-                  "actions": [
-                    "read",
-                    "update"
-                  ],
-                  "key": "writer",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z"
-                }
+                "name": "Writer",
+                "description": "Writer Action Group",
+                "actions": [
+                  "read",
+                  "update"
+                ],
+                "key": "writer",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -12245,23 +12167,20 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "Writer",
-                  "description": "Writer Action Group",
-                  "actions": [
-                    "read",
-                    "update"
-                  ],
-                  "key": "writer",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z"
-                }
+                "name": "Writer",
+                "description": "Writer Action Group",
+                "actions": [
+                  "read",
+                  "update"
+                ],
+                "key": "writer",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -12586,23 +12505,20 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "Writer",
-                  "description": "Writer Action Group",
-                  "actions": [
-                    "read",
-                    "update"
-                  ],
-                  "key": "writer",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z"
-                }
+                "name": "Writer",
+                "description": "Writer Action Group",
+                "actions": [
+                  "read",
+                  "update"
+                ],
+                "key": "writer",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -12797,30 +12713,27 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "name": "foo",
-                    "description": "foo",
-                    "permissions": [
-                      "foo"
-                    ],
-                    "attributes": {},
-                    "extends": [
-                      "foo"
-                    ],
-                    "key": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "resource_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "name": "foo",
+                  "description": "foo",
+                  "permissions": [
+                    "foo"
+                  ],
+                  "attributes": {},
+                  "extends": [
+                    "foo"
+                  ],
+                  "key": "foo",
+                  "id": "foo",
+                  "organization_id": "foo",
+                  "project_id": "foo",
+                  "environment_id": "foo",
+                  "resource_id": "foo",
+                  "created_at": "foo",
+                  "updated_at": "foo"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -13013,25 +12926,22 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "Maintainer",
-                  "description": "the maintainer role can read from the repo and push changes",
-                  "permissions": [
-                    "push"
-                  ],
-                  "extends": [
-                    "contributor"
-                  ],
-                  "key": "maintainer",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z"
-                }
+                "name": "Maintainer",
+                "description": "the maintainer role can read from the repo and push changes",
+                "permissions": [
+                  "push"
+                ],
+                "extends": [
+                  "contributor"
+                ],
+                "key": "maintainer",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -13203,25 +13113,22 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "Maintainer",
-                  "description": "the maintainer role can read from the repo and push changes",
-                  "permissions": [
-                    "push"
-                  ],
-                  "extends": [
-                    "contributor"
-                  ],
-                  "key": "maintainer",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z"
-                }
+                "name": "Maintainer",
+                "description": "the maintainer role can read from the repo and push changes",
+                "permissions": [
+                  "push"
+                ],
+                "extends": [
+                  "contributor"
+                ],
+                "key": "maintainer",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -13558,25 +13465,22 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "Maintainer",
-                  "description": "the maintainer role can read from the repo and push changes",
-                  "permissions": [
-                    "push"
-                  ],
-                  "extends": [
-                    "contributor"
-                  ],
-                  "key": "maintainer",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z"
-                }
+                "name": "Maintainer",
+                "description": "the maintainer role can read from the repo and push changes",
+                "permissions": [
+                  "push"
+                ],
+                "extends": [
+                  "contributor"
+                ],
+                "key": "maintainer",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -13774,25 +13678,22 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "Maintainer",
-                  "description": "the maintainer role can read from the repo and push changes",
-                  "permissions": [
-                    "push"
-                  ],
-                  "extends": [
-                    "contributor"
-                  ],
-                  "key": "maintainer",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z"
-                }
+                "name": "Maintainer",
+                "description": "the maintainer role can read from the repo and push changes",
+                "permissions": [
+                  "push"
+                ],
+                "extends": [
+                  "contributor"
+                ],
+                "key": "maintainer",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -13990,25 +13891,22 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "Maintainer",
-                  "description": "the maintainer role can read from the repo and push changes",
-                  "permissions": [
-                    "push"
-                  ],
-                  "extends": [
-                    "contributor"
-                  ],
-                  "key": "maintainer",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z"
-                }
+                "name": "Maintainer",
+                "description": "the maintainer role can read from the repo and push changes",
+                "permissions": [
+                  "push"
+                ],
+                "extends": [
+                  "contributor"
+                ],
+                "key": "maintainer",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -14179,30 +14077,27 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "roles": [
-                    {
-                      "name": "foo",
-                      "description": "foo",
-                      "permissions": [
-                        "foo"
-                      ],
-                      "attributes": {},
-                      "extends": [
-                        "foo"
-                      ],
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "resource_id": "foo",
-                      "created_at": "foo",
-                      "updated_at": "foo"
-                    }
-                  ]
-                }
+                "roles": [
+                  {
+                    "name": "foo",
+                    "description": "foo",
+                    "permissions": [
+                      "foo"
+                    ],
+                    "attributes": {},
+                    "extends": [
+                      "foo"
+                    ],
+                    "key": "foo",
+                    "id": "foo",
+                    "organization_id": "foo",
+                    "project_id": "foo",
+                    "environment_id": "foo",
+                    "resource_id": "foo",
+                    "created_at": "foo",
+                    "updated_at": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -14378,30 +14273,27 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "roles": [
-                    {
-                      "name": "foo",
-                      "description": "foo",
-                      "permissions": [
-                        "foo"
-                      ],
-                      "attributes": {},
-                      "extends": [
-                        "foo"
-                      ],
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "resource_id": "foo",
-                      "created_at": "foo",
-                      "updated_at": "foo"
-                    }
-                  ]
-                }
+                "roles": [
+                  {
+                    "name": "foo",
+                    "description": "foo",
+                    "permissions": [
+                      "foo"
+                    ],
+                    "attributes": {},
+                    "extends": [
+                      "foo"
+                    ],
+                    "key": "foo",
+                    "id": "foo",
+                    "organization_id": "foo",
+                    "project_id": "foo",
+                    "environment_id": "foo",
+                    "resource_id": "foo",
+                    "created_at": "foo",
+                    "updated_at": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -14603,25 +14495,22 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "type": "bool",
-                    "description": "foo",
-                    "key": "foo",
-                    "id": "foo",
-                    "resource_id": "foo",
-                    "resource_key": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo",
-                    "built_in": true
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "type": "bool",
+                  "description": "foo",
+                  "key": "foo",
+                  "id": "foo",
+                  "resource_id": "foo",
+                  "resource_key": "foo",
+                  "organization_id": "foo",
+                  "project_id": "foo",
+                  "environment_id": "foo",
+                  "created_at": "foo",
+                  "updated_at": "foo",
+                  "built_in": true
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -14797,21 +14686,18 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "type": "bool",
-                  "description": "whether or not the github repository is private",
-                  "key": "private",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
-                  "resource_key": "repository",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z",
-                  "built_in": false
-                }
+                "type": "bool",
+                "description": "whether or not the github repository is private",
+                "key": "private",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                "resource_key": "repository",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z",
+                "built_in": false
               },
               "responseBodyV3": {
                 "type": "json",
@@ -14979,21 +14865,18 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "type": "bool",
-                  "description": "whether or not the github repository is private",
-                  "key": "private",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
-                  "resource_key": "repository",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z",
-                  "built_in": false
-                }
+                "type": "bool",
+                "description": "whether or not the github repository is private",
+                "key": "private",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                "resource_key": "repository",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z",
+                "built_in": false
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15352,21 +15235,18 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "type": "bool",
-                  "description": "whether or not the github repository is private",
-                  "key": "private",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
-                  "resource_key": "repository",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z",
-                  "built_in": false
-                }
+                "type": "bool",
+                "description": "whether or not the github repository is private",
+                "key": "private",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                "resource_key": "repository",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z",
+                "built_in": false
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15553,25 +15433,22 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "type": "bool",
-                    "description": "foo",
-                    "key": "foo",
-                    "id": "foo",
-                    "resource_id": "foo",
-                    "resource_key": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo",
-                    "built_in": true
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "type": "bool",
+                  "description": "foo",
+                  "key": "foo",
+                  "id": "foo",
+                  "resource_id": "foo",
+                  "resource_key": "foo",
+                  "organization_id": "foo",
+                  "project_id": "foo",
+                  "environment_id": "foo",
+                  "created_at": "foo",
+                  "updated_at": "foo",
+                  "built_in": true
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -15742,21 +15619,18 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "type": "bool",
-                  "description": "whether or not the github repository is private",
-                  "key": "private",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
-                  "resource_key": "repository",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z",
-                  "built_in": false
-                }
+                "type": "bool",
+                "description": "whether or not the github repository is private",
+                "key": "private",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                "resource_key": "repository",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z",
+                "built_in": false
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15919,21 +15793,18 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "type": "bool",
-                  "description": "whether or not the github repository is private",
-                  "key": "private",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
-                  "resource_key": "repository",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z",
-                  "built_in": false
-                }
+                "type": "bool",
+                "description": "whether or not the github repository is private",
+                "key": "private",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                "resource_key": "repository",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z",
+                "built_in": false
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16281,21 +16152,18 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "type": "bool",
-                  "description": "whether or not the github repository is private",
-                  "key": "private",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
-                  "resource_key": "repository",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z",
-                  "built_in": false
-                }
+                "type": "bool",
+                "description": "whether or not the github repository is private",
+                "key": "private",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                "resource_key": "repository",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z",
+                "built_in": false
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16494,31 +16362,28 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": [
-                    {
-                      "name": "foo",
-                      "description": "foo",
-                      "permissions": [
-                        "foo"
-                      ],
-                      "attributes": {},
-                      "extends": [
-                        "foo"
-                      ],
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "created_at": "foo",
-                      "updated_at": "foo"
-                    }
-                  ],
-                  "total_count": 42,
-                  "page_count": 0
-                }
+                "data": [
+                  {
+                    "name": "foo",
+                    "description": "foo",
+                    "permissions": [
+                      "foo"
+                    ],
+                    "attributes": {},
+                    "extends": [
+                      "foo"
+                    ],
+                    "key": "foo",
+                    "id": "foo",
+                    "organization_id": "foo",
+                    "project_id": "foo",
+                    "environment_id": "foo",
+                    "created_at": "foo",
+                    "updated_at": "foo"
+                  }
+                ],
+                "total_count": 42,
+                "page_count": 0
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16696,24 +16561,21 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "Editor",
-                  "description": "the editor role can read and write to documents",
-                  "permissions": [
-                    "document:write"
-                  ],
-                  "extends": [
-                    "viewer"
-                  ],
-                  "key": "editor",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z"
-                }
+                "name": "Editor",
+                "description": "the editor role can read and write to documents",
+                "permissions": [
+                  "document:write"
+                ],
+                "extends": [
+                  "viewer"
+                ],
+                "key": "editor",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16865,24 +16727,21 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "Editor",
-                  "description": "the editor role can read and write to documents",
-                  "permissions": [
-                    "document:write"
-                  ],
-                  "extends": [
-                    "viewer"
-                  ],
-                  "key": "editor",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z"
-                }
+                "name": "Editor",
+                "description": "the editor role can read and write to documents",
+                "permissions": [
+                  "document:write"
+                ],
+                "extends": [
+                  "viewer"
+                ],
+                "key": "editor",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17180,24 +17039,21 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "Editor",
-                  "description": "the editor role can read and write to documents",
-                  "permissions": [
-                    "document:write"
-                  ],
-                  "extends": [
-                    "viewer"
-                  ],
-                  "key": "editor",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z"
-                }
+                "name": "Editor",
+                "description": "the editor role can read and write to documents",
+                "permissions": [
+                  "document:write"
+                ],
+                "extends": [
+                  "viewer"
+                ],
+                "key": "editor",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17375,24 +17231,21 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "Editor",
-                  "description": "the editor role can read and write to documents",
-                  "permissions": [
-                    "document:write"
-                  ],
-                  "extends": [
-                    "viewer"
-                  ],
-                  "key": "editor",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z"
-                }
+                "name": "Editor",
+                "description": "the editor role can read and write to documents",
+                "permissions": [
+                  "document:write"
+                ],
+                "extends": [
+                  "viewer"
+                ],
+                "key": "editor",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17570,24 +17423,21 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "Editor",
-                  "description": "the editor role can read and write to documents",
-                  "permissions": [
-                    "document:write"
-                  ],
-                  "extends": [
-                    "viewer"
-                  ],
-                  "key": "editor",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z"
-                }
+                "name": "Editor",
+                "description": "the editor role can read and write to documents",
+                "permissions": [
+                  "document:write"
+                ],
+                "extends": [
+                  "viewer"
+                ],
+                "key": "editor",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17738,29 +17588,26 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "roles": [
-                    {
-                      "name": "foo",
-                      "description": "foo",
-                      "permissions": [
-                        "foo"
-                      ],
-                      "attributes": {},
-                      "extends": [
-                        "foo"
-                      ],
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "created_at": "foo",
-                      "updated_at": "foo"
-                    }
-                  ]
-                }
+                "roles": [
+                  {
+                    "name": "foo",
+                    "description": "foo",
+                    "permissions": [
+                      "foo"
+                    ],
+                    "attributes": {},
+                    "extends": [
+                      "foo"
+                    ],
+                    "key": "foo",
+                    "id": "foo",
+                    "organization_id": "foo",
+                    "project_id": "foo",
+                    "environment_id": "foo",
+                    "created_at": "foo",
+                    "updated_at": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17916,29 +17763,26 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "roles": [
-                    {
-                      "name": "foo",
-                      "description": "foo",
-                      "permissions": [
-                        "foo"
-                      ],
-                      "attributes": {},
-                      "extends": [
-                        "foo"
-                      ],
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "created_at": "foo",
-                      "updated_at": "foo"
-                    }
-                  ]
-                }
+                "roles": [
+                  {
+                    "name": "foo",
+                    "description": "foo",
+                    "permissions": [
+                      "foo"
+                    ],
+                    "attributes": {},
+                    "extends": [
+                      "foo"
+                    ],
+                    "key": "foo",
+                    "id": "foo",
+                    "organization_id": "foo",
+                    "project_id": "foo",
+                    "environment_id": "foo",
+                    "created_at": "foo",
+                    "updated_at": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18156,44 +18000,41 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": [
-                    {
+                "data": [
+                  {
+                    "key": "foo",
+                    "type": "userset",
+                    "autogenerated": false,
+                    "resource_id": "foo",
+                    "id": "foo",
+                    "organization_id": "foo",
+                    "project_id": "foo",
+                    "environment_id": "foo",
+                    "created_at": "foo",
+                    "updated_at": "foo",
+                    "resource": {
                       "key": "foo",
-                      "type": "userset",
-                      "autogenerated": false,
-                      "resource_id": "foo",
                       "id": "foo",
                       "organization_id": "foo",
                       "project_id": "foo",
                       "environment_id": "foo",
                       "created_at": "foo",
                       "updated_at": "foo",
-                      "resource": {
-                        "key": "foo",
-                        "id": "foo",
-                        "organization_id": "foo",
-                        "project_id": "foo",
-                        "environment_id": "foo",
-                        "created_at": "foo",
-                        "updated_at": "foo",
-                        "name": "foo",
-                        "urn": "foo",
-                        "description": "foo",
-                        "actions": {},
-                        "attributes": {},
-                        "action_groups": {}
-                      },
                       "name": "foo",
+                      "urn": "foo",
                       "description": "foo",
-                      "conditions": {},
-                      "parent_id": "foo"
-                    }
-                  ],
-                  "total_count": 42,
-                  "page_count": 0
-                }
+                      "actions": {},
+                      "attributes": {},
+                      "action_groups": {}
+                    },
+                    "name": "foo",
+                    "description": "foo",
+                    "conditions": {},
+                    "parent_id": "foo"
+                  }
+                ],
+                "total_count": 42,
+                "page_count": 0
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18406,37 +18247,34 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "na_based_employees",
-                  "type": "userset",
-                  "autogenerated": false,
-                  "resource_id": "e05f8571-f31e-20b2-2c45-15ae74cfb0f1",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z",
-                  "name": "US or Canada based employees",
-                  "description": "All employees based in the US or Canada",
-                  "conditions": {
-                    "allOf": [
-                      {
-                        "user.role": {
-                          "equals": "employee"
-                        }
-                      },
-                      {
-                        "user.location": {
-                          "in": [
-                            "US",
-                            "Canada"
-                          ]
-                        }
+                "key": "na_based_employees",
+                "type": "userset",
+                "autogenerated": false,
+                "resource_id": "e05f8571-f31e-20b2-2c45-15ae74cfb0f1",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z",
+                "name": "US or Canada based employees",
+                "description": "All employees based in the US or Canada",
+                "conditions": {
+                  "allOf": [
+                    {
+                      "user.role": {
+                        "equals": "employee"
                       }
-                    ]
-                  }
+                    },
+                    {
+                      "user.location": {
+                        "in": [
+                          "US",
+                          "Canada"
+                        ]
+                      }
+                    }
+                  ]
                 }
               },
               "responseBodyV3": {
@@ -18603,37 +18441,34 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "na_based_employees",
-                  "type": "userset",
-                  "autogenerated": false,
-                  "resource_id": "e05f8571-f31e-20b2-2c45-15ae74cfb0f1",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z",
-                  "name": "US or Canada based employees",
-                  "description": "All employees based in the US or Canada",
-                  "conditions": {
-                    "allOf": [
-                      {
-                        "user.role": {
-                          "equals": "employee"
-                        }
-                      },
-                      {
-                        "user.location": {
-                          "in": [
-                            "US",
-                            "Canada"
-                          ]
-                        }
+                "key": "na_based_employees",
+                "type": "userset",
+                "autogenerated": false,
+                "resource_id": "e05f8571-f31e-20b2-2c45-15ae74cfb0f1",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z",
+                "name": "US or Canada based employees",
+                "description": "All employees based in the US or Canada",
+                "conditions": {
+                  "allOf": [
+                    {
+                      "user.role": {
+                        "equals": "employee"
                       }
-                    ]
-                  }
+                    },
+                    {
+                      "user.location": {
+                        "in": [
+                          "US",
+                          "Canada"
+                        ]
+                      }
+                    }
+                  ]
                 }
               },
               "responseBodyV3": {
@@ -18972,37 +18807,34 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "na_based_employees",
-                  "type": "userset",
-                  "autogenerated": false,
-                  "resource_id": "e05f8571-f31e-20b2-2c45-15ae74cfb0f1",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z",
-                  "name": "US or Canada based employees",
-                  "description": "All employees based in the US or Canada",
-                  "conditions": {
-                    "allOf": [
-                      {
-                        "user.role": {
-                          "equals": "employee"
-                        }
-                      },
-                      {
-                        "user.location": {
-                          "in": [
-                            "US",
-                            "Canada"
-                          ]
-                        }
+                "key": "na_based_employees",
+                "type": "userset",
+                "autogenerated": false,
+                "resource_id": "e05f8571-f31e-20b2-2c45-15ae74cfb0f1",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z",
+                "name": "US or Canada based employees",
+                "description": "All employees based in the US or Canada",
+                "conditions": {
+                  "allOf": [
+                    {
+                      "user.role": {
+                        "equals": "employee"
                       }
-                    ]
-                  }
+                    },
+                    {
+                      "user.location": {
+                        "in": [
+                          "US",
+                          "Canada"
+                        ]
+                      }
+                    }
+                  ]
                 }
               },
               "responseBodyV3": {
@@ -19203,42 +19035,39 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
+              "responseBody": [
+                {
+                  "key": "foo",
+                  "type": "userset",
+                  "autogenerated": false,
+                  "resource_id": "foo",
+                  "id": "foo",
+                  "organization_id": "foo",
+                  "project_id": "foo",
+                  "environment_id": "foo",
+                  "created_at": "foo",
+                  "updated_at": "foo",
+                  "resource": {
                     "key": "foo",
-                    "type": "userset",
-                    "autogenerated": false,
-                    "resource_id": "foo",
                     "id": "foo",
                     "organization_id": "foo",
                     "project_id": "foo",
                     "environment_id": "foo",
                     "created_at": "foo",
                     "updated_at": "foo",
-                    "resource": {
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "created_at": "foo",
-                      "updated_at": "foo",
-                      "name": "foo",
-                      "urn": "foo",
-                      "description": "foo",
-                      "actions": {},
-                      "attributes": {},
-                      "action_groups": {}
-                    },
                     "name": "foo",
+                    "urn": "foo",
                     "description": "foo",
-                    "conditions": {},
-                    "parent_id": "foo"
-                  }
-                ]
-              },
+                    "actions": {},
+                    "attributes": {},
+                    "action_groups": {}
+                  },
+                  "name": "foo",
+                  "description": "foo",
+                  "conditions": {},
+                  "parent_id": "foo"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -19439,42 +19268,39 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
+              "responseBody": [
+                {
+                  "key": "foo",
+                  "type": "userset",
+                  "autogenerated": false,
+                  "resource_id": "foo",
+                  "id": "foo",
+                  "organization_id": "foo",
+                  "project_id": "foo",
+                  "environment_id": "foo",
+                  "created_at": "foo",
+                  "updated_at": "foo",
+                  "resource": {
                     "key": "foo",
-                    "type": "userset",
-                    "autogenerated": false,
-                    "resource_id": "foo",
                     "id": "foo",
                     "organization_id": "foo",
                     "project_id": "foo",
                     "environment_id": "foo",
                     "created_at": "foo",
                     "updated_at": "foo",
-                    "resource": {
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "created_at": "foo",
-                      "updated_at": "foo",
-                      "name": "foo",
-                      "urn": "foo",
-                      "description": "foo",
-                      "actions": {},
-                      "attributes": {},
-                      "action_groups": {}
-                    },
                     "name": "foo",
+                    "urn": "foo",
                     "description": "foo",
-                    "conditions": {},
-                    "parent_id": "foo"
-                  }
-                ]
-              },
+                    "actions": {},
+                    "attributes": {},
+                    "action_groups": {}
+                  },
+                  "name": "foo",
+                  "description": "foo",
+                  "conditions": {},
+                  "parent_id": "foo"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -19690,39 +19516,36 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": [
-                    {
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "associated_tenants": [
-                        {
-                          "tenant": "foo",
-                          "roles": [
-                            "foo"
-                          ],
-                          "status": "active"
-                        }
-                      ],
-                      "roles": [
-                        {
-                          "role": "foo",
-                          "tenant": "foo"
-                        }
-                      ],
-                      "email": "foo",
-                      "first_name": "foo",
-                      "last_name": "foo",
-                      "attributes": {}
-                    }
-                  ],
-                  "total_count": 42,
-                  "page_count": 0
-                }
+                "data": [
+                  {
+                    "key": "foo",
+                    "id": "foo",
+                    "organization_id": "foo",
+                    "project_id": "foo",
+                    "environment_id": "foo",
+                    "associated_tenants": [
+                      {
+                        "tenant": "foo",
+                        "roles": [
+                          "foo"
+                        ],
+                        "status": "active"
+                      }
+                    ],
+                    "roles": [
+                      {
+                        "role": "foo",
+                        "tenant": "foo"
+                      }
+                    ],
+                    "email": "foo",
+                    "first_name": "foo",
+                    "last_name": "foo",
+                    "attributes": {}
+                  }
+                ],
+                "total_count": 42,
+                "page_count": 0
               },
               "responseBodyV3": {
                 "type": "json",
@@ -19914,49 +19737,46 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "user|892179821739812389327",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "associated_tenants": [
-                    {
-                      "tenant": "stripe-inc",
-                      "roles": [
-                        "admin"
-                      ],
-                      "status": "active"
-                    },
-                    {
-                      "tenant": "othercompany.com",
-                      "roles": [
-                        "viewer"
-                      ],
-                      "status": "pending"
-                    }
-                  ],
-                  "roles": [
-                    {
-                      "role": "admin",
-                      "tenant": "stripe-inc"
-                    },
-                    {
-                      "role": "viewer",
-                      "tenant": "othercompany.com"
-                    }
-                  ],
-                  "email": "jane@coolcompany.com",
-                  "first_name": "Jane",
-                  "last_name": "Doe",
-                  "attributes": {
-                    "department": "marketing",
-                    "age": 30,
-                    "subscription": {
-                      "tier": "pro",
-                      "expired": false
-                    }
+                "key": "user|892179821739812389327",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "associated_tenants": [
+                  {
+                    "tenant": "stripe-inc",
+                    "roles": [
+                      "admin"
+                    ],
+                    "status": "active"
+                  },
+                  {
+                    "tenant": "othercompany.com",
+                    "roles": [
+                      "viewer"
+                    ],
+                    "status": "pending"
+                  }
+                ],
+                "roles": [
+                  {
+                    "role": "admin",
+                    "tenant": "stripe-inc"
+                  },
+                  {
+                    "role": "viewer",
+                    "tenant": "othercompany.com"
+                  }
+                ],
+                "email": "jane@coolcompany.com",
+                "first_name": "Jane",
+                "last_name": "Doe",
+                "attributes": {
+                  "department": "marketing",
+                  "age": 30,
+                  "subscription": {
+                    "tier": "pro",
+                    "expired": false
                   }
                 }
               },
@@ -20137,49 +19957,46 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "user|892179821739812389327",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "associated_tenants": [
-                    {
-                      "tenant": "stripe-inc",
-                      "roles": [
-                        "admin"
-                      ],
-                      "status": "active"
-                    },
-                    {
-                      "tenant": "othercompany.com",
-                      "roles": [
-                        "viewer"
-                      ],
-                      "status": "pending"
-                    }
-                  ],
-                  "roles": [
-                    {
-                      "role": "admin",
-                      "tenant": "stripe-inc"
-                    },
-                    {
-                      "role": "viewer",
-                      "tenant": "othercompany.com"
-                    }
-                  ],
-                  "email": "jane@coolcompany.com",
-                  "first_name": "Jane",
-                  "last_name": "Doe",
-                  "attributes": {
-                    "department": "marketing",
-                    "age": 30,
-                    "subscription": {
-                      "tier": "pro",
-                      "expired": false
-                    }
+                "key": "user|892179821739812389327",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "associated_tenants": [
+                  {
+                    "tenant": "stripe-inc",
+                    "roles": [
+                      "admin"
+                    ],
+                    "status": "active"
+                  },
+                  {
+                    "tenant": "othercompany.com",
+                    "roles": [
+                      "viewer"
+                    ],
+                    "status": "pending"
+                  }
+                ],
+                "roles": [
+                  {
+                    "role": "admin",
+                    "tenant": "stripe-inc"
+                  },
+                  {
+                    "role": "viewer",
+                    "tenant": "othercompany.com"
+                  }
+                ],
+                "email": "jane@coolcompany.com",
+                "first_name": "Jane",
+                "last_name": "Doe",
+                "attributes": {
+                  "department": "marketing",
+                  "age": 30,
+                  "subscription": {
+                    "tier": "pro",
+                    "expired": false
                   }
                 }
               },
@@ -20403,49 +20220,46 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "user|892179821739812389327",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "associated_tenants": [
-                    {
-                      "tenant": "stripe-inc",
-                      "roles": [
-                        "admin"
-                      ],
-                      "status": "active"
-                    },
-                    {
-                      "tenant": "othercompany.com",
-                      "roles": [
-                        "viewer"
-                      ],
-                      "status": "pending"
-                    }
-                  ],
-                  "roles": [
-                    {
-                      "role": "admin",
-                      "tenant": "stripe-inc"
-                    },
-                    {
-                      "role": "viewer",
-                      "tenant": "othercompany.com"
-                    }
-                  ],
-                  "email": "jane@coolcompany.com",
-                  "first_name": "Jane",
-                  "last_name": "Doe",
-                  "attributes": {
-                    "department": "marketing",
-                    "age": 30,
-                    "subscription": {
-                      "tier": "pro",
-                      "expired": false
-                    }
+                "key": "user|892179821739812389327",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "associated_tenants": [
+                  {
+                    "tenant": "stripe-inc",
+                    "roles": [
+                      "admin"
+                    ],
+                    "status": "active"
+                  },
+                  {
+                    "tenant": "othercompany.com",
+                    "roles": [
+                      "viewer"
+                    ],
+                    "status": "pending"
+                  }
+                ],
+                "roles": [
+                  {
+                    "role": "admin",
+                    "tenant": "stripe-inc"
+                  },
+                  {
+                    "role": "viewer",
+                    "tenant": "othercompany.com"
+                  }
+                ],
+                "email": "jane@coolcompany.com",
+                "first_name": "Jane",
+                "last_name": "Doe",
+                "attributes": {
+                  "department": "marketing",
+                  "age": 30,
+                  "subscription": {
+                    "tier": "pro",
+                    "expired": false
                   }
                 }
               },
@@ -20762,49 +20576,46 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "user|892179821739812389327",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "associated_tenants": [
-                    {
-                      "tenant": "stripe-inc",
-                      "roles": [
-                        "admin"
-                      ],
-                      "status": "active"
-                    },
-                    {
-                      "tenant": "othercompany.com",
-                      "roles": [
-                        "viewer"
-                      ],
-                      "status": "pending"
-                    }
-                  ],
-                  "roles": [
-                    {
-                      "role": "admin",
-                      "tenant": "stripe-inc"
-                    },
-                    {
-                      "role": "viewer",
-                      "tenant": "othercompany.com"
-                    }
-                  ],
-                  "email": "jane@coolcompany.com",
-                  "first_name": "Jane",
-                  "last_name": "Doe",
-                  "attributes": {
-                    "department": "marketing",
-                    "age": 30,
-                    "subscription": {
-                      "tier": "pro",
-                      "expired": false
-                    }
+                "key": "user|892179821739812389327",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "associated_tenants": [
+                  {
+                    "tenant": "stripe-inc",
+                    "roles": [
+                      "admin"
+                    ],
+                    "status": "active"
+                  },
+                  {
+                    "tenant": "othercompany.com",
+                    "roles": [
+                      "viewer"
+                    ],
+                    "status": "pending"
+                  }
+                ],
+                "roles": [
+                  {
+                    "role": "admin",
+                    "tenant": "stripe-inc"
+                  },
+                  {
+                    "role": "viewer",
+                    "tenant": "othercompany.com"
+                  }
+                ],
+                "email": "jane@coolcompany.com",
+                "first_name": "Jane",
+                "last_name": "Doe",
+                "attributes": {
+                  "department": "marketing",
+                  "age": 30,
+                  "subscription": {
+                    "tier": "pro",
+                    "expired": false
                   }
                 }
               },
@@ -21009,20 +20820,17 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "user": "jane@coolcompany.com",
-                  "role": "admin",
-                  "tenant": "stripe-inc",
-                  "user_id": "7c60d51f-b44e-4682-87d6-449835ea4d11",
-                  "role_id": "405d8375-3514-403b-8c43-83ae74cfe022",
-                  "tenant_id": "40ef0e48-a11f-4963-a229-e396c9f7e733",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z"
-                }
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "user": "jane@coolcompany.com",
+                "role": "admin",
+                "tenant": "stripe-inc",
+                "user_id": "7c60d51f-b44e-4682-87d6-449835ea4d11",
+                "role_id": "405d8375-3514-403b-8c43-83ae74cfe022",
+                "tenant_id": "40ef0e48-a11f-4963-a229-e396c9f7e733",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -21379,39 +21187,36 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": [
-                    {
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "associated_tenants": [
-                        {
-                          "tenant": "foo",
-                          "roles": [
-                            "foo"
-                          ],
-                          "status": "active"
-                        }
-                      ],
-                      "roles": [
-                        {
-                          "role": "foo",
-                          "tenant": "foo"
-                        }
-                      ],
-                      "email": "foo",
-                      "first_name": "foo",
-                      "last_name": "foo",
-                      "attributes": {}
-                    }
-                  ],
-                  "total_count": 42,
-                  "page_count": 0
-                }
+                "data": [
+                  {
+                    "key": "foo",
+                    "id": "foo",
+                    "organization_id": "foo",
+                    "project_id": "foo",
+                    "environment_id": "foo",
+                    "associated_tenants": [
+                      {
+                        "tenant": "foo",
+                        "roles": [
+                          "foo"
+                        ],
+                        "status": "active"
+                      }
+                    ],
+                    "roles": [
+                      {
+                        "role": "foo",
+                        "tenant": "foo"
+                      }
+                    ],
+                    "email": "foo",
+                    "first_name": "foo",
+                    "last_name": "foo",
+                    "attributes": {}
+                  }
+                ],
+                "total_count": 42,
+                "page_count": 0
               },
               "responseBodyV3": {
                 "type": "json",
@@ -21618,26 +21423,23 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": [
-                    {
-                      "key": "foo",
-                      "id": "foo",
-                      "organization_id": "foo",
-                      "project_id": "foo",
-                      "environment_id": "foo",
-                      "created_at": "foo",
-                      "updated_at": "foo",
-                      "last_action_at": "foo",
-                      "name": "foo",
-                      "description": "foo",
-                      "attributes": {}
-                    }
-                  ],
-                  "total_count": 42,
-                  "page_count": 0
-                }
+                "data": [
+                  {
+                    "key": "foo",
+                    "id": "foo",
+                    "organization_id": "foo",
+                    "project_id": "foo",
+                    "environment_id": "foo",
+                    "created_at": "foo",
+                    "updated_at": "foo",
+                    "last_action_at": "foo",
+                    "name": "foo",
+                    "description": "foo",
+                    "attributes": {}
+                  }
+                ],
+                "total_count": 42,
+                "page_count": 0
               },
               "responseBodyV3": {
                 "type": "json",
@@ -21808,23 +21610,20 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "stripeinc",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z",
-                  "last_action_at": "2019-08-24T14:15:22Z",
-                  "name": "Stripe Inc",
-                  "attributes": {
-                    "allowed_locations": [
-                      "US",
-                      "CA"
-                    ]
-                  }
+                "key": "stripeinc",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z",
+                "last_action_at": "2019-08-24T14:15:22Z",
+                "name": "Stripe Inc",
+                "attributes": {
+                  "allowed_locations": [
+                    "US",
+                    "CA"
+                  ]
                 }
               },
               "responseBodyV3": {
@@ -21977,23 +21776,20 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "stripeinc",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z",
-                  "last_action_at": "2019-08-24T14:15:22Z",
-                  "name": "Stripe Inc",
-                  "attributes": {
-                    "allowed_locations": [
-                      "US",
-                      "CA"
-                    ]
-                  }
+                "key": "stripeinc",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z",
+                "last_action_at": "2019-08-24T14:15:22Z",
+                "name": "Stripe Inc",
+                "attributes": {
+                  "allowed_locations": [
+                    "US",
+                    "CA"
+                  ]
                 }
               },
               "responseBodyV3": {
@@ -22282,23 +22078,20 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "stripeinc",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z",
-                  "last_action_at": "2019-08-24T14:15:22Z",
-                  "name": "Stripe Inc",
-                  "attributes": {
-                    "allowed_locations": [
-                      "US",
-                      "CA"
-                    ]
-                  }
+                "key": "stripeinc",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z",
+                "last_action_at": "2019-08-24T14:15:22Z",
+                "name": "Stripe Inc",
+                "attributes": {
+                  "allowed_locations": [
+                    "US",
+                    "CA"
+                  ]
                 }
               },
               "responseBodyV3": {
@@ -22652,24 +22445,21 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "id": "foo",
-                    "user": "foo",
-                    "role": "foo",
-                    "tenant": "foo",
-                    "user_id": "foo",
-                    "role_id": "foo",
-                    "tenant_id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "created_at": "foo"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "id": "foo",
+                  "user": "foo",
+                  "role": "foo",
+                  "tenant": "foo",
+                  "user_id": "foo",
+                  "role_id": "foo",
+                  "tenant_id": "foo",
+                  "organization_id": "foo",
+                  "project_id": "foo",
+                  "environment_id": "foo",
+                  "created_at": "foo"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -22825,20 +22615,17 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "user": "jane@coolcompany.com",
-                  "role": "admin",
-                  "tenant": "stripe-inc",
-                  "user_id": "7c60d51f-b44e-4682-87d6-449835ea4d11",
-                  "role_id": "405d8375-3514-403b-8c43-83ae74cfe022",
-                  "tenant_id": "40ef0e48-a11f-4963-a229-e396c9f7e733",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z"
-                }
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "user": "jane@coolcompany.com",
+                "role": "admin",
+                "tenant": "stripe-inc",
+                "user_id": "7c60d51f-b44e-4682-87d6-449835ea4d11",
+                "role_id": "405d8375-3514-403b-8c43-83ae74cfe022",
+                "tenant_id": "40ef0e48-a11f-4963-a229-e396c9f7e733",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -23124,10 +22911,7 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "assignments_created": 0
-                }
+                "assignments_created": 0
               },
               "responseBodyV3": {
                 "type": "json",
@@ -23278,10 +23062,7 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "assignments_removed": 0
-                }
+                "assignments_removed": 0
               },
               "responseBodyV3": {
                 "type": "json",
@@ -23483,23 +23264,20 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "id": "foo",
-                    "key": "foo",
-                    "user_set": "foo",
-                    "permission": "foo",
-                    "resource_set": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "id": "foo",
+                  "key": "foo",
+                  "user_set": "foo",
+                  "permission": "foo",
+                  "resource_set": "foo",
+                  "organization_id": "foo",
+                  "project_id": "foo",
+                  "environment_id": "foo",
+                  "created_at": "foo",
+                  "updated_at": "foo"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -23656,23 +23434,20 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "id": "foo",
-                    "key": "foo",
-                    "user_set": "foo",
-                    "permission": "foo",
-                    "resource_set": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "id": "foo",
+                  "key": "foo",
+                  "user_set": "foo",
+                  "permission": "foo",
+                  "resource_set": "foo",
+                  "organization_id": "foo",
+                  "project_id": "foo",
+                  "environment_id": "foo",
+                  "created_at": "foo",
+                  "updated_at": "foo"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -23970,25 +23745,22 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "key": "foo",
-                    "tenant": "foo",
-                    "resource": "foo",
-                    "id": "foo",
-                    "organization_id": "foo",
-                    "project_id": "foo",
-                    "environment_id": "foo",
-                    "created_at": "foo",
-                    "updated_at": "foo",
-                    "resource_id": "foo",
-                    "tenant_id": "foo",
-                    "attributes": {}
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "key": "foo",
+                  "tenant": "foo",
+                  "resource": "foo",
+                  "id": "foo",
+                  "organization_id": "foo",
+                  "project_id": "foo",
+                  "environment_id": "foo",
+                  "created_at": "foo",
+                  "updated_at": "foo",
+                  "resource_id": "foo",
+                  "tenant_id": "foo",
+                  "attributes": {}
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -24153,23 +23925,20 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "react",
-                  "tenant": "default",
-                  "resource": "repository",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z",
-                  "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c5",
-                  "tenant_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c3",
-                  "attributes": {
-                    "private": "false",
-                    "owner": "facebook"
-                  }
+                "key": "react",
+                "tenant": "default",
+                "resource": "repository",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z",
+                "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c5",
+                "tenant_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c3",
+                "attributes": {
+                  "private": "false",
+                  "owner": "facebook"
                 }
               },
               "responseBodyV3": {
@@ -24322,23 +24091,20 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "react",
-                  "tenant": "default",
-                  "resource": "repository",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z",
-                  "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c5",
-                  "tenant_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c3",
-                  "attributes": {
-                    "private": "false",
-                    "owner": "facebook"
-                  }
+                "key": "react",
+                "tenant": "default",
+                "resource": "repository",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z",
+                "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c5",
+                "tenant_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c3",
+                "attributes": {
+                  "private": "false",
+                  "owner": "facebook"
                 }
               },
               "responseBodyV3": {
@@ -24637,23 +24403,20 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "key": "react",
-                  "tenant": "default",
-                  "resource": "repository",
-                  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-                  "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
-                  "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
-                  "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
-                  "created_at": "2019-08-24T14:15:22Z",
-                  "updated_at": "2019-08-24T14:15:22Z",
-                  "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c5",
-                  "tenant_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c3",
-                  "attributes": {
-                    "private": "false",
-                    "owner": "facebook"
-                  }
+                "key": "react",
+                "tenant": "default",
+                "resource": "repository",
+                "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                "created_at": "2019-08-24T14:15:22Z",
+                "updated_at": "2019-08-24T14:15:22Z",
+                "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c5",
+                "tenant_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c3",
+                "attributes": {
+                  "private": "false",
+                  "owner": "facebook"
                 }
               },
               "responseBodyV3": {
@@ -24825,10 +24588,7 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
                 "value": {}
@@ -24972,10 +24732,7 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
                 "value": {}
@@ -25115,10 +24872,7 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
                 "value": {}
@@ -25264,10 +25018,7 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
                 "value": {}
@@ -25407,10 +25158,7 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
                 "value": {}

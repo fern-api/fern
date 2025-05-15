@@ -147,12 +147,9 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "stream",
-                "value": [
-                  "foo"
-                ]
-              },
+              "responseBody": [
+                "foo"
+              ],
               "responseBodyV3": {
                 "type": "stream",
                 "value": [

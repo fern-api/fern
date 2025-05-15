@@ -16164,40 +16164,37 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "order_by": "foo",
-                    "dir": "asc",
-                    "limit": 42,
-                    "prev": "foo",
-                    "next": "foo"
-                  },
-                  "count": 42,
-                  "models": [
-                    {
-                      "id": "foo",
-                      "team_id": "foo",
-                      "name": "foo",
-                      "type": "delivery",
-                      "configs": {
-                        "strategy": "first_attempt",
-                        "connections": "foo"
+                "pagination": {
+                  "order_by": "foo",
+                  "dir": "asc",
+                  "limit": 42,
+                  "prev": "foo",
+                  "next": "foo"
+                },
+                "count": 42,
+                "models": [
+                  {
+                    "id": "foo",
+                    "team_id": "foo",
+                    "name": "foo",
+                    "type": "delivery",
+                    "configs": {
+                      "strategy": "first_attempt",
+                      "connections": "foo"
+                    },
+                    "channels": {
+                      "slack": {
+                        "channel_name": "foo"
                       },
-                      "channels": {
-                        "slack": {
-                          "channel_name": "foo"
-                        },
-                        "opsgenie": {},
-                        "email": {}
-                      },
-                      "disabled_at": "foo",
-                      "updated_at": "foo",
-                      "created_at": "foo",
-                      "deleted_at": "foo"
-                    }
-                  ]
-                }
+                      "opsgenie": {},
+                      "email": {}
+                    },
+                    "disabled_at": "foo",
+                    "updated_at": "foo",
+                    "created_at": "foo",
+                    "deleted_at": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16405,28 +16402,25 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "name": "foo",
-                  "type": "delivery",
-                  "configs": {
-                    "strategy": "first_attempt",
-                    "connections": "foo"
+                "id": "foo",
+                "team_id": "foo",
+                "name": "foo",
+                "type": "delivery",
+                "configs": {
+                  "strategy": "first_attempt",
+                  "connections": "foo"
+                },
+                "channels": {
+                  "slack": {
+                    "channel_name": "foo"
                   },
-                  "channels": {
-                    "slack": {
-                      "channel_name": "foo"
-                    },
-                    "opsgenie": {},
-                    "email": {}
-                  },
-                  "disabled_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo",
-                  "deleted_at": "foo"
-                }
+                  "opsgenie": {},
+                  "email": {}
+                },
+                "disabled_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo",
+                "deleted_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16621,28 +16615,25 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "name": "foo",
-                  "type": "delivery",
-                  "configs": {
-                    "strategy": "first_attempt",
-                    "connections": "foo"
+                "id": "foo",
+                "team_id": "foo",
+                "name": "foo",
+                "type": "delivery",
+                "configs": {
+                  "strategy": "first_attempt",
+                  "connections": "foo"
+                },
+                "channels": {
+                  "slack": {
+                    "channel_name": "foo"
                   },
-                  "channels": {
-                    "slack": {
-                      "channel_name": "foo"
-                    },
-                    "opsgenie": {},
-                    "email": {}
-                  },
-                  "disabled_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo",
-                  "deleted_at": "foo"
-                }
+                  "opsgenie": {},
+                  "email": {}
+                },
+                "disabled_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo",
+                "deleted_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16783,28 +16774,25 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "name": "foo",
-                  "type": "delivery",
-                  "configs": {
-                    "strategy": "first_attempt",
-                    "connections": "foo"
+                "id": "foo",
+                "team_id": "foo",
+                "name": "foo",
+                "type": "delivery",
+                "configs": {
+                  "strategy": "first_attempt",
+                  "connections": "foo"
+                },
+                "channels": {
+                  "slack": {
+                    "channel_name": "foo"
                   },
-                  "channels": {
-                    "slack": {
-                      "channel_name": "foo"
-                    },
-                    "opsgenie": {},
-                    "email": {}
-                  },
-                  "disabled_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo",
-                  "deleted_at": "foo"
-                }
+                  "opsgenie": {},
+                  "email": {}
+                },
+                "disabled_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo",
+                "deleted_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17027,28 +17015,25 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "name": "foo",
-                  "type": "delivery",
-                  "configs": {
-                    "strategy": "first_attempt",
-                    "connections": "foo"
+                "id": "foo",
+                "team_id": "foo",
+                "name": "foo",
+                "type": "delivery",
+                "configs": {
+                  "strategy": "first_attempt",
+                  "connections": "foo"
+                },
+                "channels": {
+                  "slack": {
+                    "channel_name": "foo"
                   },
-                  "channels": {
-                    "slack": {
-                      "channel_name": "foo"
-                    },
-                    "opsgenie": {},
-                    "email": {}
-                  },
-                  "disabled_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo",
-                  "deleted_at": "foo"
-                }
+                  "opsgenie": {},
+                  "email": {}
+                },
+                "disabled_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo",
+                "deleted_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17189,10 +17174,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo"
-                }
+                "id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17315,28 +17297,25 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "name": "foo",
-                  "type": "delivery",
-                  "configs": {
-                    "strategy": "first_attempt",
-                    "connections": "foo"
+                "id": "foo",
+                "team_id": "foo",
+                "name": "foo",
+                "type": "delivery",
+                "configs": {
+                  "strategy": "first_attempt",
+                  "connections": "foo"
+                },
+                "channels": {
+                  "slack": {
+                    "channel_name": "foo"
                   },
-                  "channels": {
-                    "slack": {
-                      "channel_name": "foo"
-                    },
-                    "opsgenie": {},
-                    "email": {}
-                  },
-                  "disabled_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo",
-                  "deleted_at": "foo"
-                }
+                  "opsgenie": {},
+                  "email": {}
+                },
+                "disabled_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo",
+                "deleted_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17477,28 +17456,25 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "name": "foo",
-                  "type": "delivery",
-                  "configs": {
-                    "strategy": "first_attempt",
-                    "connections": "foo"
+                "id": "foo",
+                "team_id": "foo",
+                "name": "foo",
+                "type": "delivery",
+                "configs": {
+                  "strategy": "first_attempt",
+                  "connections": "foo"
+                },
+                "channels": {
+                  "slack": {
+                    "channel_name": "foo"
                   },
-                  "channels": {
-                    "slack": {
-                      "channel_name": "foo"
-                    },
-                    "opsgenie": {},
-                    "email": {}
-                  },
-                  "disabled_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo",
-                  "deleted_at": "foo"
-                }
+                  "opsgenie": {},
+                  "email": {}
+                },
+                "disabled_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo",
+                "deleted_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17713,42 +17689,39 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "order_by": "foo",
-                    "dir": "asc",
-                    "limit": 42,
-                    "prev": "foo",
-                    "next": "foo"
-                  },
-                  "count": 42,
-                  "models": [
-                    {
-                      "id": "foo",
-                      "team_id": "foo",
-                      "event_id": "foo",
-                      "response_status": 42,
-                      "attempt_number": 42,
-                      "trigger": "INITIAL",
-                      "error_code": "TIMEOUT",
-                      "body": {},
-                      "requested_url": "foo",
-                      "bulk_retry_id": "foo",
-                      "status": "QUEUED",
-                      "successful_at": "foo",
-                      "delivered_at": "foo",
-                      "responded_at": "foo",
-                      "delivery_latency": 42,
-                      "response_latency": 42,
-                      "updated_at": "foo",
-                      "created_at": "foo",
-                      "state": "DELIVERING",
-                      "archived_at": "foo",
-                      "destination_id": "foo"
-                    }
-                  ]
-                }
+                "pagination": {
+                  "order_by": "foo",
+                  "dir": "asc",
+                  "limit": 42,
+                  "prev": "foo",
+                  "next": "foo"
+                },
+                "count": 42,
+                "models": [
+                  {
+                    "id": "foo",
+                    "team_id": "foo",
+                    "event_id": "foo",
+                    "response_status": 42,
+                    "attempt_number": 42,
+                    "trigger": "INITIAL",
+                    "error_code": "TIMEOUT",
+                    "body": {},
+                    "requested_url": "foo",
+                    "bulk_retry_id": "foo",
+                    "status": "QUEUED",
+                    "successful_at": "foo",
+                    "delivered_at": "foo",
+                    "responded_at": "foo",
+                    "delivery_latency": 42,
+                    "response_latency": 42,
+                    "updated_at": "foo",
+                    "created_at": "foo",
+                    "state": "DELIVERING",
+                    "archived_at": "foo",
+                    "destination_id": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17903,30 +17876,27 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "event_id": "foo",
-                  "response_status": 42,
-                  "attempt_number": 42,
-                  "trigger": "INITIAL",
-                  "error_code": "TIMEOUT",
-                  "body": {},
-                  "requested_url": "foo",
-                  "bulk_retry_id": "foo",
-                  "status": "QUEUED",
-                  "successful_at": "foo",
-                  "delivered_at": "foo",
-                  "responded_at": "foo",
-                  "delivery_latency": 42,
-                  "response_latency": 42,
-                  "updated_at": "foo",
-                  "created_at": "foo",
-                  "state": "DELIVERING",
-                  "archived_at": "foo",
-                  "destination_id": "foo"
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "event_id": "foo",
+                "response_status": 42,
+                "attempt_number": 42,
+                "trigger": "INITIAL",
+                "error_code": "TIMEOUT",
+                "body": {},
+                "requested_url": "foo",
+                "bulk_retry_id": "foo",
+                "status": "QUEUED",
+                "successful_at": "foo",
+                "delivered_at": "foo",
+                "responded_at": "foo",
+                "delivery_latency": 42,
+                "response_latency": 42,
+                "updated_at": "foo",
+                "created_at": "foo",
+                "state": "DELIVERING",
+                "archived_at": "foo",
+                "destination_id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18193,38 +18163,35 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "order_by": "foo",
-                    "dir": "asc",
-                    "limit": 42,
-                    "prev": "foo",
-                    "next": "foo"
-                  },
-                  "count": 42,
-                  "models": [
-                    {
-                      "id": "foo",
-                      "team_id": "foo",
-                      "webhook_id": "foo",
-                      "event_data_id": "foo",
-                      "label": "foo",
-                      "alias": "foo",
-                      "data": {
-                        "path": "foo",
-                        "query": "foo",
-                        "parsed_query": {},
-                        "headers": {},
-                        "body": {},
-                        "is_large_payload": true
-                      },
-                      "last_used_at": "foo",
-                      "updated_at": "foo",
-                      "created_at": "foo"
-                    }
-                  ]
-                }
+                "pagination": {
+                  "order_by": "foo",
+                  "dir": "asc",
+                  "limit": 42,
+                  "prev": "foo",
+                  "next": "foo"
+                },
+                "count": 42,
+                "models": [
+                  {
+                    "id": "foo",
+                    "team_id": "foo",
+                    "webhook_id": "foo",
+                    "event_data_id": "foo",
+                    "label": "foo",
+                    "alias": "foo",
+                    "data": {
+                      "path": "foo",
+                      "query": "foo",
+                      "parsed_query": {},
+                      "headers": {},
+                      "body": {},
+                      "is_large_payload": true
+                    },
+                    "last_used_at": "foo",
+                    "updated_at": "foo",
+                    "created_at": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18441,26 +18408,23 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "webhook_id": "foo",
-                  "event_data_id": "foo",
-                  "label": "foo",
-                  "alias": "foo",
-                  "data": {
-                    "path": "foo",
-                    "query": "foo",
-                    "parsed_query": {},
-                    "headers": {},
-                    "body": {},
-                    "is_large_payload": true
-                  },
-                  "last_used_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "webhook_id": "foo",
+                "event_data_id": "foo",
+                "label": "foo",
+                "alias": "foo",
+                "data": {
+                  "path": "foo",
+                  "query": "foo",
+                  "parsed_query": {},
+                  "headers": {},
+                  "body": {},
+                  "is_large_payload": true
+                },
+                "last_used_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18599,26 +18563,23 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "webhook_id": "foo",
-                  "event_data_id": "foo",
-                  "label": "foo",
-                  "alias": "foo",
-                  "data": {
-                    "path": "foo",
-                    "query": "foo",
-                    "parsed_query": {},
-                    "headers": {},
-                    "body": {},
-                    "is_large_payload": true
-                  },
-                  "last_used_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "webhook_id": "foo",
+                "event_data_id": "foo",
+                "label": "foo",
+                "alias": "foo",
+                "data": {
+                  "path": "foo",
+                  "query": "foo",
+                  "parsed_query": {},
+                  "headers": {},
+                  "body": {},
+                  "is_large_payload": true
+                },
+                "last_used_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18857,26 +18818,23 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "webhook_id": "foo",
-                  "event_data_id": "foo",
-                  "label": "foo",
-                  "alias": "foo",
-                  "data": {
-                    "path": "foo",
-                    "query": "foo",
-                    "parsed_query": {},
-                    "headers": {},
-                    "body": {},
-                    "is_large_payload": true
-                  },
-                  "last_used_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "webhook_id": "foo",
+                "event_data_id": "foo",
+                "label": "foo",
+                "alias": "foo",
+                "data": {
+                  "path": "foo",
+                  "query": "foo",
+                  "parsed_query": {},
+                  "headers": {},
+                  "body": {},
+                  "is_large_payload": true
+                },
+                "last_used_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -19015,10 +18973,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo"
-                }
+                "id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -19194,39 +19149,36 @@
                 "value": {}
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "id": "foo",
-                    "team_id": "foo",
-                    "webhook_id": "foo",
-                    "source_id": "foo",
-                    "destination_id": "foo",
-                    "event_data_id": "foo",
-                    "request_id": "foo",
-                    "attempts": 42,
-                    "data": {
-                      "path": "foo",
-                      "query": "foo",
-                      "parsed_query": {},
-                      "headers": {},
-                      "body": {},
-                      "is_large_payload": true
-                    },
-                    "last_attempt_at": "foo",
-                    "next_attempt_at": "foo",
-                    "response_status": 42,
-                    "status": "SCHEDULED",
-                    "successful_at": "foo",
-                    "cli_id": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo",
-                    "created_at_id": "foo",
-                    "last_attempt_at_id": "foo"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "id": "foo",
+                  "team_id": "foo",
+                  "webhook_id": "foo",
+                  "source_id": "foo",
+                  "destination_id": "foo",
+                  "event_data_id": "foo",
+                  "request_id": "foo",
+                  "attempts": 42,
+                  "data": {
+                    "path": "foo",
+                    "query": "foo",
+                    "parsed_query": {},
+                    "headers": {},
+                    "body": {},
+                    "is_large_payload": true
+                  },
+                  "last_attempt_at": "foo",
+                  "next_attempt_at": "foo",
+                  "response_status": 42,
+                  "status": "SCHEDULED",
+                  "successful_at": "foo",
+                  "cli_id": "foo",
+                  "updated_at": "foo",
+                  "created_at": "foo",
+                  "created_at_id": "foo",
+                  "last_attempt_at_id": "foo"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -19501,32 +19453,29 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "order_by": "foo",
-                    "dir": "asc",
-                    "limit": 42,
-                    "prev": "foo",
-                    "next": "foo"
-                  },
-                  "count": 42,
-                  "models": [
-                    {
-                      "id": "foo",
-                      "name": "foo",
-                      "team_id": "foo",
-                      "path_forwarding_disabled": true,
-                      "url": "foo",
-                      "cli_path": "foo",
-                      "rate_limit": 42,
-                      "rate_limit_period": "second",
-                      "archived_at": "foo",
-                      "updated_at": "foo",
-                      "created_at": "foo"
-                    }
-                  ]
-                }
+                "pagination": {
+                  "order_by": "foo",
+                  "dir": "asc",
+                  "limit": 42,
+                  "prev": "foo",
+                  "next": "foo"
+                },
+                "count": 42,
+                "models": [
+                  {
+                    "id": "foo",
+                    "name": "foo",
+                    "team_id": "foo",
+                    "path_forwarding_disabled": true,
+                    "url": "foo",
+                    "cli_path": "foo",
+                    "rate_limit": 42,
+                    "rate_limit_period": "second",
+                    "archived_at": "foo",
+                    "updated_at": "foo",
+                    "created_at": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -19769,20 +19718,17 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "name": "foo",
-                  "team_id": "foo",
-                  "path_forwarding_disabled": true,
-                  "url": "foo",
-                  "cli_path": "foo",
-                  "rate_limit": 42,
-                  "rate_limit_period": "second",
-                  "archived_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "path_forwarding_disabled": true,
+                "url": "foo",
+                "cli_path": "foo",
+                "rate_limit": 42,
+                "rate_limit_period": "second",
+                "archived_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -20013,20 +19959,17 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "name": "foo",
-                  "team_id": "foo",
-                  "path_forwarding_disabled": true,
-                  "url": "foo",
-                  "cli_path": "foo",
-                  "rate_limit": 42,
-                  "rate_limit_period": "second",
-                  "archived_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "path_forwarding_disabled": true,
+                "url": "foo",
+                "cli_path": "foo",
+                "rate_limit": 42,
+                "rate_limit_period": "second",
+                "archived_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -20159,20 +20102,17 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "name": "foo",
-                  "team_id": "foo",
-                  "path_forwarding_disabled": true,
-                  "url": "foo",
-                  "cli_path": "foo",
-                  "rate_limit": 42,
-                  "rate_limit_period": "second",
-                  "archived_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "path_forwarding_disabled": true,
+                "url": "foo",
+                "cli_path": "foo",
+                "rate_limit": 42,
+                "rate_limit_period": "second",
+                "archived_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -20453,20 +20393,17 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "name": "foo",
-                  "team_id": "foo",
-                  "path_forwarding_disabled": true,
-                  "url": "foo",
-                  "cli_path": "foo",
-                  "rate_limit": 42,
-                  "rate_limit_period": "second",
-                  "archived_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "path_forwarding_disabled": true,
+                "url": "foo",
+                "cli_path": "foo",
+                "rate_limit": 42,
+                "rate_limit_period": "second",
+                "archived_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -20599,20 +20536,17 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "name": "foo",
-                  "team_id": "foo",
-                  "path_forwarding_disabled": true,
-                  "url": "foo",
-                  "cli_path": "foo",
-                  "rate_limit": 42,
-                  "rate_limit_period": "second",
-                  "archived_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "path_forwarding_disabled": true,
+                "url": "foo",
+                "cli_path": "foo",
+                "rate_limit": 42,
+                "rate_limit_period": "second",
+                "archived_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -20745,20 +20679,17 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "name": "foo",
-                  "team_id": "foo",
-                  "path_forwarding_disabled": true,
-                  "url": "foo",
-                  "cli_path": "foo",
-                  "rate_limit": 42,
-                  "rate_limit_period": "second",
-                  "archived_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "path_forwarding_disabled": true,
+                "url": "foo",
+                "cli_path": "foo",
+                "rate_limit": 42,
+                "rate_limit_period": "second",
+                "archived_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -21167,47 +21098,44 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "order_by": "foo",
-                    "dir": "asc",
-                    "limit": 42,
-                    "prev": "foo",
-                    "next": "foo"
-                  },
-                  "count": 42,
-                  "models": [
-                    {
-                      "id": "foo",
-                      "team_id": "foo",
-                      "webhook_id": "foo",
-                      "source_id": "foo",
-                      "destination_id": "foo",
-                      "event_data_id": "foo",
-                      "request_id": "foo",
-                      "attempts": 42,
-                      "data": {
-                        "path": "foo",
-                        "query": "foo",
-                        "parsed_query": {},
-                        "headers": {},
-                        "body": {},
-                        "is_large_payload": true
-                      },
-                      "last_attempt_at": "foo",
-                      "next_attempt_at": "foo",
-                      "response_status": 42,
-                      "status": "SCHEDULED",
-                      "successful_at": "foo",
-                      "cli_id": "foo",
-                      "updated_at": "foo",
-                      "created_at": "foo",
-                      "created_at_id": "foo",
-                      "last_attempt_at_id": "foo"
-                    }
-                  ]
-                }
+                "pagination": {
+                  "order_by": "foo",
+                  "dir": "asc",
+                  "limit": 42,
+                  "prev": "foo",
+                  "next": "foo"
+                },
+                "count": 42,
+                "models": [
+                  {
+                    "id": "foo",
+                    "team_id": "foo",
+                    "webhook_id": "foo",
+                    "source_id": "foo",
+                    "destination_id": "foo",
+                    "event_data_id": "foo",
+                    "request_id": "foo",
+                    "attempts": 42,
+                    "data": {
+                      "path": "foo",
+                      "query": "foo",
+                      "parsed_query": {},
+                      "headers": {},
+                      "body": {},
+                      "is_large_payload": true
+                    },
+                    "last_attempt_at": "foo",
+                    "next_attempt_at": "foo",
+                    "response_status": 42,
+                    "status": "SCHEDULED",
+                    "successful_at": "foo",
+                    "cli_id": "foo",
+                    "updated_at": "foo",
+                    "created_at": "foo",
+                    "created_at_id": "foo",
+                    "last_attempt_at_id": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -21367,35 +21295,32 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "webhook_id": "foo",
-                  "source_id": "foo",
-                  "destination_id": "foo",
-                  "event_data_id": "foo",
-                  "request_id": "foo",
-                  "attempts": 42,
-                  "data": {
-                    "path": "foo",
-                    "query": "foo",
-                    "parsed_query": {},
-                    "headers": {},
-                    "body": {},
-                    "is_large_payload": true
-                  },
-                  "last_attempt_at": "foo",
-                  "next_attempt_at": "foo",
-                  "response_status": 42,
-                  "status": "SCHEDULED",
-                  "successful_at": "foo",
-                  "cli_id": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo",
-                  "created_at_id": "foo",
-                  "last_attempt_at_id": "foo"
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "webhook_id": "foo",
+                "source_id": "foo",
+                "destination_id": "foo",
+                "event_data_id": "foo",
+                "request_id": "foo",
+                "attempts": 42,
+                "data": {
+                  "path": "foo",
+                  "query": "foo",
+                  "parsed_query": {},
+                  "headers": {},
+                  "body": {},
+                  "is_large_payload": true
+                },
+                "last_attempt_at": "foo",
+                "next_attempt_at": "foo",
+                "response_status": 42,
+                "status": "SCHEDULED",
+                "successful_at": "foo",
+                "cli_id": "foo",
+                "updated_at": "foo",
+                "created_at": "foo",
+                "created_at_id": "foo",
+                "last_attempt_at_id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -21543,10 +21468,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "body": "foo"
-                }
+                "body": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -21669,59 +21591,56 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "event": {
-                    "id": "foo",
-                    "team_id": "foo",
-                    "webhook_id": "foo",
-                    "source_id": "foo",
-                    "destination_id": "foo",
-                    "event_data_id": "foo",
-                    "request_id": "foo",
-                    "attempts": 42,
-                    "data": {
-                      "path": "foo",
-                      "query": "foo",
-                      "parsed_query": {},
-                      "headers": {},
-                      "body": {},
-                      "is_large_payload": true
-                    },
-                    "last_attempt_at": "foo",
-                    "next_attempt_at": "foo",
-                    "response_status": 42,
-                    "status": "SCHEDULED",
-                    "successful_at": "foo",
-                    "cli_id": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo",
-                    "created_at_id": "foo",
-                    "last_attempt_at_id": "foo"
-                  },
-                  "attempt": {
-                    "id": "foo",
-                    "team_id": "foo",
-                    "event_id": "foo",
-                    "response_status": 42,
-                    "attempt_number": 42,
-                    "trigger": "INITIAL",
-                    "error_code": "TIMEOUT",
+                "event": {
+                  "id": "foo",
+                  "team_id": "foo",
+                  "webhook_id": "foo",
+                  "source_id": "foo",
+                  "destination_id": "foo",
+                  "event_data_id": "foo",
+                  "request_id": "foo",
+                  "attempts": 42,
+                  "data": {
+                    "path": "foo",
+                    "query": "foo",
+                    "parsed_query": {},
+                    "headers": {},
                     "body": {},
-                    "requested_url": "foo",
-                    "bulk_retry_id": "foo",
-                    "status": "QUEUED",
-                    "successful_at": "foo",
-                    "delivered_at": "foo",
-                    "responded_at": "foo",
-                    "delivery_latency": 42,
-                    "response_latency": 42,
-                    "updated_at": "foo",
-                    "created_at": "foo",
-                    "state": "DELIVERING",
-                    "archived_at": "foo",
-                    "destination_id": "foo"
-                  }
+                    "is_large_payload": true
+                  },
+                  "last_attempt_at": "foo",
+                  "next_attempt_at": "foo",
+                  "response_status": 42,
+                  "status": "SCHEDULED",
+                  "successful_at": "foo",
+                  "cli_id": "foo",
+                  "updated_at": "foo",
+                  "created_at": "foo",
+                  "created_at_id": "foo",
+                  "last_attempt_at_id": "foo"
+                },
+                "attempt": {
+                  "id": "foo",
+                  "team_id": "foo",
+                  "event_id": "foo",
+                  "response_status": 42,
+                  "attempt_number": 42,
+                  "trigger": "INITIAL",
+                  "error_code": "TIMEOUT",
+                  "body": {},
+                  "requested_url": "foo",
+                  "bulk_retry_id": "foo",
+                  "status": "QUEUED",
+                  "successful_at": "foo",
+                  "delivered_at": "foo",
+                  "responded_at": "foo",
+                  "delivery_latency": 42,
+                  "response_latency": 42,
+                  "updated_at": "foo",
+                  "created_at": "foo",
+                  "state": "DELIVERING",
+                  "archived_at": "foo",
+                  "destination_id": "foo"
                 }
               },
               "responseBodyV3": {
@@ -21895,35 +21814,32 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "webhook_id": "foo",
-                  "source_id": "foo",
-                  "destination_id": "foo",
-                  "event_data_id": "foo",
-                  "request_id": "foo",
-                  "attempts": 42,
-                  "data": {
-                    "path": "foo",
-                    "query": "foo",
-                    "parsed_query": {},
-                    "headers": {},
-                    "body": {},
-                    "is_large_payload": true
-                  },
-                  "last_attempt_at": "foo",
-                  "next_attempt_at": "foo",
-                  "response_status": 42,
-                  "status": "SCHEDULED",
-                  "successful_at": "foo",
-                  "cli_id": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo",
-                  "created_at_id": "foo",
-                  "last_attempt_at_id": "foo"
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "webhook_id": "foo",
+                "source_id": "foo",
+                "destination_id": "foo",
+                "event_data_id": "foo",
+                "request_id": "foo",
+                "attempts": 42,
+                "data": {
+                  "path": "foo",
+                  "query": "foo",
+                  "parsed_query": {},
+                  "headers": {},
+                  "body": {},
+                  "is_large_payload": true
+                },
+                "last_attempt_at": "foo",
+                "next_attempt_at": "foo",
+                "response_status": 42,
+                "status": "SCHEDULED",
+                "successful_at": "foo",
+                "cli_id": "foo",
+                "updated_at": "foo",
+                "created_at": "foo",
+                "created_at_id": "foo",
+                "last_attempt_at_id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -22209,36 +22125,33 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "order_by": "foo",
-                    "dir": "asc",
-                    "limit": 42,
-                    "prev": "foo",
-                    "next": "foo"
-                  },
-                  "count": 42,
-                  "models": [
-                    {
-                      "id": "foo",
-                      "team_id": "foo",
-                      "query": {},
-                      "created_at": "foo",
-                      "updated_at": "foo",
-                      "cancelled_at": "foo",
-                      "completed_at": "foo",
-                      "estimated_batch": 42,
-                      "estimated_count": 42,
-                      "processed_batch": 42,
-                      "completed_count": 42,
-                      "in_progress": true,
-                      "progress": 42,
-                      "failed_count": 42,
-                      "number": 42
-                    }
-                  ]
-                }
+                "pagination": {
+                  "order_by": "foo",
+                  "dir": "asc",
+                  "limit": 42,
+                  "prev": "foo",
+                  "next": "foo"
+                },
+                "count": 42,
+                "models": [
+                  {
+                    "id": "foo",
+                    "team_id": "foo",
+                    "query": {},
+                    "created_at": "foo",
+                    "updated_at": "foo",
+                    "cancelled_at": "foo",
+                    "completed_at": "foo",
+                    "estimated_batch": 42,
+                    "estimated_count": 42,
+                    "processed_batch": 42,
+                    "completed_count": 42,
+                    "in_progress": true,
+                    "progress": 42,
+                    "failed_count": 42,
+                    "number": 42
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -22408,24 +22321,21 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "query": {},
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "cancelled_at": "foo",
-                  "completed_at": "foo",
-                  "estimated_batch": 42,
-                  "estimated_count": 42,
-                  "processed_batch": 42,
-                  "completed_count": 42,
-                  "in_progress": true,
-                  "progress": 42,
-                  "failed_count": 42,
-                  "number": 42
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "query": {},
+                "created_at": "foo",
+                "updated_at": "foo",
+                "cancelled_at": "foo",
+                "completed_at": "foo",
+                "estimated_batch": 42,
+                "estimated_count": 42,
+                "processed_batch": 42,
+                "completed_count": 42,
+                "in_progress": true,
+                "progress": 42,
+                "failed_count": 42,
+                "number": 42
               },
               "responseBodyV3": {
                 "type": "json",
@@ -22566,12 +22476,9 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "estimated_batch": 42,
-                  "estimated_count": 42,
-                  "progress": 42
-                }
+                "estimated_batch": 42,
+                "estimated_count": 42,
+                "progress": 42
               },
               "responseBodyV3": {
                 "type": "json",
@@ -22696,24 +22603,21 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "query": {},
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "cancelled_at": "foo",
-                  "completed_at": "foo",
-                  "estimated_batch": 42,
-                  "estimated_count": 42,
-                  "processed_batch": 42,
-                  "completed_count": 42,
-                  "in_progress": true,
-                  "progress": 42,
-                  "failed_count": 42,
-                  "number": 42
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "query": {},
+                "created_at": "foo",
+                "updated_at": "foo",
+                "cancelled_at": "foo",
+                "completed_at": "foo",
+                "estimated_batch": 42,
+                "estimated_count": 42,
+                "processed_batch": 42,
+                "completed_count": 42,
+                "in_progress": true,
+                "progress": 42,
+                "failed_count": 42,
+                "number": 42
               },
               "responseBodyV3": {
                 "type": "json",
@@ -22850,24 +22754,21 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "query": {},
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "cancelled_at": "foo",
-                  "completed_at": "foo",
-                  "estimated_batch": 42,
-                  "estimated_count": 42,
-                  "processed_batch": 42,
-                  "completed_count": 42,
-                  "in_progress": true,
-                  "progress": 42,
-                  "failed_count": 42,
-                  "number": 42
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "query": {},
+                "created_at": "foo",
+                "updated_at": "foo",
+                "cancelled_at": "foo",
+                "completed_at": "foo",
+                "estimated_batch": 42,
+                "estimated_count": 42,
+                "processed_batch": 42,
+                "completed_count": 42,
+                "in_progress": true,
+                "progress": 42,
+                "failed_count": 42,
+                "number": 42
               },
               "responseBodyV3": {
                 "type": "json",
@@ -23142,36 +23043,33 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "order_by": "foo",
-                    "dir": "asc",
-                    "limit": 42,
-                    "prev": "foo",
-                    "next": "foo"
-                  },
-                  "count": 42,
-                  "models": [
-                    {
-                      "id": "foo",
-                      "team_id": "foo",
-                      "query": {},
-                      "created_at": "foo",
-                      "updated_at": "foo",
-                      "cancelled_at": "foo",
-                      "completed_at": "foo",
-                      "estimated_batch": 42,
-                      "estimated_count": 42,
-                      "processed_batch": 42,
-                      "completed_count": 42,
-                      "in_progress": true,
-                      "progress": 42,
-                      "failed_count": 42,
-                      "number": 42
-                    }
-                  ]
-                }
+                "pagination": {
+                  "order_by": "foo",
+                  "dir": "asc",
+                  "limit": 42,
+                  "prev": "foo",
+                  "next": "foo"
+                },
+                "count": 42,
+                "models": [
+                  {
+                    "id": "foo",
+                    "team_id": "foo",
+                    "query": {},
+                    "created_at": "foo",
+                    "updated_at": "foo",
+                    "cancelled_at": "foo",
+                    "completed_at": "foo",
+                    "estimated_batch": 42,
+                    "estimated_count": 42,
+                    "processed_batch": 42,
+                    "completed_count": 42,
+                    "in_progress": true,
+                    "progress": 42,
+                    "failed_count": 42,
+                    "number": 42
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -23341,24 +23239,21 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "query": {},
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "cancelled_at": "foo",
-                  "completed_at": "foo",
-                  "estimated_batch": 42,
-                  "estimated_count": 42,
-                  "processed_batch": 42,
-                  "completed_count": 42,
-                  "in_progress": true,
-                  "progress": 42,
-                  "failed_count": 42,
-                  "number": 42
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "query": {},
+                "created_at": "foo",
+                "updated_at": "foo",
+                "cancelled_at": "foo",
+                "completed_at": "foo",
+                "estimated_batch": 42,
+                "estimated_count": 42,
+                "processed_batch": 42,
+                "completed_count": 42,
+                "in_progress": true,
+                "progress": 42,
+                "failed_count": 42,
+                "number": 42
               },
               "responseBodyV3": {
                 "type": "json",
@@ -23499,12 +23394,9 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "estimated_batch": 42,
-                  "estimated_count": 42,
-                  "progress": 42
-                }
+                "estimated_batch": 42,
+                "estimated_count": 42,
+                "progress": 42
               },
               "responseBodyV3": {
                 "type": "json",
@@ -23629,24 +23521,21 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "query": {},
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "cancelled_at": "foo",
-                  "completed_at": "foo",
-                  "estimated_batch": 42,
-                  "estimated_count": 42,
-                  "processed_batch": 42,
-                  "completed_count": 42,
-                  "in_progress": true,
-                  "progress": 42,
-                  "failed_count": 42,
-                  "number": 42
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "query": {},
+                "created_at": "foo",
+                "updated_at": "foo",
+                "cancelled_at": "foo",
+                "completed_at": "foo",
+                "estimated_batch": 42,
+                "estimated_count": 42,
+                "processed_batch": 42,
+                "completed_count": 42,
+                "in_progress": true,
+                "progress": 42,
+                "failed_count": 42,
+                "number": 42
               },
               "responseBodyV3": {
                 "type": "json",
@@ -23783,24 +23672,21 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "query": {},
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "cancelled_at": "foo",
-                  "completed_at": "foo",
-                  "estimated_batch": 42,
-                  "estimated_count": 42,
-                  "processed_batch": 42,
-                  "completed_count": 42,
-                  "in_progress": true,
-                  "progress": 42,
-                  "failed_count": 42,
-                  "number": 42
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "query": {},
+                "created_at": "foo",
+                "updated_at": "foo",
+                "cancelled_at": "foo",
+                "completed_at": "foo",
+                "estimated_batch": 42,
+                "estimated_count": 42,
+                "processed_batch": 42,
+                "completed_count": 42,
+                "in_progress": true,
+                "progress": 42,
+                "failed_count": 42,
+                "number": 42
               },
               "responseBodyV3": {
                 "type": "json",
@@ -23963,39 +23849,36 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "order_by": "foo",
-                    "dir": "asc",
-                    "limit": 42,
-                    "prev": "foo",
-                    "next": "foo"
-                  },
-                  "count": 42,
-                  "models": [
-                    {
-                      "id": "foo",
-                      "team_id": "foo",
-                      "label": "foo",
-                      "provider": "twitter",
-                      "features": [
-                        "VERIFICATION"
-                      ],
-                      "configs": {
-                        "webhook_secret_key": "foo",
-                        "algorithm": "md5",
-                        "header_key": "foo",
-                        "encoding": "base64"
-                      },
-                      "sources": [
-                        "foo"
-                      ],
-                      "updated_at": "foo",
-                      "created_at": "foo"
-                    }
-                  ]
-                }
+                "pagination": {
+                  "order_by": "foo",
+                  "dir": "asc",
+                  "limit": 42,
+                  "prev": "foo",
+                  "next": "foo"
+                },
+                "count": 42,
+                "models": [
+                  {
+                    "id": "foo",
+                    "team_id": "foo",
+                    "label": "foo",
+                    "provider": "twitter",
+                    "features": [
+                      "VERIFICATION"
+                    ],
+                    "configs": {
+                      "webhook_secret_key": "foo",
+                      "algorithm": "md5",
+                      "header_key": "foo",
+                      "encoding": "base64"
+                    },
+                    "sources": [
+                      "foo"
+                    ],
+                    "updated_at": "foo",
+                    "created_at": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -24217,27 +24100,24 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "label": "foo",
-                  "provider": "twitter",
-                  "features": [
-                    "VERIFICATION"
-                  ],
-                  "configs": {
-                    "webhook_secret_key": "foo",
-                    "algorithm": "md5",
-                    "header_key": "foo",
-                    "encoding": "base64"
-                  },
-                  "sources": [
-                    "foo"
-                  ],
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "label": "foo",
+                "provider": "twitter",
+                "features": [
+                  "VERIFICATION"
+                ],
+                "configs": {
+                  "webhook_secret_key": "foo",
+                  "algorithm": "md5",
+                  "header_key": "foo",
+                  "encoding": "base64"
+                },
+                "sources": [
+                  "foo"
+                ],
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -24377,27 +24257,24 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "label": "foo",
-                  "provider": "twitter",
-                  "features": [
-                    "VERIFICATION"
-                  ],
-                  "configs": {
-                    "webhook_secret_key": "foo",
-                    "algorithm": "md5",
-                    "header_key": "foo",
-                    "encoding": "base64"
-                  },
-                  "sources": [
-                    "foo"
-                  ],
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "label": "foo",
+                "provider": "twitter",
+                "features": [
+                  "VERIFICATION"
+                ],
+                "configs": {
+                  "webhook_secret_key": "foo",
+                  "algorithm": "md5",
+                  "header_key": "foo",
+                  "encoding": "base64"
+                },
+                "sources": [
+                  "foo"
+                ],
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -24628,27 +24505,24 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "label": "foo",
-                  "provider": "twitter",
-                  "features": [
-                    "VERIFICATION"
-                  ],
-                  "configs": {
-                    "webhook_secret_key": "foo",
-                    "algorithm": "md5",
-                    "header_key": "foo",
-                    "encoding": "base64"
-                  },
-                  "sources": [
-                    "foo"
-                  ],
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "label": "foo",
+                "provider": "twitter",
+                "features": [
+                  "VERIFICATION"
+                ],
+                "configs": {
+                  "webhook_secret_key": "foo",
+                  "algorithm": "md5",
+                  "header_key": "foo",
+                  "encoding": "base64"
+                },
+                "sources": [
+                  "foo"
+                ],
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -24788,10 +24662,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo"
-                }
+                "id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -24945,10 +24816,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "success": true
-                }
+                "success": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -25101,10 +24969,7 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
                 "value": {}
@@ -25388,102 +25253,99 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "order_by": "foo",
-                    "dir": "asc",
-                    "limit": 42,
-                    "prev": "foo",
-                    "next": "foo"
-                  },
-                  "count": 42,
-                  "models": [
-                    {
-                      "id": "iss_YXKv5OdJXCiVwkPhGy",
-                      "team_id": "foo",
-                      "status": "OPENED",
-                      "opened_at": "foo",
-                      "first_seen_at": "foo",
-                      "last_seen_at": "foo",
-                      "last_updated_by": "foo",
-                      "dismissed_at": "foo",
-                      "auto_resolved_at": "foo",
-                      "merged_with": "foo",
-                      "updated_at": "foo",
-                      "created_at": "foo",
-                      "type": "delivery",
-                      "aggregation_keys": {
-                        "webhook_id": [
-                          "foo"
-                        ],
-                        "response_status": [
-                          42
-                        ],
-                        "error_code": [
-                          "TIMEOUT"
-                        ]
-                      },
-                      "reference": {
-                        "event_id": "foo",
-                        "attempt_id": "foo"
-                      },
-                      "data": {
-                        "trigger_event": {
-                          "id": "foo",
-                          "team_id": "foo",
-                          "webhook_id": "foo",
-                          "source_id": "foo",
-                          "destination_id": "foo",
-                          "event_data_id": "foo",
-                          "request_id": "foo",
-                          "attempts": 42,
-                          "data": {
-                            "path": "foo",
-                            "query": "foo",
-                            "parsed_query": {},
-                            "headers": {},
-                            "body": {},
-                            "is_large_payload": true
-                          },
-                          "last_attempt_at": "foo",
-                          "next_attempt_at": "foo",
-                          "response_status": 42,
-                          "status": "SCHEDULED",
-                          "successful_at": "foo",
-                          "cli_id": "foo",
-                          "updated_at": "foo",
-                          "created_at": "foo",
-                          "created_at_id": "foo",
-                          "last_attempt_at_id": "foo"
-                        },
-                        "trigger_attempt": {
-                          "id": "foo",
-                          "team_id": "foo",
-                          "event_id": "foo",
-                          "response_status": 42,
-                          "attempt_number": 42,
-                          "trigger": "INITIAL",
-                          "error_code": "TIMEOUT",
+                "pagination": {
+                  "order_by": "foo",
+                  "dir": "asc",
+                  "limit": 42,
+                  "prev": "foo",
+                  "next": "foo"
+                },
+                "count": 42,
+                "models": [
+                  {
+                    "id": "iss_YXKv5OdJXCiVwkPhGy",
+                    "team_id": "foo",
+                    "status": "OPENED",
+                    "opened_at": "foo",
+                    "first_seen_at": "foo",
+                    "last_seen_at": "foo",
+                    "last_updated_by": "foo",
+                    "dismissed_at": "foo",
+                    "auto_resolved_at": "foo",
+                    "merged_with": "foo",
+                    "updated_at": "foo",
+                    "created_at": "foo",
+                    "type": "delivery",
+                    "aggregation_keys": {
+                      "webhook_id": [
+                        "foo"
+                      ],
+                      "response_status": [
+                        42
+                      ],
+                      "error_code": [
+                        "TIMEOUT"
+                      ]
+                    },
+                    "reference": {
+                      "event_id": "foo",
+                      "attempt_id": "foo"
+                    },
+                    "data": {
+                      "trigger_event": {
+                        "id": "foo",
+                        "team_id": "foo",
+                        "webhook_id": "foo",
+                        "source_id": "foo",
+                        "destination_id": "foo",
+                        "event_data_id": "foo",
+                        "request_id": "foo",
+                        "attempts": 42,
+                        "data": {
+                          "path": "foo",
+                          "query": "foo",
+                          "parsed_query": {},
+                          "headers": {},
                           "body": {},
-                          "requested_url": "foo",
-                          "bulk_retry_id": "foo",
-                          "status": "QUEUED",
-                          "successful_at": "foo",
-                          "delivered_at": "foo",
-                          "responded_at": "foo",
-                          "delivery_latency": 42,
-                          "response_latency": 42,
-                          "updated_at": "foo",
-                          "created_at": "foo",
-                          "state": "DELIVERING",
-                          "archived_at": "foo",
-                          "destination_id": "foo"
-                        }
+                          "is_large_payload": true
+                        },
+                        "last_attempt_at": "foo",
+                        "next_attempt_at": "foo",
+                        "response_status": 42,
+                        "status": "SCHEDULED",
+                        "successful_at": "foo",
+                        "cli_id": "foo",
+                        "updated_at": "foo",
+                        "created_at": "foo",
+                        "created_at_id": "foo",
+                        "last_attempt_at_id": "foo"
+                      },
+                      "trigger_attempt": {
+                        "id": "foo",
+                        "team_id": "foo",
+                        "event_id": "foo",
+                        "response_status": 42,
+                        "attempt_number": 42,
+                        "trigger": "INITIAL",
+                        "error_code": "TIMEOUT",
+                        "body": {},
+                        "requested_url": "foo",
+                        "bulk_retry_id": "foo",
+                        "status": "QUEUED",
+                        "successful_at": "foo",
+                        "delivered_at": "foo",
+                        "responded_at": "foo",
+                        "delivery_latency": 42,
+                        "response_latency": 42,
+                        "updated_at": "foo",
+                        "created_at": "foo",
+                        "state": "DELIVERING",
+                        "archived_at": "foo",
+                        "destination_id": "foo"
                       }
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -25839,10 +25701,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "count": 5
-                }
+                "count": 5
               },
               "responseBodyV3": {
                 "type": "json",
@@ -25965,88 +25824,85 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "iss_YXKv5OdJXCiVwkPhGy",
-                  "team_id": "foo",
-                  "status": "OPENED",
-                  "opened_at": "foo",
-                  "first_seen_at": "foo",
-                  "last_seen_at": "foo",
-                  "last_updated_by": "foo",
-                  "dismissed_at": "foo",
-                  "auto_resolved_at": "foo",
-                  "merged_with": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo",
-                  "type": "delivery",
-                  "aggregation_keys": {
-                    "webhook_id": [
-                      "foo"
-                    ],
-                    "response_status": [
-                      42
-                    ],
-                    "error_code": [
-                      "TIMEOUT"
-                    ]
-                  },
-                  "reference": {
-                    "event_id": "foo",
-                    "attempt_id": "foo"
-                  },
-                  "data": {
-                    "trigger_event": {
-                      "id": "foo",
-                      "team_id": "foo",
-                      "webhook_id": "foo",
-                      "source_id": "foo",
-                      "destination_id": "foo",
-                      "event_data_id": "foo",
-                      "request_id": "foo",
-                      "attempts": 42,
-                      "data": {
-                        "path": "foo",
-                        "query": "foo",
-                        "parsed_query": {},
-                        "headers": {},
-                        "body": {},
-                        "is_large_payload": true
-                      },
-                      "last_attempt_at": "foo",
-                      "next_attempt_at": "foo",
-                      "response_status": 42,
-                      "status": "SCHEDULED",
-                      "successful_at": "foo",
-                      "cli_id": "foo",
-                      "updated_at": "foo",
-                      "created_at": "foo",
-                      "created_at_id": "foo",
-                      "last_attempt_at_id": "foo"
-                    },
-                    "trigger_attempt": {
-                      "id": "foo",
-                      "team_id": "foo",
-                      "event_id": "foo",
-                      "response_status": 42,
-                      "attempt_number": 42,
-                      "trigger": "INITIAL",
-                      "error_code": "TIMEOUT",
+                "id": "iss_YXKv5OdJXCiVwkPhGy",
+                "team_id": "foo",
+                "status": "OPENED",
+                "opened_at": "foo",
+                "first_seen_at": "foo",
+                "last_seen_at": "foo",
+                "last_updated_by": "foo",
+                "dismissed_at": "foo",
+                "auto_resolved_at": "foo",
+                "merged_with": "foo",
+                "updated_at": "foo",
+                "created_at": "foo",
+                "type": "delivery",
+                "aggregation_keys": {
+                  "webhook_id": [
+                    "foo"
+                  ],
+                  "response_status": [
+                    42
+                  ],
+                  "error_code": [
+                    "TIMEOUT"
+                  ]
+                },
+                "reference": {
+                  "event_id": "foo",
+                  "attempt_id": "foo"
+                },
+                "data": {
+                  "trigger_event": {
+                    "id": "foo",
+                    "team_id": "foo",
+                    "webhook_id": "foo",
+                    "source_id": "foo",
+                    "destination_id": "foo",
+                    "event_data_id": "foo",
+                    "request_id": "foo",
+                    "attempts": 42,
+                    "data": {
+                      "path": "foo",
+                      "query": "foo",
+                      "parsed_query": {},
+                      "headers": {},
                       "body": {},
-                      "requested_url": "foo",
-                      "bulk_retry_id": "foo",
-                      "status": "QUEUED",
-                      "successful_at": "foo",
-                      "delivered_at": "foo",
-                      "responded_at": "foo",
-                      "delivery_latency": 42,
-                      "response_latency": 42,
-                      "updated_at": "foo",
-                      "created_at": "foo",
-                      "state": "DELIVERING",
-                      "archived_at": "foo",
-                      "destination_id": "foo"
-                    }
+                      "is_large_payload": true
+                    },
+                    "last_attempt_at": "foo",
+                    "next_attempt_at": "foo",
+                    "response_status": 42,
+                    "status": "SCHEDULED",
+                    "successful_at": "foo",
+                    "cli_id": "foo",
+                    "updated_at": "foo",
+                    "created_at": "foo",
+                    "created_at_id": "foo",
+                    "last_attempt_at_id": "foo"
+                  },
+                  "trigger_attempt": {
+                    "id": "foo",
+                    "team_id": "foo",
+                    "event_id": "foo",
+                    "response_status": 42,
+                    "attempt_number": 42,
+                    "trigger": "INITIAL",
+                    "error_code": "TIMEOUT",
+                    "body": {},
+                    "requested_url": "foo",
+                    "bulk_retry_id": "foo",
+                    "status": "QUEUED",
+                    "successful_at": "foo",
+                    "delivered_at": "foo",
+                    "responded_at": "foo",
+                    "delivery_latency": 42,
+                    "response_latency": 42,
+                    "updated_at": "foo",
+                    "created_at": "foo",
+                    "state": "DELIVERING",
+                    "archived_at": "foo",
+                    "destination_id": "foo"
                   }
                 }
               },
@@ -26293,36 +26149,33 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "iss_YXKv5OdJXCiVwkPhGy",
-                  "team_id": "foo",
-                  "status": "OPENED",
-                  "opened_at": "foo",
-                  "first_seen_at": "foo",
-                  "last_seen_at": "foo",
-                  "last_updated_by": "foo",
-                  "dismissed_at": "foo",
-                  "auto_resolved_at": "foo",
-                  "merged_with": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo",
-                  "type": "delivery",
-                  "aggregation_keys": {
-                    "webhook_id": [
-                      "foo"
-                    ],
-                    "response_status": [
-                      42
-                    ],
-                    "error_code": [
-                      "TIMEOUT"
-                    ]
-                  },
-                  "reference": {
-                    "event_id": "foo",
-                    "attempt_id": "foo"
-                  }
+                "id": "iss_YXKv5OdJXCiVwkPhGy",
+                "team_id": "foo",
+                "status": "OPENED",
+                "opened_at": "foo",
+                "first_seen_at": "foo",
+                "last_seen_at": "foo",
+                "last_updated_by": "foo",
+                "dismissed_at": "foo",
+                "auto_resolved_at": "foo",
+                "merged_with": "foo",
+                "updated_at": "foo",
+                "created_at": "foo",
+                "type": "delivery",
+                "aggregation_keys": {
+                  "webhook_id": [
+                    "foo"
+                  ],
+                  "response_status": [
+                    42
+                  ],
+                  "error_code": [
+                    "TIMEOUT"
+                  ]
+                },
+                "reference": {
+                  "event_id": "foo",
+                  "attempt_id": "foo"
                 }
               },
               "responseBodyV3": {
@@ -26473,36 +26326,33 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "iss_YXKv5OdJXCiVwkPhGy",
-                  "team_id": "foo",
-                  "status": "OPENED",
-                  "opened_at": "foo",
-                  "first_seen_at": "foo",
-                  "last_seen_at": "foo",
-                  "last_updated_by": "foo",
-                  "dismissed_at": "foo",
-                  "auto_resolved_at": "foo",
-                  "merged_with": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo",
-                  "type": "delivery",
-                  "aggregation_keys": {
-                    "webhook_id": [
-                      "foo"
-                    ],
-                    "response_status": [
-                      42
-                    ],
-                    "error_code": [
-                      "TIMEOUT"
-                    ]
-                  },
-                  "reference": {
-                    "event_id": "foo",
-                    "attempt_id": "foo"
-                  }
+                "id": "iss_YXKv5OdJXCiVwkPhGy",
+                "team_id": "foo",
+                "status": "OPENED",
+                "opened_at": "foo",
+                "first_seen_at": "foo",
+                "last_seen_at": "foo",
+                "last_updated_by": "foo",
+                "dismissed_at": "foo",
+                "auto_resolved_at": "foo",
+                "merged_with": "foo",
+                "updated_at": "foo",
+                "created_at": "foo",
+                "type": "delivery",
+                "aggregation_keys": {
+                  "webhook_id": [
+                    "foo"
+                  ],
+                  "response_status": [
+                    42
+                  ],
+                  "error_code": [
+                    "TIMEOUT"
+                  ]
+                },
+                "reference": {
+                  "event_id": "foo",
+                  "attempt_id": "foo"
                 }
               },
               "responseBodyV3": {
@@ -26871,45 +26721,42 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "order_by": "foo",
-                    "dir": "asc",
-                    "limit": 42,
-                    "prev": "foo",
-                    "next": "foo"
-                  },
-                  "count": 42,
-                  "models": [
-                    {
-                      "id": "foo",
-                      "team_id": "foo",
-                      "verified": true,
-                      "original_event_data_id": "foo",
-                      "duplicate_hash": "foo",
-                      "duplicate_hits": 42,
-                      "rejection_cause": "SOURCE_ARCHIVED",
-                      "ingest_priority": "NORMAL",
-                      "ingested_at": "foo",
-                      "ingested_at_id": "foo",
-                      "source_id": "foo",
-                      "events_count": 42,
-                      "cli_events_count": 42,
-                      "ignored_count": 42,
-                      "data": {
-                        "path": "foo",
-                        "query": "foo",
-                        "parsed_query": {},
-                        "headers": {},
-                        "body": {},
-                        "is_large_payload": true
-                      },
-                      "updated_at": "foo",
-                      "created_at": "foo"
-                    }
-                  ]
-                }
+                "pagination": {
+                  "order_by": "foo",
+                  "dir": "asc",
+                  "limit": 42,
+                  "prev": "foo",
+                  "next": "foo"
+                },
+                "count": 42,
+                "models": [
+                  {
+                    "id": "foo",
+                    "team_id": "foo",
+                    "verified": true,
+                    "original_event_data_id": "foo",
+                    "duplicate_hash": "foo",
+                    "duplicate_hits": 42,
+                    "rejection_cause": "SOURCE_ARCHIVED",
+                    "ingest_priority": "NORMAL",
+                    "ingested_at": "foo",
+                    "ingested_at_id": "foo",
+                    "source_id": "foo",
+                    "events_count": 42,
+                    "cli_events_count": 42,
+                    "ignored_count": 42,
+                    "data": {
+                      "path": "foo",
+                      "query": "foo",
+                      "parsed_query": {},
+                      "headers": {},
+                      "body": {},
+                      "is_large_payload": true
+                    },
+                    "updated_at": "foo",
+                    "created_at": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -27067,33 +26914,30 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "verified": true,
-                  "original_event_data_id": "foo",
-                  "duplicate_hash": "foo",
-                  "duplicate_hits": 42,
-                  "rejection_cause": "SOURCE_ARCHIVED",
-                  "ingest_priority": "NORMAL",
-                  "ingested_at": "foo",
-                  "ingested_at_id": "foo",
-                  "source_id": "foo",
-                  "events_count": 42,
-                  "cli_events_count": 42,
-                  "ignored_count": 42,
-                  "data": {
-                    "path": "foo",
-                    "query": "foo",
-                    "parsed_query": {},
-                    "headers": {},
-                    "body": {},
-                    "is_large_payload": true
-                  },
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "verified": true,
+                "original_event_data_id": "foo",
+                "duplicate_hash": "foo",
+                "duplicate_hits": 42,
+                "rejection_cause": "SOURCE_ARCHIVED",
+                "ingest_priority": "NORMAL",
+                "ingested_at": "foo",
+                "ingested_at_id": "foo",
+                "source_id": "foo",
+                "events_count": 42,
+                "cli_events_count": 42,
+                "ignored_count": 42,
+                "data": {
+                  "path": "foo",
+                  "query": "foo",
+                  "parsed_query": {},
+                  "headers": {},
+                  "body": {},
+                  "is_large_payload": true
+                },
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -27239,10 +27083,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "body": "foo"
-                }
+                "body": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -27430,23 +27271,42 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "request": {
+                "request": {
+                  "id": "foo",
+                  "team_id": "foo",
+                  "verified": true,
+                  "original_event_data_id": "foo",
+                  "duplicate_hash": "foo",
+                  "duplicate_hits": 42,
+                  "rejection_cause": "SOURCE_ARCHIVED",
+                  "ingest_priority": "NORMAL",
+                  "ingested_at": "foo",
+                  "ingested_at_id": "foo",
+                  "source_id": "foo",
+                  "events_count": 42,
+                  "cli_events_count": 42,
+                  "ignored_count": 42,
+                  "data": {
+                    "path": "foo",
+                    "query": "foo",
+                    "parsed_query": {},
+                    "headers": {},
+                    "body": {},
+                    "is_large_payload": true
+                  },
+                  "updated_at": "foo",
+                  "created_at": "foo"
+                },
+                "events": [
+                  {
                     "id": "foo",
                     "team_id": "foo",
-                    "verified": true,
-                    "original_event_data_id": "foo",
-                    "duplicate_hash": "foo",
-                    "duplicate_hits": 42,
-                    "rejection_cause": "SOURCE_ARCHIVED",
-                    "ingest_priority": "NORMAL",
-                    "ingested_at": "foo",
-                    "ingested_at_id": "foo",
+                    "webhook_id": "foo",
                     "source_id": "foo",
-                    "events_count": 42,
-                    "cli_events_count": 42,
-                    "ignored_count": 42,
+                    "destination_id": "foo",
+                    "event_data_id": "foo",
+                    "request_id": "foo",
+                    "attempts": 42,
                     "data": {
                       "path": "foo",
                       "query": "foo",
@@ -27455,40 +27315,18 @@
                       "body": {},
                       "is_large_payload": true
                     },
+                    "last_attempt_at": "foo",
+                    "next_attempt_at": "foo",
+                    "response_status": 42,
+                    "status": "SCHEDULED",
+                    "successful_at": "foo",
+                    "cli_id": "foo",
                     "updated_at": "foo",
-                    "created_at": "foo"
-                  },
-                  "events": [
-                    {
-                      "id": "foo",
-                      "team_id": "foo",
-                      "webhook_id": "foo",
-                      "source_id": "foo",
-                      "destination_id": "foo",
-                      "event_data_id": "foo",
-                      "request_id": "foo",
-                      "attempts": 42,
-                      "data": {
-                        "path": "foo",
-                        "query": "foo",
-                        "parsed_query": {},
-                        "headers": {},
-                        "body": {},
-                        "is_large_payload": true
-                      },
-                      "last_attempt_at": "foo",
-                      "next_attempt_at": "foo",
-                      "response_status": 42,
-                      "status": "SCHEDULED",
-                      "successful_at": "foo",
-                      "cli_id": "foo",
-                      "updated_at": "foo",
-                      "created_at": "foo",
-                      "created_at_id": "foo",
-                      "last_attempt_at_id": "foo"
-                    }
-                  ]
-                }
+                    "created_at": "foo",
+                    "created_at_id": "foo",
+                    "last_attempt_at_id": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -27965,47 +27803,44 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "order_by": "foo",
-                    "dir": "asc",
-                    "limit": 42,
-                    "prev": "foo",
-                    "next": "foo"
-                  },
-                  "count": 42,
-                  "models": [
-                    {
-                      "id": "foo",
-                      "team_id": "foo",
-                      "webhook_id": "foo",
-                      "source_id": "foo",
-                      "destination_id": "foo",
-                      "event_data_id": "foo",
-                      "request_id": "foo",
-                      "attempts": 42,
-                      "data": {
-                        "path": "foo",
-                        "query": "foo",
-                        "parsed_query": {},
-                        "headers": {},
-                        "body": {},
-                        "is_large_payload": true
-                      },
-                      "last_attempt_at": "foo",
-                      "next_attempt_at": "foo",
-                      "response_status": 42,
-                      "status": "SCHEDULED",
-                      "successful_at": "foo",
-                      "cli_id": "foo",
-                      "updated_at": "foo",
-                      "created_at": "foo",
-                      "created_at_id": "foo",
-                      "last_attempt_at_id": "foo"
-                    }
-                  ]
-                }
+                "pagination": {
+                  "order_by": "foo",
+                  "dir": "asc",
+                  "limit": 42,
+                  "prev": "foo",
+                  "next": "foo"
+                },
+                "count": 42,
+                "models": [
+                  {
+                    "id": "foo",
+                    "team_id": "foo",
+                    "webhook_id": "foo",
+                    "source_id": "foo",
+                    "destination_id": "foo",
+                    "event_data_id": "foo",
+                    "request_id": "foo",
+                    "attempts": 42,
+                    "data": {
+                      "path": "foo",
+                      "query": "foo",
+                      "parsed_query": {},
+                      "headers": {},
+                      "body": {},
+                      "is_large_payload": true
+                    },
+                    "last_attempt_at": "foo",
+                    "next_attempt_at": "foo",
+                    "response_status": 42,
+                    "status": "SCHEDULED",
+                    "successful_at": "foo",
+                    "cli_id": "foo",
+                    "updated_at": "foo",
+                    "created_at": "foo",
+                    "created_at_id": "foo",
+                    "last_attempt_at_id": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -28262,29 +28097,26 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "order_by": "foo",
-                    "dir": "asc",
-                    "limit": 42,
-                    "prev": "foo",
-                    "next": "foo"
-                  },
-                  "count": 42,
-                  "models": [
-                    {
-                      "id": "foo",
-                      "team_id": "foo",
-                      "webhook_id": "foo",
-                      "cause": "ARCHIVED",
-                      "request_id": "foo",
-                      "meta": "body",
-                      "updated_at": "foo",
-                      "created_at": "foo"
-                    }
-                  ]
-                }
+                "pagination": {
+                  "order_by": "foo",
+                  "dir": "asc",
+                  "limit": 42,
+                  "prev": "foo",
+                  "next": "foo"
+                },
+                "count": 42,
+                "models": [
+                  {
+                    "id": "foo",
+                    "team_id": "foo",
+                    "webhook_id": "foo",
+                    "cause": "ARCHIVED",
+                    "request_id": "foo",
+                    "meta": "body",
+                    "updated_at": "foo",
+                    "created_at": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -28564,36 +28396,33 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "order_by": "foo",
-                    "dir": "asc",
-                    "limit": 42,
-                    "prev": "foo",
-                    "next": "foo"
-                  },
-                  "count": 42,
-                  "models": [
-                    {
-                      "id": "foo",
-                      "team_id": "foo",
-                      "query": {},
-                      "created_at": "foo",
-                      "updated_at": "foo",
-                      "cancelled_at": "foo",
-                      "completed_at": "foo",
-                      "estimated_batch": 42,
-                      "estimated_count": 42,
-                      "processed_batch": 42,
-                      "completed_count": 42,
-                      "in_progress": true,
-                      "progress": 42,
-                      "failed_count": 42,
-                      "number": 42
-                    }
-                  ]
-                }
+                "pagination": {
+                  "order_by": "foo",
+                  "dir": "asc",
+                  "limit": 42,
+                  "prev": "foo",
+                  "next": "foo"
+                },
+                "count": 42,
+                "models": [
+                  {
+                    "id": "foo",
+                    "team_id": "foo",
+                    "query": {},
+                    "created_at": "foo",
+                    "updated_at": "foo",
+                    "cancelled_at": "foo",
+                    "completed_at": "foo",
+                    "estimated_batch": 42,
+                    "estimated_count": 42,
+                    "processed_batch": 42,
+                    "completed_count": 42,
+                    "in_progress": true,
+                    "progress": 42,
+                    "failed_count": 42,
+                    "number": 42
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -28763,24 +28592,21 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "query": {},
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "cancelled_at": "foo",
-                  "completed_at": "foo",
-                  "estimated_batch": 42,
-                  "estimated_count": 42,
-                  "processed_batch": 42,
-                  "completed_count": 42,
-                  "in_progress": true,
-                  "progress": 42,
-                  "failed_count": 42,
-                  "number": 42
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "query": {},
+                "created_at": "foo",
+                "updated_at": "foo",
+                "cancelled_at": "foo",
+                "completed_at": "foo",
+                "estimated_batch": 42,
+                "estimated_count": 42,
+                "processed_batch": 42,
+                "completed_count": 42,
+                "in_progress": true,
+                "progress": 42,
+                "failed_count": 42,
+                "number": 42
               },
               "responseBodyV3": {
                 "type": "json",
@@ -28921,12 +28747,9 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "estimated_batch": 42,
-                  "estimated_count": 42,
-                  "progress": 42
-                }
+                "estimated_batch": 42,
+                "estimated_count": 42,
+                "progress": 42
               },
               "responseBodyV3": {
                 "type": "json",
@@ -29051,24 +28874,21 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "query": {},
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "cancelled_at": "foo",
-                  "completed_at": "foo",
-                  "estimated_batch": 42,
-                  "estimated_count": 42,
-                  "processed_batch": 42,
-                  "completed_count": 42,
-                  "in_progress": true,
-                  "progress": 42,
-                  "failed_count": 42,
-                  "number": 42
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "query": {},
+                "created_at": "foo",
+                "updated_at": "foo",
+                "cancelled_at": "foo",
+                "completed_at": "foo",
+                "estimated_batch": 42,
+                "estimated_count": 42,
+                "processed_batch": 42,
+                "completed_count": 42,
+                "in_progress": true,
+                "progress": 42,
+                "failed_count": 42,
+                "number": 42
               },
               "responseBodyV3": {
                 "type": "json",
@@ -29205,24 +29025,21 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "query": {},
-                  "created_at": "foo",
-                  "updated_at": "foo",
-                  "cancelled_at": "foo",
-                  "completed_at": "foo",
-                  "estimated_batch": 42,
-                  "estimated_count": 42,
-                  "processed_batch": 42,
-                  "completed_count": 42,
-                  "in_progress": true,
-                  "progress": 42,
-                  "failed_count": 42,
-                  "number": 42
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "query": {},
+                "created_at": "foo",
+                "updated_at": "foo",
+                "cancelled_at": "foo",
+                "completed_at": "foo",
+                "estimated_batch": 42,
+                "estimated_count": 42,
+                "processed_batch": 42,
+                "completed_count": 42,
+                "in_progress": true,
+                "progress": 42,
+                "failed_count": 42,
+                "number": 42
               },
               "responseBodyV3": {
                 "type": "json",
@@ -29465,36 +29282,33 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "order_by": "foo",
-                    "dir": "asc",
-                    "limit": 42,
-                    "prev": "foo",
-                    "next": "foo"
-                  },
-                  "count": 42,
-                  "models": [
-                    {
-                      "id": "foo",
-                      "name": "foo",
-                      "team_id": "foo",
-                      "rules": [
-                        {
-                          "type": "retry",
-                          "strategy": "linear",
-                          "interval": 42,
-                          "count": 42
-                        }
-                      ],
-                      "is_team_default": true,
-                      "archived_at": "foo",
-                      "updated_at": "foo",
-                      "created_at": "foo"
-                    }
-                  ]
-                }
+                "pagination": {
+                  "order_by": "foo",
+                  "dir": "asc",
+                  "limit": 42,
+                  "prev": "foo",
+                  "next": "foo"
+                },
+                "count": 42,
+                "models": [
+                  {
+                    "id": "foo",
+                    "name": "foo",
+                    "team_id": "foo",
+                    "rules": [
+                      {
+                        "type": "retry",
+                        "strategy": "linear",
+                        "interval": 42,
+                        "count": 42
+                      }
+                    ],
+                    "is_team_default": true,
+                    "archived_at": "foo",
+                    "updated_at": "foo",
+                    "created_at": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -29695,24 +29509,21 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "name": "foo",
-                  "team_id": "foo",
-                  "rules": [
-                    {
-                      "type": "retry",
-                      "strategy": "linear",
-                      "interval": 42,
-                      "count": 42
-                    }
-                  ],
-                  "is_team_default": true,
-                  "archived_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "rules": [
+                  {
+                    "type": "retry",
+                    "strategy": "linear",
+                    "interval": 42,
+                    "count": 42
+                  }
+                ],
+                "is_team_default": true,
+                "archived_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -29901,24 +29712,21 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "name": "foo",
-                  "team_id": "foo",
-                  "rules": [
-                    {
-                      "type": "retry",
-                      "strategy": "linear",
-                      "interval": 42,
-                      "count": 42
-                    }
-                  ],
-                  "is_team_default": true,
-                  "archived_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "rules": [
+                  {
+                    "type": "retry",
+                    "strategy": "linear",
+                    "interval": 42,
+                    "count": 42
+                  }
+                ],
+                "is_team_default": true,
+                "archived_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -30055,24 +29863,21 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "name": "foo",
-                  "team_id": "foo",
-                  "rules": [
-                    {
-                      "type": "retry",
-                      "strategy": "linear",
-                      "interval": 42,
-                      "count": 42
-                    }
-                  ],
-                  "is_team_default": true,
-                  "archived_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "rules": [
+                  {
+                    "type": "retry",
+                    "strategy": "linear",
+                    "interval": 42,
+                    "count": 42
+                  }
+                ],
+                "is_team_default": true,
+                "archived_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -30310,24 +30115,21 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "name": "foo",
-                  "team_id": "foo",
-                  "rules": [
-                    {
-                      "type": "retry",
-                      "strategy": "linear",
-                      "interval": 42,
-                      "count": 42
-                    }
-                  ],
-                  "is_team_default": true,
-                  "archived_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "rules": [
+                  {
+                    "type": "retry",
+                    "strategy": "linear",
+                    "interval": 42,
+                    "count": 42
+                  }
+                ],
+                "is_team_default": true,
+                "archived_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -30464,24 +30266,21 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "name": "foo",
-                  "team_id": "foo",
-                  "rules": [
-                    {
-                      "type": "retry",
-                      "strategy": "linear",
-                      "interval": 42,
-                      "count": 42
-                    }
-                  ],
-                  "is_team_default": true,
-                  "archived_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "rules": [
+                  {
+                    "type": "retry",
+                    "strategy": "linear",
+                    "interval": 42,
+                    "count": 42
+                  }
+                ],
+                "is_team_default": true,
+                "archived_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -30618,24 +30417,21 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "name": "foo",
-                  "team_id": "foo",
-                  "rules": [
-                    {
-                      "type": "retry",
-                      "strategy": "linear",
-                      "interval": 42,
-                      "count": 42
-                    }
-                  ],
-                  "is_team_default": true,
-                  "archived_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "rules": [
+                  {
+                    "type": "retry",
+                    "strategy": "linear",
+                    "interval": 42,
+                    "count": 42
+                  }
+                ],
+                "is_team_default": true,
+                "archived_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -30888,37 +30684,34 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "order_by": "foo",
-                    "dir": "asc",
-                    "limit": 42,
-                    "prev": "foo",
-                    "next": "foo"
-                  },
-                  "count": 42,
-                  "models": [
-                    {
+                "pagination": {
+                  "order_by": "foo",
+                  "dir": "asc",
+                  "limit": 42,
+                  "prev": "foo",
+                  "next": "foo"
+                },
+                "count": 42,
+                "models": [
+                  {
+                    "id": "foo",
+                    "name": "foo",
+                    "team_id": "foo",
+                    "url": "foo",
+                    "integration_id": "foo",
+                    "integration": {
                       "id": "foo",
-                      "name": "foo",
-                      "team_id": "foo",
-                      "url": "foo",
-                      "integration_id": "foo",
-                      "integration": {
-                        "id": "foo",
-                        "label": "foo",
-                        "provider": "twitter",
-                        "features": [
-                          "VERIFICATION"
-                        ]
-                      },
-                      "archived_at": "foo",
-                      "updated_at": "foo",
-                      "created_at": "foo"
-                    }
-                  ]
-                }
+                      "label": "foo",
+                      "provider": "twitter",
+                      "features": [
+                        "VERIFICATION"
+                      ]
+                    },
+                    "archived_at": "foo",
+                    "updated_at": "foo",
+                    "created_at": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -31094,25 +30887,22 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "url": "foo",
+                "integration_id": "foo",
+                "integration": {
                   "id": "foo",
-                  "name": "foo",
-                  "team_id": "foo",
-                  "url": "foo",
-                  "integration_id": "foo",
-                  "integration": {
-                    "id": "foo",
-                    "label": "foo",
-                    "provider": "twitter",
-                    "features": [
-                      "VERIFICATION"
-                    ]
-                  },
-                  "archived_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                  "label": "foo",
+                  "provider": "twitter",
+                  "features": [
+                    "VERIFICATION"
+                  ]
+                },
+                "archived_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -31276,25 +31066,22 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "url": "foo",
+                "integration_id": "foo",
+                "integration": {
                   "id": "foo",
-                  "name": "foo",
-                  "team_id": "foo",
-                  "url": "foo",
-                  "integration_id": "foo",
-                  "integration": {
-                    "id": "foo",
-                    "label": "foo",
-                    "provider": "twitter",
-                    "features": [
-                      "VERIFICATION"
-                    ]
-                  },
-                  "archived_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                  "label": "foo",
+                  "provider": "twitter",
+                  "features": [
+                    "VERIFICATION"
+                  ]
+                },
+                "archived_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -31432,25 +31219,22 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "url": "foo",
+                "integration_id": "foo",
+                "integration": {
                   "id": "foo",
-                  "name": "foo",
-                  "team_id": "foo",
-                  "url": "foo",
-                  "integration_id": "foo",
-                  "integration": {
-                    "id": "foo",
-                    "label": "foo",
-                    "provider": "twitter",
-                    "features": [
-                      "VERIFICATION"
-                    ]
-                  },
-                  "archived_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                  "label": "foo",
+                  "provider": "twitter",
+                  "features": [
+                    "VERIFICATION"
+                  ]
+                },
+                "archived_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -31663,25 +31447,22 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "url": "foo",
+                "integration_id": "foo",
+                "integration": {
                   "id": "foo",
-                  "name": "foo",
-                  "team_id": "foo",
-                  "url": "foo",
-                  "integration_id": "foo",
-                  "integration": {
-                    "id": "foo",
-                    "label": "foo",
-                    "provider": "twitter",
-                    "features": [
-                      "VERIFICATION"
-                    ]
-                  },
-                  "archived_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                  "label": "foo",
+                  "provider": "twitter",
+                  "features": [
+                    "VERIFICATION"
+                  ]
+                },
+                "archived_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -31819,25 +31600,22 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "url": "foo",
+                "integration_id": "foo",
+                "integration": {
                   "id": "foo",
-                  "name": "foo",
-                  "team_id": "foo",
-                  "url": "foo",
-                  "integration_id": "foo",
-                  "integration": {
-                    "id": "foo",
-                    "label": "foo",
-                    "provider": "twitter",
-                    "features": [
-                      "VERIFICATION"
-                    ]
-                  },
-                  "archived_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                  "label": "foo",
+                  "provider": "twitter",
+                  "features": [
+                    "VERIFICATION"
+                  ]
+                },
+                "archived_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -31975,25 +31753,22 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "url": "foo",
+                "integration_id": "foo",
+                "integration": {
                   "id": "foo",
-                  "name": "foo",
-                  "team_id": "foo",
-                  "url": "foo",
-                  "integration_id": "foo",
-                  "integration": {
-                    "id": "foo",
-                    "label": "foo",
-                    "provider": "twitter",
-                    "features": [
-                      "VERIFICATION"
-                    ]
-                  },
-                  "archived_at": "foo",
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                  "label": "foo",
+                  "provider": "twitter",
+                  "features": [
+                    "VERIFICATION"
+                  ]
+                },
+                "archived_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -32164,14 +31939,11 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "enabled": true,
-                  "topics": [
-                    "issue.opened"
-                  ],
-                  "source_id": "foo"
-                }
+                "enabled": true,
+                "topics": [
+                  "issue.opened"
+                ],
+                "source_id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -32382,30 +32154,27 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "order_by": "foo",
-                    "dir": "asc",
-                    "limit": 42,
-                    "prev": "foo",
-                    "next": "foo"
-                  },
-                  "count": 42,
-                  "models": [
-                    {
-                      "id": "foo",
-                      "team_id": "foo",
-                      "name": "foo",
-                      "code": "foo",
-                      "encrypted_env": "foo",
-                      "iv": "foo",
-                      "env": {},
-                      "updated_at": "foo",
-                      "created_at": "foo"
-                    }
-                  ]
-                }
+                "pagination": {
+                  "order_by": "foo",
+                  "dir": "asc",
+                  "limit": 42,
+                  "prev": "foo",
+                  "next": "foo"
+                },
+                "count": 42,
+                "models": [
+                  {
+                    "id": "foo",
+                    "team_id": "foo",
+                    "name": "foo",
+                    "code": "foo",
+                    "encrypted_env": "foo",
+                    "iv": "foo",
+                    "env": {},
+                    "updated_at": "foo",
+                    "created_at": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -32597,18 +32366,15 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "name": "foo",
-                  "code": "foo",
-                  "encrypted_env": "foo",
-                  "iv": "foo",
-                  "env": {},
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "name": "foo",
+                "code": "foo",
+                "encrypted_env": "foo",
+                "iv": "foo",
+                "env": {},
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -32788,18 +32554,15 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "name": "foo",
-                  "code": "foo",
-                  "encrypted_env": "foo",
-                  "iv": "foo",
-                  "env": {},
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "name": "foo",
+                "code": "foo",
+                "encrypted_env": "foo",
+                "iv": "foo",
+                "env": {},
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -32930,18 +32693,15 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "name": "foo",
-                  "code": "foo",
-                  "encrypted_env": "foo",
-                  "iv": "foo",
-                  "env": {},
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "name": "foo",
+                "code": "foo",
+                "encrypted_env": "foo",
+                "iv": "foo",
+                "env": {},
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -33154,18 +32914,15 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "team_id": "foo",
-                  "name": "foo",
-                  "code": "foo",
-                  "encrypted_env": "foo",
-                  "iv": "foo",
-                  "env": {},
-                  "updated_at": "foo",
-                  "created_at": "foo"
-                }
+                "id": "foo",
+                "team_id": "foo",
+                "name": "foo",
+                "code": "foo",
+                "encrypted_env": "foo",
+                "iv": "foo",
+                "env": {},
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -33379,26 +33136,23 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "request_id": "foo",
-                  "transformation_id": "foo",
-                  "execution_id": "foo",
-                  "log_level": "debug",
-                  "request": {
-                    "headers": {},
-                    "path": "foo",
-                    "query": {},
-                    "parsed_query": {},
-                    "body": {}
-                  },
-                  "console": [
-                    {
-                      "type": "error",
-                      "message": "foo"
-                    }
-                  ]
-                }
+                "request_id": "foo",
+                "transformation_id": "foo",
+                "execution_id": "foo",
+                "log_level": "debug",
+                "request": {
+                  "headers": {},
+                  "path": "foo",
+                  "query": {},
+                  "parsed_query": {},
+                  "body": {}
+                },
+                "console": [
+                  {
+                    "type": "error",
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -33651,53 +33405,50 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "order_by": "foo",
-                    "dir": "asc",
-                    "limit": 42,
-                    "prev": "foo",
-                    "next": "foo"
-                  },
-                  "count": 42,
-                  "models": [
-                    {
-                      "id": "foo",
-                      "transformed_event_data_id": "foo",
-                      "original_event_data_id": "foo",
-                      "transformation_id": "foo",
-                      "team_id": "foo",
-                      "webhook_id": "foo",
-                      "log_level": "debug",
-                      "logs": [
-                        {
-                          "type": "error",
-                          "message": "foo"
-                        }
-                      ],
-                      "updated_at": "foo",
-                      "created_at": "foo",
-                      "original_event_data": {
-                        "path": "foo",
-                        "query": "foo",
-                        "parsed_query": {},
-                        "headers": {},
-                        "body": {},
-                        "is_large_payload": true
-                      },
-                      "transformed_event_data": {
-                        "path": "foo",
-                        "query": "foo",
-                        "parsed_query": {},
-                        "headers": {},
-                        "body": {},
-                        "is_large_payload": true
-                      },
-                      "issue_id": "foo"
-                    }
-                  ]
-                }
+                "pagination": {
+                  "order_by": "foo",
+                  "dir": "asc",
+                  "limit": 42,
+                  "prev": "foo",
+                  "next": "foo"
+                },
+                "count": 42,
+                "models": [
+                  {
+                    "id": "foo",
+                    "transformed_event_data_id": "foo",
+                    "original_event_data_id": "foo",
+                    "transformation_id": "foo",
+                    "team_id": "foo",
+                    "webhook_id": "foo",
+                    "log_level": "debug",
+                    "logs": [
+                      {
+                        "type": "error",
+                        "message": "foo"
+                      }
+                    ],
+                    "updated_at": "foo",
+                    "created_at": "foo",
+                    "original_event_data": {
+                      "path": "foo",
+                      "query": "foo",
+                      "parsed_query": {},
+                      "headers": {},
+                      "body": {},
+                      "is_large_payload": true
+                    },
+                    "transformed_event_data": {
+                      "path": "foo",
+                      "query": "foo",
+                      "parsed_query": {},
+                      "headers": {},
+                      "body": {},
+                      "is_large_payload": true
+                    },
+                    "issue_id": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -33881,41 +33632,38 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "transformed_event_data_id": "foo",
-                  "original_event_data_id": "foo",
-                  "transformation_id": "foo",
-                  "team_id": "foo",
-                  "webhook_id": "foo",
-                  "log_level": "debug",
-                  "logs": [
-                    {
-                      "type": "error",
-                      "message": "foo"
-                    }
-                  ],
-                  "updated_at": "foo",
-                  "created_at": "foo",
-                  "original_event_data": {
-                    "path": "foo",
-                    "query": "foo",
-                    "parsed_query": {},
-                    "headers": {},
-                    "body": {},
-                    "is_large_payload": true
-                  },
-                  "transformed_event_data": {
-                    "path": "foo",
-                    "query": "foo",
-                    "parsed_query": {},
-                    "headers": {},
-                    "body": {},
-                    "is_large_payload": true
-                  },
-                  "issue_id": "foo"
-                }
+                "id": "foo",
+                "transformed_event_data_id": "foo",
+                "original_event_data_id": "foo",
+                "transformation_id": "foo",
+                "team_id": "foo",
+                "webhook_id": "foo",
+                "log_level": "debug",
+                "logs": [
+                  {
+                    "type": "error",
+                    "message": "foo"
+                  }
+                ],
+                "updated_at": "foo",
+                "created_at": "foo",
+                "original_event_data": {
+                  "path": "foo",
+                  "query": "foo",
+                  "parsed_query": {},
+                  "headers": {},
+                  "body": {},
+                  "is_large_payload": true
+                },
+                "transformed_event_data": {
+                  "path": "foo",
+                  "query": "foo",
+                  "parsed_query": {},
+                  "headers": {},
+                  "body": {},
+                  "is_large_payload": true
+                },
+                "issue_id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -34219,77 +33967,54 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "order_by": "foo",
-                    "dir": "asc",
-                    "limit": 42,
-                    "prev": "foo",
-                    "next": "foo"
-                  },
-                  "count": 42,
-                  "models": [
-                    {
+                "pagination": {
+                  "order_by": "foo",
+                  "dir": "asc",
+                  "limit": 42,
+                  "prev": "foo",
+                  "next": "foo"
+                },
+                "count": 42,
+                "models": [
+                  {
+                    "id": "foo",
+                    "name": "foo",
+                    "team_id": "foo",
+                    "destination": {
                       "id": "foo",
                       "name": "foo",
                       "team_id": "foo",
-                      "destination": {
+                      "path_forwarding_disabled": true,
+                      "url": "foo",
+                      "cli_path": "foo",
+                      "rate_limit": 42,
+                      "rate_limit_period": "second",
+                      "archived_at": "foo",
+                      "updated_at": "foo",
+                      "created_at": "foo"
+                    },
+                    "source": {
+                      "id": "foo",
+                      "name": "foo",
+                      "team_id": "foo",
+                      "url": "foo",
+                      "integration_id": "foo",
+                      "integration": {
                         "id": "foo",
-                        "name": "foo",
-                        "team_id": "foo",
-                        "path_forwarding_disabled": true,
-                        "url": "foo",
-                        "cli_path": "foo",
-                        "rate_limit": 42,
-                        "rate_limit_period": "second",
-                        "archived_at": "foo",
-                        "updated_at": "foo",
-                        "created_at": "foo"
+                        "label": "foo",
+                        "provider": "twitter",
+                        "features": [
+                          "VERIFICATION"
+                        ]
                       },
-                      "source": {
-                        "id": "foo",
-                        "name": "foo",
-                        "team_id": "foo",
-                        "url": "foo",
-                        "integration_id": "foo",
-                        "integration": {
-                          "id": "foo",
-                          "label": "foo",
-                          "provider": "twitter",
-                          "features": [
-                            "VERIFICATION"
-                          ]
-                        },
-                        "archived_at": "foo",
-                        "updated_at": "foo",
-                        "created_at": "foo"
-                      },
-                      "ruleset": {
-                        "id": "foo",
-                        "name": "foo",
-                        "team_id": "foo",
-                        "rules": [
-                          {
-                            "type": "retry",
-                            "strategy": "linear",
-                            "interval": 42,
-                            "count": 42
-                          }
-                        ],
-                        "is_team_default": true,
-                        "archived_at": "foo",
-                        "updated_at": "foo",
-                        "created_at": "foo"
-                      },
-                      "resolved_rules": [
-                        {
-                          "type": "retry",
-                          "strategy": "linear",
-                          "interval": 42,
-                          "count": 42
-                        }
-                      ],
+                      "archived_at": "foo",
+                      "updated_at": "foo",
+                      "created_at": "foo"
+                    },
+                    "ruleset": {
+                      "id": "foo",
+                      "name": "foo",
+                      "team_id": "foo",
                       "rules": [
                         {
                           "type": "retry",
@@ -34298,13 +34023,33 @@
                           "count": 42
                         }
                       ],
+                      "is_team_default": true,
                       "archived_at": "foo",
-                      "paused_at": "foo",
                       "updated_at": "foo",
                       "created_at": "foo"
-                    }
-                  ]
-                }
+                    },
+                    "resolved_rules": [
+                      {
+                        "type": "retry",
+                        "strategy": "linear",
+                        "interval": 42,
+                        "count": 42
+                      }
+                    ],
+                    "rules": [
+                      {
+                        "type": "retry",
+                        "strategy": "linear",
+                        "interval": 42,
+                        "count": 42
+                      }
+                    ],
+                    "archived_at": "foo",
+                    "paused_at": "foo",
+                    "updated_at": "foo",
+                    "created_at": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -34633,67 +34378,44 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "destination": {
                   "id": "foo",
                   "name": "foo",
                   "team_id": "foo",
-                  "destination": {
+                  "path_forwarding_disabled": true,
+                  "url": "foo",
+                  "cli_path": "foo",
+                  "rate_limit": 42,
+                  "rate_limit_period": "second",
+                  "archived_at": "foo",
+                  "updated_at": "foo",
+                  "created_at": "foo"
+                },
+                "source": {
+                  "id": "foo",
+                  "name": "foo",
+                  "team_id": "foo",
+                  "url": "foo",
+                  "integration_id": "foo",
+                  "integration": {
                     "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "path_forwarding_disabled": true,
-                    "url": "foo",
-                    "cli_path": "foo",
-                    "rate_limit": 42,
-                    "rate_limit_period": "second",
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
+                    "label": "foo",
+                    "provider": "twitter",
+                    "features": [
+                      "VERIFICATION"
+                    ]
                   },
-                  "source": {
-                    "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "url": "foo",
-                    "integration_id": "foo",
-                    "integration": {
-                      "id": "foo",
-                      "label": "foo",
-                      "provider": "twitter",
-                      "features": [
-                        "VERIFICATION"
-                      ]
-                    },
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
-                  },
-                  "ruleset": {
-                    "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "rules": [
-                      {
-                        "type": "retry",
-                        "strategy": "linear",
-                        "interval": 42,
-                        "count": 42
-                      }
-                    ],
-                    "is_team_default": true,
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
-                  },
-                  "resolved_rules": [
-                    {
-                      "type": "retry",
-                      "strategy": "linear",
-                      "interval": 42,
-                      "count": 42
-                    }
-                  ],
+                  "archived_at": "foo",
+                  "updated_at": "foo",
+                  "created_at": "foo"
+                },
+                "ruleset": {
+                  "id": "foo",
+                  "name": "foo",
+                  "team_id": "foo",
                   "rules": [
                     {
                       "type": "retry",
@@ -34702,11 +34424,31 @@
                       "count": 42
                     }
                   ],
+                  "is_team_default": true,
                   "archived_at": "foo",
-                  "paused_at": "foo",
                   "updated_at": "foo",
                   "created_at": "foo"
-                }
+                },
+                "resolved_rules": [
+                  {
+                    "type": "retry",
+                    "strategy": "linear",
+                    "interval": 42,
+                    "count": 42
+                  }
+                ],
+                "rules": [
+                  {
+                    "type": "retry",
+                    "strategy": "linear",
+                    "interval": 42,
+                    "count": 42
+                  }
+                ],
+                "archived_at": "foo",
+                "paused_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -35023,67 +34765,44 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "destination": {
                   "id": "foo",
                   "name": "foo",
                   "team_id": "foo",
-                  "destination": {
+                  "path_forwarding_disabled": true,
+                  "url": "foo",
+                  "cli_path": "foo",
+                  "rate_limit": 42,
+                  "rate_limit_period": "second",
+                  "archived_at": "foo",
+                  "updated_at": "foo",
+                  "created_at": "foo"
+                },
+                "source": {
+                  "id": "foo",
+                  "name": "foo",
+                  "team_id": "foo",
+                  "url": "foo",
+                  "integration_id": "foo",
+                  "integration": {
                     "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "path_forwarding_disabled": true,
-                    "url": "foo",
-                    "cli_path": "foo",
-                    "rate_limit": 42,
-                    "rate_limit_period": "second",
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
+                    "label": "foo",
+                    "provider": "twitter",
+                    "features": [
+                      "VERIFICATION"
+                    ]
                   },
-                  "source": {
-                    "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "url": "foo",
-                    "integration_id": "foo",
-                    "integration": {
-                      "id": "foo",
-                      "label": "foo",
-                      "provider": "twitter",
-                      "features": [
-                        "VERIFICATION"
-                      ]
-                    },
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
-                  },
-                  "ruleset": {
-                    "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "rules": [
-                      {
-                        "type": "retry",
-                        "strategy": "linear",
-                        "interval": 42,
-                        "count": 42
-                      }
-                    ],
-                    "is_team_default": true,
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
-                  },
-                  "resolved_rules": [
-                    {
-                      "type": "retry",
-                      "strategy": "linear",
-                      "interval": 42,
-                      "count": 42
-                    }
-                  ],
+                  "archived_at": "foo",
+                  "updated_at": "foo",
+                  "created_at": "foo"
+                },
+                "ruleset": {
+                  "id": "foo",
+                  "name": "foo",
+                  "team_id": "foo",
                   "rules": [
                     {
                       "type": "retry",
@@ -35092,11 +34811,31 @@
                       "count": 42
                     }
                   ],
+                  "is_team_default": true,
                   "archived_at": "foo",
-                  "paused_at": "foo",
                   "updated_at": "foo",
                   "created_at": "foo"
-                }
+                },
+                "resolved_rules": [
+                  {
+                    "type": "retry",
+                    "strategy": "linear",
+                    "interval": 42,
+                    "count": 42
+                  }
+                ],
+                "rules": [
+                  {
+                    "type": "retry",
+                    "strategy": "linear",
+                    "interval": 42,
+                    "count": 42
+                  }
+                ],
+                "archived_at": "foo",
+                "paused_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -35289,67 +35028,44 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "destination": {
                   "id": "foo",
                   "name": "foo",
                   "team_id": "foo",
-                  "destination": {
+                  "path_forwarding_disabled": true,
+                  "url": "foo",
+                  "cli_path": "foo",
+                  "rate_limit": 42,
+                  "rate_limit_period": "second",
+                  "archived_at": "foo",
+                  "updated_at": "foo",
+                  "created_at": "foo"
+                },
+                "source": {
+                  "id": "foo",
+                  "name": "foo",
+                  "team_id": "foo",
+                  "url": "foo",
+                  "integration_id": "foo",
+                  "integration": {
                     "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "path_forwarding_disabled": true,
-                    "url": "foo",
-                    "cli_path": "foo",
-                    "rate_limit": 42,
-                    "rate_limit_period": "second",
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
+                    "label": "foo",
+                    "provider": "twitter",
+                    "features": [
+                      "VERIFICATION"
+                    ]
                   },
-                  "source": {
-                    "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "url": "foo",
-                    "integration_id": "foo",
-                    "integration": {
-                      "id": "foo",
-                      "label": "foo",
-                      "provider": "twitter",
-                      "features": [
-                        "VERIFICATION"
-                      ]
-                    },
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
-                  },
-                  "ruleset": {
-                    "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "rules": [
-                      {
-                        "type": "retry",
-                        "strategy": "linear",
-                        "interval": 42,
-                        "count": 42
-                      }
-                    ],
-                    "is_team_default": true,
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
-                  },
-                  "resolved_rules": [
-                    {
-                      "type": "retry",
-                      "strategy": "linear",
-                      "interval": 42,
-                      "count": 42
-                    }
-                  ],
+                  "archived_at": "foo",
+                  "updated_at": "foo",
+                  "created_at": "foo"
+                },
+                "ruleset": {
+                  "id": "foo",
+                  "name": "foo",
+                  "team_id": "foo",
                   "rules": [
                     {
                       "type": "retry",
@@ -35358,11 +35074,31 @@
                       "count": 42
                     }
                   ],
+                  "is_team_default": true,
                   "archived_at": "foo",
-                  "paused_at": "foo",
                   "updated_at": "foo",
                   "created_at": "foo"
-                }
+                },
+                "resolved_rules": [
+                  {
+                    "type": "retry",
+                    "strategy": "linear",
+                    "interval": 42,
+                    "count": 42
+                  }
+                ],
+                "rules": [
+                  {
+                    "type": "retry",
+                    "strategy": "linear",
+                    "interval": 42,
+                    "count": 42
+                  }
+                ],
+                "archived_at": "foo",
+                "paused_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -35655,67 +35391,44 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "destination": {
                   "id": "foo",
                   "name": "foo",
                   "team_id": "foo",
-                  "destination": {
+                  "path_forwarding_disabled": true,
+                  "url": "foo",
+                  "cli_path": "foo",
+                  "rate_limit": 42,
+                  "rate_limit_period": "second",
+                  "archived_at": "foo",
+                  "updated_at": "foo",
+                  "created_at": "foo"
+                },
+                "source": {
+                  "id": "foo",
+                  "name": "foo",
+                  "team_id": "foo",
+                  "url": "foo",
+                  "integration_id": "foo",
+                  "integration": {
                     "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "path_forwarding_disabled": true,
-                    "url": "foo",
-                    "cli_path": "foo",
-                    "rate_limit": 42,
-                    "rate_limit_period": "second",
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
+                    "label": "foo",
+                    "provider": "twitter",
+                    "features": [
+                      "VERIFICATION"
+                    ]
                   },
-                  "source": {
-                    "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "url": "foo",
-                    "integration_id": "foo",
-                    "integration": {
-                      "id": "foo",
-                      "label": "foo",
-                      "provider": "twitter",
-                      "features": [
-                        "VERIFICATION"
-                      ]
-                    },
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
-                  },
-                  "ruleset": {
-                    "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "rules": [
-                      {
-                        "type": "retry",
-                        "strategy": "linear",
-                        "interval": 42,
-                        "count": 42
-                      }
-                    ],
-                    "is_team_default": true,
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
-                  },
-                  "resolved_rules": [
-                    {
-                      "type": "retry",
-                      "strategy": "linear",
-                      "interval": 42,
-                      "count": 42
-                    }
-                  ],
+                  "archived_at": "foo",
+                  "updated_at": "foo",
+                  "created_at": "foo"
+                },
+                "ruleset": {
+                  "id": "foo",
+                  "name": "foo",
+                  "team_id": "foo",
                   "rules": [
                     {
                       "type": "retry",
@@ -35724,11 +35437,31 @@
                       "count": 42
                     }
                   ],
+                  "is_team_default": true,
                   "archived_at": "foo",
-                  "paused_at": "foo",
                   "updated_at": "foo",
                   "created_at": "foo"
-                }
+                },
+                "resolved_rules": [
+                  {
+                    "type": "retry",
+                    "strategy": "linear",
+                    "interval": 42,
+                    "count": 42
+                  }
+                ],
+                "rules": [
+                  {
+                    "type": "retry",
+                    "strategy": "linear",
+                    "interval": 42,
+                    "count": 42
+                  }
+                ],
+                "archived_at": "foo",
+                "paused_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -35921,67 +35654,44 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "destination": {
                   "id": "foo",
                   "name": "foo",
                   "team_id": "foo",
-                  "destination": {
+                  "path_forwarding_disabled": true,
+                  "url": "foo",
+                  "cli_path": "foo",
+                  "rate_limit": 42,
+                  "rate_limit_period": "second",
+                  "archived_at": "foo",
+                  "updated_at": "foo",
+                  "created_at": "foo"
+                },
+                "source": {
+                  "id": "foo",
+                  "name": "foo",
+                  "team_id": "foo",
+                  "url": "foo",
+                  "integration_id": "foo",
+                  "integration": {
                     "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "path_forwarding_disabled": true,
-                    "url": "foo",
-                    "cli_path": "foo",
-                    "rate_limit": 42,
-                    "rate_limit_period": "second",
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
+                    "label": "foo",
+                    "provider": "twitter",
+                    "features": [
+                      "VERIFICATION"
+                    ]
                   },
-                  "source": {
-                    "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "url": "foo",
-                    "integration_id": "foo",
-                    "integration": {
-                      "id": "foo",
-                      "label": "foo",
-                      "provider": "twitter",
-                      "features": [
-                        "VERIFICATION"
-                      ]
-                    },
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
-                  },
-                  "ruleset": {
-                    "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "rules": [
-                      {
-                        "type": "retry",
-                        "strategy": "linear",
-                        "interval": 42,
-                        "count": 42
-                      }
-                    ],
-                    "is_team_default": true,
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
-                  },
-                  "resolved_rules": [
-                    {
-                      "type": "retry",
-                      "strategy": "linear",
-                      "interval": 42,
-                      "count": 42
-                    }
-                  ],
+                  "archived_at": "foo",
+                  "updated_at": "foo",
+                  "created_at": "foo"
+                },
+                "ruleset": {
+                  "id": "foo",
+                  "name": "foo",
+                  "team_id": "foo",
                   "rules": [
                     {
                       "type": "retry",
@@ -35990,11 +35700,31 @@
                       "count": 42
                     }
                   ],
+                  "is_team_default": true,
                   "archived_at": "foo",
-                  "paused_at": "foo",
                   "updated_at": "foo",
                   "created_at": "foo"
-                }
+                },
+                "resolved_rules": [
+                  {
+                    "type": "retry",
+                    "strategy": "linear",
+                    "interval": 42,
+                    "count": 42
+                  }
+                ],
+                "rules": [
+                  {
+                    "type": "retry",
+                    "strategy": "linear",
+                    "interval": 42,
+                    "count": 42
+                  }
+                ],
+                "archived_at": "foo",
+                "paused_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -36187,67 +35917,44 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "destination": {
                   "id": "foo",
                   "name": "foo",
                   "team_id": "foo",
-                  "destination": {
+                  "path_forwarding_disabled": true,
+                  "url": "foo",
+                  "cli_path": "foo",
+                  "rate_limit": 42,
+                  "rate_limit_period": "second",
+                  "archived_at": "foo",
+                  "updated_at": "foo",
+                  "created_at": "foo"
+                },
+                "source": {
+                  "id": "foo",
+                  "name": "foo",
+                  "team_id": "foo",
+                  "url": "foo",
+                  "integration_id": "foo",
+                  "integration": {
                     "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "path_forwarding_disabled": true,
-                    "url": "foo",
-                    "cli_path": "foo",
-                    "rate_limit": 42,
-                    "rate_limit_period": "second",
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
+                    "label": "foo",
+                    "provider": "twitter",
+                    "features": [
+                      "VERIFICATION"
+                    ]
                   },
-                  "source": {
-                    "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "url": "foo",
-                    "integration_id": "foo",
-                    "integration": {
-                      "id": "foo",
-                      "label": "foo",
-                      "provider": "twitter",
-                      "features": [
-                        "VERIFICATION"
-                      ]
-                    },
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
-                  },
-                  "ruleset": {
-                    "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "rules": [
-                      {
-                        "type": "retry",
-                        "strategy": "linear",
-                        "interval": 42,
-                        "count": 42
-                      }
-                    ],
-                    "is_team_default": true,
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
-                  },
-                  "resolved_rules": [
-                    {
-                      "type": "retry",
-                      "strategy": "linear",
-                      "interval": 42,
-                      "count": 42
-                    }
-                  ],
+                  "archived_at": "foo",
+                  "updated_at": "foo",
+                  "created_at": "foo"
+                },
+                "ruleset": {
+                  "id": "foo",
+                  "name": "foo",
+                  "team_id": "foo",
                   "rules": [
                     {
                       "type": "retry",
@@ -36256,11 +35963,31 @@
                       "count": 42
                     }
                   ],
+                  "is_team_default": true,
                   "archived_at": "foo",
-                  "paused_at": "foo",
                   "updated_at": "foo",
                   "created_at": "foo"
-                }
+                },
+                "resolved_rules": [
+                  {
+                    "type": "retry",
+                    "strategy": "linear",
+                    "interval": 42,
+                    "count": 42
+                  }
+                ],
+                "rules": [
+                  {
+                    "type": "retry",
+                    "strategy": "linear",
+                    "interval": 42,
+                    "count": 42
+                  }
+                ],
+                "archived_at": "foo",
+                "paused_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -36453,67 +36180,44 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "destination": {
                   "id": "foo",
                   "name": "foo",
                   "team_id": "foo",
-                  "destination": {
+                  "path_forwarding_disabled": true,
+                  "url": "foo",
+                  "cli_path": "foo",
+                  "rate_limit": 42,
+                  "rate_limit_period": "second",
+                  "archived_at": "foo",
+                  "updated_at": "foo",
+                  "created_at": "foo"
+                },
+                "source": {
+                  "id": "foo",
+                  "name": "foo",
+                  "team_id": "foo",
+                  "url": "foo",
+                  "integration_id": "foo",
+                  "integration": {
                     "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "path_forwarding_disabled": true,
-                    "url": "foo",
-                    "cli_path": "foo",
-                    "rate_limit": 42,
-                    "rate_limit_period": "second",
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
+                    "label": "foo",
+                    "provider": "twitter",
+                    "features": [
+                      "VERIFICATION"
+                    ]
                   },
-                  "source": {
-                    "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "url": "foo",
-                    "integration_id": "foo",
-                    "integration": {
-                      "id": "foo",
-                      "label": "foo",
-                      "provider": "twitter",
-                      "features": [
-                        "VERIFICATION"
-                      ]
-                    },
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
-                  },
-                  "ruleset": {
-                    "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "rules": [
-                      {
-                        "type": "retry",
-                        "strategy": "linear",
-                        "interval": 42,
-                        "count": 42
-                      }
-                    ],
-                    "is_team_default": true,
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
-                  },
-                  "resolved_rules": [
-                    {
-                      "type": "retry",
-                      "strategy": "linear",
-                      "interval": 42,
-                      "count": 42
-                    }
-                  ],
+                  "archived_at": "foo",
+                  "updated_at": "foo",
+                  "created_at": "foo"
+                },
+                "ruleset": {
+                  "id": "foo",
+                  "name": "foo",
+                  "team_id": "foo",
                   "rules": [
                     {
                       "type": "retry",
@@ -36522,11 +36226,31 @@
                       "count": 42
                     }
                   ],
+                  "is_team_default": true,
                   "archived_at": "foo",
-                  "paused_at": "foo",
                   "updated_at": "foo",
                   "created_at": "foo"
-                }
+                },
+                "resolved_rules": [
+                  {
+                    "type": "retry",
+                    "strategy": "linear",
+                    "interval": 42,
+                    "count": 42
+                  }
+                ],
+                "rules": [
+                  {
+                    "type": "retry",
+                    "strategy": "linear",
+                    "interval": 42,
+                    "count": 42
+                  }
+                ],
+                "archived_at": "foo",
+                "paused_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -36719,67 +36443,44 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
+                "id": "foo",
+                "name": "foo",
+                "team_id": "foo",
+                "destination": {
                   "id": "foo",
                   "name": "foo",
                   "team_id": "foo",
-                  "destination": {
+                  "path_forwarding_disabled": true,
+                  "url": "foo",
+                  "cli_path": "foo",
+                  "rate_limit": 42,
+                  "rate_limit_period": "second",
+                  "archived_at": "foo",
+                  "updated_at": "foo",
+                  "created_at": "foo"
+                },
+                "source": {
+                  "id": "foo",
+                  "name": "foo",
+                  "team_id": "foo",
+                  "url": "foo",
+                  "integration_id": "foo",
+                  "integration": {
                     "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "path_forwarding_disabled": true,
-                    "url": "foo",
-                    "cli_path": "foo",
-                    "rate_limit": 42,
-                    "rate_limit_period": "second",
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
+                    "label": "foo",
+                    "provider": "twitter",
+                    "features": [
+                      "VERIFICATION"
+                    ]
                   },
-                  "source": {
-                    "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "url": "foo",
-                    "integration_id": "foo",
-                    "integration": {
-                      "id": "foo",
-                      "label": "foo",
-                      "provider": "twitter",
-                      "features": [
-                        "VERIFICATION"
-                      ]
-                    },
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
-                  },
-                  "ruleset": {
-                    "id": "foo",
-                    "name": "foo",
-                    "team_id": "foo",
-                    "rules": [
-                      {
-                        "type": "retry",
-                        "strategy": "linear",
-                        "interval": 42,
-                        "count": 42
-                      }
-                    ],
-                    "is_team_default": true,
-                    "archived_at": "foo",
-                    "updated_at": "foo",
-                    "created_at": "foo"
-                  },
-                  "resolved_rules": [
-                    {
-                      "type": "retry",
-                      "strategy": "linear",
-                      "interval": 42,
-                      "count": 42
-                    }
-                  ],
+                  "archived_at": "foo",
+                  "updated_at": "foo",
+                  "created_at": "foo"
+                },
+                "ruleset": {
+                  "id": "foo",
+                  "name": "foo",
+                  "team_id": "foo",
                   "rules": [
                     {
                       "type": "retry",
@@ -36788,11 +36489,31 @@
                       "count": 42
                     }
                   ],
+                  "is_team_default": true,
                   "archived_at": "foo",
-                  "paused_at": "foo",
                   "updated_at": "foo",
                   "created_at": "foo"
-                }
+                },
+                "resolved_rules": [
+                  {
+                    "type": "retry",
+                    "strategy": "linear",
+                    "interval": 42,
+                    "count": 42
+                  }
+                ],
+                "rules": [
+                  {
+                    "type": "retry",
+                    "strategy": "linear",
+                    "interval": 42,
+                    "count": 42
+                  }
+                ],
+                "archived_at": "foo",
+                "paused_at": "foo",
+                "updated_at": "foo",
+                "created_at": "foo"
               },
               "responseBodyV3": {
                 "type": "json",

@@ -6353,20 +6353,17 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "created": "foo",
-                  "label": "foo",
-                  "name": "foo",
-                  "status": "ACTIVE",
-                  "environment": "DEVELOPMENT",
-                  "model_type": "GENERATE",
-                  "active_model_version_ids": [
-                    "foo"
-                  ],
-                  "last_deployed_on": "foo"
-                }
+                "id": "foo",
+                "created": "foo",
+                "label": "foo",
+                "name": "foo",
+                "status": "ACTIVE",
+                "environment": "DEVELOPMENT",
+                "model_type": "GENERATE",
+                "active_model_version_ids": [
+                  "foo"
+                ],
+                "last_deployed_on": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6456,7 +6453,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "Example1",
+              "name": "Index Using Instructor Model",
               "description": "",
               "path": "/v1/document-indexes",
               "pathParameters": {},
@@ -6509,16 +6506,13 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "created": "foo",
-                  "label": "foo",
-                  "name": "foo",
-                  "status": "ACTIVE",
-                  "environment": "DEVELOPMENT",
-                  "indexing_config": {}
-                }
+                "id": "foo",
+                "created": "foo",
+                "label": "foo",
+                "name": "foo",
+                "status": "ACTIVE",
+                "environment": "DEVELOPMENT",
+                "indexing_config": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6534,7 +6528,7 @@
               }
             },
             {
-              "name": "Example2",
+              "name": "Index Using a Sentence Transformers Model",
               "description": "",
               "path": "/v1/document-indexes",
               "pathParameters": {},
@@ -6579,16 +6573,13 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "created": "foo",
-                  "label": "foo",
-                  "name": "foo",
-                  "status": "ACTIVE",
-                  "environment": "DEVELOPMENT",
-                  "indexing_config": {}
-                }
+                "id": "foo",
+                "created": "foo",
+                "label": "foo",
+                "name": "foo",
+                "status": "ACTIVE",
+                "environment": "DEVELOPMENT",
+                "indexing_config": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6604,7 +6595,7 @@
               }
             },
             {
-              "name": "Example3",
+              "name": "Index Using OpenAI Model",
               "description": "",
               "path": "/v1/document-indexes",
               "pathParameters": {},
@@ -6653,16 +6644,13 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "created": "foo",
-                  "label": "foo",
-                  "name": "foo",
-                  "status": "ACTIVE",
-                  "environment": "DEVELOPMENT",
-                  "indexing_config": {}
-                }
+                "id": "foo",
+                "created": "foo",
+                "label": "foo",
+                "name": "foo",
+                "status": "ACTIVE",
+                "environment": "DEVELOPMENT",
+                "indexing_config": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6797,33 +6785,30 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "count": 123,
-                  "next": "http://api.example.org/accounts/?offset=400&limit=100",
-                  "previous": "http://api.example.org/accounts/?offset=200&limit=100",
-                  "results": [
-                    {
-                      "id": "foo",
-                      "external_id": "foo",
-                      "last_uploaded_at": "foo",
-                      "label": "foo",
-                      "processing_state": "QUEUED",
-                      "processing_failure_reason": "EXCEEDED_CHARACTER_LIMIT",
-                      "status": "ACTIVE",
-                      "keywords": [
-                        "foo"
-                      ],
-                      "document_to_document_indexes": [
-                        {
-                          "id": "foo",
-                          "document_index_id": "foo",
-                          "indexing_state": "AWAITING_PROCESSING"
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "count": 123,
+                "next": "http://api.example.org/accounts/?offset=400&limit=100",
+                "previous": "http://api.example.org/accounts/?offset=200&limit=100",
+                "results": [
+                  {
+                    "id": "foo",
+                    "external_id": "foo",
+                    "last_uploaded_at": "foo",
+                    "label": "foo",
+                    "processing_state": "QUEUED",
+                    "processing_failure_reason": "EXCEEDED_CHARACTER_LIMIT",
+                    "status": "ACTIVE",
+                    "keywords": [
+                      "foo"
+                    ],
+                    "document_to_document_indexes": [
+                      {
+                        "id": "foo",
+                        "document_index_id": "foo",
+                        "indexing_state": "AWAITING_PROCESSING"
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6975,10 +6960,7 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "document_id": "foo"
-                }
+                "document_id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7075,86 +7057,83 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "created": "foo",
-                  "label": "foo",
-                  "model_type": "GENERATE",
-                  "provider": "ANTHROPIC",
-                  "external_id": "foo",
-                  "build_config": {
-                    "base_model": "foo",
-                    "sandbox_snapshot": {
-                      "id": "foo",
-                      "prompt_index": 42,
-                      "prompt_id": "foo",
-                      "sandbox_id": "foo"
-                    }
-                  },
-                  "exec_config": {
-                    "parameters": {
-                      "temperature": 42,
-                      "max_tokens": 42,
-                      "top_p": 42,
-                      "frequency_penalty": 42,
-                      "presence_penalty": 42,
-                      "logit_bias": {},
-                      "stop": [
-                        "foo"
-                      ],
-                      "top_k": 42
-                    },
-                    "input_variables": [
-                      {
-                        "key": "foo"
-                      }
+                "id": "foo",
+                "created": "foo",
+                "label": "foo",
+                "model_type": "GENERATE",
+                "provider": "ANTHROPIC",
+                "external_id": "foo",
+                "build_config": {
+                  "base_model": "foo",
+                  "sandbox_snapshot": {
+                    "id": "foo",
+                    "prompt_index": 42,
+                    "prompt_id": "foo",
+                    "sandbox_id": "foo"
+                  }
+                },
+                "exec_config": {
+                  "parameters": {
+                    "temperature": 42,
+                    "max_tokens": 42,
+                    "top_p": 42,
+                    "frequency_penalty": 42,
+                    "presence_penalty": 42,
+                    "logit_bias": {},
+                    "stop": [
+                      "foo"
                     ],
-                    "prompt_template": "foo",
-                    "prompt_block_data": {
-                      "version": 42,
-                      "blocks": [
-                        {
-                          "id": "foo",
-                          "block_type": "CHAT_MESSAGE",
-                          "properties": {
-                            "chat_role": "SYSTEM",
-                            "chat_message_unterminated": false,
-                            "template": "foo",
-                            "template_type": "STRING",
-                            "function_name": "foo",
-                            "function_description": "foo",
-                            "function_parameters": {},
-                            "blocks": [
-                              {
-                                "id": "foo",
-                                "block_type": "CHAT_MESSAGE",
-                                "properties": {
-                                  "chat_role": "SYSTEM",
-                                  "chat_message_unterminated": false,
-                                  "template": "foo",
-                                  "template_type": "STRING",
-                                  "function_name": "foo",
-                                  "function_description": "foo",
-                                  "function_parameters": {},
-                                  "blocks": [
-                                    {
-                                      "id": "foo",
-                                      "block_type": "CHAT_MESSAGE",
-                                      "properties": {}
-                                    }
-                                  ]
-                                }
-                              }
-                            ]
-                          }
-                        }
-                      ]
-                    },
-                    "prompt_syntax_version": 42
+                    "top_k": 42
                   },
-                  "status": "CREATING"
-                }
+                  "input_variables": [
+                    {
+                      "key": "foo"
+                    }
+                  ],
+                  "prompt_template": "foo",
+                  "prompt_block_data": {
+                    "version": 42,
+                    "blocks": [
+                      {
+                        "id": "foo",
+                        "block_type": "CHAT_MESSAGE",
+                        "properties": {
+                          "chat_role": "SYSTEM",
+                          "chat_message_unterminated": false,
+                          "template": "foo",
+                          "template_type": "STRING",
+                          "function_name": "foo",
+                          "function_description": "foo",
+                          "function_parameters": {},
+                          "blocks": [
+                            {
+                              "id": "foo",
+                              "block_type": "CHAT_MESSAGE",
+                              "properties": {
+                                "chat_role": "SYSTEM",
+                                "chat_message_unterminated": false,
+                                "template": "foo",
+                                "template_type": "STRING",
+                                "function_name": "foo",
+                                "function_description": "foo",
+                                "function_parameters": {},
+                                "blocks": [
+                                  {
+                                    "id": "foo",
+                                    "block_type": "CHAT_MESSAGE",
+                                    "properties": {}
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  "prompt_syntax_version": 42
+                },
+                "status": "CREATING"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7339,12 +7318,9 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "prompt": {
-                    "text": "foo",
-                    "num_tokens": 42
-                  }
+                "prompt": {
+                  "text": "foo",
+                  "num_tokens": 42
                 }
               },
               "responseBodyV3": {
@@ -7519,28 +7495,25 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "prompt": {
-                    "id": "foo",
-                    "label": "foo"
-                  },
-                  "sandbox_snapshot": {
-                    "id": "foo"
-                  },
-                  "sandbox": {
-                    "id": "foo",
-                    "label": "foo"
-                  },
-                  "model_version": {
-                    "id": "foo",
-                    "label": "foo"
-                  },
-                  "deployment": {
-                    "id": "foo",
-                    "name": "foo",
-                    "label": "foo"
-                  }
+                "prompt": {
+                  "id": "foo",
+                  "label": "foo"
+                },
+                "sandbox_snapshot": {
+                  "id": "foo"
+                },
+                "sandbox": {
+                  "id": "foo",
+                  "label": "foo"
+                },
+                "model_version": {
+                  "id": "foo",
+                  "label": "foo"
+                },
+                "deployment": {
+                  "id": "foo",
+                  "name": "foo",
+                  "label": "foo"
                 }
               },
               "responseBodyV3": {
@@ -7660,7 +7633,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "Example1",
+              "name": "Basic Example",
               "description": "",
               "path": "/v1/sandboxes/id/scenarios",
               "pathParameters": {
@@ -7709,27 +7682,24 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "label": "Untitled Scenario",
-                  "inputs": [
-                    {
-                      "key": "foo",
-                      "type": "TEXT",
-                      "value": "foo",
-                      "chat_history": [
-                        {
-                          "text": "foo",
-                          "role": "SYSTEM"
-                        }
-                      ]
-                    }
-                  ],
-                  "id": "foo",
-                  "metric_input_params": {
-                    "params": {
-                      "target": "foo"
-                    }
+                "label": "Untitled Scenario",
+                "inputs": [
+                  {
+                    "key": "foo",
+                    "type": "TEXT",
+                    "value": "foo",
+                    "chat_history": [
+                      {
+                        "text": "foo",
+                        "role": "SYSTEM"
+                      }
+                    ]
+                  }
+                ],
+                "id": "foo",
+                "metric_input_params": {
+                  "params": {
+                    "target": "foo"
                   }
                 }
               },
@@ -7760,7 +7730,7 @@
               }
             },
             {
-              "name": "Example2",
+              "name": "Chat History Example",
               "description": "",
               "path": "/v1/sandboxes/id/scenarios",
               "pathParameters": {
@@ -7817,27 +7787,24 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "label": "Untitled Scenario",
-                  "inputs": [
-                    {
-                      "key": "foo",
-                      "type": "TEXT",
-                      "value": "foo",
-                      "chat_history": [
-                        {
-                          "text": "foo",
-                          "role": "SYSTEM"
-                        }
-                      ]
-                    }
-                  ],
-                  "id": "foo",
-                  "metric_input_params": {
-                    "params": {
-                      "target": "foo"
-                    }
+                "label": "Untitled Scenario",
+                "inputs": [
+                  {
+                    "key": "foo",
+                    "type": "TEXT",
+                    "value": "foo",
+                    "chat_history": [
+                      {
+                        "text": "foo",
+                        "role": "SYSTEM"
+                      }
+                    ]
+                  }
+                ],
+                "id": "foo",
+                "metric_input_params": {
+                  "params": {
+                    "target": "foo"
                   }
                 }
               },
@@ -8065,14 +8032,11 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "test_case_id": "foo",
-                  "label": "foo",
-                  "input_values": {},
-                  "evaluation_params": {
-                    "target": "foo"
-                  }
+                "test_case_id": "foo",
+                "label": "foo",
+                "input_values": {},
+                "evaluation_params": {
+                  "target": "foo"
                 }
               },
               "responseBodyV3": {
@@ -8319,21 +8283,18 @@
               }
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "stream",
-              "value": [
-                {
-                  "state": "INITIATED",
-                  "meta": {
-                    "model_name": "foo",
-                    "latency": 42,
-                    "deployment_release_tag": "foo",
-                    "prompt_version_id": "foo"
-                  },
-                  "execution_id": "foo"
-                }
-              ]
-            },
+            "responseBody": [
+              {
+                "state": "INITIATED",
+                "meta": {
+                  "model_name": "foo",
+                  "latency": 42,
+                  "deployment_release_tag": "foo",
+                  "prompt_version_id": "foo"
+                },
+                "execution_id": "foo"
+              }
+            ],
             "responseBodyV3": {
               "type": "stream",
               "value": [
@@ -8443,33 +8404,30 @@
               }
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "stream",
-              "value": [
-                {
-                  "run_id": "foo",
-                  "external_id": "foo",
-                  "type": "foo",
-                  "data": {
-                    "id": "foo",
+            "responseBody": [
+              {
+                "run_id": "foo",
+                "external_id": "foo",
+                "type": "foo",
+                "data": {
+                  "id": "foo",
+                  "state": "INITIATED",
+                  "ts": "foo",
+                  "output": {
+                    "name": "foo",
                     "state": "INITIATED",
-                    "ts": "foo",
-                    "output": {
-                      "name": "foo",
-                      "state": "INITIATED",
-                      "node_id": "foo",
-                      "type": "foo",
-                      "delta": "foo",
-                      "value": "foo"
-                    },
-                    "error": {
-                      "message": "foo",
-                      "code": "WORKFLOW_INITIALIZATION"
-                    }
+                    "node_id": "foo",
+                    "type": "foo",
+                    "delta": "foo",
+                    "value": "foo"
+                  },
+                  "error": {
+                    "message": "foo",
+                    "code": "WORKFLOW_INITIALIZATION"
                   }
                 }
-              ]
-            },
+              }
+            ],
             "responseBodyV3": {
               "type": "stream",
               "value": [
@@ -8640,39 +8598,36 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "results": [
-                  {
-                    "data": {
-                      "completions": [
-                        {
-                          "id": "foo",
-                          "external_id": "foo",
-                          "text": "foo",
-                          "finish_reason": "LENGTH",
-                          "logprobs": {
-                            "tokens": [
-                              {
-                                "token": "foo",
-                                "logprob": 42,
-                                "top_logprobs": {},
-                                "text_offset": 42
-                              }
-                            ],
-                            "likelihood": 42
-                          },
-                          "model_version_id": "foo",
-                          "type": "STRING"
-                        }
-                      ]
-                    },
-                    "error": {
-                      "message": "foo"
-                    }
+              "results": [
+                {
+                  "data": {
+                    "completions": [
+                      {
+                        "id": "foo",
+                        "external_id": "foo",
+                        "text": "foo",
+                        "finish_reason": "LENGTH",
+                        "logprobs": {
+                          "tokens": [
+                            {
+                              "token": "foo",
+                              "logprob": 42,
+                              "top_logprobs": {},
+                              "text_offset": 42
+                            }
+                          ],
+                          "likelihood": 42
+                        },
+                        "model_version_id": "foo",
+                        "type": "STRING"
+                      }
+                    ]
+                  },
+                  "error": {
+                    "message": "foo"
                   }
-                ]
-              }
+                }
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -8851,41 +8806,38 @@
               }
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "stream",
-              "value": [
-                {
-                  "delta": {
-                    "request_index": 42,
-                    "data": {
-                      "completion_index": 42,
-                      "completion": {
-                        "id": "foo",
-                        "external_id": "foo",
-                        "text": "foo",
-                        "finish_reason": "LENGTH",
-                        "logprobs": {
-                          "tokens": [
-                            {
-                              "token": "foo",
-                              "logprob": 42,
-                              "top_logprobs": {},
-                              "text_offset": 42
-                            }
-                          ],
-                          "likelihood": 42
-                        },
-                        "model_version_id": "foo",
-                        "type": "STRING"
-                      }
-                    },
-                    "error": {
-                      "message": "foo"
+            "responseBody": [
+              {
+                "delta": {
+                  "request_index": 42,
+                  "data": {
+                    "completion_index": 42,
+                    "completion": {
+                      "id": "foo",
+                      "external_id": "foo",
+                      "text": "foo",
+                      "finish_reason": "LENGTH",
+                      "logprobs": {
+                        "tokens": [
+                          {
+                            "token": "foo",
+                            "logprob": 42,
+                            "top_logprobs": {},
+                            "text_offset": 42
+                          }
+                        ],
+                        "likelihood": 42
+                      },
+                      "model_version_id": "foo",
+                      "type": "STRING"
                     }
+                  },
+                  "error": {
+                    "message": "foo"
                   }
                 }
-              ]
-            },
+              }
+            ],
             "responseBodyV3": {
               "type": "stream",
               "value": [
@@ -9043,23 +8995,20 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "results": [
-                  {
-                    "document": {
-                      "id": "foo",
-                      "label": "foo",
-                      "external_id": "foo"
-                    },
-                    "text": "foo",
-                    "keywords": [
-                      "foo"
-                    ],
-                    "score": 42
-                  }
-                ]
-              }
+              "results": [
+                {
+                  "document": {
+                    "id": "foo",
+                    "label": "foo",
+                    "external_id": "foo"
+                  },
+                  "text": "foo",
+                  "keywords": [
+                    "foo"
+                  ],
+                  "score": 42
+                }
+              ]
             },
             "responseBodyV3": {
               "type": "json",

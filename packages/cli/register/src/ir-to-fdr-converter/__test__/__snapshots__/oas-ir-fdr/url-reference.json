@@ -1394,30 +1394,27 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 0,
-                  "category": {
-                    "id": 6,
+                "id": 0,
+                "category": {
+                  "id": 6,
+                  "name": "name"
+                },
+                "name": "doggie",
+                "photoUrls": [
+                  "photoUrls",
+                  "photoUrls"
+                ],
+                "tags": [
+                  {
+                    "id": 1,
                     "name": "name"
                   },
-                  "name": "doggie",
-                  "photoUrls": [
-                    "photoUrls",
-                    "photoUrls"
-                  ],
-                  "tags": [
-                    {
-                      "id": 1,
-                      "name": "name"
-                    },
-                    {
-                      "id": 1,
-                      "name": "name"
-                    }
-                  ],
-                  "status": "available"
-                }
+                  {
+                    "id": 1,
+                    "name": "name"
+                  }
+                ],
+                "status": "available"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -1515,15 +1512,12 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 0,
-                  "petId": 6,
-                  "quantity": 1,
-                  "shipDate": "foo",
-                  "status": "placed",
-                  "complete": false
-                }
+                "id": 0,
+                "petId": 6,
+                "quantity": 1,
+                "shipDate": "foo",
+                "status": "placed",
+                "complete": false
               },
               "responseBodyV3": {
                 "type": "json",

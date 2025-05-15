@@ -80,11 +80,8 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "foo": "foo",
-                "bar": "foo"
-              }
+              "foo": "foo",
+              "bar": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -142,11 +139,8 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "foo": "foo",
-                "bar": "foo"
-              }
+              "foo": "foo",
+              "bar": "foo"
             },
             "responseBodyV3": {
               "type": "json",
