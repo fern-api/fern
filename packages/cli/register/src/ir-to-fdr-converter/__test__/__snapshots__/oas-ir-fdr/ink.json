@@ -781,6 +781,71 @@
         "extends": [],
         "properties": [
           {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
             "key": "type",
             "valueType": {
               "type": "primitive",
@@ -987,6 +1052,71 @@
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -1201,6 +1331,71 @@
         "extends": [],
         "properties": [
           {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
             "key": "type",
             "valueType": {
               "type": "primitive",
@@ -1353,6 +1548,71 @@
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -1965,6 +2225,71 @@
         "extends": [],
         "properties": [
           {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
             "key": "type",
             "valueType": {
               "type": "primitive",
@@ -2171,6 +2496,71 @@
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -2385,6 +2775,71 @@
         "extends": [],
         "properties": [
           {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
             "key": "type",
             "valueType": {
               "type": "primitive",
@@ -2537,6 +2992,71 @@
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -4067,6 +4587,71 @@
         "extends": [],
         "properties": [
           {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
             "key": "type",
             "valueType": {
               "type": "primitive",
@@ -4273,6 +4858,71 @@
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -4487,6 +5137,71 @@
         "extends": [],
         "properties": [
           {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
             "key": "type",
             "valueType": {
               "type": "primitive",
@@ -4639,6 +5354,71 @@
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -4883,6 +5663,71 @@
         "extends": [],
         "properties": [
           {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
             "key": "type",
             "valueType": {
               "type": "primitive",
@@ -5089,6 +5934,71 @@
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -5303,6 +6213,71 @@
         "extends": [],
         "properties": [
           {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
             "key": "type",
             "valueType": {
               "type": "primitive",
@@ -5455,6 +6430,71 @@
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -5735,6 +6775,71 @@
         "extends": [],
         "properties": [
           {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
             "key": "type",
             "valueType": {
               "type": "primitive",
@@ -5941,6 +7046,71 @@
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -6155,6 +7325,71 @@
         "extends": [],
         "properties": [
           {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
             "key": "type",
             "valueType": {
               "type": "primitive",
@@ -6307,6 +7542,71 @@
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {

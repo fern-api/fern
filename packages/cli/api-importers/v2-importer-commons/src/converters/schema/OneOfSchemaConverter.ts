@@ -191,12 +191,14 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 continue;
             }
 
+            const extendedSubSchema = this.extendSubSchema(subSchema);
+
             const schemaId = this.context.convertBreadcrumbsToName([`${this.id}_${index}`]);
             const schemaConverter = new SchemaConverter({
                 context: this.context,
                 id: schemaId,
                 breadcrumbs: [...this.breadcrumbs, `oneOf[${index}]`],
-                schema: subSchema
+                schema: extendedSubSchema ?? subSchema
             });
             const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
@@ -345,5 +347,36 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
     private wrapInNullable(type: TypeReference): TypeReference {
         return TypeReference.container(ContainerType.nullable(type));
+    }
+
+    private mergeIntoObjectSchema(
+        subSchema: OpenAPIV3_1.SchemaObject,
+        topLevelObjectProperties: Record<string, OpenAPIV3_1.SchemaObject>
+    ): OpenAPIV3_1.SchemaObject {
+        return {
+            ...subSchema,
+            properties: {
+                ...topLevelObjectProperties,
+                ...(subSchema.properties ?? {})
+            }
+        };
+    }
+
+    private extendSubSchema(subSchema: OpenAPIV3_1.SchemaObject): OpenAPIV3_1.SchemaObject | undefined {
+        if (Object.entries(this.schema.properties ?? {}).length === 0) {
+            return subSchema;
+        }
+
+        if (subSchema.type === "object") {
+            return this.mergeIntoObjectSchema(subSchema, this.schema.properties ?? {});
+        }
+
+        if (!this.context.isObjectSchemaType(subSchema)) {
+            this.context.errorCollector.collect({
+                message: `Received additional object properties for oneOf/anyOf that are not objects: ${JSON.stringify(subSchema)}`,
+                path: this.breadcrumbs
+            });
+        }
+        return undefined;
     }
 }
