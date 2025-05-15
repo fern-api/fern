@@ -211,10 +211,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         }
         for (const spec of this.allSpecs) {
             if (spec.type === "openrpc") {
-                const absoluteFilepathToSpec = join(
-                    this.absoluteFilePath,
-                    RelativeFilePath.of(spec.absoluteFilepath ?? "")
-                );
+                const absoluteFilepathToSpec = spec.absoluteFilepath;
                 const relativeFilepathToSpec = relativize(cwd(), absoluteFilepathToSpec);
 
                 const errorCollector = new ErrorCollector({ logger: context.logger, relativeFilepathToSpec });

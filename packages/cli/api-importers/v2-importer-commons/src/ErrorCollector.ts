@@ -98,7 +98,7 @@ export class ErrorCollector {
             }
         }
 
-        return { numErrors: numErrors, numWarnings };
+        return { numErrors, numWarnings };
     }
 
     public logErrors({ logWarnings }: APIErrorLoggingArgs): void {
@@ -110,7 +110,7 @@ export class ErrorCollector {
                 case APIErrorLevel.ERROR:
                     this.logger.log(LogLevel.Error, error.message);
                     if (error.path && error.path.length > 0) {
-                        let locationInfo = error.path.join(" -> ");
+                        const locationInfo = error.path.join(" -> ");
                         this.logger.log(LogLevel.Error, `\t- at location (${locationInfo})`);
                     }
                     break;
