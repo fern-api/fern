@@ -2,6 +2,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 
 import { ObjectProperty, TypeId } from "@fern-api/ir-sdk";
 
+import { Extensions } from "..";
 import { AbstractConverterContext } from "../AbstractConverterContext";
 import { ErrorCollector } from "../ErrorCollector";
 import { SchemaConverter } from "../converters/schema/SchemaConverter";
@@ -30,10 +31,12 @@ export function convertProperties({
     const propertiesByAudience: Record<string, Set<string>> = {};
     const referencedTypes: Set<string> = new Set();
     for (const [propertyName, propertySchema] of Object.entries(properties ?? {})) {
-        const propertyBreadcrumbs = [...breadcrumbs, "properties", propertyName];
+        const fernTypeName = maybeGetFernTypeNameDeclaration(breadcrumbs, propertySchema, context) ?? propertyName;
+
+        const propertyBreadcrumbs = [...breadcrumbs, "properties", fernTypeName];
         if (typeof propertySchema !== "object") {
             errorCollector.collect({
-                message: `Schema property ${propertyName} should be an object`,
+                message: `Schema property ${fernTypeName} should be an object`,
                 path: propertyBreadcrumbs
             });
             continue;
@@ -46,15 +49,15 @@ export function convertProperties({
             breadcrumbs: propertyBreadcrumbs,
             schemaOrReference: propertySchema,
             schemaIdOverride: propertyId,
-            wrapAsOptional: !required.includes(propertyName),
+            wrapAsOptional: !required.includes(fernTypeName),
             wrapAsNullable: isNullable
         });
         const convertedProperty = propertySchemaConverter.convert();
         if (convertedProperty != null) {
             convertedProperties.push({
                 name: context.casingsGenerator.generateNameAndWireValue({
-                    name: propertyName,
-                    wireValue: propertyName
+                    name: fernTypeName,
+                    wireValue: fernTypeName
                 }),
                 valueType: convertedProperty.type,
                 docs: propertySchema.description,
@@ -79,7 +82,7 @@ export function convertProperties({
                 if (propertiesByAudience[audience] == null) {
                     propertiesByAudience[audience] = new Set<string>();
                 }
-                propertiesByAudience[audience].add(propertyName);
+                propertiesByAudience[audience].add(fernTypeName);
             }
         }
     }
@@ -87,4 +90,25 @@ export function convertProperties({
         referencedTypes.add(typeId);
     }
     return { convertedProperties, propertiesByAudience, inlinedTypesFromProperties, referencedTypes };
+}
+
+function maybeGetFernTypeNameDeclaration(
+    breadcrumbs: string[],
+    schema: OpenAPIV3_1.SchemaObject,
+    context: AbstractConverterContext<object>
+): string | undefined {
+    if (context.isReferenceObject(schema)) {
+        return undefined;
+    }
+
+    const fernTypeNameConverter = new Extensions.FernTypeNameExtension({
+        breadcrumbs,
+        schema,
+        context
+    });
+    const fernTypeName = fernTypeNameConverter.convert();
+    if (fernTypeName == null) {
+        return undefined;
+    }
+    return fernTypeName;
 }

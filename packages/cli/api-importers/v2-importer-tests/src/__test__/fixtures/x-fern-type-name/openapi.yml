@@ -1,0 +1,57 @@
+openapi: 3.1.0
+info:
+  title: Test extension `x-fern-type-name`.
+  version: 0.0.0
+
+paths:
+  '/test-extension-x-fern-type-name':
+    get:
+      summary: Get Workspace Audit Logs
+      responses:
+        '200':
+          description: A list of workspace audit logs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  string_primitive:
+                    x-fern-type-name: String Example
+                    type: string
+                    description: A simple string primitive
+                  number_primitive:
+                    x-fern-type-name: Number Example  
+                    type: number
+                    description: A simple number primitive
+                  boolean_primitive:
+                    x-fern-type-name: Boolean Example
+                    type: boolean
+                    description: A simple boolean primitive
+                  object_type:
+                    x-fern-type-name: Object Example
+                    type: object
+                    properties:
+                      id: 
+                        type: string
+                      name:
+                        type: string
+                    description: An example object type
+                  array_type:
+                    x-fern-type-name: Array Example
+                    type: array
+                    items:
+                      type: string
+                    description: An array of strings
+                  enum_type:
+                    x-fern-type-name: Enum Example
+                    type: string
+                    enum: [VALUE_1, VALUE_2, VALUE_3]
+                    description: An enumerated string type
+                  anyof_type:
+                    x-fern-type-name: AnyOf Example
+                    anyOf:
+                      - type: string
+                      - type: number
+                    description: Can be either a string or number
+
+
