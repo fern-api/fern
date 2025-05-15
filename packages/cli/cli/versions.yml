@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Fix docs preview server by properly killing the Next.js process on exit and setting 
+        a memory limit (--max-old-space-size=2048) to prevent out-of-memory errors during development.
+      type: fix
+  irVersion: 57
+  version: 0.61.16
+
+- changelogEntry:
+    - summary: |
         Example pairing operates on example summary fields.
       type: fix
   irVersion: 57
