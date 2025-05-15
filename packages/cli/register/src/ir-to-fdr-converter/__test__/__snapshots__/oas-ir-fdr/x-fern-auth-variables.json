@@ -22,8 +22,8 @@
         ]
       }
     },
-    "UsersGetResponsesSchemaItems": {
-      "name": "UsersGetResponsesSchemaItems",
+    "UsersGetResponsesContentApplicationJsonSchemaItems": {
+      "name": "UsersGetResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -136,7 +136,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "UsersGetResponsesSchemaItems"
+                "value": "UsersGetResponsesContentApplicationJsonSchemaItems"
               }
             }
           },

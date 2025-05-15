@@ -1,8 +1,8 @@
 {
   "types": {
-    "TestPostRequestBodySchemaMetadata": {
+    "TestPostRequestBodyContentMultipartFormDataSchemaMetadata": {
       "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
-      "name": "TestPostRequestBodySchemaMetadata",
+      "name": "TestPostRequestBodyContentMultipartFormDataSchemaMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -12,9 +12,9 @@
         }
       }
     },
-    "ExamplePostRequestBodySchemaMetadata": {
+    "ExamplePostRequestBodyContentApplicationJsonSchemaMetadata": {
       "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
-      "name": "ExamplePostRequestBodySchemaMetadata",
+      "name": "ExamplePostRequestBodyContentApplicationJsonSchemaMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -74,7 +74,7 @@
                     "type": "optional",
                     "itemType": {
                       "type": "id",
-                      "value": "TestPostRequestBodySchemaMetadata"
+                      "value": "TestPostRequestBodyContentMultipartFormDataSchemaMetadata"
                     }
                   },
                   "contentType": "multipart/form-data",
@@ -234,7 +234,7 @@
                     "type": "optional",
                     "itemType": {
                       "type": "id",
-                      "value": "ExamplePostRequestBodySchemaMetadata"
+                      "value": "ExamplePostRequestBodyContentApplicationJsonSchemaMetadata"
                     }
                   }
                 }

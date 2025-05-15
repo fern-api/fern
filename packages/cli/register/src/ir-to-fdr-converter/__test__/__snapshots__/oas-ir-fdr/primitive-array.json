@@ -24,8 +24,8 @@
         ]
       }
     },
-    "SearchWithUnionAndNullGetRequestBodySchema": {
-      "name": "SearchWithUnionAndNullGetRequestBodySchema",
+    "SearchWithUnionAndNullGetRequestBodyContentApplicationJsonSchema": {
+      "name": "SearchWithUnionAndNullGetRequestBodyContentApplicationJsonSchema",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -240,7 +240,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "SearchWithUnionAndNullGetRequestBodySchema"
+                  "value": "SearchWithUnionAndNullGetRequestBodyContentApplicationJsonSchema"
                 }
               }
             }

@@ -3661,8 +3661,8 @@
         ]
       }
     },
-    "V1ProjectsGetResponsesSchemaProjectsItems": {
-      "name": "V1ProjectsGetResponsesSchemaProjectsItems",
+    "V1ProjectsGetResponsesContentApplicationJsonSchemaProjectsItems": {
+      "name": "V1ProjectsGetResponsesContentApplicationJsonSchemaProjectsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3710,7 +3710,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsGetResponsesSchemaProjectsItems"
+                  "value": "V1ProjectsGetResponsesContentApplicationJsonSchemaProjectsItems"
                 }
               }
             }
@@ -4407,8 +4407,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdBalancesGetResponsesSchemaBalancesItems": {
-      "name": "V1ProjectsProjectIdBalancesGetResponsesSchemaBalancesItems",
+    "V1ProjectsProjectIdBalancesGetResponsesContentApplicationJsonSchemaBalancesItems": {
+      "name": "V1ProjectsProjectIdBalancesGetResponsesContentApplicationJsonSchemaBalancesItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4483,7 +4483,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsProjectIdBalancesGetResponsesSchemaBalancesItems"
+                  "value": "V1ProjectsProjectIdBalancesGetResponsesContentApplicationJsonSchemaBalancesItems"
                 }
               }
             }
@@ -5649,8 +5649,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdMembersGetResponsesSchemaMembersItems": {
-      "name": "V1ProjectsProjectIdMembersGetResponsesSchemaMembersItems",
+    "V1ProjectsProjectIdMembersGetResponsesContentApplicationJsonSchemaMembersItems": {
+      "name": "V1ProjectsProjectIdMembersGetResponsesContentApplicationJsonSchemaMembersItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5685,7 +5685,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsProjectIdMembersGetResponsesSchemaMembersItems"
+                  "value": "V1ProjectsProjectIdMembersGetResponsesContentApplicationJsonSchemaMembersItems"
                 }
               }
             }
@@ -6250,8 +6250,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdInvitesGetResponsesSchemaInvitesItems": {
-      "name": "V1ProjectsProjectIdInvitesGetResponsesSchemaInvitesItems",
+    "V1ProjectsProjectIdInvitesGetResponsesContentApplicationJsonSchemaInvitesItems": {
+      "name": "V1ProjectsProjectIdInvitesGetResponsesContentApplicationJsonSchemaInvitesItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6299,7 +6299,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsProjectIdInvitesGetResponsesSchemaInvitesItems"
+                  "value": "V1ProjectsProjectIdInvitesGetResponsesContentApplicationJsonSchemaInvitesItems"
                 }
               }
             }
@@ -7114,8 +7114,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdUsageGetResponsesSchemaResolution": {
-      "name": "V1ProjectsProjectIdUsageGetResponsesSchemaResolution",
+    "V1ProjectsProjectIdUsageGetResponsesContentApplicationJsonSchemaResolution": {
+      "name": "V1ProjectsProjectIdUsageGetResponsesContentApplicationJsonSchemaResolution",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7185,7 +7185,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V1ProjectsProjectIdUsageGetResponsesSchemaResolution"
+                "value": "V1ProjectsProjectIdUsageGetResponsesContentApplicationJsonSchemaResolution"
               }
             }
           }
@@ -7314,8 +7314,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdUsageFieldsGetResponsesSchemaModelsItems": {
-      "name": "V1ProjectsProjectIdUsageFieldsGetResponsesSchemaModelsItems",
+    "V1ProjectsProjectIdUsageFieldsGetResponsesContentApplicationJsonSchemaModelsItems": {
+      "name": "V1ProjectsProjectIdUsageFieldsGetResponsesContentApplicationJsonSchemaModelsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7406,7 +7406,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsProjectIdUsageFieldsGetResponsesSchemaModelsItems"
+                  "value": "V1ProjectsProjectIdUsageFieldsGetResponsesContentApplicationJsonSchemaModelsItems"
                 }
               }
             }
@@ -7668,8 +7668,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResolution": {
-      "name": "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResolution",
+    "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResolution": {
+      "name": "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResolution",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7697,8 +7697,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResultsItemsGrouping": {
-      "name": "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResultsItemsGrouping",
+    "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResultsItemsGrouping": {
+      "name": "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResultsItemsGrouping",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7846,8 +7846,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResultsItems": {
-      "name": "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResultsItems",
+    "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResultsItems": {
+      "name": "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResultsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7926,7 +7926,7 @@
             "key": "grouping",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResultsItemsGrouping"
+              "value": "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResultsItemsGrouping"
             }
           }
         ]
@@ -7964,7 +7964,7 @@
             "key": "resolution",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResolution"
+              "value": "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResolution"
             }
           },
           {
@@ -7973,7 +7973,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResultsItems"
+                "value": "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResultsItems"
               }
             }
           }
@@ -8102,8 +8102,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdPurchasesGetResponsesSchemaOrdersItems": {
-      "name": "V1ProjectsProjectIdPurchasesGetResponsesSchemaOrdersItems",
+    "V1ProjectsProjectIdPurchasesGetResponsesContentApplicationJsonSchemaOrdersItems": {
+      "name": "V1ProjectsProjectIdPurchasesGetResponsesContentApplicationJsonSchemaOrdersItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8200,7 +8200,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsProjectIdPurchasesGetResponsesSchemaOrdersItems"
+                  "value": "V1ProjectsProjectIdPurchasesGetResponsesContentApplicationJsonSchemaOrdersItems"
                 }
               }
             }
@@ -8269,8 +8269,8 @@
         ]
       }
     },
-    "V1ModelsGetResponsesSchemaSttItems": {
-      "name": "V1ModelsGetResponsesSchemaSttItems",
+    "V1ModelsGetResponsesContentApplicationJsonSchemaSttItems": {
+      "name": "V1ModelsGetResponsesContentApplicationJsonSchemaSttItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8390,8 +8390,8 @@
         ]
       }
     },
-    "V1ModelsGetResponsesSchemaTtsItemsMetadata": {
-      "name": "V1ModelsGetResponsesSchemaTtsItemsMetadata",
+    "V1ModelsGetResponsesContentApplicationJsonSchemaTtsItemsMetadata": {
+      "name": "V1ModelsGetResponsesContentApplicationJsonSchemaTtsItemsMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8464,8 +8464,8 @@
         ]
       }
     },
-    "V1ModelsGetResponsesSchemaTtsItems": {
-      "name": "V1ModelsGetResponsesSchemaTtsItems",
+    "V1ModelsGetResponsesContentApplicationJsonSchemaTtsItems": {
+      "name": "V1ModelsGetResponsesContentApplicationJsonSchemaTtsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8552,7 +8552,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V1ModelsGetResponsesSchemaTtsItemsMetadata"
+                "value": "V1ModelsGetResponsesContentApplicationJsonSchemaTtsItemsMetadata"
               }
             }
           }
@@ -8573,7 +8573,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ModelsGetResponsesSchemaSttItems"
+                  "value": "V1ModelsGetResponsesContentApplicationJsonSchemaSttItems"
                 }
               }
             }
@@ -8586,7 +8586,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ModelsGetResponsesSchemaTtsItems"
+                  "value": "V1ModelsGetResponsesContentApplicationJsonSchemaTtsItems"
                 }
               }
             }
@@ -8776,8 +8776,8 @@
         ]
       }
     },
-    "V1ModelsModelIdGetResponsesSchemaOneOf1Metadata": {
-      "name": "V1ModelsModelIdGetResponsesSchemaOneOf1Metadata",
+    "V1ModelsModelIdGetResponsesContentApplicationJsonSchemaOneOf1Metadata": {
+      "name": "V1ModelsModelIdGetResponsesContentApplicationJsonSchemaOneOf1Metadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8938,7 +8938,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V1ModelsModelIdGetResponsesSchemaOneOf1Metadata"
+                "value": "V1ModelsModelIdGetResponsesContentApplicationJsonSchemaOneOf1Metadata"
               }
             }
           }
@@ -9028,8 +9028,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItemsMember": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItemsMember",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItemsMember": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItemsMember",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9059,8 +9059,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItemsDistributionCredentials": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItemsDistributionCredentials",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItemsDistributionCredentials": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItemsDistributionCredentials",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9126,8 +9126,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItems": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItems",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItems": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9136,14 +9136,14 @@
             "key": "member",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItemsMember"
+              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItemsMember"
             }
           },
           {
             "key": "distribution_credentials",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItemsDistributionCredentials"
+              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItemsDistributionCredentials"
             }
           }
         ]
@@ -9164,7 +9164,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItems"
+                  "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItems"
                 }
               }
             }
@@ -9338,8 +9338,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesSchemaMember": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesSchemaMember",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesContentApplicationJsonSchemaMember": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesContentApplicationJsonSchemaMember",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9369,8 +9369,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesSchemaDistributionCredentials": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesSchemaDistributionCredentials",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesContentApplicationJsonSchemaDistributionCredentials": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesContentApplicationJsonSchemaDistributionCredentials",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9446,14 +9446,14 @@
             "key": "member",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesSchemaMember"
+              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesContentApplicationJsonSchemaMember"
             }
           },
           {
             "key": "distribution_credentials",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesSchemaDistributionCredentials"
+              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesContentApplicationJsonSchemaDistributionCredentials"
             }
           }
         ]
@@ -9581,8 +9581,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesSchemaMember": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesSchemaMember",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesContentApplicationJsonSchemaMember": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesContentApplicationJsonSchemaMember",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9612,8 +9612,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesSchemaDistributionCredentials": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesSchemaDistributionCredentials",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesContentApplicationJsonSchemaDistributionCredentials": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesContentApplicationJsonSchemaDistributionCredentials",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9689,14 +9689,14 @@
             "key": "member",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesSchemaMember"
+              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesContentApplicationJsonSchemaMember"
             }
           },
           {
             "key": "distribution_credentials",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesSchemaDistributionCredentials"
+              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesContentApplicationJsonSchemaDistributionCredentials"
             }
           }
         ]

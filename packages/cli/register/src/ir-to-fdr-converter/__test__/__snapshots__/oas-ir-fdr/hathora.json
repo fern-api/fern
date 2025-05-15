@@ -1559,32 +1559,32 @@
         ]
       }
     },
-    "LobbyV2AppIdCreatePrivatePostRequestBodySchemaInitialConfig": {
-      "name": "LobbyV2AppIdCreatePrivatePostRequestBodySchemaInitialConfig",
+    "LobbyV2AppIdCreatePrivatePostRequestBodyContentApplicationJsonSchemaInitialConfig": {
+      "name": "LobbyV2AppIdCreatePrivatePostRequestBodyContentApplicationJsonSchemaInitialConfig",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "LobbyV2AppIdCreatePublicPostRequestBodySchemaInitialConfig": {
-      "name": "LobbyV2AppIdCreatePublicPostRequestBodySchemaInitialConfig",
+    "LobbyV2AppIdCreatePublicPostRequestBodyContentApplicationJsonSchemaInitialConfig": {
+      "name": "LobbyV2AppIdCreatePublicPostRequestBodyContentApplicationJsonSchemaInitialConfig",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "LobbyV2AppIdCreateLocalPostRequestBodySchemaInitialConfig": {
-      "name": "LobbyV2AppIdCreateLocalPostRequestBodySchemaInitialConfig",
+    "LobbyV2AppIdCreateLocalPostRequestBodyContentApplicationJsonSchemaInitialConfig": {
+      "name": "LobbyV2AppIdCreateLocalPostRequestBodyContentApplicationJsonSchemaInitialConfig",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "LobbyV2AppIdCreatePostRequestBodySchemaVisibility": {
-      "name": "LobbyV2AppIdCreatePostRequestBodySchemaVisibility",
+    "LobbyV2AppIdCreatePostRequestBodyContentApplicationJsonSchemaVisibility": {
+      "name": "LobbyV2AppIdCreatePostRequestBodyContentApplicationJsonSchemaVisibility",
       "shape": {
         "type": "enum",
         "values": [
@@ -1600,16 +1600,16 @@
         ]
       }
     },
-    "LobbyV2AppIdCreatePostRequestBodySchemaInitialConfig": {
-      "name": "LobbyV2AppIdCreatePostRequestBodySchemaInitialConfig",
+    "LobbyV2AppIdCreatePostRequestBodyContentApplicationJsonSchemaInitialConfig": {
+      "name": "LobbyV2AppIdCreatePostRequestBodyContentApplicationJsonSchemaInitialConfig",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "LobbyV2AppIdSetStateRoomIdPostRequestBodySchemaState": {
-      "name": "LobbyV2AppIdSetStateRoomIdPostRequestBodySchemaState",
+    "LobbyV2AppIdSetStateRoomIdPostRequestBodyContentApplicationJsonSchemaState": {
+      "name": "LobbyV2AppIdSetStateRoomIdPostRequestBodyContentApplicationJsonSchemaState",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4770,7 +4770,7 @@
                     "key": "initialConfig",
                     "valueType": {
                       "type": "id",
-                      "value": "LobbyV2AppIdCreatePrivatePostRequestBodySchemaInitialConfig"
+                      "value": "LobbyV2AppIdCreatePrivatePostRequestBodyContentApplicationJsonSchemaInitialConfig"
                     }
                   },
                   {
@@ -5012,7 +5012,7 @@
                     "key": "initialConfig",
                     "valueType": {
                       "type": "id",
-                      "value": "LobbyV2AppIdCreatePublicPostRequestBodySchemaInitialConfig"
+                      "value": "LobbyV2AppIdCreatePublicPostRequestBodyContentApplicationJsonSchemaInitialConfig"
                     }
                   },
                   {
@@ -5254,7 +5254,7 @@
                     "key": "initialConfig",
                     "valueType": {
                       "type": "id",
-                      "value": "LobbyV2AppIdCreateLocalPostRequestBodySchemaInitialConfig"
+                      "value": "LobbyV2AppIdCreateLocalPostRequestBodyContentApplicationJsonSchemaInitialConfig"
                     }
                   },
                   {
@@ -5495,14 +5495,14 @@
                     "key": "visibility",
                     "valueType": {
                       "type": "id",
-                      "value": "LobbyV2AppIdCreatePostRequestBodySchemaVisibility"
+                      "value": "LobbyV2AppIdCreatePostRequestBodyContentApplicationJsonSchemaVisibility"
                     }
                   },
                   {
                     "key": "initialConfig",
                     "valueType": {
                       "type": "id",
-                      "value": "LobbyV2AppIdCreatePostRequestBodySchemaInitialConfig"
+                      "value": "LobbyV2AppIdCreatePostRequestBodyContentApplicationJsonSchemaInitialConfig"
                     }
                   },
                   {
@@ -5999,7 +5999,7 @@
                     "key": "state",
                     "valueType": {
                       "type": "id",
-                      "value": "LobbyV2AppIdSetStateRoomIdPostRequestBodySchemaState"
+                      "value": "LobbyV2AppIdSetStateRoomIdPostRequestBodyContentApplicationJsonSchemaState"
                     }
                   }
                 ]

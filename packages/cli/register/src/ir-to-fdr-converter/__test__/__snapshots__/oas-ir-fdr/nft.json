@@ -4598,9 +4598,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsContractTokenType": {
+    "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsContractTokenType": {
       "description": "String - For valid NFTs, 'ERC721' or 'ERC1155.' For invalid NFTs, a descriptive reason such as 'NO_SUPPORTED_NFT_STANDARD' if the input contract address doesn't support a known NFT standard, or 'NOT_A_CONTRACT' if there is no contract deployed at the input address.",
-      "name": "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsContractTokenType",
+      "name": "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsContractTokenType",
       "shape": {
         "type": "enum",
         "values": [
@@ -4619,9 +4619,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsContractOpenseaMetadata": {
+    "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsContractOpenseaMetadata": {
       "description": "Note that the OpenSea metadata object is currently only available on ETH and Polygon Mainnet. Please reach out to us at support@alchemy.com if you would like to access this data on other networks.",
-      "name": "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsContractOpenseaMetadata",
+      "name": "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsContractOpenseaMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4746,9 +4746,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsContract": {
+    "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsContract": {
       "description": "The contract object that has details of a contract",
-      "name": "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsContract",
+      "name": "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsContract",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4812,7 +4812,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsContractTokenType"
+                "value": "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsContractTokenType"
               }
             }
           },
@@ -4849,7 +4849,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsContractOpenseaMetadata"
+                "value": "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsContractOpenseaMetadata"
               }
             }
           },
@@ -4885,9 +4885,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsImage": {
+    "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsImage": {
       "description": "Details of the image corresponding to this contract",
-      "name": "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsImage",
+      "name": "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsImage",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4973,8 +4973,8 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsRawMetadataAttributesItems": {
-      "name": "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsRawMetadataAttributesItems",
+    "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsRawMetadataAttributesItems": {
+      "name": "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsRawMetadataAttributesItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5006,9 +5006,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsRawMetadata": {
+    "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsRawMetadata": {
       "description": "Relevant metadata for NFT contract. This is useful for viewing image url, traits, etc. without having to follow the metadata url in tokenUri to parse manually.",
-      "name": "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsRawMetadata",
+      "name": "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsRawMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5061,7 +5061,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsRawMetadataAttributesItems"
+                  "value": "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsRawMetadataAttributesItems"
                 }
               }
             }
@@ -5069,9 +5069,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsRaw": {
+    "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsRaw": {
       "description": "Raw details of the NFT like its tokenUri and metadata info obtained directly from the smart contract",
-      "name": "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsRaw",
+      "name": "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsRaw",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5096,7 +5096,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsRawMetadata"
+                "value": "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsRawMetadata"
               }
             }
           },
@@ -5116,9 +5116,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsCollection": {
+    "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsCollection": {
       "description": "The collection object that has details of a collection",
-      "name": "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsCollection",
+      "name": "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsCollection",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5178,9 +5178,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsAcquiredAt": {
+    "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsAcquiredAt": {
       "description": "Only present if the request specified `orderBy=transferTime`.",
-      "name": "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsAcquiredAt",
+      "name": "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsAcquiredAt",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5214,9 +5214,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItems": {
+    "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItems": {
       "description": "The object that represents an NFT and has all data corresponding to that NFT",
-      "name": "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItems",
+      "name": "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5228,7 +5228,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsContract"
+                "value": "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsContract"
               }
             }
           },
@@ -5290,7 +5290,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsImage"
+                "value": "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsImage"
               }
             }
           },
@@ -5301,7 +5301,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsRaw"
+                "value": "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsRaw"
               }
             }
           },
@@ -5312,7 +5312,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsCollection"
+                "value": "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsCollection"
               }
             }
           },
@@ -5349,16 +5349,16 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItemsAcquiredAt"
+                "value": "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItemsAcquiredAt"
               }
             }
           }
         ]
       }
     },
-    "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaValidAt": {
+    "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaValidAt": {
       "description": "Block Information of the block as of which the corresponding data is valid",
-      "name": "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaValidAt",
+      "name": "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaValidAt",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5420,7 +5420,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaOwnedNftsItems"
+                  "value": "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaOwnedNftsItems"
                 }
               }
             }
@@ -5457,16 +5457,16 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForOwnerGetResponsesSchemaValidAt"
+                "value": "V3ApiKeyGetNfTsForOwnerGetResponsesContentApplicationJsonSchemaValidAt"
               }
             }
           }
         ]
       }
     },
-    "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsContractTokenType": {
+    "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsContractTokenType": {
       "description": "String - For valid NFTs, 'ERC721' or 'ERC1155.' For invalid NFTs, a descriptive reason such as 'NO_SUPPORTED_NFT_STANDARD' if the input contract address doesn't support a known NFT standard, or 'NOT_A_CONTRACT' if there is no contract deployed at the input address.",
-      "name": "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsContractTokenType",
+      "name": "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsContractTokenType",
       "shape": {
         "type": "enum",
         "values": [
@@ -5485,9 +5485,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsContractOpenseaMetadata": {
+    "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsContractOpenseaMetadata": {
       "description": "Note that the OpenSea metadata object is currently only available on ETH and Polygon Mainnet. Please reach out to us at support@alchemy.com if you would like to access this data on other networks.",
-      "name": "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsContractOpenseaMetadata",
+      "name": "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsContractOpenseaMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5612,9 +5612,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsContract": {
+    "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsContract": {
       "description": "The contract object that has details of a contract",
-      "name": "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsContract",
+      "name": "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsContract",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5678,7 +5678,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsContractTokenType"
+                "value": "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsContractTokenType"
               }
             }
           },
@@ -5715,7 +5715,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsContractOpenseaMetadata"
+                "value": "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsContractOpenseaMetadata"
               }
             }
           },
@@ -5751,9 +5751,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsImage": {
+    "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsImage": {
       "description": "Details of the image corresponding to this contract",
-      "name": "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsImage",
+      "name": "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsImage",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5839,8 +5839,8 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsRawMetadataAttributesItems": {
-      "name": "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsRawMetadataAttributesItems",
+    "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsRawMetadataAttributesItems": {
+      "name": "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsRawMetadataAttributesItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5872,9 +5872,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsRawMetadata": {
+    "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsRawMetadata": {
       "description": "Relevant metadata for NFT contract. This is useful for viewing image url, traits, etc. without having to follow the metadata url in tokenUri to parse manually.",
-      "name": "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsRawMetadata",
+      "name": "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsRawMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5927,7 +5927,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsRawMetadataAttributesItems"
+                  "value": "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsRawMetadataAttributesItems"
                 }
               }
             }
@@ -5935,9 +5935,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsRaw": {
+    "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsRaw": {
       "description": "Raw details of the NFT like its tokenUri and metadata info obtained directly from the smart contract",
-      "name": "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsRaw",
+      "name": "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsRaw",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5962,7 +5962,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsRawMetadata"
+                "value": "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsRawMetadata"
               }
             }
           },
@@ -5982,9 +5982,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsCollection": {
+    "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsCollection": {
       "description": "The collection object that has details of a collection",
-      "name": "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsCollection",
+      "name": "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsCollection",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6044,9 +6044,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsAcquiredAt": {
+    "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsAcquiredAt": {
       "description": "Only present if the request specified `orderBy=transferTime`.",
-      "name": "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsAcquiredAt",
+      "name": "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsAcquiredAt",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6080,9 +6080,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItems": {
+    "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItems": {
       "description": "The object that represents an NFT and has all data corresponding to that NFT",
-      "name": "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItems",
+      "name": "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6094,7 +6094,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsContract"
+                "value": "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsContract"
               }
             }
           },
@@ -6156,7 +6156,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsImage"
+                "value": "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsImage"
               }
             }
           },
@@ -6167,7 +6167,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsRaw"
+                "value": "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsRaw"
               }
             }
           },
@@ -6178,7 +6178,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsCollection"
+                "value": "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsCollection"
               }
             }
           },
@@ -6215,7 +6215,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItemsAcquiredAt"
+                "value": "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItemsAcquiredAt"
               }
             }
           }
@@ -6237,7 +6237,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetNfTsForContractGetResponsesSchemaNftsItems"
+                  "value": "V3ApiKeyGetNfTsForContractGetResponsesContentApplicationJsonSchemaNftsItems"
                 }
               }
             }
@@ -6258,9 +6258,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsIdTokenMetadataTokenType": {
+    "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsIdTokenMetadataTokenType": {
       "description": "String - For valid NFTs, 'ERC721' or 'ERC1155.' For invalid NFTs, a descriptive reason such as 'NO_SUPPORTED_NFT_STANDARD' if the input contract address doesn't support a known NFT standard, or 'NOT_A_CONTRACT' if there is no contract deployed at the input address.",
-      "name": "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsIdTokenMetadataTokenType",
+      "name": "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsIdTokenMetadataTokenType",
       "shape": {
         "type": "enum",
         "values": [
@@ -6279,8 +6279,8 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsIdTokenMetadata": {
-      "name": "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsIdTokenMetadata",
+    "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsIdTokenMetadata": {
+      "name": "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsIdTokenMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6292,15 +6292,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsIdTokenMetadataTokenType"
+                "value": "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsIdTokenMetadataTokenType"
               }
             }
           }
         ]
       }
     },
-    "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsId": {
-      "name": "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsId",
+    "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsId": {
+      "name": "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsId",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6324,15 +6324,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsIdTokenMetadata"
+                "value": "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsIdTokenMetadata"
               }
             }
           }
         ]
       }
     },
-    "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsTokenUri": {
-      "name": "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsTokenUri",
+    "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsTokenUri": {
+      "name": "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsTokenUri",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6366,8 +6366,8 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsMetadataAttributesItems": {
-      "name": "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsMetadataAttributesItems",
+    "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsMetadataAttributesItems": {
+      "name": "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsMetadataAttributesItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6399,8 +6399,8 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsMetadataMediaItems": {
-      "name": "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsMetadataMediaItems",
+    "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsMetadataMediaItems": {
+      "name": "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsMetadataMediaItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6473,9 +6473,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsMetadata": {
+    "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsMetadata": {
       "description": "Relevant metadata for NFT contract. This is useful for viewing image url, traits, etc. without having to follow the metadata url in tokenUri to parse manually.",
-      "name": "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsMetadata",
+      "name": "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6554,7 +6554,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsMetadataAttributesItems"
+                  "value": "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsMetadataAttributesItems"
                 }
               }
             }
@@ -6567,7 +6567,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsMetadataMediaItems"
+                  "value": "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsMetadataMediaItems"
                 }
               }
             }
@@ -6575,9 +6575,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsContractMetadataTokenType": {
+    "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsContractMetadataTokenType": {
       "description": "String - For valid NFTs, 'ERC721' or 'ERC1155.' For invalid NFTs, a descriptive reason such as 'NO_SUPPORTED_NFT_STANDARD' if the input contract address doesn't support a known NFT standard, or 'NOT_A_CONTRACT' if there is no contract deployed at the input address.",
-      "name": "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsContractMetadataTokenType",
+      "name": "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsContractMetadataTokenType",
       "shape": {
         "type": "enum",
         "values": [
@@ -6596,9 +6596,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsContractMetadataOpensea": {
+    "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsContractMetadataOpensea": {
       "description": "Note that the OpenSea metadata object is currently only available on ETH and Polygon Mainnet. Please reach out to us at support@alchemy.com if you would like to access this data on other networks.",
-      "name": "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsContractMetadataOpensea",
+      "name": "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsContractMetadataOpensea",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6723,8 +6723,8 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsContractMetadata": {
-      "name": "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsContractMetadata",
+    "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsContractMetadata": {
+      "name": "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsContractMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6775,7 +6775,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsContractMetadataTokenType"
+                "value": "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsContractMetadataTokenType"
               }
             }
           },
@@ -6812,15 +6812,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsContractMetadataOpensea"
+                "value": "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsContractMetadataOpensea"
               }
             }
           }
         ]
       }
     },
-    "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItems": {
-      "name": "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItems",
+    "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItems": {
+      "name": "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6831,7 +6831,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsId"
+                "value": "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsId"
               }
             }
           },
@@ -6841,7 +6841,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsTokenUri"
+                "value": "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsTokenUri"
               }
             }
           },
@@ -6852,7 +6852,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsMetadata"
+                "value": "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsMetadata"
               }
             }
           },
@@ -6875,7 +6875,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsContractMetadata"
+                "value": "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsContractMetadata"
               }
             }
           }
@@ -6897,7 +6897,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItems"
+                  "value": "V3ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItems"
                 }
               }
             }
@@ -6918,9 +6918,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNftMetadataGetResponsesSchemaContractTokenType": {
+    "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaContractTokenType": {
       "description": "String - For valid NFTs, 'ERC721' or 'ERC1155.' For invalid NFTs, a descriptive reason such as 'NO_SUPPORTED_NFT_STANDARD' if the input contract address doesn't support a known NFT standard, or 'NOT_A_CONTRACT' if there is no contract deployed at the input address.",
-      "name": "V3ApiKeyGetNftMetadataGetResponsesSchemaContractTokenType",
+      "name": "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaContractTokenType",
       "shape": {
         "type": "enum",
         "values": [
@@ -6939,9 +6939,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNftMetadataGetResponsesSchemaContractOpenseaMetadata": {
+    "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaContractOpenseaMetadata": {
       "description": "Note that the OpenSea metadata object is currently only available on ETH and Polygon Mainnet. Please reach out to us at support@alchemy.com if you would like to access this data on other networks.",
-      "name": "V3ApiKeyGetNftMetadataGetResponsesSchemaContractOpenseaMetadata",
+      "name": "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaContractOpenseaMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7066,9 +7066,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNftMetadataGetResponsesSchemaContract": {
+    "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaContract": {
       "description": "The contract object that has details of a contract",
-      "name": "V3ApiKeyGetNftMetadataGetResponsesSchemaContract",
+      "name": "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaContract",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7132,7 +7132,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNftMetadataGetResponsesSchemaContractTokenType"
+                "value": "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaContractTokenType"
               }
             }
           },
@@ -7169,7 +7169,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNftMetadataGetResponsesSchemaContractOpenseaMetadata"
+                "value": "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaContractOpenseaMetadata"
               }
             }
           },
@@ -7205,9 +7205,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNftMetadataGetResponsesSchemaImage": {
+    "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaImage": {
       "description": "Details of the image corresponding to this contract",
-      "name": "V3ApiKeyGetNftMetadataGetResponsesSchemaImage",
+      "name": "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaImage",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7293,8 +7293,8 @@
         ]
       }
     },
-    "V3ApiKeyGetNftMetadataGetResponsesSchemaRawMetadataAttributesItems": {
-      "name": "V3ApiKeyGetNftMetadataGetResponsesSchemaRawMetadataAttributesItems",
+    "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaRawMetadataAttributesItems": {
+      "name": "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaRawMetadataAttributesItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7326,9 +7326,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNftMetadataGetResponsesSchemaRawMetadata": {
+    "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaRawMetadata": {
       "description": "Relevant metadata for NFT contract. This is useful for viewing image url, traits, etc. without having to follow the metadata url in tokenUri to parse manually.",
-      "name": "V3ApiKeyGetNftMetadataGetResponsesSchemaRawMetadata",
+      "name": "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaRawMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7381,7 +7381,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetNftMetadataGetResponsesSchemaRawMetadataAttributesItems"
+                  "value": "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaRawMetadataAttributesItems"
                 }
               }
             }
@@ -7389,9 +7389,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNftMetadataGetResponsesSchemaRaw": {
+    "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaRaw": {
       "description": "Raw details of the NFT like its tokenUri and metadata info obtained directly from the smart contract",
-      "name": "V3ApiKeyGetNftMetadataGetResponsesSchemaRaw",
+      "name": "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaRaw",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7416,7 +7416,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNftMetadataGetResponsesSchemaRawMetadata"
+                "value": "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaRawMetadata"
               }
             }
           },
@@ -7436,9 +7436,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNftMetadataGetResponsesSchemaCollection": {
+    "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaCollection": {
       "description": "The collection object that has details of a collection",
-      "name": "V3ApiKeyGetNftMetadataGetResponsesSchemaCollection",
+      "name": "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaCollection",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7498,9 +7498,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNftMetadataGetResponsesSchemaAcquiredAt": {
+    "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaAcquiredAt": {
       "description": "Only present if the request specified `orderBy=transferTime`.",
-      "name": "V3ApiKeyGetNftMetadataGetResponsesSchemaAcquiredAt",
+      "name": "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaAcquiredAt",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7548,7 +7548,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNftMetadataGetResponsesSchemaContract"
+                "value": "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaContract"
               }
             }
           },
@@ -7610,7 +7610,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNftMetadataGetResponsesSchemaImage"
+                "value": "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaImage"
               }
             }
           },
@@ -7621,7 +7621,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNftMetadataGetResponsesSchemaRaw"
+                "value": "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaRaw"
               }
             }
           },
@@ -7632,7 +7632,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNftMetadataGetResponsesSchemaCollection"
+                "value": "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaCollection"
               }
             }
           },
@@ -7669,15 +7669,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNftMetadataGetResponsesSchemaAcquiredAt"
+                "value": "V3ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaAcquiredAt"
               }
             }
           }
         ]
       }
     },
-    "V3ApiKeyGetNftMetadataBatchPostRequestBodySchemaTokensItems": {
-      "name": "V3ApiKeyGetNftMetadataBatchPostRequestBodySchemaTokensItems",
+    "V3ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokensItems": {
+      "name": "V3ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokensItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7723,9 +7723,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsContractTokenType": {
+    "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractTokenType": {
       "description": "String - For valid NFTs, 'ERC721' or 'ERC1155.' For invalid NFTs, a descriptive reason such as 'NO_SUPPORTED_NFT_STANDARD' if the input contract address doesn't support a known NFT standard, or 'NOT_A_CONTRACT' if there is no contract deployed at the input address.",
-      "name": "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsContractTokenType",
+      "name": "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractTokenType",
       "shape": {
         "type": "enum",
         "values": [
@@ -7744,9 +7744,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsContractOpenseaMetadata": {
+    "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractOpenseaMetadata": {
       "description": "Note that the OpenSea metadata object is currently only available on ETH and Polygon Mainnet. Please reach out to us at support@alchemy.com if you would like to access this data on other networks.",
-      "name": "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsContractOpenseaMetadata",
+      "name": "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractOpenseaMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7871,9 +7871,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsContract": {
+    "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContract": {
       "description": "The contract object that has details of a contract",
-      "name": "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsContract",
+      "name": "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContract",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7937,7 +7937,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsContractTokenType"
+                "value": "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractTokenType"
               }
             }
           },
@@ -7974,7 +7974,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsContractOpenseaMetadata"
+                "value": "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractOpenseaMetadata"
               }
             }
           },
@@ -8010,9 +8010,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsImage": {
+    "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsImage": {
       "description": "Details of the image corresponding to this contract",
-      "name": "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsImage",
+      "name": "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsImage",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8098,8 +8098,8 @@
         ]
       }
     },
-    "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsRawMetadataAttributesItems": {
-      "name": "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsRawMetadataAttributesItems",
+    "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsRawMetadataAttributesItems": {
+      "name": "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsRawMetadataAttributesItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8131,9 +8131,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsRawMetadata": {
+    "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsRawMetadata": {
       "description": "Relevant metadata for NFT contract. This is useful for viewing image url, traits, etc. without having to follow the metadata url in tokenUri to parse manually.",
-      "name": "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsRawMetadata",
+      "name": "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsRawMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8186,7 +8186,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsRawMetadataAttributesItems"
+                  "value": "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsRawMetadataAttributesItems"
                 }
               }
             }
@@ -8194,9 +8194,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsRaw": {
+    "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsRaw": {
       "description": "Raw details of the NFT like its tokenUri and metadata info obtained directly from the smart contract",
-      "name": "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsRaw",
+      "name": "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsRaw",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8221,7 +8221,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsRawMetadata"
+                "value": "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsRawMetadata"
               }
             }
           },
@@ -8241,9 +8241,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsCollection": {
+    "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsCollection": {
       "description": "The collection object that has details of a collection",
-      "name": "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsCollection",
+      "name": "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsCollection",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8303,9 +8303,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsAcquiredAt": {
+    "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsAcquiredAt": {
       "description": "Only present if the request specified `orderBy=transferTime`.",
-      "name": "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsAcquiredAt",
+      "name": "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsAcquiredAt",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8339,9 +8339,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItems": {
+    "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItems": {
       "description": "The object that represents an NFT and has all data corresponding to that NFT",
-      "name": "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItems",
+      "name": "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8353,7 +8353,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsContract"
+                "value": "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContract"
               }
             }
           },
@@ -8415,7 +8415,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsImage"
+                "value": "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsImage"
               }
             }
           },
@@ -8426,7 +8426,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsRaw"
+                "value": "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsRaw"
               }
             }
           },
@@ -8437,7 +8437,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsCollection"
+                "value": "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsCollection"
               }
             }
           },
@@ -8474,16 +8474,16 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsAcquiredAt"
+                "value": "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsAcquiredAt"
               }
             }
           }
         ]
       }
     },
-    "V3ApiKeyGetContractMetadataGetResponsesSchemaTokenType": {
+    "V3ApiKeyGetContractMetadataGetResponsesContentApplicationJsonSchemaTokenType": {
       "description": "String - For valid NFTs, 'ERC721' or 'ERC1155.' For invalid NFTs, a descriptive reason such as 'NO_SUPPORTED_NFT_STANDARD' if the input contract address doesn't support a known NFT standard, or 'NOT_A_CONTRACT' if there is no contract deployed at the input address.",
-      "name": "V3ApiKeyGetContractMetadataGetResponsesSchemaTokenType",
+      "name": "V3ApiKeyGetContractMetadataGetResponsesContentApplicationJsonSchemaTokenType",
       "shape": {
         "type": "enum",
         "values": [
@@ -8502,9 +8502,9 @@
         ]
       }
     },
-    "V3ApiKeyGetContractMetadataGetResponsesSchemaOpenseaMetadata": {
+    "V3ApiKeyGetContractMetadataGetResponsesContentApplicationJsonSchemaOpenseaMetadata": {
       "description": "Note that the OpenSea metadata object is currently only available on ETH and Polygon Mainnet. Please reach out to us at support@alchemy.com if you would like to access this data on other networks.",
-      "name": "V3ApiKeyGetContractMetadataGetResponsesSchemaOpenseaMetadata",
+      "name": "V3ApiKeyGetContractMetadataGetResponsesContentApplicationJsonSchemaOpenseaMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8694,7 +8694,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetContractMetadataGetResponsesSchemaTokenType"
+                "value": "V3ApiKeyGetContractMetadataGetResponsesContentApplicationJsonSchemaTokenType"
               }
             }
           },
@@ -8731,16 +8731,16 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetContractMetadataGetResponsesSchemaOpenseaMetadata"
+                "value": "V3ApiKeyGetContractMetadataGetResponsesContentApplicationJsonSchemaOpenseaMetadata"
               }
             }
           }
         ]
       }
     },
-    "V3ApiKeyGetCollectionMetadataGetResponsesSchemaFloorPrice": {
+    "V3ApiKeyGetCollectionMetadataGetResponsesContentApplicationJsonSchemaFloorPrice": {
       "description": "Floor price data for the collection",
-      "name": "V3ApiKeyGetCollectionMetadataGetResponsesSchemaFloorPrice",
+      "name": "V3ApiKeyGetCollectionMetadataGetResponsesContentApplicationJsonSchemaFloorPrice",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8826,7 +8826,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetCollectionMetadataGetResponsesSchemaFloorPrice"
+                "value": "V3ApiKeyGetCollectionMetadataGetResponsesContentApplicationJsonSchemaFloorPrice"
               }
             }
           },
@@ -8921,9 +8921,9 @@
         ]
       }
     },
-    "V3ApiKeyGetContractMetadataBatchPostResponsesSchemaItemsTokenType": {
+    "V3ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItemsTokenType": {
       "description": "String - For valid NFTs, 'ERC721' or 'ERC1155.' For invalid NFTs, a descriptive reason such as 'NO_SUPPORTED_NFT_STANDARD' if the input contract address doesn't support a known NFT standard, or 'NOT_A_CONTRACT' if there is no contract deployed at the input address.",
-      "name": "V3ApiKeyGetContractMetadataBatchPostResponsesSchemaItemsTokenType",
+      "name": "V3ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItemsTokenType",
       "shape": {
         "type": "enum",
         "values": [
@@ -8942,9 +8942,9 @@
         ]
       }
     },
-    "V3ApiKeyGetContractMetadataBatchPostResponsesSchemaItemsOpenseaMetadata": {
+    "V3ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItemsOpenseaMetadata": {
       "description": "Note that the OpenSea metadata object is currently only available on ETH and Polygon Mainnet. Please reach out to us at support@alchemy.com if you would like to access this data on other networks.",
-      "name": "V3ApiKeyGetContractMetadataBatchPostResponsesSchemaItemsOpenseaMetadata",
+      "name": "V3ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItemsOpenseaMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9069,8 +9069,8 @@
         ]
       }
     },
-    "V3ApiKeyGetContractMetadataBatchPostResponsesSchemaItems": {
-      "name": "V3ApiKeyGetContractMetadataBatchPostResponsesSchemaItems",
+    "V3ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "V3ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9134,7 +9134,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetContractMetadataBatchPostResponsesSchemaItemsTokenType"
+                "value": "V3ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItemsTokenType"
               }
             }
           },
@@ -9171,7 +9171,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetContractMetadataBatchPostResponsesSchemaItemsOpenseaMetadata"
+                "value": "V3ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItemsOpenseaMetadata"
               }
             }
           }
@@ -9215,8 +9215,8 @@
         ]
       }
     },
-    "V3ApiKeyGetOwnersForContractGetResponsesSchemaOwnersItemsTokenBalancesItems": {
-      "name": "V3ApiKeyGetOwnersForContractGetResponsesSchemaOwnersItemsTokenBalancesItems",
+    "V3ApiKeyGetOwnersForContractGetResponsesContentApplicationJsonSchemaOwnersItemsTokenBalancesItems": {
+      "name": "V3ApiKeyGetOwnersForContractGetResponsesContentApplicationJsonSchemaOwnersItemsTokenBalancesItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9250,8 +9250,8 @@
         ]
       }
     },
-    "V3ApiKeyGetOwnersForContractGetResponsesSchemaOwnersItems": {
-      "name": "V3ApiKeyGetOwnersForContractGetResponsesSchemaOwnersItems",
+    "V3ApiKeyGetOwnersForContractGetResponsesContentApplicationJsonSchemaOwnersItems": {
+      "name": "V3ApiKeyGetOwnersForContractGetResponsesContentApplicationJsonSchemaOwnersItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9278,7 +9278,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetOwnersForContractGetResponsesSchemaOwnersItemsTokenBalancesItems"
+                  "value": "V3ApiKeyGetOwnersForContractGetResponsesContentApplicationJsonSchemaOwnersItemsTokenBalancesItems"
                 }
               }
             }
@@ -9301,7 +9301,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetOwnersForContractGetResponsesSchemaOwnersItems"
+                  "value": "V3ApiKeyGetOwnersForContractGetResponsesContentApplicationJsonSchemaOwnersItems"
                 }
               }
             }
@@ -9381,9 +9381,9 @@
         ]
       }
     },
-    "V3ApiKeySummarizeNftAttributesGetResponsesSchemaSummary": {
+    "V3ApiKeySummarizeNftAttributesGetResponsesContentApplicationJsonSchemaSummary": {
       "description": "Object mapping trait types to the prevalence of each trait within that type.",
-      "name": "V3ApiKeySummarizeNftAttributesGetResponsesSchemaSummary",
+      "name": "V3ApiKeySummarizeNftAttributesGetResponsesContentApplicationJsonSchemaSummary",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9417,7 +9417,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeySummarizeNftAttributesGetResponsesSchemaSummary"
+                "value": "V3ApiKeySummarizeNftAttributesGetResponsesContentApplicationJsonSchemaSummary"
               }
             }
           },
@@ -9437,9 +9437,9 @@
         ]
       }
     },
-    "V3ApiKeyGetFloorPriceGetResponsesSchemaNftMarketplaceNamePriceCurrency": {
+    "V3ApiKeyGetFloorPriceGetResponsesContentApplicationJsonSchemaNftMarketplaceNamePriceCurrency": {
       "description": "String - The currency in which the floor price is denominated. Typically, denominated in ETH",
-      "name": "V3ApiKeyGetFloorPriceGetResponsesSchemaNftMarketplaceNamePriceCurrency",
+      "name": "V3ApiKeyGetFloorPriceGetResponsesContentApplicationJsonSchemaNftMarketplaceNamePriceCurrency",
       "shape": {
         "type": "enum",
         "values": [
@@ -9449,9 +9449,9 @@
         ]
       }
     },
-    "V3ApiKeyGetFloorPriceGetResponsesSchemaNftMarketplaceName": {
+    "V3ApiKeyGetFloorPriceGetResponsesContentApplicationJsonSchemaNftMarketplaceName": {
       "description": "Name of the NFT marketplace where the collection is listed (in camel case). Current marketplaces supported - `openSea`, `looksRare`. So instead of the word `nftMarketplaceName` you will see marketplace names like `openSea` here.",
-      "name": "V3ApiKeyGetFloorPriceGetResponsesSchemaNftMarketplaceName",
+      "name": "V3ApiKeyGetFloorPriceGetResponsesContentApplicationJsonSchemaNftMarketplaceName",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9476,7 +9476,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetFloorPriceGetResponsesSchemaNftMarketplaceNamePriceCurrency"
+                "value": "V3ApiKeyGetFloorPriceGetResponsesContentApplicationJsonSchemaNftMarketplaceNamePriceCurrency"
               }
             }
           },
@@ -9535,16 +9535,16 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetFloorPriceGetResponsesSchemaNftMarketplaceName"
+                "value": "V3ApiKeyGetFloorPriceGetResponsesContentApplicationJsonSchemaNftMarketplaceName"
               }
             }
           }
         ]
       }
     },
-    "V3ApiKeySearchContractMetadataGetResponsesSchemaItemsTokenType": {
+    "V3ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItemsTokenType": {
       "description": "String - For valid NFTs, 'ERC721' or 'ERC1155.' For invalid NFTs, a descriptive reason such as 'NO_SUPPORTED_NFT_STANDARD' if the input contract address doesn't support a known NFT standard, or 'NOT_A_CONTRACT' if there is no contract deployed at the input address.",
-      "name": "V3ApiKeySearchContractMetadataGetResponsesSchemaItemsTokenType",
+      "name": "V3ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItemsTokenType",
       "shape": {
         "type": "enum",
         "values": [
@@ -9563,9 +9563,9 @@
         ]
       }
     },
-    "V3ApiKeySearchContractMetadataGetResponsesSchemaItemsOpenseaMetadata": {
+    "V3ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItemsOpenseaMetadata": {
       "description": "Note that the OpenSea metadata object is currently only available on ETH and Polygon Mainnet. Please reach out to us at support@alchemy.com if you would like to access this data on other networks.",
-      "name": "V3ApiKeySearchContractMetadataGetResponsesSchemaItemsOpenseaMetadata",
+      "name": "V3ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItemsOpenseaMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9690,8 +9690,8 @@
         ]
       }
     },
-    "V3ApiKeySearchContractMetadataGetResponsesSchemaItems": {
-      "name": "V3ApiKeySearchContractMetadataGetResponsesSchemaItems",
+    "V3ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItems": {
+      "name": "V3ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9755,7 +9755,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeySearchContractMetadataGetResponsesSchemaItemsTokenType"
+                "value": "V3ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItemsTokenType"
               }
             }
           },
@@ -9792,7 +9792,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeySearchContractMetadataGetResponsesSchemaItemsOpenseaMetadata"
+                "value": "V3ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItemsOpenseaMetadata"
               }
             }
           }
@@ -9822,8 +9822,8 @@
         ]
       }
     },
-    "V3ApiKeyComputeRarityGetResponsesSchemaRaritiesItems": {
-      "name": "V3ApiKeyComputeRarityGetResponsesSchemaRaritiesItems",
+    "V3ApiKeyComputeRarityGetResponsesContentApplicationJsonSchemaRaritiesItems": {
+      "name": "V3ApiKeyComputeRarityGetResponsesContentApplicationJsonSchemaRaritiesItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9886,7 +9886,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyComputeRarityGetResponsesSchemaRaritiesItems"
+                  "value": "V3ApiKeyComputeRarityGetResponsesContentApplicationJsonSchemaRaritiesItems"
                 }
               }
             }
@@ -9908,9 +9908,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsTaker": {
+    "V3ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsTaker": {
       "description": "String - Whether the price taker in the trade was the buyer or the seller.",
-      "name": "V3ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsTaker",
+      "name": "V3ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsTaker",
       "shape": {
         "type": "enum",
         "values": [
@@ -9923,9 +9923,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsSellerFee": {
+    "V3ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsSellerFee": {
       "description": "The payment from buyer to the seller.",
-      "name": "V3ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsSellerFee",
+      "name": "V3ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsSellerFee",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9985,9 +9985,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsProtocolFee": {
+    "V3ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsProtocolFee": {
       "description": "The payment from buyer to the NFT marketplace protocol.",
-      "name": "V3ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsProtocolFee",
+      "name": "V3ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsProtocolFee",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10047,9 +10047,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsRoyaltyFee": {
+    "V3ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsRoyaltyFee": {
       "description": "The payment from buyer to the royalty address of the NFT collection.",
-      "name": "V3ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsRoyaltyFee",
+      "name": "V3ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsRoyaltyFee",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10109,8 +10109,8 @@
         ]
       }
     },
-    "V3ApiKeyGetNftSalesGetResponsesSchemaNftSalesItems": {
-      "name": "V3ApiKeyGetNftSalesGetResponsesSchemaNftSalesItems",
+    "V3ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItems": {
+      "name": "V3ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10213,7 +10213,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsTaker"
+                "value": "V3ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsTaker"
               }
             }
           },
@@ -10224,7 +10224,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsSellerFee"
+                "value": "V3ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsSellerFee"
               }
             }
           },
@@ -10235,7 +10235,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsProtocolFee"
+                "value": "V3ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsProtocolFee"
               }
             }
           },
@@ -10246,7 +10246,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsRoyaltyFee"
+                "value": "V3ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsRoyaltyFee"
               }
             }
           },
@@ -10305,9 +10305,9 @@
         ]
       }
     },
-    "V3ApiKeyGetNftSalesGetResponsesSchemaValidAt": {
+    "V3ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaValidAt": {
       "description": "Block Information of the block as of which the corresponding data is valid",
-      "name": "V3ApiKeyGetNftSalesGetResponsesSchemaValidAt",
+      "name": "V3ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaValidAt",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10369,7 +10369,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetNftSalesGetResponsesSchemaNftSalesItems"
+                  "value": "V3ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItems"
                 }
               }
             }
@@ -10394,7 +10394,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetNftSalesGetResponsesSchemaValidAt"
+                "value": "V3ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaValidAt"
               }
             }
           }
@@ -10436,9 +10436,9 @@
         ]
       }
     },
-    "V3ApiKeyGetContractsForOwnerGetResponsesSchemaContractsItemsOpenseaMetadata": {
+    "V3ApiKeyGetContractsForOwnerGetResponsesContentApplicationJsonSchemaContractsItemsOpenseaMetadata": {
       "description": "Note that the OpenSea metadata object is currently only available on ETH and Polygon Mainnet. Please reach out to us at support@alchemy.com if you would like to access this data on other networks.",
-      "name": "V3ApiKeyGetContractsForOwnerGetResponsesSchemaContractsItemsOpenseaMetadata",
+      "name": "V3ApiKeyGetContractsForOwnerGetResponsesContentApplicationJsonSchemaContractsItemsOpenseaMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10563,9 +10563,9 @@
         ]
       }
     },
-    "V3ApiKeyGetContractsForOwnerGetResponsesSchemaContractsItemsDisplayNft": {
+    "V3ApiKeyGetContractsForOwnerGetResponsesContentApplicationJsonSchemaContractsItemsDisplayNft": {
       "description": "Details of the display NFT for this contract. This NFT and its image can be used to represent the contract when displaying info about it.",
-      "name": "V3ApiKeyGetContractsForOwnerGetResponsesSchemaContractsItemsDisplayNft",
+      "name": "V3ApiKeyGetContractsForOwnerGetResponsesContentApplicationJsonSchemaContractsItemsDisplayNft",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10599,9 +10599,9 @@
         ]
       }
     },
-    "V3ApiKeyGetContractsForOwnerGetResponsesSchemaContractsItemsImage": {
+    "V3ApiKeyGetContractsForOwnerGetResponsesContentApplicationJsonSchemaContractsItemsImage": {
       "description": "Details of the image corresponding to this contract",
-      "name": "V3ApiKeyGetContractsForOwnerGetResponsesSchemaContractsItemsImage",
+      "name": "V3ApiKeyGetContractsForOwnerGetResponsesContentApplicationJsonSchemaContractsItemsImage",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10687,9 +10687,9 @@
         ]
       }
     },
-    "V3ApiKeyGetContractsForOwnerGetResponsesSchemaContractsItems": {
+    "V3ApiKeyGetContractsForOwnerGetResponsesContentApplicationJsonSchemaContractsItems": {
       "description": "The object that represents a smart contract and has all data corresponding to that contract",
-      "name": "V3ApiKeyGetContractsForOwnerGetResponsesSchemaContractsItems",
+      "name": "V3ApiKeyGetContractsForOwnerGetResponsesContentApplicationJsonSchemaContractsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10791,7 +10791,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetContractsForOwnerGetResponsesSchemaContractsItemsOpenseaMetadata"
+                "value": "V3ApiKeyGetContractsForOwnerGetResponsesContentApplicationJsonSchemaContractsItemsOpenseaMetadata"
               }
             }
           },
@@ -10841,7 +10841,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetContractsForOwnerGetResponsesSchemaContractsItemsDisplayNft"
+                "value": "V3ApiKeyGetContractsForOwnerGetResponsesContentApplicationJsonSchemaContractsItemsDisplayNft"
               }
             }
           },
@@ -10852,7 +10852,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetContractsForOwnerGetResponsesSchemaContractsItemsImage"
+                "value": "V3ApiKeyGetContractsForOwnerGetResponsesContentApplicationJsonSchemaContractsItemsImage"
               }
             }
           }
@@ -10873,7 +10873,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetContractsForOwnerGetResponsesSchemaContractsItems"
+                  "value": "V3ApiKeyGetContractsForOwnerGetResponsesContentApplicationJsonSchemaContractsItems"
                 }
               }
             }
@@ -10921,9 +10921,9 @@
         ]
       }
     },
-    "V3ApiKeyGetCollectionsForOwnerGetResponsesSchemaCollectionsItemsFloorPrice": {
+    "V3ApiKeyGetCollectionsForOwnerGetResponsesContentApplicationJsonSchemaCollectionsItemsFloorPrice": {
       "description": "Floor price data for the collection",
-      "name": "V3ApiKeyGetCollectionsForOwnerGetResponsesSchemaCollectionsItemsFloorPrice",
+      "name": "V3ApiKeyGetCollectionsForOwnerGetResponsesContentApplicationJsonSchemaCollectionsItemsFloorPrice",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10970,9 +10970,9 @@
         ]
       }
     },
-    "V3ApiKeyGetCollectionsForOwnerGetResponsesSchemaCollectionsItemsContractTokenType": {
+    "V3ApiKeyGetCollectionsForOwnerGetResponsesContentApplicationJsonSchemaCollectionsItemsContractTokenType": {
       "description": "String - For valid NFTs, 'ERC721' or 'ERC1155.' For invalid NFTs, a descriptive reason such as 'NO_SUPPORTED_NFT_STANDARD' if the input contract address doesn't support a known NFT standard, or 'NOT_A_CONTRACT' if there is no contract deployed at the input address.",
-      "name": "V3ApiKeyGetCollectionsForOwnerGetResponsesSchemaCollectionsItemsContractTokenType",
+      "name": "V3ApiKeyGetCollectionsForOwnerGetResponsesContentApplicationJsonSchemaCollectionsItemsContractTokenType",
       "shape": {
         "type": "enum",
         "values": [
@@ -10991,9 +10991,9 @@
         ]
       }
     },
-    "V3ApiKeyGetCollectionsForOwnerGetResponsesSchemaCollectionsItemsContract": {
+    "V3ApiKeyGetCollectionsForOwnerGetResponsesContentApplicationJsonSchemaCollectionsItemsContract": {
       "description": "Contract-level data for a collection, such as contract type, name, and symbol.",
-      "name": "V3ApiKeyGetCollectionsForOwnerGetResponsesSchemaCollectionsItemsContract",
+      "name": "V3ApiKeyGetCollectionsForOwnerGetResponsesContentApplicationJsonSchemaCollectionsItemsContract",
       "shape": {
         "type": "object",
         "extends": [],
@@ -11044,7 +11044,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetCollectionsForOwnerGetResponsesSchemaCollectionsItemsContractTokenType"
+                "value": "V3ApiKeyGetCollectionsForOwnerGetResponsesContentApplicationJsonSchemaCollectionsItemsContractTokenType"
               }
             }
           },
@@ -11077,9 +11077,9 @@
         ]
       }
     },
-    "V3ApiKeyGetCollectionsForOwnerGetResponsesSchemaCollectionsItemsDisplayNft": {
+    "V3ApiKeyGetCollectionsForOwnerGetResponsesContentApplicationJsonSchemaCollectionsItemsDisplayNft": {
       "description": "Details of the display NFT for this contract. This NFT and its image can be used to represent the contract when displaying info about it.",
-      "name": "V3ApiKeyGetCollectionsForOwnerGetResponsesSchemaCollectionsItemsDisplayNft",
+      "name": "V3ApiKeyGetCollectionsForOwnerGetResponsesContentApplicationJsonSchemaCollectionsItemsDisplayNft",
       "shape": {
         "type": "object",
         "extends": [],
@@ -11113,9 +11113,9 @@
         ]
       }
     },
-    "V3ApiKeyGetCollectionsForOwnerGetResponsesSchemaCollectionsItemsImage": {
+    "V3ApiKeyGetCollectionsForOwnerGetResponsesContentApplicationJsonSchemaCollectionsItemsImage": {
       "description": "Details of the image corresponding to this contract",
-      "name": "V3ApiKeyGetCollectionsForOwnerGetResponsesSchemaCollectionsItemsImage",
+      "name": "V3ApiKeyGetCollectionsForOwnerGetResponsesContentApplicationJsonSchemaCollectionsItemsImage",
       "shape": {
         "type": "object",
         "extends": [],
@@ -11201,9 +11201,9 @@
         ]
       }
     },
-    "V3ApiKeyGetCollectionsForOwnerGetResponsesSchemaCollectionsItems": {
+    "V3ApiKeyGetCollectionsForOwnerGetResponsesContentApplicationJsonSchemaCollectionsItems": {
       "description": "Metadata for an NFT collection held by an owner address. Includes general metadata about the collection, as well as information specific to the owner such as the total balance and the token ID of a random NFT for display purposes.",
-      "name": "V3ApiKeyGetCollectionsForOwnerGetResponsesSchemaCollectionsItems",
+      "name": "V3ApiKeyGetCollectionsForOwnerGetResponsesContentApplicationJsonSchemaCollectionsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -11241,7 +11241,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetCollectionsForOwnerGetResponsesSchemaCollectionsItemsFloorPrice"
+                "value": "V3ApiKeyGetCollectionsForOwnerGetResponsesContentApplicationJsonSchemaCollectionsItemsFloorPrice"
               }
             }
           },
@@ -11304,7 +11304,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetCollectionsForOwnerGetResponsesSchemaCollectionsItemsContract"
+                "value": "V3ApiKeyGetCollectionsForOwnerGetResponsesContentApplicationJsonSchemaCollectionsItemsContract"
               }
             }
           },
@@ -11354,7 +11354,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetCollectionsForOwnerGetResponsesSchemaCollectionsItemsDisplayNft"
+                "value": "V3ApiKeyGetCollectionsForOwnerGetResponsesContentApplicationJsonSchemaCollectionsItemsDisplayNft"
               }
             }
           },
@@ -11365,7 +11365,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V3ApiKeyGetCollectionsForOwnerGetResponsesSchemaCollectionsItemsImage"
+                "value": "V3ApiKeyGetCollectionsForOwnerGetResponsesContentApplicationJsonSchemaCollectionsItemsImage"
               }
             }
           }
@@ -11386,7 +11386,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetCollectionsForOwnerGetResponsesSchemaCollectionsItems"
+                  "value": "V3ApiKeyGetCollectionsForOwnerGetResponsesContentApplicationJsonSchemaCollectionsItems"
                 }
               }
             }
@@ -11489,9 +11489,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsContract": {
+    "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsContract": {
       "description": "Object - Contract for returned NFT",
-      "name": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsContract",
+      "name": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsContract",
       "shape": {
         "type": "object",
         "extends": [],
@@ -11512,9 +11512,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsIdTokenMetadataTokenType": {
+    "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsIdTokenMetadataTokenType": {
       "description": "String - For valid NFTs, 'ERC721' or 'ERC1155.' For invalid NFTs, a descriptive reason such as 'NO_SUPPORTED_NFT_STANDARD' if the input contract address doesn't support a known NFT standard, or 'NOT_A_CONTRACT' if there is no contract deployed at the input address.",
-      "name": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsIdTokenMetadataTokenType",
+      "name": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsIdTokenMetadataTokenType",
       "shape": {
         "type": "enum",
         "values": [
@@ -11533,8 +11533,8 @@
         ]
       }
     },
-    "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsIdTokenMetadata": {
-      "name": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsIdTokenMetadata",
+    "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsIdTokenMetadata": {
+      "name": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsIdTokenMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -11546,15 +11546,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsIdTokenMetadataTokenType"
+                "value": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsIdTokenMetadataTokenType"
               }
             }
           }
         ]
       }
     },
-    "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsId": {
-      "name": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsId",
+    "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsId": {
+      "name": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsId",
       "shape": {
         "type": "object",
         "extends": [],
@@ -11578,15 +11578,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsIdTokenMetadata"
+                "value": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsIdTokenMetadata"
               }
             }
           }
         ]
       }
     },
-    "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsTokenUri": {
-      "name": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsTokenUri",
+    "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsTokenUri": {
+      "name": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsTokenUri",
       "shape": {
         "type": "object",
         "extends": [],
@@ -11620,8 +11620,8 @@
         ]
       }
     },
-    "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsMedia": {
-      "name": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsMedia",
+    "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsMedia": {
+      "name": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsMedia",
       "shape": {
         "type": "object",
         "extends": [],
@@ -11694,8 +11694,8 @@
         ]
       }
     },
-    "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsMetadataAttributesItems": {
-      "name": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsMetadataAttributesItems",
+    "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsMetadataAttributesItems": {
+      "name": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsMetadataAttributesItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -11727,8 +11727,8 @@
         ]
       }
     },
-    "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsMetadataMediaItems": {
-      "name": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsMetadataMediaItems",
+    "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsMetadataMediaItems": {
+      "name": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsMetadataMediaItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -11801,9 +11801,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsMetadata": {
+    "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsMetadata": {
       "description": "Relevant metadata for NFT contract. This is useful for viewing image url, traits, etc. without having to follow the metadata url in tokenUri to parse manually.",
-      "name": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsMetadata",
+      "name": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -11882,7 +11882,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsMetadataAttributesItems"
+                  "value": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsMetadataAttributesItems"
                 }
               }
             }
@@ -11895,7 +11895,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsMetadataMediaItems"
+                  "value": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsMetadataMediaItems"
                 }
               }
             }
@@ -11903,9 +11903,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsContractMetadataTokenType": {
+    "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsContractMetadataTokenType": {
       "description": "String - For valid NFTs, 'ERC721' or 'ERC1155.' For invalid NFTs, a descriptive reason such as 'NO_SUPPORTED_NFT_STANDARD' if the input contract address doesn't support a known NFT standard, or 'NOT_A_CONTRACT' if there is no contract deployed at the input address.",
-      "name": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsContractMetadataTokenType",
+      "name": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsContractMetadataTokenType",
       "shape": {
         "type": "enum",
         "values": [
@@ -11924,9 +11924,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsContractMetadataOpensea": {
+    "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsContractMetadataOpensea": {
       "description": "Note that the OpenSea metadata object is currently only available on ETH and Polygon Mainnet. Please reach out to us at support@alchemy.com if you would like to access this data on other networks.",
-      "name": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsContractMetadataOpensea",
+      "name": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsContractMetadataOpensea",
       "shape": {
         "type": "object",
         "extends": [],
@@ -12051,8 +12051,8 @@
         ]
       }
     },
-    "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsContractMetadata": {
-      "name": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsContractMetadata",
+    "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsContractMetadata": {
+      "name": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsContractMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -12103,7 +12103,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsContractMetadataTokenType"
+                "value": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsContractMetadataTokenType"
               }
             }
           },
@@ -12140,16 +12140,16 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsContractMetadataOpensea"
+                "value": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsContractMetadataOpensea"
               }
             }
           }
         ]
       }
     },
-    "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsSpamInfo": {
+    "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsSpamInfo": {
       "description": "Information about whether and why a contract was marked as spam.",
-      "name": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsSpamInfo",
+      "name": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsSpamInfo",
       "shape": {
         "type": "object",
         "extends": [],
@@ -12186,9 +12186,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsAcquiredAt": {
+    "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsAcquiredAt": {
       "description": "Only present if the request specified `orderBy=transferTime`.",
-      "name": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsAcquiredAt",
+      "name": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsAcquiredAt",
       "shape": {
         "type": "object",
         "extends": [],
@@ -12222,9 +12222,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItems": {
+    "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItems": {
       "description": "The object that represents an NFT and has all data corresponding to that NFT",
-      "name": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItems",
+      "name": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -12236,7 +12236,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsContract"
+                "value": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsContract"
               }
             }
           },
@@ -12246,7 +12246,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsId"
+                "value": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsId"
               }
             }
           },
@@ -12295,7 +12295,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsTokenUri"
+                "value": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsTokenUri"
               }
             }
           },
@@ -12305,7 +12305,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsMedia"
+                "value": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsMedia"
               }
             }
           },
@@ -12316,7 +12316,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsMetadata"
+                "value": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsMetadata"
               }
             }
           },
@@ -12352,7 +12352,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsContractMetadata"
+                "value": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsContractMetadata"
               }
             }
           },
@@ -12363,7 +12363,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsSpamInfo"
+                "value": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsSpamInfo"
               }
             }
           },
@@ -12374,7 +12374,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItemsAcquiredAt"
+                "value": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItemsAcquiredAt"
               }
             }
           }
@@ -12395,7 +12395,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetNfTsGetResponsesSchemaOwnedNftsItems"
+                  "value": "V2ApiKeyGetNfTsGetResponsesContentApplicationJsonSchemaOwnedNftsItems"
                 }
               }
             }
@@ -12441,9 +12441,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataGetResponsesSchemaContract": {
+    "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaContract": {
       "description": "Object - Contract for returned NFT",
-      "name": "V2ApiKeyGetNftMetadataGetResponsesSchemaContract",
+      "name": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaContract",
       "shape": {
         "type": "object",
         "extends": [],
@@ -12464,9 +12464,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataGetResponsesSchemaIdTokenMetadataTokenType": {
+    "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaIdTokenMetadataTokenType": {
       "description": "String - For valid NFTs, 'ERC721' or 'ERC1155.' For invalid NFTs, a descriptive reason such as 'NO_SUPPORTED_NFT_STANDARD' if the input contract address doesn't support a known NFT standard, or 'NOT_A_CONTRACT' if there is no contract deployed at the input address.",
-      "name": "V2ApiKeyGetNftMetadataGetResponsesSchemaIdTokenMetadataTokenType",
+      "name": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaIdTokenMetadataTokenType",
       "shape": {
         "type": "enum",
         "values": [
@@ -12485,8 +12485,8 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataGetResponsesSchemaIdTokenMetadata": {
-      "name": "V2ApiKeyGetNftMetadataGetResponsesSchemaIdTokenMetadata",
+    "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaIdTokenMetadata": {
+      "name": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaIdTokenMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -12498,15 +12498,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataGetResponsesSchemaIdTokenMetadataTokenType"
+                "value": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaIdTokenMetadataTokenType"
               }
             }
           }
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataGetResponsesSchemaId": {
-      "name": "V2ApiKeyGetNftMetadataGetResponsesSchemaId",
+    "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaId": {
+      "name": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaId",
       "shape": {
         "type": "object",
         "extends": [],
@@ -12530,15 +12530,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataGetResponsesSchemaIdTokenMetadata"
+                "value": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaIdTokenMetadata"
               }
             }
           }
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataGetResponsesSchemaTokenUri": {
-      "name": "V2ApiKeyGetNftMetadataGetResponsesSchemaTokenUri",
+    "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaTokenUri": {
+      "name": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaTokenUri",
       "shape": {
         "type": "object",
         "extends": [],
@@ -12572,8 +12572,8 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataGetResponsesSchemaMedia": {
-      "name": "V2ApiKeyGetNftMetadataGetResponsesSchemaMedia",
+    "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaMedia": {
+      "name": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaMedia",
       "shape": {
         "type": "object",
         "extends": [],
@@ -12646,8 +12646,8 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataGetResponsesSchemaMetadataAttributesItems": {
-      "name": "V2ApiKeyGetNftMetadataGetResponsesSchemaMetadataAttributesItems",
+    "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaMetadataAttributesItems": {
+      "name": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaMetadataAttributesItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -12679,8 +12679,8 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataGetResponsesSchemaMetadataMediaItems": {
-      "name": "V2ApiKeyGetNftMetadataGetResponsesSchemaMetadataMediaItems",
+    "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaMetadataMediaItems": {
+      "name": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaMetadataMediaItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -12753,9 +12753,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataGetResponsesSchemaMetadata": {
+    "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaMetadata": {
       "description": "Relevant metadata for NFT contract. This is useful for viewing image url, traits, etc. without having to follow the metadata url in tokenUri to parse manually.",
-      "name": "V2ApiKeyGetNftMetadataGetResponsesSchemaMetadata",
+      "name": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -12834,7 +12834,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetNftMetadataGetResponsesSchemaMetadataAttributesItems"
+                  "value": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaMetadataAttributesItems"
                 }
               }
             }
@@ -12847,7 +12847,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetNftMetadataGetResponsesSchemaMetadataMediaItems"
+                  "value": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaMetadataMediaItems"
                 }
               }
             }
@@ -12855,9 +12855,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataGetResponsesSchemaContractMetadataTokenType": {
+    "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaContractMetadataTokenType": {
       "description": "String - For valid NFTs, 'ERC721' or 'ERC1155.' For invalid NFTs, a descriptive reason such as 'NO_SUPPORTED_NFT_STANDARD' if the input contract address doesn't support a known NFT standard, or 'NOT_A_CONTRACT' if there is no contract deployed at the input address.",
-      "name": "V2ApiKeyGetNftMetadataGetResponsesSchemaContractMetadataTokenType",
+      "name": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaContractMetadataTokenType",
       "shape": {
         "type": "enum",
         "values": [
@@ -12876,9 +12876,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataGetResponsesSchemaContractMetadataOpensea": {
+    "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaContractMetadataOpensea": {
       "description": "Note that the OpenSea metadata object is currently only available on ETH and Polygon Mainnet. Please reach out to us at support@alchemy.com if you would like to access this data on other networks.",
-      "name": "V2ApiKeyGetNftMetadataGetResponsesSchemaContractMetadataOpensea",
+      "name": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaContractMetadataOpensea",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13003,8 +13003,8 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataGetResponsesSchemaContractMetadata": {
-      "name": "V2ApiKeyGetNftMetadataGetResponsesSchemaContractMetadata",
+    "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaContractMetadata": {
+      "name": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaContractMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13055,7 +13055,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataGetResponsesSchemaContractMetadataTokenType"
+                "value": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaContractMetadataTokenType"
               }
             }
           },
@@ -13092,16 +13092,16 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataGetResponsesSchemaContractMetadataOpensea"
+                "value": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaContractMetadataOpensea"
               }
             }
           }
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataGetResponsesSchemaSpamInfo": {
+    "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaSpamInfo": {
       "description": "Information about whether and why a contract was marked as spam.",
-      "name": "V2ApiKeyGetNftMetadataGetResponsesSchemaSpamInfo",
+      "name": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaSpamInfo",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13138,9 +13138,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataGetResponsesSchemaAcquiredAt": {
+    "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaAcquiredAt": {
       "description": "Only present if the request specified `orderBy=transferTime`.",
-      "name": "V2ApiKeyGetNftMetadataGetResponsesSchemaAcquiredAt",
+      "name": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaAcquiredAt",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13188,7 +13188,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataGetResponsesSchemaContract"
+                "value": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaContract"
               }
             }
           },
@@ -13198,7 +13198,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataGetResponsesSchemaId"
+                "value": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaId"
               }
             }
           },
@@ -13247,7 +13247,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataGetResponsesSchemaTokenUri"
+                "value": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaTokenUri"
               }
             }
           },
@@ -13257,7 +13257,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataGetResponsesSchemaMedia"
+                "value": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaMedia"
               }
             }
           },
@@ -13268,7 +13268,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataGetResponsesSchemaMetadata"
+                "value": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaMetadata"
               }
             }
           },
@@ -13304,7 +13304,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataGetResponsesSchemaContractMetadata"
+                "value": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaContractMetadata"
               }
             }
           },
@@ -13315,7 +13315,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataGetResponsesSchemaSpamInfo"
+                "value": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaSpamInfo"
               }
             }
           },
@@ -13326,15 +13326,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataGetResponsesSchemaAcquiredAt"
+                "value": "V2ApiKeyGetNftMetadataGetResponsesContentApplicationJsonSchemaAcquiredAt"
               }
             }
           }
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataBatchPostRequestBodySchemaTokensItems": {
-      "name": "V2ApiKeyGetNftMetadataBatchPostRequestBodySchemaTokensItems",
+    "V2ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokensItems": {
+      "name": "V2ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokensItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13380,9 +13380,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsContract": {
+    "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContract": {
       "description": "Object - Contract for returned NFT",
-      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsContract",
+      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContract",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13403,9 +13403,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsIdTokenMetadataTokenType": {
+    "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsIdTokenMetadataTokenType": {
       "description": "String - For valid NFTs, 'ERC721' or 'ERC1155.' For invalid NFTs, a descriptive reason such as 'NO_SUPPORTED_NFT_STANDARD' if the input contract address doesn't support a known NFT standard, or 'NOT_A_CONTRACT' if there is no contract deployed at the input address.",
-      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsIdTokenMetadataTokenType",
+      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsIdTokenMetadataTokenType",
       "shape": {
         "type": "enum",
         "values": [
@@ -13424,8 +13424,8 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsIdTokenMetadata": {
-      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsIdTokenMetadata",
+    "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsIdTokenMetadata": {
+      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsIdTokenMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13437,15 +13437,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsIdTokenMetadataTokenType"
+                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsIdTokenMetadataTokenType"
               }
             }
           }
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsId": {
-      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsId",
+    "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsId": {
+      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsId",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13469,15 +13469,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsIdTokenMetadata"
+                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsIdTokenMetadata"
               }
             }
           }
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsTokenUri": {
-      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsTokenUri",
+    "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsTokenUri": {
+      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsTokenUri",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13511,8 +13511,8 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsMedia": {
-      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsMedia",
+    "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsMedia": {
+      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsMedia",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13585,8 +13585,8 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsMetadataAttributesItems": {
-      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsMetadataAttributesItems",
+    "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsMetadataAttributesItems": {
+      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsMetadataAttributesItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13618,8 +13618,8 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsMetadataMediaItems": {
-      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsMetadataMediaItems",
+    "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsMetadataMediaItems": {
+      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsMetadataMediaItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13692,9 +13692,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsMetadata": {
+    "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsMetadata": {
       "description": "Relevant metadata for NFT contract. This is useful for viewing image url, traits, etc. without having to follow the metadata url in tokenUri to parse manually.",
-      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsMetadata",
+      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13773,7 +13773,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsMetadataAttributesItems"
+                  "value": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsMetadataAttributesItems"
                 }
               }
             }
@@ -13786,7 +13786,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsMetadataMediaItems"
+                  "value": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsMetadataMediaItems"
                 }
               }
             }
@@ -13794,9 +13794,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsContractMetadataTokenType": {
+    "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractMetadataTokenType": {
       "description": "String - For valid NFTs, 'ERC721' or 'ERC1155.' For invalid NFTs, a descriptive reason such as 'NO_SUPPORTED_NFT_STANDARD' if the input contract address doesn't support a known NFT standard, or 'NOT_A_CONTRACT' if there is no contract deployed at the input address.",
-      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsContractMetadataTokenType",
+      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractMetadataTokenType",
       "shape": {
         "type": "enum",
         "values": [
@@ -13815,9 +13815,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsContractMetadataOpensea": {
+    "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractMetadataOpensea": {
       "description": "Note that the OpenSea metadata object is currently only available on ETH and Polygon Mainnet. Please reach out to us at support@alchemy.com if you would like to access this data on other networks.",
-      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsContractMetadataOpensea",
+      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractMetadataOpensea",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13942,8 +13942,8 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsContractMetadata": {
-      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsContractMetadata",
+    "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractMetadata": {
+      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13994,7 +13994,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsContractMetadataTokenType"
+                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractMetadataTokenType"
               }
             }
           },
@@ -14031,16 +14031,16 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsContractMetadataOpensea"
+                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractMetadataOpensea"
               }
             }
           }
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsSpamInfo": {
+    "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsSpamInfo": {
       "description": "Information about whether and why a contract was marked as spam.",
-      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsSpamInfo",
+      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsSpamInfo",
       "shape": {
         "type": "object",
         "extends": [],
@@ -14077,9 +14077,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsAcquiredAt": {
+    "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsAcquiredAt": {
       "description": "Only present if the request specified `orderBy=transferTime`.",
-      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsAcquiredAt",
+      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsAcquiredAt",
       "shape": {
         "type": "object",
         "extends": [],
@@ -14113,9 +14113,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItems": {
+    "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItems": {
       "description": "The object that represents an NFT and has all data corresponding to that NFT",
-      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItems",
+      "name": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -14127,7 +14127,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsContract"
+                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContract"
               }
             }
           },
@@ -14137,7 +14137,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsId"
+                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsId"
               }
             }
           },
@@ -14186,7 +14186,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsTokenUri"
+                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsTokenUri"
               }
             }
           },
@@ -14196,7 +14196,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsMedia"
+                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsMedia"
               }
             }
           },
@@ -14207,7 +14207,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsMetadata"
+                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsMetadata"
               }
             }
           },
@@ -14243,7 +14243,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsContractMetadata"
+                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractMetadata"
               }
             }
           },
@@ -14254,7 +14254,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsSpamInfo"
+                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsSpamInfo"
               }
             }
           },
@@ -14265,16 +14265,16 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItemsAcquiredAt"
+                "value": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItemsAcquiredAt"
               }
             }
           }
         ]
       }
     },
-    "V2ApiKeyGetContractMetadataGetResponsesSchemaContractMetadataTokenType": {
+    "V2ApiKeyGetContractMetadataGetResponsesContentApplicationJsonSchemaContractMetadataTokenType": {
       "description": "String - For valid NFTs, 'ERC721' or 'ERC1155.' For invalid NFTs, a descriptive reason such as 'NO_SUPPORTED_NFT_STANDARD' if the input contract address doesn't support a known NFT standard, or 'NOT_A_CONTRACT' if there is no contract deployed at the input address.",
-      "name": "V2ApiKeyGetContractMetadataGetResponsesSchemaContractMetadataTokenType",
+      "name": "V2ApiKeyGetContractMetadataGetResponsesContentApplicationJsonSchemaContractMetadataTokenType",
       "shape": {
         "type": "enum",
         "values": [
@@ -14293,9 +14293,9 @@
         ]
       }
     },
-    "V2ApiKeyGetContractMetadataGetResponsesSchemaContractMetadataOpensea": {
+    "V2ApiKeyGetContractMetadataGetResponsesContentApplicationJsonSchemaContractMetadataOpensea": {
       "description": "Note that the OpenSea metadata object is currently only available on ETH and Polygon Mainnet. Please reach out to us at support@alchemy.com if you would like to access this data on other networks.",
-      "name": "V2ApiKeyGetContractMetadataGetResponsesSchemaContractMetadataOpensea",
+      "name": "V2ApiKeyGetContractMetadataGetResponsesContentApplicationJsonSchemaContractMetadataOpensea",
       "shape": {
         "type": "object",
         "extends": [],
@@ -14420,8 +14420,8 @@
         ]
       }
     },
-    "V2ApiKeyGetContractMetadataGetResponsesSchemaContractMetadata": {
-      "name": "V2ApiKeyGetContractMetadataGetResponsesSchemaContractMetadata",
+    "V2ApiKeyGetContractMetadataGetResponsesContentApplicationJsonSchemaContractMetadata": {
+      "name": "V2ApiKeyGetContractMetadataGetResponsesContentApplicationJsonSchemaContractMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -14472,7 +14472,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetContractMetadataGetResponsesSchemaContractMetadataTokenType"
+                "value": "V2ApiKeyGetContractMetadataGetResponsesContentApplicationJsonSchemaContractMetadataTokenType"
               }
             }
           },
@@ -14509,7 +14509,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetContractMetadataGetResponsesSchemaContractMetadataOpensea"
+                "value": "V2ApiKeyGetContractMetadataGetResponsesContentApplicationJsonSchemaContractMetadataOpensea"
               }
             }
           }
@@ -14541,15 +14541,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetContractMetadataGetResponsesSchemaContractMetadata"
+                "value": "V2ApiKeyGetContractMetadataGetResponsesContentApplicationJsonSchemaContractMetadata"
               }
             }
           }
         ]
       }
     },
-    "V2ApiKeyGetContractMetadataBatchPostResponsesSchemaItemsContractMetadataMediaItems": {
-      "name": "V2ApiKeyGetContractMetadataBatchPostResponsesSchemaItemsContractMetadataMediaItems",
+    "V2ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractMetadataMediaItems": {
+      "name": "V2ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractMetadataMediaItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -14622,9 +14622,9 @@
         ]
       }
     },
-    "V2ApiKeyGetContractMetadataBatchPostResponsesSchemaItemsContractMetadataOpensea": {
+    "V2ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractMetadataOpensea": {
       "description": "Note that the OpenSea metadata object is currently only available on ETH and Polygon Mainnet. Please reach out to us at support@alchemy.com if you would like to access this data on other networks.",
-      "name": "V2ApiKeyGetContractMetadataBatchPostResponsesSchemaItemsContractMetadataOpensea",
+      "name": "V2ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractMetadataOpensea",
       "shape": {
         "type": "object",
         "extends": [],
@@ -14749,9 +14749,9 @@
         ]
       }
     },
-    "V2ApiKeyGetContractMetadataBatchPostResponsesSchemaItemsContractMetadata": {
+    "V2ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractMetadata": {
       "description": "The object that represents a smart contract and has all data corresponding to that contract",
-      "name": "V2ApiKeyGetContractMetadataBatchPostResponsesSchemaItemsContractMetadata",
+      "name": "V2ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -14906,7 +14906,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetContractMetadataBatchPostResponsesSchemaItemsContractMetadataMediaItems"
+                  "value": "V2ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractMetadataMediaItems"
                 }
               }
             }
@@ -14918,15 +14918,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetContractMetadataBatchPostResponsesSchemaItemsContractMetadataOpensea"
+                "value": "V2ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractMetadataOpensea"
               }
             }
           }
         ]
       }
     },
-    "V2ApiKeyGetContractMetadataBatchPostResponsesSchemaItems": {
-      "name": "V2ApiKeyGetContractMetadataBatchPostResponsesSchemaItems",
+    "V2ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "V2ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -14951,16 +14951,16 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetContractMetadataBatchPostResponsesSchemaItemsContractMetadata"
+                "value": "V2ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItemsContractMetadata"
               }
             }
           }
         ]
       }
     },
-    "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsIdTokenMetadataTokenType": {
+    "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsIdTokenMetadataTokenType": {
       "description": "String - For valid NFTs, 'ERC721' or 'ERC1155.' For invalid NFTs, a descriptive reason such as 'NO_SUPPORTED_NFT_STANDARD' if the input contract address doesn't support a known NFT standard, or 'NOT_A_CONTRACT' if there is no contract deployed at the input address.",
-      "name": "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsIdTokenMetadataTokenType",
+      "name": "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsIdTokenMetadataTokenType",
       "shape": {
         "type": "enum",
         "values": [
@@ -14979,8 +14979,8 @@
         ]
       }
     },
-    "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsIdTokenMetadata": {
-      "name": "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsIdTokenMetadata",
+    "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsIdTokenMetadata": {
+      "name": "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsIdTokenMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -14992,15 +14992,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsIdTokenMetadataTokenType"
+                "value": "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsIdTokenMetadataTokenType"
               }
             }
           }
         ]
       }
     },
-    "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsId": {
-      "name": "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsId",
+    "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsId": {
+      "name": "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsId",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15024,15 +15024,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsIdTokenMetadata"
+                "value": "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsIdTokenMetadata"
               }
             }
           }
         ]
       }
     },
-    "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsTokenUri": {
-      "name": "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsTokenUri",
+    "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsTokenUri": {
+      "name": "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsTokenUri",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15066,8 +15066,8 @@
         ]
       }
     },
-    "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsMetadataAttributesItems": {
-      "name": "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsMetadataAttributesItems",
+    "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsMetadataAttributesItems": {
+      "name": "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsMetadataAttributesItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15099,8 +15099,8 @@
         ]
       }
     },
-    "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsMetadataMediaItems": {
-      "name": "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsMetadataMediaItems",
+    "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsMetadataMediaItems": {
+      "name": "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsMetadataMediaItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15173,9 +15173,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsMetadata": {
+    "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsMetadata": {
       "description": "Relevant metadata for NFT contract. This is useful for viewing image url, traits, etc. without having to follow the metadata url in tokenUri to parse manually.",
-      "name": "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsMetadata",
+      "name": "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15254,7 +15254,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsMetadataAttributesItems"
+                  "value": "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsMetadataAttributesItems"
                 }
               }
             }
@@ -15267,7 +15267,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsMetadataMediaItems"
+                  "value": "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsMetadataMediaItems"
                 }
               }
             }
@@ -15275,9 +15275,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsContractMetadataTokenType": {
+    "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsContractMetadataTokenType": {
       "description": "String - For valid NFTs, 'ERC721' or 'ERC1155.' For invalid NFTs, a descriptive reason such as 'NO_SUPPORTED_NFT_STANDARD' if the input contract address doesn't support a known NFT standard, or 'NOT_A_CONTRACT' if there is no contract deployed at the input address.",
-      "name": "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsContractMetadataTokenType",
+      "name": "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsContractMetadataTokenType",
       "shape": {
         "type": "enum",
         "values": [
@@ -15296,9 +15296,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsContractMetadataOpensea": {
+    "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsContractMetadataOpensea": {
       "description": "Note that the OpenSea metadata object is currently only available on ETH and Polygon Mainnet. Please reach out to us at support@alchemy.com if you would like to access this data on other networks.",
-      "name": "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsContractMetadataOpensea",
+      "name": "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsContractMetadataOpensea",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15423,8 +15423,8 @@
         ]
       }
     },
-    "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsContractMetadata": {
-      "name": "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsContractMetadata",
+    "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsContractMetadata": {
+      "name": "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsContractMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15475,7 +15475,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsContractMetadataTokenType"
+                "value": "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsContractMetadataTokenType"
               }
             }
           },
@@ -15512,15 +15512,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsContractMetadataOpensea"
+                "value": "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsContractMetadataOpensea"
               }
             }
           }
         ]
       }
     },
-    "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItems": {
-      "name": "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItems",
+    "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItems": {
+      "name": "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15531,7 +15531,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsId"
+                "value": "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsId"
               }
             }
           },
@@ -15541,7 +15541,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsTokenUri"
+                "value": "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsTokenUri"
               }
             }
           },
@@ -15552,7 +15552,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsMetadata"
+                "value": "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsMetadata"
               }
             }
           },
@@ -15575,7 +15575,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItemsContractMetadata"
+                "value": "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItemsContractMetadata"
               }
             }
           }
@@ -15597,7 +15597,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetNfTsForCollectionGetResponsesSchemaNftsItems"
+                  "value": "V2ApiKeyGetNfTsForCollectionGetResponsesContentApplicationJsonSchemaNftsItems"
                 }
               }
             }
@@ -15705,9 +15705,9 @@
         ]
       }
     },
-    "V2ApiKeyGetFloorPriceGetResponsesSchemaNftMarketplacePriceCurrency": {
+    "V2ApiKeyGetFloorPriceGetResponsesContentApplicationJsonSchemaNftMarketplacePriceCurrency": {
       "description": "String - The currency in which the floor price is denominated. Typically, denominated in ETH",
-      "name": "V2ApiKeyGetFloorPriceGetResponsesSchemaNftMarketplacePriceCurrency",
+      "name": "V2ApiKeyGetFloorPriceGetResponsesContentApplicationJsonSchemaNftMarketplacePriceCurrency",
       "shape": {
         "type": "enum",
         "values": [
@@ -15717,9 +15717,9 @@
         ]
       }
     },
-    "V2ApiKeyGetFloorPriceGetResponsesSchemaNftMarketplace": {
+    "V2ApiKeyGetFloorPriceGetResponsesContentApplicationJsonSchemaNftMarketplace": {
       "description": "Name of the NFT marketplace where the collection is listed. Current marketplaces supported -  OpenSea, LooksRare",
-      "name": "V2ApiKeyGetFloorPriceGetResponsesSchemaNftMarketplace",
+      "name": "V2ApiKeyGetFloorPriceGetResponsesContentApplicationJsonSchemaNftMarketplace",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15744,7 +15744,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetFloorPriceGetResponsesSchemaNftMarketplacePriceCurrency"
+                "value": "V2ApiKeyGetFloorPriceGetResponsesContentApplicationJsonSchemaNftMarketplacePriceCurrency"
               }
             }
           },
@@ -15803,15 +15803,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetFloorPriceGetResponsesSchemaNftMarketplace"
+                "value": "V2ApiKeyGetFloorPriceGetResponsesContentApplicationJsonSchemaNftMarketplace"
               }
             }
           }
         ]
       }
     },
-    "V2ApiKeyComputeRarityGetResponsesSchemaRaritiesItems": {
-      "name": "V2ApiKeyComputeRarityGetResponsesSchemaRaritiesItems",
+    "V2ApiKeyComputeRarityGetResponsesContentApplicationJsonSchemaRaritiesItems": {
+      "name": "V2ApiKeyComputeRarityGetResponsesContentApplicationJsonSchemaRaritiesItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15874,7 +15874,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyComputeRarityGetResponsesSchemaRaritiesItems"
+                  "value": "V2ApiKeyComputeRarityGetResponsesContentApplicationJsonSchemaRaritiesItems"
                 }
               }
             }
@@ -15882,9 +15882,9 @@
         ]
       }
     },
-    "V2ApiKeySearchContractMetadataGetResponsesSchemaItemsContractMetadataTokenType": {
+    "V2ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItemsContractMetadataTokenType": {
       "description": "String - For valid NFTs, 'ERC721' or 'ERC1155.' For invalid NFTs, a descriptive reason such as 'NO_SUPPORTED_NFT_STANDARD' if the input contract address doesn't support a known NFT standard, or 'NOT_A_CONTRACT' if there is no contract deployed at the input address.",
-      "name": "V2ApiKeySearchContractMetadataGetResponsesSchemaItemsContractMetadataTokenType",
+      "name": "V2ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItemsContractMetadataTokenType",
       "shape": {
         "type": "enum",
         "values": [
@@ -15903,9 +15903,9 @@
         ]
       }
     },
-    "V2ApiKeySearchContractMetadataGetResponsesSchemaItemsContractMetadataOpensea": {
+    "V2ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItemsContractMetadataOpensea": {
       "description": "Note that the OpenSea metadata object is currently only available on ETH and Polygon Mainnet. Please reach out to us at support@alchemy.com if you would like to access this data on other networks.",
-      "name": "V2ApiKeySearchContractMetadataGetResponsesSchemaItemsContractMetadataOpensea",
+      "name": "V2ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItemsContractMetadataOpensea",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16030,8 +16030,8 @@
         ]
       }
     },
-    "V2ApiKeySearchContractMetadataGetResponsesSchemaItemsContractMetadata": {
-      "name": "V2ApiKeySearchContractMetadataGetResponsesSchemaItemsContractMetadata",
+    "V2ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItemsContractMetadata": {
+      "name": "V2ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItemsContractMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16082,7 +16082,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeySearchContractMetadataGetResponsesSchemaItemsContractMetadataTokenType"
+                "value": "V2ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItemsContractMetadataTokenType"
               }
             }
           },
@@ -16119,15 +16119,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeySearchContractMetadataGetResponsesSchemaItemsContractMetadataOpensea"
+                "value": "V2ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItemsContractMetadataOpensea"
               }
             }
           }
         ]
       }
     },
-    "V2ApiKeySearchContractMetadataGetResponsesSchemaItems": {
-      "name": "V2ApiKeySearchContractMetadataGetResponsesSchemaItems",
+    "V2ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItems": {
+      "name": "V2ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16151,16 +16151,16 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeySearchContractMetadataGetResponsesSchemaItemsContractMetadata"
+                "value": "V2ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItemsContractMetadata"
               }
             }
           }
         ]
       }
     },
-    "V2ApiKeySummarizeNftAttributesGetResponsesSchemaSummary": {
+    "V2ApiKeySummarizeNftAttributesGetResponsesContentApplicationJsonSchemaSummary": {
       "description": "Object mapping trait types to the prevalence of each trait within that type.",
-      "name": "V2ApiKeySummarizeNftAttributesGetResponsesSchemaSummary",
+      "name": "V2ApiKeySummarizeNftAttributesGetResponsesContentApplicationJsonSchemaSummary",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16194,7 +16194,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeySummarizeNftAttributesGetResponsesSchemaSummary"
+                "value": "V2ApiKeySummarizeNftAttributesGetResponsesContentApplicationJsonSchemaSummary"
               }
             }
           },
@@ -16251,9 +16251,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsTaker": {
+    "V2ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsTaker": {
       "description": "String - Whether the price taker in the trade was the buyer or the seller.",
-      "name": "V2ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsTaker",
+      "name": "V2ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsTaker",
       "shape": {
         "type": "enum",
         "values": [
@@ -16266,9 +16266,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsSellerFee": {
+    "V2ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsSellerFee": {
       "description": "The payment from buyer to the seller",
-      "name": "V2ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsSellerFee",
+      "name": "V2ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsSellerFee",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16315,9 +16315,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsProtocolFee": {
+    "V2ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsProtocolFee": {
       "description": "The payment from buyer to the NFT marketplace protocol",
-      "name": "V2ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsProtocolFee",
+      "name": "V2ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsProtocolFee",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16364,9 +16364,9 @@
         ]
       }
     },
-    "V2ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsRoyaltyFee": {
+    "V2ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsRoyaltyFee": {
       "description": "The payment from buyer to the royalty address of the NFT collection",
-      "name": "V2ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsRoyaltyFee",
+      "name": "V2ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsRoyaltyFee",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16413,8 +16413,8 @@
         ]
       }
     },
-    "V2ApiKeyGetNftSalesGetResponsesSchemaNftSalesItems": {
-      "name": "V2ApiKeyGetNftSalesGetResponsesSchemaNftSalesItems",
+    "V2ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItems": {
+      "name": "V2ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16504,7 +16504,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsTaker"
+                "value": "V2ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsTaker"
               }
             }
           },
@@ -16515,7 +16515,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsSellerFee"
+                "value": "V2ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsSellerFee"
               }
             }
           },
@@ -16526,7 +16526,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsProtocolFee"
+                "value": "V2ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsProtocolFee"
               }
             }
           },
@@ -16537,7 +16537,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetNftSalesGetResponsesSchemaNftSalesItemsRoyaltyFee"
+                "value": "V2ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItemsRoyaltyFee"
               }
             }
           },
@@ -16611,7 +16611,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetNftSalesGetResponsesSchemaNftSalesItems"
+                  "value": "V2ApiKeyGetNftSalesGetResponsesContentApplicationJsonSchemaNftSalesItems"
                 }
               }
             }
@@ -16667,8 +16667,8 @@
         ]
       }
     },
-    "V2ApiKeyGetContractsForOwnerGetResponsesSchemaContractsItemsMediaItems": {
-      "name": "V2ApiKeyGetContractsForOwnerGetResponsesSchemaContractsItemsMediaItems",
+    "V2ApiKeyGetContractsForOwnerGetResponsesContentApplicationJsonSchemaContractsItemsMediaItems": {
+      "name": "V2ApiKeyGetContractsForOwnerGetResponsesContentApplicationJsonSchemaContractsItemsMediaItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16741,9 +16741,9 @@
         ]
       }
     },
-    "V2ApiKeyGetContractsForOwnerGetResponsesSchemaContractsItemsOpensea": {
+    "V2ApiKeyGetContractsForOwnerGetResponsesContentApplicationJsonSchemaContractsItemsOpensea": {
       "description": "Note that the OpenSea metadata object is currently only available on ETH and Polygon Mainnet. Please reach out to us at support@alchemy.com if you would like to access this data on other networks.",
-      "name": "V2ApiKeyGetContractsForOwnerGetResponsesSchemaContractsItemsOpensea",
+      "name": "V2ApiKeyGetContractsForOwnerGetResponsesContentApplicationJsonSchemaContractsItemsOpensea",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16868,9 +16868,9 @@
         ]
       }
     },
-    "V2ApiKeyGetContractsForOwnerGetResponsesSchemaContractsItems": {
+    "V2ApiKeyGetContractsForOwnerGetResponsesContentApplicationJsonSchemaContractsItems": {
       "description": "The object that represents a smart contract and has all data corresponding to that contract",
-      "name": "V2ApiKeyGetContractsForOwnerGetResponsesSchemaContractsItems",
+      "name": "V2ApiKeyGetContractsForOwnerGetResponsesContentApplicationJsonSchemaContractsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17025,7 +17025,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetContractsForOwnerGetResponsesSchemaContractsItemsMediaItems"
+                  "value": "V2ApiKeyGetContractsForOwnerGetResponsesContentApplicationJsonSchemaContractsItemsMediaItems"
                 }
               }
             }
@@ -17037,7 +17037,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V2ApiKeyGetContractsForOwnerGetResponsesSchemaContractsItemsOpensea"
+                "value": "V2ApiKeyGetContractsForOwnerGetResponsesContentApplicationJsonSchemaContractsItemsOpensea"
               }
             }
           }
@@ -17058,7 +17058,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetContractsForOwnerGetResponsesSchemaContractsItems"
+                  "value": "V2ApiKeyGetContractsForOwnerGetResponsesContentApplicationJsonSchemaContractsItems"
                 }
               }
             }
@@ -21070,7 +21070,7 @@
                         "type": "list",
                         "itemType": {
                           "type": "id",
-                          "value": "V3ApiKeyGetNftMetadataBatchPostRequestBodySchemaTokensItems"
+                          "value": "V3ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokensItems"
                         }
                       }
                     }
@@ -21111,7 +21111,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetNftMetadataBatchPostResponsesSchemaItems"
+                  "value": "V3ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItems"
                 }
               }
             },
@@ -22258,7 +22258,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetContractMetadataBatchPostResponsesSchemaItems"
+                  "value": "V3ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItems"
                 }
               }
             },
@@ -23200,7 +23200,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeySearchContractMetadataGetResponsesSchemaItems"
+                  "value": "V3ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItems"
                 }
               }
             },
@@ -27021,7 +27021,7 @@
                         "type": "list",
                         "itemType": {
                           "type": "id",
-                          "value": "V2ApiKeyGetNftMetadataBatchPostRequestBodySchemaTokensItems"
+                          "value": "V2ApiKeyGetNftMetadataBatchPostRequestBodyContentApplicationJsonSchemaTokensItems"
                         }
                       }
                     }
@@ -27062,7 +27062,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetNftMetadataBatchPostResponsesSchemaItems"
+                  "value": "V2ApiKeyGetNftMetadataBatchPostResponsesContentApplicationJsonSchemaItems"
                 }
               }
             },
@@ -27747,7 +27747,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetContractMetadataBatchPostResponsesSchemaItems"
+                  "value": "V2ApiKeyGetContractMetadataBatchPostResponsesContentApplicationJsonSchemaItems"
                 }
               }
             },
@@ -30463,7 +30463,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeySearchContractMetadataGetResponsesSchemaItems"
+                  "value": "V2ApiKeySearchContractMetadataGetResponsesContentApplicationJsonSchemaItems"
                 }
               }
             },

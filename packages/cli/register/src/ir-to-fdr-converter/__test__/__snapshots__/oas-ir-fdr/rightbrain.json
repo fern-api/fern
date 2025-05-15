@@ -11279,9 +11279,9 @@
         ]
       }
     },
-    "OrgOrgIdProjectProjectIdTaskTaskIdRunPostRequestBodySchemaTaskInput": {
+    "OrgOrgIdProjectProjectIdTaskTaskIdRunPostRequestBodyContentMultipartFormDataSchemaTaskInput": {
       "description": "The data input to the Task. This should be relevant to the `user_prompt` and cover any dynamic `{...}` parameters that are referenced in the prompt. Not required if `image_required` is set to `true` and there are no dynamic parameters in the prompt.",
-      "name": "OrgOrgIdProjectProjectIdTaskTaskIdRunPostRequestBodySchemaTaskInput",
+      "name": "OrgOrgIdProjectProjectIdTaskTaskIdRunPostRequestBodyContentMultipartFormDataSchemaTaskInput",
       "shape": {
         "type": "object",
         "extends": [],
@@ -38469,7 +38469,7 @@
                     "key": "task_input",
                     "valueType": {
                       "type": "id",
-                      "value": "OrgOrgIdProjectProjectIdTaskTaskIdRunPostRequestBodySchemaTaskInput"
+                      "value": "OrgOrgIdProjectProjectIdTaskTaskIdRunPostRequestBodyContentMultipartFormDataSchemaTaskInput"
                     },
                     "contentType": "multipart/form-data",
                     "description": "The data input to the Task. This should be relevant to the `user_prompt` and cover any dynamic `{...}` parameters that are referenced in the prompt. Not required if `image_required` is set to `true` and there are no dynamic parameters in the prompt.",
