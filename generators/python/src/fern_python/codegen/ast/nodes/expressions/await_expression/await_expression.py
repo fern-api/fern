@@ -15,8 +15,15 @@ class AwaitExpression(Expression):
         self.expression = Expression(expression) if isinstance(expression, (AstNode, Reference, str)) else expression
 
     def get_metadata(self) -> AstNodeMetadata:
+        if isinstance(self.expression, Reference):
+            metadata = AstNodeMetadata()
+            metadata.references.add(self.expression)
+            return metadata
         return self.expression.get_metadata()
 
     def write(self, writer: NodeWriter, should_write_as_snippet: Optional[bool] = None) -> None:
         writer.write("await ")
-        self.expression.write(writer=writer)
+        if isinstance(self.expression, Reference):
+            writer.write_reference(self.expression)
+        else:
+            self.expression.write(writer=writer)

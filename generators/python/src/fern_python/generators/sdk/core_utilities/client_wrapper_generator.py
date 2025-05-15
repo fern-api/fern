@@ -465,13 +465,23 @@ class ClientWrapperGenerator:
             params_empty = True
             for param in constructor_parameters:
                 if param.private_member_name is not None:
-                    writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
+                    writer.write_node(
+                        AST.VariableDeclaration(
+                            name=f"self.{param.private_member_name}",
+                            initializer=AST.Expression(param.constructor_parameter_name),
+                        )
+                    )
                     params_empty = False
-            for param in literal_headers:
-                writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
+            for header in literal_headers:
+                writer.write_node(
+                    AST.VariableDeclaration(
+                        name=f"self.{header.private_member_name}",
+                        initializer=AST.Expression(header.constructor_parameter_name),
+                    )
+                )
                 params_empty = False
             if params_empty:
-                writer.write_line("pass")
+                writer.write_node(AST.PassStatement())
 
         return _write_constructor_body
 
