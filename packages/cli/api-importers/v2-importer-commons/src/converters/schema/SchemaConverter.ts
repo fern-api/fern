@@ -30,6 +30,7 @@ export declare namespace SchemaConverter {
         id: string;
         schema: OpenAPIV3_1.SchemaObject;
         inlined?: boolean;
+        nameOverride?: string;
     }
 
     export interface ConvertedSchema {
@@ -49,11 +50,14 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
     private readonly id: string;
     private readonly inlined: boolean;
     private readonly audiences: string[];
-    constructor({ context, breadcrumbs, schema, id, inlined = false }: SchemaConverter.Args) {
+    private readonly nameOverride?: string;
+
+    constructor({ context, breadcrumbs, schema, id, inlined = false, nameOverride }: SchemaConverter.Args) {
         super({ context, breadcrumbs });
         this.schema = schema;
         this.id = id;
         this.inlined = inlined;
+        this.nameOverride = nameOverride;
         this.audiences =
             this.context.getAudiences({
                 operation: this.schema,
@@ -416,7 +420,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         return {
             typeId: this.id,
             fernFilepath: this.context.createFernFilepath(),
-            name: this.context.casingsGenerator.generateName(this.id)
+            name: this.context.casingsGenerator.generateName(this.nameOverride ?? this.id)
         };
     }
 

@@ -589,7 +589,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
                 packagePath: [],
                 file: undefined
             },
-            name: this.casingsGenerator.generateName(id ?? "defaultName"),
+            name: this.casingsGenerator.generateName(id),
             typeId: id,
             default: undefined,
             inline: false
