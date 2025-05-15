@@ -5,7 +5,6 @@ from typing import Dict, Generic, TypeVar
 import httpx
 
 T = TypeVar("T")
-"""Generic to represent the underlying type of the data wrapped by the HTTP response."""
 
 
 class BaseHttpResponse:

@@ -344,6 +344,9 @@ class EndpointFunctionGenerator:
         )
 
     def _get_stream_func_return_type(self) -> AST.TypeHint:
+        if self._endpoint.response is None:
+            return AST.TypeHint.async_iterator(AST.TypeHint.none())
+
         underlying_type = self._get_response_body_underlying_type(
             response_body=self._endpoint.response.body, is_async=self._is_async
         )
@@ -1559,26 +1562,26 @@ class EndpointFunctionGenerator:
             data_attribute = "data"
             if is_streaming_endpoint(self._endpoint):
                 response_variable = "r"
-                if self._is_async:
-                    body = [
-                        AST.ForStatement(
-                            target=CHUNK_VARIABLE,
-                            iterable=AST.Expression(f"{response_variable}.{data_attribute}"),
-                            is_async=True,
-                            body=[AST.YieldStatement(AST.Expression(CHUNK_VARIABLE))],
-                        )
-                    ]
-                else:
-                    body = [
-                        AST.YieldStatement(AST.Expression(f"{response_variable}.{data_attribute}"), is_yield_from=True)
-                    ]
 
                 writer.write_node(
                     AST.WithStatement(
                         context_managers=[
                             AST.WithContextManager(expression=func_invocation_expr, as_variable=response_variable)
                         ],
-                        body=body,
+                        body=[
+                            AST.ForStatement(
+                                target=CHUNK_VARIABLE,
+                                iterable=AST.Expression(f"{response_variable}.{data_attribute}"),
+                                is_async=True,
+                                body=[AST.YieldStatement(AST.Expression(CHUNK_VARIABLE))],
+                            )
+                        ]
+                        if self._is_async
+                        else [
+                            AST.YieldStatement(
+                                AST.Expression(f"{response_variable}.{data_attribute}"), is_yield_from=True
+                            )
+                        ],
                         is_async=self._is_async,
                     )
                 )
@@ -1611,7 +1614,7 @@ class EndpointFunctionGenerator:
 def is_streaming_endpoint(endpoint: ir_types.HttpEndpoint) -> bool:
     return (
         endpoint.response is not None
-        and endpoint.response.body
+        and endpoint.response.body is not None
         and (
             endpoint.response.body.get_as_union().type == "streaming"
             or endpoint.response.body.get_as_union().type == "fileDownload"

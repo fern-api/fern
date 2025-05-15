@@ -7,8 +7,7 @@ from ..context.sdk_generator_context import SdkGeneratorContext
 from .constants import DEFAULT_BODY_PARAMETER_VALUE
 from .endpoint_metadata_collector import EndpointMetadataCollector
 from .endpoint_response_code_writer import EndpointResponseCodeWriter
-from .generated_root_client import GeneratedRootClient
-from fern_python.codegen import AST, SourceFile
+from fern_python.codegen import AST
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 
@@ -45,10 +44,8 @@ class BaseClientGenerator(ABC):
         *,
         context: SdkGeneratorContext,
         package: ir_types.Package,
-        subpackage_id: Optional[ir_types.SubpackageId],
         class_name: str,
         async_class_name: str,
-        generated_root_client: Optional[GeneratedRootClient],
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
         endpoint_metadata_collector: EndpointMetadataCollector,
@@ -56,35 +53,13 @@ class BaseClientGenerator(ABC):
     ):
         self._context = context
         self._package = package
-        self._subpackage_id = subpackage_id
         self._class_name = class_name
         self._async_class_name = async_class_name
-        self._generated_root_client = generated_root_client
         self._snippet_registry = snippet_registry
         self._snippet_writer = snippet_writer
         self._endpoint_metadata_collector = endpoint_metadata_collector
         self._websocket = websocket
         self._is_default_body_parameter_used = False
-
-    def generate(self, source_file: SourceFile) -> None:
-        """Generate client classes and add them to the source file."""
-        # Create class declarations
-        sync_class_declaration = self._create_class_declaration(is_async=False)
-        async_class_declaration = self._create_class_declaration(is_async=True)
-
-        # Add default body parameter if needed
-        if self._is_default_body_parameter_used:
-            source_file.add_arbitrary_code(AST.CodeWriter(self._write_default_param))
-
-        # Add class declarations to source file
-        source_file.add_class_declaration(
-            declaration=sync_class_declaration,
-            should_export=False,
-        )
-        source_file.add_class_declaration(
-            declaration=async_class_declaration,
-            should_export=False,
-        )
 
     def _create_class_declaration_base(self, *, is_async: bool) -> AST.ClassDeclaration:
         """Create the base structure of a class declaration. To be extended by subclasses."""
@@ -156,13 +131,6 @@ class BaseClientGenerator(ABC):
 
     def _get_client_wrapper_member_name(self) -> str:
         return "_client_wrapper"
-
-    @abstractmethod
-    def _create_class_declaration(self, *, is_async: bool) -> AST.ClassDeclaration:
-        """
-        Create a class declaration for the client.
-        This method should be implemented by subclasses.
-        """
 
     @abstractmethod
     def _get_constructor_parameters(self, *, is_async: bool) -> List[ConstructorParameter]:

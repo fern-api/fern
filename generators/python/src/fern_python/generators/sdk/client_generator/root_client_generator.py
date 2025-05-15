@@ -74,10 +74,8 @@ class RootClientGenerator(BaseWrappedClientGenerator):
         super().__init__(
             context=context,
             package=package,
-            subpackage_id=None,
             class_name=class_name,
             async_class_name=async_class_name,
-            generated_root_client=None,
             snippet_registry=snippet_registry,
             snippet_writer=snippet_writer,
             endpoint_metadata_collector=endpoint_metadata_collector,
@@ -299,7 +297,8 @@ class RootClientGenerator(BaseWrappedClientGenerator):
                         name=RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
                         type_hint=(
                             AST.TypeHint(self._context.get_reference_to_environments_class())
-                            if self._environments_config.default_environment is not None
+                            if self._environments_config is not None
+                            and self._environments_config.default_environment is not None
                             else AST.TypeHint.optional(
                                 AST.TypeHint(self._context.get_reference_to_environments_class())
                             )
@@ -319,14 +318,14 @@ class RootClientGenerator(BaseWrappedClientGenerator):
             else self._context.get_class_name_for_generated_raw_root_client()
         )
 
-    def get_raw_client_class_reference(self, *, is_async: bool) -> AST.TypeHint:
+    def get_raw_client_class_reference(self, *, is_async: bool) -> AST.ClassReference:
         return (
             self._context.get_async_raw_client_class_reference_for_root_client()
             if is_async
             else self._context.get_raw_client_class_reference_for_root_client()
         )
 
-    def _get_constructor_parameters(self, *, is_async: bool) -> List[RootClientConstructorParameter]:
+    def _get_constructor_parameters(self, *, is_async: bool) -> List[RootClientConstructorParameter]:  # type: ignore[override]
         parameters: List[RootClientConstructorParameter] = []
 
         environments_config = self._context.ir.environments
@@ -636,7 +635,7 @@ class RootClientGenerator(BaseWrappedClientGenerator):
             )
         return parameters
 
-    def _get_write_constructor_body(
+    def _get_write_constructor_body(  # type: ignore[override]
         self, *, is_async: bool, constructor_parameters: List[RootClientConstructorParameter]
     ) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
@@ -924,11 +923,11 @@ class RootClientGenerator(BaseWrappedClientGenerator):
             )
         )
 
-        for wrapper_param in constructor_info.literal_headers:
+        for header in constructor_info.literal_headers:
             client_wrapper_constructor_kwargs.append(
                 (
-                    wrapper_param.header.name.name.snake_case.safe_name,
-                    AST.Expression(wrapper_param.header.name.name.snake_case.safe_name),
+                    header.header.name.name.snake_case.safe_name,
+                    AST.Expression(header.header.name.name.snake_case.safe_name),
                 )
             )
 

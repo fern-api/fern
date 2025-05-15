@@ -1,13 +1,48 @@
-from typing import List
+from typing import List, Optional
 
+from ..context.sdk_generator_context import SdkGeneratorContext
 from .base_client_generator import ConstructorParameter
 from .base_wrapped_client_generator import BaseWrappedClientGenerator
+from .generated_root_client import GeneratedRootClient
 from .websocket_connect_method_generator import WebsocketConnectMethodGenerator
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
+from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
+    EndpointMetadataCollector,
+)
+from fern_python.snippet import SnippetRegistry, SnippetWriter
+
+import fern.ir.resources as ir_types
 
 
 class ClientGenerator(BaseWrappedClientGenerator):
+    def __init__(
+        self,
+        *,
+        context: SdkGeneratorContext,
+        package: ir_types.Package,
+        subpackage_id: ir_types.SubpackageId,
+        class_name: str,
+        async_class_name: str,
+        snippet_registry: SnippetRegistry,
+        snippet_writer: SnippetWriter,
+        endpoint_metadata_collector: EndpointMetadataCollector,
+        websocket: Optional[ir_types.WebSocketChannel],
+        generated_root_client: GeneratedRootClient,
+    ):
+        super().__init__(
+            context=context,
+            package=package,
+            class_name=class_name,
+            async_class_name=async_class_name,
+            snippet_registry=snippet_registry,
+            snippet_writer=snippet_writer,
+            endpoint_metadata_collector=endpoint_metadata_collector,
+            websocket=websocket,
+        )
+        self._generated_root_client = generated_root_client
+        self._subpackage_id = subpackage_id
+
     def generate(self, source_file: SourceFile) -> None:
         class_declaration = self._create_class_declaration(is_async=False)
         async_class_declaration = self._create_class_declaration(is_async=True)
@@ -61,7 +96,7 @@ class ClientGenerator(BaseWrappedClientGenerator):
             else self._context.get_raw_client_class_name_for_subpackage_service(self._subpackage_id)
         )
 
-    def get_raw_client_class_reference(self, *, is_async: bool) -> AST.TypeHint:
+    def get_raw_client_class_reference(self, *, is_async: bool) -> AST.ClassReference:
         return (
             self._context.get_async_raw_client_class_reference_for_subpackage_service(self._subpackage_id)
             if is_async

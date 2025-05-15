@@ -6,6 +6,7 @@ from typing import Optional, Union
 from ...ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ...references import Reference
 from ..code_writer import CodeWriter
+from typing_extensions import assert_never
 
 
 class Expression(AstNode):
@@ -18,7 +19,7 @@ class Expression(AstNode):
         self.spread = spread
 
     def get_metadata(self) -> AstNodeMetadata:
-        if isinstance(self, str):
+        if isinstance(self.expression, str):
             return AstNodeMetadata()
         if isinstance(self.expression, Reference):
             metadata = AstNodeMetadata()
@@ -26,6 +27,7 @@ class Expression(AstNode):
             return metadata
         if isinstance(self.expression, AstNode):
             return self.expression.get_metadata()
+        assert_never(self.expression)
 
     def write(self, writer: NodeWriter, should_write_as_snippet: Optional[bool] = None) -> None:
         if self.spread is not None:
