@@ -4,6 +4,14 @@
       as well as the line numbers that the errors are coming from.
     type: fix
   irVersion: 57
+  version: 0.61.13
+
+- changelogEntry:
+  - summary: |
+      When you set `type-dates-as-strings` to `false` in the OpenAPI `settings` in _generators.yml_,
+      schemas of type `string` with format `date` will be converted to a Fern `date` type, instead of a `string` type.
+    type: feat
+  irVersion: 57
   version: 0.61.12
 
 - changelogEntry:

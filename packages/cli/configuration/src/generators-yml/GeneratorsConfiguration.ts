@@ -71,6 +71,7 @@ export interface APIDefinitionSettings {
     defaultFormParameterEncoding: "form" | "json" | undefined;
     exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
     additionalPropertiesDefaultsTo: boolean | undefined;
+    typeDatesAsStrings: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {
