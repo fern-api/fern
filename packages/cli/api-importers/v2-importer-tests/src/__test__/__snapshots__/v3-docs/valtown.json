@@ -9327,22 +9327,22 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "V1SqliteExecutePostRequestBodySchemaStatement1",
+          "originalName": "ParameterizedQuery",
           "camelCase": {
-            "unsafeName": "v1SqliteExecutePostRequestBodySchemaStatement1",
-            "safeName": "v1SqliteExecutePostRequestBodySchemaStatement1"
+            "unsafeName": "parameterizedQuery",
+            "safeName": "parameterizedQuery"
           },
           "snakeCase": {
-            "unsafeName": "v_1_sqlite_execute_post_request_body_schema_statement_1",
-            "safeName": "v_1_sqlite_execute_post_request_body_schema_statement_1"
+            "unsafeName": "parameterized_query",
+            "safeName": "parameterized_query"
           },
           "screamingSnakeCase": {
-            "unsafeName": "V_1_SQLITE_EXECUTE_POST_REQUEST_BODY_SCHEMA_STATEMENT_1",
-            "safeName": "V_1_SQLITE_EXECUTE_POST_REQUEST_BODY_SCHEMA_STATEMENT_1"
+            "unsafeName": "PARAMETERIZED_QUERY",
+            "safeName": "PARAMETERIZED_QUERY"
           },
           "pascalCase": {
-            "unsafeName": "V1SqliteExecutePostRequestBodySchemaStatement1",
-            "safeName": "V1SqliteExecutePostRequestBodySchemaStatement1"
+            "unsafeName": "ParameterizedQuery",
+            "safeName": "ParameterizedQuery"
           }
         }
       },
@@ -10088,22 +10088,22 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "V1SqliteBatchPostRequestBodySchemaStatementsItems1",
+          "originalName": "ParameterizedQuery",
           "camelCase": {
-            "unsafeName": "v1SqliteBatchPostRequestBodySchemaStatementsItems1",
-            "safeName": "v1SqliteBatchPostRequestBodySchemaStatementsItems1"
+            "unsafeName": "parameterizedQuery",
+            "safeName": "parameterizedQuery"
           },
           "snakeCase": {
-            "unsafeName": "v_1_sqlite_batch_post_request_body_schema_statements_items_1",
-            "safeName": "v_1_sqlite_batch_post_request_body_schema_statements_items_1"
+            "unsafeName": "parameterized_query",
+            "safeName": "parameterized_query"
           },
           "screamingSnakeCase": {
-            "unsafeName": "V_1_SQLITE_BATCH_POST_REQUEST_BODY_SCHEMA_STATEMENTS_ITEMS_1",
-            "safeName": "V_1_SQLITE_BATCH_POST_REQUEST_BODY_SCHEMA_STATEMENTS_ITEMS_1"
+            "unsafeName": "PARAMETERIZED_QUERY",
+            "safeName": "PARAMETERIZED_QUERY"
           },
           "pascalCase": {
-            "unsafeName": "V1SqliteBatchPostRequestBodySchemaStatementsItems1",
-            "safeName": "V1SqliteBatchPostRequestBodySchemaStatementsItems1"
+            "unsafeName": "ParameterizedQuery",
+            "safeName": "ParameterizedQuery"
           }
         }
       },
@@ -11357,22 +11357,22 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "V1EmailPostRequestBodySchemaFrom1",
+          "originalName": "EmailNameAndAddress",
           "camelCase": {
-            "unsafeName": "v1EmailPostRequestBodySchemaFrom1",
-            "safeName": "v1EmailPostRequestBodySchemaFrom1"
+            "unsafeName": "emailNameAndAddress",
+            "safeName": "emailNameAndAddress"
           },
           "snakeCase": {
-            "unsafeName": "v_1_email_post_request_body_schema_from_1",
-            "safeName": "v_1_email_post_request_body_schema_from_1"
+            "unsafeName": "email_name_and_address",
+            "safeName": "email_name_and_address"
           },
           "screamingSnakeCase": {
-            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_FROM_1",
-            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_FROM_1"
+            "unsafeName": "EMAIL_NAME_AND_ADDRESS",
+            "safeName": "EMAIL_NAME_AND_ADDRESS"
           },
           "pascalCase": {
-            "unsafeName": "V1EmailPostRequestBodySchemaFrom1",
-            "safeName": "V1EmailPostRequestBodySchemaFrom1"
+            "unsafeName": "EmailNameAndAddress",
+            "safeName": "EmailNameAndAddress"
           }
         }
       },
@@ -11578,22 +11578,22 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "V1EmailPostRequestBodySchemaTo01",
+          "originalName": "EmailNameAndAddress",
           "camelCase": {
-            "unsafeName": "v1EmailPostRequestBodySchemaTo01",
-            "safeName": "v1EmailPostRequestBodySchemaTo01"
+            "unsafeName": "emailNameAndAddress",
+            "safeName": "emailNameAndAddress"
           },
           "snakeCase": {
-            "unsafeName": "v_1_email_post_request_body_schema_to_01",
-            "safeName": "v_1_email_post_request_body_schema_to_01"
+            "unsafeName": "email_name_and_address",
+            "safeName": "email_name_and_address"
           },
           "screamingSnakeCase": {
-            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_TO_01",
-            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_TO_01"
+            "unsafeName": "EMAIL_NAME_AND_ADDRESS",
+            "safeName": "EMAIL_NAME_AND_ADDRESS"
           },
           "pascalCase": {
-            "unsafeName": "V1EmailPostRequestBodySchemaTo01",
-            "safeName": "V1EmailPostRequestBodySchemaTo01"
+            "unsafeName": "EmailNameAndAddress",
+            "safeName": "EmailNameAndAddress"
           }
         }
       },
@@ -11713,22 +11713,22 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "V1EmailPostRequestBodySchemaTo0",
+          "originalName": "EmailData",
           "camelCase": {
-            "unsafeName": "v1EmailPostRequestBodySchemaTo0",
-            "safeName": "v1EmailPostRequestBodySchemaTo0"
+            "unsafeName": "emailData",
+            "safeName": "emailData"
           },
           "snakeCase": {
-            "unsafeName": "v_1_email_post_request_body_schema_to_0",
-            "safeName": "v_1_email_post_request_body_schema_to_0"
+            "unsafeName": "email_data",
+            "safeName": "email_data"
           },
           "screamingSnakeCase": {
-            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_TO_0",
-            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_TO_0"
+            "unsafeName": "EMAIL_DATA",
+            "safeName": "EMAIL_DATA"
           },
           "pascalCase": {
-            "unsafeName": "V1EmailPostRequestBodySchemaTo0",
-            "safeName": "V1EmailPostRequestBodySchemaTo0"
+            "unsafeName": "EmailData",
+            "safeName": "EmailData"
           }
         }
       },
@@ -11799,22 +11799,22 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "V1EmailPostRequestBodySchemaToOneOf1Items1",
+          "originalName": "EmailNameAndAddress",
           "camelCase": {
-            "unsafeName": "v1EmailPostRequestBodySchemaToOneOf1Items1",
-            "safeName": "v1EmailPostRequestBodySchemaToOneOf1Items1"
+            "unsafeName": "emailNameAndAddress",
+            "safeName": "emailNameAndAddress"
           },
           "snakeCase": {
-            "unsafeName": "v_1_email_post_request_body_schema_to_one_of_1_items_1",
-            "safeName": "v_1_email_post_request_body_schema_to_one_of_1_items_1"
+            "unsafeName": "email_name_and_address",
+            "safeName": "email_name_and_address"
           },
           "screamingSnakeCase": {
-            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_TO_ONE_OF_1_ITEMS_1",
-            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_TO_ONE_OF_1_ITEMS_1"
+            "unsafeName": "EMAIL_NAME_AND_ADDRESS",
+            "safeName": "EMAIL_NAME_AND_ADDRESS"
           },
           "pascalCase": {
-            "unsafeName": "V1EmailPostRequestBodySchemaToOneOf1Items1",
-            "safeName": "V1EmailPostRequestBodySchemaToOneOf1Items1"
+            "unsafeName": "EmailNameAndAddress",
+            "safeName": "EmailNameAndAddress"
           }
         }
       },
@@ -12020,22 +12020,22 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "V1EmailPostRequestBodySchemaTo1",
+          "originalName": "EmailDataList",
           "camelCase": {
-            "unsafeName": "v1EmailPostRequestBodySchemaTo1",
-            "safeName": "v1EmailPostRequestBodySchemaTo1"
+            "unsafeName": "emailDataList",
+            "safeName": "emailDataList"
           },
           "snakeCase": {
-            "unsafeName": "v_1_email_post_request_body_schema_to_1",
-            "safeName": "v_1_email_post_request_body_schema_to_1"
+            "unsafeName": "email_data_list",
+            "safeName": "email_data_list"
           },
           "screamingSnakeCase": {
-            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_TO_1",
-            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_TO_1"
+            "unsafeName": "EMAIL_DATA_LIST",
+            "safeName": "EMAIL_DATA_LIST"
           },
           "pascalCase": {
-            "unsafeName": "V1EmailPostRequestBodySchemaTo1",
-            "safeName": "V1EmailPostRequestBodySchemaTo1"
+            "unsafeName": "EmailDataList",
+            "safeName": "EmailDataList"
           }
         }
       },
@@ -12235,22 +12235,22 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "V1EmailPostRequestBodySchemaCc01",
+          "originalName": "EmailNameAndAddress",
           "camelCase": {
-            "unsafeName": "v1EmailPostRequestBodySchemaCc01",
-            "safeName": "v1EmailPostRequestBodySchemaCc01"
+            "unsafeName": "emailNameAndAddress",
+            "safeName": "emailNameAndAddress"
           },
           "snakeCase": {
-            "unsafeName": "v_1_email_post_request_body_schema_cc_01",
-            "safeName": "v_1_email_post_request_body_schema_cc_01"
+            "unsafeName": "email_name_and_address",
+            "safeName": "email_name_and_address"
           },
           "screamingSnakeCase": {
-            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_CC_01",
-            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_CC_01"
+            "unsafeName": "EMAIL_NAME_AND_ADDRESS",
+            "safeName": "EMAIL_NAME_AND_ADDRESS"
           },
           "pascalCase": {
-            "unsafeName": "V1EmailPostRequestBodySchemaCc01",
-            "safeName": "V1EmailPostRequestBodySchemaCc01"
+            "unsafeName": "EmailNameAndAddress",
+            "safeName": "EmailNameAndAddress"
           }
         }
       },
@@ -12370,22 +12370,22 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "V1EmailPostRequestBodySchemaCc0",
+          "originalName": "EmailData",
           "camelCase": {
-            "unsafeName": "v1EmailPostRequestBodySchemaCc0",
-            "safeName": "v1EmailPostRequestBodySchemaCc0"
+            "unsafeName": "emailData",
+            "safeName": "emailData"
           },
           "snakeCase": {
-            "unsafeName": "v_1_email_post_request_body_schema_cc_0",
-            "safeName": "v_1_email_post_request_body_schema_cc_0"
+            "unsafeName": "email_data",
+            "safeName": "email_data"
           },
           "screamingSnakeCase": {
-            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_CC_0",
-            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_CC_0"
+            "unsafeName": "EMAIL_DATA",
+            "safeName": "EMAIL_DATA"
           },
           "pascalCase": {
-            "unsafeName": "V1EmailPostRequestBodySchemaCc0",
-            "safeName": "V1EmailPostRequestBodySchemaCc0"
+            "unsafeName": "EmailData",
+            "safeName": "EmailData"
           }
         }
       },
@@ -12456,22 +12456,22 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "V1EmailPostRequestBodySchemaCcOneOf1Items1",
+          "originalName": "EmailNameAndAddress",
           "camelCase": {
-            "unsafeName": "v1EmailPostRequestBodySchemaCcOneOf1Items1",
-            "safeName": "v1EmailPostRequestBodySchemaCcOneOf1Items1"
+            "unsafeName": "emailNameAndAddress",
+            "safeName": "emailNameAndAddress"
           },
           "snakeCase": {
-            "unsafeName": "v_1_email_post_request_body_schema_cc_one_of_1_items_1",
-            "safeName": "v_1_email_post_request_body_schema_cc_one_of_1_items_1"
+            "unsafeName": "email_name_and_address",
+            "safeName": "email_name_and_address"
           },
           "screamingSnakeCase": {
-            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_CC_ONE_OF_1_ITEMS_1",
-            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_CC_ONE_OF_1_ITEMS_1"
+            "unsafeName": "EMAIL_NAME_AND_ADDRESS",
+            "safeName": "EMAIL_NAME_AND_ADDRESS"
           },
           "pascalCase": {
-            "unsafeName": "V1EmailPostRequestBodySchemaCcOneOf1Items1",
-            "safeName": "V1EmailPostRequestBodySchemaCcOneOf1Items1"
+            "unsafeName": "EmailNameAndAddress",
+            "safeName": "EmailNameAndAddress"
           }
         }
       },
@@ -12677,22 +12677,22 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "V1EmailPostRequestBodySchemaCc1",
+          "originalName": "EmailDataList",
           "camelCase": {
-            "unsafeName": "v1EmailPostRequestBodySchemaCc1",
-            "safeName": "v1EmailPostRequestBodySchemaCc1"
+            "unsafeName": "emailDataList",
+            "safeName": "emailDataList"
           },
           "snakeCase": {
-            "unsafeName": "v_1_email_post_request_body_schema_cc_1",
-            "safeName": "v_1_email_post_request_body_schema_cc_1"
+            "unsafeName": "email_data_list",
+            "safeName": "email_data_list"
           },
           "screamingSnakeCase": {
-            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_CC_1",
-            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_CC_1"
+            "unsafeName": "EMAIL_DATA_LIST",
+            "safeName": "EMAIL_DATA_LIST"
           },
           "pascalCase": {
-            "unsafeName": "V1EmailPostRequestBodySchemaCc1",
-            "safeName": "V1EmailPostRequestBodySchemaCc1"
+            "unsafeName": "EmailDataList",
+            "safeName": "EmailDataList"
           }
         }
       },
@@ -12892,22 +12892,22 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "V1EmailPostRequestBodySchemaBcc01",
+          "originalName": "EmailNameAndAddress",
           "camelCase": {
-            "unsafeName": "v1EmailPostRequestBodySchemaBcc01",
-            "safeName": "v1EmailPostRequestBodySchemaBcc01"
+            "unsafeName": "emailNameAndAddress",
+            "safeName": "emailNameAndAddress"
           },
           "snakeCase": {
-            "unsafeName": "v_1_email_post_request_body_schema_bcc_01",
-            "safeName": "v_1_email_post_request_body_schema_bcc_01"
+            "unsafeName": "email_name_and_address",
+            "safeName": "email_name_and_address"
           },
           "screamingSnakeCase": {
-            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_BCC_01",
-            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_BCC_01"
+            "unsafeName": "EMAIL_NAME_AND_ADDRESS",
+            "safeName": "EMAIL_NAME_AND_ADDRESS"
           },
           "pascalCase": {
-            "unsafeName": "V1EmailPostRequestBodySchemaBcc01",
-            "safeName": "V1EmailPostRequestBodySchemaBcc01"
+            "unsafeName": "EmailNameAndAddress",
+            "safeName": "EmailNameAndAddress"
           }
         }
       },
@@ -13027,22 +13027,22 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "V1EmailPostRequestBodySchemaBcc0",
+          "originalName": "EmailData",
           "camelCase": {
-            "unsafeName": "v1EmailPostRequestBodySchemaBcc0",
-            "safeName": "v1EmailPostRequestBodySchemaBcc0"
+            "unsafeName": "emailData",
+            "safeName": "emailData"
           },
           "snakeCase": {
-            "unsafeName": "v_1_email_post_request_body_schema_bcc_0",
-            "safeName": "v_1_email_post_request_body_schema_bcc_0"
+            "unsafeName": "email_data",
+            "safeName": "email_data"
           },
           "screamingSnakeCase": {
-            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_BCC_0",
-            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_BCC_0"
+            "unsafeName": "EMAIL_DATA",
+            "safeName": "EMAIL_DATA"
           },
           "pascalCase": {
-            "unsafeName": "V1EmailPostRequestBodySchemaBcc0",
-            "safeName": "V1EmailPostRequestBodySchemaBcc0"
+            "unsafeName": "EmailData",
+            "safeName": "EmailData"
           }
         }
       },
@@ -13113,22 +13113,22 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "V1EmailPostRequestBodySchemaBccOneOf1Items1",
+          "originalName": "EmailNameAndAddress",
           "camelCase": {
-            "unsafeName": "v1EmailPostRequestBodySchemaBccOneOf1Items1",
-            "safeName": "v1EmailPostRequestBodySchemaBccOneOf1Items1"
+            "unsafeName": "emailNameAndAddress",
+            "safeName": "emailNameAndAddress"
           },
           "snakeCase": {
-            "unsafeName": "v_1_email_post_request_body_schema_bcc_one_of_1_items_1",
-            "safeName": "v_1_email_post_request_body_schema_bcc_one_of_1_items_1"
+            "unsafeName": "email_name_and_address",
+            "safeName": "email_name_and_address"
           },
           "screamingSnakeCase": {
-            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_BCC_ONE_OF_1_ITEMS_1",
-            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_BCC_ONE_OF_1_ITEMS_1"
+            "unsafeName": "EMAIL_NAME_AND_ADDRESS",
+            "safeName": "EMAIL_NAME_AND_ADDRESS"
           },
           "pascalCase": {
-            "unsafeName": "V1EmailPostRequestBodySchemaBccOneOf1Items1",
-            "safeName": "V1EmailPostRequestBodySchemaBccOneOf1Items1"
+            "unsafeName": "EmailNameAndAddress",
+            "safeName": "EmailNameAndAddress"
           }
         }
       },
@@ -13334,22 +13334,22 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "V1EmailPostRequestBodySchemaBcc1",
+          "originalName": "EmailDataList",
           "camelCase": {
-            "unsafeName": "v1EmailPostRequestBodySchemaBcc1",
-            "safeName": "v1EmailPostRequestBodySchemaBcc1"
+            "unsafeName": "emailDataList",
+            "safeName": "emailDataList"
           },
           "snakeCase": {
-            "unsafeName": "v_1_email_post_request_body_schema_bcc_1",
-            "safeName": "v_1_email_post_request_body_schema_bcc_1"
+            "unsafeName": "email_data_list",
+            "safeName": "email_data_list"
           },
           "screamingSnakeCase": {
-            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_BCC_1",
-            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_BCC_1"
+            "unsafeName": "EMAIL_DATA_LIST",
+            "safeName": "EMAIL_DATA_LIST"
           },
           "pascalCase": {
-            "unsafeName": "V1EmailPostRequestBodySchemaBcc1",
-            "safeName": "V1EmailPostRequestBodySchemaBcc1"
+            "unsafeName": "EmailDataList",
+            "safeName": "EmailDataList"
           }
         }
       },
@@ -13816,22 +13816,22 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "V1EmailPostRequestBodySchemaReplyToList0",
+          "originalName": "EmailNameAndAddress",
           "camelCase": {
-            "unsafeName": "v1EmailPostRequestBodySchemaReplyToList0",
-            "safeName": "v1EmailPostRequestBodySchemaReplyToList0"
+            "unsafeName": "emailNameAndAddress",
+            "safeName": "emailNameAndAddress"
           },
           "snakeCase": {
-            "unsafeName": "v_1_email_post_request_body_schema_reply_to_list_0",
-            "safeName": "v_1_email_post_request_body_schema_reply_to_list_0"
+            "unsafeName": "email_name_and_address",
+            "safeName": "email_name_and_address"
           },
           "screamingSnakeCase": {
-            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_REPLY_TO_LIST_0",
-            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_REPLY_TO_LIST_0"
+            "unsafeName": "EMAIL_NAME_AND_ADDRESS",
+            "safeName": "EMAIL_NAME_AND_ADDRESS"
           },
           "pascalCase": {
-            "unsafeName": "V1EmailPostRequestBodySchemaReplyToList0",
-            "safeName": "V1EmailPostRequestBodySchemaReplyToList0"
+            "unsafeName": "EmailNameAndAddress",
+            "safeName": "EmailNameAndAddress"
           }
         }
       },
@@ -14086,22 +14086,22 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "V1EmailPostRequestBodySchemaReplyToList1",
+          "originalName": "EmailList",
           "camelCase": {
-            "unsafeName": "v1EmailPostRequestBodySchemaReplyToList1",
-            "safeName": "v1EmailPostRequestBodySchemaReplyToList1"
+            "unsafeName": "emailList",
+            "safeName": "emailList"
           },
           "snakeCase": {
-            "unsafeName": "v_1_email_post_request_body_schema_reply_to_list_1",
-            "safeName": "v_1_email_post_request_body_schema_reply_to_list_1"
+            "unsafeName": "email_list",
+            "safeName": "email_list"
           },
           "screamingSnakeCase": {
-            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_REPLY_TO_LIST_1",
-            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_SCHEMA_REPLY_TO_LIST_1"
+            "unsafeName": "EMAIL_LIST",
+            "safeName": "EMAIL_LIST"
           },
           "pascalCase": {
-            "unsafeName": "V1EmailPostRequestBodySchemaReplyToList1",
-            "safeName": "V1EmailPostRequestBodySchemaReplyToList1"
+            "unsafeName": "EmailList",
+            "safeName": "EmailList"
           }
         }
       },
