@@ -1,6 +1,4 @@
 import chalk from "chalk";
-import { spawn } from "child_process";
-// import { loggingExeca } from "@fern-api/logging-execa";
 import cors from "cors";
 import express from "express";
 import http from "http";
@@ -11,6 +9,7 @@ import { WebSocket, WebSocketServer } from "ws";
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
+import { runExeca } from "@fern-api/logging-execa";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 
@@ -109,14 +108,11 @@ export async function runAppPreviewServer({
         NEXT_PUBLIC_IS_LOCAL: "1",
         NEXT_DISABLE_CACHE: "1",
         NODE_ENV: "production",
-        NODE_PATH: bundleRoot
+        NODE_PATH: bundleRoot,
+        NODE_OPTIONS: "--max-old-space-size=2048"
     };
 
-    const serverProcess = spawn("node", [serverPath], {
-        env,
-        detached: true,
-        stdio: ["ignore", "pipe", "pipe"]
-    });
+    const serverProcess = runExeca(context.logger, "node", [serverPath], { env, doNotPipeOutput: true });
 
     serverProcess.stdout?.on("data", (data) => {
         context.logger.debug(`[Next.js] ${data.toString()}`);
@@ -144,10 +140,10 @@ export async function runAppPreviewServer({
     });
 
     const cleanup = () => {
-        if (serverProcess.pid) {
+        if (!serverProcess.killed) {
             context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
             try {
-                process.kill(-serverProcess.pid, "SIGTERM");
+                serverProcess.kill();
             } catch (err) {
                 context.logger.error(`Failed to kill server process: ${err}`);
             }
