@@ -168,6 +168,11 @@ export class OneOfSchemaConverter extends AbstractConverter<
         const unionTypes: UndiscriminatedUnionMember[] = [];
         const referencedTypes: Set<string> = new Set();
         let inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> = {};
+        let topLevelObjectProperties: Record<string, OpenAPIV3_1.SchemaObject> = {};
+        // get top level object properties
+        if (this.schema.type === "object" || this.schema.properties != null || this.schema.allOf != null) {
+            topLevelObjectProperties = this.schema.properties ?? {};
+        }
 
         for (const [index, subSchema] of [
             ...(this.schema.oneOf ?? []).entries(),
@@ -188,12 +193,31 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 continue;
             }
 
+            const extendedSubSchema = {
+                ...subSchema,
+                ...(subSchema.type === "object" || subSchema.properties != null
+                    ? {
+                          properties: {
+                              ...topLevelObjectProperties,
+                              ...(subSchema.properties ?? {})
+                          }
+                      }
+                    : {})
+            };
+
+            if (subSchema.type !== "object" && subSchema.properties == null) {
+                this.context.errorCollector.collect({
+                    message: `Received additional object properties for oneOf/anyOf that is not an object: ${JSON.stringify(subSchema)}`,
+                    path: this.breadcrumbs
+                });
+            }
+
             const schemaId = this.context.convertBreadcrumbsToName([`${this.id}_${index}`]);
             const schemaConverter = new SchemaConverter({
                 context: this.context,
                 id: schemaId,
                 breadcrumbs: [...this.breadcrumbs, `oneOf[${index}]`],
-                schema: subSchema
+                schema: extendedSubSchema
             });
             const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
