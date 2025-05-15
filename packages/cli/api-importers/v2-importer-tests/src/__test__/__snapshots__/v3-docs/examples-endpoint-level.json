@@ -377,7 +377,6 @@
           "TreeCreate_example_0": {
             "species": "Quercus alba",
             "height": 25.4,
-            "age": 50,
             "location": {
               "latitude": 40.7128,
               "longitude": -74.006
@@ -2256,7 +2255,6 @@
                       {
                         "species": "Quercus alba",
                         "height": 25.4,
-                        "age": 50,
                         "location": {
                           "latitude": 40.7128,
                           "longitude": -74.006
@@ -2267,7 +2265,6 @@
                       {
                         "species": "Acer saccharum",
                         "height": 18.3,
-                        "age": 35,
                         "location": {
                           "latitude": 42.3601,
                           "longitude": -71.0589
@@ -2330,7 +2327,6 @@
                       {
                         "species": "Quercus alba",
                         "height": 25.4,
-                        "age": 50,
                         "location": {
                           "latitude": 40.7128,
                           "longitude": -74.006
@@ -2341,7 +2337,6 @@
                       {
                         "species": "Acer saccharum",
                         "height": 18.3,
-                        "age": 35,
                         "location": {
                           "latitude": 42.3601,
                           "longitude": -71.0589
@@ -2425,7 +2420,6 @@
                 "createTreeExample": {
                   "species": "Quercus alba",
                   "height": 25.4,
-                  "age": 50,
                   "location": {
                     "latitude": 40.7128,
                     "longitude": -74.006
@@ -3477,7 +3471,6 @@
                   "requestBody": {
                     "species": "Quercus alba",
                     "height": 25.4,
-                    "age": 50,
                     "location": {
                       "latitude": 40.7128,
                       "longitude": -74.006
@@ -3490,7 +3483,6 @@
                     "value": {
                       "species": "Quercus alba",
                       "height": 25.4,
-                      "age": 50,
                       "location": {
                         "latitude": 40.7128,
                         "longitude": -74.006
@@ -3513,7 +3505,11 @@
                   "headers": {},
                   "requestBody": {
                     "species": "Quercus alba",
-                    "height": 25.4
+                    "height": 25.4,
+                    "location": {
+                      "latitude": 40.7128,
+                      "longitude": -74.006
+                    }
                   }
                 },
                 "response": {
@@ -3522,7 +3518,6 @@
                     "value": {
                       "species": "Acer saccharum",
                       "height": 18.3,
-                      "age": 35,
                       "location": {
                         "latitude": 42.3601,
                         "longitude": -71.0589
@@ -3577,7 +3572,6 @@
                     "oak": {
                       "species": "Quercus alba",
                       "height": 25.4,
-                      "age": 50,
                       "location": {
                         "latitude": 40.7128,
                         "longitude": -74.006
@@ -3588,7 +3582,6 @@
                     "maple": {
                       "species": "Acer saccharum",
                       "height": 18.3,
-                      "age": 35,
                       "location": {
                         "latitude": 42.3601,
                         "longitude": -71.0589
@@ -4492,7 +4485,6 @@
                     "value": {
                       "species": "Quercus alba",
                       "height": 25.4,
-                      "age": 50,
                       "location": {
                         "latitude": 40.7128,
                         "longitude": -74.006
@@ -4547,7 +4539,6 @@
                     "oak": {
                       "species": "Quercus alba",
                       "height": 25.4,
-                      "age": 50,
                       "location": {
                         "latitude": 40.7128,
                         "longitude": -74.006
