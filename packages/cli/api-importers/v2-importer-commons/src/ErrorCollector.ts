@@ -59,6 +59,7 @@ export class ErrorCollector {
         // If a relative filepath is provided, try to read and parse it
         if (relativeFilepathToSpec) {
             this.breadcrumbToLineNumberMapper = new BreadcrumbToLineNumber({
+                logger,
                 relativePathToFile: RelativeFilePath.of(relativeFilepathToSpec)
             });
         }
@@ -162,6 +163,7 @@ export class ErrorCollector {
 export declare namespace BreadcrumbToLineNumber {
     interface Args {
         relativePathToFile: RelativeFilePath;
+        logger: { log: (level: LogLevel, ...args: string[]) => void };
     }
 
     interface SourceLocation {
@@ -172,12 +174,14 @@ export declare namespace BreadcrumbToLineNumber {
 }
 
 class BreadcrumbToLineNumber {
+    private readonly logger: { log: (level: LogLevel, ...args: string[]) => void };
     private readonly relativePathToFile: RelativeFilePath;
     private readonly map = new SourceMap();
     private initialized = false;
 
-    constructor({ relativePathToFile }: BreadcrumbToLineNumber.Args) {
+    constructor({ relativePathToFile, logger }: BreadcrumbToLineNumber.Args) {
         this.relativePathToFile = relativePathToFile;
+        this.logger = logger;
     }
 
     /**
@@ -194,7 +198,10 @@ class BreadcrumbToLineNumber {
             yaml.load(fileContent, { listener: this.map.listen() });
             this.initialized = true;
         } catch (error) {
-            console.error(`Failed to initialize line number mapping for ${this.relativePathToFile}:`, error);
+            this.logger.log(
+                LogLevel.Warn,
+                `Failed to initialize line number mapping for ${this.relativePathToFile}: ${JSON.stringify(error)}`
+            );
         }
     }
 
