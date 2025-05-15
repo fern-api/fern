@@ -170,7 +170,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         let inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> = {};
         let topLevelObjectProperties: Record<string, OpenAPIV3_1.SchemaObject> = {};
         // get top level object properties
-        if (this.schema.type === "object" || this.schema.properties != null || this.schema.allOf != null) {
+        if (this.context.isObjectType(this.schema)) {
             topLevelObjectProperties = this.schema.properties ?? {};
         }
 
@@ -193,19 +193,9 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 continue;
             }
 
-            const extendedSubSchema = {
-                ...subSchema,
-                ...(subSchema.type === "object" || subSchema.properties != null
-                    ? {
-                          properties: {
-                              ...topLevelObjectProperties,
-                              ...(subSchema.properties ?? {})
-                          }
-                      }
-                    : {})
-            };
+            const extendedSubSchema = this.extendSubSchema(subSchema, topLevelObjectProperties);
 
-            if (subSchema.type !== "object" && subSchema.properties == null) {
+            if (!this.context.isObjectType(subSchema)) {
                 this.context.errorCollector.collect({
                     message: `Received additional object properties for oneOf/anyOf that is not an object: ${JSON.stringify(subSchema)}`,
                     path: this.breadcrumbs
@@ -217,7 +207,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 context: this.context,
                 id: schemaId,
                 breadcrumbs: [...this.breadcrumbs, `oneOf[${index}]`],
-                schema: extendedSubSchema
+                schema: extendedSubSchema as OpenAPIV3_1.SchemaObject
             });
             const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
@@ -366,5 +356,57 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
     private wrapInNullable(type: TypeReference): TypeReference {
         return TypeReference.container(ContainerType.nullable(type));
+    }
+
+    private mergeIntoObjectSchema(subSchema: any, topLevelObjectProperties: Record<string, any>): any {
+        return {
+            ...subSchema,
+            properties: {
+                ...topLevelObjectProperties,
+                ...(subSchema.properties ?? {})
+            }
+        };
+    }
+
+    private wrapPrimitiveInObjectSchema(
+        subSchema: OpenAPIV3_1.SchemaObject,
+        topLevelObjectProperties: Record<string, any>
+    ): any {
+        return {
+            type: "object",
+            properties: {
+                ...topLevelObjectProperties,
+                [subSchema.type as string]: subSchema
+            }
+        };
+    }
+
+    private wrapUnknownInObjectSchema(
+        subSchema: OpenAPIV3_1.SchemaObject,
+        topLevelObjectProperties: Record<string, any>
+    ): any {
+        return {
+            type: "object",
+            properties: {
+                ...topLevelObjectProperties,
+                value: subSchema
+            }
+        };
+    }
+
+    private extendSubSchema(subSchema: OpenAPIV3_1.SchemaObject, topLevelObjectProperties: Record<string, any>): any {
+        if (Object.entries(topLevelObjectProperties).length === 0) {
+            return subSchema;
+        }
+
+        if (subSchema.type === "object") {
+            return this.mergeIntoObjectSchema(subSchema, topLevelObjectProperties);
+        }
+
+        if (typeof subSchema.type === "string") {
+            return this.wrapPrimitiveInObjectSchema(subSchema, topLevelObjectProperties);
+        }
+
+        return this.wrapUnknownInObjectSchema(subSchema, topLevelObjectProperties);
     }
 }
