@@ -1,8 +1,8 @@
 {
   "types": {
-    "TestExtensionXFernTypeNameGetResponsesSchemaObjectExample": {
+    "Object Example": {
       "description": "An example object type",
-      "name": "TestExtensionXFernTypeNameGetResponsesSchemaObjectExample",
+      "name": "Object Example",
       "shape": {
         "type": "object",
         "extends": [],
@@ -34,9 +34,9 @@
         ]
       }
     },
-    "TestExtensionXFernTypeNameGetResponsesSchemaEnumExample": {
+    "Enum Example": {
       "description": "An enumerated string type",
-      "name": "TestExtensionXFernTypeNameGetResponsesSchemaEnumExample",
+      "name": "Enum Example",
       "shape": {
         "type": "enum",
         "values": [
@@ -52,9 +52,9 @@
         ]
       }
     },
-    "TestExtensionXFernTypeNameGetResponsesSchemaAnyOfExample": {
+    "AnyOf Example": {
       "description": "Can be either a string or number",
-      "name": "TestExtensionXFernTypeNameGetResponsesSchemaAnyOfExample",
+      "name": "AnyOf Example",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -85,7 +85,7 @@
         "properties": [
           {
             "description": "A simple string primitive",
-            "key": "String Example",
+            "key": "string_primitive",
             "valueType": {
               "type": "optional",
               "itemType": {
@@ -98,7 +98,7 @@
           },
           {
             "description": "A simple number primitive",
-            "key": "Number Example",
+            "key": "number_primitive",
             "valueType": {
               "type": "optional",
               "itemType": {
@@ -111,7 +111,7 @@
           },
           {
             "description": "A simple boolean primitive",
-            "key": "Boolean Example",
+            "key": "boolean_primitive",
             "valueType": {
               "type": "optional",
               "itemType": {
@@ -124,18 +124,18 @@
           },
           {
             "description": "An example object type",
-            "key": "Object Example",
+            "key": "object_type",
             "valueType": {
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "TestExtensionXFernTypeNameGetResponsesSchemaObjectExample"
+                "value": "Object Example"
               }
             }
           },
           {
             "description": "An array of strings",
-            "key": "Array Example",
+            "key": "array_type",
             "valueType": {
               "type": "optional",
               "itemType": {
@@ -151,23 +151,23 @@
           },
           {
             "description": "An enumerated string type",
-            "key": "Enum Example",
+            "key": "enum_type",
             "valueType": {
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "TestExtensionXFernTypeNameGetResponsesSchemaEnumExample"
+                "value": "Enum Example"
               }
             }
           },
           {
             "description": "Can be either a string or number",
-            "key": "AnyOf Example",
+            "key": "anyof_type",
             "valueType": {
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "TestExtensionXFernTypeNameGetResponsesSchemaAnyOfExample"
+                "value": "AnyOf Example"
               }
             }
           }

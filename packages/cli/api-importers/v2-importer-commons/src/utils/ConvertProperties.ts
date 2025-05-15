@@ -30,9 +30,7 @@ export function convertProperties({
     let inlinedTypesFromProperties: Record<TypeId, SchemaConverter.ConvertedSchema> = {};
     const propertiesByAudience: Record<string, Set<string>> = {};
     const referencedTypes: Set<string> = new Set();
-    for (const [rawPropertyName, propertySchema] of Object.entries(properties ?? {})) {
-        const propertyName = maybeUseFernTypeNameDeclaration(breadcrumbs, propertySchema, context) ?? rawPropertyName;
-
+    for (const [propertyName, propertySchema] of Object.entries(properties ?? {})) {
         const propertyBreadcrumbs = [...breadcrumbs, "properties", propertyName];
         if (typeof propertySchema !== "object") {
             errorCollector.collect({
@@ -41,7 +39,9 @@ export function convertProperties({
             });
             continue;
         }
-        const propertyId = context.convertBreadcrumbsToName(propertyBreadcrumbs);
+        const propertyId =
+            maybeGetFernTypeNameExtension(breadcrumbs, propertySchema, context) ??
+            context.convertBreadcrumbsToName(propertyBreadcrumbs);
         const isNullable = "nullable" in propertySchema ? (propertySchema.nullable as boolean) : false;
 
         const propertySchemaConverter = new SchemaOrReferenceConverter({
@@ -92,7 +92,7 @@ export function convertProperties({
     return { convertedProperties, propertiesByAudience, inlinedTypesFromProperties, referencedTypes };
 }
 
-function maybeUseFernTypeNameDeclaration(
+function maybeGetFernTypeNameExtension(
     breadcrumbs: string[],
     schema: OpenAPIV3_1.SchemaObject,
     context: AbstractConverterContext<object>
@@ -100,15 +100,10 @@ function maybeUseFernTypeNameDeclaration(
     if (context.isReferenceObject(schema)) {
         return undefined;
     }
-
     const fernTypeNameConverter = new Extensions.FernTypeNameExtension({
         breadcrumbs,
         schema,
         context
     });
-    const fernTypeName = fernTypeNameConverter.convert();
-    if (fernTypeName == null) {
-        return undefined;
-    }
-    return fernTypeName;
+    return fernTypeNameConverter.convert();
 }
