@@ -10,13 +10,26 @@ import { ServerGeneratorContext } from "./ServerGeneratorContext";
 import { ReadmeGenerator } from "./readme/ReadmeGenerator";
 import { ToolsGenerator } from "./tools/ToolsGenerator";
 
+export declare namespace ServerGeneratorCLI {
+    export interface Init {
+        configOverrides?: Partial<TypescriptCustomConfigSchema>;
+    }
+}
+
 export class ServerGeneratorCLI extends AbstractTypescriptMcpGeneratorCli<
     TypescriptCustomConfigSchema,
     ServerGeneratorContext
 > {
+    private configOverrides: Partial<TypescriptCustomConfigSchema>;
+
+    constructor({ configOverrides }: ServerGeneratorCLI.Init) {
+        super();
+        this.configOverrides = configOverrides ?? {};
+    }
+
     protected constructContext({
         ir,
-        customConfig,
+        customConfig: _customConfig,
         generatorConfig,
         generatorNotificationService
     }: {
@@ -25,6 +38,7 @@ export class ServerGeneratorCLI extends AbstractTypescriptMcpGeneratorCli<
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;
     }): ServerGeneratorContext {
+        const customConfig = this.customConfigWithOverrides(_customConfig);
         return new ServerGeneratorContext(ir, generatorConfig, customConfig, generatorNotificationService);
     }
 
@@ -63,5 +77,9 @@ export class ServerGeneratorCLI extends AbstractTypescriptMcpGeneratorCli<
     private async generateReadme(context: ServerGeneratorContext) {
         const readme = new ReadmeGenerator(context);
         context.project.addSrcFile(readme.generate());
+    }
+
+    private customConfigWithOverrides(customConfig: TypescriptCustomConfigSchema): TypescriptCustomConfigSchema {
+        return { ...customConfig, ...this.configOverrides };
     }
 }

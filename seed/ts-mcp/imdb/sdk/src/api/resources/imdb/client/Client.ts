@@ -4,7 +4,6 @@
 
 import * as core from "../../../../core";
 import * as SeedApi from "../../../index";
-import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
@@ -73,21 +72,13 @@ export class Imdb {
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.CreateMovieRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: serializers.MovieId.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedApi.MovieId, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -139,7 +130,7 @@ export class Imdb {
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/movies/${encodeURIComponent(serializers.MovieId.jsonOrThrow(movieId))}`,
+                `/movies/${encodeURIComponent(movieId)}`,
             ),
             method: "GET",
             headers: {
@@ -159,27 +150,14 @@ export class Imdb {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return {
-                data: serializers.Movie.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedApi.Movie, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new SeedApi.MovieDoesNotExistError(
-                        serializers.MovieId.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
+                        _response.error.body as SeedApi.MovieId,
                         _response.rawResponse,
                     );
                 default:

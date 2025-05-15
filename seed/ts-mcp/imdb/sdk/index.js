@@ -33,11 +33,10 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.serialization = exports.SeedApiTimeoutError = exports.SeedApiError = exports.SeedApiClient = exports.SeedApi = void 0;
+exports.SeedApiTimeoutError = exports.SeedApiError = exports.SeedApiClient = exports.SeedApi = void 0;
 exports.SeedApi = __importStar(require("./api"));
 var Client_1 = require("./Client");
 Object.defineProperty(exports, "SeedApiClient", { enumerable: true, get: function () { return Client_1.SeedApiClient; } });
 var errors_1 = require("./errors");
 Object.defineProperty(exports, "SeedApiError", { enumerable: true, get: function () { return errors_1.SeedApiError; } });
 Object.defineProperty(exports, "SeedApiTimeoutError", { enumerable: true, get: function () { return errors_1.SeedApiTimeoutError; } });
-exports.serialization = __importStar(require("./serialization"));

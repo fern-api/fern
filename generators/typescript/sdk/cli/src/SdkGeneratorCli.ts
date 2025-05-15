@@ -21,15 +21,18 @@ import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSch
 export declare namespace SdkGeneratorCli {
     export interface Init {
         targetRuntime: JavaScriptRuntime;
+        configOverrides?: Partial<SdkCustomConfig>;
     }
 }
 
 export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
     private targetRuntime: JavaScriptRuntime;
+    private configOverrides: Partial<SdkCustomConfig>;
 
-    constructor({ targetRuntime }: SdkGeneratorCli.Init) {
+    constructor({ targetRuntime, configOverrides }: SdkGeneratorCli.Init) {
         super();
         this.targetRuntime = targetRuntime;
+        this.configOverrides = configOverrides ?? {};
     }
 
     protected parseCustomConfig(customConfig: unknown): SdkCustomConfig {
@@ -78,7 +81,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
 
     protected async generateTypescriptProject({
         config,
-        customConfig,
+        customConfig: _customConfig,
         npmPackage,
         generatorContext,
         intermediateRepresentation
@@ -89,6 +92,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         generatorContext: GeneratorContext;
         intermediateRepresentation: IntermediateRepresentation;
     }): Promise<PersistedTypescriptProject> {
+        const customConfig = this.customConfigWithOverrides(_customConfig);
         const useLegacyExports = customConfig.useLegacyExports ?? true;
         const namespaceExport = getNamespaceExport({
             organization: config.organization,
@@ -176,26 +180,31 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
 
     private async postProcess(
         persistedTypescriptProject: PersistedTypescriptProject,
-        config: SdkCustomConfig
+        _customConfig: SdkCustomConfig
     ): Promise<void> {
-        if (config.useLegacyExports === false) {
+        const customConfig = this.customConfigWithOverrides(_customConfig);
+        if (customConfig.useLegacyExports === false) {
             await fixImportsForEsm(persistedTypescriptProject.getRootDirectory());
         }
     }
 
-    protected isPackagePrivate(customConfig: SdkCustomConfig): boolean {
+    protected isPackagePrivate(_customConfig: SdkCustomConfig): boolean {
+        const customConfig = this.customConfigWithOverrides(_customConfig);
         return customConfig.isPackagePrivate;
     }
 
-    protected outputSourceFiles(customConfig: SdkCustomConfig): boolean {
+    protected outputSourceFiles(_customConfig: SdkCustomConfig): boolean {
+        const customConfig = this.customConfigWithOverrides(_customConfig);
         return customConfig.outputSourceFiles;
     }
 
-    protected shouldTolerateRepublish(customConfig: SdkCustomConfig): boolean {
+    protected shouldTolerateRepublish(_customConfig: SdkCustomConfig): boolean {
+        const customConfig = this.customConfigWithOverrides(_customConfig);
         return customConfig.tolerateRepublish;
     }
 
-    protected publishToJsr(customConfig: SdkCustomConfig): boolean {
+    protected publishToJsr(_customConfig: SdkCustomConfig): boolean {
+        const customConfig = this.customConfigWithOverrides(_customConfig);
         return customConfig.publishToJsr ?? false;
     }
 
@@ -205,5 +214,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             : config.environment.coordinatorUrlV2.endsWith("dev2.buildwithfern.com")
               ? "dev"
               : "prod";
+    }
+    private customConfigWithOverrides(customConfig: SdkCustomConfig): SdkCustomConfig {
+        return { ...customConfig, ...this.configOverrides };
     }
 }
