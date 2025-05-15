@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Fix an issue where a singular allOf circular reference would lead to an infinite loop in the v3 parser. 
+    type: fix
+  irVersion: 57
+  version: 0.61.11
+
+- changelogEntry:
+  - summary: |
       Fix a bug where the docs resolver would throw an error when encountering missing or duplicate endpoints.
     type: fix
   irVersion: 57

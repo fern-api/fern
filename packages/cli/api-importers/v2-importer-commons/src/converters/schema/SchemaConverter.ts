@@ -102,9 +102,9 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             return maybeConvertedMapSchema;
         }
 
-        const maybeConvertedObjectSchema = this.tryConvertObjectSchema();
-        if (maybeConvertedObjectSchema != null) {
-            return maybeConvertedObjectSchema;
+        const maybeConvertedObjectAllOfSchema = this.tryConvertObjectAllOfSchema();
+        if (maybeConvertedObjectAllOfSchema != null) {
+            return maybeConvertedObjectAllOfSchema;
         }
 
         const maybeConvertedUntypedSchema = this.tryConvertUntypedSchema();
@@ -155,23 +155,14 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
     private tryConvertSingularAllOfSchema(): SchemaConverter.Output | undefined {
         if (
-            this.schema.allOf?.length === 1 &&
             this.schemaOnlyHasAllowedKeys(["allOf"]) &&
+            this.schema.allOf?.length === 1 &&
             this.schema.allOf[0] != null
         ) {
-            let allOfSchema: OpenAPIV3_1.SchemaObject | undefined = undefined;
-
-            if (this.context.isReferenceObject(this.schema.allOf[0])) {
-                const resolvedAllOfSchemaResponse = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
-                    reference: this.schema.allOf[0],
-                    breadcrumbs: this.breadcrumbs
-                });
-                if (resolvedAllOfSchemaResponse.resolved) {
-                    allOfSchema = resolvedAllOfSchemaResponse.value;
-                }
-            } else {
-                allOfSchema = this.schema.allOf[0];
-            }
+            const allOfSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: this.schema.allOf[0],
+                breadcrumbs: this.breadcrumbs
+            });
 
             if (allOfSchema != null) {
                 const allOfConverter = new SchemaConverter({
@@ -316,7 +307,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         return undefined;
     }
 
-    private tryConvertObjectSchema(): SchemaConverter.Output | undefined {
+    private tryConvertObjectAllOfSchema(): SchemaConverter.Output | undefined {
         if (this.schema.type === "object" || this.schema.properties != null || this.schema.allOf != null) {
             const objectConverter = new ObjectSchemaConverter({
                 context: this.context,
