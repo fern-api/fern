@@ -67,10 +67,13 @@ export class ObjectSchemaConverter extends AbstractConverter<
         let inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> = propertiesInlinedTypes;
         let propertiesByAudience: Record<string, Set<string>> = basePropertiesByAudience;
         for (const [index, allOfSchema] of (this.schema.allOf ?? []).entries()) {
-            const breadcrumbs =  [...this.breadcrumbs, "allOf", index.toString()];
+            const breadcrumbs = [...this.breadcrumbs, "allOf", index.toString()];
 
             if (this.context.isReferenceObject(allOfSchema)) {
-                const maybeTypeReference = this.context.convertReferenceToTypeReference({ reference: allOfSchema, breadcrumbs });
+                const maybeTypeReference = this.context.convertReferenceToTypeReference({
+                    reference: allOfSchema,
+                    breadcrumbs
+                });
                 if (maybeTypeReference.ok) {
                     extends_.push(maybeTypeReference.reference);
                 }

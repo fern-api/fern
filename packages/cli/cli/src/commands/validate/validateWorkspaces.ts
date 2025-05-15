@@ -13,7 +13,7 @@ export async function validateWorkspaces({
     brokenLinks,
     errorOnBrokenLinks,
     isLocal,
-    directFromOpenapi,
+    directFromOpenapi
 }: {
     project: Project;
     cliContext: CliContext;
@@ -47,7 +47,11 @@ export async function validateWorkspaces({
 
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 if (workspace instanceof OSSWorkspace && directFromOpenapi) {
-                    await workspace.getIntermediateRepresentation({ context, audiences: { type: "all" }, enableUniqueErrorsPerEndpoint: false });
+                    await workspace.getIntermediateRepresentation({
+                        context,
+                        audiences: { type: "all" },
+                        enableUniqueErrorsPerEndpoint: false
+                    });
                     return;
                 }
 

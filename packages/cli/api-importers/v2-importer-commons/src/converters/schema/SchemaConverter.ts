@@ -104,7 +104,8 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
             if (this.context.isReferenceObject(this.schema.allOf[0])) {
                 const resolvedAllOfSchemaResponse = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
-                    reference: this.schema.allOf[0]
+                    reference: this.schema.allOf[0],
+                    breadcrumbs: this.breadcrumbs
                 });
                 if (resolvedAllOfSchemaResponse.resolved) {
                     allOfSchema = resolvedAllOfSchemaResponse.value;

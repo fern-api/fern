@@ -1,9 +1,13 @@
+import * as fs from "fs";
+import path from "path";
+import YAML from "yaml";
+
 import { formatLog } from "@fern-api/cli-logger";
 import { LogLevel } from "@fern-api/logger";
 
 interface APIErrorLoggingArgs {
     /* Defaults to false */
-    logWarnings?: boolean; 
+    logWarnings?: boolean;
 }
 
 export interface APIError {
@@ -35,17 +39,34 @@ export interface ErrorStatistics {
 export class ErrorCollector {
     private errors: APIError[] = [];
     private readonly logger: { log: (level: LogLevel, ...args: string[]) => void };
+    private readonly yamlDocument: YAML.Document;
+
     public readonly relativeFilepathToSpec?: string;
 
-    constructor({ 
-        logger, 
-        relativeFilepathToSpec 
-    }: { 
+    constructor({
+        logger,
+        relativeFilepathToSpec
+    }: {
         logger: { log: (level: LogLevel, ...args: string[]) => void };
         relativeFilepathToSpec?: string;
     }) {
         this.logger = logger;
         this.relativeFilepathToSpec = relativeFilepathToSpec;
+        // Initialize yamlDocument as undefined
+        this.yamlDocument = new YAML.Document();
+
+        // If a relative filepath is provided, try to read and parse it
+        if (relativeFilepathToSpec) {
+            try {
+                const contents = fs.readFileSync(path.resolve(relativeFilepathToSpec), "utf8");
+                this.yamlDocument = YAML.parseDocument(contents);
+            } catch (error) {
+                logger.log(
+                    LogLevel.Warn,
+                    `Failed to read or parse YAML from ${relativeFilepathToSpec}: ${error instanceof Error ? error.message : String(error)}`
+                );
+            }
+        }
     }
 
     public collect(error: APIError): void {
@@ -77,34 +98,33 @@ export class ErrorCollector {
             }
         }
 
-        return { numErrors, numWarnings };
+        return { numErrors: numErrors, numWarnings };
     }
 
     public logErrors({ logWarnings }: APIErrorLoggingArgs): void {
-        for (const error of this.errors) {
+        for (const error of this.errors.slice(0, 2)) {
             if (error.level === APIErrorLevel.WARNING && !logWarnings) {
                 continue;
-            }           
-            switch (error.level) {
-                case APIErrorLevel.ERROR: 
-                    this.logger.log(
-                        LogLevel.Error,
-                        formatLog({
-                            title: error.message,
-                            breadcrumbs: error.path
-                        })
-                    );
-                    break;
-                case APIErrorLevel.WARNING: 
-                default: 
-                    this.logger.log(
-                        LogLevel.Warn,
-                        formatLog({
-                            title: error.message,
-                            breadcrumbs: error.path
-                        })
-                    );                
             }
+            switch (error.level) {
+                case APIErrorLevel.ERROR:
+                    this.logger.log(LogLevel.Error, error.message);
+                    if (error.path && error.path.length > 0) {
+                        let locationInfo = error.path.join(" -> ");
+                        this.logger.log(LogLevel.Error, `\t- at location (${locationInfo})`);
+                    }
+                    break;
+                case APIErrorLevel.WARNING:
+                default:
+                    this.logger.log(LogLevel.Warn, error.message);
+                    if (error.path && error.path.length > 0) {
+                        const locationInfo = this.relativeFilepathToSpec
+                            ? `${this.relativeFilepathToSpec}:${error.path.join("/")}`
+                            : `${error.path.join("/")}`;
+                        this.logger.log(LogLevel.Warn, `\t- at location (${locationInfo})`);
+                    }
+            }
+            this.logger.log(LogLevel.Info, "");
         }
     }
 }

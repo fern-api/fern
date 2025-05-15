@@ -81,9 +81,12 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
     private static BREADCRUMBS_TO_IGNORE = ["properties", "allOf", "anyOf"];
 
-    public abstract convertReferenceToTypeReference({ reference, breadcrumbs }: {
-        reference: OpenAPIV3_1.ReferenceObject,
-        breadcrumbs?: string[],
+    public abstract convertReferenceToTypeReference({
+        reference,
+        breadcrumbs
+    }: {
+        reference: OpenAPIV3_1.ReferenceObject;
+        breadcrumbs?: string[];
     }): { ok: true; reference: TypeReference } | { ok: false };
 
     /**
@@ -161,7 +164,13 @@ export abstract class AbstractConverterContext<Spec extends object> {
      * @param reference The reference object to resolve
      * @returns Object containing ok status and resolved reference if successful
      */
-    public resolveReference<T>({ reference, breadcrumbs }: { reference: OpenAPIV3_1.ReferenceObject, breadcrumbs?: string[] }): { resolved: true; value: T } | { resolved: false } {
+    public resolveReference<T>({
+        reference,
+        breadcrumbs
+    }: {
+        reference: OpenAPIV3_1.ReferenceObject;
+        breadcrumbs?: string[];
+    }): { resolved: true; value: T } | { resolved: false } {
         let resolvedReference: unknown = this.spec;
 
         const keys = reference.$ref
@@ -173,9 +182,9 @@ export abstract class AbstractConverterContext<Spec extends object> {
             if (typeof resolvedReference !== "object" || resolvedReference == null) {
                 this.errorCollector.collect({
                     level: APIErrorLevel.ERROR,
-                    message: `${reference.$ref} does not exist`,
-                    path: breadcrumbs,
-                })
+                    message: this.getErrorMessageForMissingRef({ reference }),
+                    path: breadcrumbs
+                });
                 return { resolved: false };
             }
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -185,13 +194,27 @@ export abstract class AbstractConverterContext<Spec extends object> {
         if (resolvedReference == null) {
             this.errorCollector.collect({
                 level: APIErrorLevel.ERROR,
-                message: `${reference.$ref} does not exist`,
-                path: breadcrumbs,
-            })
+                message: this.getErrorMessageForMissingRef({ reference }),
+                path: breadcrumbs
+            });
             return { resolved: false };
         }
 
         return { resolved: true, value: resolvedReference as unknown as T };
+    }
+
+    private getErrorMessageForMissingRef({ reference }: { reference: OpenAPIV3_1.ReferenceObject }): string {
+        // Check if the reference is to a schema in components/schemas
+        const refPath = reference.$ref.replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, "").split("/");
+
+        // Check if the reference follows the pattern components/schemas/<schema>
+        if (refPath.length >= 3 && refPath[0] === "components" && refPath[1] === "schemas") {
+            const schemaName = refPath[2];
+            return `Schema ${schemaName} does not exist`;
+        }
+
+        // Default error message
+        return `${reference.$ref} does not exist`;
     }
 
     /**
@@ -421,12 +444,8 @@ export abstract class AbstractConverterContext<Spec extends object> {
         breadcrumbs: string[];
     }): T | undefined {
         if (this.isReferenceObject(schemaOrReference)) {
-            const resolved = this.resolveReference<T>({ reference: schemaOrReference });
+            const resolved = this.resolveReference<T>({ reference: schemaOrReference, breadcrumbs });
             if (!resolved.resolved) {
-                this.errorCollector.collect({
-                    message: `Failed to resolve reference: ${schemaOrReference.$ref}`,
-                    path: breadcrumbs
-                });
                 return undefined;
             }
             return resolved.value;

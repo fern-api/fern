@@ -13,7 +13,7 @@ import {
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
 import { Audiences } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
-import { AbsoluteFilePath, cwd, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, cwd, join, relativize } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
@@ -143,10 +143,13 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         const errorCollectors: ErrorCollector[] = [];
 
         for (const document of documents) {
-            const absoluteFilepathToSpec = join(this.absoluteFilePath, RelativeFilePath.of(document.source?.file ?? ""));
+            const absoluteFilepathToSpec = join(
+                this.absoluteFilePath,
+                RelativeFilePath.of(document.source?.file ?? "")
+            );
             const relativeFilepathToSpec = relativize(cwd(), absoluteFilepathToSpec);
 
-            const errorCollector = new ErrorCollector({ logger: context.logger});
+            const errorCollector = new ErrorCollector({ logger: context.logger, relativeFilepathToSpec });
             errorCollectors.push(errorCollector);
 
             let result: IntermediateRepresentation | undefined = undefined;
@@ -207,10 +210,16 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             }
         }
         for (const spec of this.allSpecs) {
-            const errorCollector = new ErrorCollector({ logger: context.logger});
-            errorCollectors.push(errorCollector);
-            
             if (spec.type === "openrpc") {
+                const absoluteFilepathToSpec = join(
+                    this.absoluteFilePath,
+                    RelativeFilePath.of(spec.absoluteFilepath ?? "")
+                );
+                const relativeFilepathToSpec = relativize(cwd(), absoluteFilepathToSpec);
+
+                const errorCollector = new ErrorCollector({ logger: context.logger, relativeFilepathToSpec });
+                errorCollectors.push(errorCollector);
+
                 const converterContext = new OpenRPCConverterContext3_1({
                     namespace: spec.namespace,
                     generationLanguage: "typescript",
@@ -247,8 +256,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         for (const errorCollector of errorCollectors) {
             if (errorCollector.hasErrors()) {
                 const errorStats = errorCollector.getErrorStats();
-                const specInfo = errorCollector.relativeFilepathToSpec ? ` for ${errorCollector.relativeFilepathToSpec}` : '';
-                
+                const specInfo = errorCollector.relativeFilepathToSpec
+                    ? ` for ${errorCollector.relativeFilepathToSpec}`
+                    : "";
+
                 if (errorStats.numErrors > 0) {
                     context.logger.log(
                         "error",
@@ -260,11 +271,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         `API validation${specInfo} completed with ${errorStats.numWarnings} warnings.`
                     );
                 } else {
-                    context.logger.log(
-                        "info",
-                        `All checks passed when parsing OpenAPI${specInfo}.`
-                    );
+                    context.logger.log("info", `All checks passed when parsing OpenAPI${specInfo}.`);
                 }
+
+                context.logger.log("info", "");
 
                 errorCollector.logErrors({ logWarnings: false });
             }
