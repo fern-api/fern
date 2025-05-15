@@ -94,7 +94,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         }
         const resolvedSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
             schemaOrReference: this.schema,
-            breadcrumbs: this.breadcrumbs
+            breadcrumbs: this.breadcrumbs,
+            skipErrorCollector: true
         });
         if (resolvedSchema == null) {
             return {
@@ -243,7 +244,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         const resolvedDefault = this.context.isReferenceObject(this.schema)
             ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                   schemaOrReference: this.schema,
-                  breadcrumbs: this.breadcrumbs
+                  breadcrumbs: this.breadcrumbs,
+                  skipErrorCollector: true
               })?.default
             : this.schema.default;
 
@@ -283,7 +285,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         const resolvedDefault = this.context.isReferenceObject(this.schema)
             ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                   schemaOrReference: this.schema,
-                  breadcrumbs: this.breadcrumbs
+                  breadcrumbs: this.breadcrumbs,
+                  skipErrorCollector: true
               })?.default
             : this.schema.default;
 
@@ -332,7 +335,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         const resolvedDefault = this.context.isReferenceObject(this.schema)
             ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                   schemaOrReference: this.schema,
-                  breadcrumbs: this.breadcrumbs
+                  breadcrumbs: this.breadcrumbs,
+                  skipErrorCollector: true
               })?.default
             : this.schema.default;
         if (typeof resolvedDefault === "number") {
@@ -380,7 +384,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         const resolvedDefault = this.context.isReferenceObject(this.schema)
             ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                   schemaOrReference: this.schema,
-                  breadcrumbs: this.breadcrumbs
+                  breadcrumbs: this.breadcrumbs,
+                  skipErrorCollector: true
               })?.default
             : this.schema.default;
 
@@ -431,7 +436,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         const resolvedDefault = this.context.isReferenceObject(this.schema)
             ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                   schemaOrReference: this.schema,
-                  breadcrumbs: this.breadcrumbs
+                  breadcrumbs: this.breadcrumbs,
+                  skipErrorCollector: true
               })?.default
             : this.schema.default;
         if (typeof resolvedDefault === "number" && Number.isInteger(resolvedDefault)) {
@@ -464,9 +470,9 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             resolvedSchema.items = { type: "string" };
         }
         const exampleArray = Array.isArray(this.example) ? this.example : [this.example];
-        const results = exampleArray.map((item, index) => {
+        const results = exampleArray.map((item) => {
             const exampleConverter = new ExampleConverter({
-                breadcrumbs: [...this.breadcrumbs, `Item[${index}]`],
+                breadcrumbs: [...this.breadcrumbs, "items"],
                 context: this.context,
                 schema: resolvedSchema.items,
                 example: item,
@@ -730,7 +736,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     ): Type | undefined {
         const resolvedSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
             schemaOrReference: schema,
-            breadcrumbs: this.breadcrumbs
+            breadcrumbs: this.breadcrumbs,
+            skipErrorCollector: true
         });
         if (resolvedSchema == null) {
             return undefined;

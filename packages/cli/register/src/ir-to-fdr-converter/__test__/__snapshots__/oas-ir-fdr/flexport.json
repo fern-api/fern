@@ -14807,8 +14807,8 @@
         ]
       }
     },
-    "BookingAmendmentsPostResponsesSchemaData": {
-      "name": "BookingAmendmentsPostResponsesSchemaData",
+    "BookingAmendmentsPostResponsesContentApplicationJsonSchemaData": {
+      "name": "BookingAmendmentsPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -14863,7 +14863,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingAmendmentsPostResponsesSchemaData"
+                "value": "BookingAmendmentsPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -14895,8 +14895,8 @@
         ]
       }
     },
-    "BookingLineItemsGetResponsesSchemaData": {
-      "name": "BookingLineItemsGetResponsesSchemaData",
+    "BookingLineItemsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "BookingLineItemsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -14951,7 +14951,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingLineItemsGetResponsesSchemaData"
+                "value": "BookingLineItemsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
@@ -15006,7 +15006,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingLineItemsGetResponsesSchemaData"
+                "value": "BookingLineItemsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -15078,8 +15078,8 @@
         ]
       }
     },
-    "BookingLineItemsPostResponsesSchemaData": {
-      "name": "BookingLineItemsPostResponsesSchemaData",
+    "BookingLineItemsPostResponsesContentApplicationJsonSchemaData": {
+      "name": "BookingLineItemsPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15134,7 +15134,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingLineItemsPostResponsesSchemaData"
+                "value": "BookingLineItemsPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -15206,8 +15206,8 @@
         ]
       }
     },
-    "BookingLineItemsIdGetResponsesSchemaData": {
-      "name": "BookingLineItemsIdGetResponsesSchemaData",
+    "BookingLineItemsIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "BookingLineItemsIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15262,7 +15262,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingLineItemsIdGetResponsesSchemaData"
+                "value": "BookingLineItemsIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -15293,8 +15293,8 @@
         ]
       }
     },
-    "BookingsGetResponsesSchemaData": {
-      "name": "BookingsGetResponsesSchemaData",
+    "BookingsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "BookingsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15349,7 +15349,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingsGetResponsesSchemaData"
+                "value": "BookingsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
@@ -15404,7 +15404,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingsGetResponsesSchemaData"
+                "value": "BookingsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -15476,8 +15476,8 @@
         ]
       }
     },
-    "BookingsPostResponsesSchemaData": {
-      "name": "BookingsPostResponsesSchemaData",
+    "BookingsPostResponsesContentApplicationJsonSchemaData": {
+      "name": "BookingsPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15532,7 +15532,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingsPostResponsesSchemaData"
+                "value": "BookingsPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -15604,8 +15604,8 @@
         ]
       }
     },
-    "BookingsIdGetResponsesSchemaData": {
-      "name": "BookingsIdGetResponsesSchemaData",
+    "BookingsIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "BookingsIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15660,7 +15660,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingsIdGetResponsesSchemaData"
+                "value": "BookingsIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -15732,8 +15732,8 @@
         ]
       }
     },
-    "CarbonCalculationPostResponsesSchemaData": {
-      "name": "CarbonCalculationPostResponsesSchemaData",
+    "CarbonCalculationPostResponsesContentApplicationJsonSchemaData": {
+      "name": "CarbonCalculationPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15788,7 +15788,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CarbonCalculationPostResponsesSchemaData"
+                "value": "CarbonCalculationPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -15805,8 +15805,8 @@
         ]
       }
     },
-    "CommercialInvoicesGetResponsesSchemaData": {
-      "name": "CommercialInvoicesGetResponsesSchemaData",
+    "CommercialInvoicesGetResponsesContentApplicationJsonSchemaData": {
+      "name": "CommercialInvoicesGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15917,7 +15917,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CommercialInvoicesGetResponsesSchemaData"
+                "value": "CommercialInvoicesGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
@@ -15979,8 +15979,8 @@
         ]
       }
     },
-    "CommercialInvoicesPostResponsesSchemaData": {
-      "name": "CommercialInvoicesPostResponsesSchemaData",
+    "CommercialInvoicesPostResponsesContentApplicationJsonSchemaData": {
+      "name": "CommercialInvoicesPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16035,7 +16035,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CommercialInvoicesPostResponsesSchemaData"
+                "value": "CommercialInvoicesPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -16107,8 +16107,8 @@
         ]
       }
     },
-    "CommercialInvoicesPatchResponsesSchemaData": {
-      "name": "CommercialInvoicesPatchResponsesSchemaData",
+    "CommercialInvoicesPatchResponsesContentApplicationJsonSchemaData": {
+      "name": "CommercialInvoicesPatchResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16163,7 +16163,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CommercialInvoicesPatchResponsesSchemaData"
+                "value": "CommercialInvoicesPatchResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -16235,8 +16235,8 @@
         ]
       }
     },
-    "CommercialInvoicesIdGetResponsesSchemaData": {
-      "name": "CommercialInvoicesIdGetResponsesSchemaData",
+    "CommercialInvoicesIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "CommercialInvoicesIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16291,7 +16291,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CommercialInvoicesIdGetResponsesSchemaData"
+                "value": "CommercialInvoicesIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -16308,8 +16308,8 @@
         ]
       }
     },
-    "CustomsEntriesGetResponsesSchemaData": {
-      "name": "CustomsEntriesGetResponsesSchemaData",
+    "CustomsEntriesGetResponsesContentApplicationJsonSchemaData": {
+      "name": "CustomsEntriesGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16364,7 +16364,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CustomsEntriesGetResponsesSchemaData"
+                "value": "CustomsEntriesGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
@@ -16419,7 +16419,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CustomsEntriesGetResponsesSchemaData"
+                "value": "CustomsEntriesGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -16491,8 +16491,8 @@
         ]
       }
     },
-    "CustomsEntriesIdGetResponsesSchemaData": {
-      "name": "CustomsEntriesIdGetResponsesSchemaData",
+    "CustomsEntriesIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "CustomsEntriesIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16547,7 +16547,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CustomsEntriesIdGetResponsesSchemaData"
+                "value": "CustomsEntriesIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -16564,8 +16564,8 @@
         ]
       }
     },
-    "DocumentsGetResponsesSchemaData": {
-      "name": "DocumentsGetResponsesSchemaData",
+    "DocumentsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "DocumentsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16620,7 +16620,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "DocumentsGetResponsesSchemaData"
+                "value": "DocumentsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
@@ -16675,7 +16675,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "DocumentsGetResponsesSchemaData"
+                "value": "DocumentsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -16747,8 +16747,8 @@
         ]
       }
     },
-    "DocumentsPostResponsesSchemaData": {
-      "name": "DocumentsPostResponsesSchemaData",
+    "DocumentsPostResponsesContentApplicationJsonSchemaData": {
+      "name": "DocumentsPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16803,7 +16803,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "DocumentsPostResponsesSchemaData"
+                "value": "DocumentsPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -16875,8 +16875,8 @@
         ]
       }
     },
-    "DocumentsIdGetResponsesSchemaData": {
-      "name": "DocumentsIdGetResponsesSchemaData",
+    "DocumentsIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "DocumentsIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16931,7 +16931,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "DocumentsIdGetResponsesSchemaData"
+                "value": "DocumentsIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -16948,8 +16948,8 @@
         ]
       }
     },
-    "DocumentsIdDownloadGetResponsesSchemaData": {
-      "name": "DocumentsIdDownloadGetResponsesSchemaData",
+    "DocumentsIdDownloadGetResponsesContentApplicationJsonSchemaData": {
+      "name": "DocumentsIdDownloadGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17004,7 +17004,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "DocumentsIdDownloadGetResponsesSchemaData"
+                "value": "DocumentsIdDownloadGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -17047,8 +17047,8 @@
         ]
       }
     },
-    "EventsGetResponsesSchemaData": {
-      "name": "EventsGetResponsesSchemaData",
+    "EventsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "EventsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17103,7 +17103,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "EventsGetResponsesSchemaData"
+                "value": "EventsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
@@ -17158,7 +17158,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "EventsGetResponsesSchemaData"
+                "value": "EventsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -17230,8 +17230,8 @@
         ]
       }
     },
-    "EventsIdGetResponsesSchemaData": {
-      "name": "EventsIdGetResponsesSchemaData",
+    "EventsIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "EventsIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17286,7 +17286,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "EventsIdGetResponsesSchemaData"
+                "value": "EventsIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -17323,8 +17323,8 @@
         ]
       }
     },
-    "InvoicesGetResponsesSchemaData": {
-      "name": "InvoicesGetResponsesSchemaData",
+    "InvoicesGetResponsesContentApplicationJsonSchemaData": {
+      "name": "InvoicesGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17379,7 +17379,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "InvoicesGetResponsesSchemaData"
+                "value": "InvoicesGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
@@ -17434,7 +17434,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "InvoicesGetResponsesSchemaData"
+                "value": "InvoicesGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -17506,8 +17506,8 @@
         ]
       }
     },
-    "InvoicesIdGetResponsesSchemaData": {
-      "name": "InvoicesIdGetResponsesSchemaData",
+    "InvoicesIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "InvoicesIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17562,7 +17562,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "InvoicesIdGetResponsesSchemaData"
+                "value": "InvoicesIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -17579,8 +17579,8 @@
         ]
       }
     },
-    "NetworkCompaniesGetResponsesSchemaData": {
-      "name": "NetworkCompaniesGetResponsesSchemaData",
+    "NetworkCompaniesGetResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkCompaniesGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17635,7 +17635,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkCompaniesGetResponsesSchemaData"
+                "value": "NetworkCompaniesGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
@@ -17690,7 +17690,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkCompaniesGetResponsesSchemaData"
+                "value": "NetworkCompaniesGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -17762,8 +17762,8 @@
         ]
       }
     },
-    "NetworkCompaniesPostResponsesSchemaData": {
-      "name": "NetworkCompaniesPostResponsesSchemaData",
+    "NetworkCompaniesPostResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkCompaniesPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17818,7 +17818,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkCompaniesPostResponsesSchemaData"
+                "value": "NetworkCompaniesPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -17945,8 +17945,8 @@
         ]
       }
     },
-    "NetworkCompaniesIdPatchResponsesSchemaData": {
-      "name": "NetworkCompaniesIdPatchResponsesSchemaData",
+    "NetworkCompaniesIdPatchResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkCompaniesIdPatchResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -18001,7 +18001,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkCompaniesIdPatchResponsesSchemaData"
+                "value": "NetworkCompaniesIdPatchResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -18018,8 +18018,8 @@
         ]
       }
     },
-    "NetworkCompanyEntitiesGetResponsesSchemaData": {
-      "name": "NetworkCompanyEntitiesGetResponsesSchemaData",
+    "NetworkCompanyEntitiesGetResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkCompanyEntitiesGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -18074,7 +18074,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkCompanyEntitiesGetResponsesSchemaData"
+                "value": "NetworkCompanyEntitiesGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
@@ -18129,7 +18129,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkCompanyEntitiesGetResponsesSchemaData"
+                "value": "NetworkCompanyEntitiesGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -18201,8 +18201,8 @@
         ]
       }
     },
-    "NetworkCompanyEntitiesPostResponsesSchemaData": {
-      "name": "NetworkCompanyEntitiesPostResponsesSchemaData",
+    "NetworkCompanyEntitiesPostResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkCompanyEntitiesPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -18257,7 +18257,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkCompanyEntitiesPostResponsesSchemaData"
+                "value": "NetworkCompanyEntitiesPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -18329,8 +18329,8 @@
         ]
       }
     },
-    "NetworkCompanyEntitiesIdGetResponsesSchemaData": {
-      "name": "NetworkCompanyEntitiesIdGetResponsesSchemaData",
+    "NetworkCompanyEntitiesIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkCompanyEntitiesIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -18385,7 +18385,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkCompanyEntitiesIdGetResponsesSchemaData"
+                "value": "NetworkCompanyEntitiesIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -18457,8 +18457,8 @@
         ]
       }
     },
-    "NetworkCompanyEntitiesIdPatchResponsesSchemaData": {
-      "name": "NetworkCompanyEntitiesIdPatchResponsesSchemaData",
+    "NetworkCompanyEntitiesIdPatchResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkCompanyEntitiesIdPatchResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -18513,7 +18513,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkCompanyEntitiesIdPatchResponsesSchemaData"
+                "value": "NetworkCompanyEntitiesIdPatchResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -18530,8 +18530,8 @@
         ]
       }
     },
-    "NetworkContactsGetResponsesSchemaData": {
-      "name": "NetworkContactsGetResponsesSchemaData",
+    "NetworkContactsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkContactsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -18586,7 +18586,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkContactsGetResponsesSchemaData"
+                "value": "NetworkContactsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
@@ -18641,7 +18641,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkContactsGetResponsesSchemaData"
+                "value": "NetworkContactsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -18713,8 +18713,8 @@
         ]
       }
     },
-    "NetworkContactsPostResponsesSchemaData": {
-      "name": "NetworkContactsPostResponsesSchemaData",
+    "NetworkContactsPostResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkContactsPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -18769,7 +18769,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkContactsPostResponsesSchemaData"
+                "value": "NetworkContactsPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -18841,8 +18841,8 @@
         ]
       }
     },
-    "NetworkContactsIdGetResponsesSchemaData": {
-      "name": "NetworkContactsIdGetResponsesSchemaData",
+    "NetworkContactsIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkContactsIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -18897,7 +18897,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkContactsIdGetResponsesSchemaData"
+                "value": "NetworkContactsIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -18969,8 +18969,8 @@
         ]
       }
     },
-    "NetworkContactsIdPatchResponsesSchemaData": {
-      "name": "NetworkContactsIdPatchResponsesSchemaData",
+    "NetworkContactsIdPatchResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkContactsIdPatchResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19025,7 +19025,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkContactsIdPatchResponsesSchemaData"
+                "value": "NetworkContactsIdPatchResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -19042,8 +19042,8 @@
         ]
       }
     },
-    "NetworkLocationsGetResponsesSchemaData": {
-      "name": "NetworkLocationsGetResponsesSchemaData",
+    "NetworkLocationsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkLocationsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19098,7 +19098,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkLocationsGetResponsesSchemaData"
+                "value": "NetworkLocationsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
@@ -19153,7 +19153,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkLocationsGetResponsesSchemaData"
+                "value": "NetworkLocationsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -19225,8 +19225,8 @@
         ]
       }
     },
-    "NetworkLocationsPostResponsesSchemaData": {
-      "name": "NetworkLocationsPostResponsesSchemaData",
+    "NetworkLocationsPostResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkLocationsPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19281,7 +19281,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkLocationsPostResponsesSchemaData"
+                "value": "NetworkLocationsPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -19353,8 +19353,8 @@
         ]
       }
     },
-    "NetworkLocationsIdGetResponsesSchemaData": {
-      "name": "NetworkLocationsIdGetResponsesSchemaData",
+    "NetworkLocationsIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkLocationsIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19409,7 +19409,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkLocationsIdGetResponsesSchemaData"
+                "value": "NetworkLocationsIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -19481,8 +19481,8 @@
         ]
       }
     },
-    "NetworkLocationsIdPatchResponsesSchemaData": {
-      "name": "NetworkLocationsIdPatchResponsesSchemaData",
+    "NetworkLocationsIdPatchResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkLocationsIdPatchResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19537,7 +19537,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkLocationsIdPatchResponsesSchemaData"
+                "value": "NetworkLocationsIdPatchResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -19609,8 +19609,8 @@
         ]
       }
     },
-    "NetworkMeCompaniesGetResponsesSchemaData": {
-      "name": "NetworkMeCompaniesGetResponsesSchemaData",
+    "NetworkMeCompaniesGetResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkMeCompaniesGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19665,7 +19665,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkMeCompaniesGetResponsesSchemaData"
+                "value": "NetworkMeCompaniesGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -19682,8 +19682,8 @@
         ]
       }
     },
-    "OceanShipmentContainerLegsGetResponsesSchemaData": {
-      "name": "OceanShipmentContainerLegsGetResponsesSchemaData",
+    "OceanShipmentContainerLegsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "OceanShipmentContainerLegsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19738,7 +19738,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "OceanShipmentContainerLegsGetResponsesSchemaData"
+                "value": "OceanShipmentContainerLegsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
@@ -19793,7 +19793,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "OceanShipmentContainerLegsGetResponsesSchemaData"
+                "value": "OceanShipmentContainerLegsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -19865,8 +19865,8 @@
         ]
       }
     },
-    "OceanShipmentContainerLegsIdGetResponsesSchemaData": {
-      "name": "OceanShipmentContainerLegsIdGetResponsesSchemaData",
+    "OceanShipmentContainerLegsIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "OceanShipmentContainerLegsIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19921,7 +19921,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "OceanShipmentContainerLegsIdGetResponsesSchemaData"
+                "value": "OceanShipmentContainerLegsIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -19938,8 +19938,8 @@
         ]
       }
     },
-    "OceanShipmentContainersGetResponsesSchemaData": {
-      "name": "OceanShipmentContainersGetResponsesSchemaData",
+    "OceanShipmentContainersGetResponsesContentApplicationJsonSchemaData": {
+      "name": "OceanShipmentContainersGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19994,7 +19994,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "OceanShipmentContainersGetResponsesSchemaData"
+                "value": "OceanShipmentContainersGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
@@ -20049,7 +20049,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "OceanShipmentContainersGetResponsesSchemaData"
+                "value": "OceanShipmentContainersGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -20121,8 +20121,8 @@
         ]
       }
     },
-    "OceanShipmentContainersIdGetResponsesSchemaData": {
-      "name": "OceanShipmentContainersIdGetResponsesSchemaData",
+    "OceanShipmentContainersIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "OceanShipmentContainersIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -20177,7 +20177,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "OceanShipmentContainersIdGetResponsesSchemaData"
+                "value": "OceanShipmentContainersIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -20214,8 +20214,8 @@
         ]
       }
     },
-    "PortsGetResponsesSchemaData": {
-      "name": "PortsGetResponsesSchemaData",
+    "PortsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "PortsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -20270,7 +20270,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PortsGetResponsesSchemaData"
+                "value": "PortsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
@@ -20325,7 +20325,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PortsGetResponsesSchemaData"
+                "value": "PortsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -20342,8 +20342,8 @@
         ]
       }
     },
-    "ProductsGetResponsesSchemaData": {
-      "name": "ProductsGetResponsesSchemaData",
+    "ProductsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "ProductsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -20398,7 +20398,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ProductsGetResponsesSchemaData"
+                "value": "ProductsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
@@ -20453,7 +20453,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ProductsGetResponsesSchemaData"
+                "value": "ProductsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -20525,8 +20525,8 @@
         ]
       }
     },
-    "ProductsPostResponsesSchemaData": {
-      "name": "ProductsPostResponsesSchemaData",
+    "ProductsPostResponsesContentApplicationJsonSchemaData": {
+      "name": "ProductsPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -20581,7 +20581,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ProductsPostResponsesSchemaData"
+                "value": "ProductsPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -20653,8 +20653,8 @@
         ]
       }
     },
-    "ProductsIdGetResponsesSchemaData": {
-      "name": "ProductsIdGetResponsesSchemaData",
+    "ProductsIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "ProductsIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -20709,7 +20709,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ProductsIdGetResponsesSchemaData"
+                "value": "ProductsIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -20781,8 +20781,8 @@
         ]
       }
     },
-    "ProductsIdPatchResponsesSchemaData": {
-      "name": "ProductsIdPatchResponsesSchemaData",
+    "ProductsIdPatchResponsesContentApplicationJsonSchemaData": {
+      "name": "ProductsIdPatchResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -20837,7 +20837,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ProductsIdPatchResponsesSchemaData"
+                "value": "ProductsIdPatchResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -20869,8 +20869,8 @@
         ]
       }
     },
-    "PurchaseOrderLineItemsGetResponsesSchemaData": {
-      "name": "PurchaseOrderLineItemsGetResponsesSchemaData",
+    "PurchaseOrderLineItemsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "PurchaseOrderLineItemsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -20925,7 +20925,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PurchaseOrderLineItemsGetResponsesSchemaData"
+                "value": "PurchaseOrderLineItemsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
@@ -20980,7 +20980,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PurchaseOrderLineItemsGetResponsesSchemaData"
+                "value": "PurchaseOrderLineItemsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -21052,8 +21052,8 @@
         ]
       }
     },
-    "PurchaseOrderLineItemsIdGetResponsesSchemaData": {
-      "name": "PurchaseOrderLineItemsIdGetResponsesSchemaData",
+    "PurchaseOrderLineItemsIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "PurchaseOrderLineItemsIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21108,7 +21108,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PurchaseOrderLineItemsIdGetResponsesSchemaData"
+                "value": "PurchaseOrderLineItemsIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -21186,8 +21186,8 @@
         ]
       }
     },
-    "PurchaseOrdersGetResponsesSchemaData": {
-      "name": "PurchaseOrdersGetResponsesSchemaData",
+    "PurchaseOrdersGetResponsesContentApplicationJsonSchemaData": {
+      "name": "PurchaseOrdersGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21242,7 +21242,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PurchaseOrdersGetResponsesSchemaData"
+                "value": "PurchaseOrdersGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
@@ -21297,7 +21297,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PurchaseOrdersGetResponsesSchemaData"
+                "value": "PurchaseOrdersGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -21314,8 +21314,8 @@
         ]
       }
     },
-    "PurchaseOrdersPostResponsesSchemaData": {
-      "name": "PurchaseOrdersPostResponsesSchemaData",
+    "PurchaseOrdersPostResponsesContentApplicationJsonSchemaData": {
+      "name": "PurchaseOrdersPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21370,7 +21370,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PurchaseOrdersPostResponsesSchemaData"
+                "value": "PurchaseOrdersPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -21442,8 +21442,8 @@
         ]
       }
     },
-    "PurchaseOrdersIdGetResponsesSchemaData": {
-      "name": "PurchaseOrdersIdGetResponsesSchemaData",
+    "PurchaseOrdersIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "PurchaseOrdersIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21498,7 +21498,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PurchaseOrdersIdGetResponsesSchemaData"
+                "value": "PurchaseOrdersIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -21515,8 +21515,8 @@
         ]
       }
     },
-    "PurchaseOrdersIdPostResponsesSchemaData": {
-      "name": "PurchaseOrdersIdPostResponsesSchemaData",
+    "PurchaseOrdersIdPostResponsesContentApplicationJsonSchemaData": {
+      "name": "PurchaseOrdersIdPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21571,7 +21571,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PurchaseOrdersIdPostResponsesSchemaData"
+                "value": "PurchaseOrdersIdPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -21588,8 +21588,8 @@
         ]
       }
     },
-    "ShipmentLegsGetResponsesSchemaData": {
-      "name": "ShipmentLegsGetResponsesSchemaData",
+    "ShipmentLegsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "ShipmentLegsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21644,7 +21644,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ShipmentLegsGetResponsesSchemaData"
+                "value": "ShipmentLegsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
@@ -21699,7 +21699,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ShipmentLegsGetResponsesSchemaData"
+                "value": "ShipmentLegsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -21771,8 +21771,8 @@
         ]
       }
     },
-    "ShipmentLegsIdGetResponsesSchemaData": {
-      "name": "ShipmentLegsIdGetResponsesSchemaData",
+    "ShipmentLegsIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "ShipmentLegsIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21827,7 +21827,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ShipmentLegsIdGetResponsesSchemaData"
+                "value": "ShipmentLegsIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -21859,8 +21859,8 @@
         ]
       }
     },
-    "ShipmentsGetResponsesSchemaData": {
-      "name": "ShipmentsGetResponsesSchemaData",
+    "ShipmentsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "ShipmentsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21915,7 +21915,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ShipmentsGetResponsesSchemaData"
+                "value": "ShipmentsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
@@ -21970,7 +21970,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ShipmentsGetResponsesSchemaData"
+                "value": "ShipmentsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -22042,8 +22042,8 @@
         ]
       }
     },
-    "ShipmentsIdGetResponsesSchemaData": {
-      "name": "ShipmentsIdGetResponsesSchemaData",
+    "ShipmentsIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "ShipmentsIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -22098,7 +22098,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ShipmentsIdGetResponsesSchemaData"
+                "value": "ShipmentsIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -22170,8 +22170,8 @@
         ]
       }
     },
-    "ShipmentsIdPatchResponsesSchemaData": {
-      "name": "ShipmentsIdPatchResponsesSchemaData",
+    "ShipmentsIdPatchResponsesContentApplicationJsonSchemaData": {
+      "name": "ShipmentsIdPatchResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -22226,7 +22226,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ShipmentsIdPatchResponsesSchemaData"
+                "value": "ShipmentsIdPatchResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -22243,8 +22243,8 @@
         ]
       }
     },
-    "ShipmentsShareablePostResponsesSchemaDataShipmentsItems": {
-      "name": "ShipmentsShareablePostResponsesSchemaDataShipmentsItems",
+    "ShipmentsShareablePostResponsesContentApplicationJsonSchemaDataShipmentsItems": {
+      "name": "ShipmentsShareablePostResponsesContentApplicationJsonSchemaDataShipmentsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -22288,8 +22288,8 @@
         ]
       }
     },
-    "ShipmentsShareablePostResponsesSchemaData": {
-      "name": "ShipmentsShareablePostResponsesSchemaData",
+    "ShipmentsShareablePostResponsesContentApplicationJsonSchemaData": {
+      "name": "ShipmentsShareablePostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -22344,7 +22344,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ShipmentsShareablePostResponsesSchemaData"
+                "value": "ShipmentsShareablePostResponsesContentApplicationJsonSchemaData"
               }
             }
           }
@@ -22399,7 +22399,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ShipmentsShareablePostResponsesSchemaData"
+                "value": "ShipmentsShareablePostResponsesContentApplicationJsonSchemaData"
               }
             }
           },

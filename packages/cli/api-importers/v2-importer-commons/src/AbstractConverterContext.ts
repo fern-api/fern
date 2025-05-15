@@ -166,10 +166,12 @@ export abstract class AbstractConverterContext<Spec extends object> {
      */
     public resolveReference<T>({
         reference,
-        breadcrumbs
+        breadcrumbs,
+        skipErrorCollector
     }: {
         reference: OpenAPIV3_1.ReferenceObject;
         breadcrumbs?: string[];
+        skipErrorCollector?: boolean;
     }): { resolved: true; value: T } | { resolved: false } {
         let resolvedReference: unknown = this.spec;
 
@@ -180,11 +182,13 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
         for (const key of keys) {
             if (typeof resolvedReference !== "object" || resolvedReference == null) {
-                this.errorCollector.collect({
-                    level: APIErrorLevel.ERROR,
-                    message: this.getErrorMessageForMissingRef({ reference }),
-                    path: breadcrumbs
-                });
+                if (!skipErrorCollector) {
+                    this.errorCollector.collect({
+                        level: APIErrorLevel.ERROR,
+                        message: this.getErrorMessageForMissingRef({ reference }),
+                        path: breadcrumbs
+                    });
+                }
                 return { resolved: false };
             }
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -192,11 +196,13 @@ export abstract class AbstractConverterContext<Spec extends object> {
         }
 
         if (resolvedReference == null) {
-            this.errorCollector.collect({
-                level: APIErrorLevel.ERROR,
-                message: this.getErrorMessageForMissingRef({ reference }),
-                path: breadcrumbs
-            });
+            if (!skipErrorCollector) {
+                this.errorCollector.collect({
+                    level: APIErrorLevel.ERROR,
+                    message: this.getErrorMessageForMissingRef({ reference }),
+                    path: breadcrumbs
+                });
+            }
             return { resolved: false };
         }
 
@@ -438,13 +444,19 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
     public resolveMaybeReference<T>({
         schemaOrReference,
-        breadcrumbs
+        breadcrumbs,
+        skipErrorCollector
     }: {
         schemaOrReference: OpenAPIV3_1.ReferenceObject | T;
         breadcrumbs: string[];
+        skipErrorCollector?: boolean;
     }): T | undefined {
         if (this.isReferenceObject(schemaOrReference)) {
-            const resolved = this.resolveReference<T>({ reference: schemaOrReference, breadcrumbs });
+            const resolved = this.resolveReference<T>({
+                reference: schemaOrReference,
+                breadcrumbs,
+                skipErrorCollector
+            });
             if (!resolved.resolved) {
                 return undefined;
             }

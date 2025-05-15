@@ -25519,8 +25519,8 @@
         ]
       }
     },
-    "ApiLinksPostResponsesSchemaItems": {
-      "name": "ApiLinksPostResponsesSchemaItems",
+    "ApiLinksPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiLinksPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -25604,8 +25604,8 @@
         ]
       }
     },
-    "ApiLinksPatchResponsesSchemaItems": {
-      "name": "ApiLinksPatchResponsesSchemaItems",
+    "ApiLinksPatchResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiLinksPatchResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -25689,8 +25689,8 @@
         ]
       }
     },
-    "ApiLinksIdPutResponsesSchemaItems": {
-      "name": "ApiLinksIdPutResponsesSchemaItems",
+    "ApiLinksIdPutResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiLinksIdPutResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -25774,8 +25774,8 @@
         ]
       }
     },
-    "ApiLinksIdPatchResponsesSchemaItems": {
-      "name": "ApiLinksIdPatchResponsesSchemaItems",
+    "ApiLinksIdPatchResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiLinksIdPatchResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -25859,8 +25859,8 @@
         ]
       }
     },
-    "ApiAccountsPostResponsesSchemaItems": {
-      "name": "ApiAccountsPostResponsesSchemaItems",
+    "ApiAccountsPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiAccountsPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -25944,8 +25944,8 @@
         ]
       }
     },
-    "ApiAccountsPatchResponsesSchemaItems": {
-      "name": "ApiAccountsPatchResponsesSchemaItems",
+    "ApiAccountsPatchResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiAccountsPatchResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -26041,8 +26041,8 @@
         ]
       }
     },
-    "ApiTransactionsPostResponsesSchemaItems": {
-      "name": "ApiTransactionsPostResponsesSchemaItems",
+    "ApiTransactionsPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiTransactionsPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -26126,8 +26126,8 @@
         ]
       }
     },
-    "ApiTransactionsPatchResponsesSchemaItems": {
-      "name": "ApiTransactionsPatchResponsesSchemaItems",
+    "ApiTransactionsPatchResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiTransactionsPatchResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -26211,8 +26211,8 @@
         ]
       }
     },
-    "ApiBalancesPostResponsesSchemaItems": {
-      "name": "ApiBalancesPostResponsesSchemaItems",
+    "ApiBalancesPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiBalancesPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -26296,8 +26296,8 @@
         ]
       }
     },
-    "ApiBalancesPatchResponsesSchemaItems": {
-      "name": "ApiBalancesPatchResponsesSchemaItems",
+    "ApiBalancesPatchResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiBalancesPatchResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -26381,8 +26381,8 @@
         ]
       }
     },
-    "ApiOwnersPostResponsesSchemaItems": {
-      "name": "ApiOwnersPostResponsesSchemaItems",
+    "ApiOwnersPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiOwnersPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -26466,8 +26466,8 @@
         ]
       }
     },
-    "ApiOwnersPatchResponsesSchemaItems": {
-      "name": "ApiOwnersPatchResponsesSchemaItems",
+    "ApiOwnersPatchResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiOwnersPatchResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -26551,8 +26551,8 @@
         ]
       }
     },
-    "ApiInvoicesPostResponsesSchemaItems": {
-      "name": "ApiInvoicesPostResponsesSchemaItems",
+    "ApiInvoicesPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiInvoicesPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -26636,8 +26636,8 @@
         ]
       }
     },
-    "ApiInvoicesPatchResponsesSchemaItems": {
-      "name": "ApiInvoicesPatchResponsesSchemaItems",
+    "ApiInvoicesPatchResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiInvoicesPatchResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -26801,8 +26801,8 @@
         ]
       }
     },
-    "ApiTaxReturnsPostResponsesSchemaItems": {
-      "name": "ApiTaxReturnsPostResponsesSchemaItems",
+    "ApiTaxReturnsPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiTaxReturnsPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -26944,8 +26944,8 @@
         ]
       }
     },
-    "ApiTaxStatusPostResponsesSchemaItems": {
-      "name": "ApiTaxStatusPostResponsesSchemaItems",
+    "ApiTaxStatusPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiTaxStatusPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -27051,8 +27051,8 @@
         ]
       }
     },
-    "ApiTaxComplianceStatusPostResponsesSchemaItems": {
-      "name": "ApiTaxComplianceStatusPostResponsesSchemaItems",
+    "ApiTaxComplianceStatusPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiTaxComplianceStatusPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -27136,8 +27136,8 @@
         ]
       }
     },
-    "ApiIncomesPostResponsesSchemaItems": {
-      "name": "ApiIncomesPostResponsesSchemaItems",
+    "ApiIncomesPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiIncomesPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -27221,8 +27221,8 @@
         ]
       }
     },
-    "ApiIncomesPatchResponsesSchemaItems": {
-      "name": "ApiIncomesPatchResponsesSchemaItems",
+    "ApiIncomesPatchResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiIncomesPatchResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -27306,8 +27306,8 @@
         ]
       }
     },
-    "ApiRecurringExpensesPostResponsesSchemaItems": {
-      "name": "ApiRecurringExpensesPostResponsesSchemaItems",
+    "ApiRecurringExpensesPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiRecurringExpensesPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -27391,8 +27391,8 @@
         ]
       }
     },
-    "ApiRecurringExpensesPatchResponsesSchemaItems": {
-      "name": "ApiRecurringExpensesPatchResponsesSchemaItems",
+    "ApiRecurringExpensesPatchResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiRecurringExpensesPatchResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -27476,8 +27476,8 @@
         ]
       }
     },
-    "InvestmentsPortfoliosPostResponsesSchemaItems": {
-      "name": "InvestmentsPortfoliosPostResponsesSchemaItems",
+    "InvestmentsPortfoliosPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "InvestmentsPortfoliosPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -27561,8 +27561,8 @@
         ]
       }
     },
-    "InvestmentsPortfoliosPatchResponsesSchemaItems": {
-      "name": "InvestmentsPortfoliosPatchResponsesSchemaItems",
+    "InvestmentsPortfoliosPatchResponsesContentApplicationJsonSchemaItems": {
+      "name": "InvestmentsPortfoliosPatchResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -27646,8 +27646,8 @@
         ]
       }
     },
-    "ReceivablesTransactionsPostResponsesSchemaItems": {
-      "name": "ReceivablesTransactionsPostResponsesSchemaItems",
+    "ReceivablesTransactionsPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "ReceivablesTransactionsPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -27731,8 +27731,8 @@
         ]
       }
     },
-    "ApiRiskInsightsPostResponsesSchemaItems": {
-      "name": "ApiRiskInsightsPostResponsesSchemaItems",
+    "ApiRiskInsightsPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiRiskInsightsPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -27816,8 +27816,8 @@
         ]
       }
     },
-    "ApiRiskInsightsPatchResponsesSchemaItems": {
-      "name": "ApiRiskInsightsPatchResponsesSchemaItems",
+    "ApiRiskInsightsPatchResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiRiskInsightsPatchResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -27901,8 +27901,8 @@
         ]
       }
     },
-    "ApiTaxRetentionsPostResponsesSchemaItems": {
-      "name": "ApiTaxRetentionsPostResponsesSchemaItems",
+    "ApiTaxRetentionsPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiTaxRetentionsPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -28008,8 +28008,8 @@
         ]
       }
     },
-    "ApiTaxDeclarationsPostResponsesSchemaItems": {
-      "name": "ApiTaxDeclarationsPostResponsesSchemaItems",
+    "ApiTaxDeclarationsPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiTaxDeclarationsPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -28115,8 +28115,8 @@
         ]
       }
     },
-    "ApiEmploymentRecordsPostResponsesSchemaItems": {
-      "name": "ApiEmploymentRecordsPostResponsesSchemaItems",
+    "ApiEmploymentRecordsPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiEmploymentRecordsPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -28200,8 +28200,8 @@
         ]
       }
     },
-    "ApiEnrichIncomesPostResponsesSchemaItems": {
-      "name": "ApiEnrichIncomesPostResponsesSchemaItems",
+    "ApiEnrichIncomesPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiEnrichIncomesPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -28285,8 +28285,8 @@
         ]
       }
     },
-    "ApiCategorizationPostResponsesSchemaItems": {
-      "name": "ApiCategorizationPostResponsesSchemaItems",
+    "ApiCategorizationPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "ApiCategorizationPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -28370,8 +28370,8 @@
         ]
       }
     },
-    "PaymentsSecretKeysPostResponsesSchemaItems": {
-      "name": "PaymentsSecretKeysPostResponsesSchemaItems",
+    "PaymentsSecretKeysPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "PaymentsSecretKeysPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -28455,8 +28455,8 @@
         ]
       }
     },
-    "PaymentsWebhooksPostResponsesSchemaItems": {
-      "name": "PaymentsWebhooksPostResponsesSchemaItems",
+    "PaymentsWebhooksPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "PaymentsWebhooksPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -28584,8 +28584,8 @@
         ]
       }
     },
-    "PaymentsCustomersPostResponsesSchemaItems": {
-      "name": "PaymentsCustomersPostResponsesSchemaItems",
+    "PaymentsCustomersPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "PaymentsCustomersPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -28735,8 +28735,8 @@
         ]
       }
     },
-    "PaymentsBankAccountsPostResponsesSchemaItems": {
-      "name": "PaymentsBankAccountsPostResponsesSchemaItems",
+    "PaymentsBankAccountsPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "PaymentsBankAccountsPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -28900,8 +28900,8 @@
         ]
       }
     },
-    "PaymentsPaymentLinksPostResponsesSchemaItems": {
-      "name": "PaymentsPaymentLinksPostResponsesSchemaItems",
+    "PaymentsPaymentLinksPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "PaymentsPaymentLinksPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -29037,8 +29037,8 @@
         ]
       }
     },
-    "PaymentsPaymentIntentsPostResponsesSchemaItems": {
-      "name": "PaymentsPaymentIntentsPostResponsesSchemaItems",
+    "PaymentsPaymentIntentsPostResponsesContentApplicationJsonSchemaItems": {
+      "name": "PaymentsPaymentIntentsPostResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -29152,8 +29152,8 @@
         ]
       }
     },
-    "PaymentsPaymentIntentsIdPatchResponsesSchemaItems": {
-      "name": "PaymentsPaymentIntentsIdPatchResponsesSchemaItems",
+    "PaymentsPaymentIntentsIdPatchResponsesContentApplicationJsonSchemaItems": {
+      "name": "PaymentsPaymentIntentsIdPatchResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -29767,7 +29767,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiLinksPostResponsesSchemaItems"
+                    "value": "ApiLinksPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -29977,7 +29977,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiLinksPatchResponsesSchemaItems"
+                    "value": "ApiLinksPatchResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -30383,7 +30383,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiLinksIdPutResponsesSchemaItems"
+                    "value": "ApiLinksIdPutResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -30737,7 +30737,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiLinksIdPatchResponsesSchemaItems"
+                    "value": "ApiLinksIdPatchResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -31764,7 +31764,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiAccountsPostResponsesSchemaItems"
+                    "value": "ApiAccountsPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -32507,7 +32507,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiAccountsPatchResponsesSchemaItems"
+                    "value": "ApiAccountsPatchResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -35283,7 +35283,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiTransactionsPostResponsesSchemaItems"
+                    "value": "ApiTransactionsPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -35888,7 +35888,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiTransactionsPatchResponsesSchemaItems"
+                    "value": "ApiTransactionsPatchResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -37662,7 +37662,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiBalancesPostResponsesSchemaItems"
+                    "value": "ApiBalancesPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -37943,7 +37943,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiBalancesPatchResponsesSchemaItems"
+                    "value": "ApiBalancesPatchResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -39533,7 +39533,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiOwnersPostResponsesSchemaItems"
+                    "value": "ApiOwnersPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -39776,7 +39776,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiOwnersPatchResponsesSchemaItems"
+                    "value": "ApiOwnersPatchResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -41569,7 +41569,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "ApiInvoicesPostResponsesSchemaItems"
+                  "value": "ApiInvoicesPostResponsesContentApplicationJsonSchemaItems"
                 }
               }
             },
@@ -41584,7 +41584,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiInvoicesPostResponsesSchemaItems"
+                    "value": "ApiInvoicesPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -42534,7 +42534,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "ApiInvoicesPatchResponsesSchemaItems"
+                  "value": "ApiInvoicesPatchResponsesContentApplicationJsonSchemaItems"
                 }
               }
             },
@@ -42549,7 +42549,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiInvoicesPatchResponsesSchemaItems"
+                    "value": "ApiInvoicesPatchResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -44998,7 +44998,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "ApiTaxReturnsPostResponsesSchemaItems"
+                  "value": "ApiTaxReturnsPostResponsesContentApplicationJsonSchemaItems"
                 }
               }
             },
@@ -45013,7 +45013,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiTaxReturnsPostResponsesSchemaItems"
+                    "value": "ApiTaxReturnsPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -47445,7 +47445,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiTaxStatusPostResponsesSchemaItems"
+                    "value": "ApiTaxStatusPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -48817,7 +48817,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiTaxComplianceStatusPostResponsesSchemaItems"
+                    "value": "ApiTaxComplianceStatusPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -49601,7 +49601,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiIncomesPostResponsesSchemaItems"
+                    "value": "ApiIncomesPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -49888,7 +49888,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiIncomesPatchResponsesSchemaItems"
+                    "value": "ApiIncomesPatchResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -51001,7 +51001,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiRecurringExpensesPostResponsesSchemaItems"
+                    "value": "ApiRecurringExpensesPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -51430,7 +51430,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiRecurringExpensesPatchResponsesSchemaItems"
+                    "value": "ApiRecurringExpensesPatchResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -52698,7 +52698,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "InvestmentsPortfoliosPostResponsesSchemaItems"
+                    "value": "InvestmentsPortfoliosPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -52982,7 +52982,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "InvestmentsPortfoliosPatchResponsesSchemaItems"
+                    "value": "InvestmentsPortfoliosPatchResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -54052,7 +54052,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ReceivablesTransactionsPostResponsesSchemaItems"
+                    "value": "ReceivablesTransactionsPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -54993,7 +54993,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiRiskInsightsPostResponsesSchemaItems"
+                    "value": "ApiRiskInsightsPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -55350,7 +55350,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiRiskInsightsPatchResponsesSchemaItems"
+                    "value": "ApiRiskInsightsPatchResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -56445,7 +56445,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiTaxRetentionsPostResponsesSchemaItems"
+                    "value": "ApiTaxRetentionsPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -57520,7 +57520,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "ApiTaxDeclarationsPostResponsesSchemaItems"
+                  "value": "ApiTaxDeclarationsPostResponsesContentApplicationJsonSchemaItems"
                 }
               }
             },
@@ -57535,7 +57535,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiTaxDeclarationsPostResponsesSchemaItems"
+                    "value": "ApiTaxDeclarationsPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -58557,7 +58557,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiEmploymentRecordsPostResponsesSchemaItems"
+                    "value": "ApiEmploymentRecordsPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -59243,7 +59243,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiEnrichIncomesPostResponsesSchemaItems"
+                    "value": "ApiEnrichIncomesPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -59566,7 +59566,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ApiCategorizationPostResponsesSchemaItems"
+                    "value": "ApiCategorizationPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -59958,7 +59958,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "PaymentsSecretKeysPostResponsesSchemaItems"
+                    "value": "PaymentsSecretKeysPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -60222,7 +60222,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "PaymentsWebhooksPostResponsesSchemaItems"
+                    "value": "PaymentsWebhooksPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -61600,7 +61600,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "PaymentsCustomersPostResponsesSchemaItems"
+                    "value": "PaymentsCustomersPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -62613,7 +62613,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "PaymentsBankAccountsPostResponsesSchemaItems"
+                    "value": "PaymentsBankAccountsPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -63565,7 +63565,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "PaymentsPaymentLinksPostResponsesSchemaItems"
+                    "value": "PaymentsPaymentLinksPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -65149,7 +65149,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "PaymentsPaymentIntentsPostResponsesSchemaItems"
+                    "value": "PaymentsPaymentIntentsPostResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },
@@ -66215,7 +66215,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "PaymentsPaymentIntentsIdPatchResponsesSchemaItems"
+                    "value": "PaymentsPaymentIntentsIdPatchResponsesContentApplicationJsonSchemaItems"
                   }
                 }
               },

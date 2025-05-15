@@ -2399,9 +2399,9 @@
         "properties": []
       }
     },
-    "FromUrlPostRequestBodySchemaCheckUrlDuplicates": {
+    "FromUrlPostRequestBodyContentMultipartFormDataSchemaCheckUrlDuplicates": {
       "description": "If set to \"1\", enables the `source_url` duplicates prevention.\nSpecifically, if the `source_url` had already been fetched and uploaded previously,\nthis request will return information about the already uploaded file.\n",
-      "name": "FromUrlPostRequestBodySchemaCheckUrlDuplicates",
+      "name": "FromUrlPostRequestBodyContentMultipartFormDataSchemaCheckUrlDuplicates",
       "shape": {
         "type": "enum",
         "default": "0",
@@ -2415,9 +2415,9 @@
         ]
       }
     },
-    "FromUrlPostRequestBodySchemaSaveUrlDuplicates": {
+    "FromUrlPostRequestBodyContentMultipartFormDataSchemaSaveUrlDuplicates": {
       "description": "Determines if the requested `source_url` should be kept in the history of\nfetched/uploaded URLs. If the value is not defined explicitly, it is set\nto the value of the `check_URL_duplicates` parameter.\n",
-      "name": "FromUrlPostRequestBodySchemaSaveUrlDuplicates",
+      "name": "FromUrlPostRequestBodyContentMultipartFormDataSchemaSaveUrlDuplicates",
       "shape": {
         "type": "enum",
         "values": [
@@ -3371,7 +3371,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "FromUrlPostRequestBodySchemaCheckUrlDuplicates"
+                        "value": "FromUrlPostRequestBodyContentMultipartFormDataSchemaCheckUrlDuplicates"
                       }
                     },
                     "contentType": "multipart/form-data",
@@ -3385,7 +3385,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "FromUrlPostRequestBodySchemaSaveUrlDuplicates"
+                        "value": "FromUrlPostRequestBodyContentMultipartFormDataSchemaSaveUrlDuplicates"
                       }
                     },
                     "contentType": "multipart/form-data",

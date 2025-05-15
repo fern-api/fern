@@ -1,7 +1,7 @@
 {
   "types": {
-    "SearchWithObjectUnionGetRequestBodySchema": {
-      "name": "SearchWithObjectUnionGetRequestBodySchema",
+    "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema": {
+      "name": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema",
       "shape": {
         "type": "object",
         "extends": [],
@@ -156,7 +156,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "SearchWithObjectUnionGetRequestBodySchema"
+                  "value": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema"
                 }
               }
             }

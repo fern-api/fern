@@ -844,9 +844,9 @@
         ]
       }
     },
-    "PetPutRequestBodySchemaCategory": {
+    "PetPutRequestBodyContentApplicationJsonSchemaCategory": {
       "description": "A category for a pet",
-      "name": "PetPutRequestBodySchemaCategory",
+      "name": "PetPutRequestBodyContentApplicationJsonSchemaCategory",
       "shape": {
         "type": "object",
         "extends": [],
@@ -878,9 +878,9 @@
         ]
       }
     },
-    "PetPutRequestBodySchemaTagsItems": {
+    "PetPutRequestBodyContentApplicationJsonSchemaTagsItems": {
       "description": "A tag for a pet",
-      "name": "PetPutRequestBodySchemaTagsItems",
+      "name": "PetPutRequestBodyContentApplicationJsonSchemaTagsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -912,9 +912,9 @@
         ]
       }
     },
-    "PetPutRequestBodySchemaStatus": {
+    "PetPutRequestBodyContentApplicationJsonSchemaStatus": {
       "description": "pet status in the store",
-      "name": "PetPutRequestBodySchemaStatus",
+      "name": "PetPutRequestBodyContentApplicationJsonSchemaStatus",
       "shape": {
         "type": "enum",
         "values": [
@@ -1269,7 +1269,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "PetPutRequestBodySchemaCategory"
+                        "value": "PetPutRequestBodyContentApplicationJsonSchemaCategory"
                       }
                     }
                   },
@@ -1302,7 +1302,7 @@
                         "type": "list",
                         "itemType": {
                           "type": "id",
-                          "value": "PetPutRequestBodySchemaTagsItems"
+                          "value": "PetPutRequestBodyContentApplicationJsonSchemaTagsItems"
                         }
                       }
                     }
@@ -1314,7 +1314,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "PetPutRequestBodySchemaStatus"
+                        "value": "PetPutRequestBodyContentApplicationJsonSchemaStatus"
                       }
                     }
                   }

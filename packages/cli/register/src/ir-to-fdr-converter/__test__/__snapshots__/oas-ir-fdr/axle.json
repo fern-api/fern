@@ -933,17 +933,17 @@
         ]
       }
     },
-    "IgnitionPostRequestBodySchemaMetadata": {
+    "IgnitionPostRequestBodyContentApplicationJsonSchemaMetadata": {
       "description": "Optional object to store ephermeral information about the session, such as `reservationTime`. Will be returned in webhook events.",
-      "name": "IgnitionPostRequestBodySchemaMetadata",
+      "name": "IgnitionPostRequestBodyContentApplicationJsonSchemaMetadata",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "IgnitionPostResponsesSchemaData": {
-      "name": "IgnitionPostResponsesSchemaData",
+    "IgnitionPostResponsesContentApplicationJsonSchemaData": {
+      "name": "IgnitionPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -989,14 +989,14 @@
             "key": "data",
             "valueType": {
               "type": "id",
-              "value": "IgnitionPostResponsesSchemaData"
+              "value": "IgnitionPostResponsesContentApplicationJsonSchemaData"
             }
           }
         ]
       }
     },
-    "TokenExchangePostResponsesSchemaData": {
-      "name": "TokenExchangePostResponsesSchemaData",
+    "TokenExchangePostResponsesContentApplicationJsonSchemaData": {
+      "name": "TokenExchangePostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1052,7 +1052,7 @@
             "key": "data",
             "valueType": {
               "type": "id",
-              "value": "TokenExchangePostResponsesSchemaData"
+              "value": "TokenExchangePostResponsesContentApplicationJsonSchemaData"
             }
           }
         ]
@@ -1288,7 +1288,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "IgnitionPostRequestBodySchemaMetadata"
+                        "value": "IgnitionPostRequestBodyContentApplicationJsonSchemaMetadata"
                       }
                     }
                   }

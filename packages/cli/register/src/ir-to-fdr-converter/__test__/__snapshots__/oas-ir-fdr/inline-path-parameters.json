@@ -24,9 +24,9 @@
         ]
       }
     },
-    "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess": {
+    "OrganizationsOrganizationIdSearchPostRequestBodyContentApplicationJsonSchemaAccess": {
       "description": "Access level",
-      "name": "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess",
+      "name": "OrganizationsOrganizationIdSearchPostRequestBodyContentApplicationJsonSchemaAccess",
       "shape": {
         "type": "enum",
         "values": [
@@ -133,7 +133,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess"
+                        "value": "OrganizationsOrganizationIdSearchPostRequestBodyContentApplicationJsonSchemaAccess"
                       }
                     }
                   }

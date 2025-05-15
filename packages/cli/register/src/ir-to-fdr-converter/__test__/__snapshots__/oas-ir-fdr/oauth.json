@@ -1,8 +1,8 @@
 {
   "types": {
-    "OauthTokenPostRequestBodySchemaGrantType": {
+    "OauthTokenPostRequestBodyContentApplicationJsonSchemaGrantType": {
       "description": "The type of grant to request",
-      "name": "OauthTokenPostRequestBodySchemaGrantType",
+      "name": "OauthTokenPostRequestBodyContentApplicationJsonSchemaGrantType",
       "shape": {
         "type": "enum",
         "values": [
@@ -124,7 +124,7 @@
                     "key": "grant_type",
                     "valueType": {
                       "type": "id",
-                      "value": "OauthTokenPostRequestBodySchemaGrantType"
+                      "value": "OauthTokenPostRequestBodyContentApplicationJsonSchemaGrantType"
                     }
                   },
                   {
