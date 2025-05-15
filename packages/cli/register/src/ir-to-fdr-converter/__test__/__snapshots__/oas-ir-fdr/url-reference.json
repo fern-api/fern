@@ -88,7 +88,7 @@
     },
     "Mammal0": {
       "description": "A pet for sale in the pet store",
-      "name": "Mammal0",
+      "name": "a Pet",
       "shape": {
         "type": "object",
         "extends": [],
@@ -166,7 +166,7 @@
     },
     "Mammal1": {
       "description": "A User who is purchasing from the pet store",
-      "name": "Mammal1",
+      "name": "a User",
       "shape": {
         "type": "object",
         "extends": [],
@@ -844,9 +844,9 @@
         ]
       }
     },
-    "PetPutRequestBodySchemaCategory": {
+    "PetPutRequestBodyContentApplicationJsonSchemaCategory": {
       "description": "A category for a pet",
-      "name": "PetPutRequestBodySchemaCategory",
+      "name": "PetPutRequestBodyContentApplicationJsonSchemaCategory",
       "shape": {
         "type": "object",
         "extends": [],
@@ -878,9 +878,9 @@
         ]
       }
     },
-    "PetPutRequestBodySchemaTagsItems": {
+    "PetPutRequestBodyContentApplicationJsonSchemaTagsItems": {
       "description": "A tag for a pet",
-      "name": "PetPutRequestBodySchemaTagsItems",
+      "name": "PetPutRequestBodyContentApplicationJsonSchemaTagsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -912,9 +912,9 @@
         ]
       }
     },
-    "PetPutRequestBodySchemaStatus": {
+    "PetPutRequestBodyContentApplicationJsonSchemaStatus": {
       "description": "pet status in the store",
-      "name": "PetPutRequestBodySchemaStatus",
+      "name": "PetPutRequestBodyContentApplicationJsonSchemaStatus",
       "shape": {
         "type": "enum",
         "values": [
@@ -1269,7 +1269,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "PetPutRequestBodySchemaCategory"
+                        "value": "PetPutRequestBodyContentApplicationJsonSchemaCategory"
                       }
                     }
                   },
@@ -1302,7 +1302,7 @@
                         "type": "list",
                         "itemType": {
                           "type": "id",
-                          "value": "PetPutRequestBodySchemaTagsItems"
+                          "value": "PetPutRequestBodyContentApplicationJsonSchemaTagsItems"
                         }
                       }
                     }
@@ -1314,7 +1314,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "PetPutRequestBodySchemaStatus"
+                        "value": "PetPutRequestBodyContentApplicationJsonSchemaStatus"
                       }
                     }
                   }
@@ -1394,30 +1394,27 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 0,
-                  "category": {
-                    "id": 6,
+                "id": 0,
+                "category": {
+                  "id": 6,
+                  "name": "name"
+                },
+                "name": "doggie",
+                "photoUrls": [
+                  "photoUrls",
+                  "photoUrls"
+                ],
+                "tags": [
+                  {
+                    "id": 1,
                     "name": "name"
                   },
-                  "name": "doggie",
-                  "photoUrls": [
-                    "photoUrls",
-                    "photoUrls"
-                  ],
-                  "tags": [
-                    {
-                      "id": 1,
-                      "name": "name"
-                    },
-                    {
-                      "id": 1,
-                      "name": "name"
-                    }
-                  ],
-                  "status": "available"
-                }
+                  {
+                    "id": 1,
+                    "name": "name"
+                  }
+                ],
+                "status": "available"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -1515,15 +1512,12 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 0,
-                  "petId": 6,
-                  "quantity": 1,
-                  "shipDate": "foo",
-                  "status": "placed",
-                  "complete": false
-                }
+                "id": 0,
+                "petId": 6,
+                "quantity": 1,
+                "shipDate": "foo",
+                "status": "placed",
+                "complete": false
               },
               "responseBodyV3": {
                 "type": "json",

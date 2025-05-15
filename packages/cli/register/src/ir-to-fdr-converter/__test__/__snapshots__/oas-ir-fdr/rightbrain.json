@@ -3480,17 +3480,6 @@
         ]
       }
     },
-    "InvalidMemberErrorResponseInvalidMemberError": {
-      "description": "Metadata detailing more information about the error.",
-      "name": "InvalidMemberErrorResponseInvalidMemberError",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "InvalidMemberErrorDetails"
-        ],
-        "properties": []
-      }
-    },
     "InvalidMemberErrorResponse": {
       "name": "InvalidMemberErrorResponse",
       "shape": {
@@ -3520,7 +3509,7 @@
             "key": "invalidMemberError",
             "valueType": {
               "type": "id",
-              "value": "InvalidMemberErrorResponseInvalidMemberError"
+              "value": "InvalidMemberErrorDetails"
             }
           }
         ]
@@ -3569,17 +3558,6 @@
         ]
       }
     },
-    "InvalidRoleErrorResponseInvalidRoleError": {
-      "description": "Metadata detailing more information about the error.",
-      "name": "InvalidRoleErrorResponseInvalidRoleError",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "InvalidRoleErrorDetails"
-        ],
-        "properties": []
-      }
-    },
     "InvalidRoleErrorResponse": {
       "name": "InvalidRoleErrorResponse",
       "shape": {
@@ -3609,7 +3587,7 @@
             "key": "invalidRoleError",
             "valueType": {
               "type": "id",
-              "value": "InvalidRoleErrorResponseInvalidRoleError"
+              "value": "InvalidRoleErrorDetails"
             }
           }
         ]
@@ -3649,17 +3627,6 @@
         ]
       }
     },
-    "InvalidSubjectTypeErrorResponseInvalidSubjectTypeError": {
-      "description": "Metadata detailing more information about the error.",
-      "name": "InvalidSubjectTypeErrorResponseInvalidSubjectTypeError",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "InvalidSubjectTypeErrorDetails"
-        ],
-        "properties": []
-      }
-    },
     "InvalidSubjectTypeErrorResponse": {
       "name": "InvalidSubjectTypeErrorResponse",
       "shape": {
@@ -3689,7 +3656,7 @@
             "key": "invalidSubjectTypeError",
             "valueType": {
               "type": "id",
-              "value": "InvalidSubjectTypeErrorResponseInvalidSubjectTypeError"
+              "value": "InvalidSubjectTypeErrorDetails"
             }
           }
         ]
@@ -4148,17 +4115,6 @@
         ]
       }
     },
-    "MalformedResourceIdentifierErrorResponseMalformedResourceIdentifierError": {
-      "description": "Metadata detailing more information about the error.",
-      "name": "MalformedResourceIdentifierErrorResponseMalformedResourceIdentifierError",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "MalformedResourceIdentifierErrorDetails"
-        ],
-        "properties": []
-      }
-    },
     "MalformedResourceIdentifierErrorResponse": {
       "name": "MalformedResourceIdentifierErrorResponse",
       "shape": {
@@ -4188,7 +4144,7 @@
             "key": "malformedResourceIdentifierError",
             "valueType": {
               "type": "id",
-              "value": "MalformedResourceIdentifierErrorResponseMalformedResourceIdentifierError"
+              "value": "MalformedResourceIdentifierErrorDetails"
             }
           }
         ]
@@ -4204,17 +4160,6 @@
             "value": "MISSING_AUTHENTICATION"
           }
         ]
-      }
-    },
-    "MissingAuthenticationErrorResponseMissingAuthenticationError": {
-      "description": "Metadata detailing more information about the error.",
-      "name": "MissingAuthenticationErrorResponseMissingAuthenticationError",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "EmptyErrorDetails"
-        ],
-        "properties": []
       }
     },
     "MissingAuthenticationErrorResponse": {
@@ -4246,7 +4191,7 @@
             "key": "missingAuthenticationError",
             "valueType": {
               "type": "id",
-              "value": "MissingAuthenticationErrorResponseMissingAuthenticationError"
+              "value": "EmptyErrorDetails"
             }
           }
         ]
@@ -4298,17 +4243,6 @@
         ]
       }
     },
-    "MultipleRolesNotAllowedErrorResponseMultipleRolesNotAllowedError": {
-      "description": "Metadata detailing more information about the error.",
-      "name": "MultipleRolesNotAllowedErrorResponseMultipleRolesNotAllowedError",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "MultipleRolesNotAllowedErrorDetails"
-        ],
-        "properties": []
-      }
-    },
     "MultipleRolesNotAllowedErrorResponse": {
       "name": "MultipleRolesNotAllowedErrorResponse",
       "shape": {
@@ -4338,28 +4272,8 @@
             "key": "multipleRolesNotAllowedError",
             "valueType": {
               "type": "id",
-              "value": "MultipleRolesNotAllowedErrorResponseMultipleRolesNotAllowedError"
+              "value": "MultipleRolesNotAllowedErrorDetails"
             }
-          }
-        ]
-      }
-    },
-    "OAuthClientCreateProfile": {
-      "name": "OAuthClientCreateProfile",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "rightbrain_docs"
-          },
-          {
-            "value": "rightbrain_tasks"
-          },
-          {
-            "value": "user_defined"
-          },
-          {
-            "value": "zendesk"
           }
         ]
       }
@@ -4390,7 +4304,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "OAuthClientCreateProfile"
+                "value": "OAuthClientProfile"
               }
             }
           },
@@ -5156,17 +5070,6 @@
         ]
       }
     },
-    "OrganizationInviteAlreadyExistsErrorResponseOrganizationInviteAlreadyExistsError": {
-      "description": "Metadata detailing more information about the error.",
-      "name": "OrganizationInviteAlreadyExistsErrorResponseOrganizationInviteAlreadyExistsError",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "OrganizationInviteAlreadyExistsErrorDetails"
-        ],
-        "properties": []
-      }
-    },
     "OrganizationInviteAlreadyExistsErrorResponse": {
       "name": "OrganizationInviteAlreadyExistsErrorResponse",
       "shape": {
@@ -5196,7 +5099,7 @@
             "key": "organizationInviteAlreadyExistsError",
             "valueType": {
               "type": "id",
-              "value": "OrganizationInviteAlreadyExistsErrorResponseOrganizationInviteAlreadyExistsError"
+              "value": "OrganizationInviteAlreadyExistsErrorDetails"
             }
           }
         ]
@@ -5241,17 +5144,6 @@
         ]
       }
     },
-    "OrganizationMemberAlreadyExistsErrorResponseOrganizationMemberAlreadyExistsError": {
-      "description": "Metadata detailing more information about the error.",
-      "name": "OrganizationMemberAlreadyExistsErrorResponseOrganizationMemberAlreadyExistsError",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "OrganizationMemberAlreadyExistsErrorDetails"
-        ],
-        "properties": []
-      }
-    },
     "OrganizationMemberAlreadyExistsErrorResponse": {
       "name": "OrganizationMemberAlreadyExistsErrorResponse",
       "shape": {
@@ -5281,7 +5173,7 @@
             "key": "organizationMemberAlreadyExistsError",
             "valueType": {
               "type": "id",
-              "value": "OrganizationMemberAlreadyExistsErrorResponseOrganizationMemberAlreadyExistsError"
+              "value": "OrganizationMemberAlreadyExistsErrorDetails"
             }
           }
         ]
@@ -5837,17 +5729,6 @@
         ]
       }
     },
-    "PermissionCheckFailedErrorResponsePermissionCheckFailedError": {
-      "description": "Metadata detailing more information about the error.",
-      "name": "PermissionCheckFailedErrorResponsePermissionCheckFailedError",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "PermissionCheckFailedErrorDetails"
-        ],
-        "properties": []
-      }
-    },
     "PermissionCheckFailedErrorResponse": {
       "name": "PermissionCheckFailedErrorResponse",
       "shape": {
@@ -5877,7 +5758,7 @@
             "key": "permissionCheckFailedError",
             "valueType": {
               "type": "id",
-              "value": "PermissionCheckFailedErrorResponsePermissionCheckFailedError"
+              "value": "PermissionCheckFailedErrorDetails"
             }
           }
         ]
@@ -6831,17 +6712,6 @@
         ]
       }
     },
-    "TaskCreateLlmConfig": {
-      "description": "Specific configuration parameters for the LLM model.",
-      "name": "TaskCreateLlmConfig",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "TaskLLMConfig"
-        ],
-        "properties": []
-      }
-    },
     "TaskCreateOutputFormat": {
       "name": "TaskCreateOutputFormat",
       "shape": {
@@ -6906,7 +6776,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "TaskCreateLlmConfig"
+                "value": "TaskLLMConfig"
               }
             }
           },
@@ -7547,17 +7417,6 @@
         ]
       }
     },
-    "TaskRevisionLlmConfig": {
-      "description": "Specific configuration parameters for the LLM model.",
-      "name": "TaskRevisionLlmConfig",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "TaskLLMConfig"
-        ],
-        "properties": []
-      }
-    },
     "TaskRevisionOutputFormat": {
       "name": "TaskRevisionOutputFormat",
       "shape": {
@@ -7622,7 +7481,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "TaskRevisionLlmConfig"
+                "value": "TaskLLMConfig"
               }
             }
           },
@@ -8398,26 +8257,6 @@
         ]
       }
     },
-    "OrgGetParametersSchema": {
-      "name": "OrgGetParametersSchema",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "active"
-          },
-          {
-            "value": "joinable"
-          },
-          {
-            "value": "joinable_by_domain"
-          },
-          {
-            "value": "joinable_by_invite"
-          }
-        ]
-      }
-    },
     "Org_get_org__org_id__getRequestForbiddenError": {
       "name": "Org_get_org__org_id__getRequestForbiddenError",
       "shape": {
@@ -8480,23 +8319,6 @@
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
             }
-          }
-        ]
-      }
-    },
-    "OrgOrgIdInviteGetParametersSchema": {
-      "name": "OrgOrgIdInviteGetParametersSchema",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "all"
-          },
-          {
-            "value": "pending"
-          },
-          {
-            "value": "accepted"
           }
         ]
       }
@@ -9106,20 +8928,6 @@
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
             }
-          }
-        ]
-      }
-    },
-    "OrgOrgIdProjectProjectIdCollectionCollectionIdChatGetParametersSchema": {
-      "name": "OrgOrgIdProjectProjectIdCollectionCollectionIdChatGetParametersSchema",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "all"
-          },
-          {
-            "value": "viewable"
           }
         ]
       }
@@ -11471,9 +11279,9 @@
         ]
       }
     },
-    "OrgOrgIdProjectProjectIdTaskTaskIdRunPostRequestBodySchemaTaskInput": {
+    "OrgOrgIdProjectProjectIdTaskTaskIdRunPostRequestBodyContentMultipartFormDataSchemaTaskInput": {
       "description": "The data input to the Task. This should be relevant to the `user_prompt` and cover any dynamic `{...}` parameters that are referenced in the prompt. Not required if `image_required` is set to `true` and there are no dynamic parameters in the prompt.",
-      "name": "OrgOrgIdProjectProjectIdTaskTaskIdRunPostRequestBodySchemaTaskInput",
+      "name": "OrgOrgIdProjectProjectIdTaskTaskIdRunPostRequestBodyContentMultipartFormDataSchemaTaskInput",
       "shape": {
         "type": "object",
         "extends": [],
@@ -11943,25 +11751,22 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "member": "foo",
-                      "roles": [
-                        "foo"
-                      ],
-                      "name": "foo",
-                      "avatar_url": "foo",
-                      "total_subjects": 1
-                    }
-                  ]
-                }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "member": "foo",
+                    "roles": [
+                      "foo"
+                    ],
+                    "name": "foo",
+                    "avatar_url": "foo",
+                    "total_subjects": 1
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -12113,16 +11918,13 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "member": "foo",
-                  "roles": [
-                    "foo"
-                  ],
-                  "name": "foo",
-                  "avatar_url": "foo",
-                  "total_subjects": 1
-                }
+                "member": "foo",
+                "roles": [
+                  "foo"
+                ],
+                "name": "foo",
+                "avatar_url": "foo",
+                "total_subjects": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -12296,16 +12098,13 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "member": "foo",
-                  "roles": [
-                    "foo"
-                  ],
-                  "name": "foo",
-                  "avatar_url": "foo",
-                  "total_subjects": 1
-                }
+                "member": "foo",
+                "roles": [
+                  "foo"
+                ],
+                "name": "foo",
+                "avatar_url": "foo",
+                "total_subjects": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -12469,13 +12268,10 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "permissions": [
-                    "foo"
-                  ],
-                  "member": "foo"
-                }
+                "permissions": [
+                  "foo"
+                ],
+                "member": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -12518,7 +12314,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "OrgGetParametersSchema"
+                  "value": "OrgMembership"
                 }
               }
             },
@@ -12674,13 +12470,10 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
-                  "contact_email": "foo",
-                  "avatar_url": "foo",
-                  "id": "foo"
-                }
+                "name": "foo",
+                "contact_email": "foo",
+                "avatar_url": "foo",
+                "id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -12801,13 +12594,10 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
-                  "contact_email": "foo",
-                  "avatar_url": "foo",
-                  "id": "foo"
-                }
+                "name": "foo",
+                "contact_email": "foo",
+                "avatar_url": "foo",
+                "id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -12946,13 +12736,10 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
-                  "contact_email": "foo",
-                  "avatar_url": "foo",
-                  "id": "foo"
-                }
+                "name": "foo",
+                "contact_email": "foo",
+                "avatar_url": "foo",
+                "id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -13072,16 +12859,13 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "member": "foo",
-                  "roles": [
-                    "foo"
-                  ],
-                  "name": "foo",
-                  "avatar_url": "foo",
-                  "total_subjects": 1
-                }
+                "member": "foo",
+                "roles": [
+                  "foo"
+                ],
+                "name": "foo",
+                "avatar_url": "foo",
+                "total_subjects": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -13145,7 +12929,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "OrgOrgIdInviteGetParametersSchema"
+                  "value": "OrgInviteShow"
                 }
               }
             },
@@ -13244,23 +13028,20 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "email_address": "foo",
-                      "roles": [
-                        "foo"
-                      ],
-                      "id": "foo"
-                    }
-                  ]
-                }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "email_address": "foo",
+                    "roles": [
+                      "foo"
+                    ],
+                    "id": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -13412,14 +13193,11 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "email_address": "foo",
-                  "roles": [
-                    "foo"
-                  ],
-                  "id": "foo"
-                }
+                "email_address": "foo",
+                "roles": [
+                  "foo"
+                ],
+                "id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -13657,21 +13435,18 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "domain": "foo",
-                      "id": "foo",
-                      "status": "unverified"
-                    }
-                  ]
-                }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "domain": "foo",
+                    "id": "foo",
+                    "status": "unverified"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -13821,12 +13596,9 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "domain": "foo",
-                  "id": "foo",
-                  "status": "unverified"
-                }
+                "domain": "foo",
+                "id": "foo",
+                "status": "unverified"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -13963,12 +13735,9 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "domain": "foo",
-                  "id": "foo",
-                  "status": "unverified"
-                }
+                "domain": "foo",
+                "id": "foo",
+                "status": "unverified"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -14120,13 +13889,10 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
-                  "contact_email": "foo",
-                  "avatar_url": "foo",
-                  "id": "foo"
-                }
+                "name": "foo",
+                "contact_email": "foo",
+                "avatar_url": "foo",
+                "id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -14211,14 +13977,11 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "email": "foo",
-                  "name": "foo",
-                  "bio": "foo",
-                  "avatar_url": "foo",
-                  "id": "foo"
-                }
+                "email": "foo",
+                "name": "foo",
+                "bio": "foo",
+                "avatar_url": "foo",
+                "id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -14312,14 +14075,11 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "email": "foo",
-                  "name": "foo",
-                  "bio": "foo",
-                  "avatar_url": "foo",
-                  "id": "foo"
-                }
+                "email": "foo",
+                "name": "foo",
+                "bio": "foo",
+                "avatar_url": "foo",
+                "id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -14426,14 +14186,11 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "email": "foo",
-                  "name": "foo",
-                  "bio": "foo",
-                  "avatar_url": "foo",
-                  "id": "foo"
-                }
+                "email": "foo",
+                "name": "foo",
+                "bio": "foo",
+                "avatar_url": "foo",
+                "id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -14594,23 +14351,20 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "name": "foo",
-                      "avatar_url": "foo",
-                      "id": "foo",
-                      "org_id": "foo",
-                      "tasks_oauth_client_id": "foo"
-                    }
-                  ]
-                }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "name": "foo",
+                    "avatar_url": "foo",
+                    "id": "foo",
+                    "org_id": "foo",
+                    "tasks_oauth_client_id": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -14763,14 +14517,11 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
-                  "avatar_url": "foo",
-                  "id": "foo",
-                  "org_id": "foo",
-                  "tasks_oauth_client_id": "foo"
-                }
+                "name": "foo",
+                "avatar_url": "foo",
+                "id": "foo",
+                "org_id": "foo",
+                "tasks_oauth_client_id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -14911,30 +14662,27 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
-                  "avatar_url": "foo",
-                  "id": "foo",
-                  "org_id": "foo",
-                  "tasks_oauth_client_id": "foo",
-                  "datasource_connections": [
-                    {
-                      "id": "foo",
+                "name": "foo",
+                "avatar_url": "foo",
+                "id": "foo",
+                "org_id": "foo",
+                "tasks_oauth_client_id": "foo",
+                "datasource_connections": [
+                  {
+                    "id": "foo",
+                    "name": "foo",
+                    "private": true,
+                    "project_id": "foo",
+                    "datasource_id": "foo",
+                    "created": "foo",
+                    "modified": "foo",
+                    "config": {},
+                    "datasource": {
                       "name": "foo",
-                      "private": true,
-                      "project_id": "foo",
-                      "datasource_id": "foo",
-                      "created": "foo",
-                      "modified": "foo",
-                      "config": {},
-                      "datasource": {
-                        "name": "foo",
-                        "id": "foo"
-                      }
+                      "id": "foo"
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15109,14 +14857,11 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
-                  "avatar_url": "foo",
-                  "id": "foo",
-                  "org_id": "foo",
-                  "tasks_oauth_client_id": "foo"
-                }
+                "name": "foo",
+                "avatar_url": "foo",
+                "id": "foo",
+                "org_id": "foo",
+                "tasks_oauth_client_id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15231,28 +14976,25 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "llm": "gpt-3.5-turbo",
-                  "temperature": 0.5,
-                  "knn": 4,
-                  "chat_system_commands": [
-                    "foo"
+                "llm": "gpt-3.5-turbo",
+                "temperature": 0.5,
+                "knn": 4,
+                "chat_system_commands": [
+                  "foo"
+                ],
+                "chat_guardrails": {
+                  "input": [
+                    {
+                      "name": "prompt_policy"
+                    }
                   ],
-                  "chat_guardrails": {
-                    "input": [
-                      {
-                        "name": "prompt_policy"
-                      }
-                    ],
-                    "output": [
-                      {
-                        "name": "source_validation"
-                      }
-                    ]
-                  },
-                  "query_expansion": false
-                }
+                  "output": [
+                    {
+                      "name": "source_validation"
+                    }
+                  ]
+                },
+                "query_expansion": false
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15425,28 +15167,25 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "llm": "gpt-3.5-turbo",
-                  "temperature": 0.5,
-                  "knn": 4,
-                  "chat_system_commands": [
-                    "foo"
+                "llm": "gpt-3.5-turbo",
+                "temperature": 0.5,
+                "knn": 4,
+                "chat_system_commands": [
+                  "foo"
+                ],
+                "chat_guardrails": {
+                  "input": [
+                    {
+                      "name": "prompt_policy"
+                    }
                   ],
-                  "chat_guardrails": {
-                    "input": [
-                      {
-                        "name": "prompt_policy"
-                      }
-                    ],
-                    "output": [
-                      {
-                        "name": "source_validation"
-                      }
-                    ]
-                  },
-                  "query_expansion": false
-                }
+                  "output": [
+                    {
+                      "name": "source_validation"
+                    }
+                  ]
+                },
+                "query_expansion": false
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15633,14 +15372,11 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
-                  "avatar_url": "foo",
-                  "id": "foo",
-                  "org_id": "foo",
-                  "tasks_oauth_client_id": "foo"
-                }
+                "name": "foo",
+                "avatar_url": "foo",
+                "id": "foo",
+                "org_id": "foo",
+                "tasks_oauth_client_id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15795,25 +15531,22 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "member": "foo",
-                      "roles": [
-                        "foo"
-                      ],
-                      "name": "foo",
-                      "avatar_url": "foo",
-                      "total_subjects": 1
-                    }
-                  ]
-                }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "member": "foo",
+                    "roles": [
+                      "foo"
+                    ],
+                    "name": "foo",
+                    "avatar_url": "foo",
+                    "total_subjects": 1
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15983,16 +15716,13 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "member": "foo",
-                  "roles": [
-                    "foo"
-                  ],
-                  "name": "foo",
-                  "avatar_url": "foo",
-                  "total_subjects": 1
-                }
+                "member": "foo",
+                "roles": [
+                  "foo"
+                ],
+                "name": "foo",
+                "avatar_url": "foo",
+                "total_subjects": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16184,16 +15914,13 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "member": "foo",
-                  "roles": [
-                    "foo"
-                  ],
-                  "name": "foo",
-                  "avatar_url": "foo",
-                  "total_subjects": 1
-                }
+                "member": "foo",
+                "roles": [
+                  "foo"
+                ],
+                "name": "foo",
+                "avatar_url": "foo",
+                "total_subjects": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16375,13 +16102,10 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "permissions": [
-                    "foo"
-                  ],
-                  "member": "foo"
-                }
+                "permissions": [
+                  "foo"
+                ],
+                "member": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16574,32 +16298,29 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "title": "foo",
-                      "project_id": "foo",
-                      "id": "foo",
-                      "summary": "foo",
-                      "created": "foo",
-                      "modified": "foo",
-                      "embedding_instances": [
-                        {
-                          "config": {},
-                          "id": "foo",
-                          "chat_document_id": "foo",
-                          "is_active": true
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "title": "foo",
+                    "project_id": "foo",
+                    "id": "foo",
+                    "summary": "foo",
+                    "created": "foo",
+                    "modified": "foo",
+                    "embedding_instances": [
+                      {
+                        "config": {},
+                        "id": "foo",
+                        "chat_document_id": "foo",
+                        "is_active": true
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16779,23 +16500,20 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "title": "foo",
-                  "project_id": "foo",
-                  "id": "foo",
-                  "summary": "foo",
-                  "created": "foo",
-                  "modified": "foo",
-                  "embedding_instances": [
-                    {
-                      "config": {},
-                      "id": "foo",
-                      "chat_document_id": "foo",
-                      "is_active": true
-                    }
-                  ]
-                }
+                "title": "foo",
+                "project_id": "foo",
+                "id": "foo",
+                "summary": "foo",
+                "created": "foo",
+                "modified": "foo",
+                "embedding_instances": [
+                  {
+                    "config": {},
+                    "id": "foo",
+                    "chat_document_id": "foo",
+                    "is_active": true
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16963,23 +16681,20 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "title": "foo",
-                  "project_id": "foo",
-                  "id": "foo",
-                  "summary": "foo",
-                  "created": "foo",
-                  "modified": "foo",
-                  "embedding_instances": [
-                    {
-                      "config": {},
-                      "id": "foo",
-                      "chat_document_id": "foo",
-                      "is_active": true
-                    }
-                  ]
-                }
+                "title": "foo",
+                "project_id": "foo",
+                "id": "foo",
+                "summary": "foo",
+                "created": "foo",
+                "modified": "foo",
+                "embedding_instances": [
+                  {
+                    "config": {},
+                    "id": "foo",
+                    "chat_document_id": "foo",
+                    "is_active": true
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17170,23 +16885,20 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "title": "foo",
-                  "project_id": "foo",
-                  "id": "foo",
-                  "summary": "foo",
-                  "created": "foo",
-                  "modified": "foo",
-                  "embedding_instances": [
-                    {
-                      "config": {},
-                      "id": "foo",
-                      "chat_document_id": "foo",
-                      "is_active": true
-                    }
-                  ]
-                }
+                "title": "foo",
+                "project_id": "foo",
+                "id": "foo",
+                "summary": "foo",
+                "created": "foo",
+                "modified": "foo",
+                "embedding_instances": [
+                  {
+                    "config": {},
+                    "id": "foo",
+                    "chat_document_id": "foo",
+                    "is_active": true
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17352,16 +17064,13 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "documents_by_source": [
-                    {
-                      "source": "upload",
-                      "count": 42
-                    }
-                  ],
-                  "number_of_chats": 42
-                }
+                "documents_by_source": [
+                  {
+                    "source": "upload",
+                    "count": 42
+                  }
+                ],
+                "number_of_chats": 42
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17461,7 +17170,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "OrgOrgIdProjectProjectIdCollectionCollectionIdChatGetParametersSchema"
+                  "value": "CollectionChatShow"
                 }
               }
             },
@@ -17562,27 +17271,24 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "title": "foo",
-                      "description": "foo",
-                      "summary": "foo",
-                      "collection_id": "foo",
-                      "created": "foo",
-                      "created_by_user_id": "foo",
-                      "last_message": "foo",
-                      "id": "foo",
-                      "documents_have_been_modified": false
-                    }
-                  ]
-                }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "title": "foo",
+                    "description": "foo",
+                    "summary": "foo",
+                    "collection_id": "foo",
+                    "created": "foo",
+                    "created_by_user_id": "foo",
+                    "last_message": "foo",
+                    "id": "foo",
+                    "documents_have_been_modified": false
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17922,13 +17628,10 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "status": "foo",
-                  "task_id": [
-                    "foo"
-                  ]
-                }
+                "status": "foo",
+                "task_id": [
+                  "foo"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18113,23 +17816,20 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "title": "foo",
-                  "project_id": "foo",
-                  "id": "foo",
-                  "summary": "foo",
-                  "created": "foo",
-                  "modified": "foo",
-                  "embedding_instances": [
-                    {
-                      "config": {},
-                      "id": "foo",
-                      "chat_document_id": "foo",
-                      "is_active": true
-                    }
-                  ]
-                }
+                "title": "foo",
+                "project_id": "foo",
+                "id": "foo",
+                "summary": "foo",
+                "created": "foo",
+                "modified": "foo",
+                "embedding_instances": [
+                  {
+                    "config": {},
+                    "id": "foo",
+                    "chat_document_id": "foo",
+                    "is_active": true
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18325,23 +18025,20 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "title": "foo",
-                  "project_id": "foo",
-                  "id": "foo",
-                  "summary": "foo",
-                  "created": "foo",
-                  "modified": "foo",
-                  "embedding_instances": [
-                    {
-                      "config": {},
-                      "id": "foo",
-                      "chat_document_id": "foo",
-                      "is_active": true
-                    }
-                  ]
-                }
+                "title": "foo",
+                "project_id": "foo",
+                "id": "foo",
+                "summary": "foo",
+                "created": "foo",
+                "modified": "foo",
+                "embedding_instances": [
+                  {
+                    "config": {},
+                    "id": "foo",
+                    "chat_document_id": "foo",
+                    "is_active": true
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18523,25 +18220,22 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "member": "foo",
-                      "roles": [
-                        "foo"
-                      ],
-                      "name": "foo",
-                      "avatar_url": "foo",
-                      "total_subjects": 1
-                    }
-                  ]
-                }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "member": "foo",
+                    "roles": [
+                      "foo"
+                    ],
+                    "name": "foo",
+                    "avatar_url": "foo",
+                    "total_subjects": 1
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18729,16 +18423,13 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "member": "foo",
-                  "roles": [
-                    "foo"
-                  ],
-                  "name": "foo",
-                  "avatar_url": "foo",
-                  "total_subjects": 1
-                }
+                "member": "foo",
+                "roles": [
+                  "foo"
+                ],
+                "name": "foo",
+                "avatar_url": "foo",
+                "total_subjects": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18948,16 +18639,13 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "member": "foo",
-                  "roles": [
-                    "foo"
-                  ],
-                  "name": "foo",
-                  "avatar_url": "foo",
-                  "total_subjects": 1
-                }
+                "member": "foo",
+                "roles": [
+                  "foo"
+                ],
+                "name": "foo",
+                "avatar_url": "foo",
+                "total_subjects": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -19157,13 +18845,10 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "permissions": [
-                    "foo"
-                  ],
-                  "member": "foo"
-                }
+                "permissions": [
+                  "foo"
+                ],
+                "member": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -19418,36 +19103,33 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "title": "foo",
-                      "project_id": "foo",
-                      "description": "foo",
-                      "source": "upload",
-                      "strategy": "foo",
-                      "source_meta": {},
-                      "connection_id": "foo",
-                      "id": "foo",
-                      "chunks": 42,
-                      "original_mime": "foo",
-                      "embedding_instances": [
-                        {
-                          "config": {},
-                          "id": "foo",
-                          "chat_document_id": "foo",
-                          "is_active": true
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "title": "foo",
+                    "project_id": "foo",
+                    "description": "foo",
+                    "source": "upload",
+                    "strategy": "foo",
+                    "source_meta": {},
+                    "connection_id": "foo",
+                    "id": "foo",
+                    "chunks": 42,
+                    "original_mime": "foo",
+                    "embedding_instances": [
+                      {
+                        "config": {},
+                        "id": "foo",
+                        "chat_document_id": "foo",
+                        "is_active": true
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -19658,18 +19340,15 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "group_id": "foo",
-                  "task_count": 42,
-                  "tasks": [
-                    {
-                      "task_id": "foo",
-                      "state": "PENDING",
-                      "info": {}
-                    }
-                  ]
-                }
+                "group_id": "foo",
+                "task_count": 42,
+                "tasks": [
+                  {
+                    "task_id": "foo",
+                    "state": "PENDING",
+                    "info": {}
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -19865,31 +19544,28 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "title": "foo",
-                    "project_id": "foo",
-                    "description": "foo",
-                    "source": "upload",
-                    "strategy": "foo",
-                    "source_meta": {},
-                    "connection_id": "foo",
-                    "id": "foo",
-                    "chunks": 42,
-                    "original_mime": "foo",
-                    "embedding_instances": [
-                      {
-                        "config": {},
-                        "id": "foo",
-                        "chat_document_id": "foo",
-                        "is_active": true
-                      }
-                    ]
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "title": "foo",
+                  "project_id": "foo",
+                  "description": "foo",
+                  "source": "upload",
+                  "strategy": "foo",
+                  "source_meta": {},
+                  "connection_id": "foo",
+                  "id": "foo",
+                  "chunks": 42,
+                  "original_mime": "foo",
+                  "embedding_instances": [
+                    {
+                      "config": {},
+                      "id": "foo",
+                      "chat_document_id": "foo",
+                      "is_active": true
+                    }
+                  ]
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -20060,18 +19736,15 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "group_id": "foo",
-                  "task_count": 42,
-                  "tasks": [
-                    {
-                      "task_id": "foo",
-                      "state": "PENDING",
-                      "info": {}
-                    }
-                  ]
-                }
+                "group_id": "foo",
+                "task_count": 42,
+                "tasks": [
+                  {
+                    "task_id": "foo",
+                    "state": "PENDING",
+                    "info": {}
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -20247,16 +19920,13 @@
               },
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "chat_document_id": "foo",
-                    "text": "foo",
-                    "score": 42
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "chat_document_id": "foo",
+                  "text": "foo",
+                  "score": 42
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -20413,27 +20083,24 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "title": "foo",
-                  "project_id": "foo",
-                  "description": "foo",
-                  "source": "upload",
-                  "strategy": "foo",
-                  "source_meta": {},
-                  "connection_id": "foo",
-                  "id": "foo",
-                  "chunks": 42,
-                  "original_mime": "foo",
-                  "embedding_instances": [
-                    {
-                      "config": {},
-                      "id": "foo",
-                      "chat_document_id": "foo",
-                      "is_active": true
-                    }
-                  ]
-                }
+                "title": "foo",
+                "project_id": "foo",
+                "description": "foo",
+                "source": "upload",
+                "strategy": "foo",
+                "source_meta": {},
+                "connection_id": "foo",
+                "id": "foo",
+                "chunks": 42,
+                "original_mime": "foo",
+                "embedding_instances": [
+                  {
+                    "config": {},
+                    "id": "foo",
+                    "chat_document_id": "foo",
+                    "is_active": true
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -20626,27 +20293,24 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "title": "foo",
-                  "project_id": "foo",
-                  "description": "foo",
-                  "source": "upload",
-                  "strategy": "foo",
-                  "source_meta": {},
-                  "connection_id": "foo",
-                  "id": "foo",
-                  "chunks": 42,
-                  "original_mime": "foo",
-                  "embedding_instances": [
-                    {
-                      "config": {},
-                      "id": "foo",
-                      "chat_document_id": "foo",
-                      "is_active": true
-                    }
-                  ]
-                }
+                "title": "foo",
+                "project_id": "foo",
+                "description": "foo",
+                "source": "upload",
+                "strategy": "foo",
+                "source_meta": {},
+                "connection_id": "foo",
+                "id": "foo",
+                "chunks": 42,
+                "original_mime": "foo",
+                "embedding_instances": [
+                  {
+                    "config": {},
+                    "id": "foo",
+                    "chat_document_id": "foo",
+                    "is_active": true
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -20990,20 +20654,17 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "id": "foo",
-                      "document": "foo"
-                    }
-                  ]
-                }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "id": "foo",
+                    "document": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -21161,11 +20822,8 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "document": "foo"
-                }
+                "id": "foo",
+                "document": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -21335,25 +20993,22 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "member": "foo",
-                      "roles": [
-                        "foo"
-                      ],
-                      "name": "foo",
-                      "avatar_url": "foo",
-                      "total_subjects": 1
-                    }
-                  ]
-                }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "member": "foo",
+                    "roles": [
+                      "foo"
+                    ],
+                    "name": "foo",
+                    "avatar_url": "foo",
+                    "total_subjects": 1
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -21541,16 +21196,13 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "member": "foo",
-                  "roles": [
-                    "foo"
-                  ],
-                  "name": "foo",
-                  "avatar_url": "foo",
-                  "total_subjects": 1
-                }
+                "member": "foo",
+                "roles": [
+                  "foo"
+                ],
+                "name": "foo",
+                "avatar_url": "foo",
+                "total_subjects": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -21760,16 +21412,13 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "member": "foo",
-                  "roles": [
-                    "foo"
-                  ],
-                  "name": "foo",
-                  "avatar_url": "foo",
-                  "total_subjects": 1
-                }
+                "member": "foo",
+                "roles": [
+                  "foo"
+                ],
+                "name": "foo",
+                "avatar_url": "foo",
+                "total_subjects": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -21969,13 +21618,10 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "permissions": [
-                    "foo"
-                  ],
-                  "member": "foo"
-                }
+                "permissions": [
+                  "foo"
+                ],
+                "member": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -22078,22 +21724,19 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "title": "foo",
-                    "description": "foo",
-                    "summary": "foo",
-                    "collection_id": "foo",
-                    "created": "foo",
-                    "created_by_user_id": "foo",
-                    "last_message": "foo",
-                    "id": "foo",
-                    "documents_have_been_modified": false
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "title": "foo",
+                  "description": "foo",
+                  "summary": "foo",
+                  "collection_id": "foo",
+                  "created": "foo",
+                  "created_by_user_id": "foo",
+                  "last_message": "foo",
+                  "id": "foo",
+                  "documents_have_been_modified": false
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -22220,18 +21863,15 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "title": "foo",
-                  "description": "foo",
-                  "summary": "foo",
-                  "collection_id": "foo",
-                  "created": "foo",
-                  "created_by_user_id": "foo",
-                  "last_message": "foo",
-                  "id": "foo",
-                  "documents_have_been_modified": false
-                }
+                "title": "foo",
+                "description": "foo",
+                "summary": "foo",
+                "collection_id": "foo",
+                "created": "foo",
+                "created_by_user_id": "foo",
+                "last_message": "foo",
+                "id": "foo",
+                "documents_have_been_modified": false
               },
               "responseBodyV3": {
                 "type": "json",
@@ -22379,18 +22019,15 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "title": "foo",
-                  "description": "foo",
-                  "summary": "foo",
-                  "collection_id": "foo",
-                  "created": "foo",
-                  "created_by_user_id": "foo",
-                  "last_message": "foo",
-                  "id": "foo",
-                  "documents_have_been_modified": false
-                }
+                "title": "foo",
+                "description": "foo",
+                "summary": "foo",
+                "collection_id": "foo",
+                "created": "foo",
+                "created_by_user_id": "foo",
+                "last_message": "foo",
+                "id": "foo",
+                "documents_have_been_modified": false
               },
               "responseBodyV3": {
                 "type": "json",
@@ -22516,28 +22153,25 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "llm": "gpt-3.5-turbo",
-                  "temperature": 0.5,
-                  "knn": 5,
-                  "chat_system_commands": [
-                    "foo"
+                "llm": "gpt-3.5-turbo",
+                "temperature": 0.5,
+                "knn": 5,
+                "chat_system_commands": [
+                  "foo"
+                ],
+                "chat_guardrails": {
+                  "input": [
+                    {
+                      "name": "prompt_policy"
+                    }
                   ],
-                  "chat_guardrails": {
-                    "input": [
-                      {
-                        "name": "prompt_policy"
-                      }
-                    ],
-                    "output": [
-                      {
-                        "name": "source_validation"
-                      }
-                    ]
-                  },
-                  "query_expansion": false
-                }
+                  "output": [
+                    {
+                      "name": "source_validation"
+                    }
+                  ]
+                },
+                "query_expansion": false
               },
               "responseBodyV3": {
                 "type": "json",
@@ -22691,28 +22325,25 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "llm": "gpt-3.5-turbo",
-                  "temperature": 0.5,
-                  "knn": 5,
-                  "chat_system_commands": [
-                    "foo"
+                "llm": "gpt-3.5-turbo",
+                "temperature": 0.5,
+                "knn": 5,
+                "chat_system_commands": [
+                  "foo"
+                ],
+                "chat_guardrails": {
+                  "input": [
+                    {
+                      "name": "prompt_policy"
+                    }
                   ],
-                  "chat_guardrails": {
-                    "input": [
-                      {
-                        "name": "prompt_policy"
-                      }
-                    ],
-                    "output": [
-                      {
-                        "name": "source_validation"
-                      }
-                    ]
-                  },
-                  "query_expansion": false
-                }
+                  "output": [
+                    {
+                      "name": "source_validation"
+                    }
+                  ]
+                },
+                "query_expansion": false
               },
               "responseBodyV3": {
                 "type": "json",
@@ -22849,18 +22480,15 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "title": "foo",
-                  "description": "foo",
-                  "summary": "foo",
-                  "collection_id": "foo",
-                  "created": "foo",
-                  "created_by_user_id": "foo",
-                  "last_message": "foo",
-                  "id": "foo",
-                  "documents_have_been_modified": false
-                }
+                "title": "foo",
+                "description": "foo",
+                "summary": "foo",
+                "collection_id": "foo",
+                "created": "foo",
+                "created_by_user_id": "foo",
+                "last_message": "foo",
+                "id": "foo",
+                "documents_have_been_modified": false
               },
               "responseBodyV3": {
                 "type": "json",
@@ -23000,16 +22628,13 @@
               },
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "chat_document_id": "foo",
-                    "text": "foo",
-                    "score": 42
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "chat_document_id": "foo",
+                  "text": "foo",
+                  "score": 42
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -23145,25 +22770,22 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "member": "foo",
-                      "roles": [
-                        "foo"
-                      ],
-                      "name": "foo",
-                      "avatar_url": "foo",
-                      "total_subjects": 1
-                    }
-                  ]
-                }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "member": "foo",
+                    "roles": [
+                      "foo"
+                    ],
+                    "name": "foo",
+                    "avatar_url": "foo",
+                    "total_subjects": 1
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -23315,16 +22937,13 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "member": "foo",
-                  "roles": [
-                    "foo"
-                  ],
-                  "name": "foo",
-                  "avatar_url": "foo",
-                  "total_subjects": 1
-                }
+                "member": "foo",
+                "roles": [
+                  "foo"
+                ],
+                "name": "foo",
+                "avatar_url": "foo",
+                "total_subjects": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -23498,16 +23117,13 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "member": "foo",
-                  "roles": [
-                    "foo"
-                  ],
-                  "name": "foo",
-                  "avatar_url": "foo",
-                  "total_subjects": 1
-                }
+                "member": "foo",
+                "roles": [
+                  "foo"
+                ],
+                "name": "foo",
+                "avatar_url": "foo",
+                "total_subjects": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -23671,13 +23287,10 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "permissions": [
-                    "foo"
-                  ],
-                  "member": "foo"
-                }
+                "permissions": [
+                  "foo"
+                ],
+                "member": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -23833,24 +23446,21 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "id": "foo",
-                    "name": "foo",
-                    "synced": false,
-                    "size": "foo",
-                    "mimeType": "foo",
-                    "createdTime": "foo",
-                    "modifiedTime": "foo",
-                    "type": "file",
-                    "tags": [
-                      "no_size"
-                    ]
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "id": "foo",
+                  "name": "foo",
+                  "synced": false,
+                  "size": "foo",
+                  "mimeType": "foo",
+                  "createdTime": "foo",
+                  "modifiedTime": "foo",
+                  "type": "file",
+                  "tags": [
+                    "no_size"
+                  ]
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -24017,23 +23627,20 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "task_id": "foo",
-                  "status": "pending",
-                  "run_output": {},
-                  "id": "foo",
-                  "created": "foo",
-                  "modified": "foo",
-                  "datasource_connection": {
-                    "private": true,
-                    "project_id": "foo",
-                    "datasource_id": "foo",
-                    "config": {},
-                    "token": "",
-                    "created_by": "foo",
-                    "id": "foo"
-                  }
+                "task_id": "foo",
+                "status": "pending",
+                "run_output": {},
+                "id": "foo",
+                "created": "foo",
+                "modified": "foo",
+                "datasource_connection": {
+                  "private": true,
+                  "project_id": "foo",
+                  "datasource_id": "foo",
+                  "config": {},
+                  "token": "",
+                  "created_by": "foo",
+                  "id": "foo"
                 }
               },
               "responseBodyV3": {
@@ -24683,33 +24290,30 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "task_id": "foo",
-                      "status": "pending",
-                      "run_output": {},
-                      "id": "foo",
-                      "created": "foo",
-                      "modified": "foo",
-                      "datasource_connection": {
-                        "private": true,
-                        "project_id": "foo",
-                        "datasource_id": "foo",
-                        "config": {},
-                        "token": "",
-                        "created_by": "foo",
-                        "id": "foo"
-                      }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "task_id": "foo",
+                    "status": "pending",
+                    "run_output": {},
+                    "id": "foo",
+                    "created": "foo",
+                    "modified": "foo",
+                    "datasource_connection": {
+                      "private": true,
+                      "project_id": "foo",
+                      "datasource_id": "foo",
+                      "config": {},
+                      "token": "",
+                      "created_by": "foo",
+                      "id": "foo"
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -24899,23 +24503,20 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "task_id": "foo",
-                  "status": "pending",
-                  "run_output": {},
-                  "id": "foo",
-                  "created": "foo",
-                  "modified": "foo",
-                  "datasource_connection": {
-                    "private": true,
-                    "project_id": "foo",
-                    "datasource_id": "foo",
-                    "config": {},
-                    "token": "",
-                    "created_by": "foo",
-                    "id": "foo"
-                  }
+                "task_id": "foo",
+                "status": "pending",
+                "run_output": {},
+                "id": "foo",
+                "created": "foo",
+                "modified": "foo",
+                "datasource_connection": {
+                  "private": true,
+                  "project_id": "foo",
+                  "datasource_id": "foo",
+                  "config": {},
+                  "token": "",
+                  "created_by": "foo",
+                  "id": "foo"
                 }
               },
               "responseBodyV3": {
@@ -25085,12 +24686,9 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
-                  "private": true,
-                  "root_folder_id": "foo"
-                }
+                "name": "foo",
+                "private": true,
+                "root_folder_id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -25508,24 +25106,21 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "id": "foo",
-                    "name": "foo",
-                    "synced": false,
-                    "size": "foo",
-                    "mimeType": "foo",
-                    "createdTime": "foo",
-                    "modifiedTime": "foo",
-                    "type": "file",
-                    "tags": [
-                      "no_size"
-                    ]
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "id": "foo",
+                  "name": "foo",
+                  "synced": false,
+                  "size": "foo",
+                  "mimeType": "foo",
+                  "createdTime": "foo",
+                  "modifiedTime": "foo",
+                  "type": "file",
+                  "tags": [
+                    "no_size"
+                  ]
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -25692,23 +25287,20 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "task_id": "foo",
-                  "status": "pending",
-                  "run_output": {},
-                  "id": "foo",
-                  "created": "foo",
-                  "modified": "foo",
-                  "datasource_connection": {
-                    "private": true,
-                    "project_id": "foo",
-                    "datasource_id": "foo",
-                    "config": {},
-                    "token": "",
-                    "created_by": "foo",
-                    "id": "foo"
-                  }
+                "task_id": "foo",
+                "status": "pending",
+                "run_output": {},
+                "id": "foo",
+                "created": "foo",
+                "modified": "foo",
+                "datasource_connection": {
+                  "private": true,
+                  "project_id": "foo",
+                  "datasource_id": "foo",
+                  "config": {},
+                  "token": "",
+                  "created_by": "foo",
+                  "id": "foo"
                 }
               },
               "responseBodyV3": {
@@ -26358,33 +25950,30 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "task_id": "foo",
-                      "status": "pending",
-                      "run_output": {},
-                      "id": "foo",
-                      "created": "foo",
-                      "modified": "foo",
-                      "datasource_connection": {
-                        "private": true,
-                        "project_id": "foo",
-                        "datasource_id": "foo",
-                        "config": {},
-                        "token": "",
-                        "created_by": "foo",
-                        "id": "foo"
-                      }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "task_id": "foo",
+                    "status": "pending",
+                    "run_output": {},
+                    "id": "foo",
+                    "created": "foo",
+                    "modified": "foo",
+                    "datasource_connection": {
+                      "private": true,
+                      "project_id": "foo",
+                      "datasource_id": "foo",
+                      "config": {},
+                      "token": "",
+                      "created_by": "foo",
+                      "id": "foo"
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -26574,23 +26163,20 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "task_id": "foo",
-                  "status": "pending",
-                  "run_output": {},
-                  "id": "foo",
-                  "created": "foo",
-                  "modified": "foo",
-                  "datasource_connection": {
-                    "private": true,
-                    "project_id": "foo",
-                    "datasource_id": "foo",
-                    "config": {},
-                    "token": "",
-                    "created_by": "foo",
-                    "id": "foo"
-                  }
+                "task_id": "foo",
+                "status": "pending",
+                "run_output": {},
+                "id": "foo",
+                "created": "foo",
+                "modified": "foo",
+                "datasource_connection": {
+                  "private": true,
+                  "project_id": "foo",
+                  "datasource_id": "foo",
+                  "config": {},
+                  "token": "",
+                  "created_by": "foo",
+                  "id": "foo"
                 }
               },
               "responseBodyV3": {
@@ -26760,12 +26346,9 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
-                  "private": true,
-                  "root_folder_id": "foo"
-                }
+                "name": "foo",
+                "private": true,
+                "root_folder_id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -27183,24 +26766,21 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "id": "foo",
-                    "name": "foo",
-                    "synced": false,
-                    "size": "foo",
-                    "mimeType": "foo",
-                    "createdTime": "foo",
-                    "modifiedTime": "foo",
-                    "type": "file",
-                    "tags": [
-                      "no_size"
-                    ]
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "id": "foo",
+                  "name": "foo",
+                  "synced": false,
+                  "size": "foo",
+                  "mimeType": "foo",
+                  "createdTime": "foo",
+                  "modifiedTime": "foo",
+                  "type": "file",
+                  "tags": [
+                    "no_size"
+                  ]
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -27367,23 +26947,20 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "task_id": "foo",
-                  "status": "pending",
-                  "run_output": {},
-                  "id": "foo",
-                  "created": "foo",
-                  "modified": "foo",
-                  "datasource_connection": {
-                    "private": true,
-                    "project_id": "foo",
-                    "datasource_id": "foo",
-                    "config": {},
-                    "token": "",
-                    "created_by": "foo",
-                    "id": "foo"
-                  }
+                "task_id": "foo",
+                "status": "pending",
+                "run_output": {},
+                "id": "foo",
+                "created": "foo",
+                "modified": "foo",
+                "datasource_connection": {
+                  "private": true,
+                  "project_id": "foo",
+                  "datasource_id": "foo",
+                  "config": {},
+                  "token": "",
+                  "created_by": "foo",
+                  "id": "foo"
                 }
               },
               "responseBodyV3": {
@@ -28033,33 +27610,30 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "task_id": "foo",
-                      "status": "pending",
-                      "run_output": {},
-                      "id": "foo",
-                      "created": "foo",
-                      "modified": "foo",
-                      "datasource_connection": {
-                        "private": true,
-                        "project_id": "foo",
-                        "datasource_id": "foo",
-                        "config": {},
-                        "token": "",
-                        "created_by": "foo",
-                        "id": "foo"
-                      }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "task_id": "foo",
+                    "status": "pending",
+                    "run_output": {},
+                    "id": "foo",
+                    "created": "foo",
+                    "modified": "foo",
+                    "datasource_connection": {
+                      "private": true,
+                      "project_id": "foo",
+                      "datasource_id": "foo",
+                      "config": {},
+                      "token": "",
+                      "created_by": "foo",
+                      "id": "foo"
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -28249,23 +27823,20 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "task_id": "foo",
-                  "status": "pending",
-                  "run_output": {},
-                  "id": "foo",
-                  "created": "foo",
-                  "modified": "foo",
-                  "datasource_connection": {
-                    "private": true,
-                    "project_id": "foo",
-                    "datasource_id": "foo",
-                    "config": {},
-                    "token": "",
-                    "created_by": "foo",
-                    "id": "foo"
-                  }
+                "task_id": "foo",
+                "status": "pending",
+                "run_output": {},
+                "id": "foo",
+                "created": "foo",
+                "modified": "foo",
+                "datasource_connection": {
+                  "private": true,
+                  "project_id": "foo",
+                  "datasource_id": "foo",
+                  "config": {},
+                  "token": "",
+                  "created_by": "foo",
+                  "id": "foo"
                 }
               },
               "responseBodyV3": {
@@ -28435,12 +28006,9 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
-                  "private": true,
-                  "root_folder_id": "foo"
-                }
+                "name": "foo",
+                "private": true,
+                "root_folder_id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -28858,24 +28426,21 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "id": "foo",
-                    "name": "foo",
-                    "synced": false,
-                    "size": "foo",
-                    "mimeType": "foo",
-                    "createdTime": "foo",
-                    "modifiedTime": "foo",
-                    "type": "file",
-                    "tags": [
-                      "no_size"
-                    ]
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "id": "foo",
+                  "name": "foo",
+                  "synced": false,
+                  "size": "foo",
+                  "mimeType": "foo",
+                  "createdTime": "foo",
+                  "modifiedTime": "foo",
+                  "type": "file",
+                  "tags": [
+                    "no_size"
+                  ]
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -29042,23 +28607,20 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "task_id": "foo",
-                  "status": "pending",
-                  "run_output": {},
-                  "id": "foo",
-                  "created": "foo",
-                  "modified": "foo",
-                  "datasource_connection": {
-                    "private": true,
-                    "project_id": "foo",
-                    "datasource_id": "foo",
-                    "config": {},
-                    "token": "",
-                    "created_by": "foo",
-                    "id": "foo"
-                  }
+                "task_id": "foo",
+                "status": "pending",
+                "run_output": {},
+                "id": "foo",
+                "created": "foo",
+                "modified": "foo",
+                "datasource_connection": {
+                  "private": true,
+                  "project_id": "foo",
+                  "datasource_id": "foo",
+                  "config": {},
+                  "token": "",
+                  "created_by": "foo",
+                  "id": "foo"
                 }
               },
               "responseBodyV3": {
@@ -29708,33 +29270,30 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "task_id": "foo",
-                      "status": "pending",
-                      "run_output": {},
-                      "id": "foo",
-                      "created": "foo",
-                      "modified": "foo",
-                      "datasource_connection": {
-                        "private": true,
-                        "project_id": "foo",
-                        "datasource_id": "foo",
-                        "config": {},
-                        "token": "",
-                        "created_by": "foo",
-                        "id": "foo"
-                      }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "task_id": "foo",
+                    "status": "pending",
+                    "run_output": {},
+                    "id": "foo",
+                    "created": "foo",
+                    "modified": "foo",
+                    "datasource_connection": {
+                      "private": true,
+                      "project_id": "foo",
+                      "datasource_id": "foo",
+                      "config": {},
+                      "token": "",
+                      "created_by": "foo",
+                      "id": "foo"
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -29924,23 +29483,20 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "task_id": "foo",
-                  "status": "pending",
-                  "run_output": {},
-                  "id": "foo",
-                  "created": "foo",
-                  "modified": "foo",
-                  "datasource_connection": {
-                    "private": true,
-                    "project_id": "foo",
-                    "datasource_id": "foo",
-                    "config": {},
-                    "token": "",
-                    "created_by": "foo",
-                    "id": "foo"
-                  }
+                "task_id": "foo",
+                "status": "pending",
+                "run_output": {},
+                "id": "foo",
+                "created": "foo",
+                "modified": "foo",
+                "datasource_connection": {
+                  "private": true,
+                  "project_id": "foo",
+                  "datasource_id": "foo",
+                  "config": {},
+                  "token": "",
+                  "created_by": "foo",
+                  "id": "foo"
                 }
               },
               "responseBodyV3": {
@@ -30110,12 +29666,9 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
-                  "private": true,
-                  "root_folder_id": "foo"
-                }
+                "name": "foo",
+                "private": true,
+                "root_folder_id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -30533,24 +30086,21 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "id": "foo",
-                    "name": "foo",
-                    "synced": false,
-                    "size": "foo",
-                    "mimeType": "foo",
-                    "createdTime": "foo",
-                    "modifiedTime": "foo",
-                    "type": "file",
-                    "tags": [
-                      "no_size"
-                    ]
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "id": "foo",
+                  "name": "foo",
+                  "synced": false,
+                  "size": "foo",
+                  "mimeType": "foo",
+                  "createdTime": "foo",
+                  "modifiedTime": "foo",
+                  "type": "file",
+                  "tags": [
+                    "no_size"
+                  ]
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -30717,23 +30267,20 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "task_id": "foo",
-                  "status": "pending",
-                  "run_output": {},
-                  "id": "foo",
-                  "created": "foo",
-                  "modified": "foo",
-                  "datasource_connection": {
-                    "private": true,
-                    "project_id": "foo",
-                    "datasource_id": "foo",
-                    "config": {},
-                    "token": "",
-                    "created_by": "foo",
-                    "id": "foo"
-                  }
+                "task_id": "foo",
+                "status": "pending",
+                "run_output": {},
+                "id": "foo",
+                "created": "foo",
+                "modified": "foo",
+                "datasource_connection": {
+                  "private": true,
+                  "project_id": "foo",
+                  "datasource_id": "foo",
+                  "config": {},
+                  "token": "",
+                  "created_by": "foo",
+                  "id": "foo"
                 }
               },
               "responseBodyV3": {
@@ -31383,33 +30930,30 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "task_id": "foo",
-                      "status": "pending",
-                      "run_output": {},
-                      "id": "foo",
-                      "created": "foo",
-                      "modified": "foo",
-                      "datasource_connection": {
-                        "private": true,
-                        "project_id": "foo",
-                        "datasource_id": "foo",
-                        "config": {},
-                        "token": "",
-                        "created_by": "foo",
-                        "id": "foo"
-                      }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "task_id": "foo",
+                    "status": "pending",
+                    "run_output": {},
+                    "id": "foo",
+                    "created": "foo",
+                    "modified": "foo",
+                    "datasource_connection": {
+                      "private": true,
+                      "project_id": "foo",
+                      "datasource_id": "foo",
+                      "config": {},
+                      "token": "",
+                      "created_by": "foo",
+                      "id": "foo"
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -31599,23 +31143,20 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "task_id": "foo",
-                  "status": "pending",
-                  "run_output": {},
-                  "id": "foo",
-                  "created": "foo",
-                  "modified": "foo",
-                  "datasource_connection": {
-                    "private": true,
-                    "project_id": "foo",
-                    "datasource_id": "foo",
-                    "config": {},
-                    "token": "",
-                    "created_by": "foo",
-                    "id": "foo"
-                  }
+                "task_id": "foo",
+                "status": "pending",
+                "run_output": {},
+                "id": "foo",
+                "created": "foo",
+                "modified": "foo",
+                "datasource_connection": {
+                  "private": true,
+                  "project_id": "foo",
+                  "datasource_id": "foo",
+                  "config": {},
+                  "token": "",
+                  "created_by": "foo",
+                  "id": "foo"
                 }
               },
               "responseBodyV3": {
@@ -31785,12 +31326,9 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
-                  "private": true,
-                  "root_folder_id": "foo"
-                }
+                "name": "foo",
+                "private": true,
+                "root_folder_id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -32208,24 +31746,21 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "id": "foo",
-                    "name": "foo",
-                    "synced": false,
-                    "size": "foo",
-                    "mimeType": "foo",
-                    "createdTime": "foo",
-                    "modifiedTime": "foo",
-                    "type": "file",
-                    "tags": [
-                      "no_size"
-                    ]
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "id": "foo",
+                  "name": "foo",
+                  "synced": false,
+                  "size": "foo",
+                  "mimeType": "foo",
+                  "createdTime": "foo",
+                  "modifiedTime": "foo",
+                  "type": "file",
+                  "tags": [
+                    "no_size"
+                  ]
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -32392,23 +31927,20 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "task_id": "foo",
-                  "status": "pending",
-                  "run_output": {},
-                  "id": "foo",
-                  "created": "foo",
-                  "modified": "foo",
-                  "datasource_connection": {
-                    "private": true,
-                    "project_id": "foo",
-                    "datasource_id": "foo",
-                    "config": {},
-                    "token": "",
-                    "created_by": "foo",
-                    "id": "foo"
-                  }
+                "task_id": "foo",
+                "status": "pending",
+                "run_output": {},
+                "id": "foo",
+                "created": "foo",
+                "modified": "foo",
+                "datasource_connection": {
+                  "private": true,
+                  "project_id": "foo",
+                  "datasource_id": "foo",
+                  "config": {},
+                  "token": "",
+                  "created_by": "foo",
+                  "id": "foo"
                 }
               },
               "responseBodyV3": {
@@ -33058,33 +32590,30 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "task_id": "foo",
-                      "status": "pending",
-                      "run_output": {},
-                      "id": "foo",
-                      "created": "foo",
-                      "modified": "foo",
-                      "datasource_connection": {
-                        "private": true,
-                        "project_id": "foo",
-                        "datasource_id": "foo",
-                        "config": {},
-                        "token": "",
-                        "created_by": "foo",
-                        "id": "foo"
-                      }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "task_id": "foo",
+                    "status": "pending",
+                    "run_output": {},
+                    "id": "foo",
+                    "created": "foo",
+                    "modified": "foo",
+                    "datasource_connection": {
+                      "private": true,
+                      "project_id": "foo",
+                      "datasource_id": "foo",
+                      "config": {},
+                      "token": "",
+                      "created_by": "foo",
+                      "id": "foo"
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -33274,23 +32803,20 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "task_id": "foo",
-                  "status": "pending",
-                  "run_output": {},
-                  "id": "foo",
-                  "created": "foo",
-                  "modified": "foo",
-                  "datasource_connection": {
-                    "private": true,
-                    "project_id": "foo",
-                    "datasource_id": "foo",
-                    "config": {},
-                    "token": "",
-                    "created_by": "foo",
-                    "id": "foo"
-                  }
+                "task_id": "foo",
+                "status": "pending",
+                "run_output": {},
+                "id": "foo",
+                "created": "foo",
+                "modified": "foo",
+                "datasource_connection": {
+                  "private": true,
+                  "project_id": "foo",
+                  "datasource_id": "foo",
+                  "config": {},
+                  "token": "",
+                  "created_by": "foo",
+                  "id": "foo"
                 }
               },
               "responseBodyV3": {
@@ -33460,12 +32986,9 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
-                  "private": true,
-                  "root_folder_id": "foo"
-                }
+                "name": "foo",
+                "private": true,
+                "root_folder_id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -33883,24 +33406,21 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "id": "foo",
-                    "name": "foo",
-                    "synced": false,
-                    "size": "foo",
-                    "mimeType": "foo",
-                    "createdTime": "foo",
-                    "modifiedTime": "foo",
-                    "type": "file",
-                    "tags": [
-                      "no_size"
-                    ]
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "id": "foo",
+                  "name": "foo",
+                  "synced": false,
+                  "size": "foo",
+                  "mimeType": "foo",
+                  "createdTime": "foo",
+                  "modifiedTime": "foo",
+                  "type": "file",
+                  "tags": [
+                    "no_size"
+                  ]
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -34067,23 +33587,20 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "task_id": "foo",
-                  "status": "pending",
-                  "run_output": {},
-                  "id": "foo",
-                  "created": "foo",
-                  "modified": "foo",
-                  "datasource_connection": {
-                    "private": true,
-                    "project_id": "foo",
-                    "datasource_id": "foo",
-                    "config": {},
-                    "token": "",
-                    "created_by": "foo",
-                    "id": "foo"
-                  }
+                "task_id": "foo",
+                "status": "pending",
+                "run_output": {},
+                "id": "foo",
+                "created": "foo",
+                "modified": "foo",
+                "datasource_connection": {
+                  "private": true,
+                  "project_id": "foo",
+                  "datasource_id": "foo",
+                  "config": {},
+                  "token": "",
+                  "created_by": "foo",
+                  "id": "foo"
                 }
               },
               "responseBodyV3": {
@@ -34733,33 +34250,30 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "task_id": "foo",
-                      "status": "pending",
-                      "run_output": {},
-                      "id": "foo",
-                      "created": "foo",
-                      "modified": "foo",
-                      "datasource_connection": {
-                        "private": true,
-                        "project_id": "foo",
-                        "datasource_id": "foo",
-                        "config": {},
-                        "token": "",
-                        "created_by": "foo",
-                        "id": "foo"
-                      }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "task_id": "foo",
+                    "status": "pending",
+                    "run_output": {},
+                    "id": "foo",
+                    "created": "foo",
+                    "modified": "foo",
+                    "datasource_connection": {
+                      "private": true,
+                      "project_id": "foo",
+                      "datasource_id": "foo",
+                      "config": {},
+                      "token": "",
+                      "created_by": "foo",
+                      "id": "foo"
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -34949,23 +34463,20 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "task_id": "foo",
-                  "status": "pending",
-                  "run_output": {},
-                  "id": "foo",
-                  "created": "foo",
-                  "modified": "foo",
-                  "datasource_connection": {
-                    "private": true,
-                    "project_id": "foo",
-                    "datasource_id": "foo",
-                    "config": {},
-                    "token": "",
-                    "created_by": "foo",
-                    "id": "foo"
-                  }
+                "task_id": "foo",
+                "status": "pending",
+                "run_output": {},
+                "id": "foo",
+                "created": "foo",
+                "modified": "foo",
+                "datasource_connection": {
+                  "private": true,
+                  "project_id": "foo",
+                  "datasource_id": "foo",
+                  "config": {},
+                  "token": "",
+                  "created_by": "foo",
+                  "id": "foo"
                 }
               },
               "responseBodyV3": {
@@ -35135,12 +34646,9 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
-                  "private": true,
-                  "root_folder_id": "foo"
-                }
+                "name": "foo",
+                "private": true,
+                "root_folder_id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -35648,16 +35156,13 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
-                  "redirect_uris": [
-                    "foo"
-                  ],
-                  "client_id": "foo",
-                  "client_secret": "foo",
-                  "scope": ""
-                }
+                "name": "foo",
+                "redirect_uris": [
+                  "foo"
+                ],
+                "client_id": "foo",
+                "client_secret": "foo",
+                "scope": ""
               },
               "responseBodyV3": {
                 "type": "json",
@@ -35756,22 +35261,19 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "messages": [
-                    {
-                      "instance_ptr": "foo",
-                      "messages": [
-                        {
-                          "id": 42,
-                          "text": "foo",
-                          "type": "info"
-                        }
-                      ]
-                    }
-                  ],
-                  "identity": {}
-                }
+                "messages": [
+                  {
+                    "instance_ptr": "foo",
+                    "messages": [
+                      {
+                        "id": 42,
+                        "text": "foo",
+                        "type": "info"
+                      }
+                    ]
+                  }
+                ],
+                "identity": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -35876,22 +35378,19 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "messages": [
-                    {
-                      "instance_ptr": "foo",
-                      "messages": [
-                        {
-                          "id": 42,
-                          "text": "foo",
-                          "type": "info"
-                        }
-                      ]
-                    }
-                  ],
-                  "identity": {}
-                }
+                "messages": [
+                  {
+                    "instance_ptr": "foo",
+                    "messages": [
+                      {
+                        "id": 42,
+                        "text": "foo",
+                        "type": "info"
+                      }
+                    ]
+                  }
+                ],
+                "identity": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -36149,23 +35648,20 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "task_id": "foo",
-                  "status": "pending",
-                  "run_output": {},
-                  "id": "foo",
-                  "created": "foo",
-                  "modified": "foo",
-                  "datasource_connection": {
-                    "private": true,
-                    "project_id": "foo",
-                    "datasource_id": "foo",
-                    "config": {},
-                    "token": "",
-                    "created_by": "foo",
-                    "id": "foo"
-                  }
+                "task_id": "foo",
+                "status": "pending",
+                "run_output": {},
+                "id": "foo",
+                "created": "foo",
+                "modified": "foo",
+                "datasource_connection": {
+                  "private": true,
+                  "project_id": "foo",
+                  "datasource_id": "foo",
+                  "config": {},
+                  "token": "",
+                  "created_by": "foo",
+                  "id": "foo"
                 }
               },
               "responseBodyV3": {
@@ -36307,23 +35803,20 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "task_id": "foo",
-                  "status": "pending",
-                  "run_output": {},
-                  "id": "foo",
-                  "created": "foo",
-                  "modified": "foo",
-                  "datasource_connection": {
-                    "private": true,
-                    "project_id": "foo",
-                    "datasource_id": "foo",
-                    "config": {},
-                    "token": "",
-                    "created_by": "foo",
-                    "id": "foo"
-                  }
+                "task_id": "foo",
+                "status": "pending",
+                "run_output": {},
+                "id": "foo",
+                "created": "foo",
+                "modified": "foo",
+                "datasource_connection": {
+                  "private": true,
+                  "project_id": "foo",
+                  "datasource_id": "foo",
+                  "config": {},
+                  "token": "",
+                  "created_by": "foo",
+                  "id": "foo"
                 }
               },
               "responseBodyV3": {
@@ -36477,33 +35970,30 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "task_id": "foo",
-                      "status": "pending",
-                      "run_output": {},
-                      "id": "foo",
-                      "created": "foo",
-                      "modified": "foo",
-                      "datasource_connection": {
-                        "private": true,
-                        "project_id": "foo",
-                        "datasource_id": "foo",
-                        "config": {},
-                        "token": "",
-                        "created_by": "foo",
-                        "id": "foo"
-                      }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "task_id": "foo",
+                    "status": "pending",
+                    "run_output": {},
+                    "id": "foo",
+                    "created": "foo",
+                    "modified": "foo",
+                    "datasource_connection": {
+                      "private": true,
+                      "project_id": "foo",
+                      "datasource_id": "foo",
+                      "config": {},
+                      "token": "",
+                      "created_by": "foo",
+                      "id": "foo"
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -37533,46 +37023,43 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "name": "foo",
-                      "description": "foo",
-                      "enabled": true,
-                      "id": "foo",
-                      "project_id": "foo",
-                      "created": "foo",
-                      "modified": "foo",
-                      "revisions": [
-                        {
-                          "system_prompt": null,
-                          "user_prompt": null,
-                          "llm_model": "gpt-4o",
-                          "llm_config": {
-                            "temperature": 0.2
-                          },
-                          "output_format": {},
-                          "task_forwarder_id": "foo",
-                          "rag": {
-                            "collection_id": "foo",
-                            "rag_param": "foo"
-                          },
-                          "image_required": false,
-                          "id": "foo",
-                          "created": "foo",
-                          "modified": "foo",
-                          "active": false
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "name": "foo",
+                    "description": "foo",
+                    "enabled": true,
+                    "id": "foo",
+                    "project_id": "foo",
+                    "created": "foo",
+                    "modified": "foo",
+                    "revisions": [
+                      {
+                        "system_prompt": null,
+                        "user_prompt": null,
+                        "llm_model": "gpt-4o",
+                        "llm_config": {
+                          "temperature": 0.2
+                        },
+                        "output_format": {},
+                        "task_forwarder_id": "foo",
+                        "rag": {
+                          "collection_id": "foo",
+                          "rag_param": "foo"
+                        },
+                        "image_required": false,
+                        "id": "foo",
+                        "created": "foo",
+                        "modified": "foo",
+                        "active": false
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -37804,37 +37291,34 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "Fintech Pre-Triage",
-                  "description": "A task to pre-triage user onboarding before IDV.",
-                  "enabled": true,
-                  "id": "019011e6-e530-3aca-6cf7-2973387c255d",
-                  "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4",
-                  "created": "2024-06-13T14:01:03.021673",
-                  "modified": "2024-06-13T14:01:03.021673",
-                  "revisions": [
-                    {
-                      "system_prompt": null,
-                      "user_prompt": null,
-                      "llm_model": "gpt-4o",
-                      "llm_config": {
-                        "temperature": 0.2
-                      },
-                      "output_format": {},
-                      "task_forwarder_id": "foo",
-                      "rag": {
-                        "collection_id": "foo",
-                        "rag_param": "foo"
-                      },
-                      "image_required": false,
-                      "id": "foo",
-                      "created": "foo",
-                      "modified": "foo",
-                      "active": false
-                    }
-                  ]
-                }
+                "name": "Fintech Pre-Triage",
+                "description": "A task to pre-triage user onboarding before IDV.",
+                "enabled": true,
+                "id": "019011e6-e530-3aca-6cf7-2973387c255d",
+                "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4",
+                "created": "2024-06-13T14:01:03.021673",
+                "modified": "2024-06-13T14:01:03.021673",
+                "revisions": [
+                  {
+                    "system_prompt": null,
+                    "user_prompt": null,
+                    "llm_model": "gpt-4o",
+                    "llm_config": {
+                      "temperature": 0.2
+                    },
+                    "output_format": {},
+                    "task_forwarder_id": "foo",
+                    "rag": {
+                      "collection_id": "foo",
+                      "rag_param": "foo"
+                    },
+                    "image_required": false,
+                    "id": "foo",
+                    "created": "foo",
+                    "modified": "foo",
+                    "active": false
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -38020,37 +37504,34 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "Fintech Pre-Triage",
-                  "description": "A task to pre-triage user onboarding before IDV.",
-                  "enabled": true,
-                  "id": "019011e6-e530-3aca-6cf7-2973387c255d",
-                  "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4",
-                  "created": "2024-06-13T14:01:03.021673",
-                  "modified": "2024-06-13T14:01:03.021673",
-                  "revisions": [
-                    {
-                      "system_prompt": null,
-                      "user_prompt": null,
-                      "llm_model": "gpt-4o",
-                      "llm_config": {
-                        "temperature": 0.2
-                      },
-                      "output_format": {},
-                      "task_forwarder_id": "foo",
-                      "rag": {
-                        "collection_id": "foo",
-                        "rag_param": "foo"
-                      },
-                      "image_required": false,
-                      "id": "foo",
-                      "created": "foo",
-                      "modified": "foo",
-                      "active": false
-                    }
-                  ]
-                }
+                "name": "Fintech Pre-Triage",
+                "description": "A task to pre-triage user onboarding before IDV.",
+                "enabled": true,
+                "id": "019011e6-e530-3aca-6cf7-2973387c255d",
+                "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4",
+                "created": "2024-06-13T14:01:03.021673",
+                "modified": "2024-06-13T14:01:03.021673",
+                "revisions": [
+                  {
+                    "system_prompt": null,
+                    "user_prompt": null,
+                    "llm_model": "gpt-4o",
+                    "llm_config": {
+                      "temperature": 0.2
+                    },
+                    "output_format": {},
+                    "task_forwarder_id": "foo",
+                    "rag": {
+                      "collection_id": "foo",
+                      "rag_param": "foo"
+                    },
+                    "image_required": false,
+                    "id": "foo",
+                    "created": "foo",
+                    "modified": "foo",
+                    "active": false
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -38254,37 +37735,34 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "Fintech Pre-Triage",
-                  "description": "A task to pre-triage user onboarding before IDV.",
-                  "enabled": true,
-                  "id": "019011e6-e530-3aca-6cf7-2973387c255d",
-                  "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4",
-                  "created": "2024-06-13T14:01:03.021673",
-                  "modified": "2024-06-13T14:01:03.021673",
-                  "revisions": [
-                    {
-                      "system_prompt": null,
-                      "user_prompt": null,
-                      "llm_model": "gpt-4o",
-                      "llm_config": {
-                        "temperature": 0.2
-                      },
-                      "output_format": {},
-                      "task_forwarder_id": "foo",
-                      "rag": {
-                        "collection_id": "foo",
-                        "rag_param": "foo"
-                      },
-                      "image_required": false,
-                      "id": "foo",
-                      "created": "foo",
-                      "modified": "foo",
-                      "active": false
-                    }
-                  ]
-                }
+                "name": "Fintech Pre-Triage",
+                "description": "A task to pre-triage user onboarding before IDV.",
+                "enabled": true,
+                "id": "019011e6-e530-3aca-6cf7-2973387c255d",
+                "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4",
+                "created": "2024-06-13T14:01:03.021673",
+                "modified": "2024-06-13T14:01:03.021673",
+                "revisions": [
+                  {
+                    "system_prompt": null,
+                    "user_prompt": null,
+                    "llm_model": "gpt-4o",
+                    "llm_config": {
+                      "temperature": 0.2
+                    },
+                    "output_format": {},
+                    "task_forwarder_id": "foo",
+                    "rag": {
+                      "collection_id": "foo",
+                      "rag_param": "foo"
+                    },
+                    "image_required": false,
+                    "id": "foo",
+                    "created": "foo",
+                    "modified": "foo",
+                    "active": false
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -38527,23 +38005,20 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "task_revision_id": "foo",
-                      "response": {},
-                      "run_data": {},
-                      "id": "foo",
-                      "created": "foo"
-                    }
-                  ]
-                }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "task_revision_id": "foo",
+                    "response": {},
+                    "run_data": {},
+                    "id": "foo",
+                    "created": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -38661,7 +38136,7 @@
                     "key": "task_input",
                     "valueType": {
                       "type": "id",
-                      "value": "OrgOrgIdProjectProjectIdTaskTaskIdRunPostRequestBodySchemaTaskInput"
+                      "value": "OrgOrgIdProjectProjectIdTaskTaskIdRunPostRequestBodyContentMultipartFormDataSchemaTaskInput"
                     },
                     "contentType": "multipart/form-data",
                     "description": "The data input to the Task. This should be relevant to the `user_prompt` and cover any dynamic `{...}` parameters that are referenced in the prompt. Not required if `image_required` is set to `true` and there are no dynamic parameters in the prompt.",
@@ -38768,28 +38243,25 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "body": {
-                    "task_revision_id": "0190a234-8dc6-6d08-aea9-928fcecad8f1",
-                    "response": {
-                      "hint": "The image is not suitable for authentication and onboarding checks. Please ensure the photo is a clear, passport-style image with a plain background, good lighting, and no accessories like sunglasses.",
-                      "match": false,
-                      "rationale": "The image does not meet the requirements for a passport-style photo. The person is wearing sunglasses, and the background is not plain.",
-                      "compliance": false
+                "body": {
+                  "task_revision_id": "0190a234-8dc6-6d08-aea9-928fcecad8f1",
+                  "response": {
+                    "hint": "The image is not suitable for authentication and onboarding checks. Please ensure the photo is a clear, passport-style image with a plain background, good lighting, and no accessories like sunglasses.",
+                    "match": false,
+                    "rationale": "The image does not meet the requirements for a passport-style photo. The person is wearing sunglasses, and the background is not plain.",
+                    "compliance": false
+                  },
+                  "run_data": {
+                    "audit": {
+                      "ip": "10.152.3.59",
+                      "ua": "Vercel Edge Functions"
                     },
-                    "run_data": {
-                      "audit": {
-                        "ip": "10.152.3.59",
-                        "ua": "Vercel Edge Functions"
-                      },
-                      "submitted": {
-                        "description": "brown hair, blue sweater"
-                      }
-                    },
-                    "id": "0190a234-cb74-6342-dec6-4be8f73f0c9f",
-                    "created": "2024-07-11T14:31:21.989219"
-                  }
+                    "submitted": {
+                      "description": "brown hair, blue sweater"
+                    }
+                  },
+                  "id": "0190a234-cb74-6342-dec6-4be8f73f0c9f",
+                  "created": "2024-07-11T14:31:21.989219"
                 }
               },
               "responseBodyV3": {
@@ -38978,25 +38450,22 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "member": "foo",
-                      "roles": [
-                        "foo"
-                      ],
-                      "name": "foo",
-                      "avatar_url": "foo",
-                      "total_subjects": 1
-                    }
-                  ]
-                }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "member": "foo",
+                    "roles": [
+                      "foo"
+                    ],
+                    "name": "foo",
+                    "avatar_url": "foo",
+                    "total_subjects": 1
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -39184,16 +38653,13 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "member": "foo",
-                  "roles": [
-                    "foo"
-                  ],
-                  "name": "foo",
-                  "avatar_url": "foo",
-                  "total_subjects": 1
-                }
+                "member": "foo",
+                "roles": [
+                  "foo"
+                ],
+                "name": "foo",
+                "avatar_url": "foo",
+                "total_subjects": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -39403,16 +38869,13 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "member": "foo",
-                  "roles": [
-                    "foo"
-                  ],
-                  "name": "foo",
-                  "avatar_url": "foo",
-                  "total_subjects": 1
-                }
+                "member": "foo",
+                "roles": [
+                  "foo"
+                ],
+                "name": "foo",
+                "avatar_url": "foo",
+                "total_subjects": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -39612,13 +39075,10 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "permissions": [
-                    "foo"
-                  ],
-                  "member": "foo"
-                }
+                "permissions": [
+                  "foo"
+                ],
+                "member": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -39801,27 +39261,24 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "task_revision_id": "0190a234-8dc6-6d08-aea9-928fcecad8f1",
-                  "response": {
-                    "compliance": false,
-                    "hint": "The image is not suitable for authentication and onboarding checks. Please ensure the photo is a clear, passport-style image with a plain background, good lighting, and no accessories like sunglasses.",
-                    "match": false,
-                    "rationale": "The image does not meet the requirements for a passport-style photo. The person is wearing sunglasses, and the background is not plain."
+                "task_revision_id": "0190a234-8dc6-6d08-aea9-928fcecad8f1",
+                "response": {
+                  "compliance": false,
+                  "hint": "The image is not suitable for authentication and onboarding checks. Please ensure the photo is a clear, passport-style image with a plain background, good lighting, and no accessories like sunglasses.",
+                  "match": false,
+                  "rationale": "The image does not meet the requirements for a passport-style photo. The person is wearing sunglasses, and the background is not plain."
+                },
+                "run_data": {
+                  "audit": {
+                    "ip": "10.152.3.59",
+                    "ua": "Vercel Edge Functions"
                   },
-                  "run_data": {
-                    "audit": {
-                      "ip": "10.152.3.59",
-                      "ua": "Vercel Edge Functions"
-                    },
-                    "submitted": {
-                      "description": "brown hair, blue sweater"
-                    }
-                  },
-                  "id": "0190a234-cb74-6342-dec6-4be8f73f0c9f",
-                  "created": "2024-07-11T14:31:21.989219"
-                }
+                  "submitted": {
+                    "description": "brown hair, blue sweater"
+                  }
+                },
+                "id": "0190a234-cb74-6342-dec6-4be8f73f0c9f",
+                "created": "2024-07-11T14:31:21.989219"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -40024,30 +39481,27 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "pagination": {
-                    "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
-                    "has_next": true,
-                    "page_limit": 100
-                  },
-                  "results": [
-                    {
-                      "name": "foo",
-                      "description": "foo",
-                      "config": {
-                        "destination_url": "foo"
-                      },
-                      "config_sensitive": {
-                        "signing_key": "foo"
-                      },
-                      "id": "foo",
-                      "project_id": "foo",
-                      "created": "foo",
-                      "modified": "foo"
-                    }
-                  ]
-                }
+                "pagination": {
+                  "next_cursor": "019097c5-5560-05b5-4a48-5197a269683b",
+                  "has_next": true,
+                  "page_limit": 100
+                },
+                "results": [
+                  {
+                    "name": "foo",
+                    "description": "foo",
+                    "config": {
+                      "destination_url": "foo"
+                    },
+                    "config_sensitive": {
+                      "signing_key": "foo"
+                    },
+                    "id": "foo",
+                    "project_id": "foo",
+                    "created": "foo",
+                    "modified": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -40243,21 +39697,18 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "Webhook Endpoint",
-                  "description": "Send all Task output to this API endpoint to ensure real-time updates of all Task Runs.",
-                  "config": {
-                    "destination_url": "https://eoalydnvgieppd9.m.pipedream.net"
-                  },
-                  "config_sensitive": {
-                    "signing_key": "sdkjhsfd2sdfkj3223.23rh"
-                  },
-                  "id": "019011e6-e530-3aca-6cf7-2973387c255d",
-                  "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4",
-                  "created": "foo",
-                  "modified": "foo"
-                }
+                "name": "Webhook Endpoint",
+                "description": "Send all Task output to this API endpoint to ensure real-time updates of all Task Runs.",
+                "config": {
+                  "destination_url": "https://eoalydnvgieppd9.m.pipedream.net"
+                },
+                "config_sensitive": {
+                  "signing_key": "sdkjhsfd2sdfkj3223.23rh"
+                },
+                "id": "019011e6-e530-3aca-6cf7-2973387c255d",
+                "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4",
+                "created": "foo",
+                "modified": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -40427,21 +39878,18 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "Webhook Endpoint",
-                  "description": "Send all Task output to this API endpoint to ensure real-time updates of all Task Runs.",
-                  "config": {
-                    "destination_url": "https://eoalydnvgieppd9.m.pipedream.net"
-                  },
-                  "config_sensitive": {
-                    "signing_key": "sdkjhsfd2sdfkj3223.23rh"
-                  },
-                  "id": "019011e6-e530-3aca-6cf7-2973387c255d",
-                  "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4",
-                  "created": "foo",
-                  "modified": "foo"
-                }
+                "name": "Webhook Endpoint",
+                "description": "Send all Task output to this API endpoint to ensure real-time updates of all Task Runs.",
+                "config": {
+                  "destination_url": "https://eoalydnvgieppd9.m.pipedream.net"
+                },
+                "config_sensitive": {
+                  "signing_key": "sdkjhsfd2sdfkj3223.23rh"
+                },
+                "id": "019011e6-e530-3aca-6cf7-2973387c255d",
+                "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4",
+                "created": "foo",
+                "modified": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -40629,21 +40077,18 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "Webhook Endpoint",
-                  "description": "Send all Task output to this API endpoint to ensure real-time updates of all Task Runs.",
-                  "config": {
-                    "destination_url": "https://eoalydnvgieppd9.m.pipedream.net"
-                  },
-                  "config_sensitive": {
-                    "signing_key": "sdkjhsfd2sdfkj3223.23rh"
-                  },
-                  "id": "019011e6-e530-3aca-6cf7-2973387c255d",
-                  "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4",
-                  "created": "foo",
-                  "modified": "foo"
-                }
+                "name": "Webhook Endpoint",
+                "description": "Send all Task output to this API endpoint to ensure real-time updates of all Task Runs.",
+                "config": {
+                  "destination_url": "https://eoalydnvgieppd9.m.pipedream.net"
+                },
+                "config_sensitive": {
+                  "signing_key": "sdkjhsfd2sdfkj3223.23rh"
+                },
+                "id": "019011e6-e530-3aca-6cf7-2973387c255d",
+                "project_id": "019010a2-8327-2607-11d7-41bb0a8936d4",
+                "created": "foo",
+                "modified": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -40807,88 +40252,85 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "body": [
-                    {
-                      "name": "gpt-3.5-turbo",
-                      "alias": "GPT 3.5 Turbo",
-                      "provider": "OpenAI",
-                      "description": "A fast and cost-effective model for a broad range of tasks. 16K context window with training cut off of Sep 2021.",
-                      "supports_vision": false
-                    },
-                    {
-                      "name": "gpt-4",
-                      "alias": "GPT 4",
-                      "provider": "OpenAI",
-                      "description": "The fourth-generation model with advanced reasoning and understanding. 8k context window with training cut off of Sep 2021.",
-                      "supports_vision": false
-                    },
-                    {
-                      "name": "gpt-4-turbo",
-                      "alias": "GPT 4 Turbo",
-                      "provider": "OpenAI",
-                      "description": "The latest GPT-4 Turbo model with vision capabilities. 128K context window with training cut off of Dec 2023.",
-                      "supports_vision": true
-                    },
-                    {
-                      "name": "gpt-4-turbo-preview",
-                      "alias": "GPT 4 Turbo Preview",
-                      "provider": "OpenAI",
-                      "description": "GPT-4 Turbo preview model featuring improved instruction following, JSON mode. 128K context window with training cut off of April 2023. Returns a maximum of 4,096 output tokens. This is a preview model.",
-                      "supports_vision": false
-                    },
-                    {
-                      "name": "gpt-4o",
-                      "alias": "GPT 4o",
-                      "provider": "OpenAI",
-                      "description": "GPT-4o (\"o\" for \"omni\") is OpenAI's most advanced model. It is multimodal, it has the same high intelligence as GPT-4 Turbo but is much more efficient — it generates text 2x faster and is 50% cheaper.",
-                      "supports_vision": true
-                    },
-                    {
-                      "name": "claude-3-5-sonnet-20240620",
-                      "alias": "Claude 3.5 Sonnet",
-                      "provider": "Anthropic",
-                      "description": "Anthropics most intelligent model. 200K context window with 4k max output with training cut off of June 2024.",
-                      "supports_vision": true
-                    },
-                    {
-                      "name": "claude-3-haiku-20240307",
-                      "alias": "Claude 3 Haiku",
-                      "provider": "Anthropic",
-                      "description": "Anthropics fastest and most compact model. 200K context window with 4k max output with training cut off of Aug 2023.",
-                      "supports_vision": true
-                    },
-                    {
-                      "name": "claude-3-sonnet-20240229",
-                      "alias": "Claude 3 Sonnet",
-                      "provider": "Anthropic",
-                      "description": "Balanced model between intelligence and speed. 200K context window with 4k max output with training cut off of Aug 2023.",
-                      "supports_vision": true
-                    },
-                    {
-                      "name": "claude-3-opus-20240229",
-                      "alias": "Claude 3 Opus",
-                      "provider": "Anthropic",
-                      "description": "Anthropics most powerful model. 200K context window with 4k max output with training cut off of Aug 2023.",
-                      "supports_vision": true
-                    },
-                    {
-                      "name": "gemini-1.5-pro-latest",
-                      "alias": "Gemini 1.5 Pro",
-                      "provider": "Google",
-                      "description": "Googles latest gemini model. 100K context window and 8k max output with training cut off in late 2023.",
-                      "supports_vision": true
-                    },
-                    {
-                      "name": "gemini-pro",
-                      "alias": "Gemini 1.0 Pro",
-                      "provider": "Google",
-                      "description": "Googles 1.0 version gemini model. 30K context window and 2k max output with training cut off in late 2023.",
-                      "supports_vision": false
-                    }
-                  ]
-                }
+                "body": [
+                  {
+                    "name": "gpt-3.5-turbo",
+                    "alias": "GPT 3.5 Turbo",
+                    "provider": "OpenAI",
+                    "description": "A fast and cost-effective model for a broad range of tasks. 16K context window with training cut off of Sep 2021.",
+                    "supports_vision": false
+                  },
+                  {
+                    "name": "gpt-4",
+                    "alias": "GPT 4",
+                    "provider": "OpenAI",
+                    "description": "The fourth-generation model with advanced reasoning and understanding. 8k context window with training cut off of Sep 2021.",
+                    "supports_vision": false
+                  },
+                  {
+                    "name": "gpt-4-turbo",
+                    "alias": "GPT 4 Turbo",
+                    "provider": "OpenAI",
+                    "description": "The latest GPT-4 Turbo model with vision capabilities. 128K context window with training cut off of Dec 2023.",
+                    "supports_vision": true
+                  },
+                  {
+                    "name": "gpt-4-turbo-preview",
+                    "alias": "GPT 4 Turbo Preview",
+                    "provider": "OpenAI",
+                    "description": "GPT-4 Turbo preview model featuring improved instruction following, JSON mode. 128K context window with training cut off of April 2023. Returns a maximum of 4,096 output tokens. This is a preview model.",
+                    "supports_vision": false
+                  },
+                  {
+                    "name": "gpt-4o",
+                    "alias": "GPT 4o",
+                    "provider": "OpenAI",
+                    "description": "GPT-4o (\"o\" for \"omni\") is OpenAI's most advanced model. It is multimodal, it has the same high intelligence as GPT-4 Turbo but is much more efficient — it generates text 2x faster and is 50% cheaper.",
+                    "supports_vision": true
+                  },
+                  {
+                    "name": "claude-3-5-sonnet-20240620",
+                    "alias": "Claude 3.5 Sonnet",
+                    "provider": "Anthropic",
+                    "description": "Anthropics most intelligent model. 200K context window with 4k max output with training cut off of June 2024.",
+                    "supports_vision": true
+                  },
+                  {
+                    "name": "claude-3-haiku-20240307",
+                    "alias": "Claude 3 Haiku",
+                    "provider": "Anthropic",
+                    "description": "Anthropics fastest and most compact model. 200K context window with 4k max output with training cut off of Aug 2023.",
+                    "supports_vision": true
+                  },
+                  {
+                    "name": "claude-3-sonnet-20240229",
+                    "alias": "Claude 3 Sonnet",
+                    "provider": "Anthropic",
+                    "description": "Balanced model between intelligence and speed. 200K context window with 4k max output with training cut off of Aug 2023.",
+                    "supports_vision": true
+                  },
+                  {
+                    "name": "claude-3-opus-20240229",
+                    "alias": "Claude 3 Opus",
+                    "provider": "Anthropic",
+                    "description": "Anthropics most powerful model. 200K context window with 4k max output with training cut off of Aug 2023.",
+                    "supports_vision": true
+                  },
+                  {
+                    "name": "gemini-1.5-pro-latest",
+                    "alias": "Gemini 1.5 Pro",
+                    "provider": "Google",
+                    "description": "Googles latest gemini model. 100K context window and 8k max output with training cut off in late 2023.",
+                    "supports_vision": true
+                  },
+                  {
+                    "name": "gemini-pro",
+                    "alias": "Gemini 1.0 Pro",
+                    "provider": "Google",
+                    "description": "Googles 1.0 version gemini model. 30K context window and 2k max output with training cut off in late 2023.",
+                    "supports_vision": false
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -41077,17 +40519,14 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "id": "source_validation",
-                    "name": "foo",
-                    "description": "foo",
-                    "type": "input"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "id": "source_validation",
+                  "name": "foo",
+                  "description": "foo",
+                  "type": "input"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [

@@ -1250,16 +1250,6 @@
         ]
       }
     },
-    "PickRoomExcludeKeyofRoomAllocationsCurrentAllocation": {
-      "name": "PickRoomExcludeKeyofRoomAllocationsCurrentAllocation",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "RoomAllocation"
-        ],
-        "properties": []
-      }
-    },
     "Pick_Room.Exclude_keyofRoom.allocations__": {
       "description": "From T, pick a set of properties whose keys are in the union K",
       "name": "Pick_Room.Exclude_keyofRoom.allocations__",
@@ -1294,7 +1284,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PickRoomExcludeKeyofRoomAllocationsCurrentAllocation"
+                "value": "RoomAllocation"
               }
             }
           }
@@ -1350,16 +1340,6 @@
         ]
       }
     },
-    "RoomCurrentAllocation": {
-      "name": "RoomCurrentAllocation",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "RoomAllocation"
-        ],
-        "properties": []
-      }
-    },
     "Room": {
       "name": "Room",
       "shape": {
@@ -1372,7 +1352,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "RoomCurrentAllocation"
+                "value": "RoomAllocation"
               }
             }
           },
@@ -1579,32 +1559,32 @@
         ]
       }
     },
-    "LobbyV2AppIdCreatePrivatePostRequestBodySchemaInitialConfig": {
-      "name": "LobbyV2AppIdCreatePrivatePostRequestBodySchemaInitialConfig",
+    "LobbyV2AppIdCreatePrivatePostRequestBodyContentApplicationJsonSchemaInitialConfig": {
+      "name": "LobbyV2AppIdCreatePrivatePostRequestBodyContentApplicationJsonSchemaInitialConfig",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "LobbyV2AppIdCreatePublicPostRequestBodySchemaInitialConfig": {
-      "name": "LobbyV2AppIdCreatePublicPostRequestBodySchemaInitialConfig",
+    "LobbyV2AppIdCreatePublicPostRequestBodyContentApplicationJsonSchemaInitialConfig": {
+      "name": "LobbyV2AppIdCreatePublicPostRequestBodyContentApplicationJsonSchemaInitialConfig",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "LobbyV2AppIdCreateLocalPostRequestBodySchemaInitialConfig": {
-      "name": "LobbyV2AppIdCreateLocalPostRequestBodySchemaInitialConfig",
+    "LobbyV2AppIdCreateLocalPostRequestBodyContentApplicationJsonSchemaInitialConfig": {
+      "name": "LobbyV2AppIdCreateLocalPostRequestBodyContentApplicationJsonSchemaInitialConfig",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "LobbyV2AppIdCreatePostRequestBodySchemaVisibility": {
-      "name": "LobbyV2AppIdCreatePostRequestBodySchemaVisibility",
+    "LobbyV2AppIdCreatePostRequestBodyContentApplicationJsonSchemaVisibility": {
+      "name": "LobbyV2AppIdCreatePostRequestBodyContentApplicationJsonSchemaVisibility",
       "shape": {
         "type": "enum",
         "values": [
@@ -1620,16 +1600,16 @@
         ]
       }
     },
-    "LobbyV2AppIdCreatePostRequestBodySchemaInitialConfig": {
-      "name": "LobbyV2AppIdCreatePostRequestBodySchemaInitialConfig",
+    "LobbyV2AppIdCreatePostRequestBodyContentApplicationJsonSchemaInitialConfig": {
+      "name": "LobbyV2AppIdCreatePostRequestBodyContentApplicationJsonSchemaInitialConfig",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "LobbyV2AppIdSetStateRoomIdPostRequestBodySchemaState": {
-      "name": "LobbyV2AppIdSetStateRoomIdPostRequestBodySchemaState",
+    "LobbyV2AppIdSetStateRoomIdPostRequestBodyContentApplicationJsonSchemaState": {
+      "name": "LobbyV2AppIdSetStateRoomIdPostRequestBodyContentApplicationJsonSchemaState",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1698,47 +1678,44 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "deletedBy": "foo",
-                    "deletedAt": "foo",
+              "responseBody": [
+                {
+                  "deletedBy": "foo",
+                  "deletedAt": "foo",
+                  "createdAt": "foo",
+                  "createdBy": "foo",
+                  "orgId": "foo",
+                  "authConfiguration": {
+                    "google": {
+                      "clientId": "foo"
+                    },
+                    "nickname": {},
+                    "anonymous": {}
+                  },
+                  "appSecret": "foo",
+                  "appId": "foo",
+                  "appName": "foo",
+                  "deployment": {
+                    "env": [
+                      {
+                        "value": "foo",
+                        "name": "foo"
+                      }
+                    ],
+                    "roomsPerProcess": 42,
+                    "planName": "tiny",
+                    "transportType": "tcp",
+                    "containerPort": 42,
                     "createdAt": "foo",
                     "createdBy": "foo",
-                    "orgId": "foo",
-                    "authConfiguration": {
-                      "google": {
-                        "clientId": "foo"
-                      },
-                      "nickname": {},
-                      "anonymous": {}
-                    },
-                    "appSecret": "foo",
-                    "appId": "foo",
-                    "appName": "foo",
-                    "deployment": {
-                      "env": [
-                        {
-                          "value": "foo",
-                          "name": "foo"
-                        }
-                      ],
-                      "roomsPerProcess": 42,
-                      "planName": "tiny",
-                      "transportType": "tcp",
-                      "containerPort": 42,
-                      "createdAt": "foo",
-                      "createdBy": "foo",
-                      "requestedMemoryMB": 42,
-                      "requestedCPU": 42,
-                      "deploymentId": 42,
-                      "buildId": 42,
-                      "appId": "foo"
-                    }
+                    "requestedMemoryMB": 42,
+                    "requestedCPU": 42,
+                    "deploymentId": 42,
+                    "buildId": 42,
+                    "appId": "foo"
                   }
-                ]
-              },
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -1895,24 +1872,21 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "deletedBy": "foo",
-                  "deletedAt": "foo",
-                  "createdAt": "foo",
-                  "createdBy": "foo",
-                  "orgId": "foo",
-                  "authConfiguration": {
-                    "google": {
-                      "clientId": "foo"
-                    },
-                    "nickname": {},
-                    "anonymous": {}
+                "deletedBy": "foo",
+                "deletedAt": "foo",
+                "createdAt": "foo",
+                "createdBy": "foo",
+                "orgId": "foo",
+                "authConfiguration": {
+                  "google": {
+                    "clientId": "foo"
                   },
-                  "appSecret": "foo",
-                  "appId": "foo",
-                  "appName": "foo"
-                }
+                  "nickname": {},
+                  "anonymous": {}
+                },
+                "appSecret": "foo",
+                "appId": "foo",
+                "appName": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2067,24 +2041,21 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "deletedBy": "foo",
-                  "deletedAt": "foo",
-                  "createdAt": "foo",
-                  "createdBy": "foo",
-                  "orgId": "foo",
-                  "authConfiguration": {
-                    "google": {
-                      "clientId": "foo"
-                    },
-                    "nickname": {},
-                    "anonymous": {}
+                "deletedBy": "foo",
+                "deletedAt": "foo",
+                "createdAt": "foo",
+                "createdBy": "foo",
+                "orgId": "foo",
+                "authConfiguration": {
+                  "google": {
+                    "clientId": "foo"
                   },
-                  "appSecret": "foo",
-                  "appId": "foo",
-                  "appName": "foo"
-                }
+                  "nickname": {},
+                  "anonymous": {}
+                },
+                "appSecret": "foo",
+                "appId": "foo",
+                "appName": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2200,24 +2171,21 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "deletedBy": "foo",
-                  "deletedAt": "foo",
-                  "createdAt": "foo",
-                  "createdBy": "foo",
-                  "orgId": "foo",
-                  "authConfiguration": {
-                    "google": {
-                      "clientId": "foo"
-                    },
-                    "nickname": {},
-                    "anonymous": {}
+                "deletedBy": "foo",
+                "deletedAt": "foo",
+                "createdAt": "foo",
+                "createdBy": "foo",
+                "orgId": "foo",
+                "authConfiguration": {
+                  "google": {
+                    "clientId": "foo"
                   },
-                  "appSecret": "foo",
-                  "appId": "foo",
-                  "appName": "foo"
-                }
+                  "nickname": {},
+                  "anonymous": {}
+                },
+                "appSecret": "foo",
+                "appId": "foo",
+                "appName": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2440,10 +2408,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "token": "foo"
-                }
+                "token": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2575,10 +2540,7 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "token": "foo"
-                }
+                "token": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2725,10 +2687,7 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "token": "foo"
-                }
+                "token": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2842,28 +2801,25 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "regionalContainerTags": [
-                      {
-                        "containerTag": "foo",
-                        "region": "Seattle"
-                      }
-                    ],
-                    "imageSize": 42,
-                    "status": "created",
-                    "deletedAt": "foo",
-                    "finishedAt": "foo",
-                    "startedAt": "foo",
-                    "createdAt": "foo",
-                    "createdBy": "foo",
-                    "buildId": 42,
-                    "appId": "foo"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "regionalContainerTags": [
+                    {
+                      "containerTag": "foo",
+                      "region": "Seattle"
+                    }
+                  ],
+                  "imageSize": 42,
+                  "status": "created",
+                  "deletedAt": "foo",
+                  "finishedAt": "foo",
+                  "startedAt": "foo",
+                  "createdAt": "foo",
+                  "createdBy": "foo",
+                  "buildId": 42,
+                  "appId": "foo"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -2996,24 +2952,21 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "regionalContainerTags": [
-                    {
-                      "containerTag": "foo",
-                      "region": "Seattle"
-                    }
-                  ],
-                  "imageSize": 42,
-                  "status": "created",
-                  "deletedAt": "foo",
-                  "finishedAt": "foo",
-                  "startedAt": "foo",
-                  "createdAt": "foo",
-                  "createdBy": "foo",
-                  "buildId": 42,
-                  "appId": "foo"
-                }
+                "regionalContainerTags": [
+                  {
+                    "containerTag": "foo",
+                    "region": "Seattle"
+                  }
+                ],
+                "imageSize": 42,
+                "status": "created",
+                "deletedAt": "foo",
+                "finishedAt": "foo",
+                "startedAt": "foo",
+                "createdAt": "foo",
+                "createdBy": "foo",
+                "buildId": 42,
+                "appId": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3159,24 +3112,21 @@
               "headers": {},
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "regionalContainerTags": [
-                    {
-                      "containerTag": "foo",
-                      "region": "Seattle"
-                    }
-                  ],
-                  "imageSize": 42,
-                  "status": "created",
-                  "deletedAt": "foo",
-                  "finishedAt": "foo",
-                  "startedAt": "foo",
-                  "createdAt": "foo",
-                  "createdBy": "foo",
-                  "buildId": 42,
-                  "appId": "foo"
-                }
+                "regionalContainerTags": [
+                  {
+                    "containerTag": "foo",
+                    "region": "Seattle"
+                  }
+                ],
+                "imageSize": 42,
+                "status": "created",
+                "deletedAt": "foo",
+                "finishedAt": "foo",
+                "startedAt": "foo",
+                "createdAt": "foo",
+                "createdBy": "foo",
+                "buildId": 42,
+                "appId": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3351,10 +3301,7 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -3593,30 +3540,27 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "env": [
-                      {
-                        "value": "foo",
-                        "name": "foo"
-                      }
-                    ],
-                    "roomsPerProcess": 42,
-                    "planName": "tiny",
-                    "transportType": "tcp",
-                    "containerPort": 42,
-                    "createdAt": "foo",
-                    "createdBy": "foo",
-                    "requestedMemoryMB": 42,
-                    "requestedCPU": 42,
-                    "deploymentId": 42,
-                    "buildId": 42,
-                    "appId": "foo"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "env": [
+                    {
+                      "value": "foo",
+                      "name": "foo"
+                    }
+                  ],
+                  "roomsPerProcess": 42,
+                  "planName": "tiny",
+                  "transportType": "tcp",
+                  "containerPort": 42,
+                  "createdAt": "foo",
+                  "createdBy": "foo",
+                  "requestedMemoryMB": 42,
+                  "requestedCPU": 42,
+                  "deploymentId": 42,
+                  "buildId": 42,
+                  "appId": "foo"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -3751,26 +3695,23 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "env": [
-                    {
-                      "value": "foo",
-                      "name": "foo"
-                    }
-                  ],
-                  "roomsPerProcess": 42,
-                  "planName": "tiny",
-                  "transportType": "tcp",
-                  "containerPort": 42,
-                  "createdAt": "foo",
-                  "createdBy": "foo",
-                  "requestedMemoryMB": 42,
-                  "requestedCPU": 42,
-                  "deploymentId": 42,
-                  "buildId": 42,
-                  "appId": "foo"
-                }
+                "env": [
+                  {
+                    "value": "foo",
+                    "name": "foo"
+                  }
+                ],
+                "roomsPerProcess": 42,
+                "planName": "tiny",
+                "transportType": "tcp",
+                "containerPort": 42,
+                "createdAt": "foo",
+                "createdBy": "foo",
+                "requestedMemoryMB": 42,
+                "requestedCPU": 42,
+                "deploymentId": 42,
+                "buildId": 42,
+                "appId": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3974,26 +3915,23 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "env": [
-                    {
-                      "value": "foo",
-                      "name": "foo"
-                    }
-                  ],
-                  "roomsPerProcess": 42,
-                  "planName": "tiny",
-                  "transportType": "tcp",
-                  "containerPort": 42,
-                  "createdAt": "foo",
-                  "createdBy": "foo",
-                  "requestedMemoryMB": 42,
-                  "requestedCPU": 42,
-                  "deploymentId": 42,
-                  "buildId": 42,
-                  "appId": "foo"
-                }
+                "env": [
+                  {
+                    "value": "foo",
+                    "name": "foo"
+                  }
+                ],
+                "roomsPerProcess": 42,
+                "planName": "tiny",
+                "transportType": "tcp",
+                "containerPort": 42,
+                "createdAt": "foo",
+                "createdBy": "foo",
+                "requestedMemoryMB": 42,
+                "requestedCPU": 42,
+                "deploymentId": 42,
+                "buildId": 42,
+                "appId": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -4086,16 +4024,13 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "port": 42,
-                    "host": "foo",
-                    "region": "Seattle"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "port": 42,
+                  "host": "foo",
+                  "region": "Seattle"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -4306,10 +4241,7 @@
                 "Authorization": "Authorization"
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -4504,10 +4436,7 @@
                 "Authorization": "Authorization"
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -4660,22 +4589,19 @@
                 "Authorization": "Authorization"
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "state": {},
-                    "initialConfig": {},
-                    "createdAt": "foo",
-                    "createdBy": "foo",
-                    "local": true,
-                    "visibility": "private",
-                    "region": "Seattle",
-                    "roomId": "foo",
-                    "appId": "foo"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "state": {},
+                  "initialConfig": {},
+                  "createdAt": "foo",
+                  "createdBy": "foo",
+                  "local": true,
+                  "visibility": "private",
+                  "region": "Seattle",
+                  "roomId": "foo",
+                  "appId": "foo"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -4790,7 +4716,7 @@
                     "key": "initialConfig",
                     "valueType": {
                       "type": "id",
-                      "value": "LobbyV2AppIdCreatePrivatePostRequestBodySchemaInitialConfig"
+                      "value": "LobbyV2AppIdCreatePrivatePostRequestBodyContentApplicationJsonSchemaInitialConfig"
                     }
                   },
                   {
@@ -4917,18 +4843,15 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "state": {},
-                  "initialConfig": {},
-                  "createdAt": "foo",
-                  "createdBy": "foo",
-                  "local": true,
-                  "visibility": "private",
-                  "region": "Seattle",
-                  "roomId": "foo",
-                  "appId": "foo"
-                }
+                "state": {},
+                "initialConfig": {},
+                "createdAt": "foo",
+                "createdBy": "foo",
+                "local": true,
+                "visibility": "private",
+                "region": "Seattle",
+                "roomId": "foo",
+                "appId": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -5032,7 +4955,7 @@
                     "key": "initialConfig",
                     "valueType": {
                       "type": "id",
-                      "value": "LobbyV2AppIdCreatePublicPostRequestBodySchemaInitialConfig"
+                      "value": "LobbyV2AppIdCreatePublicPostRequestBodyContentApplicationJsonSchemaInitialConfig"
                     }
                   },
                   {
@@ -5159,18 +5082,15 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "state": {},
-                  "initialConfig": {},
-                  "createdAt": "foo",
-                  "createdBy": "foo",
-                  "local": true,
-                  "visibility": "private",
-                  "region": "Seattle",
-                  "roomId": "foo",
-                  "appId": "foo"
-                }
+                "state": {},
+                "initialConfig": {},
+                "createdAt": "foo",
+                "createdBy": "foo",
+                "local": true,
+                "visibility": "private",
+                "region": "Seattle",
+                "roomId": "foo",
+                "appId": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -5274,7 +5194,7 @@
                     "key": "initialConfig",
                     "valueType": {
                       "type": "id",
-                      "value": "LobbyV2AppIdCreateLocalPostRequestBodySchemaInitialConfig"
+                      "value": "LobbyV2AppIdCreateLocalPostRequestBodyContentApplicationJsonSchemaInitialConfig"
                     }
                   },
                   {
@@ -5401,18 +5321,15 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "state": {},
-                  "initialConfig": {},
-                  "createdAt": "foo",
-                  "createdBy": "foo",
-                  "local": true,
-                  "visibility": "private",
-                  "region": "Seattle",
-                  "roomId": "foo",
-                  "appId": "foo"
-                }
+                "state": {},
+                "initialConfig": {},
+                "createdAt": "foo",
+                "createdBy": "foo",
+                "local": true,
+                "visibility": "private",
+                "region": "Seattle",
+                "roomId": "foo",
+                "appId": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -5515,14 +5432,14 @@
                     "key": "visibility",
                     "valueType": {
                       "type": "id",
-                      "value": "LobbyV2AppIdCreatePostRequestBodySchemaVisibility"
+                      "value": "LobbyV2AppIdCreatePostRequestBodyContentApplicationJsonSchemaVisibility"
                     }
                   },
                   {
                     "key": "initialConfig",
                     "valueType": {
                       "type": "id",
-                      "value": "LobbyV2AppIdCreatePostRequestBodySchemaInitialConfig"
+                      "value": "LobbyV2AppIdCreatePostRequestBodyContentApplicationJsonSchemaInitialConfig"
                     }
                   },
                   {
@@ -5651,18 +5568,15 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "state": {},
-                  "initialConfig": {},
-                  "createdAt": "foo",
-                  "createdBy": "foo",
-                  "local": true,
-                  "visibility": "private",
-                  "region": "Seattle",
-                  "roomId": "foo",
-                  "appId": "foo"
-                }
+                "state": {},
+                "initialConfig": {},
+                "createdAt": "foo",
+                "createdBy": "foo",
+                "local": true,
+                "visibility": "private",
+                "region": "Seattle",
+                "roomId": "foo",
+                "appId": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -5769,22 +5683,19 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "state": {},
-                    "initialConfig": {},
-                    "createdAt": "foo",
-                    "createdBy": "foo",
-                    "local": true,
-                    "visibility": "private",
-                    "region": "Seattle",
-                    "roomId": "foo",
-                    "appId": "foo"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "state": {},
+                  "initialConfig": {},
+                  "createdAt": "foo",
+                  "createdBy": "foo",
+                  "local": true,
+                  "visibility": "private",
+                  "region": "Seattle",
+                  "roomId": "foo",
+                  "appId": "foo"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -5911,18 +5822,15 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "state": {},
-                  "initialConfig": {},
-                  "createdAt": "foo",
-                  "createdBy": "foo",
-                  "local": true,
-                  "visibility": "private",
-                  "region": "Seattle",
-                  "roomId": "foo",
-                  "appId": "foo"
-                }
+                "state": {},
+                "initialConfig": {},
+                "createdAt": "foo",
+                "createdBy": "foo",
+                "local": true,
+                "visibility": "private",
+                "region": "Seattle",
+                "roomId": "foo",
+                "appId": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6019,7 +5927,7 @@
                     "key": "state",
                     "valueType": {
                       "type": "id",
-                      "value": "LobbyV2AppIdSetStateRoomIdPostRequestBodySchemaState"
+                      "value": "LobbyV2AppIdSetStateRoomIdPostRequestBodyContentApplicationJsonSchemaState"
                     }
                   }
                 ]
@@ -6091,18 +5999,15 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "state": {},
-                  "initialConfig": {},
-                  "createdAt": "foo",
-                  "createdBy": "foo",
-                  "local": true,
-                  "visibility": "private",
-                  "region": "Seattle",
-                  "roomId": "foo",
-                  "appId": "foo"
-                }
+                "state": {},
+                "initialConfig": {},
+                "createdAt": "foo",
+                "createdBy": "foo",
+                "local": true,
+                "visibility": "private",
+                "region": "Seattle",
+                "roomId": "foo",
+                "appId": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6252,10 +6157,7 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -6390,10 +6292,7 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -6714,33 +6613,30 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "cpu": [
-                    {
-                      "value": 42,
-                      "timestamp": 42
-                    }
-                  ],
-                  "memory": [
-                    {
-                      "value": 42,
-                      "timestamp": 42
-                    }
-                  ],
-                  "rate_egress": [
-                    {
-                      "value": 42,
-                      "timestamp": 42
-                    }
-                  ],
-                  "total_egress": [
-                    {
-                      "value": 42,
-                      "timestamp": 42
-                    }
-                  ]
-                }
+                "cpu": [
+                  {
+                    "value": 42,
+                    "timestamp": 42
+                  }
+                ],
+                "memory": [
+                  {
+                    "value": 42,
+                    "timestamp": 42
+                  }
+                ],
+                "rate_egress": [
+                  {
+                    "value": 42,
+                    "timestamp": 42
+                  }
+                ],
+                "total_egress": [
+                  {
+                    "value": 42,
+                    "timestamp": 42
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6888,33 +6784,30 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "egressedBytes": 42,
-                    "idleSince": "foo",
-                    "activeConnections": 42,
-                    "roomSlotsAvailable": 42,
-                    "draining": true,
-                    "terminatedAt": "foo",
-                    "stoppingAt": "foo",
-                    "startedAt": "foo",
-                    "startingAt": "foo",
-                    "roomsPerProcess": 42,
-                    "port": 42,
-                    "host": "foo",
-                    "region": "Seattle",
-                    "processId": "foo",
-                    "deploymentId": 42,
-                    "appId": "foo",
-                    "rooms": [
-                      null
-                    ],
-                    "totalRooms": 42
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "egressedBytes": 42,
+                  "idleSince": "foo",
+                  "activeConnections": 42,
+                  "roomSlotsAvailable": 42,
+                  "draining": true,
+                  "terminatedAt": "foo",
+                  "stoppingAt": "foo",
+                  "startedAt": "foo",
+                  "startingAt": "foo",
+                  "roomsPerProcess": 42,
+                  "port": 42,
+                  "host": "foo",
+                  "region": "Seattle",
+                  "processId": "foo",
+                  "deploymentId": 42,
+                  "appId": "foo",
+                  "rooms": [
+                    null
+                  ],
+                  "totalRooms": 42
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -7049,29 +6942,26 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "egressedBytes": 42,
-                    "idleSince": "foo",
-                    "activeConnections": 42,
-                    "roomSlotsAvailable": 42,
-                    "draining": true,
-                    "terminatedAt": "foo",
-                    "stoppingAt": "foo",
-                    "startedAt": "foo",
-                    "startingAt": "foo",
-                    "roomsPerProcess": 42,
-                    "port": 42,
-                    "host": "foo",
-                    "region": "Seattle",
-                    "processId": "foo",
-                    "deploymentId": 42,
-                    "appId": "foo"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "egressedBytes": 42,
+                  "idleSince": "foo",
+                  "activeConnections": 42,
+                  "roomSlotsAvailable": 42,
+                  "draining": true,
+                  "terminatedAt": "foo",
+                  "stoppingAt": "foo",
+                  "startedAt": "foo",
+                  "startingAt": "foo",
+                  "roomsPerProcess": 42,
+                  "port": 42,
+                  "host": "foo",
+                  "region": "Seattle",
+                  "processId": "foo",
+                  "deploymentId": 42,
+                  "appId": "foo"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -7205,25 +7095,22 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "egressedBytes": 42,
-                  "idleSince": "foo",
-                  "activeConnections": 42,
-                  "roomSlotsAvailable": 42,
-                  "draining": true,
-                  "terminatedAt": "foo",
-                  "stoppingAt": "foo",
-                  "startedAt": "foo",
-                  "startingAt": "foo",
-                  "roomsPerProcess": 42,
-                  "port": 42,
-                  "host": "foo",
-                  "region": "Seattle",
-                  "processId": "foo",
-                  "deploymentId": 42,
-                  "appId": "foo"
-                }
+                "egressedBytes": 42,
+                "idleSince": "foo",
+                "activeConnections": 42,
+                "roomSlotsAvailable": 42,
+                "draining": true,
+                "terminatedAt": "foo",
+                "stoppingAt": "foo",
+                "startedAt": "foo",
+                "startingAt": "foo",
+                "roomsPerProcess": 42,
+                "port": 42,
+                "host": "foo",
+                "region": "Seattle",
+                "processId": "foo",
+                "deploymentId": 42,
+                "appId": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7392,10 +7279,7 @@
                 }
               },
               "responseStatusCode": 201,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -7510,26 +7394,23 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "currentAllocation": {
+                "currentAllocation": {
+                  "unscheduledAt": "foo",
+                  "scheduledAt": "foo",
+                  "processId": "foo",
+                  "roomAllocationId": "foo"
+                },
+                "status": "scheduling",
+                "allocations": [
+                  {
                     "unscheduledAt": "foo",
                     "scheduledAt": "foo",
                     "processId": "foo",
                     "roomAllocationId": "foo"
-                  },
-                  "status": "scheduling",
-                  "allocations": [
-                    {
-                      "unscheduledAt": "foo",
-                      "scheduledAt": "foo",
-                      "processId": "foo",
-                      "roomAllocationId": "foo"
-                    }
-                  ],
-                  "roomId": "foo",
-                  "appId": "foo"
-                }
+                  }
+                ],
+                "roomId": "foo",
+                "appId": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7665,12 +7546,9 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  null
-                ]
-              },
+              "responseBody": [
+                null
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -7789,12 +7667,9 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  null
-                ]
-              },
+              "responseBody": [
+                null
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -8167,11 +8042,8 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "status": "starting",
-                  "roomId": "foo"
-                }
+                "status": "starting",
+                "roomId": "foo"
               },
               "responseBodyV3": {
                 "type": "json",

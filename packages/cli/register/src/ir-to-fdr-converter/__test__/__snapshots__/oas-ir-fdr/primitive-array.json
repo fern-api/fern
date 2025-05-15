@@ -24,8 +24,8 @@
         ]
       }
     },
-    "SearchWithUnionAndNullGetRequestBodySchema": {
-      "name": "SearchWithUnionAndNullGetRequestBodySchema",
+    "SearchWithUnionAndNullGetRequestBodyContentApplicationJsonSchema": {
+      "name": "SearchWithUnionAndNullGetRequestBodyContentApplicationJsonSchema",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -119,10 +119,7 @@
               "value": "foo"
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"
@@ -195,10 +192,7 @@
               "value": "foo"
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"
@@ -240,7 +234,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "SearchWithUnionAndNullGetRequestBodySchema"
+                  "value": "SearchWithUnionAndNullGetRequestBodyContentApplicationJsonSchema"
                 }
               }
             }
@@ -274,10 +268,7 @@
               "value": "foo"
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"

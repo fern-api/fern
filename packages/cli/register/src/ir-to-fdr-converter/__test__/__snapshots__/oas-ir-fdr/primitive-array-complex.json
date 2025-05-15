@@ -1,7 +1,7 @@
 {
   "types": {
-    "SearchWithObjectUnionGetRequestBodySchema": {
-      "name": "SearchWithObjectUnionGetRequestBodySchema",
+    "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema": {
+      "name": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema",
       "shape": {
         "type": "object",
         "extends": [],
@@ -111,10 +111,7 @@
               ]
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"
@@ -156,7 +153,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "SearchWithObjectUnionGetRequestBodySchema"
+                  "value": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema"
                 }
               }
             }
@@ -190,10 +187,7 @@
               "value": {}
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"

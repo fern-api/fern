@@ -3321,7 +3321,7 @@
     },
     "V1SpeakPostParametersSchema0": {
       "description": "Encoding - linear16. Supported sample rates - 8000, 16000, 24000, 32000, 48000 Hz.",
-      "name": "V1SpeakPostParametersSchema0",
+      "name": "linear16",
       "shape": {
         "type": "enum",
         "values": [
@@ -3393,7 +3393,7 @@
     },
     "V1SpeakPostParametersSchema1": {
       "description": "Encoding - mulaw. Supported sample rates - 8000, 16000 Hz.",
-      "name": "V1SpeakPostParametersSchema1",
+      "name": "mulaw",
       "shape": {
         "type": "enum",
         "values": [
@@ -3408,7 +3408,7 @@
     },
     "V1SpeakPostParametersSchema2": {
       "description": "Encoding - alaw. Supported sample rates - 8000, 16000 Hz.",
-      "name": "V1SpeakPostParametersSchema2",
+      "name": "alaw",
       "shape": {
         "type": "enum",
         "values": [
@@ -3423,7 +3423,7 @@
     },
     "V1SpeakPostParametersSchema3": {
       "description": "Encoding - mp3. Sample rate is fixed and not configurable (22050 Hz).",
-      "name": "V1SpeakPostParametersSchema3",
+      "name": "mp3",
       "shape": {
         "type": "enum",
         "values": [
@@ -3435,7 +3435,7 @@
     },
     "V1SpeakPostParametersSchema4": {
       "description": "Encoding - opus. Sample rate is fixed at 48000 Hz.",
-      "name": "V1SpeakPostParametersSchema4",
+      "name": "opus",
       "shape": {
         "type": "enum",
         "values": [
@@ -3447,7 +3447,7 @@
     },
     "V1SpeakPostParametersSchema5": {
       "description": "Encoding - opus. High-compression audio format optimized for real-time communications.",
-      "name": "V1SpeakPostParametersSchema5",
+      "name": "opus",
       "shape": {
         "type": "enum",
         "values": [
@@ -3459,7 +3459,7 @@
     },
     "V1SpeakPostParametersSchema6": {
       "description": "Encoding - aac. Advanced audio format offering better quality at smaller file sizes than mp3.",
-      "name": "V1SpeakPostParametersSchema6",
+      "name": "aac",
       "shape": {
         "type": "enum",
         "values": [
@@ -3661,8 +3661,8 @@
         ]
       }
     },
-    "V1ProjectsGetResponsesSchemaProjectsItems": {
-      "name": "V1ProjectsGetResponsesSchemaProjectsItems",
+    "V1ProjectsGetResponsesContentApplicationJsonSchemaProjectsItems": {
+      "name": "V1ProjectsGetResponsesContentApplicationJsonSchemaProjectsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3710,7 +3710,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsGetResponsesSchemaProjectsItems"
+                  "value": "V1ProjectsGetResponsesContentApplicationJsonSchemaProjectsItems"
                 }
               }
             }
@@ -4407,8 +4407,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdBalancesGetResponsesSchemaBalancesItems": {
-      "name": "V1ProjectsProjectIdBalancesGetResponsesSchemaBalancesItems",
+    "V1ProjectsProjectIdBalancesGetResponsesContentApplicationJsonSchemaBalancesItems": {
+      "name": "V1ProjectsProjectIdBalancesGetResponsesContentApplicationJsonSchemaBalancesItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4483,7 +4483,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsProjectIdBalancesGetResponsesSchemaBalancesItems"
+                  "value": "V1ProjectsProjectIdBalancesGetResponsesContentApplicationJsonSchemaBalancesItems"
                 }
               }
             }
@@ -5649,8 +5649,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdMembersGetResponsesSchemaMembersItems": {
-      "name": "V1ProjectsProjectIdMembersGetResponsesSchemaMembersItems",
+    "V1ProjectsProjectIdMembersGetResponsesContentApplicationJsonSchemaMembersItems": {
+      "name": "V1ProjectsProjectIdMembersGetResponsesContentApplicationJsonSchemaMembersItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5685,7 +5685,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsProjectIdMembersGetResponsesSchemaMembersItems"
+                  "value": "V1ProjectsProjectIdMembersGetResponsesContentApplicationJsonSchemaMembersItems"
                 }
               }
             }
@@ -6250,8 +6250,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdInvitesGetResponsesSchemaInvitesItems": {
-      "name": "V1ProjectsProjectIdInvitesGetResponsesSchemaInvitesItems",
+    "V1ProjectsProjectIdInvitesGetResponsesContentApplicationJsonSchemaInvitesItems": {
+      "name": "V1ProjectsProjectIdInvitesGetResponsesContentApplicationJsonSchemaInvitesItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6299,7 +6299,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsProjectIdInvitesGetResponsesSchemaInvitesItems"
+                  "value": "V1ProjectsProjectIdInvitesGetResponsesContentApplicationJsonSchemaInvitesItems"
                 }
               }
             }
@@ -7114,8 +7114,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdUsageGetResponsesSchemaResolution": {
-      "name": "V1ProjectsProjectIdUsageGetResponsesSchemaResolution",
+    "V1ProjectsProjectIdUsageGetResponsesContentApplicationJsonSchemaResolution": {
+      "name": "V1ProjectsProjectIdUsageGetResponsesContentApplicationJsonSchemaResolution",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7185,7 +7185,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V1ProjectsProjectIdUsageGetResponsesSchemaResolution"
+                "value": "V1ProjectsProjectIdUsageGetResponsesContentApplicationJsonSchemaResolution"
               }
             }
           }
@@ -7314,8 +7314,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdUsageFieldsGetResponsesSchemaModelsItems": {
-      "name": "V1ProjectsProjectIdUsageFieldsGetResponsesSchemaModelsItems",
+    "V1ProjectsProjectIdUsageFieldsGetResponsesContentApplicationJsonSchemaModelsItems": {
+      "name": "V1ProjectsProjectIdUsageFieldsGetResponsesContentApplicationJsonSchemaModelsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7406,7 +7406,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsProjectIdUsageFieldsGetResponsesSchemaModelsItems"
+                  "value": "V1ProjectsProjectIdUsageFieldsGetResponsesContentApplicationJsonSchemaModelsItems"
                 }
               }
             }
@@ -7668,8 +7668,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResolution": {
-      "name": "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResolution",
+    "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResolution": {
+      "name": "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResolution",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7697,8 +7697,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResultsItemsGrouping": {
-      "name": "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResultsItemsGrouping",
+    "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResultsItemsGrouping": {
+      "name": "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResultsItemsGrouping",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7846,8 +7846,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResultsItems": {
-      "name": "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResultsItems",
+    "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResultsItems": {
+      "name": "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResultsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7926,7 +7926,7 @@
             "key": "grouping",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResultsItemsGrouping"
+              "value": "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResultsItemsGrouping"
             }
           }
         ]
@@ -7964,7 +7964,7 @@
             "key": "resolution",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResolution"
+              "value": "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResolution"
             }
           },
           {
@@ -7973,7 +7973,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResultsItems"
+                "value": "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResultsItems"
               }
             }
           }
@@ -8102,8 +8102,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdPurchasesGetResponsesSchemaOrdersItems": {
-      "name": "V1ProjectsProjectIdPurchasesGetResponsesSchemaOrdersItems",
+    "V1ProjectsProjectIdPurchasesGetResponsesContentApplicationJsonSchemaOrdersItems": {
+      "name": "V1ProjectsProjectIdPurchasesGetResponsesContentApplicationJsonSchemaOrdersItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8200,7 +8200,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsProjectIdPurchasesGetResponsesSchemaOrdersItems"
+                  "value": "V1ProjectsProjectIdPurchasesGetResponsesContentApplicationJsonSchemaOrdersItems"
                 }
               }
             }
@@ -8269,8 +8269,8 @@
         ]
       }
     },
-    "V1ModelsGetResponsesSchemaSttItems": {
-      "name": "V1ModelsGetResponsesSchemaSttItems",
+    "V1ModelsGetResponsesContentApplicationJsonSchemaSttItems": {
+      "name": "V1ModelsGetResponsesContentApplicationJsonSchemaSttItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8390,8 +8390,8 @@
         ]
       }
     },
-    "V1ModelsGetResponsesSchemaTtsItemsMetadata": {
-      "name": "V1ModelsGetResponsesSchemaTtsItemsMetadata",
+    "V1ModelsGetResponsesContentApplicationJsonSchemaTtsItemsMetadata": {
+      "name": "V1ModelsGetResponsesContentApplicationJsonSchemaTtsItemsMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8464,8 +8464,8 @@
         ]
       }
     },
-    "V1ModelsGetResponsesSchemaTtsItems": {
-      "name": "V1ModelsGetResponsesSchemaTtsItems",
+    "V1ModelsGetResponsesContentApplicationJsonSchemaTtsItems": {
+      "name": "V1ModelsGetResponsesContentApplicationJsonSchemaTtsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8552,7 +8552,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V1ModelsGetResponsesSchemaTtsItemsMetadata"
+                "value": "V1ModelsGetResponsesContentApplicationJsonSchemaTtsItemsMetadata"
               }
             }
           }
@@ -8573,7 +8573,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ModelsGetResponsesSchemaSttItems"
+                  "value": "V1ModelsGetResponsesContentApplicationJsonSchemaSttItems"
                 }
               }
             }
@@ -8586,7 +8586,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ModelsGetResponsesSchemaTtsItems"
+                  "value": "V1ModelsGetResponsesContentApplicationJsonSchemaTtsItems"
                 }
               }
             }
@@ -8776,8 +8776,8 @@
         ]
       }
     },
-    "V1ModelsModelIdGetResponsesSchemaOneOf1Metadata": {
-      "name": "V1ModelsModelIdGetResponsesSchemaOneOf1Metadata",
+    "V1ModelsModelIdGetResponsesContentApplicationJsonSchemaOneOf1Metadata": {
+      "name": "V1ModelsModelIdGetResponsesContentApplicationJsonSchemaOneOf1Metadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8938,7 +8938,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V1ModelsModelIdGetResponsesSchemaOneOf1Metadata"
+                "value": "V1ModelsModelIdGetResponsesContentApplicationJsonSchemaOneOf1Metadata"
               }
             }
           }
@@ -9028,8 +9028,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItemsMember": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItemsMember",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItemsMember": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItemsMember",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9059,8 +9059,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItemsDistributionCredentials": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItemsDistributionCredentials",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItemsDistributionCredentials": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItemsDistributionCredentials",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9126,8 +9126,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItems": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItems",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItems": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9136,14 +9136,14 @@
             "key": "member",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItemsMember"
+              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItemsMember"
             }
           },
           {
             "key": "distribution_credentials",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItemsDistributionCredentials"
+              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItemsDistributionCredentials"
             }
           }
         ]
@@ -9164,7 +9164,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItems"
+                  "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItems"
                 }
               }
             }
@@ -9338,8 +9338,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesSchemaMember": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesSchemaMember",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesContentApplicationJsonSchemaMember": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesContentApplicationJsonSchemaMember",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9369,8 +9369,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesSchemaDistributionCredentials": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesSchemaDistributionCredentials",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesContentApplicationJsonSchemaDistributionCredentials": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesContentApplicationJsonSchemaDistributionCredentials",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9446,14 +9446,14 @@
             "key": "member",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesSchemaMember"
+              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesContentApplicationJsonSchemaMember"
             }
           },
           {
             "key": "distribution_credentials",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesSchemaDistributionCredentials"
+              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesContentApplicationJsonSchemaDistributionCredentials"
             }
           }
         ]
@@ -9581,8 +9581,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesSchemaMember": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesSchemaMember",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesContentApplicationJsonSchemaMember": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesContentApplicationJsonSchemaMember",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9612,8 +9612,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesSchemaDistributionCredentials": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesSchemaDistributionCredentials",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesContentApplicationJsonSchemaDistributionCredentials": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesContentApplicationJsonSchemaDistributionCredentials",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9689,14 +9689,14 @@
             "key": "member",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesSchemaMember"
+              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesContentApplicationJsonSchemaMember"
             }
           },
           {
             "key": "distribution_credentials",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesSchemaDistributionCredentials"
+              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesContentApplicationJsonSchemaDistributionCredentials"
             }
           }
         ]
@@ -10733,7 +10733,7 @@
     },
     "ListenControlMessageResponse0": {
       "description": "The server will process all remaining audio data and return the final results. You may receive a response with the from_finalize attribute set to true, indicating that the finalization process is complete. This response typically occurs when there is a noticeable amount of audio buffered in the server.\n",
-      "name": "ListenControlMessageResponse0",
+      "name": "FinalizeResponse",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10778,7 +10778,7 @@
     },
     "ListenControlMessageResponse1": {
       "description": "Provides real-time metadata during audio streaming, including audio characteristics\nand processing details. This response is sent periodically during streaming to\nprovide updates about the audio being processed.\n",
-      "name": "ListenControlMessageResponse1",
+      "name": "MetadataResponse",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10891,7 +10891,7 @@
     },
     "ListenControlMessageResponse2": {
       "description": "Indicates that the server has closed the WebSocket connection and the server will process all remaining audio data.\n",
-      "name": "ListenControlMessageResponse2",
+      "name": "CloseStreamResponse",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13641,189 +13641,186 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "metadata": {
-                    "transaction_key": "deprecated",
-                    "request_id": "a847f427-4ad5-4d67-9b95-db801e58251c",
-                    "sha256": "154e291ecfa8be6ab8343560bcc109008fa7853eb5372533e8efdefc9b504c33",
-                    "created": "2024-05-12T18:57:13.426Z",
-                    "duration": 25.933313,
-                    "channels": 1,
-                    "models": [
-                      "foo"
-                    ],
-                    "model_info": {},
-                    "summary_info": {
-                      "model_uuid": "67875a7f-c9c4-48a0-aa55-5bdb8a91c34a",
-                      "input_tokens": 95,
-                      "output_tokens": 63
-                    },
-                    "sentiment_info": {
-                      "model_uuid": "80ab3179-d113-4254-bd6b-4a2f96498695",
-                      "input_tokens": 105,
-                      "output_tokens": 105
-                    },
-                    "topics_info": {
-                      "model_uuid": "80ab3179-d113-4254-bd6b-4a2f96498695",
-                      "input_tokens": 105,
-                      "output_tokens": 7
-                    },
-                    "intents_info": {
-                      "model_uuid": "80ab3179-d113-4254-bd6b-4a2f96498695",
-                      "input_tokens": 105,
-                      "output_tokens": 4
-                    },
-                    "tags": [
-                      "foo"
-                    ]
+                "metadata": {
+                  "transaction_key": "deprecated",
+                  "request_id": "a847f427-4ad5-4d67-9b95-db801e58251c",
+                  "sha256": "154e291ecfa8be6ab8343560bcc109008fa7853eb5372533e8efdefc9b504c33",
+                  "created": "2024-05-12T18:57:13.426Z",
+                  "duration": 25.933313,
+                  "channels": 1,
+                  "models": [
+                    "foo"
+                  ],
+                  "model_info": {},
+                  "summary_info": {
+                    "model_uuid": "67875a7f-c9c4-48a0-aa55-5bdb8a91c34a",
+                    "input_tokens": 95,
+                    "output_tokens": 63
                   },
-                  "results": {
-                    "channels": [
-                      {
-                        "search": [
-                          {
-                            "query": "foo",
-                            "hits": [
-                              {
-                                "confidence": 42,
-                                "start": 42,
-                                "end": 42,
-                                "snippet": "foo"
-                              }
-                            ]
-                          }
-                        ],
-                        "alternatives": [
-                          {
-                            "transcript": "foo",
-                            "confidence": 42,
-                            "words": [
-                              {
-                                "word": "foo",
-                                "start": 42,
-                                "end": 42,
-                                "confidence": 42
-                              }
-                            ],
-                            "paragraphs": {
-                              "transcript": "foo",
-                              "paragraphs": [
-                                {
-                                  "sentences": [
-                                    {
-                                      "text": "foo",
-                                      "start": 42,
-                                      "end": 42
-                                    }
-                                  ],
-                                  "speaker": 42,
-                                  "num_words": 42,
-                                  "start": 42,
-                                  "end": 42
-                                }
-                              ]
-                            },
-                            "summaries": [
-                              {
-                                "summary": "foo",
-                                "start_word": 42,
-                                "end_word": 42
-                              }
-                            ],
-                            "topics": [
-                              {
-                                "text": "foo",
-                                "start_word": 42,
-                                "end_word": 42,
-                                "topics": [
-                                  "foo"
-                                ]
-                              }
-                            ]
-                          }
-                        ],
-                        "detected_language": "foo"
-                      }
-                    ],
-                    "utterances": [
-                      {
-                        "start": 42,
-                        "end": 42,
-                        "confidence": 42,
-                        "channel": 42,
-                        "transcript": "foo",
-                        "words": [
-                          {
-                            "word": "foo",
-                            "start": 42,
-                            "end": 42,
-                            "confidence": 42,
-                            "speaker": 42,
-                            "speaker_confidence": 42,
-                            "punctuated_word": "foo"
-                          }
-                        ],
-                        "speaker": 42,
-                        "id": "foo"
-                      }
-                    ],
-                    "summary": {
-                      "result": "success",
-                      "short": "Speaker 0 discusses the significance of the first all-female spacewalk with an all-female team, stating that it is a tribute to the skilled and qualified women who were denied opportunities in the past."
-                    },
-                    "topics": {
-                      "results": {
-                        "topics": {
-                          "segments": [
-                            {
-                              "text": "And, um, I think if it signifies anything, it is, uh, to honor the the women who came before us who, um, were skilled and qualified, um, and didn't get the the same opportunities that we have today.",
-                              "start_word": 32,
-                              "end_word": 69,
-                              "topics": [
-                                {
-                                  "topic": "Spacewalk",
-                                  "confidence_score": 0.91581345
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      }
-                    },
-                    "intents": {
-                      "results": {
-                        "intents": {
-                          "segments": [
-                            {
-                              "text": "If you found this valuable, you can subscribe to the show on spotify or your favorite podcast app.",
-                              "start_word": 354,
-                              "end_word": 414,
-                              "intents": [
-                                {
-                                  "intent": "Encourage podcasting",
-                                  "confidence_score": 0.0038975573
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      }
-                    },
-                    "sentiments": {
-                      "segments": [
+                  "sentiment_info": {
+                    "model_uuid": "80ab3179-d113-4254-bd6b-4a2f96498695",
+                    "input_tokens": 105,
+                    "output_tokens": 105
+                  },
+                  "topics_info": {
+                    "model_uuid": "80ab3179-d113-4254-bd6b-4a2f96498695",
+                    "input_tokens": 105,
+                    "output_tokens": 7
+                  },
+                  "intents_info": {
+                    "model_uuid": "80ab3179-d113-4254-bd6b-4a2f96498695",
+                    "input_tokens": 105,
+                    "output_tokens": 4
+                  },
+                  "tags": [
+                    "foo"
+                  ]
+                },
+                "results": {
+                  "channels": [
+                    {
+                      "search": [
                         {
-                          "text": "Yeah. As as much as, um, it's worth celebrating, uh, the first, uh, spacewalk, um, with an all-female team, I think many of us are looking forward to it just being normal. And, um, I think if it signifies anything, it is, uh, to honor the the women who came before us who, um, were skilled and qualified, um, and didn't get the the same opportunities that we have today.",
-                          "start_word": 0,
-                          "end_word": 69,
-                          "sentiment": "positive",
-                          "sentiment_score": 0.5810546875
+                          "query": "foo",
+                          "hits": [
+                            {
+                              "confidence": 42,
+                              "start": 42,
+                              "end": 42,
+                              "snippet": "foo"
+                            }
+                          ]
                         }
                       ],
-                      "average": {
-                        "sentiment": "positive",
-                        "sentiment_score": 0.5810185185185185
+                      "alternatives": [
+                        {
+                          "transcript": "foo",
+                          "confidence": 42,
+                          "words": [
+                            {
+                              "word": "foo",
+                              "start": 42,
+                              "end": 42,
+                              "confidence": 42
+                            }
+                          ],
+                          "paragraphs": {
+                            "transcript": "foo",
+                            "paragraphs": [
+                              {
+                                "sentences": [
+                                  {
+                                    "text": "foo",
+                                    "start": 42,
+                                    "end": 42
+                                  }
+                                ],
+                                "speaker": 42,
+                                "num_words": 42,
+                                "start": 42,
+                                "end": 42
+                              }
+                            ]
+                          },
+                          "summaries": [
+                            {
+                              "summary": "foo",
+                              "start_word": 42,
+                              "end_word": 42
+                            }
+                          ],
+                          "topics": [
+                            {
+                              "text": "foo",
+                              "start_word": 42,
+                              "end_word": 42,
+                              "topics": [
+                                "foo"
+                              ]
+                            }
+                          ]
+                        }
+                      ],
+                      "detected_language": "foo"
+                    }
+                  ],
+                  "utterances": [
+                    {
+                      "start": 42,
+                      "end": 42,
+                      "confidence": 42,
+                      "channel": 42,
+                      "transcript": "foo",
+                      "words": [
+                        {
+                          "word": "foo",
+                          "start": 42,
+                          "end": 42,
+                          "confidence": 42,
+                          "speaker": 42,
+                          "speaker_confidence": 42,
+                          "punctuated_word": "foo"
+                        }
+                      ],
+                      "speaker": 42,
+                      "id": "foo"
+                    }
+                  ],
+                  "summary": {
+                    "result": "success",
+                    "short": "Speaker 0 discusses the significance of the first all-female spacewalk with an all-female team, stating that it is a tribute to the skilled and qualified women who were denied opportunities in the past."
+                  },
+                  "topics": {
+                    "results": {
+                      "topics": {
+                        "segments": [
+                          {
+                            "text": "And, um, I think if it signifies anything, it is, uh, to honor the the women who came before us who, um, were skilled and qualified, um, and didn't get the the same opportunities that we have today.",
+                            "start_word": 32,
+                            "end_word": 69,
+                            "topics": [
+                              {
+                                "topic": "Spacewalk",
+                                "confidence_score": 0.91581345
+                              }
+                            ]
+                          }
+                        ]
                       }
+                    }
+                  },
+                  "intents": {
+                    "results": {
+                      "intents": {
+                        "segments": [
+                          {
+                            "text": "If you found this valuable, you can subscribe to the show on spotify or your favorite podcast app.",
+                            "start_word": 354,
+                            "end_word": 414,
+                            "intents": [
+                              {
+                                "intent": "Encourage podcasting",
+                                "confidence_score": 0.0038975573
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "sentiments": {
+                    "segments": [
+                      {
+                        "text": "Yeah. As as much as, um, it's worth celebrating, uh, the first, uh, spacewalk, um, with an all-female team, I think many of us are looking forward to it just being normal. And, um, I think if it signifies anything, it is, uh, to honor the the women who came before us who, um, were skilled and qualified, um, and didn't get the the same opportunities that we have today.",
+                        "start_word": 0,
+                        "end_word": 69,
+                        "sentiment": "positive",
+                        "sentiment_score": 0.5810546875
+                      }
+                    ],
+                    "average": {
+                      "sentiment": "positive",
+                      "sentiment_score": 0.5810185185185185
                     }
                   }
                 }
@@ -14248,95 +14245,92 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
+                "metadata": {
                   "metadata": {
-                    "metadata": {
-                      "request_id": "d04af392-db11-4c1d-83e1-20e34f0b8999",
-                      "created": "2024-11-18T23:47:44.674Z",
-                      "language": "en",
-                      "summary_info": {
-                        "model_uuid": "foo",
-                        "input_tokens": 42,
-                        "output_tokens": 42
-                      },
-                      "sentiment_info": {
-                        "model_uuid": "foo",
-                        "input_tokens": 42,
-                        "output_tokens": 42
-                      },
-                      "topics_info": {
-                        "model_uuid": "foo",
-                        "input_tokens": 42,
-                        "output_tokens": 42
-                      },
-                      "intents_info": {
-                        "model_uuid": "foo",
-                        "input_tokens": 42,
-                        "output_tokens": 42
+                    "request_id": "d04af392-db11-4c1d-83e1-20e34f0b8999",
+                    "created": "2024-11-18T23:47:44.674Z",
+                    "language": "en",
+                    "summary_info": {
+                      "model_uuid": "foo",
+                      "input_tokens": 42,
+                      "output_tokens": 42
+                    },
+                    "sentiment_info": {
+                      "model_uuid": "foo",
+                      "input_tokens": 42,
+                      "output_tokens": 42
+                    },
+                    "topics_info": {
+                      "model_uuid": "foo",
+                      "input_tokens": 42,
+                      "output_tokens": 42
+                    },
+                    "intents_info": {
+                      "model_uuid": "foo",
+                      "input_tokens": 42,
+                      "output_tokens": 42
+                    }
+                  }
+                },
+                "results": {
+                  "summary": {
+                    "results": {
+                      "summary": {
+                        "text": "The summary of the text submitted."
                       }
                     }
                   },
-                  "results": {
-                    "summary": {
-                      "results": {
-                        "summary": {
-                          "text": "The summary of the text submitted."
-                        }
+                  "topics": {
+                    "results": {
+                      "topics": {
+                        "segments": [
+                          {
+                            "text": "And, um, I think if it signifies anything, it is, uh, to honor the the women who came before us who, um, were skilled and qualified, um, and didn't get the the same opportunities that we have today.",
+                            "start_word": 32,
+                            "end_word": 69,
+                            "topics": [
+                              {
+                                "topic": "Spacewalk",
+                                "confidence_score": 0.91581345
+                              }
+                            ]
+                          }
+                        ]
                       }
-                    },
-                    "topics": {
-                      "results": {
-                        "topics": {
-                          "segments": [
-                            {
-                              "text": "And, um, I think if it signifies anything, it is, uh, to honor the the women who came before us who, um, were skilled and qualified, um, and didn't get the the same opportunities that we have today.",
-                              "start_word": 32,
-                              "end_word": 69,
-                              "topics": [
-                                {
-                                  "topic": "Spacewalk",
-                                  "confidence_score": 0.91581345
-                                }
-                              ]
-                            }
-                          ]
-                        }
+                    }
+                  },
+                  "intents": {
+                    "results": {
+                      "intents": {
+                        "segments": [
+                          {
+                            "text": "If you found this valuable, you can subscribe to the show on spotify or your favorite podcast app.",
+                            "start_word": 354,
+                            "end_word": 414,
+                            "intents": [
+                              {
+                                "intent": "Encourage podcasting",
+                                "confidence_score": 0.0038975573
+                              }
+                            ]
+                          }
+                        ]
                       }
-                    },
-                    "intents": {
-                      "results": {
-                        "intents": {
-                          "segments": [
-                            {
-                              "text": "If you found this valuable, you can subscribe to the show on spotify or your favorite podcast app.",
-                              "start_word": 354,
-                              "end_word": 414,
-                              "intents": [
-                                {
-                                  "intent": "Encourage podcasting",
-                                  "confidence_score": 0.0038975573
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      }
-                    },
-                    "sentiments": {
-                      "segments": [
-                        {
-                          "text": "Yeah. As as much as, um, it's worth celebrating, uh, the first, uh, spacewalk, um, with an all-female team, I think many of us are looking forward to it just being normal. And, um, I think if it signifies anything, it is, uh, to honor the the women who came before us who, um, were skilled and qualified, um, and didn't get the the same opportunities that we have today.",
-                          "start_word": 0,
-                          "end_word": 69,
-                          "sentiment": "positive",
-                          "sentiment_score": 0.5810546875
-                        }
-                      ],
-                      "average": {
+                    }
+                  },
+                  "sentiments": {
+                    "segments": [
+                      {
+                        "text": "Yeah. As as much as, um, it's worth celebrating, uh, the first, uh, spacewalk, um, with an all-female team, I think many of us are looking forward to it just being normal. And, um, I think if it signifies anything, it is, uh, to honor the the women who came before us who, um, were skilled and qualified, um, and didn't get the the same opportunities that we have today.",
+                        "start_word": 0,
+                        "end_word": 69,
                         "sentiment": "positive",
-                        "sentiment_score": 0.5810185185185185
+                        "sentiment_score": 0.5810546875
                       }
+                    ],
+                    "average": {
+                      "sentiment": "positive",
+                      "sentiment_score": 0.5810185185185185
                     }
                   }
                 }
@@ -14729,15 +14723,12 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "projects": [
-                    {
-                      "project_id": "foo",
-                      "name": "foo"
-                    }
-                  ]
-                }
+                "projects": [
+                  {
+                    "project_id": "foo",
+                    "name": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -14930,11 +14921,8 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "project_id": "foo",
-                  "name": "foo"
-                }
+                "project_id": "foo",
+                "name": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15061,10 +15049,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "message": "Successfully deleted a project."
-                }
+                "message": "Successfully deleted a project."
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15214,10 +15199,7 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "message": "Successfully updated project info."
-                }
+                "message": "Successfully updated project info."
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15343,17 +15325,14 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "balances": [
-                    {
-                      "balance_id": "b123456-7890-1234-5678-901234",
-                      "amount": 250,
-                      "units": "usd",
-                      "purchase_order_id": "b123456-7890-1234-5678-901234"
-                    }
-                  ]
-                }
+                "balances": [
+                  {
+                    "balance_id": "b123456-7890-1234-5678-901234",
+                    "amount": 250,
+                    "units": "usd",
+                    "purchase_order_id": "b123456-7890-1234-5678-901234"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15505,13 +15484,10 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "balance_id": "b123456-7890-1234-5678-901234",
-                  "amount": 250,
-                  "units": "usd",
-                  "purchase_order_id": "b123456-7890-1234-5678-901234"
-                }
+                "balance_id": "b123456-7890-1234-5678-901234",
+                "amount": 250,
+                "units": "usd",
+                "purchase_order_id": "b123456-7890-1234-5678-901234"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15627,49 +15603,46 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "stt": [
-                    [
-                      {
-                        "name": "conversationalai",
-                        "canonical_name": "conversationalai",
-                        "architecture": "base",
-                        "languages": [
-                          "foo"
-                        ],
-                        "version": "2021-11-10.1",
-                        "uuid": "6b28e919-8427-4f32-9847-492e2efd7daf",
-                        "batch": true,
-                        "streaming": true,
-                        "formatted_output": true
-                      }
-                    ]
-                  ],
-                  "tts": [
-                    [
-                      {
-                        "name": "zeus",
-                        "canonical_name": "aura-zeus-en",
-                        "architecture": "aura",
-                        "languages": [
-                          "foo"
-                        ],
-                        "version": "2024-07-30.0",
-                        "uuid": "9c28bce5-f144-4d32-9034-843aa7aed63e",
-                        "metadata": {
-                          "accent": "American",
-                          "color": "#949498",
-                          "image": "https://static.deepgram.com/examples/avatars/zeus.jpg",
-                          "sample": "https://static.deepgram.com/examples/voices/zeus.wav",
-                          "tags": [
-                            "foo"
-                          ]
-                        }
-                      }
-                    ]
+                "stt": [
+                  [
+                    {
+                      "name": "conversationalai",
+                      "canonical_name": "conversationalai",
+                      "architecture": "base",
+                      "languages": [
+                        "foo"
+                      ],
+                      "version": "2021-11-10.1",
+                      "uuid": "6b28e919-8427-4f32-9847-492e2efd7daf",
+                      "batch": true,
+                      "streaming": true,
+                      "formatted_output": true
+                    }
                   ]
-                }
+                ],
+                "tts": [
+                  [
+                    {
+                      "name": "zeus",
+                      "canonical_name": "aura-zeus-en",
+                      "architecture": "aura",
+                      "languages": [
+                        "foo"
+                      ],
+                      "version": "2024-07-30.0",
+                      "uuid": "9c28bce5-f144-4d32-9034-843aa7aed63e",
+                      "metadata": {
+                        "accent": "American",
+                        "color": "#949498",
+                        "image": "https://static.deepgram.com/examples/avatars/zeus.jpg",
+                        "sample": "https://static.deepgram.com/examples/voices/zeus.wav",
+                        "tags": [
+                          "foo"
+                        ]
+                      }
+                    }
+                  ]
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15824,24 +15797,21 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "name": "conversationalai",
-                    "canonical_name": "conversationalai",
-                    "architecture": "base",
-                    "languages": [
-                      "foo"
-                    ],
-                    "version": "2021-11-10.1",
-                    "uuid": "6b28e919-8427-4f32-9847-492e2efd7daf",
-                    "batch": true,
-                    "streaming": true,
-                    "formatted_output": true
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "name": "conversationalai",
+                  "canonical_name": "conversationalai",
+                  "architecture": "base",
+                  "languages": [
+                    "foo"
+                  ],
+                  "version": "2021-11-10.1",
+                  "uuid": "6b28e919-8427-4f32-9847-492e2efd7daf",
+                  "batch": true,
+                  "streaming": true,
+                  "formatted_output": true
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -15965,27 +15935,24 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "api_keys": [
-                    [
-                      {
-                        "member": {
-                          "member_id": "1000-2000-3000-4000",
-                          "email": "john@test.com"
-                        },
-                        "api_key": {
-                          "api_key_id": "1234567890abcdef1234567890abcdef",
-                          "comment": "A comment",
-                          "scopes": [
-                            "foo"
-                          ],
-                          "created": "2021-01-01T00:00:00Z"
-                        }
+                "api_keys": [
+                  [
+                    {
+                      "member": {
+                        "member_id": "1000-2000-3000-4000",
+                        "email": "john@test.com"
+                      },
+                      "api_key": {
+                        "api_key_id": "1234567890abcdef1234567890abcdef",
+                        "comment": "A comment",
+                        "scopes": [
+                          "foo"
+                        ],
+                        "created": "2021-01-01T00:00:00Z"
                       }
-                    ]
+                    }
                   ]
-                }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16139,17 +16106,14 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "api_key_id": "1234567890abcdef1234567890abcdef",
-                  "key": "1234567890abcdef1234567890abcdef",
-                  "scopes": [
-                    "member"
-                  ],
-                  "tags": [
-                    "tag-1"
-                  ]
-                }
+                "api_key_id": "1234567890abcdef1234567890abcdef",
+                "key": "1234567890abcdef1234567890abcdef",
+                "scopes": [
+                  "member"
+                ],
+                "tags": [
+                  "tag-1"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16288,22 +16252,19 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "item": {
-                    "member": {
-                      "member_id": "1000-2000-3000-4000",
-                      "email": "john@test.com",
-                      "first_name": "John",
-                      "last_name": "Doe",
-                      "api_key": {
-                        "api_key_id": "1234567890abcdef1234567890abcdef",
-                        "comment": "A comment",
-                        "scopes": [
-                          "foo"
-                        ],
-                        "created": "2021-01-01T00:00:00Z"
-                      }
+                "item": {
+                  "member": {
+                    "member_id": "1000-2000-3000-4000",
+                    "email": "john@test.com",
+                    "first_name": "John",
+                    "last_name": "Doe",
+                    "api_key": {
+                      "api_key_id": "1234567890abcdef1234567890abcdef",
+                      "comment": "A comment",
+                      "scopes": [
+                        "foo"
+                      ],
+                      "created": "2021-01-01T00:00:00Z"
                     }
                   }
                 }
@@ -16453,10 +16414,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "message": "Successfully deleted the API key!"
-                }
+                "message": "Successfully deleted the API key!"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16569,14 +16527,11 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "members": [
-                    {
-                      "member_id": "foo"
-                    }
-                  ]
-                }
+                "members": [
+                  {
+                    "member_id": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16712,10 +16667,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "message": "Successfully removed account from project."
-                }
+                "message": "Successfully removed account from project."
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16847,12 +16799,9 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "scopes": [
-                    "foo"
-                  ]
-                }
+                "scopes": [
+                  "foo"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17010,10 +16959,7 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "message": "Successfully updated the account scopes."
-                }
+                "message": "Successfully updated the account scopes."
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17099,15 +17045,12 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "invites": [
-                    {
-                      "email": "foo",
-                      "scope": "foo"
-                    }
-                  ]
-                }
+                "invites": [
+                  {
+                    "email": "foo",
+                    "scope": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17251,10 +17194,7 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "message": "foo"
-                }
+                "message": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17386,10 +17326,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "message": "foo"
-                }
+                "message": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17502,10 +17439,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "message": "foo"
-                }
+                "message": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17694,24 +17628,21 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "page": 42,
-                  "limit": 42,
-                  "requests": [
-                    {
-                      "request_id": "foo",
-                      "project_uuid": "foo",
-                      "created": "foo",
-                      "path": "foo",
-                      "api_key_id": "foo",
-                      "response": {},
-                      "code": 42,
-                      "deployment": "foo",
-                      "callback": "foo"
-                    }
-                  ]
-                }
+                "page": 42,
+                "limit": 42,
+                "requests": [
+                  {
+                    "request_id": "foo",
+                    "project_uuid": "foo",
+                    "created": "foo",
+                    "path": "foo",
+                    "api_key_id": "foo",
+                    "response": {},
+                    "code": 42,
+                    "deployment": "foo",
+                    "callback": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17830,19 +17761,16 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "request": {
-                    "request_id": "foo",
-                    "project_uuid": "foo",
-                    "created": "foo",
-                    "path": "foo",
-                    "api_key_id": "foo",
-                    "response": {},
-                    "code": 42,
-                    "deployment": "foo",
-                    "callback": "foo"
-                  }
+                "request": {
+                  "request_id": "foo",
+                  "project_uuid": "foo",
+                  "created": "foo",
+                  "path": "foo",
+                  "api_key_id": "foo",
+                  "response": {},
+                  "code": 42,
+                  "deployment": "foo",
+                  "callback": "foo"
                 }
               },
               "responseBodyV3": {
@@ -18009,14 +17937,11 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "start": "2024-10-16",
-                  "end": "2024-10-23",
-                  "resolution": {
-                    "units": "day",
-                    "amount": 1
-                  }
+                "start": "2024-10-16",
+                "end": "2024-10-23",
+                "resolution": {
+                  "units": "day",
+                  "amount": 1
                 }
               },
               "responseBodyV3": {
@@ -18167,26 +18092,23 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "tags": [
-                    "foo"
-                  ],
-                  "models": [
-                    {
-                      "name": "2-medical-nova",
-                      "language": "en-MY",
-                      "version": "2024-05-31.13574",
-                      "model_id": "1234567890-12345-67890"
-                    }
-                  ],
-                  "processing_methods": [
-                    "foo"
-                  ],
-                  "features": [
-                    "foo"
-                  ]
-                }
+                "tags": [
+                  "foo"
+                ],
+                "models": [
+                  {
+                    "name": "2-medical-nova",
+                    "language": "en-MY",
+                    "version": "2024-05-31.13574",
+                    "model_id": "1234567890-12345-67890"
+                  }
+                ],
+                "processing_methods": [
+                  "foo"
+                ],
+                "features": [
+                  "foo"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18369,37 +18291,34 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "start": "2025-01-16",
-                  "end": "2025-01-23",
-                  "resolution": {
-                    "units": "day",
-                    "amount": 1
-                  },
-                  "results": [
-                    {
-                      "hours": 1619.7242069444444,
-                      "total_hours": 1621.7395791666668,
-                      "agent_hours": 41.33564388888889,
-                      "tokens_in": 0,
-                      "tokens_out": 0,
-                      "tts_characters": 9158866,
-                      "requests": 373381,
-                      "grouping": {
-                        "start": "2025-01-16",
-                        "end": "2025-01-16",
-                        "accessor": "123456789012345678901234",
-                        "endpoint": "listen",
-                        "feature_set": "punctuate",
-                        "models": "Nova-2",
-                        "method": "async",
-                        "tags": "tag1",
-                        "deployment": "self-hosted"
-                      }
+                "start": "2025-01-16",
+                "end": "2025-01-23",
+                "resolution": {
+                  "units": "day",
+                  "amount": 1
+                },
+                "results": [
+                  {
+                    "hours": 1619.7242069444444,
+                    "total_hours": 1621.7395791666668,
+                    "agent_hours": 41.33564388888889,
+                    "tokens_in": 0,
+                    "tokens_out": 0,
+                    "tts_characters": 9158866,
+                    "requests": 373381,
+                    "grouping": {
+                      "start": "2025-01-16",
+                      "end": "2025-01-16",
+                      "accessor": "123456789012345678901234",
+                      "endpoint": "listen",
+                      "feature_set": "punctuate",
+                      "models": "Nova-2",
+                      "method": "async",
+                      "tags": "tag1",
+                      "deployment": "self-hosted"
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18560,19 +18479,16 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "orders": [
-                    {
-                      "order_id": "025e19ba-b6d9-4a04-9f99-4fe715aca5f1",
-                      "expiration": "2026-03-04T00:00:00Z",
-                      "created": "2023-02-21T21:13:40.014373Z",
-                      "amount": 150,
-                      "units": "usd",
-                      "order_type": "promotional"
-                    }
-                  ]
-                }
+                "orders": [
+                  {
+                    "order_id": "025e19ba-b6d9-4a04-9f99-4fe715aca5f1",
+                    "expiration": "2026-03-04T00:00:00Z",
+                    "created": "2023-02-21T21:13:40.014373Z",
+                    "amount": 150,
+                    "units": "usd",
+                    "order_type": "promotional"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18673,45 +18589,42 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "stt": [
-                    {
-                      "name": "general",
-                      "canonical_name": "enhanced-general",
-                      "architecture": "polaris",
-                      "languages": [
+                "stt": [
+                  {
+                    "name": "general",
+                    "canonical_name": "enhanced-general",
+                    "architecture": "polaris",
+                    "languages": [
+                      "foo"
+                    ],
+                    "version": "2022-05-18.1",
+                    "uuid": "c7226e9e-ae1c-4057-ae2a-a71a6b0dc588",
+                    "batch": true,
+                    "streaming": true,
+                    "formatted_output": false
+                  }
+                ],
+                "tts": [
+                  {
+                    "name": "angus",
+                    "canonical_name": "aura-angus-en",
+                    "architecture": "aura",
+                    "languages": [
+                      "foo"
+                    ],
+                    "version": "2024-07-30.0",
+                    "uuid": "eed36e9e-37aa-40a3-91fa-a2911e73a5da",
+                    "metadata": {
+                      "accent": "Irish",
+                      "color": "#BA80F5",
+                      "image": "https://static.deepgram.com/examples/avatars/angus.jpg",
+                      "sample": "https://static.deepgram.com/examples/voices/angus.wav",
+                      "tags": [
                         "foo"
-                      ],
-                      "version": "2022-05-18.1",
-                      "uuid": "c7226e9e-ae1c-4057-ae2a-a71a6b0dc588",
-                      "batch": true,
-                      "streaming": true,
-                      "formatted_output": false
+                      ]
                     }
-                  ],
-                  "tts": [
-                    {
-                      "name": "angus",
-                      "canonical_name": "aura-angus-en",
-                      "architecture": "aura",
-                      "languages": [
-                        "foo"
-                      ],
-                      "version": "2024-07-30.0",
-                      "uuid": "eed36e9e-37aa-40a3-91fa-a2911e73a5da",
-                      "metadata": {
-                        "accent": "Irish",
-                        "color": "#BA80F5",
-                        "image": "https://static.deepgram.com/examples/avatars/angus.jpg",
-                        "sample": "https://static.deepgram.com/examples/voices/angus.wav",
-                        "tags": [
-                          "foo"
-                        ]
-                      }
-                    }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18846,20 +18759,17 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "general",
-                  "canonical_name": "enhanced-general",
-                  "architecture": "polaris",
-                  "languages": [
-                    "foo"
-                  ],
-                  "version": "2022-05-18.1",
-                  "uuid": "c7226e9e-ae1c-4057-ae2a-a71a6b0dc588",
-                  "batch": true,
-                  "streaming": true,
-                  "formatted_output": false
-                }
+                "name": "general",
+                "canonical_name": "enhanced-general",
+                "architecture": "polaris",
+                "languages": [
+                  "foo"
+                ],
+                "version": "2022-05-18.1",
+                "uuid": "c7226e9e-ae1c-4057-ae2a-a71a6b0dc588",
+                "batch": true,
+                "streaming": true,
+                "formatted_output": false
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18982,26 +18892,23 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "distribution_credentials": [
-                    {
-                      "member": {
-                        "member_id": "3376abcd-8e5e-49d3-92d4-876d3a4f0363",
-                        "email": "email@example.com"
-                      },
-                      "distribution_credentials": {
-                        "distribution_credentials_id": "8b36cfd0-472f-4a21-833f-2d6343c3a2f3",
-                        "provider": "quay",
-                        "comment": "My Self-Hosted Distribution Credentials",
-                        "scopes": [
-                          "foo"
-                        ],
-                        "created": "2023-06-28T15:36:59.609841Z"
-                      }
+                "distribution_credentials": [
+                  {
+                    "member": {
+                      "member_id": "3376abcd-8e5e-49d3-92d4-876d3a4f0363",
+                      "email": "email@example.com"
+                    },
+                    "distribution_credentials": {
+                      "distribution_credentials_id": "8b36cfd0-472f-4a21-833f-2d6343c3a2f3",
+                      "provider": "quay",
+                      "comment": "My Self-Hosted Distribution Credentials",
+                      "scopes": [
+                        "foo"
+                      ],
+                      "created": "2023-06-28T15:36:59.609841Z"
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -19274,21 +19181,18 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "member": {
-                    "member_id": "c7b9b131-73f3-11d9-8665-0b00d2e44b83",
-                    "email": "email@example.com"
-                  },
-                  "distribution_credentials": {
-                    "distribution_credentials_id": "82c32c10-53b2-4d23-993f-864b3d44502a",
-                    "provider": "quay",
-                    "comment": "My Self-Hosted Distribution Credentials",
-                    "scopes": [
-                      "foo"
-                    ],
-                    "created": "2023-06-28T15:36:59.609841Z"
-                  }
+                "member": {
+                  "member_id": "c7b9b131-73f3-11d9-8665-0b00d2e44b83",
+                  "email": "email@example.com"
+                },
+                "distribution_credentials": {
+                  "distribution_credentials_id": "82c32c10-53b2-4d23-993f-864b3d44502a",
+                  "provider": "quay",
+                  "comment": "My Self-Hosted Distribution Credentials",
+                  "scopes": [
+                    "foo"
+                  ],
+                  "created": "2023-06-28T15:36:59.609841Z"
                 }
               },
               "responseBodyV3": {
@@ -19433,21 +19337,18 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "member": {
-                    "member_id": "c7b9b131-73f3-11d9-8665-0b00d2e44b83",
-                    "email": "email@example.com"
-                  },
-                  "distribution_credentials": {
-                    "distribution_credentials_id": "82c32c10-53b2-4d23-993f-864b3d44502a",
-                    "provider": "quay",
-                    "comment": "My Self-Hosted Distribution Credentials",
-                    "scopes": [
-                      "foo"
-                    ],
-                    "created": "2023-06-28T15:36:59.609841Z"
-                  }
+                "member": {
+                  "member_id": "c7b9b131-73f3-11d9-8665-0b00d2e44b83",
+                  "email": "email@example.com"
+                },
+                "distribution_credentials": {
+                  "distribution_credentials_id": "82c32c10-53b2-4d23-993f-864b3d44502a",
+                  "provider": "quay",
+                  "comment": "My Self-Hosted Distribution Credentials",
+                  "scopes": [
+                    "foo"
+                  ],
+                  "created": "2023-06-28T15:36:59.609841Z"
                 }
               },
               "responseBodyV3": {

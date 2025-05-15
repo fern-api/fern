@@ -91,7 +91,8 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         const mediaTypeObject = this.requestBody.content[contentType];
         const convertedSchema = this.parseMediaTypeObject({
             mediaTypeObject,
-            schemaId
+            schemaId,
+            contentType
         });
         if (convertedSchema == null) {
             return undefined;
@@ -146,7 +147,8 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         const convertedSchema = this.parseMediaTypeObject({
             mediaTypeObject,
             schemaId,
-            resolveSchema: true
+            resolveSchema: true,
+            contentType
         });
         if (convertedSchema == null) {
             return undefined;
@@ -187,7 +189,8 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         const schemaId = [...this.group, this.method, "Request"].join("_");
         const convertedSchema = this.parseMediaTypeObject({
             mediaTypeObject,
-            schemaId
+            schemaId,
+            contentType
         });
         const requestBody = HttpRequestBody.bytes({
             contentType,

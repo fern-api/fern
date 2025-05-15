@@ -1,7 +1,7 @@
 {
   "types": {
-    "ObjectWithArrayOfObjectsGetRequestBodySchemaItems": {
-      "name": "ObjectWithArrayOfObjectsGetRequestBodySchemaItems",
+    "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems": {
+      "name": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -33,8 +33,8 @@
         ]
       }
     },
-    "ImplicitObjectWithArrayOfObjectsGetRequestBodySchemaItems": {
-      "name": "ImplicitObjectWithArrayOfObjectsGetRequestBodySchemaItems",
+    "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems": {
+      "name": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -109,7 +109,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ObjectWithArrayOfObjectsGetRequestBodySchemaItems"
+                    "value": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
                   }
                 }
               }
@@ -144,10 +144,7 @@
               "value": {}
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"
@@ -197,7 +194,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ImplicitObjectWithArrayOfObjectsGetRequestBodySchemaItems"
+                    "value": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
                   }
                 }
               }
@@ -232,10 +229,7 @@
               "value": null
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"

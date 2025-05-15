@@ -173,22 +173,19 @@
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": [
-                {
-                  "species": "Ferntacular",
-                  "height": 25.4,
-                  "age": 50,
-                  "location": {
-                    "latitude": 42,
-                    "longitude": 42
-                  },
-                  "id": "foo",
-                  "plantedDate": "foo"
-                }
-              ]
-            },
+            "responseBody": [
+              {
+                "species": "Ferntacular",
+                "height": 25.4,
+                "age": 50,
+                "location": {
+                  "latitude": 42,
+                  "longitude": 42
+                },
+                "id": "foo",
+                "plantedDate": "foo"
+              }
+            ],
             "responseBodyV3": {
               "type": "json",
               "value": [
@@ -288,12 +285,9 @@
             },
             "responseStatusCode": 201,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "species": "Ferntacular",
-                "height": 25.4,
-                "id": "foo"
-              }
+              "species": "Ferntacular",
+              "height": 25.4,
+              "id": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -373,12 +367,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "species": "Ferntacular",
-                "height": 25.4,
-                "id": "foo"
-              }
+              "species": "Ferntacular",
+              "height": 25.4,
+              "id": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -485,10 +476,7 @@
               }
             },
             "responseStatusCode": 201,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"
@@ -563,11 +551,8 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "color": "blue",
-                "name": "BlueFern"
-              }
+              "color": "blue",
+              "name": "BlueFern"
             },
             "responseBodyV3": {
               "type": "json",

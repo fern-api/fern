@@ -1,16 +1,16 @@
 {
   "types": {
-    "UploadWithContentTypePostRequestBodySchemaMetadata": {
+    "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata": {
       "description": "This is a metadata field",
-      "name": "UploadWithContentTypePostRequestBodySchemaMetadata",
+      "name": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "UploadWithContentTypePostRequestBodySchemaData": {
-      "name": "UploadWithContentTypePostRequestBodySchemaData",
+    "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData": {
+      "name": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -88,7 +88,7 @@
                     "type": "optional",
                     "itemType": {
                       "type": "id",
-                      "value": "UploadWithContentTypePostRequestBodySchemaMetadata"
+                      "value": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata"
                     }
                   },
                   "contentType": "multipart/form-data",
@@ -102,7 +102,7 @@
                     "type": "optional",
                     "itemType": {
                       "type": "id",
-                      "value": "UploadWithContentTypePostRequestBodySchemaData"
+                      "value": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData"
                     }
                   },
                   "contentType": "multipart/form-data",

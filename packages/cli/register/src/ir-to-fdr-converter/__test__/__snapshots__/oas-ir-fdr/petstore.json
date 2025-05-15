@@ -185,18 +185,15 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": [
-                  {
-                    "id": 7,
-                    "name": "fluffy",
-                    "tag": "poodle"
-                  }
-                ]
-              }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": [
+                {
+                  "id": 7,
+                  "name": "fluffy",
+                  "tag": "poodle"
+                }
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -312,12 +309,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": 7
-              }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": 7
             },
             "responseBodyV3": {
               "type": "json",
@@ -413,15 +407,12 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": {
-                  "name": "fluffy",
-                  "tag": "poodle",
-                  "id": 7
-                }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": {
+                "name": "fluffy",
+                "tag": "poodle",
+                "id": 7
               }
             },
             "responseBodyV3": {

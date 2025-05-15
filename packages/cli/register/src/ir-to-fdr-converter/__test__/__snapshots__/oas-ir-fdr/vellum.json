@@ -231,57 +231,6 @@
         ]
       }
     },
-    "DeploymentReadStatus": {
-      "description": "* `ACTIVE` - Active\n* `INACTIVE` - Inactive\n* `ARCHIVED` - Archived",
-      "name": "DeploymentReadStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ACTIVE"
-          },
-          {
-            "value": "INACTIVE"
-          },
-          {
-            "value": "ARCHIVED"
-          }
-        ]
-      }
-    },
-    "DeploymentReadEnvironment": {
-      "description": "* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production",
-      "name": "DeploymentReadEnvironment",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "DEVELOPMENT"
-          },
-          {
-            "value": "STAGING"
-          },
-          {
-            "value": "PRODUCTION"
-          }
-        ]
-      }
-    },
-    "DeploymentReadModelType": {
-      "description": "* `GENERATE` - Generate\n* `CLASSIFY` - Classify",
-      "name": "DeploymentReadModelType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "GENERATE"
-          },
-          {
-            "value": "CLASSIFY"
-          }
-        ]
-      }
-    },
     "DeploymentRead": {
       "name": "DeploymentRead",
       "shape": {
@@ -339,7 +288,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "DeploymentReadStatus"
+                "value": "DeploymentReadStatusEnum"
               }
             }
           },
@@ -350,7 +299,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "DeploymentReadEnvironment"
+                "value": "EnvironmentEnum"
               }
             }
           },
@@ -359,7 +308,7 @@
             "key": "model_type",
             "valueType": {
               "type": "id",
-              "value": "DeploymentReadModelType"
+              "value": "ModelTypeEnum"
             }
           },
           {
@@ -456,30 +405,6 @@
         ]
       }
     },
-    "DocumentDocumentToDocumentIndexIndexingState": {
-      "description": "* `AWAITING_PROCESSING` - Awaiting Processing\n* `QUEUED` - Queued\n* `INDEXING` - Indexing\n* `INDEXED` - Indexed\n* `FAILED` - Failed",
-      "name": "DocumentDocumentToDocumentIndexIndexingState",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "AWAITING_PROCESSING"
-          },
-          {
-            "value": "QUEUED"
-          },
-          {
-            "value": "INDEXING"
-          },
-          {
-            "value": "INDEXED"
-          },
-          {
-            "value": "FAILED"
-          }
-        ]
-      }
-    },
     "DocumentDocumentToDocumentIndex": {
       "name": "DocumentDocumentToDocumentIndex",
       "shape": {
@@ -517,42 +442,9 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "DocumentDocumentToDocumentIndexIndexingState"
+                "value": "IndexingStateEnum"
               }
             }
-          }
-        ]
-      }
-    },
-    "DocumentIndexCreateRequestStatus": {
-      "description": "* `ACTIVE` - Active\n* `ARCHIVED` - Archived",
-      "name": "DocumentIndexCreateRequestStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ACTIVE"
-          },
-          {
-            "value": "ARCHIVED"
-          }
-        ]
-      }
-    },
-    "DocumentIndexCreateRequestEnvironment": {
-      "description": "* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production",
-      "name": "DocumentIndexCreateRequestEnvironment",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "DEVELOPMENT"
-          },
-          {
-            "value": "STAGING"
-          },
-          {
-            "value": "PRODUCTION"
           }
         ]
       }
@@ -594,7 +486,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "DocumentIndexCreateRequestStatus"
+                "value": "DocumentIndexStatus"
               }
             }
           },
@@ -605,7 +497,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "DocumentIndexCreateRequestEnvironment"
+                "value": "EnvironmentEnum"
               }
             }
           },
@@ -638,39 +530,6 @@
                 }
               }
             }
-          }
-        ]
-      }
-    },
-    "DocumentIndexReadStatus": {
-      "description": "* `ACTIVE` - Active\n* `ARCHIVED` - Archived",
-      "name": "DocumentIndexReadStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ACTIVE"
-          },
-          {
-            "value": "ARCHIVED"
-          }
-        ]
-      }
-    },
-    "DocumentIndexReadEnvironment": {
-      "description": "* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production",
-      "name": "DocumentIndexReadEnvironment",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "DEVELOPMENT"
-          },
-          {
-            "value": "STAGING"
-          },
-          {
-            "value": "PRODUCTION"
           }
         ]
       }
@@ -732,7 +591,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "DocumentIndexReadStatus"
+                "value": "DocumentIndexStatus"
               }
             }
           },
@@ -743,7 +602,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "DocumentIndexReadEnvironment"
+                "value": "EnvironmentEnum"
               }
             }
           },
@@ -779,28 +638,6 @@
             "value": "ARCHIVED"
           }
         ]
-      }
-    },
-    "EnrichedNormalizedCompletionFinishReason": {
-      "description": "The reason the generation finished.\n\n* `LENGTH` - LENGTH\n* `STOP` - STOP\n* `UNKNOWN` - UNKNOWN",
-      "name": "EnrichedNormalizedCompletionFinishReason",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "FinishReasonEnum"
-        ],
-        "properties": []
-      }
-    },
-    "EnrichedNormalizedCompletionLogprobs": {
-      "description": "The logprobs of the completion. Only present if specified in the original request options.",
-      "name": "EnrichedNormalizedCompletionLogprobs",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "NormalizedLogProbs"
-        ],
-        "properties": []
       }
     },
     "EnrichedNormalizedCompletion": {
@@ -853,7 +690,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "EnrichedNormalizedCompletionFinishReason"
+                "value": "FinishReasonEnum"
               }
             }
           },
@@ -866,7 +703,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EnrichedNormalizedCompletionLogprobs"
+                  "value": "NormalizedLogProbs"
                 }
               }
             }
@@ -1394,16 +1231,6 @@
         ]
       }
     },
-    "FunctionCallVellumValueValue": {
-      "name": "FunctionCallVellumValueValue",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "FunctionCall"
-        ],
-        "properties": []
-      }
-    },
     "FunctionCallVellumValue": {
       "description": "A value representing a Function Call.",
       "name": "FunctionCallVellumValue",
@@ -1424,7 +1251,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "FunctionCallVellumValueValue"
+                "value": "FunctionCall"
               }
             }
           }
@@ -1492,16 +1319,6 @@
         ]
       }
     },
-    "ErrorVellumValueValue": {
-      "name": "ErrorVellumValueValue",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "VellumError"
-        ],
-        "properties": []
-      }
-    },
     "ErrorVellumValue": {
       "description": "A value representing an Error.",
       "name": "ErrorVellumValue",
@@ -1522,7 +1339,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ErrorVellumValueValue"
+                "value": "VellumError"
               }
             }
           }
@@ -1682,36 +1499,6 @@
         ]
       }
     },
-    "FulfilledPromptExecutionMetaFinishReason": {
-      "name": "FulfilledPromptExecutionMetaFinishReason",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "FinishReasonEnum"
-        ],
-        "properties": []
-      }
-    },
-    "FulfilledPromptExecutionMetaUsage": {
-      "name": "FulfilledPromptExecutionMetaUsage",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "MLModelUsage"
-        ],
-        "properties": []
-      }
-    },
-    "FulfilledPromptExecutionMetaCost": {
-      "name": "FulfilledPromptExecutionMetaCost",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Price"
-        ],
-        "properties": []
-      }
-    },
     "FulfilledPromptExecutionMeta": {
       "description": "The subset of the metadata tracked by Vellum during prompt execution that the request opted into with `expand_meta`.",
       "name": "FulfilledPromptExecutionMeta",
@@ -1742,7 +1529,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "FulfilledPromptExecutionMetaFinishReason"
+                  "value": "FinishReasonEnum"
                 }
               }
             }
@@ -1755,7 +1542,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "FulfilledPromptExecutionMetaUsage"
+                  "value": "MLModelUsage"
                 }
               }
             }
@@ -1768,7 +1555,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "FulfilledPromptExecutionMetaCost"
+                  "value": "Price"
                 }
               }
             }
@@ -1830,16 +1617,6 @@
         ]
       }
     },
-    "RejectedPromptExecutionMetaFinishReason": {
-      "name": "RejectedPromptExecutionMetaFinishReason",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "FinishReasonEnum"
-        ],
-        "properties": []
-      }
-    },
     "RejectedPromptExecutionMeta": {
       "description": "The subset of the metadata tracked by Vellum during prompt execution that the request opted into with `expand_meta`.",
       "name": "RejectedPromptExecutionMeta",
@@ -1870,7 +1647,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "RejectedPromptExecutionMetaFinishReason"
+                  "value": "FinishReasonEnum"
                 }
               }
             }
@@ -1983,17 +1760,6 @@
         ]
       }
     },
-    "GenerateBodyRequestOptions": {
-      "description": "Additional configuration that can be used to control what's included in the response.",
-      "name": "GenerateBodyRequestOptions",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "GenerateOptionsRequest"
-        ],
-        "properties": []
-      }
-    },
     "GenerateBodyRequest": {
       "name": "GenerateBodyRequest",
       "shape": {
@@ -2054,7 +1820,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "GenerateBodyRequestOptions"
+                  "value": "GenerateOptionsRequest"
                 }
               }
             }
@@ -2081,21 +1847,6 @@
         ]
       }
     },
-    "GenerateOptionsRequestLogprobs": {
-      "description": "* `ALL` - ALL\n* `NONE` - NONE",
-      "name": "GenerateOptionsRequestLogprobs",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ALL"
-          },
-          {
-            "value": "NONE"
-          }
-        ]
-      }
-    },
     "GenerateOptionsRequest": {
       "name": "GenerateOptionsRequest",
       "shape": {
@@ -2109,7 +1860,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "GenerateOptionsRequestLogprobs"
+                "value": "LogprobsEnum"
               }
             }
           }
@@ -2195,6 +1946,37 @@
         ]
       }
     },
+    "GenerateResult": {
+      "name": "GenerateResult",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "An object containing the resulting generation. This key will be absent if the LLM provider experienced an error.",
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "GenerateResultData"
+              }
+            }
+          },
+          {
+            "description": "An object containing details about the error that occurred. This key will be absent if the LLM provider did not experience an error.",
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "GenerateResultError"
+              }
+            }
+          }
+        ]
+      }
+    },
     "GenerateResultData": {
       "name": "GenerateResultData",
       "shape": {
@@ -2232,48 +2014,6 @@
             }
           }
         ]
-      }
-    },
-    "GenerateResult": {
-      "name": "GenerateResult",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "description": "An object containing the resulting generation. This key will be absent if the LLM provider experienced an error.",
-            "key": "data",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "GenerateResultData"
-              }
-            }
-          },
-          {
-            "description": "An object containing details about the error that occurred. This key will be absent if the LLM provider did not experience an error.",
-            "key": "error",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "GenerateResultError"
-              }
-            }
-          }
-        ]
-      }
-    },
-    "GenerateStreamBodyRequestOptions": {
-      "description": "Additional configuration that can be used to control what's included in the response.",
-      "name": "GenerateStreamBodyRequestOptions",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "GenerateOptionsRequest"
-        ],
-        "properties": []
       }
     },
     "GenerateStreamBodyRequest": {
@@ -2336,7 +2076,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "GenerateStreamBodyRequestOptions"
+                  "value": "GenerateOptionsRequest"
                 }
               }
             }
@@ -2591,17 +2331,6 @@
         ]
       }
     },
-    "ModelVersionBuildConfigSandboxSnapshot": {
-      "description": "Information about the sandbox snapshot that was used to create this model version, if applicable.",
-      "name": "ModelVersionBuildConfigSandboxSnapshot",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "ModelVersionSandboxSnapshot"
-        ],
-        "properties": []
-      }
-    },
     "ModelVersionBuildConfig": {
       "name": "ModelVersionBuildConfig",
       "shape": {
@@ -2627,7 +2356,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "ModelVersionBuildConfigSandboxSnapshot"
+                  "value": "ModelVersionSandboxSnapshot"
                 }
               }
             }
@@ -2660,17 +2389,6 @@
         ]
       }
     },
-    "ModelVersionCompilePromptResponsePrompt": {
-      "description": "Information about the compiled prompt.",
-      "name": "ModelVersionCompilePromptResponsePrompt",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "ModelVersionCompiledPrompt"
-        ],
-        "properties": []
-      }
-    },
     "ModelVersionCompilePromptResponse": {
       "name": "ModelVersionCompilePromptResponse",
       "shape": {
@@ -2682,7 +2400,7 @@
             "key": "prompt",
             "valueType": {
               "type": "id",
-              "value": "ModelVersionCompilePromptResponsePrompt"
+              "value": "ModelVersionCompiledPrompt"
             }
           }
         ]
@@ -2712,6 +2430,69 @@
               "value": {
                 "type": "integer",
                 "minimum": 0
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ModelVersionExecConfig": {
+      "name": "ModelVersionExecConfig",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The generation parameters that are passed to the LLM provider at runtime.",
+            "key": "parameters",
+            "valueType": {
+              "type": "id",
+              "value": "ModelVersionExecConfigParameters"
+            }
+          },
+          {
+            "description": "Names of the input variables specified in the prompt template.",
+            "key": "input_variables",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "PromptTemplateInputVariable"
+              }
+            }
+          },
+          {
+            "description": "The template used to generate prompts for this model version.",
+            "key": "prompt_template",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "prompt_block_data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "PromptTemplateBlockData"
+              }
+            }
+          },
+          {
+            "key": "prompt_syntax_version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
               }
             }
           }
@@ -2826,139 +2607,6 @@
         ]
       }
     },
-    "ModelVersionExecConfig": {
-      "name": "ModelVersionExecConfig",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "description": "The generation parameters that are passed to the LLM provider at runtime.",
-            "key": "parameters",
-            "valueType": {
-              "type": "id",
-              "value": "ModelVersionExecConfigParameters"
-            }
-          },
-          {
-            "description": "Names of the input variables specified in the prompt template.",
-            "key": "input_variables",
-            "valueType": {
-              "type": "list",
-              "itemType": {
-                "type": "id",
-                "value": "PromptTemplateInputVariable"
-              }
-            }
-          },
-          {
-            "description": "The template used to generate prompts for this model version.",
-            "key": "prompt_template",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "key": "prompt_block_data",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "PromptTemplateBlockData"
-              }
-            }
-          },
-          {
-            "key": "prompt_syntax_version",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer"
-                }
-              }
-            }
-          }
-        ]
-      }
-    },
-    "ModelVersionReadModelType": {
-      "description": "* `GENERATE` - Generate\n* `CLASSIFY` - Classify",
-      "name": "ModelVersionReadModelType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "GENERATE"
-          },
-          {
-            "value": "CLASSIFY"
-          }
-        ]
-      }
-    },
-    "ModelVersionReadProvider": {
-      "description": "* `ANTHROPIC` - Anthropic\n* `COHERE` - Cohere\n* `GOOGLE` - Google\n* `HOSTED` - Hosted\n* `MOSAICML` - MosaicML\n* `MYSTIC` - Mystic\n* `OPENAI` - OpenAI\n* `PYQ` - Pyq",
-      "name": "ModelVersionReadProvider",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ANTHROPIC"
-          },
-          {
-            "value": "COHERE"
-          },
-          {
-            "value": "GOOGLE"
-          },
-          {
-            "value": "HOSTED"
-          },
-          {
-            "value": "MOSAICML"
-          },
-          {
-            "value": "MYSTIC"
-          },
-          {
-            "value": "OPENAI"
-          },
-          {
-            "value": "PYQ"
-          }
-        ]
-      }
-    },
-    "ModelVersionReadBuildConfig": {
-      "description": "Configuration used to build this model version.",
-      "name": "ModelVersionReadBuildConfig",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "ModelVersionBuildConfig"
-        ],
-        "properties": []
-      }
-    },
-    "ModelVersionReadExecConfig": {
-      "description": "Configuration used to execute this model version.",
-      "name": "ModelVersionReadExecConfig",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "ModelVersionExecConfig"
-        ],
-        "properties": []
-      }
-    },
     "ModelVersionRead": {
       "name": "ModelVersionRead",
       "shape": {
@@ -3005,7 +2653,7 @@
             "key": "model_type",
             "valueType": {
               "type": "id",
-              "value": "ModelVersionReadModelType"
+              "value": "ModelTypeEnum"
             }
           },
           {
@@ -3013,7 +2661,7 @@
             "key": "provider",
             "valueType": {
               "type": "id",
-              "value": "ModelVersionReadProvider"
+              "value": "ProviderEnum"
             }
           },
           {
@@ -3032,7 +2680,7 @@
             "key": "build_config",
             "valueType": {
               "type": "id",
-              "value": "ModelVersionReadBuildConfig"
+              "value": "ModelVersionBuildConfig"
             }
           },
           {
@@ -3040,7 +2688,7 @@
             "key": "exec_config",
             "valueType": {
               "type": "id",
-              "value": "ModelVersionReadExecConfig"
+              "value": "ModelVersionExecConfig"
             }
           },
           {
@@ -3513,26 +3161,6 @@
         ]
       }
     },
-    "PromptTemplateBlockPropertiesChatRole": {
-      "name": "PromptTemplateBlockPropertiesChatRole",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "ChatMessageRole"
-        ],
-        "properties": []
-      }
-    },
-    "PromptTemplateBlockPropertiesTemplateType": {
-      "name": "PromptTemplateBlockPropertiesTemplateType",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "ContentType"
-        ],
-        "properties": []
-      }
-    },
     "PromptTemplateBlockProperties": {
       "name": "PromptTemplateBlockProperties",
       "shape": {
@@ -3547,7 +3175,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PromptTemplateBlockPropertiesChatRole"
+                  "value": "ChatMessageRole"
                 }
               }
             }
@@ -3588,7 +3216,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PromptTemplateBlockPropertiesTemplateType"
+                  "value": "ContentType"
                 }
               }
             }
@@ -3663,26 +3291,6 @@
         ]
       }
     },
-    "PromptTemplateBlockPropertiesRequestChatRole": {
-      "name": "PromptTemplateBlockPropertiesRequestChatRole",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "ChatMessageRole"
-        ],
-        "properties": []
-      }
-    },
-    "PromptTemplateBlockPropertiesRequestTemplateType": {
-      "name": "PromptTemplateBlockPropertiesRequestTemplateType",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "ContentType"
-        ],
-        "properties": []
-      }
-    },
     "PromptTemplateBlockPropertiesRequest": {
       "name": "PromptTemplateBlockPropertiesRequest",
       "shape": {
@@ -3697,7 +3305,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PromptTemplateBlockPropertiesRequestChatRole"
+                  "value": "ChatMessageRole"
                 }
               }
             }
@@ -3738,7 +3346,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PromptTemplateBlockPropertiesRequestTemplateType"
+                  "value": "ContentType"
                 }
               }
             }
@@ -4113,61 +3721,6 @@
         ]
       }
     },
-    "RegisterPromptRequestRequestPrompt": {
-      "description": "Information about how to execute the prompt template.",
-      "name": "RegisterPromptRequestRequestPrompt",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "RegisterPromptPromptInfoRequest"
-        ],
-        "properties": []
-      }
-    },
-    "RegisterPromptRequestRequestProvider": {
-      "description": "* `ANTHROPIC` - Anthropic\n* `COHERE` - Cohere\n* `GOOGLE` - Google\n* `HOSTED` - Hosted\n* `MOSAICML` - MosaicML\n* `MYSTIC` - Mystic\n* `OPENAI` - OpenAI\n* `PYQ` - Pyq",
-      "name": "RegisterPromptRequestRequestProvider",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ANTHROPIC"
-          },
-          {
-            "value": "COHERE"
-          },
-          {
-            "value": "GOOGLE"
-          },
-          {
-            "value": "HOSTED"
-          },
-          {
-            "value": "MOSAICML"
-          },
-          {
-            "value": "MYSTIC"
-          },
-          {
-            "value": "OPENAI"
-          },
-          {
-            "value": "PYQ"
-          }
-        ]
-      }
-    },
-    "RegisterPromptRequestRequestParameters": {
-      "description": "The initial model parameters to use for  this prompt",
-      "name": "RegisterPromptRequestRequestParameters",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "RegisterPromptModelParametersRequest"
-        ],
-        "properties": []
-      }
-    },
     "RegisterPromptRequestRequest": {
       "name": "RegisterPromptRequestRequest",
       "shape": {
@@ -4201,7 +3754,7 @@
             "key": "prompt",
             "valueType": {
               "type": "id",
-              "value": "RegisterPromptRequestRequestPrompt"
+              "value": "RegisterPromptPromptInfoRequest"
             }
           },
           {
@@ -4209,7 +3762,7 @@
             "key": "provider",
             "valueType": {
               "type": "id",
-              "value": "RegisterPromptRequestRequestProvider"
+              "value": "ProviderEnum"
             }
           },
           {
@@ -4228,7 +3781,7 @@
             "key": "parameters",
             "valueType": {
               "type": "id",
-              "value": "RegisterPromptRequestRequestParameters"
+              "value": "RegisterPromptModelParametersRequest"
             }
           },
           {
@@ -4253,61 +3806,6 @@
         ]
       }
     },
-    "RegisterPromptResponsePrompt": {
-      "description": "Information about the generated prompt",
-      "name": "RegisterPromptResponsePrompt",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "RegisterPromptPrompt"
-        ],
-        "properties": []
-      }
-    },
-    "RegisterPromptResponseSandboxSnapshot": {
-      "description": "Information about the generated sandbox snapshot",
-      "name": "RegisterPromptResponseSandboxSnapshot",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "RegisteredPromptSandboxSnapshot"
-        ],
-        "properties": []
-      }
-    },
-    "RegisterPromptResponseSandbox": {
-      "description": "Information about the generated sandbox",
-      "name": "RegisterPromptResponseSandbox",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "RegisteredPromptSandbox"
-        ],
-        "properties": []
-      }
-    },
-    "RegisterPromptResponseModelVersion": {
-      "description": "Information about the generated model version",
-      "name": "RegisterPromptResponseModelVersion",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "RegisteredPromptModelVersion"
-        ],
-        "properties": []
-      }
-    },
-    "RegisterPromptResponseDeployment": {
-      "description": "Information about the generated deployment",
-      "name": "RegisterPromptResponseDeployment",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "RegisteredPromptDeployment"
-        ],
-        "properties": []
-      }
-    },
     "RegisterPromptResponse": {
       "name": "RegisterPromptResponse",
       "shape": {
@@ -4319,7 +3817,7 @@
             "key": "prompt",
             "valueType": {
               "type": "id",
-              "value": "RegisterPromptResponsePrompt"
+              "value": "RegisterPromptPrompt"
             }
           },
           {
@@ -4327,7 +3825,7 @@
             "key": "sandbox_snapshot",
             "valueType": {
               "type": "id",
-              "value": "RegisterPromptResponseSandboxSnapshot"
+              "value": "RegisteredPromptSandboxSnapshot"
             }
           },
           {
@@ -4335,7 +3833,7 @@
             "key": "sandbox",
             "valueType": {
               "type": "id",
-              "value": "RegisterPromptResponseSandbox"
+              "value": "RegisteredPromptSandbox"
             }
           },
           {
@@ -4343,7 +3841,7 @@
             "key": "model_version",
             "valueType": {
               "type": "id",
-              "value": "RegisterPromptResponseModelVersion"
+              "value": "RegisteredPromptModelVersion"
             }
           },
           {
@@ -4351,7 +3849,7 @@
             "key": "deployment",
             "valueType": {
               "type": "id",
-              "value": "RegisterPromptResponseDeployment"
+              "value": "RegisteredPromptDeployment"
             }
           }
         ]
@@ -4473,16 +3971,6 @@
         ]
       }
     },
-    "SandboxMetricInputParamsParams": {
-      "name": "SandboxMetricInputParamsParams",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "EvaluationParams"
-        ],
-        "properties": []
-      }
-    },
     "SandboxMetricInputParams": {
       "name": "SandboxMetricInputParams",
       "shape": {
@@ -4497,22 +3985,12 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "SandboxMetricInputParamsParams"
+                  "value": "EvaluationParams"
                 }
               }
             }
           }
         ]
-      }
-    },
-    "SandboxMetricInputParamsRequestParams": {
-      "name": "SandboxMetricInputParamsRequestParams",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "EvaluationParamsRequest"
-        ],
-        "properties": []
       }
     },
     "SandboxMetricInputParamsRequest": {
@@ -4529,7 +4007,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "SandboxMetricInputParamsRequestParams"
+                  "value": "EvaluationParamsRequest"
                 }
               }
             }
@@ -4661,16 +4139,6 @@
         ]
       }
     },
-    "ScenarioInputType": {
-      "name": "ScenarioInputType",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "ScenarioInputTypeEnum"
-        ],
-        "properties": []
-      }
-    },
     "ScenarioInput": {
       "name": "ScenarioInput",
       "shape": {
@@ -4694,7 +4162,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "ScenarioInputType"
+                  "value": "ScenarioInputTypeEnum"
                 }
               }
             }
@@ -4727,16 +4195,6 @@
         ]
       }
     },
-    "ScenarioInputRequestType": {
-      "name": "ScenarioInputRequestType",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "ScenarioInputTypeEnum"
-        ],
-        "properties": []
-      }
-    },
     "ScenarioInputRequest": {
       "name": "ScenarioInputRequest",
       "shape": {
@@ -4761,7 +4219,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "ScenarioInputRequestType"
+                  "value": "ScenarioInputTypeEnum"
                 }
               }
             }
@@ -4949,17 +4407,6 @@
         ]
       }
     },
-    "SearchRequestBodyRequestOptions": {
-      "description": "Configuration options for the search.",
-      "name": "SearchRequestBodyRequestOptions",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "SearchRequestOptionsRequest"
-        ],
-        "properties": []
-      }
-    },
     "SearchRequestBodyRequest": {
       "name": "SearchRequestBodyRequest",
       "shape": {
@@ -5020,45 +4467,12 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "SearchRequestBodyRequestOptions"
+                  "value": "SearchRequestOptionsRequest"
                 }
               }
             }
           }
         ]
-      }
-    },
-    "SearchRequestOptionsRequestWeights": {
-      "description": "The weights to use for the search. Must add up to 1.0.",
-      "name": "SearchRequestOptionsRequestWeights",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "SearchWeightsRequest"
-        ],
-        "properties": []
-      }
-    },
-    "SearchRequestOptionsRequestResultMerging": {
-      "description": "The configuration for merging results.",
-      "name": "SearchRequestOptionsRequestResultMerging",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "SearchResultMergingRequest"
-        ],
-        "properties": []
-      }
-    },
-    "SearchRequestOptionsRequestFilters": {
-      "description": "The filters to apply to the search.",
-      "name": "SearchRequestOptionsRequestFilters",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "SearchFiltersRequest"
-        ],
-        "properties": []
       }
     },
     "SearchRequestOptionsRequest": {
@@ -5092,7 +4506,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "SearchRequestOptionsRequestWeights"
+                  "value": "SearchWeightsRequest"
                 }
               }
             }
@@ -5106,7 +4520,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "SearchRequestOptionsRequestResultMerging"
+                  "value": "SearchResultMergingRequest"
                 }
               }
             }
@@ -5120,7 +4534,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "SearchRequestOptionsRequestFilters"
+                  "value": "SearchFiltersRequest"
                 }
               }
             }
@@ -5148,17 +4562,6 @@
         ]
       }
     },
-    "SearchResultDocument": {
-      "description": "The document that contains the chunk that matched the search query.",
-      "name": "SearchResultDocument",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Document"
-        ],
-        "properties": []
-      }
-    },
     "SearchResult": {
       "name": "SearchResult",
       "shape": {
@@ -5170,7 +4573,7 @@
             "key": "document",
             "valueType": {
               "type": "id",
-              "value": "SearchResultDocument"
+              "value": "Document"
             }
           },
           {
@@ -5256,50 +4659,6 @@
         ]
       }
     },
-    "SlimDocumentProcessingState": {
-      "description": "* `QUEUED` - Queued\n* `PROCESSING` - Processing\n* `PROCESSED` - Processed\n* `FAILED` - Failed",
-      "name": "SlimDocumentProcessingState",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "QUEUED"
-          },
-          {
-            "value": "PROCESSING"
-          },
-          {
-            "value": "PROCESSED"
-          },
-          {
-            "value": "FAILED"
-          }
-        ]
-      }
-    },
-    "SlimDocumentProcessingFailureReason": {
-      "description": "An enum value representing why the document could not be processed. Is null unless processing_state is FAILED.\n\n* `EXCEEDED_CHARACTER_LIMIT` - Exceeded Character Limit",
-      "name": "SlimDocumentProcessingFailureReason",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "ProcessingFailureReasonEnum"
-        ],
-        "properties": []
-      }
-    },
-    "SlimDocumentStatus": {
-      "description": "* `ACTIVE` - Active",
-      "name": "SlimDocumentStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ACTIVE"
-          }
-        ]
-      }
-    },
     "SlimDocument": {
       "name": "SlimDocument",
       "shape": {
@@ -5364,7 +4723,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "SlimDocumentProcessingState"
+                "value": "ProcessingStateEnum"
               }
             }
           },
@@ -5377,7 +4736,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "SlimDocumentProcessingFailureReason"
+                  "value": "ProcessingFailureReasonEnum"
                 }
               }
             }
@@ -5389,7 +4748,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "SlimDocumentStatus"
+                "value": "SlimDocumentStatusEnum"
               }
             }
           },
@@ -5792,17 +5151,6 @@
         ]
       }
     },
-    "TestSuiteTestCaseEvaluationParams": {
-      "description": "Parameters to use when evaluating the test case, specific to the test suite's evaluation metric.",
-      "name": "TestSuiteTestCaseEvaluationParams",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "EvaluationParams"
-        ],
-        "properties": []
-      }
-    },
     "TestSuiteTestCase": {
       "name": "TestSuiteTestCase",
       "shape": {
@@ -5859,21 +5207,10 @@
             "key": "evaluation_params",
             "valueType": {
               "type": "id",
-              "value": "TestSuiteTestCaseEvaluationParams"
+              "value": "EvaluationParams"
             }
           }
         ]
-      }
-    },
-    "TestSuiteTestCaseRequestEvaluationParams": {
-      "description": "Parameters to use when evaluating the test case, specific to the test suite's evaluation metric.",
-      "name": "TestSuiteTestCaseRequestEvaluationParams",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "EvaluationParamsRequest"
-        ],
-        "properties": []
       }
     },
     "TestSuiteTestCaseRequest": {
@@ -5933,7 +5270,7 @@
             "key": "evaluation_params",
             "valueType": {
               "type": "id",
-              "value": "TestSuiteTestCaseRequestEvaluationParams"
+              "value": "EvaluationParamsRequest"
             }
           }
         ]
@@ -6376,26 +5713,6 @@
         ]
       }
     },
-    "WorkflowNodeResultEventData": {
-      "name": "WorkflowNodeResultEventData",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "WorkflowNodeResultData"
-        ],
-        "properties": []
-      }
-    },
-    "WorkflowNodeResultEventError": {
-      "name": "WorkflowNodeResultEventError",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "WorkflowEventError"
-        ],
-        "properties": []
-      }
-    },
     "WorkflowNodeResultEvent": {
       "name": "WorkflowNodeResultEvent",
       "shape": {
@@ -6458,7 +5775,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "WorkflowNodeResultEventData"
+                "value": "WorkflowNodeResultData"
               }
             }
           },
@@ -6470,7 +5787,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "WorkflowNodeResultEventError"
+                  "value": "WorkflowEventError"
                 }
               }
             }
@@ -6629,26 +5946,6 @@
         ]
       }
     },
-    "WorkflowResultEventOutput": {
-      "name": "WorkflowResultEventOutput",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "WorkflowResultEventOutputData"
-        ],
-        "properties": []
-      }
-    },
-    "WorkflowResultEventError": {
-      "name": "WorkflowResultEventError",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "WorkflowEventError"
-        ],
-        "properties": []
-      }
-    },
     "WorkflowResultEvent": {
       "name": "WorkflowResultEvent",
       "shape": {
@@ -6687,7 +5984,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "WorkflowResultEventOutput"
+                "value": "WorkflowResultEventOutputData"
               }
             }
           },
@@ -6699,7 +5996,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "WorkflowResultEventError"
+                  "value": "WorkflowEventError"
                 }
               }
             }
@@ -7056,20 +6353,17 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "created": "foo",
-                  "label": "foo",
-                  "name": "foo",
-                  "status": "ACTIVE",
-                  "environment": "DEVELOPMENT",
-                  "model_type": "GENERATE",
-                  "active_model_version_ids": [
-                    "foo"
-                  ],
-                  "last_deployed_on": "foo"
-                }
+                "id": "foo",
+                "created": "foo",
+                "label": "foo",
+                "name": "foo",
+                "status": "ACTIVE",
+                "environment": "DEVELOPMENT",
+                "model_type": "GENERATE",
+                "active_model_version_ids": [
+                  "foo"
+                ],
+                "last_deployed_on": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7159,7 +6453,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "Example1",
+              "name": "Index Using Instructor Model",
               "description": "",
               "path": "/v1/document-indexes",
               "pathParameters": {},
@@ -7212,16 +6506,13 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "created": "foo",
-                  "label": "foo",
-                  "name": "foo",
-                  "status": "ACTIVE",
-                  "environment": "DEVELOPMENT",
-                  "indexing_config": {}
-                }
+                "id": "foo",
+                "created": "foo",
+                "label": "foo",
+                "name": "foo",
+                "status": "ACTIVE",
+                "environment": "DEVELOPMENT",
+                "indexing_config": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7237,7 +6528,7 @@
               }
             },
             {
-              "name": "Example2",
+              "name": "Index Using a Sentence Transformers Model",
               "description": "",
               "path": "/v1/document-indexes",
               "pathParameters": {},
@@ -7282,16 +6573,13 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "created": "foo",
-                  "label": "foo",
-                  "name": "foo",
-                  "status": "ACTIVE",
-                  "environment": "DEVELOPMENT",
-                  "indexing_config": {}
-                }
+                "id": "foo",
+                "created": "foo",
+                "label": "foo",
+                "name": "foo",
+                "status": "ACTIVE",
+                "environment": "DEVELOPMENT",
+                "indexing_config": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7307,7 +6595,7 @@
               }
             },
             {
-              "name": "Example3",
+              "name": "Index Using OpenAI Model",
               "description": "",
               "path": "/v1/document-indexes",
               "pathParameters": {},
@@ -7356,16 +6644,13 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "created": "foo",
-                  "label": "foo",
-                  "name": "foo",
-                  "status": "ACTIVE",
-                  "environment": "DEVELOPMENT",
-                  "indexing_config": {}
-                }
+                "id": "foo",
+                "created": "foo",
+                "label": "foo",
+                "name": "foo",
+                "status": "ACTIVE",
+                "environment": "DEVELOPMENT",
+                "indexing_config": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7500,33 +6785,30 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "count": 123,
-                  "next": "http://api.example.org/accounts/?offset=400&limit=100",
-                  "previous": "http://api.example.org/accounts/?offset=200&limit=100",
-                  "results": [
-                    {
-                      "id": "foo",
-                      "external_id": "foo",
-                      "last_uploaded_at": "foo",
-                      "label": "foo",
-                      "processing_state": "QUEUED",
-                      "processing_failure_reason": "EXCEEDED_CHARACTER_LIMIT",
-                      "status": "ACTIVE",
-                      "keywords": [
-                        "foo"
-                      ],
-                      "document_to_document_indexes": [
-                        {
-                          "id": "foo",
-                          "document_index_id": "foo",
-                          "indexing_state": "AWAITING_PROCESSING"
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "count": 123,
+                "next": "http://api.example.org/accounts/?offset=400&limit=100",
+                "previous": "http://api.example.org/accounts/?offset=200&limit=100",
+                "results": [
+                  {
+                    "id": "foo",
+                    "external_id": "foo",
+                    "last_uploaded_at": "foo",
+                    "label": "foo",
+                    "processing_state": "QUEUED",
+                    "processing_failure_reason": "EXCEEDED_CHARACTER_LIMIT",
+                    "status": "ACTIVE",
+                    "keywords": [
+                      "foo"
+                    ],
+                    "document_to_document_indexes": [
+                      {
+                        "id": "foo",
+                        "document_index_id": "foo",
+                        "indexing_state": "AWAITING_PROCESSING"
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7678,10 +6960,7 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "document_id": "foo"
-                }
+                "document_id": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7778,86 +7057,83 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "created": "foo",
-                  "label": "foo",
-                  "model_type": "GENERATE",
-                  "provider": "ANTHROPIC",
-                  "external_id": "foo",
-                  "build_config": {
-                    "base_model": "foo",
-                    "sandbox_snapshot": {
-                      "id": "foo",
-                      "prompt_index": 42,
-                      "prompt_id": "foo",
-                      "sandbox_id": "foo"
-                    }
-                  },
-                  "exec_config": {
-                    "parameters": {
-                      "temperature": 42,
-                      "max_tokens": 42,
-                      "top_p": 42,
-                      "frequency_penalty": 42,
-                      "presence_penalty": 42,
-                      "logit_bias": {},
-                      "stop": [
-                        "foo"
-                      ],
-                      "top_k": 42
-                    },
-                    "input_variables": [
-                      {
-                        "key": "foo"
-                      }
+                "id": "foo",
+                "created": "foo",
+                "label": "foo",
+                "model_type": "GENERATE",
+                "provider": "ANTHROPIC",
+                "external_id": "foo",
+                "build_config": {
+                  "base_model": "foo",
+                  "sandbox_snapshot": {
+                    "id": "foo",
+                    "prompt_index": 42,
+                    "prompt_id": "foo",
+                    "sandbox_id": "foo"
+                  }
+                },
+                "exec_config": {
+                  "parameters": {
+                    "temperature": 42,
+                    "max_tokens": 42,
+                    "top_p": 42,
+                    "frequency_penalty": 42,
+                    "presence_penalty": 42,
+                    "logit_bias": {},
+                    "stop": [
+                      "foo"
                     ],
-                    "prompt_template": "foo",
-                    "prompt_block_data": {
-                      "version": 42,
-                      "blocks": [
-                        {
-                          "id": "foo",
-                          "block_type": "CHAT_MESSAGE",
-                          "properties": {
-                            "chat_role": "SYSTEM",
-                            "chat_message_unterminated": false,
-                            "template": "foo",
-                            "template_type": "STRING",
-                            "function_name": "foo",
-                            "function_description": "foo",
-                            "function_parameters": {},
-                            "blocks": [
-                              {
-                                "id": "foo",
-                                "block_type": "CHAT_MESSAGE",
-                                "properties": {
-                                  "chat_role": "SYSTEM",
-                                  "chat_message_unterminated": false,
-                                  "template": "foo",
-                                  "template_type": "STRING",
-                                  "function_name": "foo",
-                                  "function_description": "foo",
-                                  "function_parameters": {},
-                                  "blocks": [
-                                    {
-                                      "id": "foo",
-                                      "block_type": "CHAT_MESSAGE",
-                                      "properties": {}
-                                    }
-                                  ]
-                                }
-                              }
-                            ]
-                          }
-                        }
-                      ]
-                    },
-                    "prompt_syntax_version": 42
+                    "top_k": 42
                   },
-                  "status": "CREATING"
-                }
+                  "input_variables": [
+                    {
+                      "key": "foo"
+                    }
+                  ],
+                  "prompt_template": "foo",
+                  "prompt_block_data": {
+                    "version": 42,
+                    "blocks": [
+                      {
+                        "id": "foo",
+                        "block_type": "CHAT_MESSAGE",
+                        "properties": {
+                          "chat_role": "SYSTEM",
+                          "chat_message_unterminated": false,
+                          "template": "foo",
+                          "template_type": "STRING",
+                          "function_name": "foo",
+                          "function_description": "foo",
+                          "function_parameters": {},
+                          "blocks": [
+                            {
+                              "id": "foo",
+                              "block_type": "CHAT_MESSAGE",
+                              "properties": {
+                                "chat_role": "SYSTEM",
+                                "chat_message_unterminated": false,
+                                "template": "foo",
+                                "template_type": "STRING",
+                                "function_name": "foo",
+                                "function_description": "foo",
+                                "function_parameters": {},
+                                "blocks": [
+                                  {
+                                    "id": "foo",
+                                    "block_type": "CHAT_MESSAGE",
+                                    "properties": {}
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  },
+                  "prompt_syntax_version": 42
+                },
+                "status": "CREATING"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -8042,12 +7318,9 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "prompt": {
-                    "text": "foo",
-                    "num_tokens": 42
-                  }
+                "prompt": {
+                  "text": "foo",
+                  "num_tokens": 42
                 }
               },
               "responseBodyV3": {
@@ -8222,28 +7495,25 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "prompt": {
-                    "id": "foo",
-                    "label": "foo"
-                  },
-                  "sandbox_snapshot": {
-                    "id": "foo"
-                  },
-                  "sandbox": {
-                    "id": "foo",
-                    "label": "foo"
-                  },
-                  "model_version": {
-                    "id": "foo",
-                    "label": "foo"
-                  },
-                  "deployment": {
-                    "id": "foo",
-                    "name": "foo",
-                    "label": "foo"
-                  }
+                "prompt": {
+                  "id": "foo",
+                  "label": "foo"
+                },
+                "sandbox_snapshot": {
+                  "id": "foo"
+                },
+                "sandbox": {
+                  "id": "foo",
+                  "label": "foo"
+                },
+                "model_version": {
+                  "id": "foo",
+                  "label": "foo"
+                },
+                "deployment": {
+                  "id": "foo",
+                  "name": "foo",
+                  "label": "foo"
                 }
               },
               "responseBodyV3": {
@@ -8363,7 +7633,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "Example1",
+              "name": "Basic Example",
               "description": "",
               "path": "/v1/sandboxes/id/scenarios",
               "pathParameters": {
@@ -8412,27 +7682,24 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "label": "Untitled Scenario",
-                  "inputs": [
-                    {
-                      "key": "foo",
-                      "type": "TEXT",
-                      "value": "foo",
-                      "chat_history": [
-                        {
-                          "text": "foo",
-                          "role": "SYSTEM"
-                        }
-                      ]
-                    }
-                  ],
-                  "id": "foo",
-                  "metric_input_params": {
-                    "params": {
-                      "target": "foo"
-                    }
+                "label": "Untitled Scenario",
+                "inputs": [
+                  {
+                    "key": "foo",
+                    "type": "TEXT",
+                    "value": "foo",
+                    "chat_history": [
+                      {
+                        "text": "foo",
+                        "role": "SYSTEM"
+                      }
+                    ]
+                  }
+                ],
+                "id": "foo",
+                "metric_input_params": {
+                  "params": {
+                    "target": "foo"
                   }
                 }
               },
@@ -8463,7 +7730,7 @@
               }
             },
             {
-              "name": "Example2",
+              "name": "Chat History Example",
               "description": "",
               "path": "/v1/sandboxes/id/scenarios",
               "pathParameters": {
@@ -8520,27 +7787,24 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "label": "Untitled Scenario",
-                  "inputs": [
-                    {
-                      "key": "foo",
-                      "type": "TEXT",
-                      "value": "foo",
-                      "chat_history": [
-                        {
-                          "text": "foo",
-                          "role": "SYSTEM"
-                        }
-                      ]
-                    }
-                  ],
-                  "id": "foo",
-                  "metric_input_params": {
-                    "params": {
-                      "target": "foo"
-                    }
+                "label": "Untitled Scenario",
+                "inputs": [
+                  {
+                    "key": "foo",
+                    "type": "TEXT",
+                    "value": "foo",
+                    "chat_history": [
+                      {
+                        "text": "foo",
+                        "role": "SYSTEM"
+                      }
+                    ]
+                  }
+                ],
+                "id": "foo",
+                "metric_input_params": {
+                  "params": {
+                    "target": "foo"
                   }
                 }
               },
@@ -8768,14 +8032,11 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "test_case_id": "foo",
-                  "label": "foo",
-                  "input_values": {},
-                  "evaluation_params": {
-                    "target": "foo"
-                  }
+                "test_case_id": "foo",
+                "label": "foo",
+                "input_values": {},
+                "evaluation_params": {
+                  "target": "foo"
                 }
               },
               "responseBodyV3": {
@@ -9022,21 +8283,18 @@
               }
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "stream",
-              "value": [
-                {
-                  "state": "INITIATED",
-                  "meta": {
-                    "model_name": "foo",
-                    "latency": 42,
-                    "deployment_release_tag": "foo",
-                    "prompt_version_id": "foo"
-                  },
-                  "execution_id": "foo"
-                }
-              ]
-            },
+            "responseBody": [
+              {
+                "state": "INITIATED",
+                "meta": {
+                  "model_name": "foo",
+                  "latency": 42,
+                  "deployment_release_tag": "foo",
+                  "prompt_version_id": "foo"
+                },
+                "execution_id": "foo"
+              }
+            ],
             "responseBodyV3": {
               "type": "stream",
               "value": [
@@ -9146,33 +8404,30 @@
               }
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "stream",
-              "value": [
-                {
-                  "run_id": "foo",
-                  "external_id": "foo",
-                  "type": "foo",
-                  "data": {
-                    "id": "foo",
+            "responseBody": [
+              {
+                "run_id": "foo",
+                "external_id": "foo",
+                "type": "foo",
+                "data": {
+                  "id": "foo",
+                  "state": "INITIATED",
+                  "ts": "foo",
+                  "output": {
+                    "name": "foo",
                     "state": "INITIATED",
-                    "ts": "foo",
-                    "output": {
-                      "name": "foo",
-                      "state": "INITIATED",
-                      "node_id": "foo",
-                      "type": "foo",
-                      "delta": "foo",
-                      "value": "foo"
-                    },
-                    "error": {
-                      "message": "foo",
-                      "code": "WORKFLOW_INITIALIZATION"
-                    }
+                    "node_id": "foo",
+                    "type": "foo",
+                    "delta": "foo",
+                    "value": "foo"
+                  },
+                  "error": {
+                    "message": "foo",
+                    "code": "WORKFLOW_INITIALIZATION"
                   }
                 }
-              ]
-            },
+              }
+            ],
             "responseBodyV3": {
               "type": "stream",
               "value": [
@@ -9343,39 +8598,36 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "results": [
-                  {
-                    "data": {
-                      "completions": [
-                        {
-                          "id": "foo",
-                          "external_id": "foo",
-                          "text": "foo",
-                          "finish_reason": "LENGTH",
-                          "logprobs": {
-                            "tokens": [
-                              {
-                                "token": "foo",
-                                "logprob": 42,
-                                "top_logprobs": {},
-                                "text_offset": 42
-                              }
-                            ],
-                            "likelihood": 42
-                          },
-                          "model_version_id": "foo",
-                          "type": "STRING"
-                        }
-                      ]
-                    },
-                    "error": {
-                      "message": "foo"
-                    }
+              "results": [
+                {
+                  "data": {
+                    "completions": [
+                      {
+                        "id": "foo",
+                        "external_id": "foo",
+                        "text": "foo",
+                        "finish_reason": "LENGTH",
+                        "logprobs": {
+                          "tokens": [
+                            {
+                              "token": "foo",
+                              "logprob": 42,
+                              "top_logprobs": {},
+                              "text_offset": 42
+                            }
+                          ],
+                          "likelihood": 42
+                        },
+                        "model_version_id": "foo",
+                        "type": "STRING"
+                      }
+                    ]
+                  },
+                  "error": {
+                    "message": "foo"
                   }
-                ]
-              }
+                }
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -9554,41 +8806,38 @@
               }
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "stream",
-              "value": [
-                {
-                  "delta": {
-                    "request_index": 42,
-                    "data": {
-                      "completion_index": 42,
-                      "completion": {
-                        "id": "foo",
-                        "external_id": "foo",
-                        "text": "foo",
-                        "finish_reason": "LENGTH",
-                        "logprobs": {
-                          "tokens": [
-                            {
-                              "token": "foo",
-                              "logprob": 42,
-                              "top_logprobs": {},
-                              "text_offset": 42
-                            }
-                          ],
-                          "likelihood": 42
-                        },
-                        "model_version_id": "foo",
-                        "type": "STRING"
-                      }
-                    },
-                    "error": {
-                      "message": "foo"
+            "responseBody": [
+              {
+                "delta": {
+                  "request_index": 42,
+                  "data": {
+                    "completion_index": 42,
+                    "completion": {
+                      "id": "foo",
+                      "external_id": "foo",
+                      "text": "foo",
+                      "finish_reason": "LENGTH",
+                      "logprobs": {
+                        "tokens": [
+                          {
+                            "token": "foo",
+                            "logprob": 42,
+                            "top_logprobs": {},
+                            "text_offset": 42
+                          }
+                        ],
+                        "likelihood": 42
+                      },
+                      "model_version_id": "foo",
+                      "type": "STRING"
                     }
+                  },
+                  "error": {
+                    "message": "foo"
                   }
                 }
-              ]
-            },
+              }
+            ],
             "responseBodyV3": {
               "type": "stream",
               "value": [
@@ -9746,23 +8995,20 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "results": [
-                  {
-                    "document": {
-                      "id": "foo",
-                      "label": "foo",
-                      "external_id": "foo"
-                    },
-                    "text": "foo",
-                    "keywords": [
-                      "foo"
-                    ],
-                    "score": 42
-                  }
-                ]
-              }
+              "results": [
+                {
+                  "document": {
+                    "id": "foo",
+                    "label": "foo",
+                    "external_id": "foo"
+                  },
+                  "text": "foo",
+                  "keywords": [
+                    "foo"
+                  ],
+                  "score": 42
+                }
+              ]
             },
             "responseBodyV3": {
               "type": "json",

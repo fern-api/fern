@@ -1,8 +1,8 @@
 {
   "types": {
-    "TestPostRequestBodySchemaMetadata": {
+    "TestPostRequestBodyContentMultipartFormDataSchemaMetadata": {
       "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
-      "name": "TestPostRequestBodySchemaMetadata",
+      "name": "TestPostRequestBodyContentMultipartFormDataSchemaMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -12,9 +12,9 @@
         }
       }
     },
-    "ExamplePostRequestBodySchemaMetadata": {
+    "ExamplePostRequestBodyContentApplicationJsonSchemaMetadata": {
       "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
-      "name": "ExamplePostRequestBodySchemaMetadata",
+      "name": "ExamplePostRequestBodyContentApplicationJsonSchemaMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -74,11 +74,23 @@
                     "type": "optional",
                     "itemType": {
                       "type": "id",
-                      "value": "TestPostRequestBodySchemaMetadata"
+                      "value": "TestPostRequestBodyContentMultipartFormDataSchemaMetadata"
                     }
                   },
                   "contentType": "multipart/form-data",
                   "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
+                  "exploded": false
+                },
+                {
+                  "type": "bodyProperty",
+                  "key": "chunking_strategy",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "unknown"
+                    }
+                  },
+                  "contentType": "multipart/form-data",
                   "exploded": false
                 },
                 {
@@ -147,6 +159,9 @@
                 "metadata": {
                   "type": "json"
                 },
+                "chunking_strategy": {
+                  "type": "json"
+                },
                 "filename": {
                   "type": "json"
                 },
@@ -157,10 +172,7 @@
               }
             },
             "responseStatusCode": 201,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"
@@ -219,7 +231,7 @@
                     "type": "optional",
                     "itemType": {
                       "type": "id",
-                      "value": "ExamplePostRequestBodySchemaMetadata"
+                      "value": "ExamplePostRequestBodyContentApplicationJsonSchemaMetadata"
                     }
                   }
                 }
@@ -258,10 +270,7 @@
               "value": {}
             },
             "responseStatusCode": 201,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"

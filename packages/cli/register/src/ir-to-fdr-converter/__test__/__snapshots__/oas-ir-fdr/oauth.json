@@ -1,8 +1,8 @@
 {
   "types": {
-    "OauthTokenPostRequestBodySchemaGrantType": {
+    "OauthTokenPostRequestBodyContentApplicationJsonSchemaGrantType": {
       "description": "The type of grant to request",
-      "name": "OauthTokenPostRequestBodySchemaGrantType",
+      "name": "OauthTokenPostRequestBodyContentApplicationJsonSchemaGrantType",
       "shape": {
         "type": "enum",
         "values": [
@@ -124,7 +124,7 @@
                     "key": "grant_type",
                     "valueType": {
                       "type": "id",
-                      "value": "OauthTokenPostRequestBodySchemaGrantType"
+                      "value": "OauthTokenPostRequestBodyContentApplicationJsonSchemaGrantType"
                     }
                   },
                   {
@@ -250,13 +250,10 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "access_token": "foo",
-                  "token_type": "Bearer",
-                  "expires_in": 42,
-                  "refresh_token": "foo"
-                }
+                "access_token": "foo",
+                "token_type": "Bearer",
+                "expires_in": 42,
+                "refresh_token": "foo"
               },
               "responseBodyV3": {
                 "type": "json",

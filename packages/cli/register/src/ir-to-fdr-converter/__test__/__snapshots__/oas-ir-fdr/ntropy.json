@@ -110,21 +110,6 @@
         ]
       }
     },
-    "AccountHolderCreateType": {
-      "description": "An enumeration.",
-      "name": "AccountHolderCreateType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "consumer"
-          },
-          {
-            "value": "business"
-          }
-        ]
-      }
-    },
     "AccountHolderCreate": {
       "name": "AccountHolderCreate",
       "shape": {
@@ -147,7 +132,7 @@
             "key": "type",
             "valueType": {
               "type": "id",
-              "value": "AccountHolderCreateType"
+              "value": "AccountHolderType"
             }
           },
           {
@@ -162,21 +147,6 @@
                 }
               }
             }
-          }
-        ]
-      }
-    },
-    "AccountHolderExternalType": {
-      "description": "An enumeration.",
-      "name": "AccountHolderExternalType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "consumer"
-          },
-          {
-            "value": "business"
           }
         ]
       }
@@ -203,7 +173,7 @@
             "key": "type",
             "valueType": {
               "type": "id",
-              "value": "AccountHolderExternalType"
+              "value": "AccountHolderType"
             }
           },
           {
@@ -378,56 +348,6 @@
               "itemType": {
                 "type": "id",
                 "value": "TransactionInput"
-              }
-            }
-          }
-        ]
-      }
-    },
-    "BankStatementStatus": {
-      "description": "An enumeration.",
-      "name": "BankStatementStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "processing"
-          },
-          {
-            "value": "completed"
-          },
-          {
-            "value": "error"
-          }
-        ]
-      }
-    },
-    "BankStatementFile": {
-      "name": "BankStatementFile",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "description": "The number of pages in the bank statement file.",
-            "key": "no_pages",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "integer"
-              }
-            }
-          },
-          {
-            "description": "The size of the bank statement file in bytes, if available.",
-            "key": "size",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer"
-                }
               }
             }
           }
@@ -670,6 +590,38 @@
         ]
       }
     },
+    "BankStatementFile": {
+      "name": "BankStatementFile",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The number of pages in the bank statement file.",
+            "key": "no_pages",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "description": "The size of the bank statement file in bytes, if available.",
+            "key": "size",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "BankStatementResults": {
       "name": "BankStatementResults",
       "shape": {
@@ -690,476 +642,20 @@
         ]
       }
     },
-    "BankStatementTransactionEntryType": {
+    "BankStatementStatus": {
       "description": "An enumeration.",
-      "name": "BankStatementTransactionEntryType",
+      "name": "BankStatementStatus",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "incoming"
+            "value": "processing"
           },
           {
-            "value": "outgoing"
-          }
-        ]
-      }
-    },
-    "BankStatementTransactionCurrency": {
-      "description": "An enumeration.",
-      "name": "BankStatementTransactionCurrency",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "EUR"
-          },
-          {
-            "value": "AED"
-          },
-          {
-            "value": "AFN"
-          },
-          {
-            "value": "XCD"
-          },
-          {
-            "value": "ALL"
-          },
-          {
-            "value": "AMD"
-          },
-          {
-            "value": "AOA"
-          },
-          {
-            "value": "ARS"
-          },
-          {
-            "value": "USD"
-          },
-          {
-            "value": "AUD"
-          },
-          {
-            "value": "AWG"
-          },
-          {
-            "value": "AZN"
-          },
-          {
-            "value": "BAM"
-          },
-          {
-            "value": "BBD"
-          },
-          {
-            "value": "BDT"
-          },
-          {
-            "value": "XOF"
-          },
-          {
-            "value": "BGN"
-          },
-          {
-            "value": "BHD"
-          },
-          {
-            "value": "BIF"
-          },
-          {
-            "value": "BMD"
-          },
-          {
-            "value": "BND"
-          },
-          {
-            "value": "BOB"
-          },
-          {
-            "value": "BRL"
-          },
-          {
-            "value": "BSD"
-          },
-          {
-            "value": "INR"
-          },
-          {
-            "value": "NOK"
-          },
-          {
-            "value": "BWP"
-          },
-          {
-            "value": "BYR"
-          },
-          {
-            "value": "BZD"
-          },
-          {
-            "value": "CAD"
-          },
-          {
-            "value": "CDF"
-          },
-          {
-            "value": "XAF"
-          },
-          {
-            "value": "CHF"
-          },
-          {
-            "value": "NZD"
-          },
-          {
-            "value": "CLP"
-          },
-          {
-            "value": "CNY"
-          },
-          {
-            "value": "COP"
-          },
-          {
-            "value": "CRC"
-          },
-          {
-            "value": "CUP"
-          },
-          {
-            "value": "CVE"
-          },
-          {
-            "value": "ANG"
-          },
-          {
-            "value": "CZK"
-          },
-          {
-            "value": "DJF"
-          },
-          {
-            "value": "DKK"
-          },
-          {
-            "value": "DOP"
-          },
-          {
-            "value": "DZD"
-          },
-          {
-            "value": "EGP"
-          },
-          {
-            "value": "MAD"
-          },
-          {
-            "value": "ERN"
-          },
-          {
-            "value": "ETB"
-          },
-          {
-            "value": "FJD"
-          },
-          {
-            "value": "FKP"
-          },
-          {
-            "value": "GBP"
-          },
-          {
-            "value": "GEL"
-          },
-          {
-            "value": "GHS"
-          },
-          {
-            "value": "GIP"
-          },
-          {
-            "value": "GMD"
-          },
-          {
-            "value": "GNF"
-          },
-          {
-            "value": "GTQ"
-          },
-          {
-            "value": "GYD"
-          },
-          {
-            "value": "HKD"
-          },
-          {
-            "value": "HNL"
-          },
-          {
-            "value": "HUF"
-          },
-          {
-            "value": "IDR"
-          },
-          {
-            "value": "ILS"
-          },
-          {
-            "value": "IQD"
-          },
-          {
-            "value": "IRR"
-          },
-          {
-            "value": "ISK"
-          },
-          {
-            "value": "JMD"
-          },
-          {
-            "value": "JOD"
-          },
-          {
-            "value": "JPY"
-          },
-          {
-            "value": "KES"
-          },
-          {
-            "value": "KGS"
-          },
-          {
-            "value": "KHR"
-          },
-          {
-            "value": "KMF"
-          },
-          {
-            "value": "KPW"
-          },
-          {
-            "value": "KRW"
-          },
-          {
-            "value": "KWD"
-          },
-          {
-            "value": "KYD"
-          },
-          {
-            "value": "KZT"
-          },
-          {
-            "value": "LAK"
-          },
-          {
-            "value": "LBP"
-          },
-          {
-            "value": "LKR"
-          },
-          {
-            "value": "LRD"
-          },
-          {
-            "value": "ZAR"
-          },
-          {
-            "value": "LYD"
-          },
-          {
-            "value": "MDL"
-          },
-          {
-            "value": "MGA"
-          },
-          {
-            "value": "MKD"
-          },
-          {
-            "value": "MMK"
-          },
-          {
-            "value": "MNT"
-          },
-          {
-            "value": "MOP"
-          },
-          {
-            "value": "MRO"
-          },
-          {
-            "value": "MUR"
-          },
-          {
-            "value": "MVR"
-          },
-          {
-            "value": "MWK"
-          },
-          {
-            "value": "MXN"
-          },
-          {
-            "value": "MYR"
-          },
-          {
-            "value": "MZN"
-          },
-          {
-            "value": "XPF"
-          },
-          {
-            "value": "NGN"
-          },
-          {
-            "value": "NIO"
-          },
-          {
-            "value": "NPR"
-          },
-          {
-            "value": "OMR"
-          },
-          {
-            "value": "PEN"
-          },
-          {
-            "value": "PGK"
-          },
-          {
-            "value": "PHP"
-          },
-          {
-            "value": "PKR"
-          },
-          {
-            "value": "PLN"
-          },
-          {
-            "value": "PYG"
-          },
-          {
-            "value": "QAR"
-          },
-          {
-            "value": "RON"
-          },
-          {
-            "value": "RSD"
-          },
-          {
-            "value": "RUB"
-          },
-          {
-            "value": "RWF"
-          },
-          {
-            "value": "SAR"
-          },
-          {
-            "value": "SBD"
-          },
-          {
-            "value": "SCR"
-          },
-          {
-            "value": "SDG"
-          },
-          {
-            "value": "SEK"
-          },
-          {
-            "value": "SGD"
-          },
-          {
-            "value": "SHP"
-          },
-          {
-            "value": "SLL"
-          },
-          {
-            "value": "SOS"
-          },
-          {
-            "value": "SRD"
-          },
-          {
-            "value": "SSP"
-          },
-          {
-            "value": "STD"
-          },
-          {
-            "value": "SYP"
-          },
-          {
-            "value": "SZL"
-          },
-          {
-            "value": "THB"
-          },
-          {
-            "value": "TJS"
-          },
-          {
-            "value": "TMT"
-          },
-          {
-            "value": "TND"
-          },
-          {
-            "value": "TOP"
-          },
-          {
-            "value": "TRY"
-          },
-          {
-            "value": "TTD"
-          },
-          {
-            "value": "TWD"
-          },
-          {
-            "value": "TZS"
-          },
-          {
-            "value": "UAH"
-          },
-          {
-            "value": "UGX"
-          },
-          {
-            "value": "UYU"
-          },
-          {
-            "value": "UZS"
-          },
-          {
-            "value": "VEF"
-          },
-          {
-            "value": "VND"
-          },
-          {
-            "value": "VUV"
-          },
-          {
-            "value": "WST"
-          },
-          {
-            "value": "YER"
-          },
-          {
-            "value": "ZMW"
-          },
-          {
-            "value": "ZWL"
+            "value": "completed"
           },
           {
-            "value": "HRK"
+            "value": "error"
           }
         ]
       }
@@ -1220,7 +716,7 @@
             "key": "entry_type",
             "valueType": {
               "type": "id",
-              "value": "BankStatementTransactionEntryType"
+              "value": "EntryType"
             }
           },
           {
@@ -1228,7 +724,7 @@
             "key": "currency",
             "valueType": {
               "type": "id",
-              "value": "BankStatementTransactionCurrency"
+              "value": "Currency"
             }
           },
           {
@@ -1243,24 +739,6 @@
                 }
               }
             }
-          }
-        ]
-      }
-    },
-    "BatchStatus": {
-      "description": "An enumeration.",
-      "name": "BatchStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "processing"
-          },
-          {
-            "value": "completed"
-          },
-          {
-            "value": "error"
           }
         ]
       }
@@ -1335,24 +813,6 @@
         ]
       }
     },
-    "BatchResultStatus": {
-      "description": "An enumeration.",
-      "name": "BatchResultStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "processing"
-          },
-          {
-            "value": "completed"
-          },
-          {
-            "value": "error"
-          }
-        ]
-      }
-    },
     "BatchResult": {
       "description": "The `BatchResult` object represents the result of a batch enrichment job, including its status and\nenriched transactions.",
       "name": "BatchResult",
@@ -1385,7 +845,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "BatchResultStatus"
+              "value": "BatchStatus"
             }
           },
           {
@@ -1394,6 +854,24 @@
               "type": "id",
               "value": "EnrichmentResult"
             }
+          }
+        ]
+      }
+    },
+    "BatchStatus": {
+      "description": "An enumeration.",
+      "name": "BatchStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processing"
+          },
+          {
+            "value": "completed"
+          },
+          {
+            "value": "error"
           }
         ]
       }
@@ -1435,30 +913,6 @@
         ]
       }
     },
-    "CategoriesAccounting": {
-      "description": "An enumeration.",
-      "name": "CategoriesAccounting",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "operational expenses"
-          },
-          {
-            "value": "cost of goods sold"
-          },
-          {
-            "value": "revenue"
-          },
-          {
-            "value": "financing"
-          },
-          {
-            "value": "taxes"
-          }
-        ]
-      }
-    },
     "Categories": {
       "name": "Categories",
       "shape": {
@@ -1485,7 +939,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CategoriesAccounting"
+                "value": "AccountingCategory"
               }
             }
           }
@@ -3245,6 +2699,70 @@
         ]
       }
     },
+    "Location": {
+      "name": "Location",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "An unstructured string containing the address",
+            "key": "raw_address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "When raw is set, a structured representation of it.",
+            "key": "structured",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "LocationStructured"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "LocationInput": {
+      "description": "Location of where the transaction has taken place. This can greatly improve entity identification, especially\nunder ambiguity.",
+      "name": "LocationInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "An unstructured string containing the address",
+            "key": "raw_address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The country where the transaction was made in ISO 3166-2 format",
+            "key": "country",
+            "valueType": {
+              "type": "id",
+              "value": "Country"
+            }
+          }
+        ]
+      }
+    },
     "LocationStructured": {
       "name": "LocationStructured",
       "shape": {
@@ -3392,811 +2910,6 @@
                   "type": "string"
                 }
               }
-            }
-          }
-        ]
-      }
-    },
-    "Location": {
-      "name": "Location",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "description": "An unstructured string containing the address",
-            "key": "raw_address",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "description": "When raw is set, a structured representation of it.",
-            "key": "structured",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "LocationStructured"
-              }
-            }
-          }
-        ]
-      }
-    },
-    "LocationInputCountry": {
-      "description": "An enumeration.",
-      "name": "LocationInputCountry",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "AD"
-          },
-          {
-            "value": "AE"
-          },
-          {
-            "value": "AF"
-          },
-          {
-            "value": "AG"
-          },
-          {
-            "value": "AI"
-          },
-          {
-            "value": "AL"
-          },
-          {
-            "value": "AM"
-          },
-          {
-            "value": "AO"
-          },
-          {
-            "value": "AR"
-          },
-          {
-            "value": "AS"
-          },
-          {
-            "value": "AT"
-          },
-          {
-            "value": "AU"
-          },
-          {
-            "value": "AW"
-          },
-          {
-            "value": "AZ"
-          },
-          {
-            "value": "BA"
-          },
-          {
-            "value": "BB"
-          },
-          {
-            "value": "BD"
-          },
-          {
-            "value": "BE"
-          },
-          {
-            "value": "BF"
-          },
-          {
-            "value": "BG"
-          },
-          {
-            "value": "BH"
-          },
-          {
-            "value": "BI"
-          },
-          {
-            "value": "BJ"
-          },
-          {
-            "value": "BL"
-          },
-          {
-            "value": "BM"
-          },
-          {
-            "value": "BN"
-          },
-          {
-            "value": "BO"
-          },
-          {
-            "value": "BQ"
-          },
-          {
-            "value": "BR"
-          },
-          {
-            "value": "BS"
-          },
-          {
-            "value": "BT"
-          },
-          {
-            "value": "BV"
-          },
-          {
-            "value": "BW"
-          },
-          {
-            "value": "BY"
-          },
-          {
-            "value": "BZ"
-          },
-          {
-            "value": "CA"
-          },
-          {
-            "value": "CC"
-          },
-          {
-            "value": "CD"
-          },
-          {
-            "value": "CF"
-          },
-          {
-            "value": "CG"
-          },
-          {
-            "value": "CH"
-          },
-          {
-            "value": "CI"
-          },
-          {
-            "value": "CK"
-          },
-          {
-            "value": "CL"
-          },
-          {
-            "value": "CM"
-          },
-          {
-            "value": "CN"
-          },
-          {
-            "value": "CO"
-          },
-          {
-            "value": "CR"
-          },
-          {
-            "value": "CU"
-          },
-          {
-            "value": "CV"
-          },
-          {
-            "value": "CW"
-          },
-          {
-            "value": "CX"
-          },
-          {
-            "value": "CY"
-          },
-          {
-            "value": "CZ"
-          },
-          {
-            "value": "DE"
-          },
-          {
-            "value": "DJ"
-          },
-          {
-            "value": "DK"
-          },
-          {
-            "value": "DM"
-          },
-          {
-            "value": "DO"
-          },
-          {
-            "value": "DZ"
-          },
-          {
-            "value": "EC"
-          },
-          {
-            "value": "EE"
-          },
-          {
-            "value": "EG"
-          },
-          {
-            "value": "EH"
-          },
-          {
-            "value": "ER"
-          },
-          {
-            "value": "ES"
-          },
-          {
-            "value": "ET"
-          },
-          {
-            "value": "FI"
-          },
-          {
-            "value": "FJ"
-          },
-          {
-            "value": "FK"
-          },
-          {
-            "value": "FM"
-          },
-          {
-            "value": "FR"
-          },
-          {
-            "value": "GA"
-          },
-          {
-            "value": "GB"
-          },
-          {
-            "value": "GD"
-          },
-          {
-            "value": "GE"
-          },
-          {
-            "value": "GF"
-          },
-          {
-            "value": "GG"
-          },
-          {
-            "value": "GH"
-          },
-          {
-            "value": "GI"
-          },
-          {
-            "value": "GL"
-          },
-          {
-            "value": "GM"
-          },
-          {
-            "value": "GN"
-          },
-          {
-            "value": "GP"
-          },
-          {
-            "value": "GQ"
-          },
-          {
-            "value": "GR"
-          },
-          {
-            "value": "GS"
-          },
-          {
-            "value": "GT"
-          },
-          {
-            "value": "GU"
-          },
-          {
-            "value": "GW"
-          },
-          {
-            "value": "GY"
-          },
-          {
-            "value": "HK"
-          },
-          {
-            "value": "HM"
-          },
-          {
-            "value": "HN"
-          },
-          {
-            "value": "HR"
-          },
-          {
-            "value": "HT"
-          },
-          {
-            "value": "HU"
-          },
-          {
-            "value": "ID"
-          },
-          {
-            "value": "IE"
-          },
-          {
-            "value": "IL"
-          },
-          {
-            "value": "IM"
-          },
-          {
-            "value": "IN"
-          },
-          {
-            "value": "IO"
-          },
-          {
-            "value": "IQ"
-          },
-          {
-            "value": "IR"
-          },
-          {
-            "value": "IS"
-          },
-          {
-            "value": "IT"
-          },
-          {
-            "value": "JE"
-          },
-          {
-            "value": "JM"
-          },
-          {
-            "value": "JO"
-          },
-          {
-            "value": "JP"
-          },
-          {
-            "value": "KE"
-          },
-          {
-            "value": "KG"
-          },
-          {
-            "value": "KH"
-          },
-          {
-            "value": "KI"
-          },
-          {
-            "value": "KM"
-          },
-          {
-            "value": "KN"
-          },
-          {
-            "value": "KP"
-          },
-          {
-            "value": "KR"
-          },
-          {
-            "value": "KW"
-          },
-          {
-            "value": "KY"
-          },
-          {
-            "value": "KZ"
-          },
-          {
-            "value": "LA"
-          },
-          {
-            "value": "LB"
-          },
-          {
-            "value": "LC"
-          },
-          {
-            "value": "LI"
-          },
-          {
-            "value": "LK"
-          },
-          {
-            "value": "LR"
-          },
-          {
-            "value": "LS"
-          },
-          {
-            "value": "LT"
-          },
-          {
-            "value": "LU"
-          },
-          {
-            "value": "LV"
-          },
-          {
-            "value": "LY"
-          },
-          {
-            "value": "MA"
-          },
-          {
-            "value": "MC"
-          },
-          {
-            "value": "MD"
-          },
-          {
-            "value": "ME"
-          },
-          {
-            "value": "MF"
-          },
-          {
-            "value": "MG"
-          },
-          {
-            "value": "MH"
-          },
-          {
-            "value": "MK"
-          },
-          {
-            "value": "ML"
-          },
-          {
-            "value": "MM"
-          },
-          {
-            "value": "MN"
-          },
-          {
-            "value": "MO"
-          },
-          {
-            "value": "MP"
-          },
-          {
-            "value": "MQ"
-          },
-          {
-            "value": "MR"
-          },
-          {
-            "value": "MS"
-          },
-          {
-            "value": "MT"
-          },
-          {
-            "value": "MU"
-          },
-          {
-            "value": "MV"
-          },
-          {
-            "value": "MW"
-          },
-          {
-            "value": "MX"
-          },
-          {
-            "value": "MY"
-          },
-          {
-            "value": "MZ"
-          },
-          {
-            "value": "NA"
-          },
-          {
-            "value": "NC"
-          },
-          {
-            "value": "NE"
-          },
-          {
-            "value": "NF"
-          },
-          {
-            "value": "NG"
-          },
-          {
-            "value": "NI"
-          },
-          {
-            "value": "NL"
-          },
-          {
-            "value": "NO"
-          },
-          {
-            "value": "NP"
-          },
-          {
-            "value": "NR"
-          },
-          {
-            "value": "NU"
-          },
-          {
-            "value": "NZ"
-          },
-          {
-            "value": "OM"
-          },
-          {
-            "value": "PA"
-          },
-          {
-            "value": "PE"
-          },
-          {
-            "value": "PF"
-          },
-          {
-            "value": "PG"
-          },
-          {
-            "value": "PH"
-          },
-          {
-            "value": "PK"
-          },
-          {
-            "value": "PL"
-          },
-          {
-            "value": "PM"
-          },
-          {
-            "value": "PN"
-          },
-          {
-            "value": "PR"
-          },
-          {
-            "value": "PS"
-          },
-          {
-            "value": "PT"
-          },
-          {
-            "value": "PW"
-          },
-          {
-            "value": "PY"
-          },
-          {
-            "value": "QA"
-          },
-          {
-            "value": "RE"
-          },
-          {
-            "value": "RO"
-          },
-          {
-            "value": "RS"
-          },
-          {
-            "value": "RU"
-          },
-          {
-            "value": "RW"
-          },
-          {
-            "value": "SA"
-          },
-          {
-            "value": "SB"
-          },
-          {
-            "value": "SC"
-          },
-          {
-            "value": "SD"
-          },
-          {
-            "value": "SE"
-          },
-          {
-            "value": "SG"
-          },
-          {
-            "value": "SH"
-          },
-          {
-            "value": "SI"
-          },
-          {
-            "value": "SJ"
-          },
-          {
-            "value": "SK"
-          },
-          {
-            "value": "SL"
-          },
-          {
-            "value": "SM"
-          },
-          {
-            "value": "SN"
-          },
-          {
-            "value": "SO"
-          },
-          {
-            "value": "SR"
-          },
-          {
-            "value": "SS"
-          },
-          {
-            "value": "ST"
-          },
-          {
-            "value": "SV"
-          },
-          {
-            "value": "SX"
-          },
-          {
-            "value": "SY"
-          },
-          {
-            "value": "SZ"
-          },
-          {
-            "value": "TC"
-          },
-          {
-            "value": "TD"
-          },
-          {
-            "value": "TG"
-          },
-          {
-            "value": "TH"
-          },
-          {
-            "value": "TJ"
-          },
-          {
-            "value": "TK"
-          },
-          {
-            "value": "TL"
-          },
-          {
-            "value": "TM"
-          },
-          {
-            "value": "TN"
-          },
-          {
-            "value": "TO"
-          },
-          {
-            "value": "TR"
-          },
-          {
-            "value": "TT"
-          },
-          {
-            "value": "TV"
-          },
-          {
-            "value": "TW"
-          },
-          {
-            "value": "TZ"
-          },
-          {
-            "value": "UA"
-          },
-          {
-            "value": "UG"
-          },
-          {
-            "value": "UM"
-          },
-          {
-            "value": "US"
-          },
-          {
-            "value": "UY"
-          },
-          {
-            "value": "UZ"
-          },
-          {
-            "value": "VC"
-          },
-          {
-            "value": "VE"
-          },
-          {
-            "value": "VG"
-          },
-          {
-            "value": "VI"
-          },
-          {
-            "value": "VN"
-          },
-          {
-            "value": "VU"
-          },
-          {
-            "value": "WF"
-          },
-          {
-            "value": "WS"
-          },
-          {
-            "value": "YE"
-          },
-          {
-            "value": "YT"
-          },
-          {
-            "value": "ZA"
-          },
-          {
-            "value": "ZM"
-          },
-          {
-            "value": "ZW"
-          }
-        ]
-      }
-    },
-    "LocationInput": {
-      "description": "Location of where the transaction has taken place. This can greatly improve entity identification, especially\nunder ambiguity.",
-      "name": "LocationInput",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "description": "An unstructured string containing the address",
-            "key": "raw_address",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "description": "The country where the transaction was made in ISO 3166-2 format",
-            "key": "country",
-            "valueType": {
-              "type": "id",
-              "value": "LocationInputCountry"
             }
           }
         ]
@@ -4373,24 +3086,6 @@
         ]
       }
     },
-    "RecurrenceType": {
-      "description": "An enumeration.",
-      "name": "RecurrenceType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "recurring"
-          },
-          {
-            "value": "subscription"
-          },
-          {
-            "value": "one off"
-          }
-        ]
-      }
-    },
     "Recurrence": {
       "description": "The `Recurrence` object represents the recurrence pattern of a transaction. It provides information about\nwhether a transaction is a one-time event or a part of a recurring series.",
       "name": "Recurrence",
@@ -4407,64 +3102,6 @@
             }
           }
         ]
-      }
-    },
-    "RecurrenceGroupPeriodicity": {
-      "description": "An enumeration.",
-      "name": "RecurrenceGroupPeriodicity",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "daily"
-          },
-          {
-            "value": "weekly"
-          },
-          {
-            "value": "bi_weekly"
-          },
-          {
-            "value": "monthly"
-          },
-          {
-            "value": "bi_monthly"
-          },
-          {
-            "value": "quarterly"
-          },
-          {
-            "value": "semi_yearly"
-          },
-          {
-            "value": "yearly"
-          },
-          {
-            "value": "other"
-          }
-        ]
-      }
-    },
-    "RecurrenceGroupCounterparty": {
-      "description": "Counterparty of the transactions",
-      "name": "RecurrenceGroupCounterparty",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Counterparty"
-        ],
-        "properties": []
-      }
-    },
-    "RecurrenceGroupCategories": {
-      "description": "Categories of the transactions in the recurrence group",
-      "name": "RecurrenceGroupCategories",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Categories"
-        ],
-        "properties": []
       }
     },
     "RecurrenceGroup": {
@@ -4540,7 +3177,7 @@
             "key": "periodicity",
             "valueType": {
               "type": "id",
-              "value": "RecurrenceGroupPeriodicity"
+              "value": "RecurrencePeriodicity"
             }
           },
           {
@@ -4548,7 +3185,7 @@
             "key": "counterparty",
             "valueType": {
               "type": "id",
-              "value": "RecurrenceGroupCounterparty"
+              "value": "Counterparty"
             }
           },
           {
@@ -4556,7 +3193,7 @@
             "key": "categories",
             "valueType": {
               "type": "id",
-              "value": "RecurrenceGroupCategories"
+              "value": "Categories"
             }
           },
           {
@@ -4611,23 +3248,20 @@
         ]
       }
     },
-    "ReportStatus": {
+    "RecurrenceType": {
       "description": "An enumeration.",
-      "name": "ReportStatus",
+      "name": "RecurrenceType",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "open"
+            "value": "recurring"
           },
           {
-            "value": "pending"
+            "value": "subscription"
           },
           {
-            "value": "resolved"
-          },
-          {
-            "value": "rejected"
+            "value": "one off"
           }
         ]
       }
@@ -4760,6 +3394,27 @@
         ]
       }
     },
+    "ReportStatus": {
+      "description": "An enumeration.",
+      "name": "ReportStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "open"
+          },
+          {
+            "value": "pending"
+          },
+          {
+            "value": "resolved"
+          },
+          {
+            "value": "rejected"
+          }
+        ]
+      }
+    },
     "StatementInfo": {
       "name": "StatementInfo",
       "shape": {
@@ -4869,480 +3524,6 @@
         ]
       }
     },
-    "TransactionEntryType": {
-      "description": "An enumeration.",
-      "name": "TransactionEntryType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "incoming"
-          },
-          {
-            "value": "outgoing"
-          }
-        ]
-      }
-    },
-    "TransactionCurrency": {
-      "description": "An enumeration.",
-      "name": "TransactionCurrency",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "EUR"
-          },
-          {
-            "value": "AED"
-          },
-          {
-            "value": "AFN"
-          },
-          {
-            "value": "XCD"
-          },
-          {
-            "value": "ALL"
-          },
-          {
-            "value": "AMD"
-          },
-          {
-            "value": "AOA"
-          },
-          {
-            "value": "ARS"
-          },
-          {
-            "value": "USD"
-          },
-          {
-            "value": "AUD"
-          },
-          {
-            "value": "AWG"
-          },
-          {
-            "value": "AZN"
-          },
-          {
-            "value": "BAM"
-          },
-          {
-            "value": "BBD"
-          },
-          {
-            "value": "BDT"
-          },
-          {
-            "value": "XOF"
-          },
-          {
-            "value": "BGN"
-          },
-          {
-            "value": "BHD"
-          },
-          {
-            "value": "BIF"
-          },
-          {
-            "value": "BMD"
-          },
-          {
-            "value": "BND"
-          },
-          {
-            "value": "BOB"
-          },
-          {
-            "value": "BRL"
-          },
-          {
-            "value": "BSD"
-          },
-          {
-            "value": "INR"
-          },
-          {
-            "value": "NOK"
-          },
-          {
-            "value": "BWP"
-          },
-          {
-            "value": "BYR"
-          },
-          {
-            "value": "BZD"
-          },
-          {
-            "value": "CAD"
-          },
-          {
-            "value": "CDF"
-          },
-          {
-            "value": "XAF"
-          },
-          {
-            "value": "CHF"
-          },
-          {
-            "value": "NZD"
-          },
-          {
-            "value": "CLP"
-          },
-          {
-            "value": "CNY"
-          },
-          {
-            "value": "COP"
-          },
-          {
-            "value": "CRC"
-          },
-          {
-            "value": "CUP"
-          },
-          {
-            "value": "CVE"
-          },
-          {
-            "value": "ANG"
-          },
-          {
-            "value": "CZK"
-          },
-          {
-            "value": "DJF"
-          },
-          {
-            "value": "DKK"
-          },
-          {
-            "value": "DOP"
-          },
-          {
-            "value": "DZD"
-          },
-          {
-            "value": "EGP"
-          },
-          {
-            "value": "MAD"
-          },
-          {
-            "value": "ERN"
-          },
-          {
-            "value": "ETB"
-          },
-          {
-            "value": "FJD"
-          },
-          {
-            "value": "FKP"
-          },
-          {
-            "value": "GBP"
-          },
-          {
-            "value": "GEL"
-          },
-          {
-            "value": "GHS"
-          },
-          {
-            "value": "GIP"
-          },
-          {
-            "value": "GMD"
-          },
-          {
-            "value": "GNF"
-          },
-          {
-            "value": "GTQ"
-          },
-          {
-            "value": "GYD"
-          },
-          {
-            "value": "HKD"
-          },
-          {
-            "value": "HNL"
-          },
-          {
-            "value": "HUF"
-          },
-          {
-            "value": "IDR"
-          },
-          {
-            "value": "ILS"
-          },
-          {
-            "value": "IQD"
-          },
-          {
-            "value": "IRR"
-          },
-          {
-            "value": "ISK"
-          },
-          {
-            "value": "JMD"
-          },
-          {
-            "value": "JOD"
-          },
-          {
-            "value": "JPY"
-          },
-          {
-            "value": "KES"
-          },
-          {
-            "value": "KGS"
-          },
-          {
-            "value": "KHR"
-          },
-          {
-            "value": "KMF"
-          },
-          {
-            "value": "KPW"
-          },
-          {
-            "value": "KRW"
-          },
-          {
-            "value": "KWD"
-          },
-          {
-            "value": "KYD"
-          },
-          {
-            "value": "KZT"
-          },
-          {
-            "value": "LAK"
-          },
-          {
-            "value": "LBP"
-          },
-          {
-            "value": "LKR"
-          },
-          {
-            "value": "LRD"
-          },
-          {
-            "value": "ZAR"
-          },
-          {
-            "value": "LYD"
-          },
-          {
-            "value": "MDL"
-          },
-          {
-            "value": "MGA"
-          },
-          {
-            "value": "MKD"
-          },
-          {
-            "value": "MMK"
-          },
-          {
-            "value": "MNT"
-          },
-          {
-            "value": "MOP"
-          },
-          {
-            "value": "MRO"
-          },
-          {
-            "value": "MUR"
-          },
-          {
-            "value": "MVR"
-          },
-          {
-            "value": "MWK"
-          },
-          {
-            "value": "MXN"
-          },
-          {
-            "value": "MYR"
-          },
-          {
-            "value": "MZN"
-          },
-          {
-            "value": "XPF"
-          },
-          {
-            "value": "NGN"
-          },
-          {
-            "value": "NIO"
-          },
-          {
-            "value": "NPR"
-          },
-          {
-            "value": "OMR"
-          },
-          {
-            "value": "PEN"
-          },
-          {
-            "value": "PGK"
-          },
-          {
-            "value": "PHP"
-          },
-          {
-            "value": "PKR"
-          },
-          {
-            "value": "PLN"
-          },
-          {
-            "value": "PYG"
-          },
-          {
-            "value": "QAR"
-          },
-          {
-            "value": "RON"
-          },
-          {
-            "value": "RSD"
-          },
-          {
-            "value": "RUB"
-          },
-          {
-            "value": "RWF"
-          },
-          {
-            "value": "SAR"
-          },
-          {
-            "value": "SBD"
-          },
-          {
-            "value": "SCR"
-          },
-          {
-            "value": "SDG"
-          },
-          {
-            "value": "SEK"
-          },
-          {
-            "value": "SGD"
-          },
-          {
-            "value": "SHP"
-          },
-          {
-            "value": "SLL"
-          },
-          {
-            "value": "SOS"
-          },
-          {
-            "value": "SRD"
-          },
-          {
-            "value": "SSP"
-          },
-          {
-            "value": "STD"
-          },
-          {
-            "value": "SYP"
-          },
-          {
-            "value": "SZL"
-          },
-          {
-            "value": "THB"
-          },
-          {
-            "value": "TJS"
-          },
-          {
-            "value": "TMT"
-          },
-          {
-            "value": "TND"
-          },
-          {
-            "value": "TOP"
-          },
-          {
-            "value": "TRY"
-          },
-          {
-            "value": "TTD"
-          },
-          {
-            "value": "TWD"
-          },
-          {
-            "value": "TZS"
-          },
-          {
-            "value": "UAH"
-          },
-          {
-            "value": "UGX"
-          },
-          {
-            "value": "UYU"
-          },
-          {
-            "value": "UZS"
-          },
-          {
-            "value": "VEF"
-          },
-          {
-            "value": "VND"
-          },
-          {
-            "value": "VUV"
-          },
-          {
-            "value": "WST"
-          },
-          {
-            "value": "YER"
-          },
-          {
-            "value": "ZMW"
-          },
-          {
-            "value": "ZWL"
-          },
-          {
-            "value": "HRK"
-          }
-        ]
-      }
-    },
     "Transaction": {
       "name": "Transaction",
       "shape": {
@@ -5399,7 +3580,7 @@
             "key": "entry_type",
             "valueType": {
               "type": "id",
-              "value": "TransactionEntryType"
+              "value": "EntryType"
             }
           },
           {
@@ -5407,7 +3588,7 @@
             "key": "currency",
             "valueType": {
               "type": "id",
-              "value": "TransactionCurrency"
+              "value": "Currency"
             }
           },
           {
@@ -5528,480 +3709,6 @@
         ]
       }
     },
-    "TransactionInputEntryType": {
-      "description": "An enumeration.",
-      "name": "TransactionInputEntryType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "incoming"
-          },
-          {
-            "value": "outgoing"
-          }
-        ]
-      }
-    },
-    "TransactionInputCurrency": {
-      "description": "An enumeration.",
-      "name": "TransactionInputCurrency",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "EUR"
-          },
-          {
-            "value": "AED"
-          },
-          {
-            "value": "AFN"
-          },
-          {
-            "value": "XCD"
-          },
-          {
-            "value": "ALL"
-          },
-          {
-            "value": "AMD"
-          },
-          {
-            "value": "AOA"
-          },
-          {
-            "value": "ARS"
-          },
-          {
-            "value": "USD"
-          },
-          {
-            "value": "AUD"
-          },
-          {
-            "value": "AWG"
-          },
-          {
-            "value": "AZN"
-          },
-          {
-            "value": "BAM"
-          },
-          {
-            "value": "BBD"
-          },
-          {
-            "value": "BDT"
-          },
-          {
-            "value": "XOF"
-          },
-          {
-            "value": "BGN"
-          },
-          {
-            "value": "BHD"
-          },
-          {
-            "value": "BIF"
-          },
-          {
-            "value": "BMD"
-          },
-          {
-            "value": "BND"
-          },
-          {
-            "value": "BOB"
-          },
-          {
-            "value": "BRL"
-          },
-          {
-            "value": "BSD"
-          },
-          {
-            "value": "INR"
-          },
-          {
-            "value": "NOK"
-          },
-          {
-            "value": "BWP"
-          },
-          {
-            "value": "BYR"
-          },
-          {
-            "value": "BZD"
-          },
-          {
-            "value": "CAD"
-          },
-          {
-            "value": "CDF"
-          },
-          {
-            "value": "XAF"
-          },
-          {
-            "value": "CHF"
-          },
-          {
-            "value": "NZD"
-          },
-          {
-            "value": "CLP"
-          },
-          {
-            "value": "CNY"
-          },
-          {
-            "value": "COP"
-          },
-          {
-            "value": "CRC"
-          },
-          {
-            "value": "CUP"
-          },
-          {
-            "value": "CVE"
-          },
-          {
-            "value": "ANG"
-          },
-          {
-            "value": "CZK"
-          },
-          {
-            "value": "DJF"
-          },
-          {
-            "value": "DKK"
-          },
-          {
-            "value": "DOP"
-          },
-          {
-            "value": "DZD"
-          },
-          {
-            "value": "EGP"
-          },
-          {
-            "value": "MAD"
-          },
-          {
-            "value": "ERN"
-          },
-          {
-            "value": "ETB"
-          },
-          {
-            "value": "FJD"
-          },
-          {
-            "value": "FKP"
-          },
-          {
-            "value": "GBP"
-          },
-          {
-            "value": "GEL"
-          },
-          {
-            "value": "GHS"
-          },
-          {
-            "value": "GIP"
-          },
-          {
-            "value": "GMD"
-          },
-          {
-            "value": "GNF"
-          },
-          {
-            "value": "GTQ"
-          },
-          {
-            "value": "GYD"
-          },
-          {
-            "value": "HKD"
-          },
-          {
-            "value": "HNL"
-          },
-          {
-            "value": "HUF"
-          },
-          {
-            "value": "IDR"
-          },
-          {
-            "value": "ILS"
-          },
-          {
-            "value": "IQD"
-          },
-          {
-            "value": "IRR"
-          },
-          {
-            "value": "ISK"
-          },
-          {
-            "value": "JMD"
-          },
-          {
-            "value": "JOD"
-          },
-          {
-            "value": "JPY"
-          },
-          {
-            "value": "KES"
-          },
-          {
-            "value": "KGS"
-          },
-          {
-            "value": "KHR"
-          },
-          {
-            "value": "KMF"
-          },
-          {
-            "value": "KPW"
-          },
-          {
-            "value": "KRW"
-          },
-          {
-            "value": "KWD"
-          },
-          {
-            "value": "KYD"
-          },
-          {
-            "value": "KZT"
-          },
-          {
-            "value": "LAK"
-          },
-          {
-            "value": "LBP"
-          },
-          {
-            "value": "LKR"
-          },
-          {
-            "value": "LRD"
-          },
-          {
-            "value": "ZAR"
-          },
-          {
-            "value": "LYD"
-          },
-          {
-            "value": "MDL"
-          },
-          {
-            "value": "MGA"
-          },
-          {
-            "value": "MKD"
-          },
-          {
-            "value": "MMK"
-          },
-          {
-            "value": "MNT"
-          },
-          {
-            "value": "MOP"
-          },
-          {
-            "value": "MRO"
-          },
-          {
-            "value": "MUR"
-          },
-          {
-            "value": "MVR"
-          },
-          {
-            "value": "MWK"
-          },
-          {
-            "value": "MXN"
-          },
-          {
-            "value": "MYR"
-          },
-          {
-            "value": "MZN"
-          },
-          {
-            "value": "XPF"
-          },
-          {
-            "value": "NGN"
-          },
-          {
-            "value": "NIO"
-          },
-          {
-            "value": "NPR"
-          },
-          {
-            "value": "OMR"
-          },
-          {
-            "value": "PEN"
-          },
-          {
-            "value": "PGK"
-          },
-          {
-            "value": "PHP"
-          },
-          {
-            "value": "PKR"
-          },
-          {
-            "value": "PLN"
-          },
-          {
-            "value": "PYG"
-          },
-          {
-            "value": "QAR"
-          },
-          {
-            "value": "RON"
-          },
-          {
-            "value": "RSD"
-          },
-          {
-            "value": "RUB"
-          },
-          {
-            "value": "RWF"
-          },
-          {
-            "value": "SAR"
-          },
-          {
-            "value": "SBD"
-          },
-          {
-            "value": "SCR"
-          },
-          {
-            "value": "SDG"
-          },
-          {
-            "value": "SEK"
-          },
-          {
-            "value": "SGD"
-          },
-          {
-            "value": "SHP"
-          },
-          {
-            "value": "SLL"
-          },
-          {
-            "value": "SOS"
-          },
-          {
-            "value": "SRD"
-          },
-          {
-            "value": "SSP"
-          },
-          {
-            "value": "STD"
-          },
-          {
-            "value": "SYP"
-          },
-          {
-            "value": "SZL"
-          },
-          {
-            "value": "THB"
-          },
-          {
-            "value": "TJS"
-          },
-          {
-            "value": "TMT"
-          },
-          {
-            "value": "TND"
-          },
-          {
-            "value": "TOP"
-          },
-          {
-            "value": "TRY"
-          },
-          {
-            "value": "TTD"
-          },
-          {
-            "value": "TWD"
-          },
-          {
-            "value": "TZS"
-          },
-          {
-            "value": "UAH"
-          },
-          {
-            "value": "UGX"
-          },
-          {
-            "value": "UYU"
-          },
-          {
-            "value": "UZS"
-          },
-          {
-            "value": "VEF"
-          },
-          {
-            "value": "VND"
-          },
-          {
-            "value": "VUV"
-          },
-          {
-            "value": "WST"
-          },
-          {
-            "value": "YER"
-          },
-          {
-            "value": "ZMW"
-          },
-          {
-            "value": "ZWL"
-          },
-          {
-            "value": "HRK"
-          }
-        ]
-      }
-    },
     "TransactionInput": {
       "name": "TransactionInput",
       "shape": {
@@ -6058,7 +3765,7 @@
             "key": "entry_type",
             "valueType": {
               "type": "id",
-              "value": "TransactionInputEntryType"
+              "value": "EntryType"
             }
           },
           {
@@ -6066,7 +3773,7 @@
             "key": "currency",
             "valueType": {
               "type": "id",
-              "value": "TransactionInputCurrency"
+              "value": "Currency"
             }
           },
           {
@@ -6518,7 +4225,7 @@
       }
     },
     "FnCall0": {
-      "name": "FnCall0",
+      "name": "&&",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6537,7 +4244,7 @@
       }
     },
     "FnCall1": {
-      "name": "FnCall1",
+      "name": "||",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6556,7 +4263,7 @@
       }
     },
     "FnCall2": {
-      "name": "FnCall2",
+      "name": "==",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6575,7 +4282,7 @@
       }
     },
     "FnCall3": {
-      "name": "FnCall3",
+      "name": "+",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6594,7 +4301,7 @@
       }
     },
     "FnCall4": {
-      "name": "FnCall4",
+      "name": "-",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6613,7 +4320,7 @@
       }
     },
     "FnCall5": {
-      "name": "FnCall5",
+      "name": "*",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6632,7 +4339,7 @@
       }
     },
     "FnCall6": {
-      "name": "FnCall6",
+      "name": "/",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6651,7 +4358,7 @@
       }
     },
     "FnCall7": {
-      "name": "FnCall7",
+      "name": "//",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6670,7 +4377,7 @@
       }
     },
     "FnCall8": {
-      "name": "FnCall8",
+      "name": "<",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6689,7 +4396,7 @@
       }
     },
     "FnCall9": {
-      "name": "FnCall9",
+      "name": "<=",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6708,7 +4415,7 @@
       }
     },
     "FnCall10": {
-      "name": "FnCall10",
+      "name": ">",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6727,7 +4434,7 @@
       }
     },
     "FnCall11": {
-      "name": "FnCall11",
+      "name": ">=",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6746,7 +4453,7 @@
       }
     },
     "FnCall12": {
-      "name": "FnCall12",
+      "name": "!",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6762,7 +4469,7 @@
       }
     },
     "FnCall13": {
-      "name": "FnCall13",
+      "name": "is_substring",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6781,7 +4488,7 @@
       }
     },
     "FnCall14": {
-      "name": "FnCall14",
+      "name": "starts_with",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6800,7 +4507,7 @@
       }
     },
     "FnCall15": {
-      "name": "FnCall15",
+      "name": "ends_with",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6819,7 +4526,7 @@
       }
     },
     "FnCall16": {
-      "name": "FnCall16",
+      "name": "to_lower",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6835,7 +4542,7 @@
       }
     },
     "FnCall17": {
-      "name": "FnCall17",
+      "name": "to_upper",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6851,7 +4558,7 @@
       }
     },
     "FnCall18": {
-      "name": "FnCall18",
+      "name": "has_label",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6867,7 +4574,7 @@
       }
     },
     "FnCall19": {
-      "name": "FnCall19",
+      "name": "has_mcc",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6883,7 +4590,7 @@
       }
     },
     "FnCall20": {
-      "name": "FnCall20",
+      "name": "get property",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7125,7 +4832,7 @@
       }
     },
     "ModifyLabels0": {
-      "name": "ModifyLabels0",
+      "name": "add_label",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7141,7 +4848,7 @@
       }
     },
     "ModifyLabels1": {
-      "name": "ModifyLabels1",
+      "name": "remove_label",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7157,7 +4864,7 @@
       }
     },
     "ModifyLabels2": {
-      "name": "ModifyLabels2",
+      "name": "set_labels",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7176,7 +4883,7 @@
       }
     },
     "ModifyLabels3": {
-      "name": "ModifyLabels3",
+      "name": "add_mcc",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7192,7 +4899,7 @@
       }
     },
     "ModifyLabels4": {
-      "name": "ModifyLabels4",
+      "name": "remove_mcc",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7208,7 +4915,7 @@
       }
     },
     "ModifyLabels5": {
-      "name": "ModifyLabels5",
+      "name": "set_mcc",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7340,66 +5047,6 @@
           }
         }
       }
-    },
-    "V3BatchesGetParametersSchema": {
-      "description": "An enumeration.",
-      "name": "V3BatchesGetParametersSchema",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "processing"
-          },
-          {
-            "value": "completed"
-          },
-          {
-            "value": "error"
-          }
-        ]
-      }
-    },
-    "V3BankStatementsGetParametersSchema": {
-      "description": "An enumeration.",
-      "name": "V3BankStatementsGetParametersSchema",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "queued"
-          },
-          {
-            "value": "processing"
-          },
-          {
-            "value": "processed"
-          },
-          {
-            "value": "failed"
-          }
-        ]
-      }
-    },
-    "V3ReportsGetParametersSchema": {
-      "description": "An enumeration.",
-      "name": "V3ReportsGetParametersSchema",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "open"
-          },
-          {
-            "value": "pending"
-          },
-          {
-            "value": "resolved"
-          },
-          {
-            "value": "rejected"
-          }
-        ]
-      }
     }
   },
   "subpackages": {
@@ -7503,59 +5150,56 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "xbx8YP14g565Xk",
-                  "description": "SQ* STARBUCKS NW 43RD",
-                  "date": "2024-03-30",
-                  "amount": 10,
-                  "entry_type": "outgoing",
-                  "currency": "USD",
-                  "entities": {
-                    "counterparty": {
-                      "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
-                      "name": "Starbucks",
-                      "website": "starbucks.com",
-                      "logo": "https://logos.ntropy.com/starbucks.com",
-                      "mccs": [
-                        5814
-                      ],
-                      "type": "organization"
-                    },
-                    "intermediaries": [
-                      {
-                        "id": "916bc837-55ef-3106-88f6-5a8269ca9f2a",
-                        "name": "Square",
-                        "website": "squareup.com",
-                        "logo": "https://logos.ntropy.com/squareup.com",
-                        "mccs": [],
-                        "type": "payment_processor"
-                      }
-                    ]
+                "id": "xbx8YP14g565Xk",
+                "description": "SQ* STARBUCKS NW 43RD",
+                "date": "2024-03-30",
+                "amount": 10,
+                "entry_type": "outgoing",
+                "currency": "USD",
+                "entities": {
+                  "counterparty": {
+                    "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
+                    "name": "Starbucks",
+                    "website": "starbucks.com",
+                    "logo": "https://logos.ntropy.com/starbucks.com",
+                    "mccs": [
+                      5814
+                    ],
+                    "type": "organization"
                   },
-                  "categories": {
-                    "general": "outgoing - coffee shops"
-                  },
-                  "location": {
-                    "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
-                    "structured": {
-                      "street": "Nw 43rd Street 5480",
-                      "city": "Gainesville",
-                      "state": "Florida",
-                      "postcode": "32653",
-                      "country_code": "US",
-                      "country": "United States",
-                      "latitude": 29.704558,
-                      "longitude": -82.389277,
-                      "google_maps_url": "https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277",
-                      "apple_maps_url": "https://maps.apple.com/?q=29.704558,-82.389277"
+                  "intermediaries": [
+                    {
+                      "id": "916bc837-55ef-3106-88f6-5a8269ca9f2a",
+                      "name": "Square",
+                      "website": "squareup.com",
+                      "logo": "https://logos.ntropy.com/squareup.com",
+                      "mccs": [],
+                      "type": "payment_processor"
                     }
-                  },
-                  "created_at": "2024-03-30T00:00:00",
-                  "account_holder_id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
-                  "recurrence": {
-                    "type": "recurring"
+                  ]
+                },
+                "categories": {
+                  "general": "outgoing - coffee shops"
+                },
+                "location": {
+                  "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
+                  "structured": {
+                    "street": "Nw 43rd Street 5480",
+                    "city": "Gainesville",
+                    "state": "Florida",
+                    "postcode": "32653",
+                    "country_code": "US",
+                    "country": "United States",
+                    "latitude": 29.704558,
+                    "longitude": -82.389277,
+                    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277",
+                    "apple_maps_url": "https://maps.apple.com/?q=29.704558,-82.389277"
                   }
+                },
+                "created_at": "2024-03-30T00:00:00",
+                "account_holder_id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
+                "recurrence": {
+                  "type": "recurring"
                 }
               },
               "responseBodyV3": {
@@ -7847,65 +5491,62 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "XjdHaksD",
-                  "data": [
-                    {
-                      "id": "xbx8YP14g565Xk",
-                      "description": "SQ* STARBUCKS NW 43RD",
-                      "date": "2024-03-30",
-                      "amount": 10,
-                      "entry_type": "outgoing",
-                      "currency": "USD",
-                      "entities": {
-                        "counterparty": {
-                          "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
-                          "name": "Starbucks",
-                          "website": "starbucks.com",
-                          "logo": "https://logos.ntropy.com/starbucks.com",
-                          "mccs": [
-                            5814
-                          ],
-                          "type": "organization"
-                        },
-                        "intermediaries": [
-                          {
-                            "id": "916bc837-55ef-3106-88f6-5a8269ca9f2a",
-                            "name": "Square",
-                            "website": "squareup.com",
-                            "logo": "https://logos.ntropy.com/squareup.com",
-                            "mccs": [],
-                            "type": "payment_processor"
-                          }
-                        ]
+                "next_cursor": "XjdHaksD",
+                "data": [
+                  {
+                    "id": "xbx8YP14g565Xk",
+                    "description": "SQ* STARBUCKS NW 43RD",
+                    "date": "2024-03-30",
+                    "amount": 10,
+                    "entry_type": "outgoing",
+                    "currency": "USD",
+                    "entities": {
+                      "counterparty": {
+                        "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
+                        "name": "Starbucks",
+                        "website": "starbucks.com",
+                        "logo": "https://logos.ntropy.com/starbucks.com",
+                        "mccs": [
+                          5814
+                        ],
+                        "type": "organization"
                       },
-                      "categories": {
-                        "general": "outgoing - coffee shops"
-                      },
-                      "location": {
-                        "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
-                        "structured": {
-                          "street": "Nw 43rd Street 5480",
-                          "city": "Gainesville",
-                          "state": "Florida",
-                          "postcode": "32653",
-                          "country_code": "US",
-                          "country": "United States",
-                          "latitude": 29.704558,
-                          "longitude": -82.389277,
-                          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277",
-                          "apple_maps_url": "https://maps.apple.com/?q=29.704558,-82.389277"
+                      "intermediaries": [
+                        {
+                          "id": "916bc837-55ef-3106-88f6-5a8269ca9f2a",
+                          "name": "Square",
+                          "website": "squareup.com",
+                          "logo": "https://logos.ntropy.com/squareup.com",
+                          "mccs": [],
+                          "type": "payment_processor"
                         }
-                      },
-                      "created_at": "2024-03-30T00:00:00",
-                      "account_holder_id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
-                      "recurrence": {
-                        "type": "recurring"
+                      ]
+                    },
+                    "categories": {
+                      "general": "outgoing - coffee shops"
+                    },
+                    "location": {
+                      "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
+                      "structured": {
+                        "street": "Nw 43rd Street 5480",
+                        "city": "Gainesville",
+                        "state": "Florida",
+                        "postcode": "32653",
+                        "country_code": "US",
+                        "country": "United States",
+                        "latitude": 29.704558,
+                        "longitude": -82.389277,
+                        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277",
+                        "apple_maps_url": "https://maps.apple.com/?q=29.704558,-82.389277"
                       }
+                    },
+                    "created_at": "2024-03-30T00:00:00",
+                    "account_holder_id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
+                    "recurrence": {
+                      "type": "recurring"
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -8081,12 +5722,21 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "transactions": [
-                    {
-                      "entities": {
-                        "counterparty": {
+                "transactions": [
+                  {
+                    "entities": {
+                      "counterparty": {
+                        "id": "foo",
+                        "name": "foo",
+                        "website": "foo",
+                        "logo": "foo",
+                        "mccs": [
+                          42
+                        ],
+                        "type": "person"
+                      },
+                      "intermediaries": [
+                        {
                           "id": "foo",
                           "name": "foo",
                           "website": "foo",
@@ -8094,50 +5744,38 @@
                           "mccs": [
                             42
                           ],
-                          "type": "person"
-                        },
-                        "intermediaries": [
-                          {
-                            "id": "foo",
-                            "name": "foo",
-                            "website": "foo",
-                            "logo": "foo",
-                            "mccs": [
-                              42
-                            ],
-                            "type": "delivery_service"
-                          }
-                        ]
-                      },
-                      "categories": {
-                        "general": "foo",
-                        "accounting": "operational expenses"
-                      },
-                      "location": {
-                        "raw_address": "foo",
-                        "structured": {
-                          "street": "foo",
-                          "city": "foo",
-                          "state": "foo",
-                          "postcode": "foo",
-                          "country_code": "foo",
-                          "country": "foo",
-                          "latitude": 42,
-                          "longitude": 42,
-                          "google_maps_url": "foo",
-                          "apple_maps_url": "foo",
-                          "store_number": "foo"
+                          "type": "delivery_service"
                         }
-                      },
-                      "error": {
-                        "code": "account_holder_not_found",
-                        "message": "foo"
-                      },
-                      "created_at": "foo",
-                      "id": "foo"
-                    }
-                  ]
-                }
+                      ]
+                    },
+                    "categories": {
+                      "general": "foo",
+                      "accounting": "operational expenses"
+                    },
+                    "location": {
+                      "raw_address": "foo",
+                      "structured": {
+                        "street": "foo",
+                        "city": "foo",
+                        "state": "foo",
+                        "postcode": "foo",
+                        "country_code": "foo",
+                        "country": "foo",
+                        "latitude": 42,
+                        "longitude": 42,
+                        "google_maps_url": "foo",
+                        "apple_maps_url": "foo",
+                        "store_number": "foo"
+                      }
+                    },
+                    "error": {
+                      "code": "account_holder_not_found",
+                      "message": "foo"
+                    },
+                    "created_at": "foo",
+                    "id": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -8323,59 +5961,56 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "xbx8YP14g565Xk",
-                  "description": "SQ* STARBUCKS NW 43RD",
-                  "date": "2024-03-30",
-                  "amount": 10,
-                  "entry_type": "outgoing",
-                  "currency": "USD",
-                  "entities": {
-                    "counterparty": {
-                      "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
-                      "name": "Starbucks",
-                      "website": "starbucks.com",
-                      "logo": "https://logos.ntropy.com/starbucks.com",
-                      "mccs": [
-                        5814
-                      ],
-                      "type": "organization"
-                    },
-                    "intermediaries": [
-                      {
-                        "id": "916bc837-55ef-3106-88f6-5a8269ca9f2a",
-                        "name": "Square",
-                        "website": "squareup.com",
-                        "logo": "https://logos.ntropy.com/squareup.com",
-                        "mccs": [],
-                        "type": "payment_processor"
-                      }
-                    ]
+                "id": "xbx8YP14g565Xk",
+                "description": "SQ* STARBUCKS NW 43RD",
+                "date": "2024-03-30",
+                "amount": 10,
+                "entry_type": "outgoing",
+                "currency": "USD",
+                "entities": {
+                  "counterparty": {
+                    "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
+                    "name": "Starbucks",
+                    "website": "starbucks.com",
+                    "logo": "https://logos.ntropy.com/starbucks.com",
+                    "mccs": [
+                      5814
+                    ],
+                    "type": "organization"
                   },
-                  "categories": {
-                    "general": "outgoing - coffee shops"
-                  },
-                  "location": {
-                    "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
-                    "structured": {
-                      "street": "Nw 43rd Street 5480",
-                      "city": "Gainesville",
-                      "state": "Florida",
-                      "postcode": "32653",
-                      "country_code": "US",
-                      "country": "United States",
-                      "latitude": 29.704558,
-                      "longitude": -82.389277,
-                      "google_maps_url": "https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277",
-                      "apple_maps_url": "https://maps.apple.com/?q=29.704558,-82.389277"
+                  "intermediaries": [
+                    {
+                      "id": "916bc837-55ef-3106-88f6-5a8269ca9f2a",
+                      "name": "Square",
+                      "website": "squareup.com",
+                      "logo": "https://logos.ntropy.com/squareup.com",
+                      "mccs": [],
+                      "type": "payment_processor"
                     }
-                  },
-                  "created_at": "2024-03-30T00:00:00",
-                  "account_holder_id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
-                  "recurrence": {
-                    "type": "recurring"
+                  ]
+                },
+                "categories": {
+                  "general": "outgoing - coffee shops"
+                },
+                "location": {
+                  "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
+                  "structured": {
+                    "street": "Nw 43rd Street 5480",
+                    "city": "Gainesville",
+                    "state": "Florida",
+                    "postcode": "32653",
+                    "country_code": "US",
+                    "country": "United States",
+                    "latitude": 29.704558,
+                    "longitude": -82.389277,
+                    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277",
+                    "apple_maps_url": "https://maps.apple.com/?q=29.704558,-82.389277"
                   }
+                },
+                "created_at": "2024-03-30T00:00:00",
+                "account_holder_id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
+                "recurrence": {
+                  "type": "recurring"
                 }
               },
               "responseBodyV3": {
@@ -8542,7 +6177,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V3BatchesGetParametersSchema"
+                  "value": "BatchStatus"
                 }
               }
             }
@@ -8584,20 +6219,17 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "XjdHaksD",
-                  "data": [
-                    {
-                      "id": "203613d2-83c8-4130-8809-d14206eeec20",
-                      "status": "processing",
-                      "created_at": "2024-01-01T00:00:00",
-                      "updated_at": "2024-01-01T00:00:30",
-                      "progress": 0,
-                      "total": 4000
-                    }
-                  ]
-                }
+                "next_cursor": "XjdHaksD",
+                "data": [
+                  {
+                    "id": "203613d2-83c8-4130-8809-d14206eeec20",
+                    "status": "processing",
+                    "created_at": "2024-01-01T00:00:00",
+                    "updated_at": "2024-01-01T00:00:30",
+                    "progress": 0,
+                    "total": 4000
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -8728,15 +6360,12 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "203613d2-83c8-4130-8809-d14206eeec20",
-                  "status": "processing",
-                  "created_at": "2024-01-01T00:00:00",
-                  "updated_at": "2024-01-01T00:00:30",
-                  "progress": 0,
-                  "total": 4000
-                }
+                "id": "203613d2-83c8-4130-8809-d14206eeec20",
+                "status": "processing",
+                "created_at": "2024-01-01T00:00:00",
+                "updated_at": "2024-01-01T00:00:30",
+                "progress": 0,
+                "total": 4000
               },
               "responseBodyV3": {
                 "type": "json",
@@ -8851,15 +6480,12 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "203613d2-83c8-4130-8809-d14206eeec20",
-                  "status": "processing",
-                  "created_at": "2024-01-01T00:00:00",
-                  "updated_at": "2024-01-01T00:00:30",
-                  "progress": 0,
-                  "total": 4000
-                }
+                "id": "203613d2-83c8-4130-8809-d14206eeec20",
+                "status": "processing",
+                "created_at": "2024-01-01T00:00:00",
+                "updated_at": "2024-01-01T00:00:30",
+                "progress": 0,
+                "total": 4000
               },
               "responseBodyV3": {
                 "type": "json",
@@ -8975,16 +6601,25 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "total": 42,
-                  "status": "processing",
-                  "results": {
-                    "transactions": [
-                      {
-                        "entities": {
-                          "counterparty": {
+                "id": "foo",
+                "total": 42,
+                "status": "processing",
+                "results": {
+                  "transactions": [
+                    {
+                      "entities": {
+                        "counterparty": {
+                          "id": "foo",
+                          "name": "foo",
+                          "website": "foo",
+                          "logo": "foo",
+                          "mccs": [
+                            42
+                          ],
+                          "type": "person"
+                        },
+                        "intermediaries": [
+                          {
                             "id": "foo",
                             "name": "foo",
                             "website": "foo",
@@ -8992,50 +6627,38 @@
                             "mccs": [
                               42
                             ],
-                            "type": "person"
-                          },
-                          "intermediaries": [
-                            {
-                              "id": "foo",
-                              "name": "foo",
-                              "website": "foo",
-                              "logo": "foo",
-                              "mccs": [
-                                42
-                              ],
-                              "type": "delivery_service"
-                            }
-                          ]
-                        },
-                        "categories": {
-                          "general": "foo",
-                          "accounting": "operational expenses"
-                        },
-                        "location": {
-                          "raw_address": "foo",
-                          "structured": {
-                            "street": "foo",
-                            "city": "foo",
-                            "state": "foo",
-                            "postcode": "foo",
-                            "country_code": "foo",
-                            "country": "foo",
-                            "latitude": 42,
-                            "longitude": 42,
-                            "google_maps_url": "foo",
-                            "apple_maps_url": "foo",
-                            "store_number": "foo"
+                            "type": "delivery_service"
                           }
-                        },
-                        "error": {
-                          "code": "account_holder_not_found",
-                          "message": "foo"
-                        },
-                        "created_at": "foo",
-                        "id": "foo"
-                      }
-                    ]
-                  }
+                        ]
+                      },
+                      "categories": {
+                        "general": "foo",
+                        "accounting": "operational expenses"
+                      },
+                      "location": {
+                        "raw_address": "foo",
+                        "structured": {
+                          "street": "foo",
+                          "city": "foo",
+                          "state": "foo",
+                          "postcode": "foo",
+                          "country_code": "foo",
+                          "country": "foo",
+                          "latitude": 42,
+                          "longitude": 42,
+                          "google_maps_url": "foo",
+                          "apple_maps_url": "foo",
+                          "store_number": "foo"
+                        }
+                      },
+                      "error": {
+                        "code": "account_holder_not_found",
+                        "message": "foo"
+                      },
+                      "created_at": "foo",
+                      "id": "foo"
+                    }
+                  ]
                 }
               },
               "responseBodyV3": {
@@ -9210,7 +6833,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V3BankStatementsGetParametersSchema"
+                  "value": "DocumentStatus"
                 }
               }
             }
@@ -9252,22 +6875,19 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "XjdHaksD",
-                  "data": [
-                    {
-                      "id": "7f8dceac-2848-472d-b5c3-55cdbaf35a9b",
-                      "name": "2014-01-01_2014-02-01_statement.pdf",
-                      "status": "processing",
-                      "created_at": "2024-01-01T00:00:00",
-                      "file": {
-                        "no_pages": 1,
-                        "size": 4096
-                      }
+                "next_cursor": "XjdHaksD",
+                "data": [
+                  {
+                    "id": "7f8dceac-2848-472d-b5c3-55cdbaf35a9b",
+                    "name": "2014-01-01_2014-02-01_statement.pdf",
+                    "status": "processing",
+                    "created_at": "2024-01-01T00:00:00",
+                    "file": {
+                      "no_pages": 1,
+                      "size": 4096
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -9390,16 +7010,13 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "7f8dceac-2848-472d-b5c3-55cdbaf35a9b",
-                  "name": "2014-01-01_2014-02-01_statement.pdf",
-                  "status": "processing",
-                  "created_at": "2024-01-01T00:00:00",
-                  "file": {
-                    "no_pages": 1,
-                    "size": 4096
-                  }
+                "id": "7f8dceac-2848-472d-b5c3-55cdbaf35a9b",
+                "name": "2014-01-01_2014-02-01_statement.pdf",
+                "status": "processing",
+                "created_at": "2024-01-01T00:00:00",
+                "file": {
+                  "no_pages": 1,
+                  "size": 4096
                 }
               },
               "responseBodyV3": {
@@ -9517,16 +7134,13 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "7f8dceac-2848-472d-b5c3-55cdbaf35a9b",
-                  "name": "2014-01-01_2014-02-01_statement.pdf",
-                  "status": "processing",
-                  "created_at": "2024-01-01T00:00:00",
-                  "file": {
-                    "no_pages": 1,
-                    "size": 4096
-                  }
+                "id": "7f8dceac-2848-472d-b5c3-55cdbaf35a9b",
+                "name": "2014-01-01_2014-02-01_statement.pdf",
+                "status": "processing",
+                "created_at": "2024-01-01T00:00:00",
+                "file": {
+                  "no_pages": 1,
+                  "size": 4096
                 }
               },
               "responseBodyV3": {
@@ -9735,32 +7349,29 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "institution": "Well's Fargo",
-                  "start_date": "2024-01-01",
-                  "end_date": "2024-02-01",
-                  "account_holder": {
-                    "type": "consumer",
-                    "name": "John Doe",
-                    "address": {
-                      "street": "601 Rosebud Avenue",
-                      "postcode": "77901",
-                      "city": "Victoria",
-                      "state": "Texas",
-                      "country": "United States"
-                    }
-                  },
-                  "accounts": [
-                    {
-                      "type": "checking",
-                      "number": "83721",
-                      "opening_balance": 1000,
-                      "closing_balance": 1500,
-                      "iso_currency_code": "USD"
-                    }
-                  ]
-                }
+                "institution": "Well's Fargo",
+                "start_date": "2024-01-01",
+                "end_date": "2024-02-01",
+                "account_holder": {
+                  "type": "consumer",
+                  "name": "John Doe",
+                  "address": {
+                    "street": "601 Rosebud Avenue",
+                    "postcode": "77901",
+                    "city": "Victoria",
+                    "state": "Texas",
+                    "country": "United States"
+                  }
+                },
+                "accounts": [
+                  {
+                    "type": "checking",
+                    "number": "83721",
+                    "opening_balance": 1000,
+                    "closing_balance": 1500,
+                    "iso_currency_code": "USD"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -9893,32 +7504,29 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "accounts": [
-                    {
-                      "number": "foo",
-                      "opening_balance": 42,
-                      "closing_balance": 42,
-                      "start_date": "foo",
-                      "end_date": "foo",
-                      "is_balance_reconciled": true,
-                      "total_incoming": 42,
-                      "total_outgoing": 42,
-                      "transactions": [
-                        {
-                          "id": "foo",
-                          "description": "foo",
-                          "date": "foo",
-                          "amount": 42,
-                          "entry_type": "incoming",
-                          "currency": "EUR",
-                          "running_balance": 42
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "accounts": [
+                  {
+                    "number": "foo",
+                    "opening_balance": 42,
+                    "closing_balance": 42,
+                    "start_date": "foo",
+                    "end_date": "foo",
+                    "is_balance_reconciled": true,
+                    "total_incoming": 42,
+                    "total_outgoing": 42,
+                    "transactions": [
+                      {
+                        "id": "foo",
+                        "description": "foo",
+                        "date": "foo",
+                        "amount": 42,
+                        "entry_type": "incoming",
+                        "currency": "EUR",
+                        "running_balance": 42
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -10060,13 +7668,10 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
-                  "type": "consumer",
-                  "name": "John Doe",
-                  "created_at": "2024-03-30T00:00:00"
-                }
+                "id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
+                "type": "consumer",
+                "name": "John Doe",
+                "created_at": "2024-03-30T00:00:00"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -10296,18 +7901,15 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "XjdHaksD",
-                  "data": [
-                    {
-                      "id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
-                      "type": "consumer",
-                      "name": "John Doe",
-                      "created_at": "2024-03-30T00:00:00"
-                    }
-                  ]
-                }
+                "next_cursor": "XjdHaksD",
+                "data": [
+                  {
+                    "id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
+                    "type": "consumer",
+                    "name": "John Doe",
+                    "created_at": "2024-03-30T00:00:00"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -10429,13 +8031,10 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
-                  "type": "consumer",
-                  "name": "John Doe",
-                  "created_at": "2024-03-30T00:00:00"
-                }
+                "id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
+                "type": "consumer",
+                "name": "John Doe",
+                "created_at": "2024-03-30T00:00:00"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -10561,37 +8160,34 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
+              "responseBody": [
+                {
+                  "id": "foo",
+                  "start_date": "foo",
+                  "end_date": "foo",
+                  "total_amount": 42,
+                  "average_amount": 42,
+                  "periodicity_in_days": 42,
+                  "periodicity": "daily",
+                  "counterparty": {
                     "id": "foo",
-                    "start_date": "foo",
-                    "end_date": "foo",
-                    "total_amount": 42,
-                    "average_amount": 42,
-                    "periodicity_in_days": 42,
-                    "periodicity": "daily",
-                    "counterparty": {
-                      "id": "foo",
-                      "name": "foo",
-                      "website": "foo",
-                      "logo": "foo",
-                      "mccs": [
-                        42
-                      ],
-                      "type": "person"
-                    },
-                    "categories": {
-                      "general": "foo",
-                      "accounting": "operational expenses"
-                    },
-                    "transaction_ids": [
-                      "foo"
-                    ]
-                  }
-                ]
-              },
+                    "name": "foo",
+                    "website": "foo",
+                    "logo": "foo",
+                    "mccs": [
+                      42
+                    ],
+                    "type": "person"
+                  },
+                  "categories": {
+                    "general": "foo",
+                    "accounting": "operational expenses"
+                  },
+                  "transaction_ids": [
+                    "foo"
+                  ]
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -10704,23 +8300,20 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "XjdHaksD",
-                  "data": [
-                    {
-                      "url": "https://example.com:5689",
-                      "events": [
-                        "batches.completed",
-                        "batches.error"
-                      ],
-                      "token": "hunter2",
-                      "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
-                      "created_at": "2024-10-03T02:53:30.167953",
-                      "enabled": true
-                    }
-                  ]
-                }
+                "next_cursor": "XjdHaksD",
+                "data": [
+                  {
+                    "url": "https://example.com:5689",
+                    "events": [
+                      "batches.completed",
+                      "batches.error"
+                    ],
+                    "token": "hunter2",
+                    "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
+                    "created_at": "2024-10-03T02:53:30.167953",
+                    "enabled": true
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -10840,18 +8433,15 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "url": "https://example.com:5689",
-                  "events": [
-                    "batches.completed",
-                    "batches.error"
-                  ],
-                  "token": "hunter2",
-                  "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
-                  "created_at": "2024-10-03T02:53:30.167953",
-                  "enabled": true
-                }
+                "url": "https://example.com:5689",
+                "events": [
+                  "batches.completed",
+                  "batches.error"
+                ],
+                "token": "hunter2",
+                "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
+                "created_at": "2024-10-03T02:53:30.167953",
+                "enabled": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -10958,18 +8548,15 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "url": "https://example.com:5689",
-                  "events": [
-                    "batches.completed",
-                    "batches.error"
-                  ],
-                  "token": "hunter2",
-                  "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
-                  "created_at": "2024-10-03T02:53:30.167953",
-                  "enabled": true
-                }
+                "url": "https://example.com:5689",
+                "events": [
+                  "batches.completed",
+                  "batches.error"
+                ],
+                "token": "hunter2",
+                "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
+                "created_at": "2024-10-03T02:53:30.167953",
+                "enabled": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -11185,18 +8772,15 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "url": "https://example.com:5689",
-                  "events": [
-                    "batches.completed",
-                    "batches.error"
-                  ],
-                  "token": "hunter2",
-                  "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
-                  "created_at": "2024-10-03T02:53:30.167953",
-                  "enabled": true
-                }
+                "url": "https://example.com:5689",
+                "events": [
+                  "batches.completed",
+                  "batches.error"
+                ],
+                "token": "hunter2",
+                "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
+                "created_at": "2024-10-03T02:53:30.167953",
+                "enabled": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -11292,40 +8876,37 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "if": {
-                      "&&": [
-                        {
-                          "&&": [
-                            null
-                          ]
-                        }
-                      ]
-                    },
-                    "then": [
+              "responseBody": [
+                {
+                  "if": {
+                    "&&": [
                       {
-                        "if": {
-                          "&&": [
-                            {}
-                          ]
-                        }
-                      }
-                    ],
-                    "else": [
-                      {
-                        "if": {
-                          "&&": [
-                            {}
-                          ]
-                        }
+                        "&&": [
+                          null
+                        ]
                       }
                     ]
-                  }
-                ]
-              },
+                  },
+                  "then": [
+                    {
+                      "if": {
+                        "&&": [
+                          {}
+                        ]
+                      }
+                    }
+                  ],
+                  "else": [
+                    {
+                      "if": {
+                        "&&": [
+                          {}
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -12010,7 +9591,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ReportsGetParametersSchema"
+                  "value": "ReportStatus"
                 }
               }
             }
@@ -12052,23 +9633,20 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "foo",
-                  "data": [
-                    {
-                      "transaction_id": "foo",
-                      "description": "foo",
-                      "fields": [
-                        "foo"
-                      ],
-                      "id": "foo",
-                      "created_at": "foo",
-                      "status": "open",
-                      "rejection_reason": "foo"
-                    }
-                  ]
-                }
+                "next_cursor": "foo",
+                "data": [
+                  {
+                    "transaction_id": "foo",
+                    "description": "foo",
+                    "fields": [
+                      "foo"
+                    ],
+                    "id": "foo",
+                    "created_at": "foo",
+                    "status": "open",
+                    "rejection_reason": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -12190,17 +9768,14 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "transaction_id": "xbx8YP14g565Xk",
-                  "description": "lorem ipsum",
-                  "fields": [
-                    ".entities.counterparty"
-                  ],
-                  "id": "a652285d-de1b-4a6f-b6ce-45efa9be7952",
-                  "created_at": "2024-10-03T02:53:30.167953+00:00",
-                  "status": "open"
-                }
+                "transaction_id": "xbx8YP14g565Xk",
+                "description": "lorem ipsum",
+                "fields": [
+                  ".entities.counterparty"
+                ],
+                "id": "a652285d-de1b-4a6f-b6ce-45efa9be7952",
+                "created_at": "2024-10-03T02:53:30.167953+00:00",
+                "status": "open"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -12318,17 +9893,14 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "transaction_id": "xbx8YP14g565Xk",
-                  "description": "lorem ipsum",
-                  "fields": [
-                    ".entities.counterparty"
-                  ],
-                  "id": "a652285d-de1b-4a6f-b6ce-45efa9be7952",
-                  "created_at": "2024-10-03T02:53:30.167953+00:00",
-                  "status": "open"
-                }
+                "transaction_id": "xbx8YP14g565Xk",
+                "description": "lorem ipsum",
+                "fields": [
+                  ".entities.counterparty"
+                ],
+                "id": "a652285d-de1b-4a6f-b6ce-45efa9be7952",
+                "created_at": "2024-10-03T02:53:30.167953+00:00",
+                "status": "open"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -12533,36 +10105,33 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "incoming": [
-                    "transfer from investment app",
-                    "transfer from stock broker",
-                    "transfer from crypto broker",
-                    "chargeback",
-                    "freelance income",
-                    "rideshare or delivery income",
-                    "paycheck",
-                    "benefits",
-                    "interest earned",
-                    "stock dividend"
-                  ],
-                  "outgoing": [
-                    "digital content and streaming",
-                    "vending machine",
-                    "reversal",
-                    "transfer to investment app",
-                    "transfer to stock broker",
-                    "transfer to crypto broker",
-                    "adjustment",
-                    "intra account transfer",
-                    "inter account transfer",
-                    "peer to peer transfer",
-                    "funeral service",
-                    "ATM withdrawal",
-                    "teller withdrawal"
-                  ]
-                }
+                "incoming": [
+                  "transfer from investment app",
+                  "transfer from stock broker",
+                  "transfer from crypto broker",
+                  "chargeback",
+                  "freelance income",
+                  "rideshare or delivery income",
+                  "paycheck",
+                  "benefits",
+                  "interest earned",
+                  "stock dividend"
+                ],
+                "outgoing": [
+                  "digital content and streaming",
+                  "vending machine",
+                  "reversal",
+                  "transfer to investment app",
+                  "transfer to stock broker",
+                  "transfer to crypto broker",
+                  "adjustment",
+                  "intra account transfer",
+                  "inter account transfer",
+                  "peer to peer transfer",
+                  "funeral service",
+                  "ATM withdrawal",
+                  "teller withdrawal"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -12727,20 +10296,17 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "incoming": [
-                    "salary",
-                    "investment income",
-                    "other income"
-                  ],
-                  "outgoing": [
-                    "rent",
-                    "utilities",
-                    "groceries",
-                    "entertainment"
-                  ]
-                }
+                "incoming": [
+                  "salary",
+                  "investment income",
+                  "other income"
+                ],
+                "outgoing": [
+                  "rent",
+                  "utilities",
+                  "groceries",
+                  "entertainment"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -12847,36 +10413,33 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "incoming": [
-                    "transfer from investment app",
-                    "transfer from stock broker",
-                    "transfer from crypto broker",
-                    "chargeback",
-                    "freelance income",
-                    "rideshare or delivery income",
-                    "paycheck",
-                    "benefits",
-                    "interest earned",
-                    "stock dividend"
-                  ],
-                  "outgoing": [
-                    "digital content and streaming",
-                    "vending machine",
-                    "reversal",
-                    "transfer to investment app",
-                    "transfer to stock broker",
-                    "transfer to crypto broker",
-                    "adjustment",
-                    "intra account transfer",
-                    "inter account transfer",
-                    "peer to peer transfer",
-                    "funeral service",
-                    "ATM withdrawal",
-                    "teller withdrawal"
-                  ]
-                }
+                "incoming": [
+                  "transfer from investment app",
+                  "transfer from stock broker",
+                  "transfer from crypto broker",
+                  "chargeback",
+                  "freelance income",
+                  "rideshare or delivery income",
+                  "paycheck",
+                  "benefits",
+                  "interest earned",
+                  "stock dividend"
+                ],
+                "outgoing": [
+                  "digital content and streaming",
+                  "vending machine",
+                  "reversal",
+                  "transfer to investment app",
+                  "transfer to stock broker",
+                  "transfer to crypto broker",
+                  "adjustment",
+                  "intra account transfer",
+                  "inter account transfer",
+                  "peer to peer transfer",
+                  "funeral service",
+                  "ATM withdrawal",
+                  "teller withdrawal"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -13055,16 +10618,13 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
-                  "name": "Starbucks",
-                  "website": "starbucks.com",
-                  "logo": "https://logos.ntropy.com/starbucks.com",
-                  "mccs": [
-                    5814
-                  ]
-                }
+                "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
+                "name": "Starbucks",
+                "website": "starbucks.com",
+                "logo": "https://logos.ntropy.com/starbucks.com",
+                "mccs": [
+                  5814
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -13194,16 +10754,13 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
-                  "name": "Starbucks",
-                  "website": "starbucks.com",
-                  "logo": "https://logos.ntropy.com/starbucks.com",
-                  "mccs": [
-                    5814
-                  ]
-                }
+                "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
+                "name": "Starbucks",
+                "website": "starbucks.com",
+                "logo": "https://logos.ntropy.com/starbucks.com",
+                "mccs": [
+                  5814
+                ]
               },
               "responseBodyV3": {
                 "type": "json",

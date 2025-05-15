@@ -163,10 +163,7 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "message": "foo"
-              }
+              "message": "foo"
             },
             "responseBodyV3": {
               "type": "json",

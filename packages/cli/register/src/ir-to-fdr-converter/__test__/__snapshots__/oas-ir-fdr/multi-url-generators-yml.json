@@ -183,13 +183,10 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "username": "foo",
-                "email": "foo",
-                "createdAt": "foo"
-              }
+              "id": "foo",
+              "username": "foo",
+              "email": "foo",
+              "createdAt": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -302,13 +299,10 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "username": "foo",
-                "email": "foo",
-                "createdAt": "foo"
-              }
+              "id": "foo",
+              "username": "foo",
+              "email": "foo",
+              "createdAt": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -389,12 +383,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "accessToken": "foo",
-                "tokenType": "foo",
-                "expiresIn": 42
-              }
+              "accessToken": "foo",
+              "tokenType": "foo",
+              "expiresIn": 42
             },
             "responseBodyV3": {
               "type": "json",

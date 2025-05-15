@@ -197,6 +197,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
             const schemaConverter = new SchemaConverter({
                 context: this.context,
                 id: schemaId,
+                nameOverride: subSchema.title,
                 breadcrumbs: [...this.breadcrumbs, `oneOf[${index}]`],
                 schema: extendedSubSchema ?? subSchema
             });

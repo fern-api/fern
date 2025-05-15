@@ -7039,12 +7039,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -7138,12 +7135,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": 42
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": 42
             },
             "responseBodyV3": {
               "type": "json",
@@ -7235,12 +7229,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -7324,12 +7315,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -7413,12 +7401,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": 42
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": 42
             },
             "responseBodyV3": {
               "type": "json",
@@ -7500,12 +7485,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -7612,14 +7594,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  42
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                42
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -7728,14 +7707,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  42
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                42
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -7821,12 +7797,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": 42
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": 42
             },
             "responseBodyV3": {
               "type": "json",
@@ -7888,14 +7861,11 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -7979,12 +7949,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -8043,12 +8010,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -8140,12 +8104,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": 42
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": 42
             },
             "responseBodyV3": {
               "type": "json",
@@ -8206,12 +8167,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": 42
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": 42
             },
             "responseBodyV3": {
               "type": "json",
@@ -8272,12 +8230,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": "foo"
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -8336,12 +8291,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -8400,12 +8352,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -8464,12 +8413,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -8551,12 +8497,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -8615,12 +8558,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -8705,14 +8645,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -8799,14 +8736,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -8890,12 +8824,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -8956,12 +8887,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": 42
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": 42
             },
             "responseBodyV3": {
               "type": "json",
@@ -9022,12 +8950,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": 42
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": 42
             },
             "responseBodyV3": {
               "type": "json",
@@ -9119,12 +9044,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": 42
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": 42
             },
             "responseBodyV3": {
               "type": "json",
@@ -9222,14 +9144,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -9326,14 +9245,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -9422,14 +9338,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -9521,14 +9434,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -9625,14 +9535,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -9732,14 +9639,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -9825,12 +9729,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": 42
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": 42
             },
             "responseBodyV3": {
               "type": "json",
@@ -9914,12 +9815,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": "foo"
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -10018,14 +9916,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  "foo"
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                "foo"
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -10109,12 +10004,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -10206,12 +10098,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -10314,14 +10203,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -10415,12 +10301,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -10512,12 +10395,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -10576,12 +10456,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -10663,12 +10540,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -10762,12 +10636,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": true
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": true
             },
             "responseBodyV3": {
               "type": "json",
@@ -10828,12 +10699,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": 42
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": 42
             },
             "responseBodyV3": {
               "type": "json",
@@ -10937,12 +10805,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": "foo"
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -11036,12 +10901,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": "foo"
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -11133,12 +10995,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",

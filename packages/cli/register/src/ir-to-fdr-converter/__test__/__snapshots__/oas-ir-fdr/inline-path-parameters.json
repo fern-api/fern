@@ -24,9 +24,9 @@
         ]
       }
     },
-    "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess": {
+    "OrganizationsOrganizationIdSearchPostRequestBodyContentApplicationJsonSchemaAccess": {
       "description": "Access level",
-      "name": "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess",
+      "name": "OrganizationsOrganizationIdSearchPostRequestBodyContentApplicationJsonSchemaAccess",
       "shape": {
         "type": "enum",
         "values": [
@@ -133,7 +133,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess"
+                        "value": "OrganizationsOrganizationIdSearchPostRequestBodyContentApplicationJsonSchemaAccess"
                       }
                     }
                   }
@@ -171,12 +171,9 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "results": [
-                    "foo"
-                  ]
-                }
+                "results": [
+                  "foo"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -353,12 +350,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "results": [
-                  "foo"
-                ]
-              }
+              "results": [
+                "foo"
+              ]
             },
             "responseBodyV3": {
               "type": "json",
