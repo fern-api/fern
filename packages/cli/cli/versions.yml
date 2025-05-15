@@ -1,4 +1,10 @@
 - changelogEntry:
+  - summary: Convert schemas of type `string` with format `date` to a Fern `date` type, instead of a `string` type.
+    type: fix
+  irVersion: 57
+  version: 0.61.11
+
+- changelogEntry:
   - summary: |
       Fix a bug where the docs resolver would throw an error when encountering missing or duplicate endpoints.
     type: fix
