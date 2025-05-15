@@ -91,7 +91,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                     defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding,
                     useBytesForBinaryResponse: definition.settings?.useBytesForBinaryResponse ?? false,
                     respectForwardCompatibleEnums: definition.settings?.respectForwardCompatibleEnums ?? false,
-                    additionalPropertiesDefaultsTo: definition.settings?.additionalPropertiesDefaultsTo ?? false
+                    additionalPropertiesDefaultsTo: definition.settings?.additionalPropertiesDefaultsTo ?? false,
+                    typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? true
                 }
             });
             continue;
@@ -160,7 +161,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                 defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding,
                 useBytesForBinaryResponse: definition.settings?.useBytesForBinaryResponse ?? false,
                 respectForwardCompatibleEnums: definition.settings?.respectForwardCompatibleEnums ?? false,
-                additionalPropertiesDefaultsTo: definition.settings?.additionalPropertiesDefaultsTo ?? false
+                additionalPropertiesDefaultsTo: definition.settings?.additionalPropertiesDefaultsTo ?? false,
+                typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? true
             },
             source: {
                 type: "openapi",

@@ -450,7 +450,25 @@ export function convertSchemaObject(
                 namespace,
                 groupName
             });
-        } else if (schema.format === "json-string") {
+        }
+
+        if (schema.format === "date" && context.options.typeDatesAsStrings === false) {
+            return wrapPrimitive({
+                nameOverride,
+                generatedName,
+                title,
+                primitive: PrimitiveSchemaValueWithExample.date({
+                    example: getExamplesString({ schema, logger: context.logger, fallback })
+                }),
+                wrapAsNullable,
+                description,
+                availability,
+                namespace,
+                groupName
+            });
+        }
+
+        if (schema.format === "json-string") {
             return SchemaWithExample.unknown({
                 nameOverride,
                 generatedName,

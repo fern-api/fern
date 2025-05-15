@@ -27,7 +27,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     filter: undefined,
     exampleGeneration: undefined,
     defaultFormParameterEncoding: undefined,
-    additionalPropertiesDefaultsTo: undefined
+    additionalPropertiesDefaultsTo: undefined,
+    typeDatesAsStrings: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -103,7 +104,8 @@ function parseOpenApiDefinitionSettingsSchema(
         defaultFormParameterEncoding: settings?.["default-form-parameter-encoding"],
         useBytesForBinaryResponse: settings?.["use-bytes-for-binary-response"],
         respectForwardCompatibleEnums: settings?.["respect-forward-compatible-enums"],
-        additionalPropertiesDefaultsTo: settings?.["additional-properties-defaults-to"]
+        additionalPropertiesDefaultsTo: settings?.["additional-properties-defaults-to"],
+        typeDatesAsStrings: settings?.["type-dates-as-strings"]
     };
 }
 
