@@ -698,7 +698,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return group;
     }
 
-    public isObjectType(schema: OpenAPIV3_1.SchemaObject): boolean {
+    public isObjectSchemaType(schema: OpenAPIV3_1.SchemaObject): boolean {
         return schema.type === "object" || schema.properties != null;
     }
 }

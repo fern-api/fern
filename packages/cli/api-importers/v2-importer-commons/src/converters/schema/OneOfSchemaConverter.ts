@@ -168,11 +168,6 @@ export class OneOfSchemaConverter extends AbstractConverter<
         const unionTypes: UndiscriminatedUnionMember[] = [];
         const referencedTypes: Set<string> = new Set();
         let inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> = {};
-        let topLevelObjectProperties: Record<string, OpenAPIV3_1.SchemaObject> = {};
-        // get top level object properties
-        if (this.context.isObjectType(this.schema)) {
-            topLevelObjectProperties = this.schema.properties ?? {};
-        }
 
         for (const [index, subSchema] of [
             ...(this.schema.oneOf ?? []).entries(),
@@ -195,11 +190,8 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
             const extendedSubSchema = this.extendSubSchema(subSchema);
 
-            if (!this.context.isObjectType(subSchema)) {
-                this.context.errorCollector.collect({
-                    message: `Received additional object properties for oneOf/anyOf that is not an object: ${JSON.stringify(subSchema)}`,
-                    path: this.breadcrumbs
-                });
+            if (extendedSubSchema === null) {
+                continue;
             }
 
             const schemaId = this.context.convertBreadcrumbsToName([`${this.id}_${index}`]);
@@ -371,7 +363,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         };
     }
 
-    private extendSubSchema(subSchema: OpenAPIV3_1.SchemaObject): OpenAPIV3_1.SchemaObject {
+    private extendSubSchema(subSchema: OpenAPIV3_1.SchemaObject): OpenAPIV3_1.SchemaObject | null {
         if (Object.entries(this.schema.properties ?? {}).length === 0) {
             return subSchema;
         }
@@ -380,6 +372,12 @@ export class OneOfSchemaConverter extends AbstractConverter<
             return this.mergeIntoObjectSchema(subSchema, this.schema.properties ?? {});
         }
 
-        return this.schema;
+        if (!this.context.isObjectSchemaType(subSchema)) {
+            this.context.errorCollector.collect({
+                message: `Received additional object properties for oneOf/anyOf that are not objects: ${JSON.stringify(subSchema)}`,
+                path: this.breadcrumbs
+            });
+        }
+        return null;
     }
 }
