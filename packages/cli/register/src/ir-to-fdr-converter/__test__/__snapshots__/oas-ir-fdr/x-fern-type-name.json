@@ -221,21 +221,18 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "string_primitive": "foo",
-                "number_primitive": 42,
-                "boolean_primitive": true,
-                "object_type": {
-                  "id": "foo",
-                  "name": "foo"
-                },
-                "array_type": [
-                  "foo"
-                ],
-                "enum_type": "VALUE_1",
-                "anyof_type": "foo"
-              }
+              "string_primitive": "foo",
+              "number_primitive": 42,
+              "boolean_primitive": true,
+              "object_type": {
+                "id": "foo",
+                "name": "foo"
+              },
+              "array_type": [
+                "foo"
+              ],
+              "enum_type": "VALUE_1",
+              "anyof_type": "foo"
             },
             "responseBodyV3": {
               "type": "json",
