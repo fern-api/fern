@@ -2162,13 +2162,7 @@ The client can use this value to localize the `items[].time` values to the local
                 "access": "read-only",
                 "availability": "deprecated",
                 "docs": "The date when the transaction occurred in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.<br>**Warning**: The property `createdOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `createdOn` will be removed on version `v3.0.0` of the schema.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "description": {
                 "docs": "The transaction description assigned by the transaction cleansing service.",
@@ -2207,13 +2201,7 @@ The client can use this value to localize the `items[].time` values to the local
               "occurredOn": {
                 "access": "read-only",
                 "docs": "The date of the transaction in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.",
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "date",
               },
               "posted": {
                 "docs": "If `true`, the transaction has been posted (cleared) and applied to the account. If `false`, the transaction is still pending and might be canceled. `posted` is only valid for credit and debit transactions and omitted for balance transactions.",
@@ -2223,13 +2211,7 @@ The client can use this value to localize the `items[].time` values to the local
                 "access": "read-only",
                 "availability": "deprecated",
                 "docs": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date `YYYY-MM-DD` format, UTC. This is derived and immutable and only present if `posted` is `true`.<br>**Warning**: The property `postedOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `postedOn` will be removed on version `v3.0.0` of the schema.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "subtype": {
                 "docs": "The transaction's kind of debit or credit.",
@@ -2438,33 +2420,15 @@ The client can use this value to localize the `items[].time` values to the local
             "properties": {
               "creditOn": {
                 "docs": "The date the local financial institution account is credited in [RFC 3339 `YYYY-MM-DD`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the `date` based on the `risk` level. The credit-on date normally falls one business day after the restricted `date`. This property is only returned if the payment `type` is `achDebit` or `ach`.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "debitOn": {
                 "docs": "The date the local financial institution account is debited in [RFC 3339 `YYYY-MM-DD`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the `date` based on the `risk` level and the transfer direction (`achDebit` or `achCredit`). The debit-on date normally falls one to three business days before the restricted `date`. This property is only returned if the payment `type` is `achCredit` or `ach`.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "occursOn": {
                 "docs": "The date that a transfers restriction occurs, is in the [ISO 8601 Date](https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates) format, `yyyy-mm-dd`.",
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "date",
               },
               "reason": {
                 "docs": "Indicates why this date is restricted.",
@@ -2536,13 +2500,7 @@ The response may include dates prior to requested the start date, as that is use
             "properties": {
               "accuracyEndsOn": {
                 "docs": "The service only knows [bank holidays](https://www.federalreserve.gov/aboutthefed/k8.htm) for about two to four years in advance. This date is the end of that known holiday schedule, although the requested dates may extend well beyond this date. Any dates in the response beyond this date may omit holidays but may include other restricted dates based on the financial institution's normal scheduled closures such as Saturdays and Sundays.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "restrictedDates": {
                 "docs": "A list of restricted transfer dates as determined by the requested transfer parameters, holidays, and scheduled closures. This includes dates that correspond to normal day-of-week restrictions as listed in `restrictedDays`.",
@@ -2722,24 +2680,12 @@ The response may include dates prior to requested the start date, as that is use
               "creditsOn": {
                 "access": "read-only",
                 "docs": "The effective the transfer is scheduled to credit the target account, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived from the `scheduledOn` date, based on the financial institution's transfer rules.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "debitsOn": {
                 "access": "read-only",
                 "docs": "The effective date the transfer is scheduled to debit the source account, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived from the `scheduledOn` date, based on the financial institution's transfer rules.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
             },
             "source": {
@@ -2801,13 +2747,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
               },
               "endsOn": {
                 "docs": "The optional date when the recurring transfer schedule ends, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. Subsequent recurring transfers may be scheduled up to and including this date, but not after. This property is ignored if `frequency` is `once`.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "frequency": {
                 "type": "TransferFrequency",
@@ -2817,13 +2757,7 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
               },
               "scheduledOn": {
                 "docs": "The date the the customer scheduled the transfer to occur in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format.",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
             },
             "source": {
@@ -2872,23 +2806,11 @@ For recurring transfer schedules, `endsOn`, `count`, and `amountLimit` are mutua
             "properties": {
               "effectiveOn": {
                 "docs": "The effective date of the recurrence in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. When the effective date differs from the scheduled date, it is due to a banking holiday, weekend, or other non-business day. The date is adjusted to before the scheduled date when the transfer direction is `credit` and adjusted to after the scheduled date when the transfer direction is `debit`.",
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "date",
               },
               "scheduledOn": {
                 "docs": "The scheduled date of the calculated calendar recurrence in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "date",
               },
             },
             "source": {
@@ -4327,15 +4249,13 @@ types:
       schedule list.
     properties:
       scheduledOn:
-        type: string
+        type: date
         docs: >-
           The scheduled date of the calculated calendar recurrence in
           `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date
           format.
-        validation:
-          format: date
       effectiveOn:
-        type: string
+        type: date
         docs: >-
           The effective date of the recurrence in `YYYY-MM-DD` [RFC
           3339](https://tools.ietf.org/html/rfc3339) date format. When the
@@ -4344,8 +4264,6 @@ types:
           before the scheduled date when the transfer direction is `credit` and
           adjusted to after the scheduled date when the transfer direction is
           `debit`.
-        validation:
-          format: date
     source:
       openapi: ../openapi.yml
   TransferDateRestrictionType:
@@ -4474,7 +4392,7 @@ types:
           dates that correspond to normal day-of-week restrictions as listed in
           `restrictedDays`.
       accuracyEndsOn:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           The service only knows [bank
           holidays](https://www.federalreserve.gov/aboutthefed/k8.htm) for about
@@ -4483,8 +4401,6 @@ types:
           this date. Any dates in the response beyond this date may omit
           holidays but may include other restricted dates based on the financial
           institution's normal scheduled closures such as Saturdays and Sundays.
-        validation:
-          format: date
     extends:
       - AbstractBody
     source:
@@ -4497,18 +4413,16 @@ types:
       date or both.
     properties:
       occursOn:
-        type: string
+        type: date
         docs: >-
           The date that a transfers restriction occurs, is in the [ISO 8601
           Date](https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates) format,
           `yyyy-mm-dd`.
-        validation:
-          format: date
       reason:
         type: TransferDateRestrictionType
         docs: Indicates why this date is restricted.
       creditOn:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           The date the local financial institution account is credited in [RFC
           3339 `YYYY-MM-DD`](https://tools.ietf.org/html/rfc3339) date format.
@@ -4516,10 +4430,8 @@ types:
           credit-on date normally falls one business day after the restricted
           `date`. This property is only returned if the payment `type` is
           `achDebit` or `ach`.
-        validation:
-          format: date
       debitOn:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           The date the local financial institution account is debited in [RFC
           3339 `YYYY-MM-DD`](https://tools.ietf.org/html/rfc3339) date format.
@@ -4528,8 +4440,6 @@ types:
           normally falls one to three business days before the restricted
           `date`. This property is only returned if the payment `type` is
           `achCredit` or `ach`.
-        validation:
-          format: date
     source:
       openapi: ../openapi.yml
   CheckNumberRange:
@@ -4557,16 +4467,14 @@ types:
         type: TransactionSubType
         docs: The transaction's kind of debit or credit.
       occurredOn:
-        type: string
+        type: date
         docs: >-
           The date of the transaction in `YYYY-MM-DD` [RFC
           3339](https://tools.ietf.org/html/rfc3339) `date` format. This is
           derived and immutable.
-        validation:
-          format: date
         access: read-only
       createdOn:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           The date when the transaction occurred in `YYYY-MM-DD` [RFC
           3339](https://tools.ietf.org/html/rfc3339) `date` format. This is
@@ -4574,12 +4482,10 @@ types:
           deprecated on version `v2.1.0` of the schema. Use the `occurredOn`
           property instead. `createdOn` will be removed on version `v3.0.0` of
           the schema.
-        validation:
-          format: date
         availability: deprecated
         access: read-only
       postedOn:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           The date when this transaction was posted (cleared and applied to the
           account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339)
@@ -4588,8 +4494,6 @@ types:
           was deprecated on version `v2.1.0` of the schema. Use the `occurredOn`
           property instead. `postedOn` will be removed on version `v3.0.0` of
           the schema.
-        validation:
-          format: date
         availability: deprecated
         access: read-only
       amount:
@@ -4881,27 +4785,23 @@ types:
       mutually exclusive.
     properties:
       scheduledOn:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           The date the the customer scheduled the transfer to occur in
           `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date`
           format.
-        validation:
-          format: date
       recurrenceType:
         type: optional<TransferRecurrenceType>
       frequency:
         type: TransferFrequency
       endsOn:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           The optional date when the recurring transfer schedule ends, in
           `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date
           format. Subsequent recurring transfers may be scheduled up to and
           including this date, but not after. This property is ignored if
           `frequency` is `once`.
-        validation:
-          format: date
       count:
         type: optional<integer>
         docs: >-
@@ -4926,25 +4826,21 @@ types:
       properties, and derived credit and debit dates.
     properties:
       debitsOn:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           The effective date the transfer is scheduled to debit the source
           account, in `YYYY-MM-DD` [RFC
           3339](https://tools.ietf.org/html/rfc3339) `date` format. This is
           derived from the `scheduledOn` date, based on the financial
           institution's transfer rules.
-        validation:
-          format: date
         access: read-only
       creditsOn:
-        type: optional<string>
+        type: optional<date>
         docs: >-
           The effective the transfer is scheduled to credit the target account,
           in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date`
           format. This is derived from the `scheduledOn` date, based on the
           financial institution's transfer rules.
-        validation:
-          format: date
         access: read-only
     extends:
       - TransferSchedule
@@ -6897,13 +6793,7 @@ This information provides hints to clients, allowing bank customers to select tr
                 "query-parameters": {
                   "endsOn": {
                     "docs": "The end of the range of dates to include in the response. in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. The default is at least one year from the `startOn` date and is limited to a four year interval.",
-                    "type": "optional<string>",
-                    "validation": {
-                      "format": "date",
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
-                    },
+                    "type": "optional<date>",
                   },
                   "risk": {
                     "docs": "The primary account's risk level. This determines what business rules and adjustments to make to the date restrictions. This parameter only applies to ACH credit transfers (funds credited to an external account) and is ignored for others.",
@@ -6911,13 +6801,7 @@ This information provides hints to clients, allowing bank customers to select tr
                   },
                   "startsOn": {
                     "docs": "The start of the range of dates to include in the response, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. While start dates far in the future are allowed, bank holiday schedules are only available for a small number of years ahead. The default is the current date.",
-                    "type": "optional<string>",
-                    "validation": {
-                      "format": "date",
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
-                    },
+                    "type": "optional<date>",
                   },
                   "type": {
                     "docs": "Describes the type of transfer. This determines what business rules and adjustments to make to the date restrictions. Note ACH transfers (including CTX and PPD), that `Credit` and `Debit` here are relative to the account at the _external_ financial institution.",
@@ -7018,13 +6902,7 @@ This information provides hints to clients, allowing bank customers to select tr
                   },
                   "endsOn": {
                     "docs": "The date to use to conclude calculations of the transfer schedule in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
-                    "type": "optional<string>",
-                    "validation": {
-                      "format": "date",
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
-                    },
+                    "type": "optional<date>",
                   },
                   "frequency": {
                     "docs": "The interval at which the money movement recurs.",
@@ -7032,13 +6910,7 @@ This information provides hints to clients, allowing bank customers to select tr
                   },
                   "startsOn": {
                     "docs": "The date to use to begin calculations of the transfer schedule in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
-                    "type": "string",
-                    "validation": {
-                      "format": "date",
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
-                    },
+                    "type": "date",
                   },
                 },
               },
@@ -7264,21 +7136,17 @@ service:
         name: InstitutionsListTransferScheduleRequest
         query-parameters:
           startsOn:
-            type: string
+            type: date
             docs: >-
               The date to use to begin calculations of the transfer schedule in
               `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date
               format.
-            validation:
-              format: date
           endsOn:
-            type: optional<string>
+            type: optional<date>
             docs: >-
               The date to use to conclude calculations of the transfer schedule
               in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339)
               date format.
-            validation:
-              format: date
           direction:
             type: root.TransferScheduleDirection
             docs: >-
@@ -7431,24 +7299,20 @@ service:
         name: InstitutionsGetTransferDateRestrictionsRequest
         query-parameters:
           startsOn:
-            type: optional<string>
+            type: optional<date>
             docs: >-
               The start of the range of dates to include in the response, in
               `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date
               format. While start dates far in the future are allowed, bank
               holiday schedules are only available for a small number of years
               ahead. The default is the current date.
-            validation:
-              format: date
           endsOn:
-            type: optional<string>
+            type: optional<date>
             docs: >-
               The end of the range of dates to include in the response. in
               `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date
               format. The default is at least one year from the `startOn` date
               and is limited to a four year interval.
-            validation:
-              format: date
           type:
             type: optional<root.TransferTypeForDateRestrictions>
             docs: >-
@@ -8721,7 +8585,7 @@ Note: This operation requires an identity challenge if the financial institution
                         "count": 1,
                         "creditsOn": "2026-06-26",
                         "debitsOn": "2026-06-24",
-                        "endsOn": "endsOn",
+                        "endsOn": "2023-01-15",
                         "frequency": "once",
                         "recurrenceType": "fixed",
                         "scheduledOn": "2026-06-28",
@@ -8838,7 +8702,7 @@ Note: This operation requires an identity challenge if the financial institution
                         "count": 1,
                         "creditsOn": "2026-06-26",
                         "debitsOn": "2026-06-24",
-                        "endsOn": "endsOn",
+                        "endsOn": "2023-01-15",
                         "frequency": "once",
                         "recurrenceType": "fixed",
                         "scheduledOn": "2026-06-28",
@@ -9064,7 +8928,7 @@ Note: This operation requires an identity challenge if the financial institution
                         "count": 1,
                         "creditsOn": "2026-06-26",
                         "debitsOn": "2026-06-24",
-                        "endsOn": "endsOn",
+                        "endsOn": "2023-01-15",
                         "frequency": "once",
                         "recurrenceType": "fixed",
                         "scheduledOn": "2026-06-28",
@@ -9372,7 +9236,7 @@ service:
                 scheduledOn: '2026-06-28'
                 recurrenceType: fixed
                 frequency: once
-                endsOn: endsOn
+                endsOn: '2023-01-15'
                 count: 1
                 amountLimit: '3456.78'
                 debitsOn: '2026-06-24'
@@ -9424,7 +9288,7 @@ service:
                 scheduledOn: '2026-06-28'
                 recurrenceType: fixed
                 frequency: once
-                endsOn: endsOn
+                endsOn: '2023-01-15'
                 count: 1
                 amountLimit: '3456.78'
                 debitsOn: '2026-06-24'
@@ -9540,7 +9404,7 @@ service:
                 scheduledOn: '2026-06-28'
                 recurrenceType: fixed
                 frequency: once
-                endsOn: endsOn
+                endsOn: '2023-01-15'
                 count: 1
                 amountLimit: '3456.78'
                 debitsOn: '2026-06-24'

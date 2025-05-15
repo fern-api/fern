@@ -15,15 +15,7 @@
                 "type": "optional<datetime>",
               },
               "complete": "GameComplete",
-              "date": {
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
+              "date": "date",
               "extra_fields": "list<GameExtraFieldsItem>",
               "group": {
                 "access": "read-only",
@@ -130,15 +122,7 @@
                 "access": "read-only",
                 "type": "optional<datetime>",
               },
-              "date": {
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
+              "date": "date",
               "games": {
                 "access": "read-only",
                 "type": "optional<list<GroupGamesItem>>",
@@ -185,15 +169,7 @@
                 "type": "optional<datetime>",
               },
               "complete": "GroupGamesItemComplete",
-              "date": {
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
+              "date": "date",
               "extra_fields": "list<GroupGamesItemExtraFieldsItem>",
               "id": {
                 "access": "read-only",
@@ -582,10 +558,7 @@
         type: optional<string>
         validation:
           maxLength: 255
-      date:
-        type: string
-        validation:
-          format: date
+      date: date
       time: string
       start_at:
         type: optional<datetime>
@@ -639,10 +612,7 @@
         type: optional<string>
         validation:
           maxLength: 255
-      date:
-        type: string
-        validation:
-          format: date
+      date: date
       time: string
       start_at:
         type: optional<datetime>
@@ -733,10 +703,7 @@
         type: optional<string>
         validation:
           maxLength: 255
-      date:
-        type: string
-        validation:
-          format: date
+      date: date
       time: string
       start_at:
         type: optional<datetime>
@@ -896,7 +863,7 @@
                           "complete": {
                             "completed_at": "2024-01-15T09:30:00Z",
                           },
-                          "date": "date",
+                          "date": "2023-01-15",
                           "extra_fields": [
                             {
                               "key": "key",
@@ -971,13 +938,13 @@
                       "results": [
                         {
                           "added_at": "2024-01-15T09:30:00Z",
-                          "date": "date",
+                          "date": "2023-01-15",
                           "games": [
                             {
                               "complete": {
                                 "completed_at": "2024-01-15T09:30:00Z",
                               },
-                              "date": "date",
+                              "date": "2023-01-15",
                               "extra_fields": [
                                 {
                                   "key": "key",
@@ -1240,7 +1207,7 @@
                         "hints": 1,
                         "score": 1,
                       },
-                      "date": "date",
+                      "date": "2023-01-15",
                       "extra_fields": [
                         {
                           "key": "key",
@@ -1320,14 +1287,14 @@
                   "response": {
                     "body": {
                       "added_at": "2024-01-15T09:30:00Z",
-                      "date": "date",
+                      "date": "2023-01-15",
                       "games": [
                         {
                           "added_at": "2024-01-15T09:30:00Z",
                           "complete": {
                             "completed_at": "2024-01-15T09:30:00Z",
                           },
-                          "date": "date",
+                          "date": "2023-01-15",
                           "extra_fields": [
                             {
                               "key": "key",
@@ -1640,7 +1607,7 @@
                   added_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
                   name: name
-                  date: date
+                  date: '2023-01-15'
                   time: time
                   start_at: '2024-01-15T09:30:00Z'
                   group: group
@@ -1691,7 +1658,7 @@
               added_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               name: name
-              date: date
+              date: '2023-01-15'
               time: time
               start_at: '2024-01-15T09:30:00Z'
               group: group
@@ -1748,11 +1715,11 @@
                   updated_at: '2024-01-15T09:30:00Z'
                   is_event: true
                   name: name
-                  date: date
+                  date: '2023-01-15'
                   time: time
                   start_at: '2024-01-15T09:30:00Z'
                   games:
-                    - date: date
+                    - date: '2023-01-15'
                       time: time
                       extra_fields:
                         - key: key
@@ -1801,7 +1768,7 @@
               updated_at: '2024-01-15T09:30:00Z'
               is_event: true
               name: name
-              date: date
+              date: '2023-01-15'
               time: time
               start_at: '2024-01-15T09:30:00Z'
               games:
@@ -1809,7 +1776,7 @@
                   added_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
                   name: name
-                  date: date
+                  date: '2023-01-15'
                   time: time
                   start_at: '2024-01-15T09:30:00Z'
                   room: room

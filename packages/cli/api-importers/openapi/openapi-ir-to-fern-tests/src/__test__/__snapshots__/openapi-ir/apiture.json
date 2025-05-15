@@ -7955,9 +7955,7 @@
           "name": "startsOn",
           "schema": {
             "schema": {
-              "format": "date",
-              "example": "2022-07-04",
-              "type": "string"
+              "type": "date"
             },
             "generatedName": "InstitutionsListTransferScheduleRequestStartsOn",
             "groupName": [],
@@ -7975,9 +7973,7 @@
             "generatedName": "InstitutionsListTransferScheduleRequestEndsOn",
             "value": {
               "schema": {
-                "format": "date",
-                "example": "2022-07-04",
-                "type": "string"
+                "type": "date"
               },
               "generatedName": "InstitutionsListTransferScheduleRequestEndsOn",
               "groupName": [],
@@ -8768,7 +8764,7 @@
               "value": {
                 "value": {
                   "value": "2022-07-04",
-                  "type": "string"
+                  "type": "date"
                 },
                 "type": "primitive"
               }
@@ -8778,7 +8774,7 @@
               "value": {
                 "value": {
                   "value": "2022-07-04",
-                  "type": "string"
+                  "type": "date"
                 },
                 "type": "primitive"
               }
@@ -8809,14 +8805,14 @@
                         "scheduledOn": {
                           "value": {
                             "value": "2022-06-27",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "effectiveOn": {
                           "value": {
                             "value": "2022-06-27",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -8828,14 +8824,14 @@
                         "scheduledOn": {
                           "value": {
                             "value": "2022-07-04",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "effectiveOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -8847,14 +8843,14 @@
                         "scheduledOn": {
                           "value": {
                             "value": "2022-07-11",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "effectiveOn": {
                           "value": {
                             "value": "2022-07-11",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -8866,14 +8862,14 @@
                         "scheduledOn": {
                           "value": {
                             "value": "2022-07-18",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "effectiveOn": {
                           "value": {
                             "value": "2022-07-18",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -8885,14 +8881,14 @@
                         "scheduledOn": {
                           "value": {
                             "value": "2022-07-25",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "effectiveOn": {
                           "value": {
                             "value": "2022-07-25",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -8904,14 +8900,14 @@
                         "scheduledOn": {
                           "value": {
                             "value": "2022-08-01",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "effectiveOn": {
                           "value": {
                             "value": "2022-07-01",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -10003,9 +9999,7 @@
             "generatedName": "InstitutionsGetTransferDateRestrictionsRequestStartsOn",
             "value": {
               "schema": {
-                "format": "date",
-                "example": "2022-07-04",
-                "type": "string"
+                "type": "date"
               },
               "generatedName": "InstitutionsGetTransferDateRestrictionsRequestStartsOn",
               "groupName": [],
@@ -10026,9 +10020,7 @@
             "generatedName": "InstitutionsGetTransferDateRestrictionsRequestEndsOn",
             "value": {
               "schema": {
-                "format": "date",
-                "example": "2022-07-04",
-                "type": "string"
+                "type": "date"
               },
               "generatedName": "InstitutionsGetTransferDateRestrictionsRequestEndsOn",
               "groupName": [],
@@ -10803,7 +10795,7 @@
               "value": {
                 "value": {
                   "value": "2022-07-04",
-                  "type": "string"
+                  "type": "date"
                 },
                 "type": "primitive"
               }
@@ -10813,7 +10805,7 @@
               "value": {
                 "value": {
                   "value": "2022-07-04",
-                  "type": "string"
+                  "type": "date"
                 },
                 "type": "primitive"
               }
@@ -10830,7 +10822,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-01",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -10841,14 +10833,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -10860,7 +10852,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-02",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -10871,14 +10863,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -10890,7 +10882,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-03",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -10901,14 +10893,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -10920,7 +10912,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-04",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -10931,14 +10923,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -10950,7 +10942,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -10961,14 +10953,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -10980,7 +10972,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-06",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -10991,14 +10983,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11010,7 +11002,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-07",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11021,14 +11013,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11040,7 +11032,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-08",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11051,14 +11043,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11070,7 +11062,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-09",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11081,14 +11073,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11100,7 +11092,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-10",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11111,14 +11103,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11130,7 +11122,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-15",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11141,14 +11133,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11160,7 +11152,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-16",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11171,14 +11163,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11190,7 +11182,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-22",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11201,14 +11193,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11220,7 +11212,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-23",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11231,14 +11223,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11250,7 +11242,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-29",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11261,14 +11253,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11280,7 +11272,7 @@
                         "occursOn": {
                           "value": {
                             "value": "2022-10-30",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11291,14 +11283,14 @@
                         "creditOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "debitOn": {
                           "value": {
                             "value": "2022-07-05",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -11311,7 +11303,7 @@
                 "accuracyEndsOn": {
                   "value": {
                     "value": "2026-12-31T00:00:00.000Z",
-                    "type": "string"
+                    "type": "date"
                   },
                   "type": "primitive"
                 }
@@ -12722,21 +12714,21 @@
                         "occurredOn": {
                           "value": {
                             "value": "2023-06-18",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "createdOn": {
                           "value": {
                             "value": "2023-05-18",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "postedOn": {
                           "value": {
                             "value": "2023-05-18",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -12829,21 +12821,21 @@
                         "occurredOn": {
                           "value": {
                             "value": "2023-06-18",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "createdOn": {
                           "value": {
                             "value": "2023-05-18",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "postedOn": {
                           "value": {
                             "value": "2023-05-18",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -14499,7 +14491,7 @@
                             "scheduledOn": {
                               "value": {
                                 "value": "2026-06-28",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
@@ -14517,14 +14509,14 @@
                             "debitsOn": {
                               "value": {
                                 "value": "2026-06-24",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
                             "creditsOn": {
                               "value": {
                                 "value": "2026-06-26",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             }
@@ -14648,7 +14640,7 @@
                             "scheduledOn": {
                               "value": {
                                 "value": "2023-08-01",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
@@ -14673,14 +14665,14 @@
                             "debitsOn": {
                               "value": {
                                 "value": "2026-08-01",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
                             "creditsOn": {
                               "value": {
                                 "value": "2023-08-01",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             }
@@ -15409,7 +15401,7 @@
                   "scheduledOn": {
                     "value": {
                       "value": "2022-06-28",
-                      "type": "string"
+                      "type": "date"
                     },
                     "type": "primitive"
                   },
@@ -15520,7 +15512,7 @@
                     "scheduledOn": {
                       "value": {
                         "value": "2026-06-28",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -15534,8 +15526,8 @@
                     },
                     "endsOn": {
                       "value": {
-                        "value": "endsOn",
-                        "type": "string"
+                        "value": "2023-01-15",
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -15556,14 +15548,14 @@
                     "debitsOn": {
                       "value": {
                         "value": "2026-06-24",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
                     "creditsOn": {
                       "value": {
                         "value": "2026-06-26",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     }
@@ -16177,7 +16169,7 @@
                     "scheduledOn": {
                       "value": {
                         "value": "2026-06-28",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -16191,8 +16183,8 @@
                     },
                     "endsOn": {
                       "value": {
-                        "value": "endsOn",
-                        "type": "string"
+                        "value": "2023-01-15",
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -16213,14 +16205,14 @@
                     "debitsOn": {
                       "value": {
                         "value": "2026-06-24",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
                     "creditsOn": {
                       "value": {
                         "value": "2026-06-26",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     }
@@ -17674,7 +17666,7 @@
                   "scheduledOn": {
                     "value": {
                       "value": "2022-06-28",
-                      "type": "string"
+                      "type": "date"
                     },
                     "type": "primitive"
                   },
@@ -17785,7 +17777,7 @@
                     "scheduledOn": {
                       "value": {
                         "value": "2026-06-28",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -17799,8 +17791,8 @@
                     },
                     "endsOn": {
                       "value": {
-                        "value": "endsOn",
-                        "type": "string"
+                        "value": "2023-01-15",
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -17821,14 +17813,14 @@
                     "debitsOn": {
                       "value": {
                         "value": "2026-06-24",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
                     "creditsOn": {
                       "value": {
                         "value": "2026-06-26",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     }
@@ -20142,9 +20134,7 @@
             "schema": {
               "description": "The scheduled date of the calculated calendar recurrence in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
               "schema": {
-                "format": "date",
-                "example": "2022-07-04",
-                "type": "string"
+                "type": "date"
               },
               "generatedName": "TransferScheduleItemScheduledOn",
               "groupName": [],
@@ -20159,9 +20149,7 @@
             "schema": {
               "description": "The effective date of the recurrence in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. When the effective date differs from the scheduled date, it is due to a banking holiday, weekend, or other non-business day. The date is adjusted to before the scheduled date when the transfer direction is `credit` and adjusted to after the scheduled date when the transfer direction is `debit`.",
               "schema": {
-                "format": "date",
-                "example": "2022-07-05",
-                "type": "string"
+                "type": "date"
               },
               "generatedName": "TransferScheduleItemEffectiveOn",
               "groupName": [],
@@ -20321,8 +20309,7 @@
               "value": {
                 "description": "The service only knows [bank holidays](https://www.federalreserve.gov/aboutthefed/k8.htm) for about two to four years in advance. This date is the end of that known holiday schedule, although the requested dates may extend well beyond this date. Any dates in the response beyond this date may omit holidays but may include other restricted dates based on the financial institution's normal scheduled closures such as Saturdays and Sundays.",
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "TransferDateRestrictionsAccuracyEndsOn",
                 "groupName": [],
@@ -20356,9 +20343,7 @@
             "schema": {
               "description": "The date that a transfers restriction occurs, is in the [ISO 8601 Date](https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates) format, `yyyy-mm-dd`.",
               "schema": {
-                "format": "date",
-                "example": "2019-04-05",
-                "type": "string"
+                "type": "date"
               },
               "generatedName": "TransferDateRestrictionOccursOn",
               "groupName": [],
@@ -20394,9 +20379,7 @@
               "value": {
                 "description": "The date the local financial institution account is credited in [RFC 3339 `YYYY-MM-DD`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the `date` based on the `risk` level. The credit-on date normally falls one business day after the restricted `date`. This property is only returned if the payment `type` is `achDebit` or `ach`.",
                 "schema": {
-                  "format": "date",
-                  "example": "2022-07-05",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "TransferDateRestrictionCreditOn",
                 "groupName": [],
@@ -20417,9 +20400,7 @@
               "value": {
                 "description": "The date the local financial institution account is debited in [RFC 3339 `YYYY-MM-DD`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the `date` based on the `risk` level and the transfer direction (`achDebit` or `achCredit`). The debit-on date normally falls one to three business days before the restricted `date`. This property is only returned if the payment `type` is `achCredit` or `ach`.",
                 "schema": {
-                  "format": "date",
-                  "example": "2022-07-05",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "TransferDateRestrictionDebitOn",
                 "groupName": [],
@@ -20519,9 +20500,7 @@
             "schema": {
               "description": "The date of the transaction in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.",
               "schema": {
-                "format": "date",
-                "example": "2023-05-18",
-                "type": "string"
+                "type": "date"
               },
               "generatedName": "TransactionFieldsOccurredOn",
               "groupName": [],
@@ -20542,9 +20521,7 @@
                 "description": "The date when the transaction occurred in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.<br>**Warning**: The property `createdOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `createdOn` will be removed on version `v3.0.0` of the schema.",
                 "availability": "Deprecated",
                 "schema": {
-                  "format": "date",
-                  "example": "2023-05-18",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "TransactionFieldsCreatedOn",
                 "groupName": [],
@@ -20569,9 +20546,7 @@
                 "description": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date `YYYY-MM-DD` format, UTC. This is derived and immutable and only present if `posted` is `true`.<br>**Warning**: The property `postedOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `postedOn` will be removed on version `v3.0.0` of the schema.",
                 "availability": "Deprecated",
                 "schema": {
-                  "format": "date",
-                  "example": "2023-05-18",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "TransactionFieldsPostedOn",
                 "groupName": [],
@@ -21324,8 +21299,7 @@
               "value": {
                 "description": "The date the the customer scheduled the transfer to occur in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format.",
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "TransferScheduleScheduledOn",
                 "groupName": [],
@@ -21386,8 +21360,7 @@
               "value": {
                 "description": "The optional date when the recurring transfer schedule ends, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. Subsequent recurring transfers may be scheduled up to and including this date, but not after. This property is ignored if `frequency` is `once`.",
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "TransferScheduleEndsOn",
                 "groupName": [],
@@ -21480,8 +21453,7 @@
               "value": {
                 "description": "The effective date the transfer is scheduled to debit the source account, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived from the `scheduledOn` date, based on the financial institution's transfer rules.",
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "TransferItemScheduleDebitsOn",
                 "groupName": [],
@@ -21502,8 +21474,7 @@
               "value": {
                 "description": "The effective the transfer is scheduled to credit the target account, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived from the `scheduledOn` date, based on the financial institution's transfer rules.",
                 "schema": {
-                  "format": "date",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "TransferItemScheduleCreditsOn",
                 "groupName": [],

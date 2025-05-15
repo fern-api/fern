@@ -2913,13 +2913,7 @@ The default value is 'en_us'.
               },
               "created_on": {
                 "docs": "Only get transcripts created on this date",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "limit": {
                 "default": 10,
@@ -4981,10 +4975,8 @@ types:
         type: optional<TranscriptStatus>
         docs: Filter by transcript status
       created_on:
-        type: optional<string>
+        type: optional<date>
         docs: Only get transcripts created on this date
-        validation:
-          format: date
       before_id:
         type: optional<string>
         docs: Get transcripts that were created before this transcript ID
@@ -6991,13 +6983,7 @@ docs: Real-time transcription
                   },
                   "created_on": {
                     "docs": "Only get transcripts created on this date",
-                    "type": "optional<string>",
-                    "validation": {
-                      "format": "date",
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
-                    },
+                    "type": "optional<date>",
                   },
                   "limit": {
                     "default": 10,
@@ -7138,10 +7124,8 @@ service:
             type: optional<TranscriptListRequestStatus>
             docs: Filter by transcript status
           created_on:
-            type: optional<string>
+            type: optional<date>
             docs: Only get transcripts created on this date
-            validation:
-              format: date
           before_id:
             type: optional<string>
             docs: Get transcripts that were created before this transcript ID

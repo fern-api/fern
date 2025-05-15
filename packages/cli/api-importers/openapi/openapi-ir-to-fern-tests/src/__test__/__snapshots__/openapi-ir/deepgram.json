@@ -15303,9 +15303,7 @@
                 "generatedName": "getProjectUsageResponseStart",
                 "value": {
                   "schema": {
-                    "format": "date",
-                    "example": "2024-10-16",
-                    "type": "string"
+                    "type": "date"
                   },
                   "generatedName": "GetProjectUsageResponseStart",
                   "groupName": [],
@@ -15324,9 +15322,7 @@
                 "generatedName": "getProjectUsageResponseEnd",
                 "value": {
                   "schema": {
-                    "format": "date",
-                    "example": "2024-10-23",
-                    "type": "string"
+                    "type": "date"
                   },
                   "generatedName": "GetProjectUsageResponseEnd",
                   "groupName": [],
@@ -15851,14 +15847,14 @@
                 "start": {
                   "value": {
                     "value": "2024-10-16",
-                    "type": "string"
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
                 "end": {
                   "value": {
                     "value": "2024-10-23",
-                    "type": "string"
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
@@ -17194,9 +17190,7 @@
               "schema": {
                 "description": "Start date of the usage period",
                 "schema": {
-                  "format": "date",
-                  "example": "2025-01-16",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "GetProjectUsageBreakdownResponseStart",
                 "groupName": [],
@@ -17211,9 +17205,7 @@
               "schema": {
                 "description": "End date of the usage period",
                 "schema": {
-                  "format": "date",
-                  "example": "2025-01-23",
-                  "type": "string"
+                  "type": "date"
                 },
                 "generatedName": "GetProjectUsageBreakdownResponseEnd",
                 "groupName": [],
@@ -17406,9 +17398,7 @@
                               "value": {
                                 "description": "Start date for this group",
                                 "schema": {
-                                  "format": "date",
-                                  "example": "2025-01-16",
-                                  "type": "string"
+                                  "type": "date"
                                 },
                                 "generatedName": "GetProjectUsageBreakdownResponseResultsItemGroupingStart",
                                 "groupName": [],
@@ -17428,9 +17418,7 @@
                               "value": {
                                 "description": "End date for this group",
                                 "schema": {
-                                  "format": "date",
-                                  "example": "2025-01-16",
-                                  "type": "string"
+                                  "type": "date"
                                 },
                                 "generatedName": "GetProjectUsageBreakdownResponseResultsItemGroupingEnd",
                                 "groupName": [],
@@ -18058,14 +18046,14 @@
                 "start": {
                   "value": {
                     "value": "2025-01-16",
-                    "type": "string"
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
                 "end": {
                   "value": {
                     "value": "2025-01-23",
-                    "type": "string"
+                    "type": "date"
                   },
                   "type": "primitive"
                 },
@@ -18146,14 +18134,14 @@
                             "start": {
                               "value": {
                                 "value": "2025-01-16",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             },
                             "end": {
                               "value": {
                                 "value": "2025-01-16",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             }

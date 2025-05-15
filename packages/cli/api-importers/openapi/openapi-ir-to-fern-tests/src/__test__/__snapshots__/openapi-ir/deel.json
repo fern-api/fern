@@ -410,7 +410,7 @@
                     "start_date": {
                       "value": {
                         "value": "1999-12-31",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     },
@@ -565,7 +565,7 @@
                           "start_date": {
                             "value": {
                               "value": "1999-12-31",
-                              "type": "string"
+                              "type": "date"
                             },
                             "type": "primitive"
                           },
@@ -579,7 +579,7 @@
                           "end_date": {
                             "value": {
                               "value": "1999-12-31",
-                              "type": "string"
+                              "type": "date"
                             },
                             "type": "primitive"
                           },
@@ -606,8 +606,8 @@
                       "properties": {
                         "vacation_accrual_start_date": {
                           "value": {
-                            "value": "vacation_accrual_start_date",
-                            "type": "string"
+                            "value": "2023-01-15",
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -1309,14 +1309,14 @@
                         "start_date": {
                           "value": {
                             "value": "1999-12-31",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "end_date": {
                           "value": {
                             "value": "1999-12-31",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -8792,7 +8792,7 @@
                         "date_submitted": {
                           "value": {
                             "value": "1999-12-31",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -9128,7 +9128,7 @@
                   "date_submitted": {
                     "value": {
                       "value": "1999-12-31",
-                      "type": "string"
+                      "type": "date"
                     },
                     "type": "primitive"
                   }
@@ -9721,7 +9721,7 @@
                         "date_submitted": {
                           "value": {
                             "value": "1999-12-31",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -10107,7 +10107,7 @@
                         "date_submitted": {
                           "value": {
                             "value": "1999-12-31",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
@@ -11079,7 +11079,7 @@
                     "completion_date": {
                       "value": {
                         "value": "1999-12-31",
-                        "type": "string"
+                        "type": "date"
                       },
                       "type": "primitive"
                     }
@@ -15549,7 +15549,7 @@
                   "date_submitted": {
                     "value": {
                       "value": "1999-12-31",
-                      "type": "string"
+                      "type": "date"
                     },
                     "type": "primitive"
                   },
@@ -17147,7 +17147,7 @@
                   "start_date": {
                     "value": {
                       "value": "1999-12-31",
-                      "type": "string"
+                      "type": "date"
                     },
                     "type": "primitive"
                   },
@@ -17211,14 +17211,14 @@
                         "cycle_start": {
                           "value": {
                             "value": "1999-12-31",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         },
                         "cycle_end": {
                           "value": {
                             "value": "1999-12-31",
-                            "type": "string"
+                            "type": "date"
                           },
                           "type": "primitive"
                         }
@@ -17232,7 +17232,7 @@
                             "due": {
                               "value": {
                                 "value": "1999-12-31",
-                                "type": "string"
+                                "type": "date"
                               },
                               "type": "primitive"
                             }
@@ -20255,7 +20255,7 @@
                   "date_submitted": {
                     "value": {
                       "value": "1999-12-31",
-                      "type": "string"
+                      "type": "date"
                     },
                     "type": "primitive"
                   },
@@ -23750,7 +23750,7 @@
                   "date_submitted": {
                     "value": {
                       "value": "1999-12-31",
-                      "type": "string"
+                      "type": "date"
                     },
                     "type": "primitive"
                   },
@@ -35664,10 +35664,7 @@
       "DateStringDefaultNow": {
         "description": "Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31. Defaults to current date",
         "schema": {
-          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
-          "format": "date",
-          "example": "1999-12-31",
-          "type": "string"
+          "type": "date"
         },
         "generatedName": "DateStringDefaultNow",
         "groupName": [],
@@ -35676,10 +35673,7 @@
       "DateStringRequired": {
         "description": "Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31.",
         "schema": {
-          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
-          "format": "date",
-          "example": "1999-12-31",
-          "type": "string"
+          "type": "date"
         },
         "generatedName": "DateStringRequired",
         "groupName": [],
@@ -35691,10 +35685,7 @@
         "value": {
           "description": "Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31.",
           "schema": {
-            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
-            "format": "date",
-            "example": "1999-12-31",
-            "type": "string"
+            "type": "date"
           },
           "generatedName": "DateString",
           "groupName": [],
@@ -58133,8 +58124,7 @@
                       "key": "vacation_accrual_start_date",
                       "schema": {
                         "schema": {
-                          "format": "date",
-                          "type": "string"
+                          "type": "date"
                         },
                         "generatedName": "HrisDirectEmployeeVacationInfoVacationAccrualStartDate",
                         "groupName": [],

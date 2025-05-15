@@ -6960,25 +6960,13 @@ channel:
             "properties": {
               "end": {
                 "docs": "End date of the usage period",
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "date",
               },
               "resolution": "GetProjectUsageBreakdownResponseResolution",
               "results": "list<GetProjectUsageBreakdownResponseResultsItem>",
               "start": {
                 "docs": "Start date of the usage period",
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "date",
               },
             },
             "source": {
@@ -7054,13 +7042,7 @@ channel:
               },
               "end": {
                 "docs": "End date for this group",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "endpoint": {
                 "docs": "Optional endpoint identifier",
@@ -7080,13 +7062,7 @@ channel:
               },
               "start": {
                 "docs": "Start date for this group",
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
+                "type": "optional<date>",
               },
               "tags": {
                 "docs": "Optional tags",
@@ -7265,25 +7241,9 @@ channel:
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "end": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
+              "end": "optional<date>",
               "resolution": "optional<GetProjectUsageResponseResolution>",
-              "start": {
-                "type": "optional<string>",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
+              "start": "optional<date>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -8083,14 +8043,8 @@ channel:
     inline: true
   GetProjectUsageResponse:
     properties:
-      start:
-        type: optional<string>
-        validation:
-          format: date
-      end:
-        type: optional<string>
-        validation:
-          format: date
+      start: optional<date>
+      end: optional<date>
       resolution: optional<GetProjectUsageResponseResolution>
     source:
       openapi: ../openapi.yml
@@ -8225,15 +8179,11 @@ channel:
   GetProjectUsageBreakdownResponseResultsItemGrouping:
     properties:
       start:
-        type: optional<string>
+        type: optional<date>
         docs: Start date for this group
-        validation:
-          format: date
       end:
-        type: optional<string>
+        type: optional<date>
         docs: End date for this group
-        validation:
-          format: date
       accessor:
         type: optional<string>
         docs: Optional accessor identifier
@@ -8288,15 +8238,11 @@ channel:
   GetProjectUsageBreakdownResponse:
     properties:
       start:
-        type: string
+        type: date
         docs: Start date of the usage period
-        validation:
-          format: date
       end:
-        type: string
+        type: date
         docs: End date of the usage period
-        validation:
-          format: date
       resolution: GetProjectUsageBreakdownResponseResolution
       results: list<GetProjectUsageBreakdownResponseResultsItem>
     source:

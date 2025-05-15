@@ -13131,13 +13131,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -35779,13 +35773,7 @@
                 "container": {
                   "optional": {
                     "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "validation": {
-                          "format": "date"
-                        },
-                        "type": "string"
-                      }
+                      "v1": "DATE"
                     },
                     "type": "primitive"
                   },
@@ -54733,7 +54721,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -58520,7 +58508,7 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "STRING",
+                  "value": "DATE",
                   "type": "primitive"
                 },
                 "type": "optional"

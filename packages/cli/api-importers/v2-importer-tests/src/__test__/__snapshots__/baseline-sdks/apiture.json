@@ -7865,13 +7865,7 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date"
-                  },
-                  "type": "string"
-                }
+                "v1": "DATE"
               },
               "type": "primitive"
             },
@@ -7906,13 +7900,7 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date"
-                  },
-                  "type": "string"
-                }
+                "v1": "DATE"
               },
               "type": "primitive"
             },
@@ -8479,13 +8467,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -8567,13 +8549,7 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date"
-                  },
-                  "type": "string"
-                }
+                "v1": "DATE"
               },
               "type": "primitive"
             },
@@ -8666,13 +8642,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -8713,13 +8683,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -9031,13 +8995,7 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date"
-                  },
-                  "type": "string"
-                }
+                "v1": "DATE"
               },
               "type": "primitive"
             },
@@ -9078,13 +9036,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -9129,13 +9081,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -10633,13 +10579,7 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date"
-                  },
-                  "type": "string"
-                }
+                "v1": "DATE"
               },
               "type": "primitive"
             },
@@ -10680,13 +10620,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -10731,13 +10665,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -12138,13 +12066,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -12301,13 +12223,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -12528,13 +12444,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -12576,13 +12486,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -12627,13 +12531,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -12790,13 +12688,7 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "validation": {
-                        "format": "date"
-                      },
-                      "type": "string"
-                    }
+                    "v1": "DATE"
                   },
                   "type": "primitive"
                 },
@@ -43760,13 +43652,7 @@
               },
               "valueType": {
                 "primitive": {
-                  "v1": "STRING",
-                  "v2": {
-                    "validation": {
-                      "format": "date"
-                    },
-                    "type": "string"
-                  }
+                  "v1": "DATE"
                 },
                 "type": "primitive"
               },
@@ -43804,13 +43690,7 @@
                 "container": {
                   "optional": {
                     "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "validation": {
-                          "format": "date"
-                        },
-                        "type": "string"
-                      }
+                      "v1": "DATE"
                     },
                     "type": "primitive"
                   },
@@ -44962,13 +44842,7 @@
                 "container": {
                   "optional": {
                     "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "validation": {
-                          "format": "date"
-                        },
-                        "type": "string"
-                      }
+                      "v1": "DATE"
                     },
                     "type": "primitive"
                   },
@@ -45010,13 +44884,7 @@
                 "container": {
                   "optional": {
                     "primitive": {
-                      "v1": "STRING",
-                      "v2": {
-                        "validation": {
-                          "format": "date"
-                        },
-                        "type": "string"
-                      }
+                      "v1": "DATE"
                     },
                     "type": "primitive"
                   },
@@ -54627,7 +54495,7 @@
               "wireValue": "scheduledOn"
             },
             "typeReference": {
-              "value": "STRING",
+              "value": "DATE",
               "type": "primitive"
             }
           },
@@ -54655,7 +54523,7 @@
               "wireValue": "effectiveOn"
             },
             "typeReference": {
-              "value": "STRING",
+              "value": "DATE",
               "type": "primitive"
             }
           }
@@ -55073,7 +54941,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -55134,7 +55002,7 @@
               "wireValue": "occursOn"
             },
             "typeReference": {
-              "value": "STRING",
+              "value": "DATE",
               "type": "primitive"
             }
           },
@@ -55191,7 +55059,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -55222,7 +55090,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -55399,7 +55267,7 @@
               "wireValue": "occurredOn"
             },
             "typeReference": {
-              "value": "STRING",
+              "value": "DATE",
               "type": "primitive"
             }
           },
@@ -55428,7 +55296,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -55459,7 +55327,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -56383,7 +56251,7 @@
               "wireValue": "occurredOn"
             },
             "typeReference": {
-              "value": "STRING",
+              "value": "DATE",
               "type": "primitive"
             }
           },
@@ -56412,7 +56280,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -56443,7 +56311,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -57246,7 +57114,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -57336,7 +57204,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -57460,7 +57328,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -57550,7 +57418,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -57643,7 +57511,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -57674,7 +57542,7 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               },
               "type": "optional"
@@ -65138,7 +65006,7 @@
                 "wireValue": "startsOn"
               },
               "typeReference": {
-                "value": "STRING",
+                "value": "DATE",
                 "type": "primitive"
               }
             },
@@ -65167,7 +65035,7 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "STRING",
+                  "value": "DATE",
                   "type": "primitive"
                 },
                 "type": "optional"
@@ -65766,7 +65634,7 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "STRING",
+                  "value": "DATE",
                   "type": "primitive"
                 },
                 "type": "optional"
@@ -65797,7 +65665,7 @@
               },
               "typeReference": {
                 "value": {
-                  "value": "STRING",
+                  "value": "DATE",
                   "type": "primitive"
                 },
                 "type": "optional"

@@ -1863,33 +1863,15 @@
           },
           "DateString": {
             "docs": "Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31.",
-            "type": "optional<string>",
-            "validation": {
-              "format": "date",
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": "^\d{4}-\d{2}-\d{2}$",
-            },
+            "type": "optional<date>",
           },
           "DateStringDefaultNow": {
             "docs": "Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31. Defaults to current date",
-            "type": "string",
-            "validation": {
-              "format": "date",
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": "^\d{4}-\d{2}-\d{2}$",
-            },
+            "type": "date",
           },
           "DateStringRequired": {
             "docs": "Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31.",
-            "type": "string",
-            "validation": {
-              "format": "date",
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": "^\d{4}-\d{2}-\d{2}$",
-            },
+            "type": "date",
           },
           "DateTimeString": {
             "docs": "Long date-time format following ISO-8601",
@@ -3723,15 +3705,7 @@
             "docs": undefined,
             "inline": true,
             "properties": {
-              "vacation_accrual_start_date": {
-                "type": "string",
-                "validation": {
-                  "format": "date",
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
-                },
-              },
+              "vacation_accrual_start_date": "date",
               "vacation_yearly_policy": {
                 "type": "double",
                 "validation": {
@@ -6967,25 +6941,16 @@
     source:
       openapi: ../openapi.yml
   DateStringDefaultNow:
-    type: string
+    type: date
     docs: >-
       Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31.
       Defaults to current date
-    validation:
-      format: date
-      pattern: ^\d{4}-\d{2}-\d{2}$
   DateStringRequired:
-    type: string
+    type: date
     docs: 'Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31.'
-    validation:
-      format: date
-      pattern: ^\d{4}-\d{2}-\d{2}$
   DateString:
-    type: optional<string>
+    type: optional<date>
     docs: 'Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31.'
-    validation:
-      format: date
-      pattern: ^\d{4}-\d{2}-\d{2}$
   DateTimeStringRequired:
     type: optional<datetime>
     docs: Long date-time format following ISO-8601
@@ -10612,10 +10577,7 @@
       openapi: ../openapi.yml
   HrisDirectEmployeeVacationInfo:
     properties:
-      vacation_accrual_start_date:
-        type: string
-        validation:
-          format: date
+      vacation_accrual_start_date: date
       vacation_yearly_policy:
         type: double
         validation:
@@ -16141,7 +16103,7 @@ docs: Employee of Record (EOR).
                           "team_id": 1.1,
                         },
                         "vacation_info": {
-                          "vacation_accrual_start_date": "vacation_accrual_start_date",
+                          "vacation_accrual_start_date": "2023-01-15",
                           "vacation_yearly_policy": 1.1,
                         },
                       },
@@ -16249,7 +16211,7 @@ service:
                   part_time_percentage: 1.1
                   employment_type: PART_TIME
                 vacation_info:
-                  vacation_accrual_start_date: vacation_accrual_start_date
+                  vacation_accrual_start_date: '2023-01-15'
                   vacation_yearly_policy: 1.1
                 id: 6733c95b-df52-419e-906d-6904d3117dab
       audiences:
