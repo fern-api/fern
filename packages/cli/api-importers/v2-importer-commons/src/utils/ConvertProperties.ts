@@ -31,7 +31,7 @@ export function convertProperties({
     const propertiesByAudience: Record<string, Set<string>> = {};
     const referencedTypes: Set<string> = new Set();
     for (const [propertyName, propertySchema] of Object.entries(properties ?? {})) {
-        const fernTypeName = maybeGetFernTypeNameDeclaration(breadcrumbs, propertySchema, context) ?? propertyName;
+        const fernTypeName = maybeUseFernTypeNameDeclaration(breadcrumbs, propertySchema, context) ?? propertyName;
 
         const propertyBreadcrumbs = [...breadcrumbs, "properties", fernTypeName];
         if (typeof propertySchema !== "object") {
@@ -92,7 +92,7 @@ export function convertProperties({
     return { convertedProperties, propertiesByAudience, inlinedTypesFromProperties, referencedTypes };
 }
 
-function maybeGetFernTypeNameDeclaration(
+function maybeUseFernTypeNameDeclaration(
     breadcrumbs: string[],
     schema: OpenAPIV3_1.SchemaObject,
     context: AbstractConverterContext<object>
