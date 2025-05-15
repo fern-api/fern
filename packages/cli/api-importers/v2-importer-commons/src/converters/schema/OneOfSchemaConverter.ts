@@ -193,7 +193,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 continue;
             }
 
-            const extendedSubSchema = this.extendSubSchema(subSchema, topLevelObjectProperties);
+            const extendedSubSchema = this.extendSubSchema(subSchema);
 
             if (!this.context.isObjectType(subSchema)) {
                 this.context.errorCollector.collect({
@@ -207,7 +207,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 context: this.context,
                 id: schemaId,
                 breadcrumbs: [...this.breadcrumbs, `oneOf[${index}]`],
-                schema: extendedSubSchema as OpenAPIV3_1.SchemaObject
+                schema: extendedSubSchema
             });
             const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
@@ -358,7 +358,10 @@ export class OneOfSchemaConverter extends AbstractConverter<
         return TypeReference.container(ContainerType.nullable(type));
     }
 
-    private mergeIntoObjectSchema(subSchema: any, topLevelObjectProperties: Record<string, any>): any {
+    private mergeIntoObjectSchema(
+        subSchema: OpenAPIV3_1.SchemaObject,
+        topLevelObjectProperties: Record<string, OpenAPIV3_1.SchemaObject>
+    ): OpenAPIV3_1.SchemaObject {
         return {
             ...subSchema,
             properties: {
@@ -368,45 +371,15 @@ export class OneOfSchemaConverter extends AbstractConverter<
         };
     }
 
-    private wrapPrimitiveInObjectSchema(
-        subSchema: OpenAPIV3_1.SchemaObject,
-        topLevelObjectProperties: Record<string, any>
-    ): any {
-        return {
-            type: "object",
-            properties: {
-                ...topLevelObjectProperties,
-                [subSchema.type as string]: subSchema
-            }
-        };
-    }
-
-    private wrapUnknownInObjectSchema(
-        subSchema: OpenAPIV3_1.SchemaObject,
-        topLevelObjectProperties: Record<string, any>
-    ): any {
-        return {
-            type: "object",
-            properties: {
-                ...topLevelObjectProperties,
-                value: subSchema
-            }
-        };
-    }
-
-    private extendSubSchema(subSchema: OpenAPIV3_1.SchemaObject, topLevelObjectProperties: Record<string, any>): any {
-        if (Object.entries(topLevelObjectProperties).length === 0) {
+    private extendSubSchema(subSchema: OpenAPIV3_1.SchemaObject): OpenAPIV3_1.SchemaObject {
+        if (Object.entries(this.schema.properties ?? {}).length === 0) {
             return subSchema;
         }
 
         if (subSchema.type === "object") {
-            return this.mergeIntoObjectSchema(subSchema, topLevelObjectProperties);
+            return this.mergeIntoObjectSchema(subSchema, this.schema.properties ?? {});
         }
 
-        if (typeof subSchema.type === "string") {
-            return this.wrapPrimitiveInObjectSchema(subSchema, topLevelObjectProperties);
-        }
-
-        return this.wrapUnknownInObjectSchema(subSchema, topLevelObjectProperties);
+        return this.schema;
     }
 }
