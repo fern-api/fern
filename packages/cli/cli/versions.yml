@@ -1,5 +1,13 @@
 - changelogEntry:
   - summary: |
+      Introduce `fern check --from-openapi` which prints out validation errors directly from OpenAPI
+      as well as the line numbers that the errors are coming from.
+    type: fix
+  irVersion: 57
+  version: 0.61.12
+
+- changelogEntry:
+  - summary: |
       Fix an issue where a singular allOf circular reference would lead to an infinite loop in the v3 parser. 
     type: fix
   irVersion: 57

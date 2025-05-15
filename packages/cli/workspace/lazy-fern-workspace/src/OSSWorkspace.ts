@@ -273,7 +273,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
                 context.logger.log("info", "");
 
-                errorCollector.logErrors({ logWarnings: false });
+                await errorCollector.logErrors({ logWarnings: false });
             }
         }
 

@@ -42,9 +42,11 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
     protected parseMediaTypeObject({
         mediaTypeObject,
         resolveSchema,
+        contentType,
         schemaId
     }: {
         mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
+        contentType: string;
         resolveSchema?: boolean;
         schemaId: string;
     }): AbstractMediaTypeObjectConverter.MediaTypeObject | undefined {
@@ -57,7 +59,7 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
         if (resolveSchema) {
             const resolvedSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                 schemaOrReference: mediaTypeObject.schema,
-                breadcrumbs: this.breadcrumbs
+                breadcrumbs: [...this.breadcrumbs, "content", contentType]
             });
             if (resolvedSchema == null) {
                 return undefined;
@@ -67,7 +69,7 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
 
         const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
             context: this.context,
-            breadcrumbs: [...this.breadcrumbs, "schema"],
+            breadcrumbs: [...this.breadcrumbs, "content", contentType, "schema"],
             schemaOrReference: mediaTypeObject.schema,
             schemaIdOverride: schemaId
         });
@@ -85,7 +87,8 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
                               if (this.context.isReferenceObject(example)) {
                                   const resolved = this.context.resolveReference<OpenAPIV3_1.ExampleObject>({
                                       reference: example,
-                                      breadcrumbs: this.breadcrumbs
+                                      breadcrumbs: [...this.breadcrumbs, "content", contentType, "examples"],
+                                      skipErrorCollector: true
                                   });
                                   return resolved.resolved ? [key, resolved.value] : null;
                               }
@@ -159,10 +162,12 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
         example: unknown;
         generateOptionalProperties?: boolean;
         exampleGenerationStrategy?: "request" | "response";
+        skipErrorCollector?: boolean;
     }): unknown {
         const resolvedSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
             schemaOrReference: schema,
-            breadcrumbs: this.breadcrumbs
+            breadcrumbs: this.breadcrumbs,
+            skipErrorCollector: true
         });
         if (resolvedSchema == null) {
             return undefined;

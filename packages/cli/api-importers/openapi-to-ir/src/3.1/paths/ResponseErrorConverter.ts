@@ -84,7 +84,8 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
             const mediaTypeObject = this.responseError.content?.[contentType];
             const convertedSchema = this.parseMediaTypeObject({
                 mediaTypeObject,
-                schemaId: uppercaseFirstChar(`${this.methodName}Request${errorName}`)
+                schemaId: uppercaseFirstChar(`${this.methodName}Request${errorName}`),
+                contentType
             });
             if (convertedSchema == null) {
                 continue;
