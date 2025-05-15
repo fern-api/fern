@@ -20,7 +20,7 @@ import { ExampleGenerationArgs } from "@fern-api/ir-utils";
 import { Logger } from "@fern-api/logger";
 
 import { Extensions } from ".";
-import { ErrorCollector } from "./ErrorCollector";
+import { APIErrorLevel, ErrorCollector } from "./ErrorCollector";
 import { SchemaConverter } from "./converters/schema/SchemaConverter";
 
 export declare namespace Spec {
@@ -81,9 +81,13 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
     private static BREADCRUMBS_TO_IGNORE = ["properties", "allOf", "anyOf"];
 
-    public abstract convertReferenceToTypeReference(
-        reference: OpenAPIV3_1.ReferenceObject
-    ): { ok: true; reference: TypeReference } | { ok: false };
+    public abstract convertReferenceToTypeReference({
+        reference,
+        breadcrumbs
+    }: {
+        reference: OpenAPIV3_1.ReferenceObject;
+        breadcrumbs?: string[];
+    }): { ok: true; reference: TypeReference } | { ok: false };
 
     /**
      * Converts breadcrumbs into a schema name or type id
@@ -160,7 +164,13 @@ export abstract class AbstractConverterContext<Spec extends object> {
      * @param reference The reference object to resolve
      * @returns Object containing ok status and resolved reference if successful
      */
-    public resolveReference<T>(reference: { $ref: string }): { resolved: true; value: T } | { resolved: false } {
+    public resolveReference<T>({
+        reference,
+        breadcrumbs
+    }: {
+        reference: OpenAPIV3_1.ReferenceObject;
+        breadcrumbs?: string[];
+    }): { resolved: true; value: T } | { resolved: false } {
         let resolvedReference: unknown = this.spec;
 
         const keys = reference.$ref
@@ -170,6 +180,11 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
         for (const key of keys) {
             if (typeof resolvedReference !== "object" || resolvedReference == null) {
+                this.errorCollector.collect({
+                    level: APIErrorLevel.ERROR,
+                    message: this.getErrorMessageForMissingRef({ reference }),
+                    path: breadcrumbs
+                });
                 return { resolved: false };
             }
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -177,10 +192,29 @@ export abstract class AbstractConverterContext<Spec extends object> {
         }
 
         if (resolvedReference == null) {
+            this.errorCollector.collect({
+                level: APIErrorLevel.ERROR,
+                message: this.getErrorMessageForMissingRef({ reference }),
+                path: breadcrumbs
+            });
             return { resolved: false };
         }
 
         return { resolved: true, value: resolvedReference as unknown as T };
+    }
+
+    private getErrorMessageForMissingRef({ reference }: { reference: OpenAPIV3_1.ReferenceObject }): string {
+        // Check if the reference is to a schema in components/schemas
+        const refPath = reference.$ref.replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, "").split("/");
+
+        // Check if the reference follows the pattern components/schemas/<schema>
+        if (refPath.length >= 3 && refPath[0] === "components" && refPath[1] === "schemas") {
+            const schemaName = refPath[2];
+            return `Schema ${schemaName} does not exist`;
+        }
+
+        // Default error message
+        return `${reference.$ref} does not exist`;
     }
 
     /**
@@ -410,12 +444,8 @@ export abstract class AbstractConverterContext<Spec extends object> {
         breadcrumbs: string[];
     }): T | undefined {
         if (this.isReferenceObject(schemaOrReference)) {
-            const resolved = this.resolveReference<T>(schemaOrReference);
+            const resolved = this.resolveReference<T>({ reference: schemaOrReference, breadcrumbs });
             if (!resolved.resolved) {
-                this.errorCollector.collect({
-                    message: `Failed to resolve reference: ${schemaOrReference.$ref}`,
-                    path: breadcrumbs
-                });
                 return undefined;
             }
             return resolved.value;
@@ -427,7 +457,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         if (!this.isReferenceObject(example)) {
             return example;
         }
-        const resolved = this.resolveReference(example);
+        const resolved = this.resolveReference({ reference: example });
         return resolved.resolved ? this.returnExampleValue(resolved.value) : undefined;
     }
 
@@ -435,7 +465,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         if (!this.isReferenceObject(example)) {
             return this.returnExampleValue(example);
         }
-        const resolved = this.resolveReference(example);
+        const resolved = this.resolveReference({ reference: example });
         return resolved.resolved ? this.returnExampleValue(resolved.value) : undefined;
     }
 
@@ -449,7 +479,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         let schema = schemaOrReference;
 
         while (this.isReferenceObject(schema)) {
-            const resolved = this.resolveReference<OpenAPIV3_1.SchemaObject>(schema);
+            const resolved = this.resolveReference<OpenAPIV3_1.SchemaObject>({ reference: schema });
             if (!resolved.resolved) {
                 return undefined;
             }
@@ -502,7 +532,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         breadcrumbs: string[];
     }): Availability | undefined {
         while (this.isReferenceObject(node)) {
-            const resolved = this.resolveReference<OpenAPIV3_1.SchemaObject>(node);
+            const resolved = this.resolveReference<OpenAPIV3_1.SchemaObject>({ reference: node });
             if (!resolved.resolved) {
                 return undefined;
             }
@@ -696,5 +726,9 @@ export abstract class AbstractConverterContext<Spec extends object> {
         }
         group.push(...(groupParts ?? []));
         return group;
+    }
+
+    public isObjectSchemaType(schema: OpenAPIV3_1.SchemaObject): boolean {
+        return schema.type === "object" || schema.properties != null;
     }
 }

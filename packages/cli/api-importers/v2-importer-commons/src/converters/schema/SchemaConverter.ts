@@ -12,6 +12,19 @@ import { ObjectSchemaConverter } from "./ObjectSchemaConverter";
 import { OneOfSchemaConverter } from "./OneOfSchemaConverter";
 import { PrimitiveSchemaConverter } from "./PrimitiveSchemaConverter";
 
+const TYPE_INVARIANT_KEYS = [
+    "description",
+    "example",
+    "title",
+    "default",
+    "deprecated",
+    "readOnly",
+    "writeOnly",
+    "xml",
+    "externalDocs",
+    "extensions"
+];
+
 export declare namespace SchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
         id: string;
@@ -49,69 +62,107 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
     }
 
     public convert(): SchemaConverter.Output | undefined {
-        const maybeFernTypeDeclaration = this.tryConvertFernTypeDeclaration();
-        if (maybeFernTypeDeclaration != null) {
+        const maybeConvertedFernTypeDeclaration = this.tryConvertFernTypeDeclaration();
+        if (maybeConvertedFernTypeDeclaration != null) {
+            return maybeConvertedFernTypeDeclaration;
+        }
+
+        const maybeConvertedEnumSchema = this.tryConvertEnumSchema();
+        if (maybeConvertedEnumSchema != null) {
+            return maybeConvertedEnumSchema;
+        }
+
+        const maybeConvertedSingularAllOfSchema = this.tryConvertSingularAllOfSchema();
+        if (maybeConvertedSingularAllOfSchema != null) {
+            return maybeConvertedSingularAllOfSchema;
+        }
+
+        const maybeConvertedPrimitiveSchema = this.tryConvertPrimitiveSchema();
+        if (maybeConvertedPrimitiveSchema != null) {
+            return maybeConvertedPrimitiveSchema;
+        }
+
+        const maybeConvertedArraySchema = this.tryConvertArraySchema();
+        if (maybeConvertedArraySchema != null) {
+            return maybeConvertedArraySchema;
+        }
+
+        const maybeConvertedTypeArraySchema = this.tryConvertTypeArraySchema();
+        if (maybeConvertedTypeArraySchema != null) {
+            return maybeConvertedTypeArraySchema;
+        }
+
+        const maybeConvertedOneOfAnyOfSchema = this.tryConvertOneOfAnyOfSchema();
+        if (maybeConvertedOneOfAnyOfSchema != null) {
+            return maybeConvertedOneOfAnyOfSchema;
+        }
+
+        const maybeConvertedMapSchema = this.tryConvertMapSchema();
+        if (maybeConvertedMapSchema != null) {
+            return maybeConvertedMapSchema;
+        }
+
+        const maybeConvertedObjectAllOfSchema = this.tryConvertObjectAllOfSchema();
+        if (maybeConvertedObjectAllOfSchema != null) {
+            return maybeConvertedObjectAllOfSchema;
+        }
+
+        const maybeConvertedUntypedSchema = this.tryConvertUntypedSchema();
+        if (maybeConvertedUntypedSchema != null) {
+            return maybeConvertedUntypedSchema;
+        }
+
+        this.context.errorCollector.collect({
+            message: `Failed to convert schema object: ${JSON.stringify(this.schema, null, 2)}`,
+            path: this.breadcrumbs
+        });
+        return undefined;
+    }
+
+    private tryConvertEnumSchema(): SchemaConverter.Output | undefined {
+        if (!this.schema.enum?.length) {
+            return undefined;
+        }
+        const fernEnumConverter = new Extensions.FernEnumExtension({
+            breadcrumbs: this.breadcrumbs,
+            schema: this.schema,
+            context: this.context
+        });
+        const maybeFernEnum = fernEnumConverter.convert();
+
+        const enumConverter = new EnumSchemaConverter({
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            schema: this.schema,
+            maybeFernEnum
+        });
+        const enumType = enumConverter.convert();
+        if (enumType != null) {
             return {
                 convertedSchema: {
-                    typeDeclaration: maybeFernTypeDeclaration,
+                    typeDeclaration: this.createTypeDeclaration({
+                        shape: enumType.type,
+                        referencedTypes: new Set()
+                    }),
                     audiences: this.audiences,
-                    // TODO: Can convertedFernTypeDeclaration contain propertiesByAudiences?
                     propertiesByAudience: {}
                 },
                 inlinedTypes: {}
             };
         }
-        return this.convertSchema();
+        return undefined;
     }
 
-    private convertSchema(): SchemaConverter.Output | undefined {
-        if (this.schema.enum?.length) {
-            const fernEnumConverter = new Extensions.FernEnumExtension({
-                breadcrumbs: this.breadcrumbs,
-                schema: this.schema,
-                context: this.context
-            });
-            const maybeFernEnum = fernEnumConverter.convert();
-
-            const enumConverter = new EnumSchemaConverter({
-                context: this.context,
-                breadcrumbs: this.breadcrumbs,
-                schema: this.schema,
-                maybeFernEnum
-            });
-            const enumType = enumConverter.convert();
-            if (enumType != null) {
-                return {
-                    convertedSchema: {
-                        typeDeclaration: this.createTypeDeclaration({
-                            shape: enumType.type,
-                            referencedTypes: new Set()
-                        }),
-                        audiences: this.audiences,
-                        propertiesByAudience: {}
-                    },
-                    inlinedTypes: {}
-                };
-            }
-        }
-
+    private tryConvertSingularAllOfSchema(): SchemaConverter.Output | undefined {
         if (
-            this.schema.allOf?.length === 1 &&
             this.schemaOnlyHasAllowedKeys(["allOf"]) &&
+            this.schema.allOf?.length === 1 &&
             this.schema.allOf[0] != null
         ) {
-            let allOfSchema: OpenAPIV3_1.SchemaObject | undefined = undefined;
-
-            if (this.context.isReferenceObject(this.schema.allOf[0])) {
-                const resolvedAllOfSchemaResponse = this.context.resolveReference<OpenAPIV3_1.SchemaObject>(
-                    this.schema.allOf[0]
-                );
-                if (resolvedAllOfSchemaResponse.resolved) {
-                    allOfSchema = resolvedAllOfSchemaResponse.value;
-                }
-            } else {
-                allOfSchema = this.schema.allOf[0];
-            }
+            const allOfSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: this.schema.allOf[0],
+                breadcrumbs: this.breadcrumbs
+            });
 
             if (allOfSchema != null) {
                 const allOfConverter = new SchemaConverter({
@@ -129,7 +180,10 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 }
             }
         }
+        return undefined;
+    }
 
+    private tryConvertPrimitiveSchema(): SchemaConverter.Output | undefined {
         const primitiveConverter = new PrimitiveSchemaConverter({ context: this.context, schema: this.schema });
         const primitiveType = primitiveConverter.convert();
         if (primitiveType != null) {
@@ -149,7 +203,10 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 inlinedTypes: {}
             };
         }
+        return undefined;
+    }
 
+    private tryConvertArraySchema(): SchemaConverter.Output | undefined {
         if (this.schema.type === "array") {
             const arrayConverter = new ArraySchemaConverter({
                 context: this.context,
@@ -175,20 +232,25 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 };
             }
         }
+        return undefined;
+    }
 
+    private tryConvertTypeArraySchema(): SchemaConverter.Output | undefined {
         if (Array.isArray(this.schema.type) && this.schema.type.length > 0) {
             if (this.schema.type.length === 1) {
                 this.schema.type = this.schema.type[0];
             } else {
-                const schemaTypeArray = this.schema.type;
-                this.schema.type = undefined;
-                this.schema.oneOf = schemaTypeArray.map((type) => ({
+                this.schema.oneOf = this.schema.type.map((type) => ({
                     type: type as OpenAPIV3_1.NonArraySchemaObjectType
                 }));
+                this.schema.type = undefined;
             }
-            return this.convertSchema();
+            return this.convert();
         }
+        return undefined;
+    }
 
+    private tryConvertOneOfAnyOfSchema(): SchemaConverter.Output | undefined {
         if (this.schema.oneOf != null || this.schema.anyOf != null) {
             const oneOfConverter = new OneOfSchemaConverter({
                 id: this.id,
@@ -212,7 +274,10 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 };
             }
         }
+        return undefined;
+    }
 
+    private tryConvertMapSchema(): SchemaConverter.Output | undefined {
         if (
             typeof this.schema.additionalProperties === "object" &&
             this.schema.additionalProperties != null &&
@@ -239,7 +304,10 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 };
             }
         }
+        return undefined;
+    }
 
+    private tryConvertObjectAllOfSchema(): SchemaConverter.Output | undefined {
         if (this.schema.type === "object" || this.schema.properties != null || this.schema.allOf != null) {
             const objectConverter = new ObjectSchemaConverter({
                 context: this.context,
@@ -261,28 +329,54 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 };
             }
         }
-
-        if (this.isUntypedSchema()) {
-            return this.convertUntypedSchema();
-        }
-
-        this.context.errorCollector.collect({
-            message: `Failed to convert schema object: ${JSON.stringify(this.schema, null, 2)}`,
-            path: this.breadcrumbs
-        });
         return undefined;
     }
 
-    private convertUntypedSchema(): SchemaConverter.Output | undefined {
+    private tryConvertUntypedSchema(): SchemaConverter.Output | undefined {
+        if (this.isUntypedSchema()) {
+            return {
+                convertedSchema: {
+                    typeDeclaration: this.createTypeDeclaration({
+                        shape: FernIr.Type.alias({
+                            aliasOf: FernIr.TypeReference.unknown(),
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            resolvedType: FernIr.TypeReference.unknown() as any
+                        }),
+                        referencedTypes: new Set()
+                    }),
+                    audiences: this.audiences,
+                    propertiesByAudience: {}
+                },
+                inlinedTypes: {}
+            };
+        }
+        return undefined;
+    }
+
+    private tryConvertFernTypeDeclaration(): SchemaConverter.Output | undefined {
+        const fernTypeConverter = new Extensions.FernTypeExtension({
+            breadcrumbs: this.breadcrumbs,
+            schema: this.schema,
+            context: this.context
+        });
+        const fernType = fernTypeConverter.convert();
+        if (fernType == null) {
+            return undefined;
+        }
+        const typeReference = createTypeReferenceFromFernType(fernType);
+        if (typeReference == null) {
+            return undefined;
+        }
         return {
             convertedSchema: {
                 typeDeclaration: this.createTypeDeclaration({
                     shape: FernIr.Type.alias({
-                        aliasOf: FernIr.TypeReference.unknown(),
+                        aliasOf: typeReference,
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                        resolvedType: FernIr.TypeReference.unknown() as any
+                        resolvedType: typeReference as any
                     }),
-                    referencedTypes: new Set()
+                    referencedTypes: new Set(),
+                    omitV2Examples: true
                 }),
                 audiences: this.audiences,
                 propertiesByAudience: {}
@@ -291,32 +385,15 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         };
     }
 
-    private tryConvertFernTypeDeclaration(): FernIr.TypeDeclaration | undefined {
-        const fernTypeConverter = new Extensions.FernTypeExtension({
-            breadcrumbs: this.breadcrumbs,
-            schema: this.schema,
-            context: this.context
-        });
-        const fernType = fernTypeConverter.convert();
-        if (fernType != null) {
-            const typeDeclaration = this.createTypeDeclarationFromFernType({
-                fernType
-            });
-            if (typeDeclaration != null) {
-                return typeDeclaration;
-            }
-        }
-        return undefined;
-    }
-
     public createTypeDeclaration({
         shape,
-        referencedTypes
+        referencedTypes,
+        omitV2Examples
     }: {
         shape: FernIr.Type;
         referencedTypes: Set<string>;
+        omitV2Examples?: boolean;
     }): FernIr.TypeDeclaration {
-        const v2Examples = this.convertSchemaExamples();
         return {
             name: this.convertDeclaredTypeName(),
             shape,
@@ -331,7 +408,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             referencedTypes,
             source: undefined,
             inline: this.inlined,
-            v2Examples
+            v2Examples: omitV2Examples ? undefined : this.convertSchemaExamples()
         };
     }
 
@@ -349,23 +426,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
      * @returns true if the schema only has the specified keys, false otherwise
      */
     private schemaOnlyHasAllowedKeys(allowedKeys: string[]): boolean {
-        // These are common schema properties that don't affect the type
-        const defaultAllowedKeys = [
-            "description",
-            "example",
-            "title",
-            "default",
-            "deprecated",
-            "readOnly",
-            "writeOnly",
-            "xml",
-            "externalDocs",
-            "extensions"
-        ];
-
-        // Combine default allowed keys with any additional allowed keys
-        const allAllowedKeys = [...defaultAllowedKeys, ...allowedKeys];
-
+        const allAllowedKeys = [...TYPE_INVARIANT_KEYS, ...allowedKeys];
         const schemaKeys = Object.keys(this.schema);
         return schemaKeys.every((key) => allAllowedKeys.includes(key));
     }
@@ -384,37 +445,6 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             return true;
         }
         return false;
-    }
-
-    private createTypeDeclarationFromFernType({ fernType }: { fernType: string }): FernIr.TypeDeclaration | undefined {
-        const typeReference = createTypeReferenceFromFernType(fernType);
-        if (typeReference == null) {
-            return undefined;
-        }
-
-        return {
-            name: this.convertDeclaredTypeName(),
-            shape: FernIr.Type.alias({
-                aliasOf: typeReference,
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                resolvedType: typeReference as any
-            }),
-            autogeneratedExamples: [],
-            userProvidedExamples: [],
-            encoding: undefined,
-            availability: this.context.getAvailability({
-                node: this.schema,
-                breadcrumbs: this.breadcrumbs
-            }),
-            docs: this.schema.description,
-            referencedTypes: new Set<string>(),
-            source: undefined,
-            inline: this.inlined,
-            v2Examples: {
-                userSpecifiedExamples: {},
-                autogeneratedExamples: {}
-            }
-        };
     }
 
     private convertSchemaExamples(): FernIr.V2SchemaExamples {

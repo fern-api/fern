@@ -1,6 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverter, AbstractConverterContext, type OpenApiError } from "..";
+import { APIError, AbstractConverter, AbstractConverterContext } from "..";
 
 export declare namespace ExampleConverter {
     export interface Args extends AbstractConverter.Args<AbstractConverterContext<object>> {
@@ -54,7 +54,7 @@ export declare namespace ExampleConverter {
          * We can't collect errors along the way because for oneOf and anyOf, we don't know
          * which branch will be valid until we have converted all of them.
          */
-        errors: OpenApiError[];
+        errors: APIError[];
     }
 }
 

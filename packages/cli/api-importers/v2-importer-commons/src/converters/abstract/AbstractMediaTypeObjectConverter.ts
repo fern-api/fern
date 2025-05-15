@@ -83,7 +83,10 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
                       Object.entries(mediaTypeObject.examples)
                           .map(([key, example]) => {
                               if (this.context.isReferenceObject(example)) {
-                                  const resolved = this.context.resolveReference<OpenAPIV3_1.ExampleObject>(example);
+                                  const resolved = this.context.resolveReference<OpenAPIV3_1.ExampleObject>({
+                                      reference: example,
+                                      breadcrumbs: this.breadcrumbs
+                                  });
                                   return resolved.resolved ? [key, resolved.value] : null;
                               }
                               return [key, example];

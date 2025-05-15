@@ -1603,72 +1603,6 @@
         "properties": []
       }
     },
-    "BookingAmendmentNewContainerCounts": {
-      "description": "The requested new container count values",
-      "name": "BookingAmendmentNewContainerCounts",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "ContainerCounts"
-        ],
-        "properties": []
-      }
-    },
-    "BookingAmendmentNewOriginAddress": {
-      "description": "The requested new origin address",
-      "name": "BookingAmendmentNewOriginAddress",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Address"
-        ],
-        "properties": []
-      }
-    },
-    "BookingAmendmentNewPortOfLoading": {
-      "description": "The requested new origin port (port of loading)",
-      "name": "BookingAmendmentNewPortOfLoading",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Address"
-        ],
-        "properties": []
-      }
-    },
-    "BookingAmendmentNewPortOfUnloading": {
-      "description": "The requested new destination port (port of unloading)",
-      "name": "BookingAmendmentNewPortOfUnloading",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Address"
-        ],
-        "properties": []
-      }
-    },
-    "BookingAmendmentNewCargo": {
-      "description": "The requested new cargo, possibly including package details",
-      "name": "BookingAmendmentNewCargo",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Cargo"
-        ],
-        "properties": []
-      }
-    },
-    "BookingAmendmentNewMetadata": {
-      "description": "The requested new metadata",
-      "name": "BookingAmendmentNewMetadata",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Metadata"
-        ],
-        "properties": []
-      }
-    },
     "BookingAmendment": {
       "name": "BookingAmendment",
       "shape": {
@@ -1747,7 +1681,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingAmendmentNewContainerCounts"
+                "value": "ContainerCounts"
               }
             }
           },
@@ -1810,7 +1744,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingAmendmentNewOriginAddress"
+                "value": "Address"
               }
             }
           },
@@ -1821,7 +1755,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingAmendmentNewPortOfLoading"
+                "value": "Address"
               }
             }
           },
@@ -1832,7 +1766,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingAmendmentNewPortOfUnloading"
+                "value": "Address"
               }
             }
           },
@@ -1871,7 +1805,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingAmendmentNewCargo"
+                "value": "Cargo"
               }
             }
           },
@@ -1882,7 +1816,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingAmendmentNewMetadata"
+                "value": "Metadata"
               }
             }
           }
@@ -4598,39 +4532,6 @@
         ]
       }
     },
-    "CommercialInvoiceLineItemWeight": {
-      "description": "Weight including any associated packaging (padding, foam, etc).",
-      "name": "CommercialInvoiceLineItemWeight",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Weight"
-        ],
-        "properties": []
-      }
-    },
-    "CommercialInvoiceLineItemNetWeight": {
-      "description": "Weight excluding packaging.",
-      "name": "CommercialInvoiceLineItemNetWeight",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Weight"
-        ],
-        "properties": []
-      }
-    },
-    "CommercialInvoiceLineItemNetNetWeight": {
-      "description": "Weight excluding packaging, tags, labels, instruction manuals, etc.",
-      "name": "CommercialInvoiceLineItemNetNetWeight",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Weight"
-        ],
-        "properties": []
-      }
-    },
     "CommercialInvoiceLineItem": {
       "name": "CommercialInvoiceLineItem",
       "shape": {
@@ -4768,7 +4669,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CommercialInvoiceLineItemWeight"
+                "value": "Weight"
               }
             }
           },
@@ -4789,7 +4690,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CommercialInvoiceLineItemNetWeight"
+                "value": "Weight"
               }
             }
           },
@@ -4800,7 +4701,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CommercialInvoiceLineItemNetNetWeight"
+                "value": "Weight"
               }
             }
           },
@@ -8998,17 +8899,6 @@
         ]
       }
     },
-    "ShipmentEventDataLocation": {
-      "description": "Possibly null. Location associated with the event.",
-      "name": "ShipmentEventDataLocation",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "ShipmentNode"
-        ],
-        "properties": []
-      }
-    },
     "ShipmentEventData": {
       "name": "ShipmentEventData",
       "shape": {
@@ -9055,7 +8945,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ShipmentEventDataLocation"
+                "value": "ShipmentNode"
               }
             }
           },
@@ -10030,17 +9920,6 @@
         ]
       }
     },
-    "CreateCompanyEntityMailingAddress": {
-      "description": "Always Required. The object representing the mailing address of the company entity.",
-      "name": "CreateCompanyEntityMailingAddress",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "AddressForRequestBody"
-        ],
-        "properties": []
-      }
-    },
     "CreateCompanyEntity": {
       "name": "CreateCompanyEntity",
       "shape": {
@@ -10088,7 +9967,7 @@
             "key": "mailing_address",
             "valueType": {
               "type": "id",
-              "value": "CreateCompanyEntityMailingAddress"
+              "value": "AddressForRequestBody"
             }
           },
           {
