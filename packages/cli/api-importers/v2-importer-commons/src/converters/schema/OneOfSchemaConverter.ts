@@ -190,16 +190,12 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
             const extendedSubSchema = this.extendSubSchema(subSchema);
 
-            if (extendedSubSchema === null) {
-                continue;
-            }
-
             const schemaId = this.context.convertBreadcrumbsToName([`${this.id}_${index}`]);
             const schemaConverter = new SchemaConverter({
                 context: this.context,
                 id: schemaId,
                 breadcrumbs: [...this.breadcrumbs, `oneOf[${index}]`],
-                schema: extendedSubSchema
+                schema: extendedSubSchema ?? subSchema
             });
             const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
@@ -363,7 +359,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         };
     }
 
-    private extendSubSchema(subSchema: OpenAPIV3_1.SchemaObject): OpenAPIV3_1.SchemaObject | null {
+    private extendSubSchema(subSchema: OpenAPIV3_1.SchemaObject): OpenAPIV3_1.SchemaObject | undefined {
         if (Object.entries(this.schema.properties ?? {}).length === 0) {
             return subSchema;
         }
@@ -378,6 +374,6 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 path: this.breadcrumbs
             });
         }
-        return null;
+        return undefined;
     }
 }
