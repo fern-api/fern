@@ -156,17 +156,6 @@
         ]
       }
     },
-    "AccountAllows": {
-      "description": "Flags which indicate the permissions the current authorized user has on this account resource.",
-      "name": "AccountAllows",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "fullAccountPermissions"
-        ],
-        "properties": []
-      }
-    },
     "account": {
       "description": "An internal customer account.",
       "name": "account",
@@ -182,7 +171,7 @@
             "key": "allows",
             "valueType": {
               "type": "id",
-              "value": "AccountAllows"
+              "value": "fullAccountPermissions"
             },
             "propertyAccess": "READ_ONLY"
           },
@@ -437,35 +426,6 @@
         ]
       }
     },
-    "AccountFieldsId": {
-      "description": "The unique identifier for this account resource. This is an immutable opaque string.",
-      "name": "AccountFieldsId",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "readOnlyResourceId"
-        ],
-        "properties": []
-      }
-    },
-    "AccountFieldsLocation": {
-      "description": "Indicates where an account is held:\n  * `internal` accounts at the current financial institution;\n  * `external` accounts at another financial institution;\n  * `outside` accounts non-banking accounts such as brokerage and fund accounts.\nAccount transfers are only allowed between `internal` and `external` accounts. All accounts are considered when calculating total cash balance.",
-      "name": "AccountFieldsLocation",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "internal"
-          },
-          {
-            "value": "external"
-          },
-          {
-            "value": "outside"
-          }
-        ]
-      }
-    },
     "accountFields": {
       "description": "Fragment schema use to build other account schemas.",
       "name": "accountFields",
@@ -478,7 +438,7 @@
             "key": "id",
             "valueType": {
               "type": "id",
-              "value": "AccountFieldsId"
+              "value": "readOnlyResourceId"
             }
           },
           {
@@ -522,37 +482,8 @@
             "key": "location",
             "valueType": {
               "type": "id",
-              "value": "AccountFieldsLocation"
+              "value": "accountLocation"
             }
-          }
-        ]
-      }
-    },
-    "AccountItemId": {
-      "description": "The unique identifier for this account resource. This is an immutable opaque string.",
-      "name": "AccountItemId",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "readOnlyResourceId"
-        ],
-        "properties": []
-      }
-    },
-    "AccountItemLocation": {
-      "description": "Indicates where an account is held:\n  * `internal` accounts at the current financial institution;\n  * `external` accounts at another financial institution;\n  * `outside` accounts non-banking accounts such as brokerage and fund accounts.\nAccount transfers are only allowed between `internal` and `external` accounts. All accounts are considered when calculating total cash balance.",
-      "name": "AccountItemLocation",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "internal"
-          },
-          {
-            "value": "external"
-          },
-          {
-            "value": "outside"
           }
         ]
       }
@@ -573,7 +504,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "AccountItemId"
+                "value": "readOnlyResourceId"
               }
             }
           },
@@ -636,7 +567,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "AccountItemLocation"
+                "value": "accountLocation"
               }
             }
           }
@@ -811,11 +742,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "regex": "^(-|\\+)?(0|[1-9][0-9]*)\\.[0-9][0-9]$"
-                }
+                "type": "id",
+                "value": "creditOrDebitValue"
               }
             },
             "propertyAccess": "READ_ONLY"
@@ -826,11 +754,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "regex": "^(-|\\+)?(0|[1-9][0-9]*)\\.[0-9][0-9]$"
-                }
+                "type": "id",
+                "value": "creditOrDebitValue"
               }
             },
             "propertyAccess": "READ_ONLY"
@@ -853,11 +778,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "regex": "^(-|\\+)?(0|[1-9][0-9]*)\\.[0-9][0-9]$"
-                }
+                "type": "id",
+                "value": "creditOrDebitValue"
               }
             },
             "propertyAccess": "READ_ONLY"
@@ -2327,47 +2249,6 @@
         ]
       }
     },
-    "TransferItemId": {
-      "description": "The unique identifier for this transfer resource. This is an immutable opaque string.",
-      "name": "TransferItemId",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "readOnlyResourceId"
-        ],
-        "properties": []
-      }
-    },
-    "TransferItemState": {
-      "description": "The state of a transfer resource.\n\n<strong><code>transferState</code></strong> strings may have one of the following\n[enumerated values](https://dx.apiture.com/docs/api-documentation/concepts/label-groups#enumerations):\n\n<table>\n<tr>\n  <th>Value</th><th>Description</th>\n</tr>\n\n<tr>\n    <td><strong><code>unscheduled</code></strong></td><td>Unscheduled: <p>A transfer which is not ready to be queued for processing</p>\n</td>\n    </tr>\n<tr>\n    <td><strong><code>pendingApproval</code></strong></td><td>Pending Approval: <p>A transfer which is awaiting approval before it can be queued for processing</p>\n</td>\n    </tr>\n<tr>\n    <td><strong><code>scheduled</code></strong></td><td>Scheduled: <p>A transfer which has been queued for processing</p>\n</td>\n    </tr>\n<tr>\n    <td><strong><code>processing</code></strong></td><td>Processing: <p>A transfer which is being processed</p>\n</td>\n    </tr>\n<tr>\n    <td><strong><code>processed</code></strong></td><td>Processed: <p>A transfer which has completed processing</p>\n</td>\n    </tr>\n<tr>\n    <td><strong><code>failed</code></strong></td><td>Failed: <p>A transfer which has cannot be processed or failed while processing</p>\n</td>\n    </tr>\n<tr>\n    <td><strong><code>other</code></strong></td><td>Other: <p>A transfer which is in some other state</p>\n</td>\n    </tr>\n</table>\n\n",
-      "name": "TransferItemState",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "unscheduled"
-          },
-          {
-            "value": "pendingApproval"
-          },
-          {
-            "value": "scheduled"
-          },
-          {
-            "value": "processing"
-          },
-          {
-            "value": "processed"
-          },
-          {
-            "value": "failed"
-          },
-          {
-            "value": "other"
-          }
-        ]
-      }
-    },
     "transferItem": {
       "description": "Summary representation of a transfer resource in transfers collections. To fetch the full representation of this transfer, use the [`getTransfer`](#op-getTransfer) operation, passing this item's `id` field as the `transferId` path parameter.",
       "name": "transferItem",
@@ -2383,7 +2264,7 @@
             "key": "id",
             "valueType": {
               "type": "id",
-              "value": "TransferItemId"
+              "value": "readOnlyResourceId"
             }
           },
           {
@@ -2399,7 +2280,7 @@
             "key": "state",
             "valueType": {
               "type": "id",
-              "value": "TransferItemState"
+              "value": "transferState"
             },
             "propertyAccess": "READ_ONLY"
           },

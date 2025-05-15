@@ -46,25 +46,61 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
     }
 
     public convert(): SchemaOrReferenceConverter.Output | undefined {
-        if (this.context.isReferenceObject(this.schemaOrReference)) {
-            return this.convertReferenceObject({ reference: this.schemaOrReference });
+        const maybeConvertedReferenceObject = this.maybeConvertReferenceObject({
+            schemaOrReference: this.schemaOrReference
+        });
+        if (maybeConvertedReferenceObject != null) {
+            return maybeConvertedReferenceObject;
+        }
+        const maybeSingularAllOfReferenceOutput = this.maybeConvertSingularAllOfReferenceObject();
+        if (maybeSingularAllOfReferenceOutput != null) {
+            return maybeSingularAllOfReferenceOutput;
         }
         return this.convertSchemaObject({ schema: this.schemaOrReference });
     }
 
-    private convertReferenceObject({
-        reference
+    private maybeConvertReferenceObject({
+        schemaOrReference
     }: {
-        reference: OpenAPIV3_1.ReferenceObject;
+        schemaOrReference: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
     }): SchemaOrReferenceConverter.Output | undefined {
-        const response = this.context.convertReferenceToTypeReference({ reference, breadcrumbs: this.breadcrumbs });
-        if (!response.ok) {
+        if (this.context.isReferenceObject(schemaOrReference)) {
+            const response = this.context.convertReferenceToTypeReference({
+                reference: schemaOrReference,
+                breadcrumbs: this.breadcrumbs
+            });
+            if (response.ok) {
+                return {
+                    type: this.wrapTypeReference(response.reference),
+                    inlinedTypes: {}
+                };
+            }
+        }
+        return undefined;
+    }
+
+    private maybeConvertSingularAllOfReferenceObject(): SchemaOrReferenceConverter.Output | undefined {
+        if (
+            this.context.isReferenceObject(this.schemaOrReference) ||
+            this.schemaOrReference.allOf == null ||
+            this.schemaOrReference.allOf.length !== 1
+        ) {
             return undefined;
         }
-        return {
-            type: this.wrapTypeReference(response.reference),
-            inlinedTypes: {}
-        };
+        const allOfReference = this.schemaOrReference.allOf[0];
+        if (this.context.isReferenceObject(allOfReference)) {
+            const response = this.context.convertReferenceToTypeReference({
+                reference: allOfReference,
+                breadcrumbs: this.breadcrumbs
+            });
+            if (response.ok) {
+                return {
+                    type: this.wrapTypeReference(response.reference),
+                    inlinedTypes: {}
+                };
+            }
+        }
+        return undefined;
     }
 
     private convertSchemaObject({

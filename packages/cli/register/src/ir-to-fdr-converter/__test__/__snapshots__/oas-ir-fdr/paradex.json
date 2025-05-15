@@ -42,52 +42,6 @@
         ]
       }
     },
-    "RequestsAlgoOrderRequestSide": {
-      "name": "RequestsAlgoOrderRequestSide",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "BUY"
-          },
-          {
-            "value": "SELL"
-          }
-        ]
-      }
-    },
-    "RequestsAlgoOrderRequestType": {
-      "name": "RequestsAlgoOrderRequestType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "MARKET"
-          },
-          {
-            "value": "LIMIT"
-          },
-          {
-            "value": "STOP_LIMIT"
-          },
-          {
-            "value": "STOP_MARKET"
-          },
-          {
-            "value": "TAKE_PROFIT_LIMIT"
-          },
-          {
-            "value": "TAKE_PROFIT_MARKET"
-          },
-          {
-            "value": "STOP_LOSS_MARKET"
-          },
-          {
-            "value": "STOP_LOSS_LIMIT"
-          }
-        ]
-      }
-    },
     "requests.AlgoOrderRequest": {
       "name": "requests.AlgoOrderRequest",
       "shape": {
@@ -129,7 +83,7 @@
             "key": "side",
             "valueType": {
               "type": "id",
-              "value": "RequestsAlgoOrderRequestSide"
+              "value": "responses.OrderSide"
             }
           },
           {
@@ -167,7 +121,7 @@
             "key": "type",
             "valueType": {
               "type": "id",
-              "value": "RequestsAlgoOrderRequestType"
+              "value": "responses.OrderType"
             }
           }
         ]
@@ -451,52 +405,6 @@
         ]
       }
     },
-    "RequestsOrderRequestSide": {
-      "name": "RequestsOrderRequestSide",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "BUY"
-          },
-          {
-            "value": "SELL"
-          }
-        ]
-      }
-    },
-    "RequestsOrderRequestType": {
-      "name": "RequestsOrderRequestType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "MARKET"
-          },
-          {
-            "value": "LIMIT"
-          },
-          {
-            "value": "STOP_LIMIT"
-          },
-          {
-            "value": "STOP_MARKET"
-          },
-          {
-            "value": "TAKE_PROFIT_LIMIT"
-          },
-          {
-            "value": "TAKE_PROFIT_MARKET"
-          },
-          {
-            "value": "STOP_LOSS_MARKET"
-          },
-          {
-            "value": "STOP_LOSS_LIMIT"
-          }
-        ]
-      }
-    },
     "requests.OrderRequest": {
       "name": "requests.OrderRequest",
       "shape": {
@@ -592,7 +500,7 @@
             "key": "side",
             "valueType": {
               "type": "id",
-              "value": "RequestsOrderRequestSide"
+              "value": "responses.OrderSide"
             }
           },
           {
@@ -656,7 +564,7 @@
             "key": "type",
             "valueType": {
               "type": "id",
-              "value": "RequestsOrderRequestType"
+              "value": "responses.OrderType"
             }
           }
         ]
@@ -787,29 +695,6 @@
         ]
       }
     },
-    "ResponsesAccountInfoResponseKind": {
-      "name": "ResponsesAccountInfoResponseKind",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": ""
-          },
-          {
-            "value": "main"
-          },
-          {
-            "value": "subaccount"
-          },
-          {
-            "value": "vault_operator"
-          },
-          {
-            "value": "vault_sub_operator"
-          }
-        ]
-      }
-    },
     "responses.AccountInfoResponse": {
       "name": "responses.AccountInfoResponse",
       "shape": {
@@ -885,7 +770,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesAccountInfoResponseKind"
+                "value": "responses.AccountKind"
               }
             }
           },
@@ -1319,54 +1204,6 @@
         ]
       }
     },
-    "ResponsesAlgoOrderRespAlgoType": {
-      "name": "ResponsesAlgoOrderRespAlgoType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": ""
-          },
-          {
-            "value": "TWAP"
-          }
-        ]
-      }
-    },
-    "ResponsesAlgoOrderRespSide": {
-      "name": "ResponsesAlgoOrderRespSide",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "BUY"
-          },
-          {
-            "value": "SELL"
-          }
-        ]
-      }
-    },
-    "ResponsesAlgoOrderRespStatus": {
-      "name": "ResponsesAlgoOrderRespStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "NEW"
-          },
-          {
-            "value": "UNTRIGGERED"
-          },
-          {
-            "value": "OPEN"
-          },
-          {
-            "value": "CLOSED"
-          }
-        ]
-      }
-    },
     "responses.AlgoOrderResp": {
       "name": "responses.AlgoOrderResp",
       "shape": {
@@ -1393,7 +1230,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesAlgoOrderRespAlgoType"
+                "value": "responses.AlgoType"
               }
             }
           },
@@ -1508,7 +1345,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesAlgoOrderRespSide"
+                "value": "responses.OrderSide"
               }
             }
           },
@@ -1532,7 +1369,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesAlgoOrderRespStatus"
+                "value": "responses.OrderStatus"
               }
             }
           }
@@ -1549,200 +1386,6 @@
           },
           {
             "value": "TWAP"
-          }
-        ]
-      }
-    },
-    "ResponsesApiErrorError": {
-      "name": "ResponsesApiErrorError",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "VALIDATION_ERROR"
-          },
-          {
-            "value": "BINDING_ERROR"
-          },
-          {
-            "value": "INTERNAL_ERROR"
-          },
-          {
-            "value": "NOT_FOUND"
-          },
-          {
-            "value": "SERVICE_UNAVAILABLE"
-          },
-          {
-            "value": "INVALID_REQUEST_PARAMETER"
-          },
-          {
-            "value": "ORDER_ID_NOT_FOUND"
-          },
-          {
-            "value": "ORDER_IS_CLOSED"
-          },
-          {
-            "value": "ORDER_IS_NOT_OPEN"
-          },
-          {
-            "value": "INVALID_ORDER_SIZE"
-          },
-          {
-            "value": "CLIENT_ORDER_ID_NOT_FOUND"
-          },
-          {
-            "value": "DUPLICATED_CLIENT_ID"
-          },
-          {
-            "value": "INVALID_PRICE_PRECISION"
-          },
-          {
-            "value": "INVALID_SYMBOL"
-          },
-          {
-            "value": "INVALID_TOKEN"
-          },
-          {
-            "value": "INVALID_ETHEREUM_ADDRESS"
-          },
-          {
-            "value": "INVALID_ETHEREUM_SIGNATURE"
-          },
-          {
-            "value": "INVALID_STARKNET_ADDRESS"
-          },
-          {
-            "value": "INVALID_STARKNET_SIGNATURE"
-          },
-          {
-            "value": "STARKNET_SIGNATURE_VERIFICATION_FAILED"
-          },
-          {
-            "value": "BAD_STARKNET_REQUEST"
-          },
-          {
-            "value": "ETHEREUM_SIGNER_MISMATCH"
-          },
-          {
-            "value": "ETHEREUM_HASH_MISMATCH"
-          },
-          {
-            "value": "NOT_ONBOARDED"
-          },
-          {
-            "value": "INVALID_TIMESTAMP"
-          },
-          {
-            "value": "INVALID_SIGNATURE_EXPIRATION"
-          },
-          {
-            "value": "ACCOUNT_NOT_FOUND"
-          },
-          {
-            "value": "INVALID_ORDER_SIGNATURE"
-          },
-          {
-            "value": "PUBLIC_KEY_INVALID"
-          },
-          {
-            "value": "UNAUTHORIZED_ETHEREUM_ADDRESS"
-          },
-          {
-            "value": "UNAUTHORIZED_ERROR"
-          },
-          {
-            "value": "ETHEREUM_ADDRESS_ALREADY_ONBOARDED"
-          },
-          {
-            "value": "MARKET_NOT_FOUND"
-          },
-          {
-            "value": "ALLOWLIST_ENTRY_NOT_FOUND"
-          },
-          {
-            "value": "USERNAME_IN_USE"
-          },
-          {
-            "value": "GEO_IP_BLOCK"
-          },
-          {
-            "value": "ETHEREUM_ADDRESS_BLOCKED"
-          },
-          {
-            "value": "PROGRAM_NOT_FOUND"
-          },
-          {
-            "value": "PROGRAM_NOT_SUPPORTED"
-          },
-          {
-            "value": "INVALID_DASHBOARD"
-          },
-          {
-            "value": "MARKET_NOT_OPEN"
-          },
-          {
-            "value": "INVALID_REFERRAL_CODE"
-          },
-          {
-            "value": "REQUEST_NOT_ALLOWED"
-          },
-          {
-            "value": "PARENT_ADDRESS_ALREADY_ONBOARDED"
-          },
-          {
-            "value": "INVALID_PARENT_ACCOUNT"
-          },
-          {
-            "value": "INVALID_VAULT_OPERATOR_CHAIN"
-          },
-          {
-            "value": "VAULT_OPERATOR_ALREADY_ONBOARDED"
-          },
-          {
-            "value": "VAULT_NAME_IN_USE"
-          },
-          {
-            "value": "VAULT_NOT_FOUND"
-          },
-          {
-            "value": "VAULT_STRATEGY_NOT_FOUND"
-          },
-          {
-            "value": "VAULT_LIMIT_REACHED"
-          },
-          {
-            "value": "BATCH_SIZE_OUT_OF_RANGE"
-          },
-          {
-            "value": "ISOLATED_MARKET_ACCOUNT_MISMATCH"
-          },
-          {
-            "value": "NO_ACCESS_TO_MARKET"
-          },
-          {
-            "value": "POINTS_SUMMARY_NOT_FOUND"
-          },
-          {
-            "value": "ALGO_ID_NOT_FOUND"
-          },
-          {
-            "value": "INVALID_DERIVATION_PATH"
-          },
-          {
-            "value": "PROFILE_STATS_NOT_FOUND"
-          },
-          {
-            "value": "INVALID_CHAIN"
-          },
-          {
-            "value": "INVALID_LAYERSWAP_SWAP"
-          },
-          {
-            "value": "SOCIAL_USERNAME_IN_USE"
-          },
-          {
-            "value": "INVALID_OAUTH_REQUEST"
           }
         ]
       }
@@ -1770,7 +1413,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesApiErrorError"
+                "value": "responses.ErrorCode"
               }
             }
           },
@@ -2685,56 +2328,6 @@
         ]
       }
     },
-    "ResponsesFillResultFillType": {
-      "name": "ResponsesFillResultFillType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "LIQUIDATION"
-          },
-          {
-            "value": "TRANSFER"
-          },
-          {
-            "value": "FILL"
-          },
-          {
-            "value": "SETTLE_MARKET"
-          }
-        ]
-      }
-    },
-    "ResponsesFillResultLiquidity": {
-      "description": "Maker or Taker",
-      "name": "ResponsesFillResultLiquidity",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "TAKER"
-          },
-          {
-            "value": "MAKER"
-          }
-        ]
-      }
-    },
-    "ResponsesFillResultSide": {
-      "description": "Taker side",
-      "name": "ResponsesFillResultSide",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "BUY"
-          },
-          {
-            "value": "SELL"
-          }
-        ]
-      }
-    },
     "responses.FillResult": {
       "name": "responses.FillResult",
       "shape": {
@@ -2813,7 +2406,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesFillResultFillType"
+                "value": "responses.FillType"
               }
             }
           },
@@ -2837,7 +2430,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesFillResultLiquidity"
+                "value": "responses.TraderRole"
               }
             }
           },
@@ -2926,7 +2519,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesFillResultSide"
+                "value": "responses.OrderSide"
               }
             }
           },
@@ -3574,54 +3167,6 @@
         ]
       }
     },
-    "ResponsesMarketRespChainDetails": {
-      "description": "Chain details",
-      "name": "ResponsesMarketRespChainDetails",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "responses.MarketChainDetails"
-        ],
-        "properties": []
-      }
-    },
-    "ResponsesMarketRespDelta1CrossMarginParams": {
-      "description": "Delta1 Cross margin parameters",
-      "name": "ResponsesMarketRespDelta1CrossMarginParams",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "responses.Delta1CrossMarginParams"
-        ],
-        "properties": []
-      }
-    },
-    "ResponsesMarketRespMarketKind": {
-      "description": "Market's margin mode",
-      "name": "ResponsesMarketRespMarketKind",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "cross"
-          },
-          {
-            "value": "isolated"
-          }
-        ]
-      }
-    },
-    "ResponsesMarketRespOptionCrossMarginParams": {
-      "description": "Option Cross margin parameters",
-      "name": "ResponsesMarketRespOptionCrossMarginParams",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "responses.PerpetualOptionCrossMarginParams"
-        ],
-        "properties": []
-      }
-    },
     "ResponsesMarketRespOptionType": {
       "description": "Type of option",
       "name": "ResponsesMarketRespOptionType",
@@ -3674,7 +3219,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesMarketRespChainDetails"
+                "value": "responses.MarketChainDetails"
               }
             }
           },
@@ -3698,7 +3243,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesMarketRespDelta1CrossMarginParams"
+                "value": "responses.Delta1CrossMarginParams"
               }
             }
           },
@@ -3761,7 +3306,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesMarketRespMarketKind"
+                "value": "responses.MarketKind"
               }
             }
           },
@@ -3863,7 +3408,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesMarketRespOptionCrossMarginParams"
+                "value": "responses.PerpetualOptionCrossMarginParams"
               }
             }
           },
@@ -4027,46 +3572,6 @@
         ]
       }
     },
-    "ResponsesMarketSummaryRespGreeks": {
-      "description": "Greeks",
-      "name": "ResponsesMarketSummaryRespGreeks",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "description": "Market Delta",
-            "key": "delta",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "description": "Market Gamma",
-            "key": "gamma",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "description": "Market Vega",
-            "key": "vega",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          }
-        ]
-      }
-    },
     "responses.MarketSummaryResp": {
       "name": "responses.MarketSummaryResp",
       "shape": {
@@ -4184,7 +3689,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesMarketSummaryRespGreeks"
+                "value": "responses.Greeks"
               }
             }
           },
@@ -4436,161 +3941,6 @@
         ]
       }
     },
-    "ResponsesOrderRespInstruction": {
-      "description": "OrderInstruction (GTC, IOC, POST_ONLY)",
-      "name": "ResponsesOrderRespInstruction",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "GTC"
-          },
-          {
-            "value": "POST_ONLY"
-          },
-          {
-            "value": "IOC"
-          }
-        ]
-      }
-    },
-    "ResponsesOrderRespRequestInfo": {
-      "description": "Request info for modify order",
-      "name": "ResponsesOrderRespRequestInfo",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "description": "Request id",
-            "key": "id",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "description": "Error message for failed requests",
-            "key": "message",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "description": "Type of request (MODIFY_ORDER)",
-            "key": "request_type",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "description": "Status of modify order request",
-            "key": "status",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          }
-        ]
-      }
-    },
-    "ResponsesOrderRespSide": {
-      "description": "Order side",
-      "name": "ResponsesOrderRespSide",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "BUY"
-          },
-          {
-            "value": "SELL"
-          }
-        ]
-      }
-    },
-    "ResponsesOrderRespStatus": {
-      "description": "Order status",
-      "name": "ResponsesOrderRespStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "NEW"
-          },
-          {
-            "value": "UNTRIGGERED"
-          },
-          {
-            "value": "OPEN"
-          },
-          {
-            "value": "CLOSED"
-          }
-        ]
-      }
-    },
-    "ResponsesOrderRespStp": {
-      "description": "Self Trade Prevention mode (EXEPIRE_MAKER, EXPIRE_TAKER, EXPIRE_BOTH)",
-      "name": "ResponsesOrderRespStp",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "EXPIRE_MAKER"
-          },
-          {
-            "value": "EXPIRE_TAKER"
-          },
-          {
-            "value": "EXPIRE_BOTH"
-          }
-        ]
-      }
-    },
-    "ResponsesOrderRespType": {
-      "description": "Order type",
-      "name": "ResponsesOrderRespType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "MARKET"
-          },
-          {
-            "value": "LIMIT"
-          },
-          {
-            "value": "STOP_LIMIT"
-          },
-          {
-            "value": "STOP_MARKET"
-          },
-          {
-            "value": "TAKE_PROFIT_LIMIT"
-          },
-          {
-            "value": "TAKE_PROFIT_MARKET"
-          },
-          {
-            "value": "STOP_LOSS_MARKET"
-          },
-          {
-            "value": "STOP_LOSS_LIMIT"
-          }
-        ]
-      }
-    },
     "responses.OrderResp": {
       "name": "responses.OrderResp",
       "shape": {
@@ -4696,7 +4046,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesOrderRespInstruction"
+                "value": "responses.OrderInstruction"
               }
             }
           },
@@ -4785,7 +4135,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesOrderRespRequestInfo"
+                "value": "responses.RequestInfo"
               }
             }
           },
@@ -4809,7 +4159,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesOrderRespSide"
+                "value": "responses.OrderSide"
               }
             }
           },
@@ -4833,7 +4183,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesOrderRespStatus"
+                "value": "responses.OrderStatus"
               }
             }
           },
@@ -4844,7 +4194,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesOrderRespStp"
+                "value": "responses.STPMode"
               }
             }
           },
@@ -4881,7 +4231,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesOrderRespType"
+                "value": "responses.OrderType"
               }
             }
           }
@@ -6087,23 +5437,6 @@
         ]
       }
     },
-    "ResponsesSystemStateResponseStatus": {
-      "name": "ResponsesSystemStateResponseStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ok"
-          },
-          {
-            "value": "maintenance"
-          },
-          {
-            "value": "cancel_only"
-          }
-        ]
-      }
-    },
     "responses.SystemStateResponse": {
       "name": "responses.SystemStateResponse",
       "shape": {
@@ -6117,7 +5450,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesSystemStateResponseStatus"
+                "value": "responses.SystemStatus"
               }
             }
           }
@@ -6159,41 +5492,6 @@
                 }
               }
             }
-          }
-        ]
-      }
-    },
-    "ResponsesTradeResultSide": {
-      "description": "Taker side",
-      "name": "ResponsesTradeResultSide",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "BUY"
-          },
-          {
-            "value": "SELL"
-          }
-        ]
-      }
-    },
-    "ResponsesTradeResultTradeType": {
-      "name": "ResponsesTradeResultTradeType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "LIQUIDATION"
-          },
-          {
-            "value": "TRANSFER"
-          },
-          {
-            "value": "FILL"
-          },
-          {
-            "value": "SETTLE_MARKET"
           }
         ]
       }
@@ -6263,7 +5561,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesTradeResultSide"
+                "value": "responses.OrderSide"
               }
             }
           },
@@ -6287,7 +5585,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesTradeResultTradeType"
+                "value": "responses.FillType"
               }
             }
           }
@@ -6544,90 +5842,6 @@
         ]
       }
     },
-    "ResponsesTransferResultBridge": {
-      "description": "Bridge used for the transfer",
-      "name": "ResponsesTransferResultBridge",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": ""
-          },
-          {
-            "value": "STARKGATE"
-          },
-          {
-            "value": "LAYERSWAP"
-          },
-          {
-            "value": "RHINOFI"
-          }
-        ]
-      }
-    },
-    "ResponsesTransferResultDirection": {
-      "description": "Transfer direction (IN, OUT)",
-      "name": "ResponsesTransferResultDirection",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "IN"
-          },
-          {
-            "value": "OUT"
-          }
-        ]
-      }
-    },
-    "ResponsesTransferResultKind": {
-      "description": "Transfer Kind (DEPOSIT, WITHDRAWAL)",
-      "name": "ResponsesTransferResultKind",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "DEPOSIT"
-          },
-          {
-            "value": "WITHDRAWAL"
-          },
-          {
-            "value": "UNWINDING"
-          },
-          {
-            "value": "VAULT_DEPOSIT"
-          },
-          {
-            "value": "VAULT_WITHDRAWAL"
-          },
-          {
-            "value": "AUTO_WITHDRAWAL"
-          }
-        ]
-      }
-    },
-    "ResponsesTransferResultStatus": {
-      "description": "Transfer External State (PENDING, AVAILABLE, COMPLETED, FAILED)",
-      "name": "ResponsesTransferResultStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "PENDING"
-          },
-          {
-            "value": "AVAILABLE"
-          },
-          {
-            "value": "COMPLETED"
-          },
-          {
-            "value": "FAILED"
-          }
-        ]
-      }
-    },
     "responses.TransferResult": {
       "description": "TransferResult",
       "name": "responses.TransferResult",
@@ -6681,7 +5895,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesTransferResultBridge"
+                "value": "responses.TransferBridge"
               }
             }
           },
@@ -6718,7 +5932,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesTransferResultDirection"
+                "value": "responses.TransferDirection"
               }
             }
           },
@@ -6794,7 +6008,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesTransferResultKind"
+                "value": "responses.TransferKind"
               }
             }
           },
@@ -6831,7 +6045,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesTransferResultStatus"
+                "value": "responses.TransferStatus"
               }
             }
           },
@@ -7171,40 +6385,6 @@
         ]
       }
     },
-    "ResponsesVaultRespKind": {
-      "name": "ResponsesVaultRespKind",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "user"
-          },
-          {
-            "value": "protocol"
-          }
-        ]
-      }
-    },
-    "ResponsesVaultRespStatus": {
-      "name": "ResponsesVaultRespStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "INITIALIZING"
-          },
-          {
-            "value": "ACTIVE"
-          },
-          {
-            "value": "CLOSED"
-          },
-          {
-            "value": "FAILED"
-          }
-        ]
-      }
-    },
     "responses.VaultResp": {
       "name": "responses.VaultResp",
       "shape": {
@@ -7257,7 +6437,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesVaultRespKind"
+                "value": "responses.VaultKind"
               }
             }
           },
@@ -7359,7 +6539,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesVaultRespStatus"
+                "value": "responses.VaultStatus"
               }
             }
           },
@@ -8859,6 +8039,36 @@
         ]
       }
     },
+    "ResponsesFillResultLiquidity": {
+      "description": "Maker or Taker",
+      "name": "ResponsesFillResultLiquidity",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "TAKER"
+          },
+          {
+            "value": "MAKER"
+          }
+        ]
+      }
+    },
+    "ResponsesFillResultSide": {
+      "description": "Taker side",
+      "name": "ResponsesFillResultSide",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "BUY"
+          },
+          {
+            "value": "SELL"
+          }
+        ]
+      }
+    },
     "ResponsesFillResult": {
       "name": "ResponsesFillResult",
       "shape": {
@@ -9196,6 +8406,46 @@
         ]
       }
     },
+    "ResponsesMarketSummaryRespGreeks": {
+      "description": "Greeks",
+      "name": "ResponsesMarketSummaryRespGreeks",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Market Delta",
+            "key": "delta",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "Market Gamma",
+            "key": "gamma",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "Market Vega",
+            "key": "vega",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
     "ResponsesMarketSummaryResp": {
       "name": "ResponsesMarketSummaryResp",
       "shape": {
@@ -9410,6 +8660,161 @@
                 "type": "string"
               }
             }
+          }
+        ]
+      }
+    },
+    "ResponsesOrderRespInstruction": {
+      "description": "OrderInstruction (GTC, IOC, POST_ONLY)",
+      "name": "ResponsesOrderRespInstruction",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "GTC"
+          },
+          {
+            "value": "POST_ONLY"
+          },
+          {
+            "value": "IOC"
+          }
+        ]
+      }
+    },
+    "ResponsesOrderRespRequestInfo": {
+      "description": "Request info for modify order",
+      "name": "ResponsesOrderRespRequestInfo",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Request id",
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "Error message for failed requests",
+            "key": "message",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "Type of request (MODIFY_ORDER)",
+            "key": "request_type",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "Status of modify order request",
+            "key": "status",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ResponsesOrderRespSide": {
+      "description": "Order side",
+      "name": "ResponsesOrderRespSide",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "BUY"
+          },
+          {
+            "value": "SELL"
+          }
+        ]
+      }
+    },
+    "ResponsesOrderRespStatus": {
+      "description": "Order status",
+      "name": "ResponsesOrderRespStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "NEW"
+          },
+          {
+            "value": "UNTRIGGERED"
+          },
+          {
+            "value": "OPEN"
+          },
+          {
+            "value": "CLOSED"
+          }
+        ]
+      }
+    },
+    "ResponsesOrderRespStp": {
+      "description": "Self Trade Prevention mode (EXEPIRE_MAKER, EXPIRE_TAKER, EXPIRE_BOTH)",
+      "name": "ResponsesOrderRespStp",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "EXPIRE_MAKER"
+          },
+          {
+            "value": "EXPIRE_TAKER"
+          },
+          {
+            "value": "EXPIRE_BOTH"
+          }
+        ]
+      }
+    },
+    "ResponsesOrderRespType": {
+      "description": "Order type",
+      "name": "ResponsesOrderRespType",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "MARKET"
+          },
+          {
+            "value": "LIMIT"
+          },
+          {
+            "value": "STOP_LIMIT"
+          },
+          {
+            "value": "STOP_MARKET"
+          },
+          {
+            "value": "TAKE_PROFIT_LIMIT"
+          },
+          {
+            "value": "TAKE_PROFIT_MARKET"
+          },
+          {
+            "value": "STOP_LOSS_MARKET"
+          },
+          {
+            "value": "STOP_LOSS_LIMIT"
           }
         ]
       }
@@ -10117,6 +9522,21 @@
         ]
       }
     },
+    "ResponsesTradeResultSide": {
+      "description": "Taker side",
+      "name": "ResponsesTradeResultSide",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "BUY"
+          },
+          {
+            "value": "SELL"
+          }
+        ]
+      }
+    },
     "ResponsesTradeResult": {
       "name": "ResponsesTradeResult",
       "shape": {
@@ -10298,6 +9718,90 @@
                 "type": "string"
               }
             }
+          }
+        ]
+      }
+    },
+    "ResponsesTransferResultBridge": {
+      "description": "Bridge used for the transfer",
+      "name": "ResponsesTransferResultBridge",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": ""
+          },
+          {
+            "value": "STARKGATE"
+          },
+          {
+            "value": "LAYERSWAP"
+          },
+          {
+            "value": "RHINOFI"
+          }
+        ]
+      }
+    },
+    "ResponsesTransferResultDirection": {
+      "description": "Transfer direction (IN, OUT)",
+      "name": "ResponsesTransferResultDirection",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "IN"
+          },
+          {
+            "value": "OUT"
+          }
+        ]
+      }
+    },
+    "ResponsesTransferResultKind": {
+      "description": "Transfer Kind (DEPOSIT, WITHDRAWAL)",
+      "name": "ResponsesTransferResultKind",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "DEPOSIT"
+          },
+          {
+            "value": "WITHDRAWAL"
+          },
+          {
+            "value": "UNWINDING"
+          },
+          {
+            "value": "VAULT_DEPOSIT"
+          },
+          {
+            "value": "VAULT_WITHDRAWAL"
+          },
+          {
+            "value": "AUTO_WITHDRAWAL"
+          }
+        ]
+      }
+    },
+    "ResponsesTransferResultStatus": {
+      "description": "Transfer External State (PENDING, AVAILABLE, COMPLETED, FAILED)",
+      "name": "ResponsesTransferResultStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "PENDING"
+          },
+          {
+            "value": "AVAILABLE"
+          },
+          {
+            "value": "COMPLETED"
+          },
+          {
+            "value": "FAILED"
           }
         ]
       }
