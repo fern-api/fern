@@ -36,6 +36,7 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/typescript-ast": "workspace:*",
+    "@fern-api/typescript-formatter": "workspace:*",
     "@fern-fern/generator-cli-sdk": "0.0.17",
     "@fern-fern/ir-sdk": "^57.0.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",

@@ -18,5 +18,9 @@ export abstract class FileGenerator<
 
     protected abstract doGenerate(): GeneratedFile;
 
+    protected abstract getDirectory(): RelativeFilePath;
+
+    protected abstract getFilename(): string;
+
     protected abstract getFilepath(): RelativeFilePath;
 }

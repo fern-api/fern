@@ -159,22 +159,22 @@ declare namespace TypescriptMcpProjectBuilder {
 class TypescriptMcpProjectBuilder {
     public readonly packageName: string;
     public readonly description: string;
-    public readonly sdkPackageName: string;
-    public readonly sdkClientVariableName: string;
+    public readonly sdkModuleName: string;
+    public readonly sdkClientClassName: string;
 
     constructor({ context }: TypescriptMcpProjectBuilder.Args) {
         const { organization, workspaceName } = context.config;
         this.packageName = context.publishConfig?.packageName ?? `${organization}-mcp-server`;
         this.description = `Model Context Protocol (MCP) server for ${organization}'s ${workspaceName}.`;
-        this.sdkPackageName = this.inferSdkPackageName(organization, workspaceName);
-        this.sdkClientVariableName = this.inferSdkClientVariableName(organization, workspaceName);
+        this.sdkModuleName = this.inferSdkModuleName(organization, workspaceName);
+        this.sdkClientClassName = this.inferSdkClientClassName(organization, workspaceName);
     }
 
-    private inferSdkPackageName(organization: string, workspaceName: string): string {
+    private inferSdkModuleName(organization: string, workspaceName: string): string {
         return `${kebabCase(organization)}-${kebabCase(workspaceName)}`;
     }
 
-    private inferSdkClientVariableName(organization: string, workspaceName: string): string {
+    private inferSdkClientClassName(organization: string, workspaceName: string): string {
         return `${capitalize(organization)}${capitalize(workspaceName)}Client`;
     }
 
@@ -231,7 +231,7 @@ class PackageJson {
             },
             dependencies: {
                 "@modelcontextprotocol/sdk": "^1.8.0",
-                [this.context.project.builder.sdkPackageName]: "file:./sdk",
+                [this.context.project.builder.sdkModuleName]: "file:./sdk",
                 zod: "^3.24.2"
             },
             devDependencies: {

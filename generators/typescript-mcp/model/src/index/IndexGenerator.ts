@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
 import { FileGenerator, TypescriptMcpFile } from "@fern-api/typescript-mcp-base";
 
@@ -13,6 +13,7 @@ export class IndexGenerator extends FileGenerator<
     ModelGeneratorContext
 > {
     private readonly schemaVariableNames: string[];
+
     constructor(
         context: ModelGeneratorContext,
         private readonly typeDeclarations: TypeDeclaration[]
@@ -38,13 +39,21 @@ export class IndexGenerator extends FileGenerator<
                     );
                 });
             }),
-            directory: this.getFilepath(),
-            filename: "index.ts",
+            directory: this.getDirectory(),
+            filename: this.getFilename(),
             customConfig: this.context.customConfig
         });
     }
 
-    protected getFilepath(): RelativeFilePath {
+    protected getDirectory(): RelativeFilePath {
         return RelativeFilePath.of("");
+    }
+
+    protected getFilename(): string {
+        return "index.ts";
+    }
+
+    protected getFilepath(): RelativeFilePath {
+        return join(this.getDirectory(), RelativeFilePath.of(this.getFilename()));
     }
 }

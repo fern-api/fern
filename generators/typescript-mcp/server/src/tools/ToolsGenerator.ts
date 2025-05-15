@@ -2,136 +2,315 @@ import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
 import { FileGenerator, TypescriptMcpFile } from "@fern-api/typescript-mcp-base";
 
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
+import { FernFilepath, HttpEndpoint, HttpService, Name } from "@fern-fern/ir-sdk/api";
 
 import { ServerGeneratorContext } from "../ServerGeneratorContext";
-
-const SUBDIRECTORY_NAME = "";
-const FILENAME = "index.ts";
+import { FunctionNode, MethodInvocationNode, ObjectLiteralNode, ParameterNode, sdkRequestMapper } from "../ast";
 
 export class ToolsGenerator extends FileGenerator<
     TypescriptMcpFile,
     TypescriptCustomConfigSchema,
     ServerGeneratorContext
 > {
+    private readonly mcpSdkReference: ts.Reference;
+    private readonly sdkClientClassReference: ts.Reference;
+    private readonly sdkClientVariableName: string;
+    private readonly schemasReference: ts.Reference;
+    constructor(context: ServerGeneratorContext) {
+        super(context);
+        this.mcpSdkReference = ts.reference({
+            name: "McpServer",
+            importFrom: { type: "named", moduleName: "@modelcontextprotocol/sdk/server/mcp.js" }
+        });
+        this.sdkClientClassReference = ts.reference({
+            name: this.context.project.builder.sdkClientClassName,
+            importFrom: { type: "named", moduleName: this.context.project.builder.sdkModuleName }
+        });
+        this.sdkClientVariableName = "client";
+        this.schemasReference = ts.reference({
+            name: "",
+            importFrom: { type: "star", moduleName: "../schemas", starImportAlias: "schemas" }
+        });
+    }
+
     public doGenerate(): TypescriptMcpFile {
         return new TypescriptMcpFile({
             node: ts.codeblock((writer) => {
-                this.writeImportsBlock(writer);
+                writer.writeNodeStatement(
+                    ts.variable({
+                        name: this.sdkClientVariableName,
+                        const: true,
+                        initializer: ts.instantiateClass({
+                            class_: this.sdkClientClassReference,
+                            arguments_: [
+                                // TODO: properly generate config object
+                                new ObjectLiteralNode({
+                                    fields: [
+                                        {
+                                            name: "environment",
+                                            value: new FunctionNode({
+                                                parameters: [],
+                                                body: ts.codeblock((writer) => {
+                                                    writer.write("return ");
+                                                    writer.write(`""`);
+                                                })
+                                            })
+                                        }
+                                    ]
+                                })
+                            ]
+                        })
+                    })
+                );
                 writer.newLine();
-                this.writeClientInitializationBlock(writer);
-                writer.newLine();
-                Object.values(this.context.ir.services).forEach((service) => {
-                    service.endpoints.forEach((endpoint) => {
-                        this.writeToolDefinitionsBlock(writer, endpoint, service);
+                for (const service of Object.values(this.context.ir.services)) {
+                    for (const endpoint of service.endpoints) {
+                        writer.writeNodeStatement(
+                            new ToolDefinitionNode({
+                                mcpSdkReference: this.mcpSdkReference,
+                                sdkClientClassReference: this.sdkClientClassReference,
+                                sdkClientVariableName: this.sdkClientVariableName,
+                                schemasReference: this.schemasReference,
+                                endpoint,
+                                service,
+                                builder: this.context.project.builder
+                            })
+                        );
                         writer.newLine();
-                    });
-                });
+                    }
+                }
             }),
-            directory: this.getSubDirectory(),
-            filename: FILENAME,
+            directory: this.getDirectory(),
+            filename: this.getFilename(),
             customConfig: this.context.customConfig
         });
     }
 
-    private getSubDirectory(): RelativeFilePath {
-        return join(RelativeFilePath.of(SUBDIRECTORY_NAME));
+    protected getDirectory(): RelativeFilePath {
+        return RelativeFilePath.of("");
+    }
+
+    protected getFilename(): string {
+        return "index.ts";
     }
 
     protected getFilepath(): RelativeFilePath {
-        return join(this.getSubDirectory(), RelativeFilePath.of(FILENAME));
+        return join(this.getDirectory(), RelativeFilePath.of(this.getFilename()));
     }
+}
 
-    private writeImportsBlock(writer: ts.Writer) {
-        writer.writeLine('import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";');
-        writer.writeLine(
-            `import { ${this.context.project.builder.sdkClientVariableName} } from "${this.context.project.builder.sdkPackageName}";`
+export declare namespace ToolDefinitionNode {
+    interface Args {
+        mcpSdkReference: ts.Reference;
+        sdkClientClassReference: ts.Reference;
+        sdkClientVariableName: string;
+        schemasReference: ts.Reference;
+        endpoint: HttpEndpoint;
+        service: HttpService;
+        builder: ServerGeneratorContext["project"]["builder"];
+    }
+}
+
+export class ToolDefinitionNode extends ts.AstNode {
+    private readonly sdkMethodPath: string;
+
+    private readonly toolVariableName: string;
+    private readonly toolName: string;
+    private readonly toolDescription?: string;
+
+    private readonly schemaVariableName?: string;
+    private readonly schemaName?: Name;
+    private readonly schemaFilepath?: FernFilepath;
+
+    public constructor(private readonly args: ToolDefinitionNode.Args) {
+        super();
+        this.sdkMethodPath = this.args.builder.getSdkMethodPath(
+            this.args.endpoint.name,
+            this.args.service.name.fernFilepath
         );
-        writer.writeLine('import * as schemas from "../schemas";');
-    }
 
-    private writeClientInitializationBlock(writer: ts.Writer) {
-        writer.writeLine(`const client = new ${this.context.project.builder.sdkClientVariableName}({`);
-        writer.writeLine('    environment: () => ""');
-        writer.writeLine("});");
-    }
-
-    private writeToolDefinitionsBlock(writer: ts.Writer, endpoint: HttpEndpoint, service: HttpService) {
-        const endpointName = endpoint.name;
-        const serviceFilepath = service.name.fernFilepath;
-        const toolVariableName = this.context.project.builder.getToolVariableName(endpointName, serviceFilepath);
-        const toolName = this.context.project.builder.getToolName(endpointName, serviceFilepath);
-        const toolDescription = endpoint.docs;
-        const sdkMethodPath = this.context.project.builder.getSdkMethodPath(endpointName, serviceFilepath);
+        this.toolVariableName = this.args.builder.getToolVariableName(
+            this.args.endpoint.name,
+            this.args.service.name.fernFilepath
+        );
+        this.toolName = this.args.builder.getToolName(this.args.endpoint.name, this.args.service.name.fernFilepath);
+        this.toolDescription = this.args.endpoint.docs;
 
         const { name: schemaName, fernFilepath: schemaFilepath } =
-            endpoint.sdkRequest?.shape._visit({
-                justRequestBody: (value) =>
-                    value._visit({
-                        typeReference: (value) =>
-                            value.requestBodyType._visit({
-                                container: () => undefined,
-                                named: (value) => value,
-                                primitive: () => undefined,
-                                unknown: () => undefined,
-                                _other: () => undefined
-                            }),
-                        bytes: () => undefined,
-                        _other: () => undefined
-                    }),
-                wrapper: () => undefined,
-                _other: () => undefined
-            }) ?? {};
+            sdkRequestMapper(this.args.endpoint.sdkRequest) ?? {};
+        this.schemaVariableName = schemaName && this.args.builder.getSchemaVariableName(schemaName, schemaFilepath);
+        this.schemaName = schemaName;
+        this.schemaFilepath = schemaFilepath;
+    }
 
-        const paramsFromSchema = schemaName
-            ? `schemas.${this.context.project.builder.getSchemaVariableName(schemaName, schemaFilepath)}`
-            : undefined;
+    write(writer: ts.Writer) {
+        const hasSchema = !!this.schemaVariableName;
+        const writeSchema = (writer: ts.Writer) => {
+            writer.writeNode(this.args.schemasReference);
+            writer.write(this.schemaVariableName!);
+        };
 
-        // TODO: fix this
-        function capitalize(str: string) {
-            return str.charAt(0).toUpperCase() + str.slice(1);
-        }
-        const schemaPrefix = service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join("");
-        const partsFromPath = endpoint.path.parts.map((part) => ({
+        const partsFromPath = this.getPartsFromPath();
+        const hasPartsFromPath = partsFromPath.length > 0;
+        const writeSchemaShapeFromParts = (writer: ts.Writer) => {
+            writer.writeNode(
+                new ObjectLiteralNode({
+                    fields: partsFromPath.map((part) => ({
+                        name: part.key,
+                        value: ts.codeblock((writer) => {
+                            writer.writeNode(this.args.schemasReference);
+                            writer.write(part.value);
+                        })
+                    }))
+                })
+            );
+        };
+
+        const hasAnyParams = hasSchema || hasPartsFromPath;
+        const writeParams = (writer: ts.Writer) => {
+            if (hasSchema && hasPartsFromPath) {
+                writeSchema(writer);
+                writer.write(".extend(");
+                writeSchemaShapeFromParts(writer);
+                writer.write(").shape");
+            } else if (hasSchema) {
+                writeSchema(writer);
+                writer.write(".shape");
+            } else if (hasPartsFromPath) {
+                writeSchemaShapeFromParts(writer);
+            }
+        };
+
+        const writeExtractParams = (writer: ts.Writer) => {
+            writer.write("const { ");
+            writer.write(partsFromPath?.map((part) => part.key).join(", "));
+            writer.write(hasSchema && hasPartsFromPath ? ", " : "");
+            writer.write(hasSchema ? "...restParams" : "");
+            writer.write(" } = params;");
+        };
+
+        writer.writeNode(
+            ts.variable({
+                name: this.toolVariableName,
+                const: true,
+                export: true,
+                initializer: ts.codeblock((writer) => {
+                    writer.writeNode(
+                        new ObjectLiteralNode({
+                            fields: [
+                                {
+                                    name: "register",
+                                    value: new FunctionNode({
+                                        parameters: [
+                                            new ParameterNode({
+                                                name: "server",
+                                                type: this.args.mcpSdkReference
+                                            })
+                                        ],
+                                        body: ts.codeblock((writer) => {
+                                            writer.write("return ");
+                                            writer.writeNodeStatement(
+                                                new MethodInvocationNode({
+                                                    on: ts.codeblock("server"),
+                                                    method: "tool",
+                                                    arguments_: [
+                                                        ts.TypeLiteral.string(this.toolName),
+                                                        ...(this.toolDescription
+                                                            ? [ts.TypeLiteral.string(this.toolDescription)]
+                                                            : []),
+                                                        ...(hasAnyParams
+                                                            ? [
+                                                                  ts.codeblock((writer) => {
+                                                                      writeParams(writer);
+                                                                  })
+                                                              ]
+                                                            : []),
+                                                        new FunctionNode({
+                                                            async: true,
+                                                            parameters: [
+                                                                new ParameterNode({
+                                                                    name: "params"
+                                                                })
+                                                            ],
+                                                            body: ts.codeblock((writer) => {
+                                                                writeExtractParams(writer);
+                                                                writer.writeNodeStatement(
+                                                                    ts.variable({
+                                                                        name: "result",
+                                                                        const: true,
+                                                                        initializer: ts.codeblock((writer) => {
+                                                                            writer.write("await ");
+                                                                            writer.writeNode(
+                                                                                new MethodInvocationNode({
+                                                                                    on: ts.codeblock(
+                                                                                        this.args.sdkClientVariableName
+                                                                                    ),
+                                                                                    method: this.sdkMethodPath,
+                                                                                    arguments_: [
+                                                                                        ...partsFromPath?.map((part) =>
+                                                                                            ts.codeblock((writer) => {
+                                                                                                writer.write(part.key);
+                                                                                            })
+                                                                                        ),
+                                                                                        ...(hasSchema
+                                                                                            ? [
+                                                                                                  ts.codeblock(
+                                                                                                      (writer) => {
+                                                                                                          writer.write(
+                                                                                                              "restParams"
+                                                                                                          );
+                                                                                                      }
+                                                                                                  )
+                                                                                              ]
+                                                                                            : [])
+                                                                                    ]
+                                                                                })
+                                                                            );
+                                                                        })
+                                                                    })
+                                                                );
+                                                                writer.write("return ");
+                                                                writer.writeNodeStatement(
+                                                                    new ObjectLiteralNode({
+                                                                        fields: [
+                                                                            {
+                                                                                name: "content",
+                                                                                value: ts.codeblock((writer) => {
+                                                                                    writer.write(
+                                                                                        `[{ type: "text", text: JSON.stringify(result) }]`
+                                                                                    );
+                                                                                })
+                                                                            }
+                                                                        ]
+                                                                    })
+                                                                );
+                                                            })
+                                                        })
+                                                    ]
+                                                })
+                                            );
+                                        })
+                                    })
+                                }
+                            ]
+                        })
+                    );
+                })
+            })
+        );
+    }
+
+    private getPartsFromPath() {
+        const schemaPrefix = this.args.service.name.fernFilepath.allParts
+            .map((part) => part.pascalCase.safeName)
+            .join("");
+        return this.args.endpoint.path.parts.map((part) => ({
             key: part.pathParameter,
-            value: `${schemaPrefix}${capitalize(part.pathParameter)}`
+            value: `${schemaPrefix}${this.capitalize(part.pathParameter)}`
         }));
-        const paramsFromPath = partsFromPath.length
-            ? `{ ${partsFromPath.map((param) => `${param.key}: schemas.${param.value}`).join(", ")} }`
-            : undefined;
+    }
 
-        const toolParams =
-            paramsFromSchema && paramsFromPath
-                ? `${paramsFromSchema}.extend(${paramsFromPath}).shape`
-                : paramsFromSchema
-                  ? `${paramsFromSchema}.shape`
-                  : paramsFromPath;
-
-        // TODO: clean this up to use AST
-        writer.writeLine(`// ${JSON.stringify(endpoint.method)}`);
-        writer.writeLine(`export const ${toolVariableName} = {`);
-        writer.writeLine("    register: function(server: McpServer) {");
-        writer.writeLine("        return server.tool(");
-        writer.writeLine(`            "${toolName}",`);
-        if (toolDescription) {
-            writer.writeLine(`            "${toolDescription}",`);
-        }
-        if (toolParams) {
-            writer.writeLine(`            ${toolParams},`);
-        }
-        writer.writeLine("            async (params) => {");
-        writer.writeLine(
-            `                const { ${partsFromPath?.map((part) => part.key).join(", ")}${paramsFromPath && paramsFromSchema ? ", " : ""}${paramsFromSchema ? "...restParams" : ""} } = params;`
-        );
-        writer.writeLine(
-            `                const result = await client.${sdkMethodPath}(${partsFromPath?.map((part) => part.key).join(", ")}${paramsFromPath && paramsFromSchema ? ", " : ""}${paramsFromSchema ? "restParams" : ""});`
-        );
-        writer.writeLine("                return {");
-        writer.writeLine('                    content: [{ type: "text", text: JSON.stringify(result) }]');
-        writer.writeLine("                };");
-        writer.writeLine("            }");
-        writer.writeLine("        );");
-        writer.writeLine("    }");
-        writer.writeLine("};");
+    private capitalize(str: string) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
     }
 }

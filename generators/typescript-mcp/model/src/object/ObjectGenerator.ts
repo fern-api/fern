@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
 import { FileGenerator, TypescriptMcpFile } from "@fern-api/typescript-mcp-base";
 
@@ -15,6 +15,7 @@ export class ObjectGenerator extends FileGenerator<
 > {
     private readonly zodReference: ts.Reference;
     private readonly schemaVariableName: string;
+
     constructor(
         context: ModelGeneratorContext,
         private readonly typeDeclaration: TypeDeclaration,
@@ -43,14 +44,22 @@ export class ObjectGenerator extends FileGenerator<
                     })
                 );
             }),
-            directory: this.getFilepath(),
-            filename: `${this.schemaVariableName}.ts`,
+            directory: this.getDirectory(),
+            filename: this.getFilename(),
             customConfig: this.context.customConfig
         });
     }
 
-    protected getFilepath(): RelativeFilePath {
+    protected getDirectory(): RelativeFilePath {
         return RelativeFilePath.of("");
+    }
+
+    protected getFilename(): string {
+        return `${this.schemaVariableName}.ts`;
+    }
+
+    protected getFilepath(): RelativeFilePath {
+        return join(this.getDirectory(), RelativeFilePath.of(this.getFilename()));
     }
 }
 

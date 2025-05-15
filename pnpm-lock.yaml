@@ -2467,6 +2467,9 @@ importers:
       '@fern-api/typescript-ast':
         specifier: workspace:*
         version: link:../../typescript-v2/ast
+      '@fern-api/typescript-formatter':
+        specifier: workspace:*
+        version: link:../../typescript-v2/formatter
       '@fern-fern/generator-cli-sdk':
         specifier: 0.0.17
         version: 0.0.17

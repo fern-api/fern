@@ -1,6 +1,7 @@
 import { AbstractFormatter, File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
+import { TypeScriptFormatter } from "@fern-api/typescript-formatter";
 
 export declare namespace TypescriptMcpFile {
     interface Args {
@@ -19,12 +20,13 @@ export declare namespace TypescriptMcpFile {
 
 export class TypescriptMcpFile extends File {
     constructor({ node, directory, filename, customConfig, formatter }: TypescriptMcpFile.Args) {
+        const _formatter = formatter ?? new TypeScriptFormatter();
         super(
             filename,
             directory,
             node.toString({
                 customConfig,
-                formatter
+                formatter: _formatter
             })
         );
     }
