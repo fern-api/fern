@@ -506,7 +506,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
             }
 
-
             if (this.isDeprecatedProperty(property)) {
                 const isOptionalProperty = !this.isRequiredProperty({ key, resolvedSchema });
                 if (isOptionalProperty) {
@@ -517,7 +516,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 }
             }
 
-          
             if (
                 "readOnly" in property &&
                 property.readOnly === true &&
@@ -545,7 +543,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
             if (propertyIsOmittedFromExample && propertyIsOptional) {
                 if (this.example === undefined && this.generateOptionalProperties) {
-
                     const exampleConverter = new ExampleConverter({
                         breadcrumbs: [...this.breadcrumbs, key],
                         context: this.context,
