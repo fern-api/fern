@@ -1,3 +1,12 @@
+
+- changelogEntry:
+    - summary: |
+        Fix the generated README.md for the `maxRetries` configuration option, which is now
+        shown on the client constructor.
+      type: fix
+  createdAt: '2025-05-15'
+  irVersion: 57
+  version: 2.36.2
 - changelogEntry:
     - summary: |
         Add support for the custom introduction setting in the generated README.md.

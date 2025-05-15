@@ -93,15 +93,12 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```java
-import com.seed.api.core.RequestOptions;
+import com.seed.api.SeedApiClient;
 
-client.imdb().createMovie(
-    ...,
-    RequestOptions
-        .builder()
-        .maxRetries(1)
-        .build()
-);
+SeedApiClient client = SeedApiClient
+    .builder()
+    .maxRetries(1)
+    .build();
 ```
 
 ### Timeouts

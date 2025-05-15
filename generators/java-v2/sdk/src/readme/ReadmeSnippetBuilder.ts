@@ -268,10 +268,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private renderRetriesSnippet(endpoint: EndpointWithFilepath): string {
-        const requestOptionsClassReference = this.context.getRequestOptionsClassReference();
+        const clientClassReference = this.context.getRootClientClassReference();
 
-        const requestOptionsInitialization = java.TypeLiteral.builder({
-            classReference: requestOptionsClassReference,
+        const clientInitialization = java.TypeLiteral.builder({
+            classReference: clientClassReference,
             parameters: [
                 {
                     name: "maxRetries",
@@ -280,14 +280,13 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             ]
         });
 
-        const endpointMethodInvocation = this.getMethodCall(endpoint, [
-            ReadmeSnippetBuilder.ELLIPSES,
-            requestOptionsInitialization
-        ]);
+        const clientWithRetries = java.codeblock((writer) => {
+            writer.writeNode(clientClassReference);
+            writer.write(` ${this.rootPackageClientName} = `);
+            writer.writeNodeStatement(clientInitialization);
+        });
 
-        const snippet = java.codeblock((writer) => writer.writeNodeStatement(endpointMethodInvocation));
-
-        return this.renderSnippet(snippet);
+        return this.renderSnippet(clientWithRetries);
     }
 
     private renderTimeoutsSnippet(endpoint: EndpointWithFilepath): string {
