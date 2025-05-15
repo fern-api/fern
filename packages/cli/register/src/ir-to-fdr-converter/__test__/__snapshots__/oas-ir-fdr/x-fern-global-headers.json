@@ -178,11 +178,14 @@
           },
           "response": {
             "type": {
-              "type": "reference",
-              "value": {
-                "type": "primitive",
+              "type": "stream",
+              "shape": {
+                "type": "reference",
                 "value": {
-                  "type": "string"
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -192,18 +195,18 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userGetExample",
               "description": "",
-              "path": "/user/",
+              "path": "/user/userId",
               "pathParameters": {
-                "userId": "foo"
+                "userId": "userId"
               },
               "queryParameters": {},
               "headers": {
-                "my-api-key": "foo",
-                "another_header": "foo",
-                "x-api-key": "foo",
-                "my-api-version": "foo"
+                "my-api-key": "my-api-key",
+                "another_header": "another_header",
+                "x-api-key": "x-api-key",
+                "my-api-version": "my-api-version"
               },
               "requestBody": {},
               "requestBodyV3": {
@@ -212,12 +215,19 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": "foo"
+                "type": "stream",
+                "value": [
+                  "foo"
+                ]
               },
               "responseBodyV3": {
-                "type": "json",
-                "value": "foo"
+                "type": "stream",
+                "value": [
+                  {
+                    "type": "json",
+                    "value": "foo"
+                  }
+                ]
               }
             }
           ],

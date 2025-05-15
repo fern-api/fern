@@ -21,7 +21,12 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedAuthEnvironmentVariables
-client = SeedAuthEnvironmentVariables(x_another_header="YOUR_X_ANOTHER_HEADER", api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+client = SeedAuthEnvironmentVariables(
+    x_another_header="YOUR_X_ANOTHER_HEADER",
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
 client.service.get_with_api_key()
 ```
 
@@ -30,11 +35,21 @@ client.service.get_with_api_key()
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-from seed import AsyncSeedAuthEnvironmentVariables
 import asyncio
-client = AsyncSeedAuthEnvironmentVariables(x_another_header="YOUR_X_ANOTHER_HEADER", api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+from seed import AsyncSeedAuthEnvironmentVariables
+
+client = AsyncSeedAuthEnvironmentVariables(
+    x_another_header="YOUR_X_ANOTHER_HEADER",
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+
 async def main() -> None:
     await client.service.get_with_api_key()
+
+
 asyncio.run(main())
 ```
 
@@ -45,6 +60,7 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
+
 try:
     client.service.get_with_api_key(...)
 except ApiError as e:
@@ -61,7 +77,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 
 ```python
 from seed import SeedAuthEnvironmentVariables
-client = SeedAuthEnvironmentVariables(..., )
+
+client = SeedAuthEnvironmentVariables(
+    ...,
+)
 response = client.service.with_raw_response.get_with_api_key(...)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
@@ -94,7 +113,12 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedAuthEnvironmentVariables
-client = SeedAuthEnvironmentVariables(..., timeout=20.0, )
+
+client = SeedAuthEnvironmentVariables(
+    ...,
+    timeout=20.0,
+)
+
 
 # Override timeout for a specific method
 client.service.get_with_api_key(..., request_options={
@@ -108,9 +132,17 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-from seed import SeedAuthEnvironmentVariables
 import httpx
-client = SeedAuthEnvironmentVariables(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
+from seed import SeedAuthEnvironmentVariables
+
+client = SeedAuthEnvironmentVariables(
+    ...,
+    httpx_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
 
 ## Contributing
 

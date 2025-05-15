@@ -96,30 +96,6 @@
         ]
       }
     },
-    "ResultSetLastInsertRowid0": {
-      "name": "ResultSetLastInsertRowid0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ResultSetLastInsertRowid1": {
-      "name": "ResultSetLastInsertRowid1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
     "ResultSetLastInsertRowid": {
       "description": "ROWID of the last inserted row.\n\nThis value is not specified if the SQL statement was not an INSERT or if the table was not a ROWID table.",
       "name": "ResultSetLastInsertRowid",
@@ -127,17 +103,19 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ResultSetLastInsertRowid0",
             "type": {
-              "type": "id",
-              "value": "ResultSetLastInsertRowid0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ResultSetLastInsertRowid1",
             "type": {
-              "type": "id",
-              "value": "ResultSetLastInsertRowid1"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           }
         ]
@@ -805,9 +783,9 @@
         ]
       }
     },
-    "V1AliasUsernameValNameGetResponsesSchemaPrivacy": {
+    "V1AliasUsernameValNameGetResponsesContentApplicationJsonSchemaPrivacy": {
       "description": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
-      "name": "V1AliasUsernameValNameGetResponsesSchemaPrivacy",
+      "name": "V1AliasUsernameValNameGetResponsesContentApplicationJsonSchemaPrivacy",
       "shape": {
         "type": "enum",
         "values": [
@@ -823,9 +801,9 @@
         ]
       }
     },
-    "V1AliasUsernameValNameGetResponsesSchemaType": {
+    "V1AliasUsernameValNameGetResponsesContentApplicationJsonSchemaType": {
       "description": "The type of a val. HTTP can receive web requests, Email can receive emails, Cron runs periodically, and Script can be used for libraries or one-off calculations",
-      "name": "V1AliasUsernameValNameGetResponsesSchemaType",
+      "name": "V1AliasUsernameValNameGetResponsesContentApplicationJsonSchemaType",
       "shape": {
         "type": "enum",
         "values": [
@@ -853,8 +831,8 @@
         ]
       }
     },
-    "V1AliasUsernameValNameGetResponsesSchemaLinks": {
-      "name": "V1AliasUsernameValNameGetResponsesSchemaLinks",
+    "V1AliasUsernameValNameGetResponsesContentApplicationJsonSchemaLinks": {
+      "name": "V1AliasUsernameValNameGetResponsesContentApplicationJsonSchemaLinks",
       "shape": {
         "type": "object",
         "extends": [],
@@ -895,9 +873,9 @@
         ]
       }
     },
-    "V1AliasUsernameValNameGetResponsesSchemaAuthor": {
+    "V1AliasUsernameValNameGetResponsesContentApplicationJsonSchemaAuthor": {
       "description": "The user who created this val",
-      "name": "V1AliasUsernameValNameGetResponsesSchemaAuthor",
+      "name": "V1AliasUsernameValNameGetResponsesContentApplicationJsonSchemaAuthor",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1003,7 +981,7 @@
             "key": "privacy",
             "valueType": {
               "type": "id",
-              "value": "V1AliasUsernameValNameGetResponsesSchemaPrivacy"
+              "value": "V1AliasUsernameValNameGetResponsesContentApplicationJsonSchemaPrivacy"
             }
           },
           {
@@ -1011,7 +989,7 @@
             "key": "type",
             "valueType": {
               "type": "id",
-              "value": "V1AliasUsernameValNameGetResponsesSchemaType"
+              "value": "V1AliasUsernameValNameGetResponsesContentApplicationJsonSchemaType"
             }
           },
           {
@@ -1029,7 +1007,7 @@
             "key": "links",
             "valueType": {
               "type": "id",
-              "value": "V1AliasUsernameValNameGetResponsesSchemaLinks"
+              "value": "V1AliasUsernameValNameGetResponsesContentApplicationJsonSchemaLinks"
             }
           },
           {
@@ -1038,7 +1016,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V1AliasUsernameValNameGetResponsesSchemaAuthor"
+                "value": "V1AliasUsernameValNameGetResponsesContentApplicationJsonSchemaAuthor"
               }
             }
           },
@@ -1078,8 +1056,8 @@
         ]
       }
     },
-    "V1MeGetResponsesSchemaLinks": {
-      "name": "V1MeGetResponsesSchemaLinks",
+    "V1MeGetResponsesContentApplicationJsonSchemaLinks": {
+      "name": "V1MeGetResponsesContentApplicationJsonSchemaLinks",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1098,9 +1076,9 @@
         ]
       }
     },
-    "V1MeGetResponsesSchemaTier": {
+    "V1MeGetResponsesContentApplicationJsonSchemaTier": {
       "description": "Your account tier",
-      "name": "V1MeGetResponsesSchemaTier",
+      "name": "V1MeGetResponsesContentApplicationJsonSchemaTier",
       "shape": {
         "type": "enum",
         "values": [
@@ -1183,7 +1161,7 @@
             "key": "links",
             "valueType": {
               "type": "id",
-              "value": "V1MeGetResponsesSchemaLinks"
+              "value": "V1MeGetResponsesContentApplicationJsonSchemaLinks"
             }
           },
           {
@@ -1192,7 +1170,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V1MeGetResponsesSchemaTier"
+                "value": "V1MeGetResponsesContentApplicationJsonSchemaTier"
               }
             }
           },
@@ -1254,8 +1232,8 @@
         ]
       }
     },
-    "V1MeCommentsGetResponsesSchemaDataItemsAuthor": {
-      "name": "V1MeCommentsGetResponsesSchemaDataItemsAuthor",
+    "V1MeCommentsGetResponsesContentApplicationJsonSchemaDataItemsAuthor": {
+      "name": "V1MeCommentsGetResponsesContentApplicationJsonSchemaDataItemsAuthor",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1285,9 +1263,9 @@
         ]
       }
     },
-    "V1MeCommentsGetResponsesSchemaDataItemsValPrivacy": {
+    "V1MeCommentsGetResponsesContentApplicationJsonSchemaDataItemsValPrivacy": {
       "description": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
-      "name": "V1MeCommentsGetResponsesSchemaDataItemsValPrivacy",
+      "name": "V1MeCommentsGetResponsesContentApplicationJsonSchemaDataItemsValPrivacy",
       "shape": {
         "type": "enum",
         "values": [
@@ -1303,9 +1281,9 @@
         ]
       }
     },
-    "V1MeCommentsGetResponsesSchemaDataItemsValAuthor": {
+    "V1MeCommentsGetResponsesContentApplicationJsonSchemaDataItemsValAuthor": {
       "description": "The user who created this val",
-      "name": "V1MeCommentsGetResponsesSchemaDataItemsValAuthor",
+      "name": "V1MeCommentsGetResponsesContentApplicationJsonSchemaDataItemsValAuthor",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1335,8 +1313,8 @@
         ]
       }
     },
-    "V1MeCommentsGetResponsesSchemaDataItemsVal": {
-      "name": "V1MeCommentsGetResponsesSchemaDataItemsVal",
+    "V1MeCommentsGetResponsesContentApplicationJsonSchemaDataItemsVal": {
+      "name": "V1MeCommentsGetResponsesContentApplicationJsonSchemaDataItemsVal",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1376,7 +1354,7 @@
             "key": "privacy",
             "valueType": {
               "type": "id",
-              "value": "V1MeCommentsGetResponsesSchemaDataItemsValPrivacy"
+              "value": "V1MeCommentsGetResponsesContentApplicationJsonSchemaDataItemsValPrivacy"
             }
           },
           {
@@ -1385,15 +1363,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V1MeCommentsGetResponsesSchemaDataItemsValAuthor"
+                "value": "V1MeCommentsGetResponsesContentApplicationJsonSchemaDataItemsValAuthor"
               }
             }
           }
         ]
       }
     },
-    "V1MeCommentsGetResponsesSchemaDataItems": {
-      "name": "V1MeCommentsGetResponsesSchemaDataItems",
+    "V1MeCommentsGetResponsesContentApplicationJsonSchemaDataItems": {
+      "name": "V1MeCommentsGetResponsesContentApplicationJsonSchemaDataItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1433,14 +1411,14 @@
             "key": "author",
             "valueType": {
               "type": "id",
-              "value": "V1MeCommentsGetResponsesSchemaDataItemsAuthor"
+              "value": "V1MeCommentsGetResponsesContentApplicationJsonSchemaDataItemsAuthor"
             }
           },
           {
             "key": "val",
             "valueType": {
               "type": "id",
-              "value": "V1MeCommentsGetResponsesSchemaDataItemsVal"
+              "value": "V1MeCommentsGetResponsesContentApplicationJsonSchemaDataItemsVal"
             }
           }
         ]
@@ -1459,7 +1437,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "V1MeCommentsGetResponsesSchemaDataItems"
+                "value": "V1MeCommentsGetResponsesContentApplicationJsonSchemaDataItems"
               }
             }
           },
@@ -1473,9 +1451,9 @@
         ]
       }
     },
-    "V1MeReferencesGetResponsesSchemaDataItemsReference": {
+    "V1MeReferencesGetResponsesContentApplicationJsonSchemaDataItemsReference": {
       "description": "A val in a dependency relationship",
-      "name": "V1MeReferencesGetResponsesSchemaDataItemsReference",
+      "name": "V1MeReferencesGetResponsesContentApplicationJsonSchemaDataItemsReference",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1529,9 +1507,9 @@
         ]
       }
     },
-    "V1MeReferencesGetResponsesSchemaDataItemsDependsOn": {
+    "V1MeReferencesGetResponsesContentApplicationJsonSchemaDataItemsDependsOn": {
       "description": "A val in a dependency relationship",
-      "name": "V1MeReferencesGetResponsesSchemaDataItemsDependsOn",
+      "name": "V1MeReferencesGetResponsesContentApplicationJsonSchemaDataItemsDependsOn",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1585,9 +1563,9 @@
         ]
       }
     },
-    "V1MeReferencesGetResponsesSchemaDataItems": {
+    "V1MeReferencesGetResponsesContentApplicationJsonSchemaDataItems": {
       "description": "A description of a dependency from one val (reference) to another (dependsOn) that was introduced at a particular time.",
-      "name": "V1MeReferencesGetResponsesSchemaDataItems",
+      "name": "V1MeReferencesGetResponsesContentApplicationJsonSchemaDataItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1597,7 +1575,7 @@
             "key": "reference",
             "valueType": {
               "type": "id",
-              "value": "V1MeReferencesGetResponsesSchemaDataItemsReference"
+              "value": "V1MeReferencesGetResponsesContentApplicationJsonSchemaDataItemsReference"
             }
           },
           {
@@ -1605,7 +1583,7 @@
             "key": "dependsOn",
             "valueType": {
               "type": "id",
-              "value": "V1MeReferencesGetResponsesSchemaDataItemsDependsOn"
+              "value": "V1MeReferencesGetResponsesContentApplicationJsonSchemaDataItemsDependsOn"
             }
           },
           {
@@ -1634,7 +1612,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "V1MeReferencesGetResponsesSchemaDataItems"
+                "value": "V1MeReferencesGetResponsesContentApplicationJsonSchemaDataItems"
               }
             }
           },
@@ -1648,8 +1626,8 @@
         ]
       }
     },
-    "V1BlobGetResponsesSchemaItems": {
-      "name": "V1BlobGetResponsesSchemaItems",
+    "V1BlobGetResponsesContentApplicationJsonSchemaItems": {
+      "name": "V1BlobGetResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1720,87 +1698,41 @@
         ]
       }
     },
-    "V1SqliteExecutePostRequestBodySchemaStatement0": {
-      "description": "Simple SQL statement to run in SQLite",
-      "name": "V1SqliteExecutePostRequestBodySchemaStatement0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf0Items0": {
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf0Items0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf0Items1": {
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf0Items1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf0Items2": {
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf0Items2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf0Items": {
+    "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1ArgsOneOf0Items": {
       "description": "A value to be used as a parameter",
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf0Items",
+      "name": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1ArgsOneOf0Items",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf0Items0",
             "type": {
-              "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf0Items0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf0Items1",
             "type": {
-              "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf0Items1"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           },
           {
-            "typeName": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf0Items2",
             "type": {
-              "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf0Items2"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
       }
     },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOf1Args0": {
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1Args0",
+    "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args0": {
+      "name": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args0",
       "shape": {
         "type": "alias",
         "value": {
@@ -1809,80 +1741,47 @@
             "type": "optional",
             "itemType": {
               "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf0Items"
+              "value": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1ArgsOneOf0Items"
             }
           }
         }
       }
     },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf10": {
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf10",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf11": {
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf11",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf12": {
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf12",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf1": {
+    "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1ArgsOneOf1": {
       "description": "A value to be used as a parameter",
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf1",
+      "name": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1ArgsOneOf1",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf10",
             "type": {
-              "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf10"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf11",
             "type": {
-              "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf11"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           },
           {
-            "typeName": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf12",
             "type": {
-              "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf12"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
       }
     },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOf1Args1": {
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1Args1",
+    "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args1": {
+      "name": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args1",
       "shape": {
         "type": "alias",
         "value": {
@@ -1897,38 +1796,38 @@
             "type": "optional",
             "itemType": {
               "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf1"
+              "value": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1ArgsOneOf1"
             }
           }
         }
       }
     },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOf1Args": {
+    "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args": {
       "description": "List of arguments to be used in the given statement",
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1Args",
+      "name": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1Args0",
+            "typeName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args0",
             "type": {
               "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1Args0"
+              "value": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args0"
             }
           },
           {
-            "typeName": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1Args1",
+            "typeName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args1",
             "type": {
               "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1Args1"
+              "value": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args1"
             }
           }
         ]
       }
     },
-    "V1SqliteExecutePostRequestBodySchemaStatement1": {
+    "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatement1": {
       "description": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
-      "name": "V1SqliteExecutePostRequestBodySchemaStatement1",
+      "name": "ParameterizedQuery",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1948,117 +1847,72 @@
             "key": "args",
             "valueType": {
               "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1Args"
+              "value": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args"
             }
           }
         ]
       }
     },
-    "V1SqliteExecutePostRequestBodySchemaStatement": {
-      "name": "V1SqliteExecutePostRequestBodySchemaStatement",
+    "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatement": {
+      "name": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatement",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1SqliteExecutePostRequestBodySchemaStatement0",
             "description": "Simple SQL statement to run in SQLite",
             "type": {
-              "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatement0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1SqliteExecutePostRequestBodySchemaStatement1",
+            "typeName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatement1",
             "description": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
             "type": {
               "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatement1"
+              "value": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatement1"
             }
           }
         ]
       }
     },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItems0": {
-      "description": "Simple SQL statement to run in SQLite",
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf0Items0": {
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf0Items0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf0Items1": {
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf0Items1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf0Items2": {
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf0Items2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf0Items": {
+    "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1ArgsOneOf0Items": {
       "description": "A value to be used as a parameter",
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf0Items",
+      "name": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1ArgsOneOf0Items",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf0Items0",
             "type": {
-              "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf0Items0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf0Items1",
             "type": {
-              "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf0Items1"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           },
           {
-            "typeName": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf0Items2",
             "type": {
-              "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf0Items2"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
       }
     },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1Args0": {
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1Args0",
+    "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args0": {
+      "name": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args0",
       "shape": {
         "type": "alias",
         "value": {
@@ -2067,80 +1921,47 @@
             "type": "optional",
             "itemType": {
               "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf0Items"
+              "value": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1ArgsOneOf0Items"
             }
           }
         }
       }
     },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf10": {
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf10",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf11": {
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf11",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf12": {
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf12",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf1": {
+    "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1ArgsOneOf1": {
       "description": "A value to be used as a parameter",
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf1",
+      "name": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1ArgsOneOf1",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf10",
             "type": {
-              "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf10"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf11",
             "type": {
-              "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf11"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           },
           {
-            "typeName": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf12",
             "type": {
-              "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf12"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
       }
     },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1Args1": {
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1Args1",
+    "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args1": {
+      "name": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args1",
       "shape": {
         "type": "alias",
         "value": {
@@ -2155,38 +1976,38 @@
             "type": "optional",
             "itemType": {
               "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf1"
+              "value": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1ArgsOneOf1"
             }
           }
         }
       }
     },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1Args": {
+    "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args": {
       "description": "List of arguments to be used in the given statement",
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1Args",
+      "name": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1Args0",
+            "typeName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args0",
             "type": {
               "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1Args0"
+              "value": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args0"
             }
           },
           {
-            "typeName": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1Args1",
+            "typeName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args1",
             "type": {
               "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1Args1"
+              "value": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args1"
             }
           }
         ]
       }
     },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItems1": {
+    "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItems1": {
       "description": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItems1",
+      "name": "ParameterizedQuery",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2206,38 +2027,39 @@
             "key": "args",
             "valueType": {
               "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1Args"
+              "value": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args"
             }
           }
         ]
       }
     },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItems": {
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItems",
+    "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItems": {
+      "name": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1SqliteBatchPostRequestBodySchemaStatementsItems0",
             "description": "Simple SQL statement to run in SQLite",
             "type": {
-              "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1SqliteBatchPostRequestBodySchemaStatementsItems1",
+            "typeName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItems1",
             "description": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
             "type": {
               "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItems1"
+              "value": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItems1"
             }
           }
         ]
       }
     },
-    "V1SqliteBatchPostRequestBodySchemaMode": {
-      "name": "V1SqliteBatchPostRequestBodySchemaMode",
+    "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaMode": {
+      "name": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaMode",
       "shape": {
         "type": "enum",
         "values": [
@@ -2253,32 +2075,8 @@
         ]
       }
     },
-    "V1EvalPostResponsesSchema0": {
-      "name": "V1EvalPostResponsesSchema0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1EvalPostResponsesSchema1": {
-      "name": "V1EvalPostResponsesSchema1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
-    "V1EvalPostResponsesSchema2": {
-      "name": "V1EvalPostResponsesSchema2",
+    "V1EvalPostResponsesContentApplicationJsonSchema2": {
+      "name": "V1EvalPostResponsesContentApplicationJsonSchema2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2288,8 +2086,8 @@
         }
       }
     },
-    "V1EvalPostResponsesSchema3": {
-      "name": "V1EvalPostResponsesSchema3",
+    "V1EvalPostResponsesContentApplicationJsonSchema3": {
+      "name": "V1EvalPostResponsesContentApplicationJsonSchema3",
       "shape": {
         "type": "alias",
         "value": {
@@ -2300,63 +2098,54 @@
         }
       }
     },
-    "V1EvalPostResponsesSchema4": {
-      "name": "V1EvalPostResponsesSchema4",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "V1EvalPostResponsesSchema": {
-      "name": "V1EvalPostResponsesSchema",
+    "V1EvalPostResponsesContentApplicationJsonSchema": {
+      "name": "V1EvalPostResponsesContentApplicationJsonSchema",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EvalPostResponsesSchema0",
             "type": {
-              "type": "id",
-              "value": "V1EvalPostResponsesSchema0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1EvalPostResponsesSchema1",
             "type": {
-              "type": "id",
-              "value": "V1EvalPostResponsesSchema1"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           },
           {
-            "typeName": "V1EvalPostResponsesSchema2",
+            "typeName": "V1EvalPostResponsesContentApplicationJsonSchema2",
             "type": {
               "type": "id",
-              "value": "V1EvalPostResponsesSchema2"
+              "value": "V1EvalPostResponsesContentApplicationJsonSchema2"
             }
           },
           {
-            "typeName": "V1EvalPostResponsesSchema3",
+            "typeName": "V1EvalPostResponsesContentApplicationJsonSchema3",
             "type": {
               "type": "id",
-              "value": "V1EvalPostResponsesSchema3"
+              "value": "V1EvalPostResponsesContentApplicationJsonSchema3"
             }
           },
           {
-            "typeName": "V1EvalPostResponsesSchema4",
             "type": {
-              "type": "id",
-              "value": "V1EvalPostResponsesSchema4"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
       }
     },
-    "V1EvalPostResponsesSchemaType": {
-      "name": "V1EvalPostResponsesSchemaType",
+    "V1EvalPostResponsesContentApplicationJsonSchemaType": {
+      "name": "V1EvalPostResponsesContentApplicationJsonSchemaType",
       "shape": {
         "type": "enum",
         "values": [
@@ -2366,8 +2155,8 @@
         ]
       }
     },
-    "vals_evalPost_Response_400": {
-      "name": "vals_evalPost_Response_400",
+    "EvalPostRequestBadRequestError": {
+      "name": "EvalPostRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2376,7 +2165,7 @@
             "key": "type",
             "valueType": {
               "type": "id",
-              "value": "V1EvalPostResponsesSchemaType"
+              "value": "V1EvalPostResponsesContentApplicationJsonSchemaType"
             }
           },
           {
@@ -2391,32 +2180,8 @@
         ]
       }
     },
-    "V1EvalCodeGetResponsesSchema0": {
-      "name": "V1EvalCodeGetResponsesSchema0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1EvalCodeGetResponsesSchema1": {
-      "name": "V1EvalCodeGetResponsesSchema1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
-    "V1EvalCodeGetResponsesSchema2": {
-      "name": "V1EvalCodeGetResponsesSchema2",
+    "V1EvalCodeGetResponsesContentApplicationJsonSchema2": {
+      "name": "V1EvalCodeGetResponsesContentApplicationJsonSchema2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2426,8 +2191,8 @@
         }
       }
     },
-    "V1EvalCodeGetResponsesSchema3": {
-      "name": "V1EvalCodeGetResponsesSchema3",
+    "V1EvalCodeGetResponsesContentApplicationJsonSchema3": {
+      "name": "V1EvalCodeGetResponsesContentApplicationJsonSchema3",
       "shape": {
         "type": "alias",
         "value": {
@@ -2438,63 +2203,54 @@
         }
       }
     },
-    "V1EvalCodeGetResponsesSchema4": {
-      "name": "V1EvalCodeGetResponsesSchema4",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "V1EvalCodeGetResponsesSchema": {
-      "name": "V1EvalCodeGetResponsesSchema",
+    "V1EvalCodeGetResponsesContentApplicationJsonSchema": {
+      "name": "V1EvalCodeGetResponsesContentApplicationJsonSchema",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EvalCodeGetResponsesSchema0",
             "type": {
-              "type": "id",
-              "value": "V1EvalCodeGetResponsesSchema0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1EvalCodeGetResponsesSchema1",
             "type": {
-              "type": "id",
-              "value": "V1EvalCodeGetResponsesSchema1"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           },
           {
-            "typeName": "V1EvalCodeGetResponsesSchema2",
+            "typeName": "V1EvalCodeGetResponsesContentApplicationJsonSchema2",
             "type": {
               "type": "id",
-              "value": "V1EvalCodeGetResponsesSchema2"
+              "value": "V1EvalCodeGetResponsesContentApplicationJsonSchema2"
             }
           },
           {
-            "typeName": "V1EvalCodeGetResponsesSchema3",
+            "typeName": "V1EvalCodeGetResponsesContentApplicationJsonSchema3",
             "type": {
               "type": "id",
-              "value": "V1EvalCodeGetResponsesSchema3"
+              "value": "V1EvalCodeGetResponsesContentApplicationJsonSchema3"
             }
           },
           {
-            "typeName": "V1EvalCodeGetResponsesSchema4",
             "type": {
-              "type": "id",
-              "value": "V1EvalCodeGetResponsesSchema4"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
       }
     },
-    "V1EvalCodeGetResponsesSchemaType": {
-      "name": "V1EvalCodeGetResponsesSchemaType",
+    "V1EvalCodeGetResponsesContentApplicationJsonSchemaType": {
+      "name": "V1EvalCodeGetResponsesContentApplicationJsonSchemaType",
       "shape": {
         "type": "enum",
         "values": [
@@ -2504,9 +2260,9 @@
         ]
       }
     },
-    "vals_evalGet_Response_400": {
+    "EvalGetRequestBadRequestError": {
       "description": "The function throw an error or had invalid syntax",
-      "name": "vals_evalGet_Response_400",
+      "name": "EvalGetRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2515,7 +2271,7 @@
             "key": "type",
             "valueType": {
               "type": "id",
-              "value": "V1EvalCodeGetResponsesSchemaType"
+              "value": "V1EvalCodeGetResponsesContentApplicationJsonSchemaType"
             }
           },
           {
@@ -2530,21 +2286,9 @@
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaFrom0": {
-      "name": "V1EmailPostRequestBodySchemaFrom0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1EmailPostRequestBodySchemaFrom1": {
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaFrom1": {
       "description": "An email address and name",
-      "name": "V1EmailPostRequestBodySchemaFrom1",
+      "name": "EmailNameAndAddress",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2573,44 +2317,33 @@
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaFrom": {
-      "name": "V1EmailPostRequestBodySchemaFrom",
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaFrom": {
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaFrom",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EmailPostRequestBodySchemaFrom0",
             "type": {
-              "type": "id",
-              "value": "V1EmailPostRequestBodySchemaFrom0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1EmailPostRequestBodySchemaFrom1",
+            "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaFrom1",
             "description": "An email address and name",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaFrom1"
+              "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaFrom1"
             }
           }
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaTo00": {
-      "name": "V1EmailPostRequestBodySchemaTo00",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1EmailPostRequestBodySchemaTo01": {
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaTo01": {
       "description": "An email address and name",
-      "name": "V1EmailPostRequestBodySchemaTo01",
+      "name": "EmailNameAndAddress",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2639,44 +2372,33 @@
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaTo0": {
-      "name": "V1EmailPostRequestBodySchemaTo0",
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaTo0": {
+      "name": "EmailData",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EmailPostRequestBodySchemaTo00",
             "type": {
-              "type": "id",
-              "value": "V1EmailPostRequestBodySchemaTo00"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1EmailPostRequestBodySchemaTo01",
+            "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo01",
             "description": "An email address and name",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaTo01"
+              "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo01"
             }
           }
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaToOneOf1Items0": {
-      "name": "V1EmailPostRequestBodySchemaToOneOf1Items0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1EmailPostRequestBodySchemaToOneOf1Items1": {
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaToOneOf1Items1": {
       "description": "An email address and name",
-      "name": "V1EmailPostRequestBodySchemaToOneOf1Items1",
+      "name": "EmailNameAndAddress",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2705,80 +2427,69 @@
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaToOneOf1Items": {
-      "name": "V1EmailPostRequestBodySchemaToOneOf1Items",
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaToOneOf1Items": {
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaToOneOf1Items",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EmailPostRequestBodySchemaToOneOf1Items0",
             "type": {
-              "type": "id",
-              "value": "V1EmailPostRequestBodySchemaToOneOf1Items0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1EmailPostRequestBodySchemaToOneOf1Items1",
+            "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaToOneOf1Items1",
             "description": "An email address and name",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaToOneOf1Items1"
+              "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaToOneOf1Items1"
             }
           }
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaTo1": {
-      "name": "V1EmailPostRequestBodySchemaTo1",
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaTo1": {
+      "name": "EmailDataList",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "V1EmailPostRequestBodySchemaToOneOf1Items"
+            "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaToOneOf1Items"
           }
         }
       }
     },
-    "V1EmailPostRequestBodySchemaTo": {
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaTo": {
       "description": "A single email or list of emails for one of the address fields",
-      "name": "V1EmailPostRequestBodySchemaTo",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EmailPostRequestBodySchemaTo0",
+            "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo0",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaTo0"
+              "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo0"
             }
           },
           {
-            "typeName": "V1EmailPostRequestBodySchemaTo1",
+            "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo1",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaTo1"
+              "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo1"
             }
           }
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaCc00": {
-      "name": "V1EmailPostRequestBodySchemaCc00",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1EmailPostRequestBodySchemaCc01": {
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaCc01": {
       "description": "An email address and name",
-      "name": "V1EmailPostRequestBodySchemaCc01",
+      "name": "EmailNameAndAddress",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2807,44 +2518,33 @@
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaCc0": {
-      "name": "V1EmailPostRequestBodySchemaCc0",
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaCc0": {
+      "name": "EmailData",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EmailPostRequestBodySchemaCc00",
             "type": {
-              "type": "id",
-              "value": "V1EmailPostRequestBodySchemaCc00"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1EmailPostRequestBodySchemaCc01",
+            "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc01",
             "description": "An email address and name",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaCc01"
+              "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc01"
             }
           }
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaCcOneOf1Items0": {
-      "name": "V1EmailPostRequestBodySchemaCcOneOf1Items0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1EmailPostRequestBodySchemaCcOneOf1Items1": {
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaCcOneOf1Items1": {
       "description": "An email address and name",
-      "name": "V1EmailPostRequestBodySchemaCcOneOf1Items1",
+      "name": "EmailNameAndAddress",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2873,80 +2573,69 @@
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaCcOneOf1Items": {
-      "name": "V1EmailPostRequestBodySchemaCcOneOf1Items",
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaCcOneOf1Items": {
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaCcOneOf1Items",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EmailPostRequestBodySchemaCcOneOf1Items0",
             "type": {
-              "type": "id",
-              "value": "V1EmailPostRequestBodySchemaCcOneOf1Items0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1EmailPostRequestBodySchemaCcOneOf1Items1",
+            "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaCcOneOf1Items1",
             "description": "An email address and name",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaCcOneOf1Items1"
+              "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaCcOneOf1Items1"
             }
           }
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaCc1": {
-      "name": "V1EmailPostRequestBodySchemaCc1",
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaCc1": {
+      "name": "EmailDataList",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "V1EmailPostRequestBodySchemaCcOneOf1Items"
+            "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaCcOneOf1Items"
           }
         }
       }
     },
-    "V1EmailPostRequestBodySchemaCc": {
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaCc": {
       "description": "A single email or list of emails for one of the address fields",
-      "name": "V1EmailPostRequestBodySchemaCc",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EmailPostRequestBodySchemaCc0",
+            "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc0",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaCc0"
+              "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc0"
             }
           },
           {
-            "typeName": "V1EmailPostRequestBodySchemaCc1",
+            "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc1",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaCc1"
+              "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc1"
             }
           }
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaBcc00": {
-      "name": "V1EmailPostRequestBodySchemaBcc00",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1EmailPostRequestBodySchemaBcc01": {
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc01": {
       "description": "An email address and name",
-      "name": "V1EmailPostRequestBodySchemaBcc01",
+      "name": "EmailNameAndAddress",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2975,44 +2664,33 @@
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaBcc0": {
-      "name": "V1EmailPostRequestBodySchemaBcc0",
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc0": {
+      "name": "EmailData",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EmailPostRequestBodySchemaBcc00",
             "type": {
-              "type": "id",
-              "value": "V1EmailPostRequestBodySchemaBcc00"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1EmailPostRequestBodySchemaBcc01",
+            "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc01",
             "description": "An email address and name",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaBcc01"
+              "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc01"
             }
           }
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaBccOneOf1Items0": {
-      "name": "V1EmailPostRequestBodySchemaBccOneOf1Items0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1EmailPostRequestBodySchemaBccOneOf1Items1": {
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaBccOneOf1Items1": {
       "description": "An email address and name",
-      "name": "V1EmailPostRequestBodySchemaBccOneOf1Items1",
+      "name": "EmailNameAndAddress",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3041,67 +2719,68 @@
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaBccOneOf1Items": {
-      "name": "V1EmailPostRequestBodySchemaBccOneOf1Items",
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaBccOneOf1Items": {
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaBccOneOf1Items",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EmailPostRequestBodySchemaBccOneOf1Items0",
             "type": {
-              "type": "id",
-              "value": "V1EmailPostRequestBodySchemaBccOneOf1Items0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1EmailPostRequestBodySchemaBccOneOf1Items1",
+            "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaBccOneOf1Items1",
             "description": "An email address and name",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaBccOneOf1Items1"
+              "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaBccOneOf1Items1"
             }
           }
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaBcc1": {
-      "name": "V1EmailPostRequestBodySchemaBcc1",
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc1": {
+      "name": "EmailDataList",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "V1EmailPostRequestBodySchemaBccOneOf1Items"
+            "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaBccOneOf1Items"
           }
         }
       }
     },
-    "V1EmailPostRequestBodySchemaBcc": {
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc": {
       "description": "A single email or list of emails for one of the address fields",
-      "name": "V1EmailPostRequestBodySchemaBcc",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EmailPostRequestBodySchemaBcc0",
+            "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc0",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaBcc0"
+              "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc0"
             }
           },
           {
-            "typeName": "V1EmailPostRequestBodySchemaBcc1",
+            "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc1",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaBcc1"
+              "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc1"
             }
           }
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaAttachmentsItems": {
-      "name": "V1EmailPostRequestBodySchemaAttachmentsItems",
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaAttachmentsItems": {
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaAttachmentsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3163,9 +2842,9 @@
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaReplyToList0": {
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList0": {
       "description": "An email address and name",
-      "name": "V1EmailPostRequestBodySchemaReplyToList0",
+      "name": "EmailNameAndAddress",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3194,9 +2873,9 @@
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaReplyToListOneOf1Items": {
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToListOneOf1Items": {
       "description": "An email address and name",
-      "name": "V1EmailPostRequestBodySchemaReplyToListOneOf1Items",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToListOneOf1Items",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3225,38 +2904,38 @@
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaReplyToList1": {
-      "name": "V1EmailPostRequestBodySchemaReplyToList1",
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList1": {
+      "name": "EmailList",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "V1EmailPostRequestBodySchemaReplyToListOneOf1Items"
+            "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToListOneOf1Items"
           }
         }
       }
     },
-    "V1EmailPostRequestBodySchemaReplyToList": {
+    "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList": {
       "description": "A reply-to list of email addresses",
-      "name": "V1EmailPostRequestBodySchemaReplyToList",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EmailPostRequestBodySchemaReplyToList0",
+            "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList0",
             "description": "An email address and name",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaReplyToList0"
+              "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList0"
             }
           },
           {
-            "typeName": "V1EmailPostRequestBodySchemaReplyToList1",
+            "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList1",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaReplyToList1"
+              "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList1"
             }
           }
         ]
@@ -3281,9 +2960,27 @@
         ]
       }
     },
-    "V1ValsPostRequestBodySchemaPrivacy": {
+    "EmailsSendRequestInternalServerError": {
+      "name": "EmailsSendRequestInternalServerError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "error",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "V1ValsPostRequestBodyContentApplicationJsonSchemaPrivacy": {
       "description": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
-      "name": "V1ValsPostRequestBodySchemaPrivacy",
+      "name": "V1ValsPostRequestBodyContentApplicationJsonSchemaPrivacy",
       "shape": {
         "type": "enum",
         "values": [
@@ -3299,9 +2996,9 @@
         ]
       }
     },
-    "V1ValsPostRequestBodySchemaType": {
+    "V1ValsPostRequestBodyContentApplicationJsonSchemaType": {
       "description": "The type of the val you want to create. Note that this does not include interval vals, because they cannot be created through the API yet.",
-      "name": "V1ValsPostRequestBodySchemaType",
+      "name": "V1ValsPostRequestBodyContentApplicationJsonSchemaType",
       "shape": {
         "type": "enum",
         "default": "script",
@@ -3318,9 +3015,9 @@
         ]
       }
     },
-    "V1ValsValIdPutRequestBodySchemaPrivacy": {
+    "V1ValsValIdPutRequestBodyContentApplicationJsonSchemaPrivacy": {
       "description": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
-      "name": "V1ValsValIdPutRequestBodySchemaPrivacy",
+      "name": "V1ValsValIdPutRequestBodyContentApplicationJsonSchemaPrivacy",
       "shape": {
         "type": "enum",
         "values": [
@@ -3336,9 +3033,9 @@
         ]
       }
     },
-    "V1ValsValIdPutRequestBodySchemaType": {
+    "V1ValsValIdPutRequestBodyContentApplicationJsonSchemaType": {
       "description": "The type of the val you want to update. Note that this does not include interval vals, because they cannot be created through the API yet.",
-      "name": "V1ValsValIdPutRequestBodySchemaType",
+      "name": "V1ValsValIdPutRequestBodyContentApplicationJsonSchemaType",
       "shape": {
         "type": "enum",
         "values": [
@@ -3354,8 +3051,8 @@
         ]
       }
     },
-    "V1ValsValIdVersionsGetResponsesSchemaDataItems": {
-      "name": "V1ValsValIdVersionsGetResponsesSchemaDataItems",
+    "V1ValsValIdVersionsGetResponsesContentApplicationJsonSchemaDataItems": {
+      "name": "V1ValsValIdVersionsGetResponsesContentApplicationJsonSchemaDataItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3408,7 +3105,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "V1ValsValIdVersionsGetResponsesSchemaDataItems"
+                "value": "V1ValsValIdVersionsGetResponsesContentApplicationJsonSchemaDataItems"
               }
             }
           },
@@ -3422,9 +3119,9 @@
         ]
       }
     },
-    "V1ValsValIdVersionsPostRequestBodySchemaPrivacy": {
+    "V1ValsValIdVersionsPostRequestBodyContentApplicationJsonSchemaPrivacy": {
       "description": "This val’s privacy setting. Unlisted vals do not appear on profile pages or elsewhere, but you can link to them.",
-      "name": "V1ValsValIdVersionsPostRequestBodySchemaPrivacy",
+      "name": "V1ValsValIdVersionsPostRequestBodyContentApplicationJsonSchemaPrivacy",
       "shape": {
         "type": "enum",
         "values": [
@@ -3440,9 +3137,9 @@
         ]
       }
     },
-    "V1ValsValIdVersionsPostRequestBodySchemaType": {
+    "V1ValsValIdVersionsPostRequestBodyContentApplicationJsonSchemaType": {
       "description": "The type of the val you want to create. Note that this does not include interval vals, because they cannot be created through the API yet.",
-      "name": "V1ValsValIdVersionsPostRequestBodySchemaType",
+      "name": "V1ValsValIdVersionsPostRequestBodyContentApplicationJsonSchemaType",
       "shape": {
         "type": "enum",
         "default": "script",
@@ -3566,14 +3263,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "valsExample",
               "description": "",
               "path": "/v1/search/vals",
               "pathParameters": {},
               "queryParameters": {
                 "offset": 0,
                 "limit": 20,
-                "query": "foo"
+                "query": "query"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -3719,11 +3416,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "usernameExample",
               "description": "",
-              "path": "/v1/alias/",
+              "path": "/v1/alias/username",
               "pathParameters": {
-                "username": "foo"
+                "username": "username"
               },
               "queryParameters": {},
               "headers": {},
@@ -3840,12 +3537,12 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "valExample",
               "description": "",
-              "path": "/v1/alias/",
+              "path": "/v1/alias/username/val_name",
               "pathParameters": {
-                "username": "foo",
-                "val_name": "foo"
+                "username": "username",
+                "val_name": "val_name"
               },
               "queryParameters": {},
               "headers": {},
@@ -3961,7 +3658,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "me_get_example",
               "description": "",
               "path": "/v1/me",
               "pathParameters": {},
@@ -4073,7 +3770,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "likesExample",
               "description": "",
               "path": "/v1/me/likes",
               "pathParameters": {},
@@ -4258,7 +3955,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "commentsExample",
               "description": "",
               "path": "/v1/me/comments",
               "pathParameters": {},
@@ -4434,7 +4131,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "referencesExample",
               "description": "",
               "path": "/v1/me/references",
               "pathParameters": {},
@@ -4564,7 +4261,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1BlobGetResponsesSchemaItems"
+                  "value": "V1BlobGetResponsesContentApplicationJsonSchemaItems"
                 }
               }
             },
@@ -4574,7 +4271,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "blobs_list_example",
               "description": "",
               "path": "/v1/blob",
               "pathParameters": {},
@@ -4667,11 +4364,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
-              "path": "/v1/blob/",
+              "path": "/v1/blob/key",
               "pathParameters": {
-                "key": "foo"
+                "key": "key"
               },
               "queryParameters": {},
               "headers": {},
@@ -4753,11 +4450,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "blobsStoreExample",
               "description": "",
-              "path": "/v1/blob/",
+              "path": "/v1/blob/key",
               "pathParameters": {
-                "key": "foo"
+                "key": "key"
               },
               "queryParameters": {},
               "headers": {},
@@ -4826,11 +4523,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "deleteExample",
               "description": "",
-              "path": "/v1/blob/",
+              "path": "/v1/blob/key",
               "pathParameters": {
-                "key": "foo"
+                "key": "key"
               },
               "queryParameters": {},
               "headers": {},
@@ -4913,11 +4610,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
-              "path": "/v1/users/",
+              "path": "/v1/users/user_id",
               "pathParameters": {
-                "user_id": "foo"
+                "user_id": "user_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -5042,11 +4739,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "valsExample",
               "description": "",
-              "path": "/v1/users/",
+              "path": "/v1/users/user_id/vals",
               "pathParameters": {
-                "user_id": "foo"
+                "user_id": "user_id"
               },
               "queryParameters": {
                 "offset": 0,
@@ -5175,7 +4872,7 @@
                     "key": "statement",
                     "valueType": {
                       "type": "id",
-                      "value": "V1SqliteExecutePostRequestBodySchemaStatement"
+                      "value": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatement"
                     }
                   }
                 ]
@@ -5197,7 +4894,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "example1",
               "description": "",
               "path": "/v1/sqlite/execute",
               "pathParameters": {},
@@ -5210,6 +4907,70 @@
                 "type": "json",
                 "value": {
                   "statement": "SELECT 1;"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "columns": [
+                    "foo"
+                  ],
+                  "columnTypes": [
+                    "foo"
+                  ],
+                  "rows": [
+                    [
+                      null
+                    ]
+                  ],
+                  "rowsAffected": 42,
+                  "lastInsertRowid": "foo"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "columns": [
+                    "foo"
+                  ],
+                  "columnTypes": [
+                    "foo"
+                  ],
+                  "rows": [
+                    [
+                      null
+                    ]
+                  ],
+                  "rowsAffected": 42,
+                  "lastInsertRowid": "foo"
+                }
+              }
+            },
+            {
+              "name": "example2",
+              "description": "",
+              "path": "/v1/sqlite/execute",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "statement": {
+                  "sql": "SELECT * FROM table WHERE column = ?;",
+                  "args": [
+                    1
+                  ]
+                }
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "statement": {
+                    "sql": "SELECT * FROM table WHERE column = ?;",
+                    "args": [
+                      1
+                    ]
+                  }
                 }
               },
               "responseStatusCode": 200,
@@ -5298,7 +5059,7 @@
                       "type": "list",
                       "itemType": {
                         "type": "id",
-                        "value": "V1SqliteBatchPostRequestBodySchemaStatementsItems"
+                        "value": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItems"
                       }
                     }
                   },
@@ -5308,7 +5069,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "V1SqliteBatchPostRequestBodySchemaMode"
+                        "value": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaMode"
                       }
                     }
                   }
@@ -5334,7 +5095,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "sqlite_batch_example",
               "description": "",
               "path": "/v1/sqlite/batch",
               "pathParameters": {},
@@ -5482,17 +5243,31 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1EvalPostResponsesSchema"
+                  "value": "V1EvalPostResponsesContentApplicationJsonSchema"
                 }
               }
             },
             "statusCode": 200,
             "description": "Default Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "EvalPostRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Default Response",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "example1",
               "description": "",
               "path": "/v1/eval",
               "pathParameters": {},
@@ -5505,6 +5280,38 @@
                 "type": "json",
                 "value": {
                   "code": "export default 1"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "name": "example2",
+              "description": "",
+              "path": "/v1/eval",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "code": "export default function main(value: number) { return value; }",
+                "args": [
+                  1
+                ]
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "code": "export default function main(value: number) { return value; }",
+                  "args": [
+                    1
+                  ]
                 }
               },
               "responseStatusCode": 200,
@@ -5591,21 +5398,35 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1EvalCodeGetResponsesSchema"
+                  "value": "V1EvalCodeGetResponsesContentApplicationJsonSchema"
                 }
               }
             },
             "statusCode": 200,
             "description": "Default Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "EvalGetRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "The function throw an error or had invalid syntax",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "evalGetExample",
               "description": "",
-              "path": "/v1/eval/",
+              "path": "/v1/eval/code",
               "pathParameters": {
-                "code": "foo"
+                "code": "code"
               },
               "queryParameters": {},
               "headers": {},
@@ -5691,11 +5512,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "runGetExample",
               "description": "",
-              "path": "/v1/run/",
+              "path": "/v1/run/valname",
               "pathParameters": {
-                "valname": "foo"
+                "valname": "valname"
               },
               "queryParameters": {},
               "headers": {},
@@ -5784,11 +5605,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "vals_runPost_example",
               "description": "",
-              "path": "/v1/run/",
+              "path": "/v1/run/valname",
               "pathParameters": {
-                "valname": "foo"
+                "valname": "valname"
               },
               "queryParameters": {},
               "headers": {},
@@ -5897,7 +5718,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "V1ValsPostRequestBodySchemaPrivacy"
+                        "value": "V1ValsPostRequestBodyContentApplicationJsonSchemaPrivacy"
                       }
                     }
                   },
@@ -5908,7 +5729,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "V1ValsPostRequestBodySchemaType"
+                        "value": "V1ValsPostRequestBodyContentApplicationJsonSchemaType"
                       }
                     }
                   }
@@ -5931,7 +5752,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "vals_create_example",
               "description": "",
               "path": "/v1/vals",
               "pathParameters": {},
@@ -6082,7 +5903,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "vals_put_example",
               "description": "",
               "path": "/v1/vals",
               "pathParameters": {},
@@ -6169,11 +5990,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/val_id",
               "pathParameters": {
-                "val_id": "foo"
+                "val_id": "val_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -6329,7 +6150,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "V1ValsValIdPutRequestBodySchemaPrivacy"
+                        "value": "V1ValsValIdPutRequestBodyContentApplicationJsonSchemaPrivacy"
                       }
                     }
                   },
@@ -6340,7 +6161,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "V1ValsValIdPutRequestBodySchemaType"
+                        "value": "V1ValsValIdPutRequestBodyContentApplicationJsonSchemaType"
                       }
                     }
                   }
@@ -6352,11 +6173,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "example1",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/val_id",
               "pathParameters": {
-                "val_id": "foo"
+                "val_id": "val_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -6369,6 +6190,26 @@
                 "value": {
                   "name": "myVal",
                   "readme": "# Updated readme"
+                }
+              },
+              "responseStatusCode": 200
+            },
+            {
+              "name": "example2",
+              "description": "",
+              "path": "/v1/vals/val_id",
+              "pathParameters": {
+                "val_id": "val_id"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "type": "http"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "http"
                 }
               },
               "responseStatusCode": 200
@@ -6427,14 +6268,27 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "The val was not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteExample",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/val_id",
               "pathParameters": {
-                "val_id": "foo"
+                "val_id": "val_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -6534,11 +6388,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/val_id/versions",
               "pathParameters": {
-                "val_id": "foo"
+                "val_id": "val_id"
               },
               "queryParameters": {
                 "offset": 0,
@@ -6691,7 +6545,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "V1ValsValIdVersionsPostRequestBodySchemaPrivacy"
+                        "value": "V1ValsValIdVersionsPostRequestBodyContentApplicationJsonSchemaPrivacy"
                       }
                     }
                   },
@@ -6702,7 +6556,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "V1ValsValIdVersionsPostRequestBodySchemaType"
+                        "value": "V1ValsValIdVersionsPostRequestBodyContentApplicationJsonSchemaType"
                       }
                     }
                   }
@@ -6725,11 +6579,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "vals_createVersion_example",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/val_id/versions",
               "pathParameters": {
-                "val_id": "foo"
+                "val_id": "val_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -6917,11 +6771,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getVersionExample",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/val_id/versions/42",
               "pathParameters": {
-                "val_id": "foo",
+                "val_id": "val_id",
                 "version": 42
               },
               "queryParameters": {
@@ -7056,14 +6910,27 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "The val was not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteVersionExample",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/val_id/versions/42",
               "pathParameters": {
-                "val_id": "foo",
+                "val_id": "val_id",
                 "version": 42
               },
               "queryParameters": {},
@@ -7154,15 +7021,31 @@
             "statusCode": 200,
             "description": "The evaluation_id was successfully searched for and the evaluation was either already done or now has been cancelled"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Default Response",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "cancelExample",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/val_id/evaluations/evaluation_id/cancel",
               "pathParameters": {
-                "val_id": "foo",
-                "evaluation_id": "foo"
+                "val_id": "val_id",
+                "evaluation_id": "evaluation_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -7251,7 +7134,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "V1EmailPostRequestBodySchemaFrom"
+                        "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaFrom"
                       }
                     }
                   },
@@ -7262,7 +7145,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "V1EmailPostRequestBodySchemaTo"
+                        "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo"
                       }
                     }
                   },
@@ -7273,7 +7156,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "V1EmailPostRequestBodySchemaCc"
+                        "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc"
                       }
                     }
                   },
@@ -7284,7 +7167,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "V1EmailPostRequestBodySchemaBcc"
+                        "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc"
                       }
                     }
                   },
@@ -7323,7 +7206,7 @@
                         "type": "list",
                         "itemType": {
                           "type": "id",
-                          "value": "V1EmailPostRequestBodySchemaAttachmentsItems"
+                          "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaAttachmentsItems"
                         }
                       }
                     }
@@ -7335,7 +7218,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "V1EmailPostRequestBodySchemaReplyToList"
+                        "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList"
                       }
                     }
                   }
@@ -7355,10 +7238,24 @@
             "statusCode": 200,
             "description": "Successfully sent email"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "EmailsSendRequestInternalServerError"
+                }
+              },
+              "statusCode": 500,
+              "description": "Default Response",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "emails_send_example",
               "description": "",
               "path": "/v1/email",
               "pathParameters": {},

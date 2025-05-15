@@ -79,6 +79,12 @@
             }
           },
           {
+            "key": "data",
+            "valueType": {
+              "type": "unknown"
+            }
+          },
+          {
             "key": "errors",
             "valueType": {
               "type": "optional",
@@ -89,6 +95,12 @@
                   "value": "Issue"
                 }
               }
+            }
+          },
+          {
+            "key": "meta",
+            "valueType": {
+              "type": "unknown"
             }
           },
           {
@@ -359,15 +371,6 @@
         ]
       }
     },
-    "IssueDetails": {
-      "description": "Any associated details",
-      "name": "IssueDetails",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "Issue": {
       "name": "Issue",
       "shape": {
@@ -398,8 +401,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "IssueDetails"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             }
@@ -1821,7 +1832,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "andRedirectExample",
               "description": "",
               "path": "/auth",
               "pathParameters": {},
@@ -1901,7 +1912,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
               "path": "/extensions",
               "pathParameters": {},
@@ -2031,7 +2042,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "extensionsPostExample",
               "description": "",
               "path": "/extensions",
               "pathParameters": {},
@@ -2155,7 +2166,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "deleteExample",
               "description": "",
               "path": "/extensions",
               "pathParameters": {},
@@ -2230,12 +2241,52 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal Server Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getByIdExample",
               "description": "",
-              "path": "/extensions/",
+              "path": "/extensions/4a61a55c-391b-4f73-957e-ffbd29ac7cba",
               "pathParameters": {
                 "id": "4a61a55c-391b-4f73-957e-ffbd29ac7cba"
               },
@@ -2387,7 +2438,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
               "path": "/profiles",
               "pathParameters": {},
@@ -2525,7 +2576,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "profilesPostExample",
               "description": "",
               "path": "/profiles",
               "pathParameters": {},
@@ -2669,7 +2720,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "deleteExample",
               "description": "",
               "path": "/profiles",
               "pathParameters": {},
@@ -2747,12 +2798,52 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal Server Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getByIdExample",
               "description": "",
-              "path": "/profiles/",
+              "path": "/profiles/4a61a55c-391b-4f73-957e-ffbd29ac7cba",
               "pathParameters": {
                 "id": "4a61a55c-391b-4f73-957e-ffbd29ac7cba"
               },
@@ -2931,10 +3022,50 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal Server Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/sessions",
               "pathParameters": {},
@@ -3130,7 +3261,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "sessionsPostExample",
               "description": "",
               "path": "/sessions",
               "pathParameters": {},
@@ -3300,12 +3431,52 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal Server Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getinfoExample",
               "description": "",
-              "path": "/sessions/",
+              "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
               "pathParameters": {
                 "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b"
               },
@@ -3461,9 +3632,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "terminateExample",
               "description": "",
-              "path": "/sessions/",
+              "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
               "pathParameters": {
                 "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b"
               },
@@ -3524,18 +3695,94 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "response": {
+            "statusCode": 200,
+            "type": {
+              "type": "object",
+              "extends": [],
+              "properties": []
+            }
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal Server Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "eventsExample",
               "description": "",
-              "path": "/sessions/",
+              "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/events",
               "pathParameters": {
                 "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b"
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": {
+                    "event": "foo",
+                    "eventTimeMillis": 42,
+                    "id": "foo",
+                    "status": "awaiting_capacity"
+                  },
+                  "event": "foo",
+                  "id": 42,
+                  "retry": 42
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "data": {
+                    "event": "foo",
+                    "eventTimeMillis": 42,
+                    "id": "foo",
+                    "status": "awaiting_capacity"
+                  },
+                  "event": "foo",
+                  "id": 42,
+                  "retry": 42
+                }
+              }
             }
           ],
           "protocol": {
@@ -3672,9 +3919,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getWindowInfoExample",
               "description": "",
-              "path": "/sessions/",
+              "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/7334da2a-91b0-42c5-6156-76a5eba87430/get-window-info",
               "pathParameters": {
                 "sessionId": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
                 "windowId": "7334da2a-91b0-42c5-6156-76a5eba87430"
@@ -3838,9 +4085,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "windowsPromptContentExample",
               "description": "",
-              "path": "/sessions/",
+              "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/0334da2a-91b0-42c5-6156-76a5eba87430/prompt-content",
               "pathParameters": {
                 "sessionId": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
                 "windowId": "0334da2a-91b0-42c5-6156-76a5eba87430"
@@ -4012,9 +4259,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "scrapeContentExample",
               "description": "",
-              "path": "/sessions/",
+              "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/0334da2a-91b0-42c5-6156-76a5eba87430/scrape-content",
               "pathParameters": {
                 "sessionId": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
                 "windowId": "0334da2a-91b0-42c5-6156-76a5eba87430"
@@ -4204,9 +4451,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "windowsSummarizeContentExample",
               "description": "",
-              "path": "/sessions/",
+              "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/0334da2a-91b0-42c5-6156-76a5eba87430/summarize-content",
               "pathParameters": {
                 "sessionId": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
                 "windowId": "0334da2a-91b0-42c5-6156-76a5eba87430"

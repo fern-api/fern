@@ -110,21 +110,6 @@
         ]
       }
     },
-    "AccountHolderCreateType": {
-      "description": "An enumeration.",
-      "name": "AccountHolderCreateType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "consumer"
-          },
-          {
-            "value": "business"
-          }
-        ]
-      }
-    },
     "AccountHolderCreate": {
       "name": "AccountHolderCreate",
       "shape": {
@@ -147,7 +132,7 @@
             "key": "type",
             "valueType": {
               "type": "id",
-              "value": "AccountHolderCreateType"
+              "value": "AccountHolderType"
             }
           },
           {
@@ -162,21 +147,6 @@
                 }
               }
             }
-          }
-        ]
-      }
-    },
-    "AccountHolderExternalType": {
-      "description": "An enumeration.",
-      "name": "AccountHolderExternalType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "consumer"
-          },
-          {
-            "value": "business"
           }
         ]
       }
@@ -203,7 +173,7 @@
             "key": "type",
             "valueType": {
               "type": "id",
-              "value": "AccountHolderExternalType"
+              "value": "AccountHolderType"
             }
           },
           {
@@ -285,6 +255,15 @@
             "value": "taxes"
           }
         ]
+      }
+    },
+    "ActionModel": {
+      "name": "ActionModel",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
       }
     },
     "Address": {
@@ -369,56 +348,6 @@
               "itemType": {
                 "type": "id",
                 "value": "TransactionInput"
-              }
-            }
-          }
-        ]
-      }
-    },
-    "BankStatementStatus": {
-      "description": "An enumeration.",
-      "name": "BankStatementStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "processing"
-          },
-          {
-            "value": "completed"
-          },
-          {
-            "value": "error"
-          }
-        ]
-      }
-    },
-    "BankStatementFile": {
-      "name": "BankStatementFile",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "description": "The number of pages in the bank statement file.",
-            "key": "no_pages",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "integer"
-              }
-            }
-          },
-          {
-            "description": "The size of the bank statement file in bytes, if available.",
-            "key": "size",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer"
-                }
               }
             }
           }
@@ -661,6 +590,38 @@
         ]
       }
     },
+    "BankStatementFile": {
+      "name": "BankStatementFile",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The number of pages in the bank statement file.",
+            "key": "no_pages",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "description": "The size of the bank statement file in bytes, if available.",
+            "key": "size",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "BankStatementResults": {
       "name": "BankStatementResults",
       "shape": {
@@ -681,476 +642,20 @@
         ]
       }
     },
-    "BankStatementTransactionEntryType": {
+    "BankStatementStatus": {
       "description": "An enumeration.",
-      "name": "BankStatementTransactionEntryType",
+      "name": "BankStatementStatus",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "incoming"
+            "value": "processing"
           },
           {
-            "value": "outgoing"
-          }
-        ]
-      }
-    },
-    "BankStatementTransactionCurrency": {
-      "description": "An enumeration.",
-      "name": "BankStatementTransactionCurrency",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "EUR"
-          },
-          {
-            "value": "AED"
-          },
-          {
-            "value": "AFN"
-          },
-          {
-            "value": "XCD"
-          },
-          {
-            "value": "ALL"
-          },
-          {
-            "value": "AMD"
-          },
-          {
-            "value": "AOA"
-          },
-          {
-            "value": "ARS"
-          },
-          {
-            "value": "USD"
-          },
-          {
-            "value": "AUD"
-          },
-          {
-            "value": "AWG"
-          },
-          {
-            "value": "AZN"
-          },
-          {
-            "value": "BAM"
-          },
-          {
-            "value": "BBD"
-          },
-          {
-            "value": "BDT"
-          },
-          {
-            "value": "XOF"
-          },
-          {
-            "value": "BGN"
-          },
-          {
-            "value": "BHD"
-          },
-          {
-            "value": "BIF"
-          },
-          {
-            "value": "BMD"
-          },
-          {
-            "value": "BND"
-          },
-          {
-            "value": "BOB"
-          },
-          {
-            "value": "BRL"
-          },
-          {
-            "value": "BSD"
-          },
-          {
-            "value": "INR"
-          },
-          {
-            "value": "NOK"
-          },
-          {
-            "value": "BWP"
-          },
-          {
-            "value": "BYR"
-          },
-          {
-            "value": "BZD"
-          },
-          {
-            "value": "CAD"
-          },
-          {
-            "value": "CDF"
-          },
-          {
-            "value": "XAF"
-          },
-          {
-            "value": "CHF"
-          },
-          {
-            "value": "NZD"
-          },
-          {
-            "value": "CLP"
-          },
-          {
-            "value": "CNY"
-          },
-          {
-            "value": "COP"
-          },
-          {
-            "value": "CRC"
-          },
-          {
-            "value": "CUP"
-          },
-          {
-            "value": "CVE"
-          },
-          {
-            "value": "ANG"
-          },
-          {
-            "value": "CZK"
-          },
-          {
-            "value": "DJF"
-          },
-          {
-            "value": "DKK"
-          },
-          {
-            "value": "DOP"
-          },
-          {
-            "value": "DZD"
-          },
-          {
-            "value": "EGP"
-          },
-          {
-            "value": "MAD"
-          },
-          {
-            "value": "ERN"
-          },
-          {
-            "value": "ETB"
-          },
-          {
-            "value": "FJD"
-          },
-          {
-            "value": "FKP"
-          },
-          {
-            "value": "GBP"
-          },
-          {
-            "value": "GEL"
-          },
-          {
-            "value": "GHS"
-          },
-          {
-            "value": "GIP"
-          },
-          {
-            "value": "GMD"
-          },
-          {
-            "value": "GNF"
-          },
-          {
-            "value": "GTQ"
-          },
-          {
-            "value": "GYD"
-          },
-          {
-            "value": "HKD"
-          },
-          {
-            "value": "HNL"
-          },
-          {
-            "value": "HUF"
-          },
-          {
-            "value": "IDR"
-          },
-          {
-            "value": "ILS"
-          },
-          {
-            "value": "IQD"
-          },
-          {
-            "value": "IRR"
-          },
-          {
-            "value": "ISK"
-          },
-          {
-            "value": "JMD"
-          },
-          {
-            "value": "JOD"
-          },
-          {
-            "value": "JPY"
-          },
-          {
-            "value": "KES"
-          },
-          {
-            "value": "KGS"
-          },
-          {
-            "value": "KHR"
-          },
-          {
-            "value": "KMF"
-          },
-          {
-            "value": "KPW"
-          },
-          {
-            "value": "KRW"
-          },
-          {
-            "value": "KWD"
-          },
-          {
-            "value": "KYD"
-          },
-          {
-            "value": "KZT"
-          },
-          {
-            "value": "LAK"
-          },
-          {
-            "value": "LBP"
-          },
-          {
-            "value": "LKR"
-          },
-          {
-            "value": "LRD"
-          },
-          {
-            "value": "ZAR"
-          },
-          {
-            "value": "LYD"
-          },
-          {
-            "value": "MDL"
-          },
-          {
-            "value": "MGA"
-          },
-          {
-            "value": "MKD"
-          },
-          {
-            "value": "MMK"
-          },
-          {
-            "value": "MNT"
-          },
-          {
-            "value": "MOP"
-          },
-          {
-            "value": "MRO"
-          },
-          {
-            "value": "MUR"
-          },
-          {
-            "value": "MVR"
-          },
-          {
-            "value": "MWK"
-          },
-          {
-            "value": "MXN"
-          },
-          {
-            "value": "MYR"
-          },
-          {
-            "value": "MZN"
-          },
-          {
-            "value": "XPF"
-          },
-          {
-            "value": "NGN"
-          },
-          {
-            "value": "NIO"
-          },
-          {
-            "value": "NPR"
-          },
-          {
-            "value": "OMR"
-          },
-          {
-            "value": "PEN"
-          },
-          {
-            "value": "PGK"
-          },
-          {
-            "value": "PHP"
-          },
-          {
-            "value": "PKR"
-          },
-          {
-            "value": "PLN"
-          },
-          {
-            "value": "PYG"
-          },
-          {
-            "value": "QAR"
-          },
-          {
-            "value": "RON"
-          },
-          {
-            "value": "RSD"
-          },
-          {
-            "value": "RUB"
-          },
-          {
-            "value": "RWF"
-          },
-          {
-            "value": "SAR"
-          },
-          {
-            "value": "SBD"
-          },
-          {
-            "value": "SCR"
-          },
-          {
-            "value": "SDG"
-          },
-          {
-            "value": "SEK"
-          },
-          {
-            "value": "SGD"
-          },
-          {
-            "value": "SHP"
-          },
-          {
-            "value": "SLL"
-          },
-          {
-            "value": "SOS"
-          },
-          {
-            "value": "SRD"
-          },
-          {
-            "value": "SSP"
-          },
-          {
-            "value": "STD"
-          },
-          {
-            "value": "SYP"
-          },
-          {
-            "value": "SZL"
-          },
-          {
-            "value": "THB"
-          },
-          {
-            "value": "TJS"
-          },
-          {
-            "value": "TMT"
-          },
-          {
-            "value": "TND"
-          },
-          {
-            "value": "TOP"
-          },
-          {
-            "value": "TRY"
-          },
-          {
-            "value": "TTD"
-          },
-          {
-            "value": "TWD"
-          },
-          {
-            "value": "TZS"
-          },
-          {
-            "value": "UAH"
-          },
-          {
-            "value": "UGX"
-          },
-          {
-            "value": "UYU"
-          },
-          {
-            "value": "UZS"
-          },
-          {
-            "value": "VEF"
-          },
-          {
-            "value": "VND"
-          },
-          {
-            "value": "VUV"
-          },
-          {
-            "value": "WST"
-          },
-          {
-            "value": "YER"
-          },
-          {
-            "value": "ZMW"
-          },
-          {
-            "value": "ZWL"
+            "value": "completed"
           },
           {
-            "value": "HRK"
+            "value": "error"
           }
         ]
       }
@@ -1211,7 +716,7 @@
             "key": "entry_type",
             "valueType": {
               "type": "id",
-              "value": "BankStatementTransactionEntryType"
+              "value": "EntryType"
             }
           },
           {
@@ -1219,7 +724,7 @@
             "key": "currency",
             "valueType": {
               "type": "id",
-              "value": "BankStatementTransactionCurrency"
+              "value": "Currency"
             }
           },
           {
@@ -1234,24 +739,6 @@
                 }
               }
             }
-          }
-        ]
-      }
-    },
-    "BatchStatus": {
-      "description": "An enumeration.",
-      "name": "BatchStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "processing"
-          },
-          {
-            "value": "completed"
-          },
-          {
-            "value": "error"
           }
         ]
       }
@@ -1326,24 +813,6 @@
         ]
       }
     },
-    "BatchResultStatus": {
-      "description": "An enumeration.",
-      "name": "BatchResultStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "processing"
-          },
-          {
-            "value": "completed"
-          },
-          {
-            "value": "error"
-          }
-        ]
-      }
-    },
     "BatchResult": {
       "description": "The `BatchResult` object represents the result of a batch enrichment job, including its status and\nenriched transactions.",
       "name": "BatchResult",
@@ -1376,7 +845,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "BatchResultStatus"
+              "value": "BatchStatus"
             }
           },
           {
@@ -1385,6 +854,24 @@
               "type": "id",
               "value": "EnrichmentResult"
             }
+          }
+        ]
+      }
+    },
+    "BatchStatus": {
+      "description": "An enumeration.",
+      "name": "BatchStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processing"
+          },
+          {
+            "value": "completed"
+          },
+          {
+            "value": "error"
           }
         ]
       }
@@ -1426,30 +913,6 @@
         ]
       }
     },
-    "CategoriesAccounting": {
-      "description": "An enumeration.",
-      "name": "CategoriesAccounting",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "operational expenses"
-          },
-          {
-            "value": "cost of goods sold"
-          },
-          {
-            "value": "revenue"
-          },
-          {
-            "value": "financing"
-          },
-          {
-            "value": "taxes"
-          }
-        ]
-      }
-    },
     "Categories": {
       "name": "Categories",
       "shape": {
@@ -1476,7 +939,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CategoriesAccounting"
+                "value": "AccountingCategory"
               }
             }
           }
@@ -3106,6 +2569,15 @@
         ]
       }
     },
+    "FilterModel": {
+      "name": "FilterModel",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
     "HTTPValidationError": {
       "name": "HTTPValidationError",
       "shape": {
@@ -3223,6 +2695,70 @@
           },
           {
             "value": "payment_processor"
+          }
+        ]
+      }
+    },
+    "Location": {
+      "name": "Location",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "An unstructured string containing the address",
+            "key": "raw_address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "When raw is set, a structured representation of it.",
+            "key": "structured",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "LocationStructured"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "LocationInput": {
+      "description": "Location of where the transaction has taken place. This can greatly improve entity identification, especially\nunder ambiguity.",
+      "name": "LocationInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "An unstructured string containing the address",
+            "key": "raw_address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The country where the transaction was made in ISO 3166-2 format",
+            "key": "country",
+            "valueType": {
+              "type": "id",
+              "value": "Country"
+            }
           }
         ]
       }
@@ -3374,811 +2910,6 @@
                   "type": "string"
                 }
               }
-            }
-          }
-        ]
-      }
-    },
-    "Location": {
-      "name": "Location",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "description": "An unstructured string containing the address",
-            "key": "raw_address",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "description": "When raw is set, a structured representation of it.",
-            "key": "structured",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "LocationStructured"
-              }
-            }
-          }
-        ]
-      }
-    },
-    "LocationInputCountry": {
-      "description": "An enumeration.",
-      "name": "LocationInputCountry",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "AD"
-          },
-          {
-            "value": "AE"
-          },
-          {
-            "value": "AF"
-          },
-          {
-            "value": "AG"
-          },
-          {
-            "value": "AI"
-          },
-          {
-            "value": "AL"
-          },
-          {
-            "value": "AM"
-          },
-          {
-            "value": "AO"
-          },
-          {
-            "value": "AR"
-          },
-          {
-            "value": "AS"
-          },
-          {
-            "value": "AT"
-          },
-          {
-            "value": "AU"
-          },
-          {
-            "value": "AW"
-          },
-          {
-            "value": "AZ"
-          },
-          {
-            "value": "BA"
-          },
-          {
-            "value": "BB"
-          },
-          {
-            "value": "BD"
-          },
-          {
-            "value": "BE"
-          },
-          {
-            "value": "BF"
-          },
-          {
-            "value": "BG"
-          },
-          {
-            "value": "BH"
-          },
-          {
-            "value": "BI"
-          },
-          {
-            "value": "BJ"
-          },
-          {
-            "value": "BL"
-          },
-          {
-            "value": "BM"
-          },
-          {
-            "value": "BN"
-          },
-          {
-            "value": "BO"
-          },
-          {
-            "value": "BQ"
-          },
-          {
-            "value": "BR"
-          },
-          {
-            "value": "BS"
-          },
-          {
-            "value": "BT"
-          },
-          {
-            "value": "BV"
-          },
-          {
-            "value": "BW"
-          },
-          {
-            "value": "BY"
-          },
-          {
-            "value": "BZ"
-          },
-          {
-            "value": "CA"
-          },
-          {
-            "value": "CC"
-          },
-          {
-            "value": "CD"
-          },
-          {
-            "value": "CF"
-          },
-          {
-            "value": "CG"
-          },
-          {
-            "value": "CH"
-          },
-          {
-            "value": "CI"
-          },
-          {
-            "value": "CK"
-          },
-          {
-            "value": "CL"
-          },
-          {
-            "value": "CM"
-          },
-          {
-            "value": "CN"
-          },
-          {
-            "value": "CO"
-          },
-          {
-            "value": "CR"
-          },
-          {
-            "value": "CU"
-          },
-          {
-            "value": "CV"
-          },
-          {
-            "value": "CW"
-          },
-          {
-            "value": "CX"
-          },
-          {
-            "value": "CY"
-          },
-          {
-            "value": "CZ"
-          },
-          {
-            "value": "DE"
-          },
-          {
-            "value": "DJ"
-          },
-          {
-            "value": "DK"
-          },
-          {
-            "value": "DM"
-          },
-          {
-            "value": "DO"
-          },
-          {
-            "value": "DZ"
-          },
-          {
-            "value": "EC"
-          },
-          {
-            "value": "EE"
-          },
-          {
-            "value": "EG"
-          },
-          {
-            "value": "EH"
-          },
-          {
-            "value": "ER"
-          },
-          {
-            "value": "ES"
-          },
-          {
-            "value": "ET"
-          },
-          {
-            "value": "FI"
-          },
-          {
-            "value": "FJ"
-          },
-          {
-            "value": "FK"
-          },
-          {
-            "value": "FM"
-          },
-          {
-            "value": "FR"
-          },
-          {
-            "value": "GA"
-          },
-          {
-            "value": "GB"
-          },
-          {
-            "value": "GD"
-          },
-          {
-            "value": "GE"
-          },
-          {
-            "value": "GF"
-          },
-          {
-            "value": "GG"
-          },
-          {
-            "value": "GH"
-          },
-          {
-            "value": "GI"
-          },
-          {
-            "value": "GL"
-          },
-          {
-            "value": "GM"
-          },
-          {
-            "value": "GN"
-          },
-          {
-            "value": "GP"
-          },
-          {
-            "value": "GQ"
-          },
-          {
-            "value": "GR"
-          },
-          {
-            "value": "GS"
-          },
-          {
-            "value": "GT"
-          },
-          {
-            "value": "GU"
-          },
-          {
-            "value": "GW"
-          },
-          {
-            "value": "GY"
-          },
-          {
-            "value": "HK"
-          },
-          {
-            "value": "HM"
-          },
-          {
-            "value": "HN"
-          },
-          {
-            "value": "HR"
-          },
-          {
-            "value": "HT"
-          },
-          {
-            "value": "HU"
-          },
-          {
-            "value": "ID"
-          },
-          {
-            "value": "IE"
-          },
-          {
-            "value": "IL"
-          },
-          {
-            "value": "IM"
-          },
-          {
-            "value": "IN"
-          },
-          {
-            "value": "IO"
-          },
-          {
-            "value": "IQ"
-          },
-          {
-            "value": "IR"
-          },
-          {
-            "value": "IS"
-          },
-          {
-            "value": "IT"
-          },
-          {
-            "value": "JE"
-          },
-          {
-            "value": "JM"
-          },
-          {
-            "value": "JO"
-          },
-          {
-            "value": "JP"
-          },
-          {
-            "value": "KE"
-          },
-          {
-            "value": "KG"
-          },
-          {
-            "value": "KH"
-          },
-          {
-            "value": "KI"
-          },
-          {
-            "value": "KM"
-          },
-          {
-            "value": "KN"
-          },
-          {
-            "value": "KP"
-          },
-          {
-            "value": "KR"
-          },
-          {
-            "value": "KW"
-          },
-          {
-            "value": "KY"
-          },
-          {
-            "value": "KZ"
-          },
-          {
-            "value": "LA"
-          },
-          {
-            "value": "LB"
-          },
-          {
-            "value": "LC"
-          },
-          {
-            "value": "LI"
-          },
-          {
-            "value": "LK"
-          },
-          {
-            "value": "LR"
-          },
-          {
-            "value": "LS"
-          },
-          {
-            "value": "LT"
-          },
-          {
-            "value": "LU"
-          },
-          {
-            "value": "LV"
-          },
-          {
-            "value": "LY"
-          },
-          {
-            "value": "MA"
-          },
-          {
-            "value": "MC"
-          },
-          {
-            "value": "MD"
-          },
-          {
-            "value": "ME"
-          },
-          {
-            "value": "MF"
-          },
-          {
-            "value": "MG"
-          },
-          {
-            "value": "MH"
-          },
-          {
-            "value": "MK"
-          },
-          {
-            "value": "ML"
-          },
-          {
-            "value": "MM"
-          },
-          {
-            "value": "MN"
-          },
-          {
-            "value": "MO"
-          },
-          {
-            "value": "MP"
-          },
-          {
-            "value": "MQ"
-          },
-          {
-            "value": "MR"
-          },
-          {
-            "value": "MS"
-          },
-          {
-            "value": "MT"
-          },
-          {
-            "value": "MU"
-          },
-          {
-            "value": "MV"
-          },
-          {
-            "value": "MW"
-          },
-          {
-            "value": "MX"
-          },
-          {
-            "value": "MY"
-          },
-          {
-            "value": "MZ"
-          },
-          {
-            "value": "NA"
-          },
-          {
-            "value": "NC"
-          },
-          {
-            "value": "NE"
-          },
-          {
-            "value": "NF"
-          },
-          {
-            "value": "NG"
-          },
-          {
-            "value": "NI"
-          },
-          {
-            "value": "NL"
-          },
-          {
-            "value": "NO"
-          },
-          {
-            "value": "NP"
-          },
-          {
-            "value": "NR"
-          },
-          {
-            "value": "NU"
-          },
-          {
-            "value": "NZ"
-          },
-          {
-            "value": "OM"
-          },
-          {
-            "value": "PA"
-          },
-          {
-            "value": "PE"
-          },
-          {
-            "value": "PF"
-          },
-          {
-            "value": "PG"
-          },
-          {
-            "value": "PH"
-          },
-          {
-            "value": "PK"
-          },
-          {
-            "value": "PL"
-          },
-          {
-            "value": "PM"
-          },
-          {
-            "value": "PN"
-          },
-          {
-            "value": "PR"
-          },
-          {
-            "value": "PS"
-          },
-          {
-            "value": "PT"
-          },
-          {
-            "value": "PW"
-          },
-          {
-            "value": "PY"
-          },
-          {
-            "value": "QA"
-          },
-          {
-            "value": "RE"
-          },
-          {
-            "value": "RO"
-          },
-          {
-            "value": "RS"
-          },
-          {
-            "value": "RU"
-          },
-          {
-            "value": "RW"
-          },
-          {
-            "value": "SA"
-          },
-          {
-            "value": "SB"
-          },
-          {
-            "value": "SC"
-          },
-          {
-            "value": "SD"
-          },
-          {
-            "value": "SE"
-          },
-          {
-            "value": "SG"
-          },
-          {
-            "value": "SH"
-          },
-          {
-            "value": "SI"
-          },
-          {
-            "value": "SJ"
-          },
-          {
-            "value": "SK"
-          },
-          {
-            "value": "SL"
-          },
-          {
-            "value": "SM"
-          },
-          {
-            "value": "SN"
-          },
-          {
-            "value": "SO"
-          },
-          {
-            "value": "SR"
-          },
-          {
-            "value": "SS"
-          },
-          {
-            "value": "ST"
-          },
-          {
-            "value": "SV"
-          },
-          {
-            "value": "SX"
-          },
-          {
-            "value": "SY"
-          },
-          {
-            "value": "SZ"
-          },
-          {
-            "value": "TC"
-          },
-          {
-            "value": "TD"
-          },
-          {
-            "value": "TG"
-          },
-          {
-            "value": "TH"
-          },
-          {
-            "value": "TJ"
-          },
-          {
-            "value": "TK"
-          },
-          {
-            "value": "TL"
-          },
-          {
-            "value": "TM"
-          },
-          {
-            "value": "TN"
-          },
-          {
-            "value": "TO"
-          },
-          {
-            "value": "TR"
-          },
-          {
-            "value": "TT"
-          },
-          {
-            "value": "TV"
-          },
-          {
-            "value": "TW"
-          },
-          {
-            "value": "TZ"
-          },
-          {
-            "value": "UA"
-          },
-          {
-            "value": "UG"
-          },
-          {
-            "value": "UM"
-          },
-          {
-            "value": "US"
-          },
-          {
-            "value": "UY"
-          },
-          {
-            "value": "UZ"
-          },
-          {
-            "value": "VC"
-          },
-          {
-            "value": "VE"
-          },
-          {
-            "value": "VG"
-          },
-          {
-            "value": "VI"
-          },
-          {
-            "value": "VN"
-          },
-          {
-            "value": "VU"
-          },
-          {
-            "value": "WF"
-          },
-          {
-            "value": "WS"
-          },
-          {
-            "value": "YE"
-          },
-          {
-            "value": "YT"
-          },
-          {
-            "value": "ZA"
-          },
-          {
-            "value": "ZM"
-          },
-          {
-            "value": "ZW"
-          }
-        ]
-      }
-    },
-    "LocationInput": {
-      "description": "Location of where the transaction has taken place. This can greatly improve entity identification, especially\nunder ambiguity.",
-      "name": "LocationInput",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "description": "An unstructured string containing the address",
-            "key": "raw_address",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "description": "The country where the transaction was made in ISO 3166-2 format",
-            "key": "country",
-            "valueType": {
-              "type": "id",
-              "value": "LocationInputCountry"
             }
           }
         ]
@@ -4355,24 +3086,6 @@
         ]
       }
     },
-    "RecurrenceType": {
-      "description": "An enumeration.",
-      "name": "RecurrenceType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "recurring"
-          },
-          {
-            "value": "subscription"
-          },
-          {
-            "value": "one off"
-          }
-        ]
-      }
-    },
     "Recurrence": {
       "description": "The `Recurrence` object represents the recurrence pattern of a transaction. It provides information about\nwhether a transaction is a one-time event or a part of a recurring series.",
       "name": "Recurrence",
@@ -4389,64 +3102,6 @@
             }
           }
         ]
-      }
-    },
-    "RecurrenceGroupPeriodicity": {
-      "description": "An enumeration.",
-      "name": "RecurrenceGroupPeriodicity",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "daily"
-          },
-          {
-            "value": "weekly"
-          },
-          {
-            "value": "bi_weekly"
-          },
-          {
-            "value": "monthly"
-          },
-          {
-            "value": "bi_monthly"
-          },
-          {
-            "value": "quarterly"
-          },
-          {
-            "value": "semi_yearly"
-          },
-          {
-            "value": "yearly"
-          },
-          {
-            "value": "other"
-          }
-        ]
-      }
-    },
-    "RecurrenceGroupCounterparty": {
-      "description": "Counterparty of the transactions",
-      "name": "RecurrenceGroupCounterparty",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Counterparty"
-        ],
-        "properties": []
-      }
-    },
-    "RecurrenceGroupCategories": {
-      "description": "Categories of the transactions in the recurrence group",
-      "name": "RecurrenceGroupCategories",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Categories"
-        ],
-        "properties": []
       }
     },
     "RecurrenceGroup": {
@@ -4522,7 +3177,7 @@
             "key": "periodicity",
             "valueType": {
               "type": "id",
-              "value": "RecurrenceGroupPeriodicity"
+              "value": "RecurrencePeriodicity"
             }
           },
           {
@@ -4530,7 +3185,7 @@
             "key": "counterparty",
             "valueType": {
               "type": "id",
-              "value": "RecurrenceGroupCounterparty"
+              "value": "Counterparty"
             }
           },
           {
@@ -4538,7 +3193,7 @@
             "key": "categories",
             "valueType": {
               "type": "id",
-              "value": "RecurrenceGroupCategories"
+              "value": "Categories"
             }
           },
           {
@@ -4593,23 +3248,20 @@
         ]
       }
     },
-    "ReportStatus": {
+    "RecurrenceType": {
       "description": "An enumeration.",
-      "name": "ReportStatus",
+      "name": "RecurrenceType",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "open"
+            "value": "recurring"
           },
           {
-            "value": "pending"
+            "value": "subscription"
           },
           {
-            "value": "resolved"
-          },
-          {
-            "value": "rejected"
+            "value": "one off"
           }
         ]
       }
@@ -4742,6 +3394,27 @@
         ]
       }
     },
+    "ReportStatus": {
+      "description": "An enumeration.",
+      "name": "ReportStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "open"
+          },
+          {
+            "value": "pending"
+          },
+          {
+            "value": "resolved"
+          },
+          {
+            "value": "rejected"
+          }
+        ]
+      }
+    },
     "StatementInfo": {
       "name": "StatementInfo",
       "shape": {
@@ -4851,480 +3524,6 @@
         ]
       }
     },
-    "TransactionEntryType": {
-      "description": "An enumeration.",
-      "name": "TransactionEntryType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "incoming"
-          },
-          {
-            "value": "outgoing"
-          }
-        ]
-      }
-    },
-    "TransactionCurrency": {
-      "description": "An enumeration.",
-      "name": "TransactionCurrency",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "EUR"
-          },
-          {
-            "value": "AED"
-          },
-          {
-            "value": "AFN"
-          },
-          {
-            "value": "XCD"
-          },
-          {
-            "value": "ALL"
-          },
-          {
-            "value": "AMD"
-          },
-          {
-            "value": "AOA"
-          },
-          {
-            "value": "ARS"
-          },
-          {
-            "value": "USD"
-          },
-          {
-            "value": "AUD"
-          },
-          {
-            "value": "AWG"
-          },
-          {
-            "value": "AZN"
-          },
-          {
-            "value": "BAM"
-          },
-          {
-            "value": "BBD"
-          },
-          {
-            "value": "BDT"
-          },
-          {
-            "value": "XOF"
-          },
-          {
-            "value": "BGN"
-          },
-          {
-            "value": "BHD"
-          },
-          {
-            "value": "BIF"
-          },
-          {
-            "value": "BMD"
-          },
-          {
-            "value": "BND"
-          },
-          {
-            "value": "BOB"
-          },
-          {
-            "value": "BRL"
-          },
-          {
-            "value": "BSD"
-          },
-          {
-            "value": "INR"
-          },
-          {
-            "value": "NOK"
-          },
-          {
-            "value": "BWP"
-          },
-          {
-            "value": "BYR"
-          },
-          {
-            "value": "BZD"
-          },
-          {
-            "value": "CAD"
-          },
-          {
-            "value": "CDF"
-          },
-          {
-            "value": "XAF"
-          },
-          {
-            "value": "CHF"
-          },
-          {
-            "value": "NZD"
-          },
-          {
-            "value": "CLP"
-          },
-          {
-            "value": "CNY"
-          },
-          {
-            "value": "COP"
-          },
-          {
-            "value": "CRC"
-          },
-          {
-            "value": "CUP"
-          },
-          {
-            "value": "CVE"
-          },
-          {
-            "value": "ANG"
-          },
-          {
-            "value": "CZK"
-          },
-          {
-            "value": "DJF"
-          },
-          {
-            "value": "DKK"
-          },
-          {
-            "value": "DOP"
-          },
-          {
-            "value": "DZD"
-          },
-          {
-            "value": "EGP"
-          },
-          {
-            "value": "MAD"
-          },
-          {
-            "value": "ERN"
-          },
-          {
-            "value": "ETB"
-          },
-          {
-            "value": "FJD"
-          },
-          {
-            "value": "FKP"
-          },
-          {
-            "value": "GBP"
-          },
-          {
-            "value": "GEL"
-          },
-          {
-            "value": "GHS"
-          },
-          {
-            "value": "GIP"
-          },
-          {
-            "value": "GMD"
-          },
-          {
-            "value": "GNF"
-          },
-          {
-            "value": "GTQ"
-          },
-          {
-            "value": "GYD"
-          },
-          {
-            "value": "HKD"
-          },
-          {
-            "value": "HNL"
-          },
-          {
-            "value": "HUF"
-          },
-          {
-            "value": "IDR"
-          },
-          {
-            "value": "ILS"
-          },
-          {
-            "value": "IQD"
-          },
-          {
-            "value": "IRR"
-          },
-          {
-            "value": "ISK"
-          },
-          {
-            "value": "JMD"
-          },
-          {
-            "value": "JOD"
-          },
-          {
-            "value": "JPY"
-          },
-          {
-            "value": "KES"
-          },
-          {
-            "value": "KGS"
-          },
-          {
-            "value": "KHR"
-          },
-          {
-            "value": "KMF"
-          },
-          {
-            "value": "KPW"
-          },
-          {
-            "value": "KRW"
-          },
-          {
-            "value": "KWD"
-          },
-          {
-            "value": "KYD"
-          },
-          {
-            "value": "KZT"
-          },
-          {
-            "value": "LAK"
-          },
-          {
-            "value": "LBP"
-          },
-          {
-            "value": "LKR"
-          },
-          {
-            "value": "LRD"
-          },
-          {
-            "value": "ZAR"
-          },
-          {
-            "value": "LYD"
-          },
-          {
-            "value": "MDL"
-          },
-          {
-            "value": "MGA"
-          },
-          {
-            "value": "MKD"
-          },
-          {
-            "value": "MMK"
-          },
-          {
-            "value": "MNT"
-          },
-          {
-            "value": "MOP"
-          },
-          {
-            "value": "MRO"
-          },
-          {
-            "value": "MUR"
-          },
-          {
-            "value": "MVR"
-          },
-          {
-            "value": "MWK"
-          },
-          {
-            "value": "MXN"
-          },
-          {
-            "value": "MYR"
-          },
-          {
-            "value": "MZN"
-          },
-          {
-            "value": "XPF"
-          },
-          {
-            "value": "NGN"
-          },
-          {
-            "value": "NIO"
-          },
-          {
-            "value": "NPR"
-          },
-          {
-            "value": "OMR"
-          },
-          {
-            "value": "PEN"
-          },
-          {
-            "value": "PGK"
-          },
-          {
-            "value": "PHP"
-          },
-          {
-            "value": "PKR"
-          },
-          {
-            "value": "PLN"
-          },
-          {
-            "value": "PYG"
-          },
-          {
-            "value": "QAR"
-          },
-          {
-            "value": "RON"
-          },
-          {
-            "value": "RSD"
-          },
-          {
-            "value": "RUB"
-          },
-          {
-            "value": "RWF"
-          },
-          {
-            "value": "SAR"
-          },
-          {
-            "value": "SBD"
-          },
-          {
-            "value": "SCR"
-          },
-          {
-            "value": "SDG"
-          },
-          {
-            "value": "SEK"
-          },
-          {
-            "value": "SGD"
-          },
-          {
-            "value": "SHP"
-          },
-          {
-            "value": "SLL"
-          },
-          {
-            "value": "SOS"
-          },
-          {
-            "value": "SRD"
-          },
-          {
-            "value": "SSP"
-          },
-          {
-            "value": "STD"
-          },
-          {
-            "value": "SYP"
-          },
-          {
-            "value": "SZL"
-          },
-          {
-            "value": "THB"
-          },
-          {
-            "value": "TJS"
-          },
-          {
-            "value": "TMT"
-          },
-          {
-            "value": "TND"
-          },
-          {
-            "value": "TOP"
-          },
-          {
-            "value": "TRY"
-          },
-          {
-            "value": "TTD"
-          },
-          {
-            "value": "TWD"
-          },
-          {
-            "value": "TZS"
-          },
-          {
-            "value": "UAH"
-          },
-          {
-            "value": "UGX"
-          },
-          {
-            "value": "UYU"
-          },
-          {
-            "value": "UZS"
-          },
-          {
-            "value": "VEF"
-          },
-          {
-            "value": "VND"
-          },
-          {
-            "value": "VUV"
-          },
-          {
-            "value": "WST"
-          },
-          {
-            "value": "YER"
-          },
-          {
-            "value": "ZMW"
-          },
-          {
-            "value": "ZWL"
-          },
-          {
-            "value": "HRK"
-          }
-        ]
-      }
-    },
     "Transaction": {
       "name": "Transaction",
       "shape": {
@@ -5381,7 +3580,7 @@
             "key": "entry_type",
             "valueType": {
               "type": "id",
-              "value": "TransactionEntryType"
+              "value": "EntryType"
             }
           },
           {
@@ -5389,7 +3588,7 @@
             "key": "currency",
             "valueType": {
               "type": "id",
-              "value": "TransactionCurrency"
+              "value": "Currency"
             }
           },
           {
@@ -5510,480 +3709,6 @@
         ]
       }
     },
-    "TransactionInputEntryType": {
-      "description": "An enumeration.",
-      "name": "TransactionInputEntryType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "incoming"
-          },
-          {
-            "value": "outgoing"
-          }
-        ]
-      }
-    },
-    "TransactionInputCurrency": {
-      "description": "An enumeration.",
-      "name": "TransactionInputCurrency",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "EUR"
-          },
-          {
-            "value": "AED"
-          },
-          {
-            "value": "AFN"
-          },
-          {
-            "value": "XCD"
-          },
-          {
-            "value": "ALL"
-          },
-          {
-            "value": "AMD"
-          },
-          {
-            "value": "AOA"
-          },
-          {
-            "value": "ARS"
-          },
-          {
-            "value": "USD"
-          },
-          {
-            "value": "AUD"
-          },
-          {
-            "value": "AWG"
-          },
-          {
-            "value": "AZN"
-          },
-          {
-            "value": "BAM"
-          },
-          {
-            "value": "BBD"
-          },
-          {
-            "value": "BDT"
-          },
-          {
-            "value": "XOF"
-          },
-          {
-            "value": "BGN"
-          },
-          {
-            "value": "BHD"
-          },
-          {
-            "value": "BIF"
-          },
-          {
-            "value": "BMD"
-          },
-          {
-            "value": "BND"
-          },
-          {
-            "value": "BOB"
-          },
-          {
-            "value": "BRL"
-          },
-          {
-            "value": "BSD"
-          },
-          {
-            "value": "INR"
-          },
-          {
-            "value": "NOK"
-          },
-          {
-            "value": "BWP"
-          },
-          {
-            "value": "BYR"
-          },
-          {
-            "value": "BZD"
-          },
-          {
-            "value": "CAD"
-          },
-          {
-            "value": "CDF"
-          },
-          {
-            "value": "XAF"
-          },
-          {
-            "value": "CHF"
-          },
-          {
-            "value": "NZD"
-          },
-          {
-            "value": "CLP"
-          },
-          {
-            "value": "CNY"
-          },
-          {
-            "value": "COP"
-          },
-          {
-            "value": "CRC"
-          },
-          {
-            "value": "CUP"
-          },
-          {
-            "value": "CVE"
-          },
-          {
-            "value": "ANG"
-          },
-          {
-            "value": "CZK"
-          },
-          {
-            "value": "DJF"
-          },
-          {
-            "value": "DKK"
-          },
-          {
-            "value": "DOP"
-          },
-          {
-            "value": "DZD"
-          },
-          {
-            "value": "EGP"
-          },
-          {
-            "value": "MAD"
-          },
-          {
-            "value": "ERN"
-          },
-          {
-            "value": "ETB"
-          },
-          {
-            "value": "FJD"
-          },
-          {
-            "value": "FKP"
-          },
-          {
-            "value": "GBP"
-          },
-          {
-            "value": "GEL"
-          },
-          {
-            "value": "GHS"
-          },
-          {
-            "value": "GIP"
-          },
-          {
-            "value": "GMD"
-          },
-          {
-            "value": "GNF"
-          },
-          {
-            "value": "GTQ"
-          },
-          {
-            "value": "GYD"
-          },
-          {
-            "value": "HKD"
-          },
-          {
-            "value": "HNL"
-          },
-          {
-            "value": "HUF"
-          },
-          {
-            "value": "IDR"
-          },
-          {
-            "value": "ILS"
-          },
-          {
-            "value": "IQD"
-          },
-          {
-            "value": "IRR"
-          },
-          {
-            "value": "ISK"
-          },
-          {
-            "value": "JMD"
-          },
-          {
-            "value": "JOD"
-          },
-          {
-            "value": "JPY"
-          },
-          {
-            "value": "KES"
-          },
-          {
-            "value": "KGS"
-          },
-          {
-            "value": "KHR"
-          },
-          {
-            "value": "KMF"
-          },
-          {
-            "value": "KPW"
-          },
-          {
-            "value": "KRW"
-          },
-          {
-            "value": "KWD"
-          },
-          {
-            "value": "KYD"
-          },
-          {
-            "value": "KZT"
-          },
-          {
-            "value": "LAK"
-          },
-          {
-            "value": "LBP"
-          },
-          {
-            "value": "LKR"
-          },
-          {
-            "value": "LRD"
-          },
-          {
-            "value": "ZAR"
-          },
-          {
-            "value": "LYD"
-          },
-          {
-            "value": "MDL"
-          },
-          {
-            "value": "MGA"
-          },
-          {
-            "value": "MKD"
-          },
-          {
-            "value": "MMK"
-          },
-          {
-            "value": "MNT"
-          },
-          {
-            "value": "MOP"
-          },
-          {
-            "value": "MRO"
-          },
-          {
-            "value": "MUR"
-          },
-          {
-            "value": "MVR"
-          },
-          {
-            "value": "MWK"
-          },
-          {
-            "value": "MXN"
-          },
-          {
-            "value": "MYR"
-          },
-          {
-            "value": "MZN"
-          },
-          {
-            "value": "XPF"
-          },
-          {
-            "value": "NGN"
-          },
-          {
-            "value": "NIO"
-          },
-          {
-            "value": "NPR"
-          },
-          {
-            "value": "OMR"
-          },
-          {
-            "value": "PEN"
-          },
-          {
-            "value": "PGK"
-          },
-          {
-            "value": "PHP"
-          },
-          {
-            "value": "PKR"
-          },
-          {
-            "value": "PLN"
-          },
-          {
-            "value": "PYG"
-          },
-          {
-            "value": "QAR"
-          },
-          {
-            "value": "RON"
-          },
-          {
-            "value": "RSD"
-          },
-          {
-            "value": "RUB"
-          },
-          {
-            "value": "RWF"
-          },
-          {
-            "value": "SAR"
-          },
-          {
-            "value": "SBD"
-          },
-          {
-            "value": "SCR"
-          },
-          {
-            "value": "SDG"
-          },
-          {
-            "value": "SEK"
-          },
-          {
-            "value": "SGD"
-          },
-          {
-            "value": "SHP"
-          },
-          {
-            "value": "SLL"
-          },
-          {
-            "value": "SOS"
-          },
-          {
-            "value": "SRD"
-          },
-          {
-            "value": "SSP"
-          },
-          {
-            "value": "STD"
-          },
-          {
-            "value": "SYP"
-          },
-          {
-            "value": "SZL"
-          },
-          {
-            "value": "THB"
-          },
-          {
-            "value": "TJS"
-          },
-          {
-            "value": "TMT"
-          },
-          {
-            "value": "TND"
-          },
-          {
-            "value": "TOP"
-          },
-          {
-            "value": "TRY"
-          },
-          {
-            "value": "TTD"
-          },
-          {
-            "value": "TWD"
-          },
-          {
-            "value": "TZS"
-          },
-          {
-            "value": "UAH"
-          },
-          {
-            "value": "UGX"
-          },
-          {
-            "value": "UYU"
-          },
-          {
-            "value": "UZS"
-          },
-          {
-            "value": "VEF"
-          },
-          {
-            "value": "VND"
-          },
-          {
-            "value": "VUV"
-          },
-          {
-            "value": "WST"
-          },
-          {
-            "value": "YER"
-          },
-          {
-            "value": "ZMW"
-          },
-          {
-            "value": "ZWL"
-          },
-          {
-            "value": "HRK"
-          }
-        ]
-      }
-    },
     "TransactionInput": {
       "name": "TransactionInput",
       "shape": {
@@ -6040,7 +3765,7 @@
             "key": "entry_type",
             "valueType": {
               "type": "id",
-              "value": "TransactionInputEntryType"
+              "value": "EntryType"
             }
           },
           {
@@ -6048,7 +3773,7 @@
             "key": "currency",
             "valueType": {
               "type": "id",
-              "value": "TransactionInputCurrency"
+              "value": "Currency"
             }
           },
           {
@@ -6074,47 +3799,25 @@
         ]
       }
     },
-    "ValidationErrorLocItems0": {
-      "name": "ValidationErrorLocItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ValidationErrorLocItems1": {
-      "name": "ValidationErrorLocItems1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
     "ValidationErrorLocItems": {
       "name": "ValidationErrorLocItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ValidationErrorLocItems0",
             "type": {
-              "type": "id",
-              "value": "ValidationErrorLocItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ValidationErrorLocItems1",
             "type": {
-              "type": "id",
-              "value": "ValidationErrorLocItems1"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           }
         ]
@@ -6435,66 +4138,33 @@
         ]
       }
     },
-    "Expr0": {
-      "name": "Expr0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "Expr1": {
-      "name": "Expr1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "Expr2": {
-      "name": "Expr2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "double"
-          }
-        }
-      }
-    },
     "Expr": {
       "name": "Expr",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "Expr0",
             "type": {
-              "type": "id",
-              "value": "Expr0"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           },
           {
-            "typeName": "Expr1",
             "type": {
-              "type": "id",
-              "value": "Expr1"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "Expr2",
             "type": {
-              "type": "id",
-              "value": "Expr2"
+              "type": "primitive",
+              "value": {
+                "type": "double"
+              }
             }
           },
           {
@@ -6555,7 +4225,7 @@
       }
     },
     "FnCall0": {
-      "name": "FnCall0",
+      "name": "&&",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6574,7 +4244,7 @@
       }
     },
     "FnCall1": {
-      "name": "FnCall1",
+      "name": "||",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6593,7 +4263,7 @@
       }
     },
     "FnCall2": {
-      "name": "FnCall2",
+      "name": "==",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6612,7 +4282,7 @@
       }
     },
     "FnCall3": {
-      "name": "FnCall3",
+      "name": "+",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6631,7 +4301,7 @@
       }
     },
     "FnCall4": {
-      "name": "FnCall4",
+      "name": "-",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6650,7 +4320,7 @@
       }
     },
     "FnCall5": {
-      "name": "FnCall5",
+      "name": "*",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6669,7 +4339,7 @@
       }
     },
     "FnCall6": {
-      "name": "FnCall6",
+      "name": "/",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6688,7 +4358,7 @@
       }
     },
     "FnCall7": {
-      "name": "FnCall7",
+      "name": "//",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6707,7 +4377,7 @@
       }
     },
     "FnCall8": {
-      "name": "FnCall8",
+      "name": "<",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6726,7 +4396,7 @@
       }
     },
     "FnCall9": {
-      "name": "FnCall9",
+      "name": "<=",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6745,7 +4415,7 @@
       }
     },
     "FnCall10": {
-      "name": "FnCall10",
+      "name": ">",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6764,7 +4434,7 @@
       }
     },
     "FnCall11": {
-      "name": "FnCall11",
+      "name": ">=",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6783,7 +4453,7 @@
       }
     },
     "FnCall12": {
-      "name": "FnCall12",
+      "name": "!",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6799,7 +4469,7 @@
       }
     },
     "FnCall13": {
-      "name": "FnCall13",
+      "name": "is_substring",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6818,7 +4488,7 @@
       }
     },
     "FnCall14": {
-      "name": "FnCall14",
+      "name": "starts_with",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6837,7 +4507,7 @@
       }
     },
     "FnCall15": {
-      "name": "FnCall15",
+      "name": "ends_with",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6856,7 +4526,7 @@
       }
     },
     "FnCall16": {
-      "name": "FnCall16",
+      "name": "to_lower",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6872,7 +4542,7 @@
       }
     },
     "FnCall17": {
-      "name": "FnCall17",
+      "name": "to_upper",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6888,7 +4558,7 @@
       }
     },
     "FnCall18": {
-      "name": "FnCall18",
+      "name": "has_label",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6904,7 +4574,7 @@
       }
     },
     "FnCall19": {
-      "name": "FnCall19",
+      "name": "has_mcc",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6920,7 +4590,7 @@
       }
     },
     "FnCall20": {
-      "name": "FnCall20",
+      "name": "get property",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7162,7 +4832,7 @@
       }
     },
     "ModifyLabels0": {
-      "name": "ModifyLabels0",
+      "name": "add_label",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7178,7 +4848,7 @@
       }
     },
     "ModifyLabels1": {
-      "name": "ModifyLabels1",
+      "name": "remove_label",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7194,7 +4864,7 @@
       }
     },
     "ModifyLabels2": {
-      "name": "ModifyLabels2",
+      "name": "set_labels",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7213,7 +4883,7 @@
       }
     },
     "ModifyLabels3": {
-      "name": "ModifyLabels3",
+      "name": "add_mcc",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7229,7 +4899,7 @@
       }
     },
     "ModifyLabels4": {
-      "name": "ModifyLabels4",
+      "name": "remove_mcc",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7245,7 +4915,7 @@
       }
     },
     "ModifyLabels5": {
-      "name": "ModifyLabels5",
+      "name": "set_mcc",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7377,66 +5047,6 @@
           }
         }
       }
-    },
-    "V3BatchesGetParametersSchema": {
-      "description": "An enumeration.",
-      "name": "V3BatchesGetParametersSchema",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "processing"
-          },
-          {
-            "value": "completed"
-          },
-          {
-            "value": "error"
-          }
-        ]
-      }
-    },
-    "V3BankStatementsGetParametersSchema": {
-      "description": "An enumeration.",
-      "name": "V3BankStatementsGetParametersSchema",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "queued"
-          },
-          {
-            "value": "processing"
-          },
-          {
-            "value": "processed"
-          },
-          {
-            "value": "failed"
-          }
-        ]
-      }
-    },
-    "V3ReportsGetParametersSchema": {
-      "description": "An enumeration.",
-      "name": "V3ReportsGetParametersSchema",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "open"
-          },
-          {
-            "value": "pending"
-          },
-          {
-            "value": "resolved"
-          },
-          {
-            "value": "rejected"
-          }
-        ]
-      }
     }
   },
   "subpackages": {
@@ -7501,14 +5111,40 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Transaction with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getTransactionV3TransactionsIdGetExample",
               "description": "",
-              "path": "/v3/transactions/",
+              "path": "/v3/transactions/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -7678,14 +5314,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Transaction with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteTransactionV3TransactionsIdDeleteExample",
               "description": "",
-              "path": "/v3/transactions/",
+              "path": "/v3/transactions/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -7807,10 +5469,24 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listTransactionsV3TransactionsGetExample",
               "description": "",
               "path": "/v3/transactions",
               "pathParameters": {},
@@ -7998,10 +5674,24 @@
             "statusCode": 200,
             "description": "Enriched transactions."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "transactionsPostTransactionsV3TransactionsPostExample",
               "description": "",
               "path": "/v3/transactions",
               "pathParameters": {},
@@ -8232,14 +5922,40 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Transaction or account holder with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "transactionsSetTransactionAhV3TransactionsIdAssignPostExample",
               "description": "",
-              "path": "/v3/transactions/",
+              "path": "/v3/transactions/id/assign",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -8473,7 +6189,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V3BatchesGetParametersSchema"
+                  "value": "BatchStatus"
                 }
               }
             }
@@ -8490,10 +6206,24 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getBatchesV3BatchesGetExample",
               "description": "",
               "path": "/v3/batches",
               "pathParameters": {},
@@ -8591,10 +6321,24 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "batchesPostBatchV3BatchesPostExample",
               "description": "",
               "path": "/v3/batches",
               "pathParameters": {},
@@ -8715,14 +6459,40 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Batch with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getSingleBatchV3BatchesIdGetExample",
               "description": "",
-              "path": "/v3/batches/",
+              "path": "/v3/batches/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -8813,14 +6583,40 @@
             "statusCode": 200,
             "description": "Returned batch of transaction enrichment results."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Batch with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getBatchResultsV3BatchesIdResultsGetExample",
               "description": "",
-              "path": "/v3/batches/",
+              "path": "/v3/batches/id/results",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -9061,7 +6857,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V3BankStatementsGetParametersSchema"
+                  "value": "DocumentStatus"
                 }
               }
             }
@@ -9078,10 +6874,24 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getBankStatementsV3BankStatementsGetExample",
               "description": "",
               "path": "/v3/bank_statements",
               "pathParameters": {},
@@ -9159,6 +6969,26 @@
           },
           "queryParameters": [],
           "headers": [],
+          "request": {
+            "type": {
+              "type": "fileUpload",
+              "value": {
+                "name": "Bank statements_post_bank_statement_v3_bank_statements_post_Request",
+                "properties": [
+                  {
+                    "type": "file",
+                    "value": {
+                      "type": "file",
+                      "key": "file",
+                      "isOptional": false,
+                      "contentType": "multipart/form-data"
+                    }
+                  }
+                ]
+              },
+              "contentType": "multipart/form-data"
+            }
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -9170,15 +7000,41 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "bankStatementsPostBankStatementV3BankStatementsPostExample",
               "description": "",
               "path": "/v3/bank_statements",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "file": "foo"
+              },
+              "requestBodyV3": {
+                "type": "form",
+                "value": {
+                  "file": {
+                    "type": "filename",
+                    "value": "foo"
+                  }
+                }
+              },
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -9269,14 +7125,40 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Bank statement with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getBankStatementV3BankStatementsIdGetExample",
               "description": "",
-              "path": "/v3/bank_statements/",
+              "path": "/v3/bank_statements/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -9359,14 +7241,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Bank statement with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteBankStatementV3BankStatementsIdDeleteExample",
               "description": "",
-              "path": "/v3/bank_statements/",
+              "path": "/v3/bank_statements/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -9435,14 +7343,40 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Bank statement with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getBankStatementStatementInfoV3BankStatementsIdOverviewPostExample",
               "description": "",
-              "path": "/v3/bank_statements/",
+              "path": "/v3/bank_statements/id/overview",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -9567,14 +7501,40 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Bank statement with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getBankStatementResultV3BankStatementsIdResultsGetExample",
               "description": "",
-              "path": "/v3/bank_statements/",
+              "path": "/v3/bank_statements/id/results",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -9708,14 +7668,40 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Account holder with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getAccountHolderV3AccountHoldersIdGetExample",
               "description": "",
-              "path": "/v3/account_holders/",
+              "path": "/v3/account_holders/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -9791,14 +7777,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Account holder with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteAccountHolderV3AccountHoldersIdDeleteExample",
               "description": "",
-              "path": "/v3/account_holders/",
+              "path": "/v3/account_holders/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -9906,10 +7918,24 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getAccountHoldersV3AccountHoldersGetExample",
               "description": "",
               "path": "/v3/account_holders",
               "pathParameters": {},
@@ -10002,10 +8028,36 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Account holder with the provided id already exists.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "accountHoldersCreateAccountHolderV3AccountHoldersPostExample",
               "description": "",
               "path": "/v3/account_holders",
               "pathParameters": {},
@@ -10118,14 +8170,40 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Account holder with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getAccountHolderRecurringPaymentsV3AccountHoldersIdRecurringGroupsPostExample",
               "description": "",
-              "path": "/v3/account_holders/",
+              "path": "/v3/account_holders/id/recurring_groups",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -10248,10 +8326,24 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getWebhooksV3WebhooksGetExample",
               "description": "",
               "path": "/v3/webhooks",
               "pathParameters": {},
@@ -10355,10 +8447,24 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "webhooksPostWebhookV3WebhooksPostExample",
               "description": "",
               "path": "/v3/webhooks",
               "pathParameters": {},
@@ -10472,14 +8578,28 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getWebhookV3WebhooksIdGetExample",
               "description": "",
-              "path": "/v3/webhooks/",
+              "path": "/v3/webhooks/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -10565,14 +8685,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Webhook with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteWebhookV3WebhooksIdDeleteExample",
               "description": "",
-              "path": "/v3/webhooks/",
+              "path": "/v3/webhooks/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -10654,14 +8800,28 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "webhooksPatchWebhookV3WebhooksIdPatchExample",
               "description": "",
-              "path": "/v3/webhooks/",
+              "path": "/v3/webhooks/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -10755,10 +8915,24 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "filterGetV3RulesGetExample",
               "description": "",
               "path": "/v3/rules",
               "pathParameters": {},
@@ -10881,10 +9055,58 @@
               }
             }
           },
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Provided ruleset has invalid structure",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 413,
+              "description": "Ruleset was larger than 50KiB",
+              "name": "ContentTooLargeError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "personalizationFilterPostV3RulesPostExample",
               "description": "",
               "path": "/v3/rules",
               "pathParameters": {},
@@ -11004,10 +9226,58 @@
               }
             }
           },
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Provided rule has invalid structure",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 413,
+              "description": "Ruleset after append was larger than 50KiB",
+              "name": "ContentTooLargeError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "personalizationFilterAppendV3RulesAppendPostExample",
               "description": "",
               "path": "/v3/rules/append",
               "pathParameters": {},
@@ -11092,12 +9362,48 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Provided index does not exist in ruleset",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "filterDeleteV3RulesIndexDeleteExample",
               "description": "",
-              "path": "/v3/rules/",
+              "path": "/v3/rules/42",
               "pathParameters": {
                 "index": 42
               },
@@ -11170,12 +9476,48 @@
               }
             }
           },
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Provided index does not exist in ruleset",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "personalizationFilterPatchV3RulesIndexPatchExample",
               "description": "",
-              "path": "/v3/rules/",
+              "path": "/v3/rules/42",
               "pathParameters": {
                 "index": 42
               },
@@ -11315,7 +9657,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ReportsGetParametersSchema"
+                  "value": "ReportStatus"
                 }
               }
             }
@@ -11332,10 +9674,24 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getReportsV3ReportsGetExample",
               "description": "",
               "path": "/v3/reports",
               "pathParameters": {},
@@ -11439,10 +9795,24 @@
             "statusCode": 200,
             "description": "The newly created report"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "reportsPostReportV3ReportsPostExample",
               "description": "",
               "path": "/v3/reports",
               "pathParameters": {},
@@ -11556,14 +9926,40 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Report with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getReportV3ReportsIdGetExample",
               "description": "",
-              "path": "/v3/reports/",
+              "path": "/v3/reports/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -11647,14 +10043,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Report with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteReportV3ReportsIdDeleteExample",
               "description": "",
-              "path": "/v3/reports/",
+              "path": "/v3/reports/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -11731,12 +10153,26 @@
             "statusCode": 200,
             "description": "Category set for the selected type of account holder"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getCategorySetV3CategoriesAccountHolderTypeGetExample",
               "description": "",
-              "path": "/v3/categories/",
+              "path": "/v3/categories/consumer",
               "pathParameters": {
                 "account_holder_type": "consumer"
               },
@@ -11882,12 +10318,26 @@
             "statusCode": 200,
             "description": "Custom categories successfully set."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "categoriesCustomCategoriesPostV3CategoriesAccountHolderTypePostExample",
               "description": "",
-              "path": "/v3/categories/",
+              "path": "/v3/categories/consumer",
               "pathParameters": {
                 "account_holder_type": "consumer"
               },
@@ -12017,12 +10467,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteCustomCategorySetV3CategoriesAccountHolderTypeResetPostExample",
               "description": "",
-              "path": "/v3/categories/",
+              "path": "/v3/categories/consumer/reset",
               "pathParameters": {
                 "account_holder_type": "consumer"
               },
@@ -12189,10 +10653,48 @@
             "statusCode": 200,
             "description": "Entity"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 423,
+              "description": "Not enough credits.",
+              "name": "LockedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "searchEntityV3EntitiesLookupGetExample",
               "description": "",
               "path": "/v3/entities/lookup",
               "pathParameters": {},
@@ -12288,14 +10790,52 @@
             "statusCode": 200,
             "description": "Entity"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Entity does not exist for ID",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getEntityByIdV3EntitiesIdGetExample",
               "description": "",
-              "path": "/v3/entities/",
+              "path": "/v3/entities/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -12349,6 +10889,7 @@
       "AccountHolderType",
       "AccountType",
       "AccountingCategory",
+      "ActionModel",
       "Address",
       "AsyncEnrichmentInput",
       "BankStatement",
@@ -12378,6 +10919,7 @@
       "Entities",
       "Entity",
       "EntryType",
+      "FilterModel",
       "HTTPValidationError",
       "Intermediary",
       "IntermediaryType",

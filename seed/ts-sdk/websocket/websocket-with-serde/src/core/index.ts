@@ -1,4 +1,3 @@
-export * as serialization from "./schemas";
-export * from "./websocket";
-export * from "./runtime";
-export * from "./fetcher";
+export * from "./websocket/index.js";
+export * from "./runtime/index.js";
+export * from "./fetcher/index.js";

@@ -4,6 +4,7 @@ import {
     NpmPackage,
     PackageId,
     getParameterNameForRootPathParameter,
+    getPropertyKey,
     getTextOfTsNode,
     maybeAddDocsStructure
 } from "@fern-typescript/commons";
@@ -16,7 +17,6 @@ import {
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import {
     ClassDeclarationStructure,
-    GetAccessorDeclarationStructure,
     InterfaceDeclarationStructure,
     MethodDeclarationStructure,
     ModuleDeclarationStructure,
@@ -1117,26 +1117,26 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             name: GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME,
             properties: [
                 {
-                    name: GeneratedSdkClientClassImpl.TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME,
+                    name: getPropertyKey(GeneratedSdkClientClassImpl.TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME),
                     type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
                     hasQuestionToken: true,
                     docs: ["The maximum time to wait for a response in seconds."]
                 },
                 {
-                    name: GeneratedSdkClientClassImpl.MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME,
+                    name: getPropertyKey(GeneratedSdkClientClassImpl.MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME),
                     type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
                     hasQuestionToken: true,
                     docs: ["The number of times to retry the request. Defaults to 2."]
                 },
                 {
-                    name: GeneratedSdkClientClassImpl.ABORT_SIGNAL_PROPERTY_NAME,
+                    name: getPropertyKey(GeneratedSdkClientClassImpl.ABORT_SIGNAL_PROPERTY_NAME),
                     type: getTextOfTsNode(ts.factory.createIdentifier("AbortSignal")),
                     hasQuestionToken: true,
                     docs: ["A hook to abort the request."]
                 },
                 ...this.intermediateRepresentation.headers.map((header) => {
                     return {
-                        name: this.getOptionKeyForHeader(header),
+                        name: getPropertyKey(this.getOptionKeyForHeader(header)),
                         type: getTextOfTsNode(context.type.getReferenceToType(header.valueType).typeNode),
                         hasQuestionToken: true,
                         docs: [`Override the ${header.name.wireValue} header`]
@@ -1156,7 +1156,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         if (generatedVersion != null) {
             const header = generatedVersion.getHeader();
             requestOptions.properties.push({
-                name: this.getOptionKeyForHeader(header),
+                name: getPropertyKey(this.getOptionKeyForHeader(header)),
                 type: generatedVersion.getEnumValueUnion(),
                 hasQuestionToken: true,
                 docs: [`Override the ${header.name.wireValue} header`]
@@ -1175,7 +1175,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             if (!isLiteralHeader(header, context)) {
                 const type = context.type.getReferenceToType(header.valueType);
                 properties.push({
-                    name: this.getOptionKeyForHeader(header),
+                    name: getPropertyKey(this.getOptionKeyForHeader(header)),
                     type: getTextOfTsNode(type.typeNode),
                     hasQuestionToken: type.isOptional
                 });
@@ -1294,7 +1294,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         if (!this.requireDefaultEnvironment) {
             const generatedEnvironments = context.environments.getGeneratedEnvironments();
             properties.push({
-                name: GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME,
+                name: getPropertyKey(GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME),
                 type: getTextOfTsNode(
                     context.coreUtilities.fetcher.Supplier._getReferenceToType(
                         generatedEnvironments.getTypeForUserSuppliedEnvironment(context)
@@ -1305,7 +1305,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
 
         properties.push({
-            name: GeneratedSdkClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME,
+            name: getPropertyKey(GeneratedSdkClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME),
             type: getTextOfTsNode(
                 context.coreUtilities.fetcher.Supplier._getReferenceToType(
                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
@@ -1317,7 +1317,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         if (this.isRoot && this.oauthAuthScheme != null && context.generateOAuthClients) {
             properties.push({
-                name: OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME,
+                name: getPropertyKey(OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME),
                 type: getTextOfTsNode(
                     context.coreUtilities.fetcher.Supplier._getReferenceToType(
                         context.type.getReferenceToType(
@@ -1329,7 +1329,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 hasQuestionToken: this.oauthAuthScheme.configuration.clientIdEnvVar != null
             });
             properties.push({
-                name: OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME,
+                name: getPropertyKey(OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME),
                 type: getTextOfTsNode(
                     context.coreUtilities.fetcher.Supplier._getReferenceToType(
                         context.type.getReferenceToType(
@@ -1345,7 +1345,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         for (const variable of this.intermediateRepresentation.variables) {
             const variableType = context.type.getReferenceToType(variable.type);
             properties.push({
-                name: this.getOptionNameForVariable(variable),
+                name: getPropertyKey(this.getOptionNameForVariable(variable)),
                 type: getTextOfTsNode(variableType.typeNodeWithoutUndefined),
                 hasQuestionToken: variableType.isOptional
             });
@@ -1353,17 +1353,19 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         for (const pathParameter of getNonVariablePathParameters(this.intermediateRepresentation.pathParameters)) {
             properties.push({
-                name: getParameterNameForRootPathParameter({
-                    pathParameter,
-                    retainOriginalCasing: this.retainOriginalCasing
-                }),
+                name: getPropertyKey(
+                    getParameterNameForRootPathParameter({
+                        pathParameter,
+                        retainOriginalCasing: this.retainOriginalCasing
+                    })
+                ),
                 type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode)
             });
         }
 
         if (this.bearerAuthScheme != null) {
             properties.push({
-                name: this.getBearerAuthOptionKey(this.bearerAuthScheme),
+                name: getPropertyKey(this.getBearerAuthOptionKey(this.bearerAuthScheme)),
                 type: getTextOfTsNode(
                     context.coreUtilities.fetcher.Supplier._getReferenceToType(
                         this.intermediateRepresentation.sdkConfig.isAuthMandatory &&
@@ -1381,7 +1383,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         } else if (!this.isRoot && this.oauthAuthScheme != null && context.generateOAuthClients) {
             properties.push({
-                name: OAuthTokenProviderGenerator.OAUTH_TOKEN_PROPERTY_NAME,
+                name: getPropertyKey(OAuthTokenProviderGenerator.OAUTH_TOKEN_PROPERTY_NAME),
                 type: getTextOfTsNode(
                     context.coreUtilities.fetcher.Supplier._getReferenceToType(
                         this.intermediateRepresentation.sdkConfig.isAuthMandatory
@@ -1399,7 +1401,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         if (this.basicAuthScheme != null) {
             properties.push(
                 {
-                    name: this.getBasicAuthUsernameOptionKey(this.basicAuthScheme),
+                    name: getPropertyKey(this.getBasicAuthUsernameOptionKey(this.basicAuthScheme)),
                     type: getTextOfTsNode(
                         context.coreUtilities.fetcher.Supplier._getReferenceToType(
                             this.intermediateRepresentation.sdkConfig.isAuthMandatory &&
@@ -1417,7 +1419,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         (this.basicAuthScheme.passwordEnvVar != null && this.basicAuthScheme.usernameEnvVar != null)
                 },
                 {
-                    name: this.getBasicAuthPasswordOptionKey(this.basicAuthScheme),
+                    name: getPropertyKey(this.getBasicAuthPasswordOptionKey(this.basicAuthScheme)),
                     type: getTextOfTsNode(
                         context.coreUtilities.fetcher.Supplier._getReferenceToType(
                             this.intermediateRepresentation.sdkConfig.isAuthMandatory &&
@@ -1444,7 +1446,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
                 header.headerEnvVar != null;
             properties.push({
-                name: this.getOptionKeyForAuthHeader(header),
+                name: getPropertyKey(this.getOptionKeyForAuthHeader(header)),
                 type: getTextOfTsNode(
                     context.coreUtilities.fetcher.Supplier._getReferenceToType(
                         this.intermediateRepresentation.sdkConfig.isAuthMandatory
@@ -1463,14 +1465,14 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             const type = context.type.getReferenceToType(header.valueType);
             if (isLiteralHeader(header, context)) {
                 properties.push({
-                    name: this.getOptionKeyForHeader(header),
+                    name: getPropertyKey(this.getOptionKeyForHeader(header)),
                     type: getTextOfTsNode(context.type.getReferenceToType(header.valueType).typeNode),
                     hasQuestionToken: true,
                     docs: [`Override the ${header.name.wireValue} header`]
                 });
             } else {
                 properties.push({
-                    name: this.getOptionKeyForHeader(header),
+                    name: getPropertyKey(this.getOptionKeyForHeader(header)),
                     type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(type.typeNode)),
                     hasQuestionToken: type.isOptional,
                     docs: [`Override the ${header.name.wireValue} header`]
@@ -1482,7 +1484,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         if (generatedVersion != null) {
             const header = generatedVersion.getHeader();
             properties.push({
-                name: this.getOptionKeyForHeader(header),
+                name: getPropertyKey(this.getOptionKeyForHeader(header)),
                 type: generatedVersion.getEnumValueUnion(),
                 hasQuestionToken: generatedVersion.hasDefaultVersion(),
                 docs: [`Override the ${header.name.wireValue} header`]
@@ -1491,7 +1493,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         if (this.allowCustomFetcher) {
             properties.push({
-                name: GeneratedSdkClientClassImpl.CUSTOM_FETCHER_PROPERTY_NAME,
+                name: getPropertyKey(GeneratedSdkClientClassImpl.CUSTOM_FETCHER_PROPERTY_NAME),
                 type: getTextOfTsNode(context.coreUtilities.fetcher.FetchFunction._getReferenceToType()),
                 hasQuestionToken: true
             });

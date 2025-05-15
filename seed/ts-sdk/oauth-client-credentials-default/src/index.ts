@@ -1,4 +1,6 @@
-export * as SeedOauthClientCredentialsDefault from "./api";
-export { SeedOauthClientCredentialsDefaultClient } from "./Client";
-export { SeedOauthClientCredentialsDefaultError, SeedOauthClientCredentialsDefaultTimeoutError } from "./errors";
-export * as serialization from "./serialization";
+export * as SeedOauthClientCredentialsDefault from "./api/index.js";
+export { SeedOauthClientCredentialsDefaultClient } from "./Client.js";
+export {
+    SeedOauthClientCredentialsDefaultError,
+    SeedOauthClientCredentialsDefaultTimeoutError,
+} from "./errors/index.js";

@@ -27,7 +27,10 @@ class SeedObjectsWithImports:
     Examples
     --------
     from seed import SeedObjectsWithImports
-    client = SeedObjectsWithImports(base_url="https://yourhost.com/path/to/api", )
+
+    client = SeedObjectsWithImports(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
@@ -73,7 +76,10 @@ class AsyncSeedObjectsWithImports:
     Examples
     --------
     from seed import AsyncSeedObjectsWithImports
-    client = AsyncSeedObjectsWithImports(base_url="https://yourhost.com/path/to/api", )
+
+    client = AsyncSeedObjectsWithImports(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(

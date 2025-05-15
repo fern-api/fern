@@ -1,5 +1,25 @@
 {
   "types": {
+    "ProofNode": {
+      "description": "An individual node used to prove a path down a merkle-patricia-tree",
+      "name": "ProofNode",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "StorageProofKey": {
+      "description": "The key used to get the storage slot in its account tree.",
+      "name": "StorageProofKey",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
     "StorageProofItems": {
       "description": "Object proving a relationship of a storage value to an account's storageHash.",
       "name": "StorageProofItems",
@@ -66,6 +86,46 @@
             "type": "id",
             "value": "ProofNode"
           }
+        }
+      }
+    },
+    "PowHash": {
+      "description": "Current block header PoW hash.",
+      "name": "PowHash",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "SeedHash": {
+      "description": "The seed hash used for the DAG.",
+      "name": "SeedHash",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "MixHash": {
+      "description": "The mix digest.",
+      "name": "MixHash",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "Difficulty": {
+      "description": "The boundary condition ('target'), 2^256 / difficulty.",
+      "name": "Difficulty",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
         }
       }
     },
@@ -444,6 +504,26 @@
         }
       }
     },
+    "Topic": {
+      "description": "32 Bytes DATA of indexed log arguments. (In solidity: The first topic is the hash of the signature of the event (e.g. Deposit(address,bytes32,uint256))",
+      "name": "Topic",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "TransactionIndex": {
+      "description": "The index of the transaction. null when its pending",
+      "name": "TransactionIndex",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
     "BlockNumberOrNull": {
       "description": "The block number or null when its the pending block",
       "name": "BlockNumberOrNull",
@@ -467,6 +547,16 @@
         ]
       }
     },
+    "BlockHashOrNull": {
+      "description": "The block hash or null when its the pending block",
+      "name": "BlockHashOrNull",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
     "NonceOrNull": {
       "description": "Randomly selected number to satisfy the proof-of-work or null when its the pending block",
       "name": "NonceOrNull",
@@ -488,6 +578,16 @@
             }
           }
         ]
+      }
+    },
+    "From": {
+      "description": "The sender of the transaction",
+      "name": "From",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
       }
     },
     "To": {
@@ -990,6 +1090,16 @@
             "type": "string",
             "regex": "^0x[a-fA-F\\d]{64}$"
           }
+        }
+      }
+    },
+    "Nonce": {
+      "description": "A number only to be used once",
+      "name": "Nonce",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
         }
       }
     },
@@ -1729,7 +1839,7 @@
     },
     "EthGetProofResult0": {
       "description": "The merkle proofs of the specified account connecting them to the blockhash of the block specified",
-      "name": "EthGetProofResult0",
+      "name": "proofAccount",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1880,6 +1990,35 @@
         ]
       }
     },
+    "EthGetWorkResultItems": {
+      "name": "EthGetWorkResultItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "PowHash",
+            "type": {
+              "type": "id",
+              "value": "PowHash"
+            }
+          },
+          {
+            "typeName": "SeedHash",
+            "type": {
+              "type": "id",
+              "value": "SeedHash"
+            }
+          },
+          {
+            "typeName": "Difficulty",
+            "type": {
+              "type": "id",
+              "value": "Difficulty"
+            }
+          }
+        ]
+      }
+    },
     "e_t_h___g_e_t_W_o_r_k_Result": {
       "name": "EthGetWorkResult",
       "shape": {
@@ -1887,7 +2026,8 @@
         "value": {
           "type": "list",
           "itemType": {
-            "type": "unknown"
+            "type": "id",
+            "value": "EthGetWorkResultItems"
           }
         }
       }
@@ -1980,7 +2120,7 @@
     },
     "EthSyncingResult0": {
       "description": "An object with sync status data",
-      "name": "EthSyncingResult0",
+      "name": "syncingData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2043,18 +2183,6 @@
         ]
       }
     },
-    "EthSyncingResult1": {
-      "name": "EthSyncingResult1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "EthSyncingResult": {
       "name": "EthSyncingResult",
       "shape": {
@@ -2069,10 +2197,11 @@
             }
           },
           {
-            "typeName": "EthSyncingResult1",
             "type": {
-              "type": "id",
-              "value": "EthSyncingResult1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -2092,10 +2221,11 @@
             }
           },
           {
-            "typeName": "EthSyncingResult1",
             "type": {
-              "type": "id",
-              "value": "EthSyncingResult1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -2154,7 +2284,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "web3ClientVersionExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -2242,7 +2372,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "sha3Example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -2319,7 +2449,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "netListeningTrueExample",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -2388,7 +2518,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "netPeerCountExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -2456,7 +2586,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "netVersionExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -2519,7 +2649,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethBlockNumberExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -2609,7 +2739,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethCallExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -2664,7 +2794,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethChainIdExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -2728,7 +2858,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethCoinbaseExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -2795,7 +2925,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethEstimateGasExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -2845,7 +2975,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGasPriceExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -2920,7 +3050,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGetBalanceExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -2999,7 +3129,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGetBlockByHashExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3078,7 +3208,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGetBlockByNumberExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3148,7 +3278,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGetBlockTransactionCountByHashExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3218,7 +3348,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGetBlockTransactionCountByNumberExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3296,7 +3426,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGetCodeExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3368,7 +3498,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGetFilterChangesExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3461,7 +3591,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGetFilterLogsExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3551,7 +3681,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGetRawTransactionByHashExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3629,7 +3759,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGetRawTransactionByBlockHashAndIndexExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3707,7 +3837,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGetRawTransactionByBlockNumberAndIndexExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3780,7 +3910,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGetLogsExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3883,7 +4013,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGetStorageAtExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -3961,7 +4091,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "nullExample",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -4048,7 +4178,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGetTransactionByBlockNumberAndIndexExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -4142,7 +4272,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGetTransactionByHashExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -4242,7 +4372,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGetTransactionCountExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -4328,7 +4458,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGetTransactionReceiptExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -4449,7 +4579,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGetUncleByBlockHashAndIndexExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -4528,7 +4658,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "nullResultExample",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -4607,7 +4737,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGetUncleCountByBlockHashExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -4677,7 +4807,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGetUncleCountByBlockNumberExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -4754,7 +4884,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGetProofExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -4814,7 +4944,8 @@
             "value": {
               "type": "list",
               "itemType": {
-                "type": "unknown"
+                "type": "id",
+                "value": "EthGetWorkResultItems"
               }
             }
           }
@@ -4822,7 +4953,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethGetWorkExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -4890,7 +5021,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethHashrateExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -4940,7 +5071,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethMiningExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -5003,7 +5134,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethNewBlockFilterExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -5070,7 +5201,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethNewFilterExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -5120,7 +5251,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethNewPendingTransactionFilterExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -5167,7 +5298,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethPendingTransactionsExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -5215,7 +5346,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethProtocolVersionExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -5283,7 +5414,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethSendRawTransactionExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -5363,7 +5494,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethSubmitHashrateExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -5465,7 +5596,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "submitWorkExample",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -5526,7 +5657,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethSyncingExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -5611,7 +5742,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "ethUninstallFilterExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -5648,8 +5779,14 @@
     "webhooks": [],
     "websockets": [],
     "types": [
+      "ProofNode",
+      "StorageProofKey",
       "StorageProof",
       "ProofNodes",
+      "PowHash",
+      "SeedHash",
+      "MixHash",
+      "Difficulty",
       "FilterId",
       "BlockHash",
       "BlockNumber",
@@ -5661,8 +5798,12 @@
       "BloomFilter",
       "Log",
       "Topics",
+      "Topic",
+      "TransactionIndex",
       "BlockNumberOrNull",
+      "BlockHashOrNull",
       "NonceOrNull",
+      "From",
       "To",
       "Block",
       "Transaction",
@@ -5670,6 +5811,7 @@
       "TransactionHash",
       "KeccakOrPending",
       "Keccak",
+      "Nonce",
       "Integer",
       "Address",
       "Addresses",

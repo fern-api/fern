@@ -95,7 +95,8 @@ func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 		if useEnumWireValue {
 			enumName = t.typeName + enumValue.Name.WireValue
 		}
-		t.writer.P(enumName, " ", t.typeName, fmt.Sprintf(" = %q", enumValue.Name.WireValue))
+		escapedWireValue := strings.Replace(enumValue.Name.WireValue, `"`, `\"`, -1)
+		t.writer.P(enumName, " ", t.typeName, fmt.Sprintf(" = %q", escapedWireValue))
 	}
 	t.writer.P(")")
 	t.writer.P()
@@ -108,7 +109,8 @@ func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 		if useEnumWireValue {
 			enumName = t.typeName + enumValue.Name.WireValue
 		}
-		t.writer.P("case \"", enumValue.Name.WireValue, "\":")
+		escapedWireValue := strings.Replace(enumValue.Name.WireValue, `"`, `\"`, -1)
+		t.writer.P("case \"", escapedWireValue, "\":")
 		t.writer.P("return ", enumName, ", nil")
 	}
 	t.writer.P("}")

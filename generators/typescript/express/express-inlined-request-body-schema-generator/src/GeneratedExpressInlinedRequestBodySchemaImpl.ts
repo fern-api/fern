@@ -1,5 +1,5 @@
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { PackageId, Reference, Zurg, getTextOfTsNode } from "@fern-typescript/commons";
+import { PackageId, Reference, Zurg, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressInlinedRequestBodySchema } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
@@ -83,7 +83,7 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
             properties: this.inlinedRequestBody.properties.map((property) => {
                 const type = context.typeSchema.getReferenceToRawType(property.valueType);
                 return {
-                    name: `"${property.name.wireValue}"`,
+                    name: getPropertyKey(property.name.wireValue),
                     type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                     hasQuestionToken: type.isOptional
                 };

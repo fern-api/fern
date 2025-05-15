@@ -14,7 +14,11 @@
 
 ```python
 from seed import SeedNoEnvironment
-client = SeedNoEnvironment(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+client = SeedNoEnvironment(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
 client.dummy.get_dummy()
 
 ```

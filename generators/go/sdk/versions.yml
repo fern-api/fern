@@ -1,3 +1,25 @@
+- version: 0.38.0
+  changelogEntry:
+    - summary: |
+        Add support for the `useReaderForBytesRequest` configuration option, which generates
+        `io.Reader` request parameters instead of `[]byte` request parameters.
+      type: feat
+  createdAt: '2025-05-14'
+  irVersion: 57
+- version: 0.37.5
+  changelogEntry:
+    - summary: |
+        Add support for the custom introduction setting in the generated README.md.
+      type: fix
+  createdAt: '2025-05-13'
+  irVersion: 57
+- version: 0.37.4
+  changelogEntry:
+    - summary: |
+        Fix an issue where enum values containing double quotes were not properly escaped in generated code.
+      type: fix
+  createdAt: '2025-05-08'
+  irVersion: 57
 - version: 0.37.3
   changelogEntry:
     - summary: |

@@ -44,7 +44,11 @@ class SeedExamples:
     --------
     from seed import SeedExamples
     from seed.environment import SeedExamplesEnvironment
-    client = SeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
+    
+    client = SeedExamples(
+        token="YOUR_TOKEN",
+        environment=SeedExamplesEnvironment.PRODUCTION,
+    )
     """
     def __init__(self, *, base_url: typing.Optional[str] = None, environment: typing.Optional[SeedExamplesEnvironment] = None, token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None, timeout: typing.Optional[float] = None, follow_redirects: typing.Optional[bool] = True, httpx_client: typing.Optional[httpx.Client] = None):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -83,8 +87,14 @@ class SeedExamples:
         --------
         from seed import SeedExamples
         from seed.environment import SeedExamplesEnvironment
-        client = SeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
-        client.echo(request='Hello world!\\n\\nwith\\n\\tnewlines', )
+        
+        client = SeedExamples(
+            token="YOUR_TOKEN",
+            environment=SeedExamplesEnvironment.PRODUCTION,
+        )
+        client.echo(
+            request="Hello world!\\n\\nwith\\n\\tnewlines",
+        )
         """
         _response = self._raw_client.echo(request=request, request_options=request_options)
         return _response.data
@@ -106,8 +116,14 @@ class SeedExamples:
         --------
         from seed import SeedExamples
         from seed.environment import SeedExamplesEnvironment
-        client = SeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
-        client.create_type(request="primitive", )
+        
+        client = SeedExamples(
+            token="YOUR_TOKEN",
+            environment=SeedExamplesEnvironment.PRODUCTION,
+        )
+        client.create_type(
+            request="primitive",
+        )
         """
         _response = self._raw_client.create_type(request=request, request_options=request_options)
         return _response.data
@@ -137,7 +153,11 @@ class AsyncSeedExamples:
     --------
     from seed import AsyncSeedExamples
     from seed.environment import SeedExamplesEnvironment
-    client = AsyncSeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
+    
+    client = AsyncSeedExamples(
+        token="YOUR_TOKEN",
+        environment=SeedExamplesEnvironment.PRODUCTION,
+    )
     """
     def __init__(self, *, base_url: typing.Optional[str] = None, environment: typing.Optional[SeedExamplesEnvironment] = None, token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None, timeout: typing.Optional[float] = None, follow_redirects: typing.Optional[bool] = True, httpx_client: typing.Optional[httpx.AsyncClient] = None):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -174,12 +194,23 @@ class AsyncSeedExamples:
         
         Examples
         --------
+        import asyncio
+        
         from seed import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
-        import asyncio
-        client = AsyncSeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
+        
+        client = AsyncSeedExamples(
+            token="YOUR_TOKEN",
+            environment=SeedExamplesEnvironment.PRODUCTION,
+        )
+        
+        
         async def main() -> None:
-            await client.echo(request='Hello world!\\n\\nwith\\n\\tnewlines', )
+            await client.echo(
+                request="Hello world!\\n\\nwith\\n\\tnewlines",
+            )
+        
+        
         asyncio.run(main())
         """
         _response = await self._raw_client.echo(request=request, request_options=request_options)
@@ -200,12 +231,23 @@ class AsyncSeedExamples:
         
         Examples
         --------
+        import asyncio
+        
         from seed import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
-        import asyncio
-        client = AsyncSeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
+        
+        client = AsyncSeedExamples(
+            token="YOUR_TOKEN",
+            environment=SeedExamplesEnvironment.PRODUCTION,
+        )
+        
+        
         async def main() -> None:
-            await client.create_type(request="primitive", )
+            await client.create_type(
+                request="primitive",
+            )
+        
+        
         asyncio.run(main())
         """
         _response = await self._raw_client.create_type(request=request, request_options=request_options)

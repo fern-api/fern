@@ -22,7 +22,11 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedSingleUrlEnvironmentNoDefault
 from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
-client = SeedSingleUrlEnvironmentNoDefault(token="YOUR_TOKEN", environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION, )
+
+client = SeedSingleUrlEnvironmentNoDefault(
+    token="YOUR_TOKEN",
+    environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
+)
 client.dummy.get_dummy()
 ```
 
@@ -31,12 +35,21 @@ client.dummy.get_dummy()
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed import AsyncSeedSingleUrlEnvironmentNoDefault
 from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
-import asyncio
-client = AsyncSeedSingleUrlEnvironmentNoDefault(token="YOUR_TOKEN", environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION, )
+
+client = AsyncSeedSingleUrlEnvironmentNoDefault(
+    token="YOUR_TOKEN",
+    environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
+)
+
+
 async def main() -> None:
     await client.dummy.get_dummy()
+
+
 asyncio.run(main())
 ```
 
@@ -47,6 +60,7 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
+
 try:
     client.dummy.get_dummy()
 except ApiError as e:
@@ -63,7 +77,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 
 ```python
 from seed import SeedSingleUrlEnvironmentNoDefault
-client = SeedSingleUrlEnvironmentNoDefault(..., )
+
+client = SeedSingleUrlEnvironmentNoDefault(
+    ...,
+)
 response = client.dummy.with_raw_response.get_dummy()
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
@@ -96,7 +113,12 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedSingleUrlEnvironmentNoDefault
-client = SeedSingleUrlEnvironmentNoDefault(..., timeout=20.0, )
+
+client = SeedSingleUrlEnvironmentNoDefault(
+    ...,
+    timeout=20.0,
+)
+
 
 # Override timeout for a specific method
 client.dummy.get_dummy(request_options={
@@ -110,9 +132,17 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-from seed import SeedSingleUrlEnvironmentNoDefault
 import httpx
-client = SeedSingleUrlEnvironmentNoDefault(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
+from seed import SeedSingleUrlEnvironmentNoDefault
+
+client = SeedSingleUrlEnvironmentNoDefault(
+    ...,
+    httpx_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
 
 ## Contributing
 

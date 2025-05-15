@@ -519,10 +519,35 @@
             "statusCode": 200,
             "description": "Successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid input",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation exception",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "petAddPetExample",
               "description": "",
               "path": "/pet",
               "pathParameters": {},
@@ -647,10 +672,47 @@
             "statusCode": 200,
             "description": "Successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid ID supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Pet not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation exception",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "petUpdatePetExample",
               "description": "",
               "path": "/pet",
               "pathParameters": {},
@@ -775,10 +837,23 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid status value",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "findPetsByStatusExample",
               "description": "",
               "path": "/pet/findByStatus",
               "pathParameters": {},
@@ -897,10 +972,23 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid tag value",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "findPetsByTagsExample",
               "description": "",
               "path": "/pet/findByTags",
               "pathParameters": {},
@@ -1018,12 +1106,37 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid ID supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Pet not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getPetByIdExample",
               "description": "",
-              "path": "/pet/",
+              "path": "/pet/42",
               "pathParameters": {
                 "petId": 42
               },
@@ -1164,12 +1277,25 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid input",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "updatePetWithFormExample",
               "description": "",
-              "path": "/pet/",
+              "path": "/pet/42",
               "pathParameters": {
                 "petId": 42
               },
@@ -1286,12 +1412,25 @@
               }
             }
           ],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid pet value",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deletePetExample",
               "description": "",
-              "path": "/pet/",
+              "path": "/pet/42",
               "pathParameters": {
                 "petId": 42
               },
@@ -1366,6 +1505,13 @@
             }
           ],
           "headers": [],
+          "request": {
+            "type": {
+              "type": "bytes",
+              "isOptional": false,
+              "contentType": "application/octet-stream"
+            }
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -1377,12 +1523,37 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "No file uploaded",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Pet not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "uploadFileExample",
               "description": "",
-              "path": "/pet/",
+              "path": "/pet/42/uploadImage",
               "pathParameters": {
                 "petId": 42
               },
@@ -1475,7 +1646,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getInventoryExample",
               "description": "",
               "path": "/store/inventory",
               "pathParameters": {},
@@ -1549,10 +1720,35 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid input",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation exception",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "storePlaceOrderExample",
               "description": "",
               "path": "/store/order",
               "pathParameters": {},
@@ -1651,12 +1847,37 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid ID supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Order not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getOrderByIdExample",
               "description": "",
-              "path": "/store/order/",
+              "path": "/store/order/42",
               "pathParameters": {
                 "orderId": 42
               },
@@ -1739,12 +1960,37 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid ID supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Order not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteOrderExample",
               "description": "",
-              "path": "/store/order/",
+              "path": "/store/order/42",
               "pathParameters": {
                 "orderId": 42
               },
@@ -1825,7 +2071,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userCreateUserExample",
               "description": "",
               "path": "/user",
               "pathParameters": {},
@@ -1928,7 +2174,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userCreateUsersWithListInputExample",
               "description": "",
               "path": "/user/createWithList",
               "pathParameters": {},
@@ -2045,10 +2291,23 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid username/password supplied",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "loginUserExample",
               "description": "",
               "path": "/user/login",
               "pathParameters": {},
@@ -2101,7 +2360,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "logoutUserExample",
               "description": "",
               "path": "/user/logout",
               "pathParameters": {},
@@ -2173,14 +2432,39 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid username supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "User not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getUserByNameExample",
               "description": "",
-              "path": "/user/",
+              "path": "/user/username",
               "pathParameters": {
-                "username": "foo"
+                "username": "username"
               },
               "queryParameters": {},
               "headers": {},
@@ -2280,14 +2564,39 @@
             },
             "description": "Update an existent user in the store"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "bad request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "user not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "userUpdateUserExample",
               "description": "",
-              "path": "/user/",
+              "path": "/user/username",
               "pathParameters": {
-                "username": "foo"
+                "username": "username"
               },
               "queryParameters": {},
               "headers": {},
@@ -2351,14 +2660,39 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid username supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "User not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteUserExample",
               "description": "",
-              "path": "/user/",
+              "path": "/user/username",
               "pathParameters": {
-                "username": "foo"
+                "username": "username"
               },
               "queryParameters": {},
               "headers": {},
@@ -2464,10 +2798,35 @@
             "statusCode": 200,
             "description": "Successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid input",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation exception",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "petAddPetExample",
               "description": "",
               "path": "/pet",
               "pathParameters": {},
@@ -2592,10 +2951,47 @@
             "statusCode": 200,
             "description": "Successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid ID supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Pet not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation exception",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "petUpdatePetExample",
               "description": "",
               "path": "/pet",
               "pathParameters": {},
@@ -2720,10 +3116,23 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid status value",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "findPetsByStatusExample",
               "description": "",
               "path": "/pet/findByStatus",
               "pathParameters": {},
@@ -2842,10 +3251,23 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid tag value",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "findPetsByTagsExample",
               "description": "",
               "path": "/pet/findByTags",
               "pathParameters": {},
@@ -2963,12 +3385,37 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid ID supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Pet not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getPetByIdExample",
               "description": "",
-              "path": "/pet/",
+              "path": "/pet/42",
               "pathParameters": {
                 "petId": 42
               },
@@ -3109,12 +3556,25 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid input",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "updatePetWithFormExample",
               "description": "",
-              "path": "/pet/",
+              "path": "/pet/42",
               "pathParameters": {
                 "petId": 42
               },
@@ -3231,12 +3691,25 @@
               }
             }
           ],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid pet value",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deletePetExample",
               "description": "",
-              "path": "/pet/",
+              "path": "/pet/42",
               "pathParameters": {
                 "petId": 42
               },
@@ -3311,6 +3784,13 @@
             }
           ],
           "headers": [],
+          "request": {
+            "type": {
+              "type": "bytes",
+              "isOptional": false,
+              "contentType": "application/octet-stream"
+            }
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -3322,12 +3802,37 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "No file uploaded",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Pet not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "uploadFileExample",
               "description": "",
-              "path": "/pet/",
+              "path": "/pet/42/uploadImage",
               "pathParameters": {
                 "petId": 42
               },
@@ -3420,7 +3925,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getInventoryExample",
               "description": "",
               "path": "/store/inventory",
               "pathParameters": {},
@@ -3494,10 +3999,35 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid input",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation exception",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "storePlaceOrderExample",
               "description": "",
               "path": "/store/order",
               "pathParameters": {},
@@ -3596,12 +4126,37 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid ID supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Order not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getOrderByIdExample",
               "description": "",
-              "path": "/store/order/",
+              "path": "/store/order/42",
               "pathParameters": {
                 "orderId": 42
               },
@@ -3684,12 +4239,37 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid ID supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Order not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteOrderExample",
               "description": "",
-              "path": "/store/order/",
+              "path": "/store/order/42",
               "pathParameters": {
                 "orderId": 42
               },
@@ -3770,7 +4350,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userCreateUserExample",
               "description": "",
               "path": "/user",
               "pathParameters": {},
@@ -3873,7 +4453,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userCreateUsersWithListInputExample",
               "description": "",
               "path": "/user/createWithList",
               "pathParameters": {},
@@ -3990,10 +4570,23 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid username/password supplied",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "loginUserExample",
               "description": "",
               "path": "/user/login",
               "pathParameters": {},
@@ -4046,7 +4639,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "logoutUserExample",
               "description": "",
               "path": "/user/logout",
               "pathParameters": {},
@@ -4118,14 +4711,39 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid username supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "User not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getUserByNameExample",
               "description": "",
-              "path": "/user/",
+              "path": "/user/username",
               "pathParameters": {
-                "username": "foo"
+                "username": "username"
               },
               "queryParameters": {},
               "headers": {},
@@ -4225,14 +4843,39 @@
             },
             "description": "Update an existent user in the store"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "bad request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "user not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "userUpdateUserExample",
               "description": "",
-              "path": "/user/",
+              "path": "/user/username",
               "pathParameters": {
-                "username": "foo"
+                "username": "username"
               },
               "queryParameters": {},
               "headers": {},
@@ -4296,14 +4939,39 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid username supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "User not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteUserExample",
               "description": "",
-              "path": "/user/",
+              "path": "/user/username",
               "pathParameters": {
-                "username": "foo"
+                "username": "username"
               },
               "queryParameters": {},
               "headers": {},

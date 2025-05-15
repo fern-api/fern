@@ -1,8 +1,8 @@
 {
   "types": {
-    "TestPostRequestBodySchemaMetadata": {
+    "TestPostRequestBodyContentMultipartFormDataSchemaMetadata": {
       "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
-      "name": "TestPostRequestBodySchemaMetadata",
+      "name": "TestPostRequestBodyContentMultipartFormDataSchemaMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -12,9 +12,9 @@
         }
       }
     },
-    "ExamplePostRequestBodySchemaMetadata": {
+    "ExamplePostRequestBodyContentApplicationJsonSchemaMetadata": {
       "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
-      "name": "ExamplePostRequestBodySchemaMetadata",
+      "name": "ExamplePostRequestBodyContentApplicationJsonSchemaMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -74,11 +74,23 @@
                     "type": "optional",
                     "itemType": {
                       "type": "id",
-                      "value": "TestPostRequestBodySchemaMetadata"
+                      "value": "TestPostRequestBodyContentMultipartFormDataSchemaMetadata"
                     }
                   },
                   "contentType": "multipart/form-data",
                   "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
+                  "exploded": false
+                },
+                {
+                  "type": "bodyProperty",
+                  "key": "chunking_strategy",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "unknown"
+                    }
+                  },
+                  "contentType": "multipart/form-data",
                   "exploded": false
                 },
                 {
@@ -130,11 +142,11 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "testUploadExample",
             "description": "",
             "path": "/test",
             "pathParameters": {
-              "corpus_key": "foo"
+              "corpus_key": "corpus_key"
             },
             "queryParameters": {},
             "headers": {},
@@ -145,6 +157,9 @@
               "type": "form",
               "value": {
                 "metadata": {
+                  "type": "json"
+                },
+                "chunking_strategy": {
                   "type": "json"
                 },
                 "filename": {
@@ -219,7 +234,7 @@
                     "type": "optional",
                     "itemType": {
                       "type": "id",
-                      "value": "ExamplePostRequestBodySchemaMetadata"
+                      "value": "ExamplePostRequestBodyContentApplicationJsonSchemaMetadata"
                     }
                   }
                 }
@@ -244,11 +259,11 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "testWithDualContentTypeRequestTypesExample",
             "description": "",
             "path": "/example",
             "pathParameters": {
-              "corpus_key": "foo"
+              "corpus_key": "corpus_key"
             },
             "queryParameters": {},
             "headers": {},

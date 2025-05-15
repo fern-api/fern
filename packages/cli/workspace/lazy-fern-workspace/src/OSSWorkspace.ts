@@ -13,9 +13,9 @@ import {
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
 import { Audiences } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, cwd, join, relativize } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { IrGraph, mergeIntermediateRepresentation } from "@fern-api/ir-utils";
+import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
 import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-to-ir";
@@ -117,7 +117,6 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     }): Promise<IntermediateRepresentation> {
         const specs = await getAllOpenAPISpecs({ context, specs: this.specs });
         const documents = await this.loader.loadDocuments({ context, specs });
-        const irGraph = new IrGraph(audiences);
 
         const authOverrides =
             this.generatorsConfiguration?.api?.auth != null ? { ...this.generatorsConfiguration?.api } : undefined;
@@ -140,8 +139,19 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         }
 
         let mergedIr: IntermediateRepresentation | undefined;
+
+        const errorCollectors: ErrorCollector[] = [];
+
         for (const document of documents) {
-            const errorCollector = new ErrorCollector({ logger: context.logger });
+            const absoluteFilepathToSpec = join(
+                this.absoluteFilePath,
+                RelativeFilePath.of(document.source?.file ?? "")
+            );
+            const relativeFilepathToSpec = relativize(cwd(), absoluteFilepathToSpec);
+
+            const errorCollector = new ErrorCollector({ logger: context.logger, relativeFilepathToSpec });
+            errorCollectors.push(errorCollector);
+
             let result: IntermediateRepresentation | undefined = undefined;
 
             switch (document.type) {
@@ -159,7 +169,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         globalHeaderOverrides,
                         enableUniqueErrorsPerEndpoint
                     });
-                    const converter = new OpenAPI3_1Converter({ context: converterContext });
+                    const converter = new OpenAPI3_1Converter({ context: converterContext, audiences });
                     result = await converter.convert();
                     break;
                 }
@@ -174,7 +184,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         errorCollector,
                         enableUniqueErrorsPerEndpoint
                     });
-                    const converter = new AsyncAPIConverter({ context: converterContext });
+                    const converter = new AsyncAPIConverter({ context: converterContext, audiences });
                     result = await converter.convert();
                     break;
                 }
@@ -184,13 +194,6 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         path: []
                     });
                     break;
-            }
-
-            if (errorCollector.hasErrors()) {
-                context.logger.info(
-                    `${document.type === "openapi" ? "OpenAPI" : "AsyncAPI"} Importer encountered errors:`
-                );
-                errorCollector.logErrors();
             }
 
             const casingsGenerator = constructCasingsGenerator({
@@ -208,7 +211,12 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         }
         for (const spec of this.allSpecs) {
             if (spec.type === "openrpc") {
-                const errorCollector = new ErrorCollector({ logger: context.logger });
+                const absoluteFilepathToSpec = spec.absoluteFilepath;
+                const relativeFilepathToSpec = relativize(cwd(), absoluteFilepathToSpec);
+
+                const errorCollector = new ErrorCollector({ logger: context.logger, relativeFilepathToSpec });
+                errorCollectors.push(errorCollector);
+
                 const converterContext = new OpenRPCConverterContext3_1({
                     namespace: spec.namespace,
                     generationLanguage: "typescript",
@@ -224,13 +232,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     enableUniqueErrorsPerEndpoint
                 });
 
-                const converter = new OpenRPCConverter({ context: converterContext });
+                const converter = new OpenRPCConverter({ context: converterContext, audiences });
                 const result = await converter.convert();
-
-                if (errorCollector.hasErrors()) {
-                    context.logger.info("OpenRPC Importer encountered errors:");
-                    errorCollector.logErrors();
-                }
 
                 const casingsGenerator = constructCasingsGenerator({
                     generationLanguage: "typescript",
@@ -246,6 +249,34 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 }
             }
         }
+
+        for (const errorCollector of errorCollectors) {
+            if (errorCollector.hasErrors()) {
+                const errorStats = errorCollector.getErrorStats();
+                const specInfo = errorCollector.relativeFilepathToSpec
+                    ? ` for ${errorCollector.relativeFilepathToSpec}`
+                    : "";
+
+                if (errorStats.numErrors > 0) {
+                    context.logger.log(
+                        "error",
+                        `API validation${specInfo} completed with ${errorStats.numErrors} errors and ${errorStats.numWarnings} warnings.`
+                    );
+                } else if (errorStats.numWarnings > 0) {
+                    context.logger.log(
+                        "warn",
+                        `API validation${specInfo} completed with ${errorStats.numWarnings} warnings.`
+                    );
+                } else {
+                    context.logger.log("info", `All checks passed when parsing OpenAPI${specInfo}.`);
+                }
+
+                context.logger.log("info", "");
+
+                await errorCollector.logErrors({ logWarnings: false });
+            }
+        }
+
         if (mergedIr === undefined) {
             throw new Error("Failed to generate intermediate representation");
         }

@@ -68,11 +68,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "generateContentExample",
               "description": "",
               "path": "/generateContent",
               "pathParameters": {
-                "model": "foo"
+                "model": "model"
               },
               "queryParameters": {},
               "headers": {},

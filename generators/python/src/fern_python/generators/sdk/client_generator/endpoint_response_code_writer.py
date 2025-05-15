@@ -4,7 +4,7 @@ from ..context.sdk_generator_context import SdkGeneratorContext
 from fern_python.codegen import AST
 from fern_python.external_dependencies.httpx_sse import HttpxSSE
 from fern_python.external_dependencies.json import Json
-from fern_python.generators.sdk.client_generator.constants import RESPONSE_VARIABLE
+from fern_python.generators.sdk.client_generator.constants import CHUNK_VARIABLE, RESPONSE_VARIABLE
 from fern_python.generators.sdk.client_generator.pagination.abstract_paginator import (
     PaginationSnippetConfig,
 )
@@ -25,7 +25,6 @@ class EndpointResponseCodeWriter:
     PARSED_RESPONSE_VARIABLE = "_parsed_response"
     RESPONSE_JSON_VARIABLE = "_response_json"
     STREAM_TEXT_VARIABLE = "_text"
-    FILE_CHUNK_VARIABLE = "_chunk"
     EVENT_SOURCE_VARIABLE = "_event_source"
     SSE_VARIABLE = "_sse"
 
@@ -130,7 +129,14 @@ class EndpointResponseCodeWriter:
                             AST.TryStatement(
                                 body=[
                                     AST.YieldStatement(
-                                        AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data"),
+                                        self._context.core_utilities.get_construct(
+                                            self._get_streaming_response_data_type(stream_response),
+                                            AST.Expression(
+                                                Json.loads(
+                                                    AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data")
+                                                )
+                                            ),
+                                        ),
                                     ),
                                 ],
                                 handlers=[
@@ -405,19 +411,11 @@ class EndpointResponseCodeWriter:
         # For raw clients, wrap the generator in an HttpResponse
         if self._is_raw_client:
             iter_method = self._get_iter_bytes_method(is_async=self._is_async)
-            writer.write("return ")
-            writer.write_node(
-                self._instantiate_http_response(
-                    data=AST.Expression(
-                        f"({EndpointResponseCodeWriter.FILE_CHUNK_VARIABLE} async for {EndpointResponseCodeWriter.FILE_CHUNK_VARIABLE} "
-                        + f"in {RESPONSE_VARIABLE}.{iter_method}(chunk_size={chunk_size_variable}))"
-                        if self._is_async
-                        else f"({EndpointResponseCodeWriter.FILE_CHUNK_VARIABLE} for {EndpointResponseCodeWriter.FILE_CHUNK_VARIABLE} "
-                        + f"in {RESPONSE_VARIABLE}.{iter_method}(chunk_size={chunk_size_variable}))"
-                    ),
-                )
-            )
-            writer.write_newline_if_last_line_not()
+            if self._is_async:
+                expr = f"({CHUNK_VARIABLE} async for {CHUNK_VARIABLE} in {RESPONSE_VARIABLE}.{iter_method}(chunk_size={chunk_size_variable}))"
+            else:
+                expr = f"({CHUNK_VARIABLE} for {CHUNK_VARIABLE} in {RESPONSE_VARIABLE}.{iter_method}(chunk_size={chunk_size_variable}))"
+            writer.write_node(AST.ReturnStatement(self._instantiate_http_response(data=AST.Expression(expr))))
         else:
             writer.write_node(
                 AST.YieldStatement(

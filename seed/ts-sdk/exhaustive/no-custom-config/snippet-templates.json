@@ -3190,7 +3190,7 @@
                                             {
                                                 "value": {
                                                     "imports": [],
-                                                    "templateString": "nestedObject: {\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                                    "templateString": "NestedObject: {\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
                                                     "isOptional": true,
                                                     "inputDelimiter": ",\n\t\t\t\t",
                                                     "templateInputs": [
@@ -3596,7 +3596,7 @@
                                             {
                                                 "value": {
                                                     "imports": [],
-                                                    "templateString": "nestedObject: {\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                                    "templateString": "NestedObject: {\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
                                                     "isOptional": true,
                                                     "inputDelimiter": ",\n\t\t\t\t",
                                                     "templateInputs": [
@@ -3979,7 +3979,7 @@
                                                 {
                                                     "value": {
                                                         "imports": [],
-                                                        "templateString": "nestedObject: {\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t}",
+                                                        "templateString": "NestedObject: {\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t}",
                                                         "isOptional": true,
                                                         "inputDelimiter": ",\n\t\t\t\t\t",
                                                         "templateInputs": [
@@ -6509,7 +6509,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "nestedObject: {\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "templateString": "NestedObject: {\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "isOptional": true,
                                         "inputDelimiter": ",\n\t\t\t",
                                         "templateInputs": [
@@ -7100,7 +7100,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "xTestEndpointHeader: $FERN_INPUT",
+                                        "templateString": "X-TEST-ENDPOINT-HEADER: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {

@@ -8,6 +8,7 @@ class Color(str, enum.Enum):
     Examples
     --------
     from seed.enum import Color
+    
     Color.RED
     """
     RED = "red"

@@ -32,6 +32,7 @@ type Config struct {
 	AlwaysSendRequiredProperties bool
 	InlinePathParameters         bool
 	InlineFileProperties         bool
+	UseReaderForBytesRequest     bool
 	Organization                 string
 	Version                      string
 	IRFilepath                   string
@@ -74,6 +75,7 @@ func NewConfig(
 	alwaysSendRequiredProperties bool,
 	inlinePathParameters bool,
 	inlineFileProperties bool,
+	useReaderForBytesRequest bool,
 	organization string,
 	version string,
 	irFilepath string,
@@ -105,6 +107,7 @@ func NewConfig(
 		AlwaysSendRequiredProperties: alwaysSendRequiredProperties,
 		InlinePathParameters:         inlinePathParameters,
 		InlineFileProperties:         inlineFileProperties,
+		UseReaderForBytesRequest:     useReaderForBytesRequest,
 		Version:                      version,
 		IRFilepath:                   irFilepath,
 		SnippetFilepath:              snippetFilepath,

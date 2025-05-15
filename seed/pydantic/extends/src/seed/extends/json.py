@@ -12,7 +12,11 @@ class Json(Docs):
     Examples
     --------
     from seed.extends import Json
-    Json(docs='Types extend this type to include a docs and json property.', raw='{"docs": true, "json": true}', )
+
+    Json(
+        docs="Types extend this type to include a docs and json property.",
+        raw='{"docs": true, "json": true}',
+    )
     """
 
     raw: str

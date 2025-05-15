@@ -39,8 +39,14 @@ class ServiceClient:
         --------
         from seed import SeedExamples
         from seed.environment import SeedExamplesEnvironment
-        client = SeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
-        client.file.notification.service.get_exception(notification_id='notification-hsy129x', )
+        
+        client = SeedExamples(
+            token="YOUR_TOKEN",
+            environment=SeedExamplesEnvironment.PRODUCTION,
+        )
+        client.file.notification.service.get_exception(
+            notification_id="notification-hsy129x",
+        )
         """
         _response = self._raw_client.get_exception(notification_id, request_options=request_options)
         return _response.data
@@ -74,12 +80,23 @@ class AsyncServiceClient:
         
         Examples
         --------
+        import asyncio
+        
         from seed import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
-        import asyncio
-        client = AsyncSeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
+        
+        client = AsyncSeedExamples(
+            token="YOUR_TOKEN",
+            environment=SeedExamplesEnvironment.PRODUCTION,
+        )
+        
+        
         async def main() -> None:
-            await client.file.notification.service.get_exception(notification_id='notification-hsy129x', )
+            await client.file.notification.service.get_exception(
+                notification_id="notification-hsy129x",
+            )
+        
+        
         asyncio.run(main())
         """
         _response = await self._raw_client.get_exception(notification_id, request_options=request_options)

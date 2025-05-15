@@ -41,8 +41,14 @@ class UsersClient:
         Examples
         --------
         from seed import SeedPagination
-        client = SeedPagination(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-        response = client.users.list_usernames_custom(starting_after='starting_after', )
+        
+        client = SeedPagination(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.users.list_usernames_custom(
+            starting_after="starting_after",
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -82,17 +88,28 @@ class AsyncUsersClient:
         
         Examples
         --------
-        from seed import AsyncSeedPagination
         import asyncio
-        client = AsyncSeedPagination(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+        
+        from seed import AsyncSeedPagination
+        
+        client = AsyncSeedPagination(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        
+        
         async def main() -> None:
-            response = await client.users.list_usernames_custom(starting_after='starting_after', )
+            response = await client.users.list_usernames_custom(
+                starting_after="starting_after",
+            )
             async for item in response:
                 yield item
-            
+        
             # alternatively, you can paginate page-by-page
             async for page in response.iter_pages():
                 yield page
+        
+        
         asyncio.run(main())
         """
         return await self._raw_client.list_usernames_custom(starting_after=starting_after, request_options=request_options)

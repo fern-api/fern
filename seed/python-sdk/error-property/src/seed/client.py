@@ -28,7 +28,10 @@ class SeedErrorProperty:
     Examples
     --------
     from seed import SeedErrorProperty
-    client = SeedErrorProperty(base_url="https://yourhost.com/path/to/api", )
+
+    client = SeedErrorProperty(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
@@ -75,7 +78,10 @@ class AsyncSeedErrorProperty:
     Examples
     --------
     from seed import AsyncSeedErrorProperty
-    client = AsyncSeedErrorProperty(base_url="https://yourhost.com/path/to/api", )
+
+    client = AsyncSeedErrorProperty(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(

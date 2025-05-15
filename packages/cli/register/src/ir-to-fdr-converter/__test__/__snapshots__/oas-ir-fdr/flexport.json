@@ -1603,72 +1603,6 @@
         "properties": []
       }
     },
-    "BookingAmendmentNewContainerCounts": {
-      "description": "The requested new container count values",
-      "name": "BookingAmendmentNewContainerCounts",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "ContainerCounts"
-        ],
-        "properties": []
-      }
-    },
-    "BookingAmendmentNewOriginAddress": {
-      "description": "The requested new origin address",
-      "name": "BookingAmendmentNewOriginAddress",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Address"
-        ],
-        "properties": []
-      }
-    },
-    "BookingAmendmentNewPortOfLoading": {
-      "description": "The requested new origin port (port of loading)",
-      "name": "BookingAmendmentNewPortOfLoading",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Address"
-        ],
-        "properties": []
-      }
-    },
-    "BookingAmendmentNewPortOfUnloading": {
-      "description": "The requested new destination port (port of unloading)",
-      "name": "BookingAmendmentNewPortOfUnloading",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Address"
-        ],
-        "properties": []
-      }
-    },
-    "BookingAmendmentNewCargo": {
-      "description": "The requested new cargo, possibly including package details",
-      "name": "BookingAmendmentNewCargo",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Cargo"
-        ],
-        "properties": []
-      }
-    },
-    "BookingAmendmentNewMetadata": {
-      "description": "The requested new metadata",
-      "name": "BookingAmendmentNewMetadata",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Metadata"
-        ],
-        "properties": []
-      }
-    },
     "BookingAmendment": {
       "name": "BookingAmendment",
       "shape": {
@@ -1747,7 +1681,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingAmendmentNewContainerCounts"
+                "value": "ContainerCounts"
               }
             }
           },
@@ -1810,7 +1744,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingAmendmentNewOriginAddress"
+                "value": "Address"
               }
             }
           },
@@ -1821,7 +1755,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingAmendmentNewPortOfLoading"
+                "value": "Address"
               }
             }
           },
@@ -1832,7 +1766,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingAmendmentNewPortOfUnloading"
+                "value": "Address"
               }
             }
           },
@@ -1871,7 +1805,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingAmendmentNewCargo"
+                "value": "Cargo"
               }
             }
           },
@@ -1882,7 +1816,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingAmendmentNewMetadata"
+                "value": "Metadata"
               }
             }
           }
@@ -4598,39 +4532,6 @@
         ]
       }
     },
-    "CommercialInvoiceLineItemWeight": {
-      "description": "Weight including any associated packaging (padding, foam, etc).",
-      "name": "CommercialInvoiceLineItemWeight",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Weight"
-        ],
-        "properties": []
-      }
-    },
-    "CommercialInvoiceLineItemNetWeight": {
-      "description": "Weight excluding packaging.",
-      "name": "CommercialInvoiceLineItemNetWeight",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Weight"
-        ],
-        "properties": []
-      }
-    },
-    "CommercialInvoiceLineItemNetNetWeight": {
-      "description": "Weight excluding packaging, tags, labels, instruction manuals, etc.",
-      "name": "CommercialInvoiceLineItemNetNetWeight",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Weight"
-        ],
-        "properties": []
-      }
-    },
     "CommercialInvoiceLineItem": {
       "name": "CommercialInvoiceLineItem",
       "shape": {
@@ -4768,7 +4669,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CommercialInvoiceLineItemWeight"
+                "value": "Weight"
               }
             }
           },
@@ -4789,7 +4690,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CommercialInvoiceLineItemNetWeight"
+                "value": "Weight"
               }
             }
           },
@@ -4800,7 +4701,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CommercialInvoiceLineItemNetNetWeight"
+                "value": "Weight"
               }
             }
           },
@@ -6062,47 +5963,25 @@
         ]
       }
     },
-    "GenericObjectRefId0": {
-      "name": "GenericObjectRefId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "GenericObjectRefId1": {
-      "name": "GenericObjectRefId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
     "GenericObjectRefId": {
       "name": "GenericObjectRefId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "GenericObjectRefId0",
             "type": {
-              "type": "id",
-              "value": "GenericObjectRefId0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "GenericObjectRefId1",
             "type": {
-              "type": "id",
-              "value": "GenericObjectRefId1"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           }
         ]
@@ -9020,17 +8899,6 @@
         ]
       }
     },
-    "ShipmentEventDataLocation": {
-      "description": "Possibly null. Location associated with the event.",
-      "name": "ShipmentEventDataLocation",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "ShipmentNode"
-        ],
-        "properties": []
-      }
-    },
     "ShipmentEventData": {
       "name": "ShipmentEventData",
       "shape": {
@@ -9077,7 +8945,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ShipmentEventDataLocation"
+                "value": "ShipmentNode"
               }
             }
           },
@@ -10052,17 +9920,6 @@
         ]
       }
     },
-    "CreateCompanyEntityMailingAddress": {
-      "description": "Always Required. The object representing the mailing address of the company entity.",
-      "name": "CreateCompanyEntityMailingAddress",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "AddressForRequestBody"
-        ],
-        "properties": []
-      }
-    },
     "CreateCompanyEntity": {
       "name": "CreateCompanyEntity",
       "shape": {
@@ -10110,7 +9967,7 @@
             "key": "mailing_address",
             "valueType": {
               "type": "id",
-              "value": "CreateCompanyEntityMailingAddress"
+              "value": "AddressForRequestBody"
             }
           },
           {
@@ -14950,16 +14807,16 @@
         ]
       }
     },
-    "BookingAmendmentsPostResponsesSchemaData": {
-      "name": "BookingAmendmentsPostResponsesSchemaData",
+    "BookingAmendmentsPostResponsesContentApplicationJsonSchemaData": {
+      "name": "BookingAmendmentsPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "BookingAmendment_booking_amendment_create_Response_400": {
-      "name": "BookingAmendment_booking_amendment_create_Response_400",
+    "Booking_amendment_createRequestBadRequestError": {
+      "name": "Booking_amendment_createRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15006,7 +14863,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingAmendmentsPostResponsesSchemaData"
+                "value": "BookingAmendmentsPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -15038,8 +14895,8 @@
         ]
       }
     },
-    "BookingLineItemsGetResponsesSchemaData": {
-      "name": "BookingLineItemsGetResponsesSchemaData",
+    "BookingLineItemsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "BookingLineItemsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15094,15 +14951,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingLineItemsGetResponsesSchemaData"
+                "value": "BookingLineItemsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
         ]
       }
     },
-    "BookingLineItem_booking_line_item_index_Response_400": {
-      "name": "BookingLineItem_booking_line_item_index_Response_400",
+    "Booking_line_item_indexRequestBadRequestError": {
+      "name": "Booking_line_item_indexRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15149,7 +15006,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingLineItemsGetResponsesSchemaData"
+                "value": "BookingLineItemsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -15221,16 +15078,16 @@
         ]
       }
     },
-    "BookingLineItemsPostResponsesSchemaData": {
-      "name": "BookingLineItemsPostResponsesSchemaData",
+    "BookingLineItemsPostResponsesContentApplicationJsonSchemaData": {
+      "name": "BookingLineItemsPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "BookingLineItem_booking_line_item_create_Response_400": {
-      "name": "BookingLineItem_booking_line_item_create_Response_400",
+    "Booking_line_item_createRequestBadRequestError": {
+      "name": "Booking_line_item_createRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15277,7 +15134,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingLineItemsPostResponsesSchemaData"
+                "value": "BookingLineItemsPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -15349,16 +15206,16 @@
         ]
       }
     },
-    "BookingLineItemsIdGetResponsesSchemaData": {
-      "name": "BookingLineItemsIdGetResponsesSchemaData",
+    "BookingLineItemsIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "BookingLineItemsIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "BookingLineItem_booking_line_item_show_Response_400": {
-      "name": "BookingLineItem_booking_line_item_show_Response_400",
+    "Booking_line_item_showRequestBadRequestError": {
+      "name": "Booking_line_item_showRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15405,7 +15262,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingLineItemsIdGetResponsesSchemaData"
+                "value": "BookingLineItemsIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -15436,8 +15293,8 @@
         ]
       }
     },
-    "BookingsGetResponsesSchemaData": {
-      "name": "BookingsGetResponsesSchemaData",
+    "BookingsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "BookingsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15492,15 +15349,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingsGetResponsesSchemaData"
+                "value": "BookingsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
         ]
       }
     },
-    "Booking_bookings_index_Response_400": {
-      "name": "Booking_bookings_index_Response_400",
+    "Bookings_indexRequestBadRequestError": {
+      "name": "Bookings_indexRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15547,7 +15404,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingsGetResponsesSchemaData"
+                "value": "BookingsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -15619,16 +15476,16 @@
         ]
       }
     },
-    "BookingsPostResponsesSchemaData": {
-      "name": "BookingsPostResponsesSchemaData",
+    "BookingsPostResponsesContentApplicationJsonSchemaData": {
+      "name": "BookingsPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Booking_create_Response_400": {
-      "name": "Booking_create_Response_400",
+    "Booking_createRequestBadRequestError": {
+      "name": "Booking_createRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15675,7 +15532,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingsPostResponsesSchemaData"
+                "value": "BookingsPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -15747,16 +15604,16 @@
         ]
       }
     },
-    "BookingsIdGetResponsesSchemaData": {
-      "name": "BookingsIdGetResponsesSchemaData",
+    "BookingsIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "BookingsIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Booking_show_Response_400": {
-      "name": "Booking_show_Response_400",
+    "Booking_showRequestBadRequestError": {
+      "name": "Booking_showRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15803,7 +15660,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "BookingsIdGetResponsesSchemaData"
+                "value": "BookingsIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -15875,16 +15732,16 @@
         ]
       }
     },
-    "CarbonCalculationPostResponsesSchemaData": {
-      "name": "CarbonCalculationPostResponsesSchemaData",
+    "CarbonCalculationPostResponsesContentApplicationJsonSchemaData": {
+      "name": "CarbonCalculationPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Carbon Calculation_create_Response_400": {
-      "name": "Carbon Calculation_create_Response_400",
+    "Carbon_calculation_createRequestBadRequestError": {
+      "name": "Carbon_calculation_createRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15931,7 +15788,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CarbonCalculationPostResponsesSchemaData"
+                "value": "CarbonCalculationPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -15948,8 +15805,8 @@
         ]
       }
     },
-    "CommercialInvoicesGetResponsesSchemaData": {
-      "name": "CommercialInvoicesGetResponsesSchemaData",
+    "CommercialInvoicesGetResponsesContentApplicationJsonSchemaData": {
+      "name": "CommercialInvoicesGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16060,7 +15917,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CommercialInvoicesGetResponsesSchemaData"
+                "value": "CommercialInvoicesGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
@@ -16122,16 +15979,16 @@
         ]
       }
     },
-    "CommercialInvoicesPostResponsesSchemaData": {
-      "name": "CommercialInvoicesPostResponsesSchemaData",
+    "CommercialInvoicesPostResponsesContentApplicationJsonSchemaData": {
+      "name": "CommercialInvoicesPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Commercial Invoices_create_Response_400": {
-      "name": "Commercial Invoices_create_Response_400",
+    "Commercial_invoices_createRequestBadRequestError": {
+      "name": "Commercial_invoices_createRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16178,7 +16035,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CommercialInvoicesPostResponsesSchemaData"
+                "value": "CommercialInvoicesPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -16250,16 +16107,16 @@
         ]
       }
     },
-    "CommercialInvoicesPatchResponsesSchemaData": {
-      "name": "CommercialInvoicesPatchResponsesSchemaData",
+    "CommercialInvoicesPatchResponsesContentApplicationJsonSchemaData": {
+      "name": "CommercialInvoicesPatchResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Commercial Invoices_update_Response_400": {
-      "name": "Commercial Invoices_update_Response_400",
+    "Commercial_invoices_updateRequestBadRequestError": {
+      "name": "Commercial_invoices_updateRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16306,7 +16163,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CommercialInvoicesPatchResponsesSchemaData"
+                "value": "CommercialInvoicesPatchResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -16378,16 +16235,16 @@
         ]
       }
     },
-    "CommercialInvoicesIdGetResponsesSchemaData": {
-      "name": "CommercialInvoicesIdGetResponsesSchemaData",
+    "CommercialInvoicesIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "CommercialInvoicesIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Commercial Invoices_show_Response_400": {
-      "name": "Commercial Invoices_show_Response_400",
+    "Commercial_invoices_showRequestBadRequestError": {
+      "name": "Commercial_invoices_showRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16434,7 +16291,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CommercialInvoicesIdGetResponsesSchemaData"
+                "value": "CommercialInvoicesIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -16451,8 +16308,8 @@
         ]
       }
     },
-    "CustomsEntriesGetResponsesSchemaData": {
-      "name": "CustomsEntriesGetResponsesSchemaData",
+    "CustomsEntriesGetResponsesContentApplicationJsonSchemaData": {
+      "name": "CustomsEntriesGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16507,15 +16364,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CustomsEntriesGetResponsesSchemaData"
+                "value": "CustomsEntriesGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
         ]
       }
     },
-    "Customs Entries_customs_entry_index_Response_400": {
-      "name": "Customs Entries_customs_entry_index_Response_400",
+    "Customs_entry_indexRequestBadRequestError": {
+      "name": "Customs_entry_indexRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16562,7 +16419,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CustomsEntriesGetResponsesSchemaData"
+                "value": "CustomsEntriesGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -16634,16 +16491,16 @@
         ]
       }
     },
-    "CustomsEntriesIdGetResponsesSchemaData": {
-      "name": "CustomsEntriesIdGetResponsesSchemaData",
+    "CustomsEntriesIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "CustomsEntriesIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Customs Entries_show_Response_400": {
-      "name": "Customs Entries_show_Response_400",
+    "Customs_entries_showRequestBadRequestError": {
+      "name": "Customs_entries_showRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16690,7 +16547,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CustomsEntriesIdGetResponsesSchemaData"
+                "value": "CustomsEntriesIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -16707,8 +16564,8 @@
         ]
       }
     },
-    "DocumentsGetResponsesSchemaData": {
-      "name": "DocumentsGetResponsesSchemaData",
+    "DocumentsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "DocumentsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16763,15 +16620,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "DocumentsGetResponsesSchemaData"
+                "value": "DocumentsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
         ]
       }
     },
-    "Document_documents_index_Response_400": {
-      "name": "Document_documents_index_Response_400",
+    "Documents_indexRequestBadRequestError": {
+      "name": "Documents_indexRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16818,7 +16675,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "DocumentsGetResponsesSchemaData"
+                "value": "DocumentsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -16890,16 +16747,16 @@
         ]
       }
     },
-    "DocumentsPostResponsesSchemaData": {
-      "name": "DocumentsPostResponsesSchemaData",
+    "DocumentsPostResponsesContentApplicationJsonSchemaData": {
+      "name": "DocumentsPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Document_documents_create_Response_400": {
-      "name": "Document_documents_create_Response_400",
+    "Documents_createRequestBadRequestError": {
+      "name": "Documents_createRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16946,7 +16803,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "DocumentsPostResponsesSchemaData"
+                "value": "DocumentsPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -17018,16 +16875,16 @@
         ]
       }
     },
-    "DocumentsIdGetResponsesSchemaData": {
-      "name": "DocumentsIdGetResponsesSchemaData",
+    "DocumentsIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "DocumentsIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Document_documents_show_Response_400": {
-      "name": "Document_documents_show_Response_400",
+    "Documents_showRequestBadRequestError": {
+      "name": "Documents_showRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17074,7 +16931,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "DocumentsIdGetResponsesSchemaData"
+                "value": "DocumentsIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -17091,16 +16948,16 @@
         ]
       }
     },
-    "DocumentsIdDownloadGetResponsesSchemaData": {
-      "name": "DocumentsIdDownloadGetResponsesSchemaData",
+    "DocumentsIdDownloadGetResponsesContentApplicationJsonSchemaData": {
+      "name": "DocumentsIdDownloadGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Document_documents_download_Response_400": {
-      "name": "Document_documents_download_Response_400",
+    "Documents_downloadRequestBadRequestError": {
+      "name": "Documents_downloadRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17147,7 +17004,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "DocumentsIdDownloadGetResponsesSchemaData"
+                "value": "DocumentsIdDownloadGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -17190,8 +17047,8 @@
         ]
       }
     },
-    "EventsGetResponsesSchemaData": {
-      "name": "EventsGetResponsesSchemaData",
+    "EventsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "EventsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17246,15 +17103,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "EventsGetResponsesSchemaData"
+                "value": "EventsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
         ]
       }
     },
-    "Event_events_index_Response_400": {
-      "name": "Event_events_index_Response_400",
+    "Events_indexRequestBadRequestError": {
+      "name": "Events_indexRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17301,7 +17158,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "EventsGetResponsesSchemaData"
+                "value": "EventsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -17373,16 +17230,16 @@
         ]
       }
     },
-    "EventsIdGetResponsesSchemaData": {
-      "name": "EventsIdGetResponsesSchemaData",
+    "EventsIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "EventsIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Event_events_show_Response_400": {
-      "name": "Event_events_show_Response_400",
+    "Events_showRequestBadRequestError": {
+      "name": "Events_showRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17429,7 +17286,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "EventsIdGetResponsesSchemaData"
+                "value": "EventsIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -17466,8 +17323,8 @@
         ]
       }
     },
-    "InvoicesGetResponsesSchemaData": {
-      "name": "InvoicesGetResponsesSchemaData",
+    "InvoicesGetResponsesContentApplicationJsonSchemaData": {
+      "name": "InvoicesGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17522,15 +17379,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "InvoicesGetResponsesSchemaData"
+                "value": "InvoicesGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
         ]
       }
     },
-    "Invoices_invoice_index_Response_400": {
-      "name": "Invoices_invoice_index_Response_400",
+    "Invoice_indexRequestBadRequestError": {
+      "name": "Invoice_indexRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17577,7 +17434,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "InvoicesGetResponsesSchemaData"
+                "value": "InvoicesGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -17649,16 +17506,16 @@
         ]
       }
     },
-    "InvoicesIdGetResponsesSchemaData": {
-      "name": "InvoicesIdGetResponsesSchemaData",
+    "InvoicesIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "InvoicesIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Invoices_show_Response_400": {
-      "name": "Invoices_show_Response_400",
+    "Invoices_showRequestBadRequestError": {
+      "name": "Invoices_showRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17705,7 +17562,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "InvoicesIdGetResponsesSchemaData"
+                "value": "InvoicesIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -17722,8 +17579,8 @@
         ]
       }
     },
-    "NetworkCompaniesGetResponsesSchemaData": {
-      "name": "NetworkCompaniesGetResponsesSchemaData",
+    "NetworkCompaniesGetResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkCompaniesGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17778,15 +17635,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkCompaniesGetResponsesSchemaData"
+                "value": "NetworkCompaniesGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
         ]
       }
     },
-    "Company_network_company_index_Response_400": {
-      "name": "Company_network_company_index_Response_400",
+    "Network_company_indexRequestBadRequestError": {
+      "name": "Network_company_indexRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17833,7 +17690,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkCompaniesGetResponsesSchemaData"
+                "value": "NetworkCompaniesGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -17905,16 +17762,16 @@
         ]
       }
     },
-    "NetworkCompaniesPostResponsesSchemaData": {
-      "name": "NetworkCompaniesPostResponsesSchemaData",
+    "NetworkCompaniesPostResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkCompaniesPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Company_network_company_create_Response_400": {
-      "name": "Company_network_company_create_Response_400",
+    "Network_company_createRequestBadRequestError": {
+      "name": "Network_company_createRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17961,7 +17818,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkCompaniesPostResponsesSchemaData"
+                "value": "NetworkCompaniesPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -18088,16 +17945,16 @@
         ]
       }
     },
-    "NetworkCompaniesIdPatchResponsesSchemaData": {
-      "name": "NetworkCompaniesIdPatchResponsesSchemaData",
+    "NetworkCompaniesIdPatchResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkCompaniesIdPatchResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Company_network_company_update_Response_400": {
-      "name": "Company_network_company_update_Response_400",
+    "Network_company_updateRequestBadRequestError": {
+      "name": "Network_company_updateRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -18144,7 +18001,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkCompaniesIdPatchResponsesSchemaData"
+                "value": "NetworkCompaniesIdPatchResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -18161,8 +18018,8 @@
         ]
       }
     },
-    "NetworkCompanyEntitiesGetResponsesSchemaData": {
-      "name": "NetworkCompanyEntitiesGetResponsesSchemaData",
+    "NetworkCompanyEntitiesGetResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkCompanyEntitiesGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -18217,15 +18074,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkCompanyEntitiesGetResponsesSchemaData"
+                "value": "NetworkCompanyEntitiesGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
         ]
       }
     },
-    "CompanyEntity_company_entity_index_Response_400": {
-      "name": "CompanyEntity_company_entity_index_Response_400",
+    "Company_entity_indexRequestBadRequestError": {
+      "name": "Company_entity_indexRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -18272,7 +18129,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkCompanyEntitiesGetResponsesSchemaData"
+                "value": "NetworkCompanyEntitiesGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -18344,16 +18201,16 @@
         ]
       }
     },
-    "NetworkCompanyEntitiesPostResponsesSchemaData": {
-      "name": "NetworkCompanyEntitiesPostResponsesSchemaData",
+    "NetworkCompanyEntitiesPostResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkCompanyEntitiesPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "CompanyEntity_network_company_entity_create_Response_400": {
-      "name": "CompanyEntity_network_company_entity_create_Response_400",
+    "Network_company_entity_createRequestBadRequestError": {
+      "name": "Network_company_entity_createRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -18400,7 +18257,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkCompanyEntitiesPostResponsesSchemaData"
+                "value": "NetworkCompanyEntitiesPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -18472,16 +18329,16 @@
         ]
       }
     },
-    "NetworkCompanyEntitiesIdGetResponsesSchemaData": {
-      "name": "NetworkCompanyEntitiesIdGetResponsesSchemaData",
+    "NetworkCompanyEntitiesIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkCompanyEntitiesIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "CompanyEntity_network_company_entity_show_Response_400": {
-      "name": "CompanyEntity_network_company_entity_show_Response_400",
+    "Network_company_entity_showRequestBadRequestError": {
+      "name": "Network_company_entity_showRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -18528,7 +18385,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkCompanyEntitiesIdGetResponsesSchemaData"
+                "value": "NetworkCompanyEntitiesIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -18600,16 +18457,16 @@
         ]
       }
     },
-    "NetworkCompanyEntitiesIdPatchResponsesSchemaData": {
-      "name": "NetworkCompanyEntitiesIdPatchResponsesSchemaData",
+    "NetworkCompanyEntitiesIdPatchResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkCompanyEntitiesIdPatchResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "CompanyEntity_network_company_entity_update_Response_400": {
-      "name": "CompanyEntity_network_company_entity_update_Response_400",
+    "Network_company_entity_updateRequestBadRequestError": {
+      "name": "Network_company_entity_updateRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -18656,7 +18513,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkCompanyEntitiesIdPatchResponsesSchemaData"
+                "value": "NetworkCompanyEntitiesIdPatchResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -18673,8 +18530,8 @@
         ]
       }
     },
-    "NetworkContactsGetResponsesSchemaData": {
-      "name": "NetworkContactsGetResponsesSchemaData",
+    "NetworkContactsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkContactsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -18729,15 +18586,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkContactsGetResponsesSchemaData"
+                "value": "NetworkContactsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
         ]
       }
     },
-    "Contact_network_contact_index_Response_400": {
-      "name": "Contact_network_contact_index_Response_400",
+    "Network_contact_indexRequestBadRequestError": {
+      "name": "Network_contact_indexRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -18784,7 +18641,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkContactsGetResponsesSchemaData"
+                "value": "NetworkContactsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -18856,16 +18713,16 @@
         ]
       }
     },
-    "NetworkContactsPostResponsesSchemaData": {
-      "name": "NetworkContactsPostResponsesSchemaData",
+    "NetworkContactsPostResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkContactsPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Contact_network_contact_create_Response_400": {
-      "name": "Contact_network_contact_create_Response_400",
+    "Network_contact_createRequestBadRequestError": {
+      "name": "Network_contact_createRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -18912,7 +18769,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkContactsPostResponsesSchemaData"
+                "value": "NetworkContactsPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -18984,16 +18841,16 @@
         ]
       }
     },
-    "NetworkContactsIdGetResponsesSchemaData": {
-      "name": "NetworkContactsIdGetResponsesSchemaData",
+    "NetworkContactsIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkContactsIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Contact_network_contact_show_Response_400": {
-      "name": "Contact_network_contact_show_Response_400",
+    "Network_contact_showRequestBadRequestError": {
+      "name": "Network_contact_showRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19040,7 +18897,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkContactsIdGetResponsesSchemaData"
+                "value": "NetworkContactsIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -19112,16 +18969,16 @@
         ]
       }
     },
-    "NetworkContactsIdPatchResponsesSchemaData": {
-      "name": "NetworkContactsIdPatchResponsesSchemaData",
+    "NetworkContactsIdPatchResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkContactsIdPatchResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Contact_network_contact_update_Response_400": {
-      "name": "Contact_network_contact_update_Response_400",
+    "Network_contact_updateRequestBadRequestError": {
+      "name": "Network_contact_updateRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19168,7 +19025,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkContactsIdPatchResponsesSchemaData"
+                "value": "NetworkContactsIdPatchResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -19185,8 +19042,8 @@
         ]
       }
     },
-    "NetworkLocationsGetResponsesSchemaData": {
-      "name": "NetworkLocationsGetResponsesSchemaData",
+    "NetworkLocationsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkLocationsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19241,15 +19098,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkLocationsGetResponsesSchemaData"
+                "value": "NetworkLocationsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
         ]
       }
     },
-    "Location_index_Response_400": {
-      "name": "Location_index_Response_400",
+    "Location_indexRequestBadRequestError": {
+      "name": "Location_indexRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19296,7 +19153,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkLocationsGetResponsesSchemaData"
+                "value": "NetworkLocationsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -19368,16 +19225,16 @@
         ]
       }
     },
-    "NetworkLocationsPostResponsesSchemaData": {
-      "name": "NetworkLocationsPostResponsesSchemaData",
+    "NetworkLocationsPostResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkLocationsPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Location_network_location_create_Response_400": {
-      "name": "Location_network_location_create_Response_400",
+    "Network_location_createRequestBadRequestError": {
+      "name": "Network_location_createRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19424,7 +19281,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkLocationsPostResponsesSchemaData"
+                "value": "NetworkLocationsPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -19496,16 +19353,16 @@
         ]
       }
     },
-    "NetworkLocationsIdGetResponsesSchemaData": {
-      "name": "NetworkLocationsIdGetResponsesSchemaData",
+    "NetworkLocationsIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkLocationsIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Location_network_location_show_Response_400": {
-      "name": "Location_network_location_show_Response_400",
+    "Network_location_showRequestBadRequestError": {
+      "name": "Network_location_showRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19552,7 +19409,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkLocationsIdGetResponsesSchemaData"
+                "value": "NetworkLocationsIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -19624,16 +19481,16 @@
         ]
       }
     },
-    "NetworkLocationsIdPatchResponsesSchemaData": {
-      "name": "NetworkLocationsIdPatchResponsesSchemaData",
+    "NetworkLocationsIdPatchResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkLocationsIdPatchResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Location_update_Response_400": {
-      "name": "Location_update_Response_400",
+    "Location_updateRequestBadRequestError": {
+      "name": "Location_updateRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19680,7 +19537,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkLocationsIdPatchResponsesSchemaData"
+                "value": "NetworkLocationsIdPatchResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -19752,16 +19609,16 @@
         ]
       }
     },
-    "NetworkMeCompaniesGetResponsesSchemaData": {
-      "name": "NetworkMeCompaniesGetResponsesSchemaData",
+    "NetworkMeCompaniesGetResponsesContentApplicationJsonSchemaData": {
+      "name": "NetworkMeCompaniesGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Company_network_company_me_Response_400": {
-      "name": "Company_network_company_me_Response_400",
+    "Network_company_meRequestBadRequestError": {
+      "name": "Network_company_meRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19808,7 +19665,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "NetworkMeCompaniesGetResponsesSchemaData"
+                "value": "NetworkMeCompaniesGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -19825,8 +19682,8 @@
         ]
       }
     },
-    "OceanShipmentContainerLegsGetResponsesSchemaData": {
-      "name": "OceanShipmentContainerLegsGetResponsesSchemaData",
+    "OceanShipmentContainerLegsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "OceanShipmentContainerLegsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19881,15 +19738,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "OceanShipmentContainerLegsGetResponsesSchemaData"
+                "value": "OceanShipmentContainerLegsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
         ]
       }
     },
-    "ContainerLeg_ocean_container_legs_index_Response_400": {
-      "name": "ContainerLeg_ocean_container_legs_index_Response_400",
+    "Ocean_container_legs_indexRequestBadRequestError": {
+      "name": "Ocean_container_legs_indexRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19936,7 +19793,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "OceanShipmentContainerLegsGetResponsesSchemaData"
+                "value": "OceanShipmentContainerLegsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -20008,16 +19865,16 @@
         ]
       }
     },
-    "OceanShipmentContainerLegsIdGetResponsesSchemaData": {
-      "name": "OceanShipmentContainerLegsIdGetResponsesSchemaData",
+    "OceanShipmentContainerLegsIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "OceanShipmentContainerLegsIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "ContainerLeg_ocean_container_legs_show_Response_400": {
-      "name": "ContainerLeg_ocean_container_legs_show_Response_400",
+    "Ocean_container_legs_showRequestBadRequestError": {
+      "name": "Ocean_container_legs_showRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -20064,7 +19921,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "OceanShipmentContainerLegsIdGetResponsesSchemaData"
+                "value": "OceanShipmentContainerLegsIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -20081,8 +19938,8 @@
         ]
       }
     },
-    "OceanShipmentContainersGetResponsesSchemaData": {
-      "name": "OceanShipmentContainersGetResponsesSchemaData",
+    "OceanShipmentContainersGetResponsesContentApplicationJsonSchemaData": {
+      "name": "OceanShipmentContainersGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -20137,15 +19994,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "OceanShipmentContainersGetResponsesSchemaData"
+                "value": "OceanShipmentContainersGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
         ]
       }
     },
-    "Container_list_Response_400": {
-      "name": "Container_list_Response_400",
+    "Container_listRequestBadRequestError": {
+      "name": "Container_listRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -20192,7 +20049,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "OceanShipmentContainersGetResponsesSchemaData"
+                "value": "OceanShipmentContainersGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -20264,16 +20121,16 @@
         ]
       }
     },
-    "OceanShipmentContainersIdGetResponsesSchemaData": {
-      "name": "OceanShipmentContainersIdGetResponsesSchemaData",
+    "OceanShipmentContainersIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "OceanShipmentContainersIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Container_show_Response_400": {
-      "name": "Container_show_Response_400",
+    "Container_showRequestBadRequestError": {
+      "name": "Container_showRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -20320,7 +20177,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "OceanShipmentContainersIdGetResponsesSchemaData"
+                "value": "OceanShipmentContainersIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -20357,8 +20214,8 @@
         ]
       }
     },
-    "PortsGetResponsesSchemaData": {
-      "name": "PortsGetResponsesSchemaData",
+    "PortsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "PortsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -20413,15 +20270,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PortsGetResponsesSchemaData"
+                "value": "PortsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
         ]
       }
     },
-    "Ports_index_Response_400": {
-      "name": "Ports_index_Response_400",
+    "Ports_indexRequestBadRequestError": {
+      "name": "Ports_indexRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -20468,7 +20325,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PortsGetResponsesSchemaData"
+                "value": "PortsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -20485,8 +20342,8 @@
         ]
       }
     },
-    "ProductsGetResponsesSchemaData": {
-      "name": "ProductsGetResponsesSchemaData",
+    "ProductsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "ProductsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -20541,15 +20398,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ProductsGetResponsesSchemaData"
+                "value": "ProductsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
         ]
       }
     },
-    "Product_index_Response_400": {
-      "name": "Product_index_Response_400",
+    "Product_indexRequestBadRequestError": {
+      "name": "Product_indexRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -20596,7 +20453,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ProductsGetResponsesSchemaData"
+                "value": "ProductsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -20668,16 +20525,16 @@
         ]
       }
     },
-    "ProductsPostResponsesSchemaData": {
-      "name": "ProductsPostResponsesSchemaData",
+    "ProductsPostResponsesContentApplicationJsonSchemaData": {
+      "name": "ProductsPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Product_create_Response_400": {
-      "name": "Product_create_Response_400",
+    "Product_createRequestBadRequestError": {
+      "name": "Product_createRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -20724,7 +20581,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ProductsPostResponsesSchemaData"
+                "value": "ProductsPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -20796,16 +20653,16 @@
         ]
       }
     },
-    "ProductsIdGetResponsesSchemaData": {
-      "name": "ProductsIdGetResponsesSchemaData",
+    "ProductsIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "ProductsIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Product_show_Response_400": {
-      "name": "Product_show_Response_400",
+    "Product_showRequestBadRequestError": {
+      "name": "Product_showRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -20852,7 +20709,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ProductsIdGetResponsesSchemaData"
+                "value": "ProductsIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -20924,16 +20781,16 @@
         ]
       }
     },
-    "ProductsIdPatchResponsesSchemaData": {
-      "name": "ProductsIdPatchResponsesSchemaData",
+    "ProductsIdPatchResponsesContentApplicationJsonSchemaData": {
+      "name": "ProductsIdPatchResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Product_update_Response_400": {
-      "name": "Product_update_Response_400",
+    "Product_updateRequestBadRequestError": {
+      "name": "Product_updateRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -20980,7 +20837,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ProductsIdPatchResponsesSchemaData"
+                "value": "ProductsIdPatchResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -21012,8 +20869,8 @@
         ]
       }
     },
-    "PurchaseOrderLineItemsGetResponsesSchemaData": {
-      "name": "PurchaseOrderLineItemsGetResponsesSchemaData",
+    "PurchaseOrderLineItemsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "PurchaseOrderLineItemsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21068,15 +20925,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PurchaseOrderLineItemsGetResponsesSchemaData"
+                "value": "PurchaseOrderLineItemsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
         ]
       }
     },
-    "PurchaseOrderLineItem_purchase_order_line_item_index_Response_400": {
-      "name": "PurchaseOrderLineItem_purchase_order_line_item_index_Response_400",
+    "Purchase_order_line_item_indexRequestBadRequestError": {
+      "name": "Purchase_order_line_item_indexRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21123,7 +20980,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PurchaseOrderLineItemsGetResponsesSchemaData"
+                "value": "PurchaseOrderLineItemsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -21195,16 +21052,16 @@
         ]
       }
     },
-    "PurchaseOrderLineItemsIdGetResponsesSchemaData": {
-      "name": "PurchaseOrderLineItemsIdGetResponsesSchemaData",
+    "PurchaseOrderLineItemsIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "PurchaseOrderLineItemsIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "PurchaseOrderLineItem_purchase_order_line_item_show_Response_400": {
-      "name": "PurchaseOrderLineItem_purchase_order_line_item_show_Response_400",
+    "Purchase_order_line_item_showRequestBadRequestError": {
+      "name": "Purchase_order_line_item_showRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21251,7 +21108,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PurchaseOrderLineItemsIdGetResponsesSchemaData"
+                "value": "PurchaseOrderLineItemsIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -21329,8 +21186,8 @@
         ]
       }
     },
-    "PurchaseOrdersGetResponsesSchemaData": {
-      "name": "PurchaseOrdersGetResponsesSchemaData",
+    "PurchaseOrdersGetResponsesContentApplicationJsonSchemaData": {
+      "name": "PurchaseOrdersGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21385,15 +21242,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PurchaseOrdersGetResponsesSchemaData"
+                "value": "PurchaseOrdersGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
         ]
       }
     },
-    "PurchaseOrder_purchase_order_index_Response_400": {
-      "name": "PurchaseOrder_purchase_order_index_Response_400",
+    "Purchase_order_indexRequestBadRequestError": {
+      "name": "Purchase_order_indexRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21440,7 +21297,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PurchaseOrdersGetResponsesSchemaData"
+                "value": "PurchaseOrdersGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -21457,16 +21314,16 @@
         ]
       }
     },
-    "PurchaseOrdersPostResponsesSchemaData": {
-      "name": "PurchaseOrdersPostResponsesSchemaData",
+    "PurchaseOrdersPostResponsesContentApplicationJsonSchemaData": {
+      "name": "PurchaseOrdersPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "PurchaseOrder_purchase_order_create_Response_400": {
-      "name": "PurchaseOrder_purchase_order_create_Response_400",
+    "Purchase_order_createRequestBadRequestError": {
+      "name": "Purchase_order_createRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21513,7 +21370,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PurchaseOrdersPostResponsesSchemaData"
+                "value": "PurchaseOrdersPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -21585,16 +21442,16 @@
         ]
       }
     },
-    "PurchaseOrdersIdGetResponsesSchemaData": {
-      "name": "PurchaseOrdersIdGetResponsesSchemaData",
+    "PurchaseOrdersIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "PurchaseOrdersIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "PurchaseOrder_purchase_order_show_Response_400": {
-      "name": "PurchaseOrder_purchase_order_show_Response_400",
+    "Purchase_order_showRequestBadRequestError": {
+      "name": "Purchase_order_showRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21641,7 +21498,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PurchaseOrdersIdGetResponsesSchemaData"
+                "value": "PurchaseOrdersIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -21658,16 +21515,16 @@
         ]
       }
     },
-    "PurchaseOrdersIdPostResponsesSchemaData": {
-      "name": "PurchaseOrdersIdPostResponsesSchemaData",
+    "PurchaseOrdersIdPostResponsesContentApplicationJsonSchemaData": {
+      "name": "PurchaseOrdersIdPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "PurchaseOrder_purchase_order_update_Response_400": {
-      "name": "PurchaseOrder_purchase_order_update_Response_400",
+    "Purchase_order_updateRequestBadRequestError": {
+      "name": "Purchase_order_updateRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21714,7 +21571,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PurchaseOrdersIdPostResponsesSchemaData"
+                "value": "PurchaseOrdersIdPostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -21731,8 +21588,8 @@
         ]
       }
     },
-    "ShipmentLegsGetResponsesSchemaData": {
-      "name": "ShipmentLegsGetResponsesSchemaData",
+    "ShipmentLegsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "ShipmentLegsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21787,15 +21644,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ShipmentLegsGetResponsesSchemaData"
+                "value": "ShipmentLegsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
         ]
       }
     },
-    "ShipmentLeg_shipment_leg_index_Response_400": {
-      "name": "ShipmentLeg_shipment_leg_index_Response_400",
+    "Shipment_leg_indexRequestBadRequestError": {
+      "name": "Shipment_leg_indexRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21842,7 +21699,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ShipmentLegsGetResponsesSchemaData"
+                "value": "ShipmentLegsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -21914,16 +21771,16 @@
         ]
       }
     },
-    "ShipmentLegsIdGetResponsesSchemaData": {
-      "name": "ShipmentLegsIdGetResponsesSchemaData",
+    "ShipmentLegsIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "ShipmentLegsIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "ShipmentLeg_shipment_leg_show_Response_400": {
-      "name": "ShipmentLeg_shipment_leg_show_Response_400",
+    "Shipment_leg_showRequestBadRequestError": {
+      "name": "Shipment_leg_showRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -21970,7 +21827,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ShipmentLegsIdGetResponsesSchemaData"
+                "value": "ShipmentLegsIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -22002,8 +21859,8 @@
         ]
       }
     },
-    "ShipmentsGetResponsesSchemaData": {
-      "name": "ShipmentsGetResponsesSchemaData",
+    "ShipmentsGetResponsesContentApplicationJsonSchemaData": {
+      "name": "ShipmentsGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -22058,15 +21915,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ShipmentsGetResponsesSchemaData"
+                "value": "ShipmentsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           }
         ]
       }
     },
-    "Shipment_index_Response_400": {
-      "name": "Shipment_index_Response_400",
+    "Shipment_indexRequestBadRequestError": {
+      "name": "Shipment_indexRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -22113,7 +21970,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ShipmentsGetResponsesSchemaData"
+                "value": "ShipmentsGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -22185,16 +22042,16 @@
         ]
       }
     },
-    "ShipmentsIdGetResponsesSchemaData": {
-      "name": "ShipmentsIdGetResponsesSchemaData",
+    "ShipmentsIdGetResponsesContentApplicationJsonSchemaData": {
+      "name": "ShipmentsIdGetResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Shipment_show_Response_400": {
-      "name": "Shipment_show_Response_400",
+    "Shipment_showRequestBadRequestError": {
+      "name": "Shipment_showRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -22241,7 +22098,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ShipmentsIdGetResponsesSchemaData"
+                "value": "ShipmentsIdGetResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -22313,16 +22170,16 @@
         ]
       }
     },
-    "ShipmentsIdPatchResponsesSchemaData": {
-      "name": "ShipmentsIdPatchResponsesSchemaData",
+    "ShipmentsIdPatchResponsesContentApplicationJsonSchemaData": {
+      "name": "ShipmentsIdPatchResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "Shipment_update_Response_400": {
-      "name": "Shipment_update_Response_400",
+    "Shipment_updateRequestBadRequestError": {
+      "name": "Shipment_updateRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -22369,7 +22226,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ShipmentsIdPatchResponsesSchemaData"
+                "value": "ShipmentsIdPatchResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -22386,8 +22243,8 @@
         ]
       }
     },
-    "ShipmentsShareablePostResponsesSchemaDataShipmentsItems": {
-      "name": "ShipmentsShareablePostResponsesSchemaDataShipmentsItems",
+    "ShipmentsShareablePostResponsesContentApplicationJsonSchemaDataShipmentsItems": {
+      "name": "ShipmentsShareablePostResponsesContentApplicationJsonSchemaDataShipmentsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -22431,8 +22288,8 @@
         ]
       }
     },
-    "ShipmentsShareablePostResponsesSchemaData": {
-      "name": "ShipmentsShareablePostResponsesSchemaData",
+    "ShipmentsShareablePostResponsesContentApplicationJsonSchemaData": {
+      "name": "ShipmentsShareablePostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -22487,15 +22344,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ShipmentsShareablePostResponsesSchemaData"
+                "value": "ShipmentsShareablePostResponsesContentApplicationJsonSchemaData"
               }
             }
           }
         ]
       }
     },
-    "Shipment_shipments_shareable_Response_400": {
-      "name": "Shipment_shipments_shareable_Response_400",
+    "Shipments_shareableRequestBadRequestError": {
+      "name": "Shipments_shareableRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -22542,7 +22399,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ShipmentsShareablePostResponsesSchemaData"
+                "value": "ShipmentsShareablePostResponsesContentApplicationJsonSchemaData"
               }
             }
           },
@@ -22617,10 +22474,24 @@
             "statusCode": 200,
             "description": "The created booking amendment"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Booking_amendment_createRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "BookingAmendment_booking_amendment_create_example",
               "description": "",
               "path": "/booking_amendments",
               "pathParameters": {},
@@ -22756,6 +22627,18 @@
                   },
                   "new_metadata": {}
                 }
+              },
+              "responseStatusCode": 200
+            },
+            {
+              "name": "response",
+              "description": "",
+              "path": "/booking_amendments",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "json"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -23118,10 +23001,24 @@
             "statusCode": 200,
             "description": "collection of booking line items"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Booking_line_item_indexRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/booking_line_items",
               "pathParameters": {},
@@ -23249,10 +23146,24 @@
             "statusCode": 200,
             "description": "The created booking line item"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Booking_line_item_createRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "BookingLineItem_booking_line_item_create_example",
               "description": "",
               "path": "/booking_line_items",
               "pathParameters": {},
@@ -23270,6 +23181,18 @@
                   "booking_id": 9876,
                   "units": 200
                 }
+              },
+              "responseStatusCode": 200
+            },
+            {
+              "name": "response",
+              "description": "",
+              "path": "/booking_line_items",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "json"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -23387,12 +23310,26 @@
             "statusCode": 200,
             "description": "A collection of booking line items"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Booking_line_item_showRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/booking_line_items/",
+              "path": "/booking_line_items/42",
               "pathParameters": {
                 "id": 42
               },
@@ -23764,10 +23701,24 @@
             "statusCode": 200,
             "description": "collection of bookings"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Bookings_indexRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/bookings",
               "pathParameters": {},
@@ -24252,10 +24203,24 @@
             "statusCode": 200,
             "description": "The created booking"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Booking_createRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "Booking_create_example",
               "description": "",
               "path": "/bookings",
               "pathParameters": {},
@@ -24421,6 +24386,18 @@
                   "special_instructions": "Handle carefully",
                   "metadata": {}
                 }
+              },
+              "responseStatusCode": 200
+            },
+            {
+              "name": "response",
+              "description": "",
+              "path": "/bookings",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "json"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -24958,12 +24935,26 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Booking_showRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/bookings/",
+              "path": "/bookings/42",
               "pathParameters": {
                 "id": 42
               },
@@ -25481,10 +25472,24 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Carbon_calculation_createRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "Carbon Calculation_create_example",
               "description": "",
               "path": "/carbon_calculation",
               "pathParameters": {},
@@ -25516,6 +25521,18 @@
                   },
                   "destination_port": "JFK"
                 }
+              },
+              "responseStatusCode": 200
+            },
+            {
+              "name": "response",
+              "description": "",
+              "path": "/carbon_calculation",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "json"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -25693,7 +25710,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/commercial_invoices",
               "pathParameters": {},
@@ -25955,10 +25972,24 @@
             "statusCode": 200,
             "description": "The created commercial invoice"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Commercial_invoices_createRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/commercial_invoices",
               "pathParameters": {},
@@ -26241,10 +26272,24 @@
             "statusCode": 200,
             "description": "The updated commercial invoice"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Commercial_invoices_updateRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/commercial_invoices",
               "pathParameters": {},
@@ -26503,14 +26548,28 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Commercial_invoices_showRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/commercial_invoices/",
+              "path": "/commercial_invoices/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -26800,10 +26859,24 @@
             "statusCode": 200,
             "description": "collection of customs entries"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Customs_entry_indexRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/customs_entries",
               "pathParameters": {},
@@ -26929,14 +27002,28 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Customs_entries_showRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/customs_entries/",
+              "path": "/customs_entries/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -27162,10 +27249,24 @@
             "statusCode": 200,
             "description": "collection of documents"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Documents_indexRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/documents",
               "pathParameters": {},
@@ -27297,10 +27398,24 @@
             "statusCode": 200,
             "description": "Created"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Documents_createRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/documents",
               "pathParameters": {},
@@ -27419,14 +27534,28 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Documents_showRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/documents/",
+              "path": "/documents/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -27544,14 +27673,28 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Documents_downloadRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "documentsDownloadExample",
               "description": "",
-              "path": "/documents/",
+              "path": "/documents/id/download",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -27676,10 +27819,24 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Events_indexRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "eventsIndexExample",
               "description": "",
               "path": "/events",
               "pathParameters": {},
@@ -29368,12 +29525,26 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Events_showRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "eventsShowExample",
               "description": "",
-              "path": "/events/",
+              "path": "/events/42",
               "pathParameters": {
                 "id": 42
               },
@@ -31247,10 +31418,24 @@
             "statusCode": 200,
             "description": "collection of invoices"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Invoice_indexRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/invoices",
               "pathParameters": {},
@@ -31804,14 +31989,28 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Invoices_showRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/invoices/",
+              "path": "/invoices/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -32400,10 +32599,24 @@
             "statusCode": 200,
             "description": "collection of companies"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Network_company_indexRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/companies",
               "pathParameters": {},
@@ -32590,10 +32803,24 @@
             "statusCode": 200,
             "description": "The created company"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Network_company_createRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/companies",
               "pathParameters": {},
@@ -32771,11 +32998,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/network/companies/",
+              "path": "/network/companies/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -32965,12 +33192,26 @@
             "statusCode": 200,
             "description": "The updated company"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Network_company_updateRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/network/companies/",
+              "path": "/network/companies/K67EZV1K8cQ5afQErZwk1Q",
               "pathParameters": {
                 "id": "K67EZV1K8cQ5afQErZwk1Q"
               },
@@ -33122,10 +33363,24 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Network_company_meRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/me/companies",
               "pathParameters": {},
@@ -33353,10 +33608,24 @@
             "statusCode": 200,
             "description": "collection of company entities"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Company_entity_indexRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/company_entities",
               "pathParameters": {},
@@ -33503,10 +33772,24 @@
             "statusCode": 200,
             "description": "The created company entity"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Network_company_entity_createRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/company_entities",
               "pathParameters": {},
@@ -33657,14 +33940,28 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Network_company_entity_showRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/network/company_entities/",
+              "path": "/network/company_entities/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -33814,14 +34111,28 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Network_company_entity_updateRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/network/company_entities/",
+              "path": "/network/company_entities/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -34026,10 +34337,24 @@
             "statusCode": 200,
             "description": "collection of contacts"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Network_contact_indexRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/contacts",
               "pathParameters": {},
@@ -34160,10 +34485,24 @@
             "statusCode": 200,
             "description": "The created contact"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Network_contact_createRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/contacts",
               "pathParameters": {},
@@ -34300,14 +34639,28 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Network_contact_showRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/network/contacts/",
+              "path": "/network/contacts/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -34441,12 +34794,26 @@
             "statusCode": 200,
             "description": "The updated contact"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Network_contact_updateRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/network/contacts/",
+              "path": "/network/contacts/FHLKEFHHoW8nwh9UVOMpw",
               "pathParameters": {
                 "id": "FHLKEFHHoW8nwh9UVOMpw"
               },
@@ -34663,10 +35030,24 @@
             "statusCode": 200,
             "description": "collection of locations"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Location_indexRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/locations",
               "pathParameters": {},
@@ -34823,10 +35204,24 @@
             "statusCode": 200,
             "description": "The created location"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Network_location_createRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/locations",
               "pathParameters": {},
@@ -34989,14 +35384,28 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Network_location_showRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/network/locations/",
+              "path": "/network/locations/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -35156,14 +35565,28 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Location_updateRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/network/locations/",
+              "path": "/network/locations/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -35375,10 +35798,24 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Ocean_container_legs_indexRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/ocean/shipment_container_legs",
               "pathParameters": {},
@@ -35519,12 +35956,26 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Ocean_container_legs_showRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/ocean/shipment_container_legs/",
+              "path": "/ocean/shipment_container_legs/42",
               "pathParameters": {
                 "id": 42
               },
@@ -35714,10 +36165,24 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Container_listRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/ocean/shipment_containers",
               "pathParameters": {},
@@ -35935,14 +36400,28 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Container_showRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/ocean/shipment_containers/",
+              "path": "/ocean/shipment_containers/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -36190,10 +36669,24 @@
             "statusCode": 200,
             "description": "collection of ports"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Ports_indexRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/ports",
               "pathParameters": {},
@@ -36448,10 +36941,24 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Product_indexRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/products",
               "pathParameters": {},
@@ -36613,10 +37120,24 @@
             "statusCode": 200,
             "description": "Created"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Product_createRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/products",
               "pathParameters": {},
@@ -36785,14 +37306,28 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Product_showRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/products/",
+              "path": "/products/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -36957,14 +37492,28 @@
             "statusCode": 200,
             "description": "Updated"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Product_updateRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/products/",
+              "path": "/products/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -37207,10 +37756,24 @@
             "statusCode": 200,
             "description": "collection of purchase order line items"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Purchase_order_line_item_indexRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/purchase_order_line_items",
               "pathParameters": {},
@@ -37512,12 +38075,26 @@
             "statusCode": 200,
             "description": "collection of purchase order line items"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Purchase_order_line_item_showRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/purchase_order_line_items/",
+              "path": "/purchase_order_line_items/42",
               "pathParameters": {
                 "id": 42
               },
@@ -37994,10 +38571,24 @@
             "statusCode": 200,
             "description": "collection of purchase orders"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Purchase_order_indexRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/purchase_orders",
               "pathParameters": {},
@@ -38430,10 +39021,24 @@
             "statusCode": 200,
             "description": "The created purchase order"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Purchase_order_createRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "PurchaseOrder_purchase_order_create_example",
               "description": "",
               "path": "/purchase_orders",
               "pathParameters": {},
@@ -38676,6 +39281,18 @@
                   ]
                 }
               },
+              "responseStatusCode": 200
+            },
+            {
+              "name": "response",
+              "description": "",
+              "path": "/purchase_orders",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "json"
+              },
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -38768,12 +39385,26 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Purchase_order_showRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/purchase_orders/",
+              "path": "/purchase_orders/42",
               "pathParameters": {
                 "id": 42
               },
@@ -38869,12 +39500,26 @@
             "statusCode": 200,
             "description": "The update purchase order"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Purchase_order_updateRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "PurchaseOrder_purchase_order_update_example",
               "description": "",
-              "path": "/purchase_orders/",
+              "path": "/purchase_orders/42",
               "pathParameters": {
                 "id": 42
               },
@@ -39077,6 +39722,20 @@
                   ]
                 }
               },
+              "responseStatusCode": 200
+            },
+            {
+              "name": "response",
+              "description": "",
+              "path": "/purchase_orders/42",
+              "pathParameters": {
+                "id": 42
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "json"
+              },
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -39218,10 +39877,24 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Shipment_leg_indexRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/shipment_legs",
               "pathParameters": {},
@@ -39587,12 +40260,26 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Shipment_leg_showRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/shipment_legs/",
+              "path": "/shipment_legs/42",
               "pathParameters": {
                 "id": 42
               },
@@ -40318,10 +41005,24 @@
             "statusCode": 200,
             "description": "collection of shipments"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Shipment_indexRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/shipments",
               "pathParameters": {},
@@ -40931,14 +41632,28 @@
             "statusCode": 200,
             "description": "Success"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Shipment_showRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/shipments/",
+              "path": "/shipments/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -41540,12 +42255,26 @@
             "statusCode": 200,
             "description": "The updated shipment"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Shipment_updateRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
-              "path": "/shipments/",
+              "path": "/shipments/12345",
               "pathParameters": {
                 "id": 12345
               },
@@ -42157,10 +42886,24 @@
             "statusCode": 200,
             "description": "collection of shipments shareable status url"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Shipments_shareableRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "error",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "Shipment_shipments_shareable_example",
               "description": "",
               "path": "/shipments_shareable",
               "pathParameters": {},
@@ -42180,6 +42923,18 @@
                     456
                   ]
                 }
+              },
+              "responseStatusCode": 200
+            },
+            {
+              "name": "response",
+              "description": "",
+              "path": "/shipments_shareable",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "json"
               },
               "responseStatusCode": 200,
               "responseBody": {

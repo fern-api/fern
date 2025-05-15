@@ -37,6 +37,9 @@
     },
     {
       "path": "../../../commons/casings-generator"
-    }
+    },
+    {
+      "path": "../../../commons/fs-utils"
+    },
   ]
 }

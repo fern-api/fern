@@ -13,22 +13,9 @@
         }
       }
     },
-    "EthCallParamBlock0": {
-      "name": "EthCallParamBlock0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
-          }
-        }
-      }
-    },
     "EthCallParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "EthCallParamBlock1",
+      "name": "Block tag",
       "shape": {
         "type": "enum",
         "values": [
@@ -50,29 +37,18 @@
         ]
       }
     },
-    "EthCallParamBlock2": {
-      "name": "EthCallParamBlock2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^0x[0-9a-f]{64}$"
-          }
-        }
-      }
-    },
     "eth_call_Param_Block": {
       "name": "eth_call_Param_Block",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthCallParamBlock0",
             "type": {
-              "type": "id",
-              "value": "EthCallParamBlock0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
             }
           },
           {
@@ -84,10 +60,12 @@
             }
           },
           {
-            "typeName": "EthCallParamBlock2",
             "type": {
-              "type": "id",
-              "value": "EthCallParamBlock2"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]{64}$"
+              }
             }
           }
         ]
@@ -378,22 +356,9 @@
         }
       }
     },
-    "EthEstimateGasParamBlock0": {
-      "name": "EthEstimateGasParamBlock0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
-          }
-        }
-      }
-    },
     "EthEstimateGasParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "EthEstimateGasParamBlock1",
+      "name": "Block tag",
       "shape": {
         "type": "enum",
         "values": [
@@ -421,10 +386,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthEstimateGasParamBlock0",
             "type": {
-              "type": "id",
-              "value": "EthEstimateGasParamBlock0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
             }
           },
           {
@@ -685,22 +652,9 @@
         }
       }
     },
-    "EthGetBalanceParamBlock0": {
-      "name": "EthGetBalanceParamBlock0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
-          }
-        }
-      }
-    },
     "EthGetBalanceParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "EthGetBalanceParamBlock1",
+      "name": "Block tag",
       "shape": {
         "type": "enum",
         "values": [
@@ -722,29 +676,18 @@
         ]
       }
     },
-    "EthGetBalanceParamBlock2": {
-      "name": "EthGetBalanceParamBlock2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^0x[0-9a-f]{64}$"
-          }
-        }
-      }
-    },
     "eth_getBalance_Param_Block": {
       "name": "eth_getBalance_Param_Block",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetBalanceParamBlock0",
             "type": {
-              "type": "id",
-              "value": "EthGetBalanceParamBlock0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
             }
           },
           {
@@ -756,10 +699,12 @@
             }
           },
           {
-            "typeName": "EthGetBalanceParamBlock2",
             "type": {
-              "type": "id",
-              "value": "EthGetBalanceParamBlock2"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]{64}$"
+              }
             }
           }
         ]
@@ -787,22 +732,6 @@
           "value": {
             "type": "string",
             "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
-          }
-        }
-      }
-    },
-    "EthGetBlockByHashResultTransactions0": {
-      "name": "EthGetBlockByHashResultTransactions0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "regex": "^0x[0-9a-f]{64}$"
-            }
           }
         }
       }
@@ -846,11 +775,76 @@
       }
     },
     "EthGetBlockByHashResultTransactionsOneOf1Items0": {
-      "name": "EthGetBlockByHashResultTransactionsOneOf1Items0",
+      "name": "Signed 4844 Transaction",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -1053,11 +1047,76 @@
       }
     },
     "EthGetBlockByHashResultTransactionsOneOf1Items1": {
-      "name": "EthGetBlockByHashResultTransactionsOneOf1Items1",
+      "name": "Signed 1559 Transaction",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -1266,11 +1325,76 @@
       }
     },
     "EthGetBlockByHashResultTransactionsOneOf1Items2": {
-      "name": "EthGetBlockByHashResultTransactionsOneOf1Items2",
+      "name": "Signed 2930 Transaction",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -1419,11 +1543,76 @@
       }
     },
     "EthGetBlockByHashResultTransactionsOneOf1Items3": {
-      "name": "EthGetBlockByHashResultTransactionsOneOf1Items3",
+      "name": "Signed Legacy Transaction",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -1585,7 +1774,7 @@
       }
     },
     "EthGetBlockByHashResultTransactions1": {
-      "name": "EthGetBlockByHashResultTransactions1",
+      "name": "Full transactions",
       "shape": {
         "type": "alias",
         "value": {
@@ -1603,10 +1792,15 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetBlockByHashResultTransactions0",
             "type": {
-              "type": "id",
-              "value": "EthGetBlockByHashResultTransactions0"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
             }
           },
           {
@@ -1986,22 +2180,6 @@
         }
       }
     },
-    "EthGetBlockByNumberResultTransactions0": {
-      "name": "EthGetBlockByNumberResultTransactions0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "regex": "^0x[0-9a-f]{64}$"
-            }
-          }
-        }
-      }
-    },
     "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf0AccessListItems": {
       "name": "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf0AccessListItems",
       "shape": {
@@ -2041,11 +2219,76 @@
       }
     },
     "EthGetBlockByNumberResultTransactionsOneOf1Items0": {
-      "name": "EthGetBlockByNumberResultTransactionsOneOf1Items0",
+      "name": "Signed 4844 Transaction",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -2248,11 +2491,76 @@
       }
     },
     "EthGetBlockByNumberResultTransactionsOneOf1Items1": {
-      "name": "EthGetBlockByNumberResultTransactionsOneOf1Items1",
+      "name": "Signed 1559 Transaction",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -2461,11 +2769,76 @@
       }
     },
     "EthGetBlockByNumberResultTransactionsOneOf1Items2": {
-      "name": "EthGetBlockByNumberResultTransactionsOneOf1Items2",
+      "name": "Signed 2930 Transaction",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -2614,11 +2987,76 @@
       }
     },
     "EthGetBlockByNumberResultTransactionsOneOf1Items3": {
-      "name": "EthGetBlockByNumberResultTransactionsOneOf1Items3",
+      "name": "Signed Legacy Transaction",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -2780,7 +3218,7 @@
       }
     },
     "EthGetBlockByNumberResultTransactions1": {
-      "name": "EthGetBlockByNumberResultTransactions1",
+      "name": "Full transactions",
       "shape": {
         "type": "alias",
         "value": {
@@ -2798,10 +3236,15 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetBlockByNumberResultTransactions0",
             "type": {
-              "type": "id",
-              "value": "EthGetBlockByNumberResultTransactions0"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
             }
           },
           {
@@ -3143,22 +3586,9 @@
         ]
       }
     },
-    "EthGetBlockByNumberParamBlockNumberOrTag0": {
-      "name": "EthGetBlockByNumberParamBlockNumberOrTag0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
-          }
-        }
-      }
-    },
     "EthGetBlockByNumberParamBlockNumberOrTag1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "EthGetBlockByNumberParamBlockNumberOrTag1",
+      "name": "Block tag",
       "shape": {
         "type": "enum",
         "values": [
@@ -3186,10 +3616,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetBlockByNumberParamBlockNumberOrTag0",
             "type": {
-              "type": "id",
-              "value": "EthGetBlockByNumberParamBlockNumberOrTag0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
             }
           },
           {
@@ -3257,22 +3689,9 @@
         }
       }
     },
-    "EthGetBlockTransactionCountByNumberParamBlockNumberOrTag0": {
-      "name": "EthGetBlockTransactionCountByNumberParamBlockNumberOrTag0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
-          }
-        }
-      }
-    },
     "EthGetBlockTransactionCountByNumberParamBlockNumberOrTag1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "EthGetBlockTransactionCountByNumberParamBlockNumberOrTag1",
+      "name": "Block tag",
       "shape": {
         "type": "enum",
         "values": [
@@ -3300,10 +3719,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetBlockTransactionCountByNumberParamBlockNumberOrTag0",
             "type": {
-              "type": "id",
-              "value": "EthGetBlockTransactionCountByNumberParamBlockNumberOrTag0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
             }
           },
           {
@@ -3333,22 +3754,9 @@
         }
       }
     },
-    "EthGetCodeParamBlock0": {
-      "name": "EthGetCodeParamBlock0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
-          }
-        }
-      }
-    },
     "EthGetCodeParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "EthGetCodeParamBlock1",
+      "name": "Block tag",
       "shape": {
         "type": "enum",
         "values": [
@@ -3370,29 +3778,18 @@
         ]
       }
     },
-    "EthGetCodeParamBlock2": {
-      "name": "EthGetCodeParamBlock2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^0x[0-9a-f]{64}$"
-          }
-        }
-      }
-    },
     "eth_getCode_Param_Block": {
       "name": "eth_getCode_Param_Block",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetCodeParamBlock0",
             "type": {
-              "type": "id",
-              "value": "EthGetCodeParamBlock0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
             }
           },
           {
@@ -3404,10 +3801,12 @@
             }
           },
           {
-            "typeName": "EthGetCodeParamBlock2",
             "type": {
-              "type": "id",
-              "value": "EthGetCodeParamBlock2"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]{64}$"
+              }
             }
           }
         ]
@@ -3435,22 +3834,6 @@
           "value": {
             "type": "string",
             "regex": "^0x[0-9a-f]*$"
-          }
-        }
-      }
-    },
-    "EthGetLogsResult0": {
-      "name": "EthGetLogsResult0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "regex": "^0x[0-9a-f]{64}$"
-            }
           }
         }
       }
@@ -3581,7 +3964,7 @@
       }
     },
     "EthGetLogsResult1": {
-      "name": "EthGetLogsResult1",
+      "name": "new logs",
       "shape": {
         "type": "alias",
         "value": {
@@ -3599,10 +3982,15 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetLogsResult0",
             "type": {
-              "type": "id",
-              "value": "EthGetLogsResult0"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
             }
           },
           {
@@ -3615,84 +4003,33 @@
         ]
       }
     },
-    "MethodsParams0Address0": {
-      "name": "MethodsParams0Address0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^0x[0-9a-fA-F]{40}$"
-          }
-        }
-      }
-    },
-    "MethodsParams0Address1": {
-      "name": "MethodsParams0Address1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "regex": "^0x[0-9a-fA-F]{40}$"
-            }
-          }
-        }
-      }
-    },
     "MethodsParams0Address": {
       "name": "MethodsParams0Address",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "MethodsParams0Address0",
             "type": {
-              "type": "id",
-              "value": "MethodsParams0Address0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-fA-F]{40}$"
+              }
             }
           },
           {
-            "typeName": "MethodsParams0Address1",
             "type": {
-              "type": "id",
-              "value": "MethodsParams0Address1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "MethodsParams0TopicsItems0": {
-      "name": "MethodsParams0TopicsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^0x[0-9a-f]{64}$"
-          }
-        }
-      }
-    },
-    "MethodsParams0TopicsItems1": {
-      "name": "MethodsParams0TopicsItems1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "regex": "^0x[0-9a-f]{64}$"
-            }
-          }
-        }
       }
     },
     "MethodsParams0TopicsItems": {
@@ -3701,17 +4038,24 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "MethodsParams0TopicsItems0",
             "type": {
-              "type": "id",
-              "value": "MethodsParams0TopicsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]{64}$"
+              }
             }
           },
           {
-            "typeName": "MethodsParams0TopicsItems1",
             "type": {
-              "type": "id",
-              "value": "MethodsParams0TopicsItems1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
             }
           }
         ]
@@ -3787,10 +4131,15 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetLogsResult0",
             "type": {
-              "type": "id",
-              "value": "EthGetLogsResult0"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
             }
           },
           {
@@ -3927,22 +4276,9 @@
         ]
       }
     },
-    "EthGetProofParamBlock0": {
-      "name": "EthGetProofParamBlock0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
-          }
-        }
-      }
-    },
     "EthGetProofParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "EthGetProofParamBlock1",
+      "name": "Block tag",
       "shape": {
         "type": "enum",
         "values": [
@@ -3964,29 +4300,18 @@
         ]
       }
     },
-    "EthGetProofParamBlock2": {
-      "name": "EthGetProofParamBlock2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^0x[0-9a-f]{64}$"
-          }
-        }
-      }
-    },
     "eth_getProof_Param_Block": {
       "name": "eth_getProof_Param_Block",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetProofParamBlock0",
             "type": {
-              "type": "id",
-              "value": "EthGetProofParamBlock0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
             }
           },
           {
@@ -3998,10 +4323,12 @@
             }
           },
           {
-            "typeName": "EthGetProofParamBlock2",
             "type": {
-              "type": "id",
-              "value": "EthGetProofParamBlock2"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]{64}$"
+              }
             }
           }
         ]
@@ -4118,22 +4445,9 @@
         ]
       }
     },
-    "EthGetStorageAtParamBlock0": {
-      "name": "EthGetStorageAtParamBlock0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
-          }
-        }
-      }
-    },
     "EthGetStorageAtParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "EthGetStorageAtParamBlock1",
+      "name": "Block tag",
       "shape": {
         "type": "enum",
         "values": [
@@ -4155,29 +4469,18 @@
         ]
       }
     },
-    "EthGetStorageAtParamBlock2": {
-      "name": "EthGetStorageAtParamBlock2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^0x[0-9a-f]{64}$"
-          }
-        }
-      }
-    },
     "eth_getStorageAt_Param_Block": {
       "name": "eth_getStorageAt_Param_Block",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetStorageAtParamBlock0",
             "type": {
-              "type": "id",
-              "value": "EthGetStorageAtParamBlock0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
             }
           },
           {
@@ -4189,10 +4492,12 @@
             }
           },
           {
-            "typeName": "EthGetStorageAtParamBlock2",
             "type": {
-              "type": "id",
-              "value": "EthGetStorageAtParamBlock2"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]{64}$"
+              }
             }
           }
         ]
@@ -4276,11 +4581,76 @@
       }
     },
     "EthGetTransactionByBlockHashAndIndexResult0": {
-      "name": "EthGetTransactionByBlockHashAndIndexResult0",
+      "name": "Signed 4844 Transaction",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -4483,11 +4853,76 @@
       }
     },
     "EthGetTransactionByBlockHashAndIndexResult1": {
-      "name": "EthGetTransactionByBlockHashAndIndexResult1",
+      "name": "Signed 1559 Transaction",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -4696,11 +5131,76 @@
       }
     },
     "EthGetTransactionByBlockHashAndIndexResult2": {
-      "name": "EthGetTransactionByBlockHashAndIndexResult2",
+      "name": "Signed 2930 Transaction",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -4849,11 +5349,76 @@
       }
     },
     "EthGetTransactionByBlockHashAndIndexResult3": {
-      "name": "EthGetTransactionByBlockHashAndIndexResult3",
+      "name": "Signed Legacy Transaction",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -5092,11 +5657,76 @@
       }
     },
     "EthGetTransactionByBlockNumberAndIndexResult0": {
-      "name": "EthGetTransactionByBlockNumberAndIndexResult0",
+      "name": "Signed 4844 Transaction",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -5299,11 +5929,76 @@
       }
     },
     "EthGetTransactionByBlockNumberAndIndexResult1": {
-      "name": "EthGetTransactionByBlockNumberAndIndexResult1",
+      "name": "Signed 1559 Transaction",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -5512,11 +6207,76 @@
       }
     },
     "EthGetTransactionByBlockNumberAndIndexResult2": {
-      "name": "EthGetTransactionByBlockNumberAndIndexResult2",
+      "name": "Signed 2930 Transaction",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -5665,11 +6425,76 @@
       }
     },
     "EthGetTransactionByBlockNumberAndIndexResult3": {
-      "name": "EthGetTransactionByBlockNumberAndIndexResult3",
+      "name": "Signed Legacy Transaction",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -5830,22 +6655,9 @@
         ]
       }
     },
-    "EthGetTransactionByBlockNumberAndIndexParamBlock0": {
-      "name": "EthGetTransactionByBlockNumberAndIndexParamBlock0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
-          }
-        }
-      }
-    },
     "EthGetTransactionByBlockNumberAndIndexParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "EthGetTransactionByBlockNumberAndIndexParamBlock1",
+      "name": "Block tag",
       "shape": {
         "type": "enum",
         "values": [
@@ -5873,10 +6685,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetTransactionByBlockNumberAndIndexParamBlock0",
             "type": {
-              "type": "id",
-              "value": "EthGetTransactionByBlockNumberAndIndexParamBlock0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
             }
           },
           {
@@ -5955,11 +6769,76 @@
       }
     },
     "EthGetTransactionByHashResult0": {
-      "name": "EthGetTransactionByHashResult0",
+      "name": "Signed 4844 Transaction",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -6162,11 +7041,76 @@
       }
     },
     "EthGetTransactionByHashResult1": {
-      "name": "EthGetTransactionByHashResult1",
+      "name": "Signed 1559 Transaction",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -6375,11 +7319,76 @@
       }
     },
     "EthGetTransactionByHashResult2": {
-      "name": "EthGetTransactionByHashResult2",
+      "name": "Signed 2930 Transaction",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -6528,11 +7537,76 @@
       }
     },
     "EthGetTransactionByHashResult3": {
-      "name": "EthGetTransactionByHashResult3",
+      "name": "Signed Legacy Transaction",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "blockHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+                }
+              }
+            }
+          },
           {
             "key": "type",
             "valueType": {
@@ -6719,22 +7793,9 @@
         }
       }
     },
-    "EthGetTransactionCountParamBlock0": {
-      "name": "EthGetTransactionCountParamBlock0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
-          }
-        }
-      }
-    },
     "EthGetTransactionCountParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "EthGetTransactionCountParamBlock1",
+      "name": "Block tag",
       "shape": {
         "type": "enum",
         "values": [
@@ -6756,29 +7817,18 @@
         ]
       }
     },
-    "EthGetTransactionCountParamBlock2": {
-      "name": "EthGetTransactionCountParamBlock2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^0x[0-9a-f]{64}$"
-          }
-        }
-      }
-    },
     "eth_getTransactionCount_Param_Block": {
       "name": "eth_getTransactionCount_Param_Block",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetTransactionCountParamBlock0",
             "type": {
-              "type": "id",
-              "value": "EthGetTransactionCountParamBlock0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x([1-9a-f]+[0-9a-f]*|0)$"
+              }
             }
           },
           {
@@ -6790,10 +7840,12 @@
             }
           },
           {
-            "typeName": "EthGetTransactionCountParamBlock2",
             "type": {
-              "type": "id",
-              "value": "EthGetTransactionCountParamBlock2"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[0-9a-f]{64}$"
+              }
             }
           }
         ]
@@ -7217,20 +8269,8 @@
         }
       }
     },
-    "EthSyncingResult0": {
-      "name": "EthSyncingResult0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "EthSyncingResult10": {
-      "name": "EthSyncingResult10",
+      "name": "Syncing progress",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7277,21 +8317,8 @@
         ]
       }
     },
-    "EthSyncingResult11": {
-      "description": "Should always return false if not syncing.",
-      "name": "EthSyncingResult11",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "EthSyncingResult1": {
-      "name": "EthSyncingResult1",
+      "name": "Syncing status",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -7303,11 +8330,12 @@
             }
           },
           {
-            "typeName": "EthSyncingResult11",
             "description": "Should always return false if not syncing.",
             "type": {
-              "type": "id",
-              "value": "EthSyncingResult11"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -7319,10 +8347,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthSyncingResult0",
             "type": {
-              "type": "id",
-              "value": "EthSyncingResult0"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           },
           {
@@ -7341,10 +8370,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthSyncingResult0",
             "type": {
-              "type": "id",
-              "value": "EthSyncingResult0"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           },
           {
@@ -7459,7 +8489,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_blockNumber example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -7567,7 +8597,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_call example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -7663,7 +8693,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_chainId example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -7771,7 +8801,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_estimateGas example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -7867,7 +8897,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_gasPrice example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -7978,7 +9008,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getBalance example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -8101,7 +9131,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getBlockByHash example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -8295,7 +9325,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getBlockByNumber example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -8485,7 +9515,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getBlockTransactionCountByHash example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -8596,7 +9626,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getBlockTransactionCountByNumber example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -8715,7 +9745,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getCode example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -8822,7 +9852,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getLogs example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -9016,7 +10046,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getProof example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -9190,7 +10220,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getStorageAt example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -9316,7 +10346,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getTransactionByBlockHashAndIndex example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -9469,7 +10499,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getTransactionByBlockNumberAndIndex example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -9614,7 +10644,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getTransactionByHash example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -9765,7 +10795,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getTransactionCount example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -9878,7 +10908,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getTransactionReceipt example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -10020,7 +11050,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_sendRawTransaction example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -10105,7 +11135,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_syncing example (syncing)",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -10137,6 +11167,17 @@
                 }
               }
             },
+            "codeSamples": []
+          },
+          {
+            "name": "eth_syncing example (not syncing)",
+            "description": "",
+            "path": "/{apiKey}",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": [],
+            "responseStatusCode": 200,
             "codeSamples": []
           }
         ],
@@ -10192,7 +11233,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "net_version example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -10271,7 +11312,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "web3_clientVersion example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -10374,7 +11415,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "web3_sha3 example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},

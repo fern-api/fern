@@ -16,7 +16,7 @@
                     "from seed import SeedUnknownAsAny"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedUnknownAsAny(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedUnknownAsAny(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -55,7 +55,7 @@
                         "from seed import AsyncSeedUnknownAsAny"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedUnknownAsAny(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedUnknownAsAny(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -106,7 +106,7 @@
                     "from seed import SeedUnknownAsAny"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedUnknownAsAny(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedUnknownAsAny(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -145,7 +145,7 @@
                         "from seed import AsyncSeedUnknownAsAny"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedUnknownAsAny(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedUnknownAsAny(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

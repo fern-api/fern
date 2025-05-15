@@ -1,4 +1,4 @@
-import { HttpResponsePromise, RawResponse } from "../fetcher";
+import { HttpResponsePromise, RawResponse } from "../fetcher/index.js";
 
 /**
  * A page of results from a paginated API.

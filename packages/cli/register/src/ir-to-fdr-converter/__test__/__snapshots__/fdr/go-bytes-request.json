@@ -1,0 +1,57 @@
+{
+  "types": {},
+  "subpackages": {
+    "subpackage_service": {
+      "subpackageId": "subpackage_service",
+      "name": "service",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "upload",
+          "originalEndpointId": "endpoint_service.upload",
+          "name": "Upload",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/upload-content"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "bytes",
+              "isOptional": false,
+              "contentType": "application/octet-stream"
+            }
+          },
+          "errorsV2": [],
+          "examples": []
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [],
+    "subpackages": [
+      "subpackage_service"
+    ]
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

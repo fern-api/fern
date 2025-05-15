@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_auth.getToken"
             },
             "snippet": {
-                "sync_client": "from seed import SeedOauthClientCredentials\nclient = SeedOauthClientCredentials(base_url=\"https://yourhost.com/path/to/api\", client_id=\"YOUR_CLIENT_ID\", client_secret=\"YOUR_CLIENT_SECRET\", )\nclient.auth.get_token(client_id='client_id', client_secret='client_secret', scope='scope', )\n",
-                "async_client": "from seed import AsyncSeedOauthClientCredentials\nimport asyncio\nclient = AsyncSeedOauthClientCredentials(base_url=\"https://yourhost.com/path/to/api\", client_id=\"YOUR_CLIENT_ID\", client_secret=\"YOUR_CLIENT_SECRET\", )\nasync def main() -> None:\n    await client.auth.get_token(client_id='client_id', client_secret='client_secret', scope='scope', )\nasyncio.run(main())",
+                "sync_client": "from seed import SeedOauthClientCredentials\n\nclient = SeedOauthClientCredentials(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.auth.get_token(\n    client_id=\"client_id\",\n    client_secret=\"client_secret\",\n    scope=\"scope\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedOauthClientCredentials\n\nclient = AsyncSeedOauthClientCredentials(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.auth.get_token(\n        client_id=\"client_id\",\n        client_secret=\"client_secret\",\n        scope=\"scope\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

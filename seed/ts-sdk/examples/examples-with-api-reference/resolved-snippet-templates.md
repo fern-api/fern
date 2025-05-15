@@ -220,15 +220,14 @@ await client.service.createMovie({
 ```typescript
 import { SeedExamplesClient } from "@fern/examples";
 
-const client = new SeedExamplesClient({
-  environment: SeedExamplesEnvironment.Production,
-  token: "YOUR_TOKEN",
-});
-await client.service.getMetadata({
-  shallow: false,
-  tag: "development",
-  xApiVersion: "0.0.1",
-});
+const client = new SeedExamplesClient({ environment: SeedExamplesEnvironment.Production, token: "YOUR_TOKEN" });        
+await client.service.getMetadata(
+	{
+		shallow: false,
+		tag: "development",
+		X-API-Version: "0.0.1"
+	}
+)
 
 ```
 
@@ -236,15 +235,14 @@ await client.service.getMetadata({
 ```typescript
 import { SeedExamplesClient } from "@fern/examples";
 
-const client = new SeedExamplesClient({
-  environment: SeedExamplesEnvironment.Production,
-  token: "YOUR_TOKEN",
-});
-await client.service.getMetadata({
-  shallow: true,
-  tag: "tag",
-  xApiVersion: "X-API-Version",
-});
+const client = new SeedExamplesClient({ environment: SeedExamplesEnvironment.Production, token: "YOUR_TOKEN" });        
+await client.service.getMetadata(
+	{
+		shallow: true,
+		tag: "tag",
+		X-API-Version: "X-API-Version"
+	}
+)
 
 ```
 

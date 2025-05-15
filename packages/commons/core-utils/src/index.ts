@@ -18,7 +18,7 @@ export { mapValues } from "./objects/mapValues";
 export { values, type Values } from "./objects/values";
 export { PLATFORM, type Platform } from "./platform";
 export { replaceEnvVariables } from "./replaceEnvVars";
-export type { Digit, Letter, LowercaseLetter, UppercaseLetter } from "./types";
+export type { Digit, Letter, LowercaseLetter, UppercaseLetter, ContainerRunner } from "./types";
 export { visitDiscriminatedUnion } from "./visitDiscriminatedUnion";
 export type { WithoutQuestionMarks } from "./withoutQuestionMarks";
 export { mergeWithOverrides } from "./mergeWithOverrides";

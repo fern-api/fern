@@ -14,25 +14,4 @@ export const MigrationStatus = {
     Running: "RUNNING",
     Failed: "FAILED",
     Finished: "FINISHED",
-    _visit: <R>(value: MigrationStatus, visitor: MigrationStatus.Visitor<R>) => {
-        switch (value) {
-            case MigrationStatus.Running:
-                return visitor.running();
-            case MigrationStatus.Failed:
-                return visitor.failed();
-            case MigrationStatus.Finished:
-                return visitor.finished();
-            default:
-                return visitor._other();
-        }
-    },
 } as const;
-
-export namespace MigrationStatus {
-    export interface Visitor<R> {
-        running: () => R;
-        failed: () => R;
-        finished: () => R;
-        _other: () => R;
-    }
-}

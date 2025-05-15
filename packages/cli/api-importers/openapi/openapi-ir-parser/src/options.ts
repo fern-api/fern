@@ -52,6 +52,12 @@ export interface ParseOpenAPIOptions {
      * Configure what `additionalProperties` should default to when not explicitly defined on a schema. Defaults to `false`.
      */
     additionalPropertiesDefaultsTo: boolean;
+
+    /**
+     * If true, convert strings with format date to strings.
+     * If false, convert strings with format date to dates.
+     */
+    typeDatesAsStrings: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -75,7 +81,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     defaultFormParameterEncoding: "json",
     useBytesForBinaryResponse: false,
     respectForwardCompatibleEnums: false,
-    additionalPropertiesDefaultsTo: false
+    additionalPropertiesDefaultsTo: false,
+    typeDatesAsStrings: true
 };
 
 export function getParseOptions({
@@ -148,6 +155,10 @@ export function getParseOptions({
         additionalPropertiesDefaultsTo:
             overrides?.additionalPropertiesDefaultsTo ??
             options?.additionalPropertiesDefaultsTo ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.additionalPropertiesDefaultsTo
+            DEFAULT_PARSE_OPENAPI_SETTINGS.additionalPropertiesDefaultsTo,
+        typeDatesAsStrings:
+            overrides?.typeDatesAsStrings ??
+            options?.typeDatesAsStrings ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.typeDatesAsStrings
     };
 }

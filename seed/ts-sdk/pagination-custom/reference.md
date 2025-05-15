@@ -16,7 +16,7 @@
 
 ```typescript
 await client.users.listUsernamesCustom({
-    startingAfter: "starting_after",
+    starting_after: "starting_after",
 });
 ```
 

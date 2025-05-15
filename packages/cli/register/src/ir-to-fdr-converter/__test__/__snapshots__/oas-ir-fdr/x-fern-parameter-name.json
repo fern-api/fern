@@ -78,17 +78,17 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getUserExample",
             "description": "",
-            "path": "/user/",
+            "path": "/user/userId",
             "pathParameters": {
-              "userId": "foo"
+              "userId": "userId"
             },
             "queryParameters": {
               "foo": "foo"
             },
             "headers": {
-              "X-API-Version": "foo"
+              "X-API-Version": "X-API-Version"
             },
             "responseStatusCode": 200,
             "responseBody": {

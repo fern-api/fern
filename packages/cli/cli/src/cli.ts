@@ -5,6 +5,7 @@ import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 
+import { BaseOpenAPIWorkspace } from "@fern-api/api-workspace-commons";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
     PROJECT_CONFIG_FILENAME,
@@ -12,8 +13,10 @@ import {
     getFernDirectory,
     loadProjectConfig
 } from "@fern-api/configuration-loader";
+import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
 import { initializeAPI, initializeDocs, initializeWithMintlify, initializeWithReadme } from "@fern-api/init";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
@@ -24,6 +27,7 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
 import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
+import { diff } from "./commands/diff/diff";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
 import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces";
@@ -38,7 +42,6 @@ import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJ
 import { mockServer } from "./commands/mock/mockServer";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
-import { getSdkVersion } from "./commands/sdk/version/getSdkVersion";
 import { testOutput } from "./commands/test/testOutput";
 import { generateToken } from "./commands/token/token";
 import { updateApiSpec } from "./commands/upgrade/updateApiSpec";
@@ -56,7 +59,7 @@ const USE_NODE_18_OR_ABOVE_MESSAGE = "The Fern CLI requires Node 18+ or above.";
 
 async function runCli() {
     const isLocal = process.argv.includes("--local");
-    const cliContext = new CliContext(process.stdout, { isLocal });
+    const cliContext = new CliContext(process.stdout, process.stderr, { isLocal });
 
     const exit = async () => {
         await cliContext.exit();
@@ -152,6 +155,7 @@ async function tryRunCli(cliContext: CliContext) {
         .demandCommand()
         .recommendCommands();
 
+    addDiffCommand(cli, cliContext);
     addInitCommand(cli, cliContext);
     addTokenCommand(cli, cliContext);
     addAddCommand(cli, cliContext);
@@ -184,7 +188,6 @@ async function tryRunCli(cliContext: CliContext) {
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
     addGeneratorCommands(cli, cliContext);
-    addSdkCommand(cli, cliContext);
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
@@ -327,48 +330,43 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     );
 }
 
-function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command("sdk <command>", "SDK management commands", (yargs) => {
-        return yargs
-            .command(
-                "version",
-                "Generate the next semantic version based on your API changes.",
-                (yargs) => {
-                    yargs.option("api", {
-                        string: true,
-                        description: "Only run the command on the provided API"
-                    });
-                    yargs.option("group", {
-                        string: true,
-                        demandOption: true,
-                        description: "The group to generate the next semantic version for"
-                    });
-                    yargs.option("from-version", {
-                        string: true,
-                        description: "The previous version of the SDK (e.g. 1.1.0)"
-                    });
-                    yargs.option("from", {
-                        string: true,
-                        demandOption: true,
-                        description:
-                            "A reference that resolves to the previous version of the API (e.g. a git SHA like 'bac7962')"
-                    });
-                },
-                async (argv) =>
-                    await getSdkVersion({
-                        project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                            commandLineApiWorkspace: undefined,
-                            defaultToAllApiWorkspaces: true
-                        }),
-                        context: cliContext,
-                        group: argv.group as string,
-                        from: argv.from as string,
-                        fromVersion: argv.fromVersion as string
-                    })
-            )
-            .demandCommand(1)
-            .help();
-    });
+function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "diff",
+        "Diff two versions of an API",
+        (yargs) =>
+            yargs
+                .option("from", {
+                    string: true,
+                    demandOption: true,
+                    description: "The previous version of the API"
+                })
+                .option("to", {
+                    string: true,
+                    demandOption: true,
+                    description: "The next version of the API"
+                })
+                .option("from-version", {
+                    string: true,
+                    description: "The previous version of the API (e.g. 1.1.0)"
+                }),
+        async (argv) => {
+            const fromVersion = argv.fromVersion != null ? argv.fromVersion : undefined;
+            const result = await diff({
+                context: cliContext,
+                from: argv.from,
+                to: argv.to,
+                fromVersion
+            });
+            if (fromVersion != null) {
+                // If the user specified the --from-version flag, we write the full
+                // JSON object to stdout.
+                cliContext.logger.info(JSON.stringify(result));
+            }
+            const code = result.bump === "major" ? 1 : 0;
+            await cliContext.exit({ code });
+        }
+    );
 }
 
 function addTokenCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
@@ -496,6 +494,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description:
                         "Throw an error (rather than logging a warning) if there are broken links in the docs.",
                     default: false
+                })
+                .option("runner", {
+                    choices: ["docker", "podman"],
+                    description: "Choose the container runtime to use for local generation.",
+                    default: undefined
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -515,10 +518,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     groupName: argv.group,
                     shouldLogS3Url: argv.printZipUrl,
                     keepDocker: argv.keepDocker,
-                    useLocalDocker: argv.local,
+                    useLocalDocker: argv.local || argv.runner != null,
                     preview: argv.preview,
                     mode: argv.mode,
-                    force: argv.force
+                    force: argv.force,
+                    runner: argv.runner as ContainerRunner
                 });
             }
             if (argv.docs != null) {
@@ -558,7 +562,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 useLocalDocker: argv.local,
                 preview: argv.preview,
                 mode: argv.mode,
-                force: argv.force
+                force: argv.force,
+                runner: argv.runner as ContainerRunner
             });
         }
     );
@@ -872,6 +877,11 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     description: "Run validation locally without sending data to Fern API.",
                     default: false
+                })
+                .option("from-openapi", {
+                    boolean: true,
+                    description: "Whether to use the new parser and go directly from OpenAPI to IR",
+                    default: false
                 }),
         async (argv) => {
             await validateWorkspaces({
@@ -882,7 +892,8 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 cliContext,
                 logWarnings: argv.warnings,
                 brokenLinks: argv.brokenLinks,
-                errorOnBrokenLinks: argv.strictBrokenLinks
+                errorOnBrokenLinks: argv.strictBrokenLinks,
+                directFromOpenapi: argv.fromOpenapi
             });
         }
     );

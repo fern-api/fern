@@ -16,7 +16,7 @@
                     "from seed import SeedServerSentEvents"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedServerSentEvents(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedServerSentEvents(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -55,7 +55,7 @@
                         "from seed import AsyncSeedServerSentEvents"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedServerSentEvents(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedServerSentEvents(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

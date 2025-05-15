@@ -3158,11 +3158,12 @@
             }
           },
           {
-            "typeName": "V1ListenPostParametersSchema1",
             "description": "Use a previous version of a model",
             "type": {
-              "type": "id",
-              "value": "V1ListenPostParametersSchema1"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           }
         ]
@@ -3178,19 +3179,6 @@
             "value": "latest"
           }
         ]
-      }
-    },
-    "V1ListenPostParametersSchema1": {
-      "description": "Use a previous version of a model",
-      "name": "V1ListenPostParametersSchema1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "V1ListenPostParametersSchemaOneOf1Items": {
@@ -3210,8 +3198,21 @@
         ]
       }
     },
-    "Speech to Text_listen_Response_400": {
-      "name": "Speech to Text_listen_Response_400",
+    "V1ListenPostParametersSchema1": {
+      "name": "V1ListenPostParametersSchema1",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemType": {
+            "type": "id",
+            "value": "V1ListenPostParametersSchemaOneOf1Items"
+          }
+        }
+      }
+    },
+    "ListenRequestBadRequestError": {
+      "name": "ListenRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3270,35 +3271,8 @@
         ]
       }
     },
-    "V1ReadPostParametersSchema0": {
-      "name": "V1ReadPostParametersSchema0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1ReadPostParametersSchema1": {
-      "name": "V1ReadPostParametersSchema1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "Text Intelligence_TextRead_Response_400": {
-      "name": "Text Intelligence_TextRead_Response_400",
+    "TextReadRequestBadRequestError": {
+      "name": "TextReadRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3347,7 +3321,7 @@
     },
     "V1SpeakPostParametersSchema0": {
       "description": "Encoding - linear16. Supported sample rates - 8000, 16000, 24000, 32000, 48000 Hz.",
-      "name": "V1SpeakPostParametersSchema0",
+      "name": "linear16",
       "shape": {
         "type": "enum",
         "values": [
@@ -3365,36 +3339,6 @@
           },
           {
             "value": "48000"
-          }
-        ]
-      }
-    },
-    "V1SpeakPostParametersSchema1": {
-      "description": "Encoding - mulaw. Supported sample rates - 8000, 16000 Hz.",
-      "name": "V1SpeakPostParametersSchema1",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "8000"
-          },
-          {
-            "value": "16000"
-          }
-        ]
-      }
-    },
-    "V1SpeakPostParametersSchema2": {
-      "description": "Encoding - alaw. Supported sample rates - 8000, 16000 Hz.",
-      "name": "V1SpeakPostParametersSchema2",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "8000"
-          },
-          {
-            "value": "16000"
           }
         ]
       }
@@ -3447,9 +3391,39 @@
         ]
       }
     },
+    "V1SpeakPostParametersSchema1": {
+      "description": "Encoding - mulaw. Supported sample rates - 8000, 16000 Hz.",
+      "name": "mulaw",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "8000"
+          },
+          {
+            "value": "16000"
+          }
+        ]
+      }
+    },
+    "V1SpeakPostParametersSchema2": {
+      "description": "Encoding - alaw. Supported sample rates - 8000, 16000 Hz.",
+      "name": "alaw",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "8000"
+          },
+          {
+            "value": "16000"
+          }
+        ]
+      }
+    },
     "V1SpeakPostParametersSchema3": {
       "description": "Encoding - mp3. Sample rate is fixed and not configurable (22050 Hz).",
-      "name": "V1SpeakPostParametersSchema3",
+      "name": "mp3",
       "shape": {
         "type": "enum",
         "values": [
@@ -3461,7 +3435,7 @@
     },
     "V1SpeakPostParametersSchema4": {
       "description": "Encoding - opus. Sample rate is fixed at 48000 Hz.",
-      "name": "V1SpeakPostParametersSchema4",
+      "name": "opus",
       "shape": {
         "type": "enum",
         "values": [
@@ -3473,7 +3447,7 @@
     },
     "V1SpeakPostParametersSchema5": {
       "description": "Encoding - opus. High-compression audio format optimized for real-time communications.",
-      "name": "V1SpeakPostParametersSchema5",
+      "name": "opus",
       "shape": {
         "type": "enum",
         "values": [
@@ -3485,7 +3459,7 @@
     },
     "V1SpeakPostParametersSchema6": {
       "description": "Encoding - aac. Advanced audio format offering better quality at smaller file sizes than mp3.",
-      "name": "V1SpeakPostParametersSchema6",
+      "name": "aac",
       "shape": {
         "type": "enum",
         "values": [
@@ -3495,8 +3469,8 @@
         ]
       }
     },
-    "Text to Speech_speak_Response_400": {
-      "name": "Text to Speech_speak_Response_400",
+    "SpeakRequestBadRequestError": {
+      "name": "SpeakRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3543,8 +3517,8 @@
         ]
       }
     },
-    "Text to Speech_speak_Response_403": {
-      "name": "Text to Speech_speak_Response_403",
+    "SpeakRequestForbiddenError": {
+      "name": "SpeakRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3591,8 +3565,8 @@
         ]
       }
     },
-    "Text to Speech_speak_Response_413": {
-      "name": "Text to Speech_speak_Response_413",
+    "SpeakRequestContentTooLargeError": {
+      "name": "SpeakRequestContentTooLargeError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3639,8 +3613,8 @@
         ]
       }
     },
-    "Text to Speech_speak_Response_415": {
-      "name": "Text to Speech_speak_Response_415",
+    "SpeakRequestUnsupportedMediaTypeError": {
+      "name": "SpeakRequestUnsupportedMediaTypeError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3687,8 +3661,8 @@
         ]
       }
     },
-    "V1ProjectsGetResponsesSchemaProjectsItems": {
-      "name": "V1ProjectsGetResponsesSchemaProjectsItems",
+    "V1ProjectsGetResponsesContentApplicationJsonSchemaProjectsItems": {
+      "name": "V1ProjectsGetResponsesContentApplicationJsonSchemaProjectsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3736,7 +3710,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsGetResponsesSchemaProjectsItems"
+                  "value": "V1ProjectsGetResponsesContentApplicationJsonSchemaProjectsItems"
                 }
               }
             }
@@ -3744,8 +3718,8 @@
         ]
       }
     },
-    "Management API_listProjects_Response_403": {
-      "name": "Management API_listProjects_Response_403",
+    "ListProjectsRequestForbiddenError": {
+      "name": "ListProjectsRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3840,8 +3814,8 @@
         ]
       }
     },
-    "Management API_getProject_Response_400": {
-      "name": "Management API_getProject_Response_400",
+    "GetProjectRequestBadRequestError": {
+      "name": "GetProjectRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3901,8 +3875,8 @@
         ]
       }
     },
-    "Management API_getProject_Response_403": {
-      "name": "Management API_getProject_Response_403",
+    "GetProjectRequestForbiddenError": {
+      "name": "GetProjectRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3962,8 +3936,8 @@
         ]
       }
     },
-    "Management API_getProject_Response_404": {
-      "name": "Management API_getProject_Response_404",
+    "GetProjectRequestNotFoundError": {
+      "name": "GetProjectRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4045,8 +4019,8 @@
         ]
       }
     },
-    "Management API_deleteProject_Response_400": {
-      "name": "Management API_deleteProject_Response_400",
+    "DeleteProjectRequestBadRequestError": {
+      "name": "DeleteProjectRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4106,8 +4080,8 @@
         ]
       }
     },
-    "Management API_deleteProject_Response_403": {
-      "name": "Management API_deleteProject_Response_403",
+    "DeleteProjectRequestForbiddenError": {
+      "name": "DeleteProjectRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4167,8 +4141,8 @@
         ]
       }
     },
-    "Management API_deleteProject_Response_404": {
-      "name": "Management API_deleteProject_Response_404",
+    "DeleteProjectRequestNotFoundError": {
+      "name": "DeleteProjectRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4250,8 +4224,8 @@
         ]
       }
     },
-    "Management API_updateProject_Response_400": {
-      "name": "Management API_updateProject_Response_400",
+    "UpdateProjectRequestBadRequestError": {
+      "name": "UpdateProjectRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4311,8 +4285,8 @@
         ]
       }
     },
-    "Management API_updateProject_Response_403": {
-      "name": "Management API_updateProject_Response_403",
+    "UpdateProjectRequestForbiddenError": {
+      "name": "UpdateProjectRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4372,8 +4346,8 @@
         ]
       }
     },
-    "Management API_updateProject_Response_404": {
-      "name": "Management API_updateProject_Response_404",
+    "UpdateProjectRequestNotFoundError": {
+      "name": "UpdateProjectRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4433,8 +4407,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdBalancesGetResponsesSchemaBalancesItems": {
-      "name": "V1ProjectsProjectIdBalancesGetResponsesSchemaBalancesItems",
+    "V1ProjectsProjectIdBalancesGetResponsesContentApplicationJsonSchemaBalancesItems": {
+      "name": "V1ProjectsProjectIdBalancesGetResponsesContentApplicationJsonSchemaBalancesItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4509,7 +4483,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsProjectIdBalancesGetResponsesSchemaBalancesItems"
+                  "value": "V1ProjectsProjectIdBalancesGetResponsesContentApplicationJsonSchemaBalancesItems"
                 }
               }
             }
@@ -4517,8 +4491,8 @@
         ]
       }
     },
-    "Management API_getProjectBalances_Response_400": {
-      "name": "Management API_getProjectBalances_Response_400",
+    "GetProjectBalancesRequestBadRequestError": {
+      "name": "GetProjectBalancesRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4578,8 +4552,8 @@
         ]
       }
     },
-    "Management API_getProjectBalances_Response_403": {
-      "name": "Management API_getProjectBalances_Response_403",
+    "GetProjectBalancesRequestForbiddenError": {
+      "name": "GetProjectBalancesRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4639,8 +4613,8 @@
         ]
       }
     },
-    "Management API_getProjectBalances_Response_404": {
-      "name": "Management API_getProjectBalances_Response_404",
+    "GetProjectBalancesRequestNotFoundError": {
+      "name": "GetProjectBalancesRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4762,8 +4736,8 @@
         ]
       }
     },
-    "Management API_getProjectBalance_Response_400": {
-      "name": "Management API_getProjectBalance_Response_400",
+    "GetProjectBalanceRequestBadRequestError": {
+      "name": "GetProjectBalanceRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4823,8 +4797,8 @@
         ]
       }
     },
-    "Management API_getProjectBalance_Response_403": {
-      "name": "Management API_getProjectBalance_Response_403",
+    "GetProjectBalanceRequestForbiddenError": {
+      "name": "GetProjectBalanceRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4884,8 +4858,8 @@
         ]
       }
     },
-    "Management API_getProjectBalance_Response_404": {
-      "name": "Management API_getProjectBalance_Response_404",
+    "GetProjectBalanceRequestNotFoundError": {
+      "name": "GetProjectBalanceRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4980,8 +4954,8 @@
         ]
       }
     },
-    "Management API_listProjectModels_Response_400": {
-      "name": "Management API_listProjectModels_Response_400",
+    "ListProjectModelsRequestBadRequestError": {
+      "name": "ListProjectModelsRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5063,8 +5037,8 @@
         ]
       }
     },
-    "Management API_getProjectModel_Response_400": {
-      "name": "Management API_getProjectModel_Response_400",
+    "GetProjectModelRequestBadRequestError": {
+      "name": "GetProjectModelRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5146,8 +5120,8 @@
         ]
       }
     },
-    "Management API_listProjectKeys_Response_403": {
-      "name": "Management API_listProjectKeys_Response_403",
+    "ListProjectKeysRequestForbiddenError": {
+      "name": "ListProjectKeysRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5207,8 +5181,8 @@
         ]
       }
     },
-    "Management API_listProjectKeys_Response_404": {
-      "name": "Management API_listProjectKeys_Response_404",
+    "ListProjectKeysRequestNotFoundError": {
+      "name": "ListProjectKeysRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5268,8 +5242,8 @@
         ]
       }
     },
-    "Management API_createProjectKey_Response_403": {
-      "name": "Management API_createProjectKey_Response_403",
+    "CreateProjectKeyRequestForbiddenError": {
+      "name": "CreateProjectKeyRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5329,8 +5303,8 @@
         ]
       }
     },
-    "Management API_createProjectKey_Response_404": {
-      "name": "Management API_createProjectKey_Response_404",
+    "CreateProjectKeyRequestNotFoundError": {
+      "name": "CreateProjectKeyRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5409,8 +5383,8 @@
         ]
       }
     },
-    "Management API_getProjectKey_Response_403": {
-      "name": "Management API_getProjectKey_Response_403",
+    "GetProjectKeyRequestForbiddenError": {
+      "name": "GetProjectKeyRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5470,8 +5444,8 @@
         ]
       }
     },
-    "Management API_getProjectKey_Response_404": {
-      "name": "Management API_getProjectKey_Response_404",
+    "GetProjectKeyRequestNotFoundError": {
+      "name": "GetProjectKeyRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5553,8 +5527,8 @@
         ]
       }
     },
-    "Management API_deleteProjectKey_Response_403": {
-      "name": "Management API_deleteProjectKey_Response_403",
+    "DeleteProjectKeyRequestForbiddenError": {
+      "name": "DeleteProjectKeyRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5614,8 +5588,8 @@
         ]
       }
     },
-    "Management API_deleteProjectKey_Response_404": {
-      "name": "Management API_deleteProjectKey_Response_404",
+    "DeleteProjectKeyRequestNotFoundError": {
+      "name": "DeleteProjectKeyRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5675,8 +5649,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdMembersGetResponsesSchemaMembersItems": {
-      "name": "V1ProjectsProjectIdMembersGetResponsesSchemaMembersItems",
+    "V1ProjectsProjectIdMembersGetResponsesContentApplicationJsonSchemaMembersItems": {
+      "name": "V1ProjectsProjectIdMembersGetResponsesContentApplicationJsonSchemaMembersItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5711,7 +5685,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsProjectIdMembersGetResponsesSchemaMembersItems"
+                  "value": "V1ProjectsProjectIdMembersGetResponsesContentApplicationJsonSchemaMembersItems"
                 }
               }
             }
@@ -5719,8 +5693,8 @@
         ]
       }
     },
-    "Management API_listProjectMembers_Response_403": {
-      "name": "Management API_listProjectMembers_Response_403",
+    "ListProjectMembersRequestForbiddenError": {
+      "name": "ListProjectMembersRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5780,8 +5754,8 @@
         ]
       }
     },
-    "Management API_listProjectMembers_Response_404": {
-      "name": "Management API_listProjectMembers_Response_404",
+    "ListProjectMembersRequestNotFoundError": {
+      "name": "ListProjectMembersRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5863,8 +5837,8 @@
         ]
       }
     },
-    "Management API_deleteProjectMember_Response_403": {
-      "name": "Management API_deleteProjectMember_Response_403",
+    "DeleteProjectMemberRequestForbiddenError": {
+      "name": "DeleteProjectMemberRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5924,8 +5898,8 @@
         ]
       }
     },
-    "Management API_deleteProjectMember_Response_404": {
-      "name": "Management API_deleteProjectMember_Response_404",
+    "DeleteProjectMemberRequestNotFoundError": {
+      "name": "DeleteProjectMemberRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6010,8 +5984,8 @@
         ]
       }
     },
-    "Management API_listProjectMemberScopes_Response_403": {
-      "name": "Management API_listProjectMemberScopes_Response_403",
+    "ListProjectMemberScopesRequestForbiddenError": {
+      "name": "ListProjectMemberScopesRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6071,8 +6045,8 @@
         ]
       }
     },
-    "Management API_listProjectMemberScopes_Response_404": {
-      "name": "Management API_listProjectMemberScopes_Response_404",
+    "ListProjectMemberScopesRequestNotFoundError": {
+      "name": "ListProjectMemberScopesRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6154,8 +6128,8 @@
         ]
       }
     },
-    "Management API_updateProjectMemberScopes_Response_403": {
-      "name": "Management API_updateProjectMemberScopes_Response_403",
+    "UpdateProjectMemberScopesRequestForbiddenError": {
+      "name": "UpdateProjectMemberScopesRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6215,8 +6189,8 @@
         ]
       }
     },
-    "Management API_updateProjectMemberScopes_Response_404": {
-      "name": "Management API_updateProjectMemberScopes_Response_404",
+    "UpdateProjectMemberScopesRequestNotFoundError": {
+      "name": "UpdateProjectMemberScopesRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6276,8 +6250,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdInvitesGetResponsesSchemaInvitesItems": {
-      "name": "V1ProjectsProjectIdInvitesGetResponsesSchemaInvitesItems",
+    "V1ProjectsProjectIdInvitesGetResponsesContentApplicationJsonSchemaInvitesItems": {
+      "name": "V1ProjectsProjectIdInvitesGetResponsesContentApplicationJsonSchemaInvitesItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6325,7 +6299,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsProjectIdInvitesGetResponsesSchemaInvitesItems"
+                  "value": "V1ProjectsProjectIdInvitesGetResponsesContentApplicationJsonSchemaInvitesItems"
                 }
               }
             }
@@ -6355,8 +6329,8 @@
         ]
       }
     },
-    "Management API_createProjectInvite_Response_403": {
-      "name": "Management API_createProjectInvite_Response_403",
+    "CreateProjectInviteRequestForbiddenError": {
+      "name": "CreateProjectInviteRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6416,8 +6390,8 @@
         ]
       }
     },
-    "Management API_createProjectInvite_Response_404": {
-      "name": "Management API_createProjectInvite_Response_404",
+    "CreateProjectInviteRequestNotFoundError": {
+      "name": "CreateProjectInviteRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6499,8 +6473,8 @@
         ]
       }
     },
-    "Management API_deleteProjectInvite_Response_403": {
-      "name": "Management API_deleteProjectInvite_Response_403",
+    "DeleteProjectInviteRequestForbiddenError": {
+      "name": "DeleteProjectInviteRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6560,8 +6534,8 @@
         ]
       }
     },
-    "Management API_deleteProjectInvite_Response_404": {
-      "name": "Management API_deleteProjectInvite_Response_404",
+    "DeleteProjectInviteRequestNotFoundError": {
+      "name": "DeleteProjectInviteRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6643,8 +6617,8 @@
         ]
       }
     },
-    "Management API_deleteProjectLeave_Response_403": {
-      "name": "Management API_deleteProjectLeave_Response_403",
+    "DeleteProjectLeaveRequestForbiddenError": {
+      "name": "DeleteProjectLeaveRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6704,8 +6678,8 @@
         ]
       }
     },
-    "Management API_deleteProjectLeave_Response_404": {
-      "name": "Management API_deleteProjectLeave_Response_404",
+    "DeleteProjectLeaveRequestNotFoundError": {
+      "name": "DeleteProjectLeaveRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6813,8 +6787,8 @@
         ]
       }
     },
-    "Management API_listProjectRequests_Response_400": {
-      "name": "Management API_listProjectRequests_Response_400",
+    "ListProjectRequestsRequestBadRequestError": {
+      "name": "ListProjectRequestsRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6874,8 +6848,8 @@
         ]
       }
     },
-    "Management API_listProjectRequests_Response_403": {
-      "name": "Management API_listProjectRequests_Response_403",
+    "ListProjectRequestsRequestForbiddenError": {
+      "name": "ListProjectRequestsRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6935,8 +6909,8 @@
         ]
       }
     },
-    "Management API_listProjectRequests_Response_404": {
-      "name": "Management API_listProjectRequests_Response_404",
+    "ListProjectRequestsRequestNotFoundError": {
+      "name": "ListProjectRequestsRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7140,8 +7114,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdUsageGetResponsesSchemaResolution": {
-      "name": "V1ProjectsProjectIdUsageGetResponsesSchemaResolution",
+    "V1ProjectsProjectIdUsageGetResponsesContentApplicationJsonSchemaResolution": {
+      "name": "V1ProjectsProjectIdUsageGetResponsesContentApplicationJsonSchemaResolution",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7211,15 +7185,15 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V1ProjectsProjectIdUsageGetResponsesSchemaResolution"
+                "value": "V1ProjectsProjectIdUsageGetResponsesContentApplicationJsonSchemaResolution"
               }
             }
           }
         ]
       }
     },
-    "Management API_getProjectUsage_Response_403": {
-      "name": "Management API_getProjectUsage_Response_403",
+    "GetProjectUsageRequestForbiddenError": {
+      "name": "GetProjectUsageRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7279,8 +7253,8 @@
         ]
       }
     },
-    "Management API_getProjectUsage_Response_404": {
-      "name": "Management API_getProjectUsage_Response_404",
+    "GetProjectUsageRequestNotFoundError": {
+      "name": "GetProjectUsageRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7340,8 +7314,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdUsageFieldsGetResponsesSchemaModelsItems": {
-      "name": "V1ProjectsProjectIdUsageFieldsGetResponsesSchemaModelsItems",
+    "V1ProjectsProjectIdUsageFieldsGetResponsesContentApplicationJsonSchemaModelsItems": {
+      "name": "V1ProjectsProjectIdUsageFieldsGetResponsesContentApplicationJsonSchemaModelsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7432,7 +7406,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsProjectIdUsageFieldsGetResponsesSchemaModelsItems"
+                  "value": "V1ProjectsProjectIdUsageFieldsGetResponsesContentApplicationJsonSchemaModelsItems"
                 }
               }
             }
@@ -7472,8 +7446,8 @@
         ]
       }
     },
-    "Management API_listProjectUsageFields_Response_403": {
-      "name": "Management API_listProjectUsageFields_Response_403",
+    "ListProjectUsageFieldsRequestForbiddenError": {
+      "name": "ListProjectUsageFieldsRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7533,8 +7507,8 @@
         ]
       }
     },
-    "Management API_listProjectUsageFields_Response_404": {
-      "name": "Management API_listProjectUsageFields_Response_404",
+    "ListProjectUsageFieldsRequestNotFoundError": {
+      "name": "ListProjectUsageFieldsRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7694,8 +7668,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResolution": {
-      "name": "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResolution",
+    "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResolution": {
+      "name": "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResolution",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7723,8 +7697,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResultsItemsGrouping": {
-      "name": "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResultsItemsGrouping",
+    "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResultsItemsGrouping": {
+      "name": "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResultsItemsGrouping",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7872,8 +7846,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResultsItems": {
-      "name": "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResultsItems",
+    "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResultsItems": {
+      "name": "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResultsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7952,7 +7926,7 @@
             "key": "grouping",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResultsItemsGrouping"
+              "value": "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResultsItemsGrouping"
             }
           }
         ]
@@ -7990,7 +7964,7 @@
             "key": "resolution",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResolution"
+              "value": "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResolution"
             }
           },
           {
@@ -7999,15 +7973,15 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "V1ProjectsProjectIdUsageBreakdownGetResponsesSchemaResultsItems"
+                "value": "V1ProjectsProjectIdUsageBreakdownGetResponsesContentApplicationJsonSchemaResultsItems"
               }
             }
           }
         ]
       }
     },
-    "Management API_getProjectUsageBreakdown_Response_400": {
-      "name": "Management API_getProjectUsageBreakdown_Response_400",
+    "GetProjectUsageBreakdownRequestBadRequestError": {
+      "name": "GetProjectUsageBreakdownRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8067,8 +8041,8 @@
         ]
       }
     },
-    "Management API_getProjectUsageBreakdown_Response_404": {
-      "name": "Management API_getProjectUsageBreakdown_Response_404",
+    "GetProjectUsageBreakdownRequestNotFoundError": {
+      "name": "GetProjectUsageBreakdownRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8128,8 +8102,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdPurchasesGetResponsesSchemaOrdersItems": {
-      "name": "V1ProjectsProjectIdPurchasesGetResponsesSchemaOrdersItems",
+    "V1ProjectsProjectIdPurchasesGetResponsesContentApplicationJsonSchemaOrdersItems": {
+      "name": "V1ProjectsProjectIdPurchasesGetResponsesContentApplicationJsonSchemaOrdersItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8226,7 +8200,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsProjectIdPurchasesGetResponsesSchemaOrdersItems"
+                  "value": "V1ProjectsProjectIdPurchasesGetResponsesContentApplicationJsonSchemaOrdersItems"
                 }
               }
             }
@@ -8234,8 +8208,8 @@
         ]
       }
     },
-    "Management API_listProjectPurchases_Response_400": {
-      "name": "Management API_listProjectPurchases_Response_400",
+    "ListProjectPurchasesRequestBadRequestError": {
+      "name": "ListProjectPurchasesRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8295,8 +8269,8 @@
         ]
       }
     },
-    "V1ModelsGetResponsesSchemaSttItems": {
-      "name": "V1ModelsGetResponsesSchemaSttItems",
+    "V1ModelsGetResponsesContentApplicationJsonSchemaSttItems": {
+      "name": "V1ModelsGetResponsesContentApplicationJsonSchemaSttItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8416,8 +8390,8 @@
         ]
       }
     },
-    "V1ModelsGetResponsesSchemaTtsItemsMetadata": {
-      "name": "V1ModelsGetResponsesSchemaTtsItemsMetadata",
+    "V1ModelsGetResponsesContentApplicationJsonSchemaTtsItemsMetadata": {
+      "name": "V1ModelsGetResponsesContentApplicationJsonSchemaTtsItemsMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8490,8 +8464,8 @@
         ]
       }
     },
-    "V1ModelsGetResponsesSchemaTtsItems": {
-      "name": "V1ModelsGetResponsesSchemaTtsItems",
+    "V1ModelsGetResponsesContentApplicationJsonSchemaTtsItems": {
+      "name": "V1ModelsGetResponsesContentApplicationJsonSchemaTtsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8578,7 +8552,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V1ModelsGetResponsesSchemaTtsItemsMetadata"
+                "value": "V1ModelsGetResponsesContentApplicationJsonSchemaTtsItemsMetadata"
               }
             }
           }
@@ -8599,7 +8573,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ModelsGetResponsesSchemaSttItems"
+                  "value": "V1ModelsGetResponsesContentApplicationJsonSchemaSttItems"
                 }
               }
             }
@@ -8612,7 +8586,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ModelsGetResponsesSchemaTtsItems"
+                  "value": "V1ModelsGetResponsesContentApplicationJsonSchemaTtsItems"
                 }
               }
             }
@@ -8620,8 +8594,8 @@
         ]
       }
     },
-    "Management API_listModels_Response_400": {
-      "name": "Management API_listModels_Response_400",
+    "ListModelsRequestBadRequestError": {
+      "name": "ListModelsRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8802,8 +8776,8 @@
         ]
       }
     },
-    "V1ModelsModelIdGetResponsesSchemaOneOf1Metadata": {
-      "name": "V1ModelsModelIdGetResponsesSchemaOneOf1Metadata",
+    "V1ModelsModelIdGetResponsesContentApplicationJsonSchemaOneOf1Metadata": {
+      "name": "V1ModelsModelIdGetResponsesContentApplicationJsonSchemaOneOf1Metadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8964,7 +8938,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V1ModelsModelIdGetResponsesSchemaOneOf1Metadata"
+                "value": "V1ModelsModelIdGetResponsesContentApplicationJsonSchemaOneOf1Metadata"
               }
             }
           }
@@ -8993,8 +8967,8 @@
         ]
       }
     },
-    "Management API_getModel_Response_400": {
-      "name": "Management API_getModel_Response_400",
+    "GetModelRequestBadRequestError": {
+      "name": "GetModelRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9054,8 +9028,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItemsMember": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItemsMember",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItemsMember": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItemsMember",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9085,8 +9059,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItemsDistributionCredentials": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItemsDistributionCredentials",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItemsDistributionCredentials": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItemsDistributionCredentials",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9152,8 +9126,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItems": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItems",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItems": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9162,14 +9136,14 @@
             "key": "member",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItemsMember"
+              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItemsMember"
             }
           },
           {
             "key": "distribution_credentials",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItemsDistributionCredentials"
+              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItemsDistributionCredentials"
             }
           }
         ]
@@ -9190,7 +9164,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItems"
+                  "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesContentApplicationJsonSchemaDistributionCredentialsItems"
                 }
               }
             }
@@ -9198,8 +9172,8 @@
         ]
       }
     },
-    "Management API_listSelfHostedDistCreds_Response_403": {
-      "name": "Management API_listSelfHostedDistCreds_Response_403",
+    "ListSelfHostedDistCredsRequestForbiddenError": {
+      "name": "ListSelfHostedDistCredsRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9259,8 +9233,8 @@
         ]
       }
     },
-    "Management API_listSelfHostedDistCreds_Response_404": {
-      "name": "Management API_listSelfHostedDistCreds_Response_404",
+    "ListSelfHostedDistCredsRequestNotFoundError": {
+      "name": "ListSelfHostedDistCredsRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9364,8 +9338,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesSchemaMember": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesSchemaMember",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesContentApplicationJsonSchemaMember": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesContentApplicationJsonSchemaMember",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9395,8 +9369,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesSchemaDistributionCredentials": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesSchemaDistributionCredentials",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesContentApplicationJsonSchemaDistributionCredentials": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesContentApplicationJsonSchemaDistributionCredentials",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9472,21 +9446,21 @@
             "key": "member",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesSchemaMember"
+              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesContentApplicationJsonSchemaMember"
             }
           },
           {
             "key": "distribution_credentials",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesSchemaDistributionCredentials"
+              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdGetResponsesContentApplicationJsonSchemaDistributionCredentials"
             }
           }
         ]
       }
     },
-    "Management API_getSelfHostedCredentials_Response_403": {
-      "name": "Management API_getSelfHostedCredentials_Response_403",
+    "GetSelfHostedCredentialsRequestForbiddenError": {
+      "name": "GetSelfHostedCredentialsRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9546,8 +9520,8 @@
         ]
       }
     },
-    "Management API_getSelfHostedCredentials_Response_404": {
-      "name": "Management API_getSelfHostedCredentials_Response_404",
+    "GetSelfHostedCredentialsRequestNotFoundError": {
+      "name": "GetSelfHostedCredentialsRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9607,8 +9581,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesSchemaMember": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesSchemaMember",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesContentApplicationJsonSchemaMember": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesContentApplicationJsonSchemaMember",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9638,8 +9612,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesSchemaDistributionCredentials": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesSchemaDistributionCredentials",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesContentApplicationJsonSchemaDistributionCredentials": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesContentApplicationJsonSchemaDistributionCredentials",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9715,21 +9689,21 @@
             "key": "member",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesSchemaMember"
+              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesContentApplicationJsonSchemaMember"
             }
           },
           {
             "key": "distribution_credentials",
             "valueType": {
               "type": "id",
-              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesSchemaDistributionCredentials"
+              "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesContentApplicationJsonSchemaDistributionCredentials"
             }
           }
         ]
       }
     },
-    "Management API_deleteSelfHostedDistCreds_Response_403": {
-      "name": "Management API_deleteSelfHostedDistCreds_Response_403",
+    "DeleteSelfHostedDistCredsRequestForbiddenError": {
+      "name": "DeleteSelfHostedDistCredsRequestForbiddenError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9789,8 +9763,8 @@
         ]
       }
     },
-    "Management API_deleteSelfHostedDistCreds_Response_404": {
-      "name": "Management API_deleteSelfHostedDistCreds_Response_404",
+    "DeleteSelfHostedDistCredsRequestNotFoundError": {
+      "name": "DeleteSelfHostedDistCredsRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10759,7 +10733,7 @@
     },
     "ListenControlMessageResponse0": {
       "description": "The server will process all remaining audio data and return the final results. You may receive a response with the from_finalize attribute set to true, indicating that the finalization process is complete. This response typically occurs when there is a noticeable amount of audio buffered in the server.\n",
-      "name": "ListenControlMessageResponse0",
+      "name": "FinalizeResponse",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10804,7 +10778,7 @@
     },
     "ListenControlMessageResponse1": {
       "description": "Provides real-time metadata during audio streaming, including audio characteristics\nand processing details. This response is sent periodically during streaming to\nprovide updates about the audio being processed.\n",
-      "name": "ListenControlMessageResponse1",
+      "name": "MetadataResponse",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10917,7 +10891,7 @@
     },
     "ListenControlMessageResponse2": {
       "description": "Indicates that the server has closed the WebSocket connection and the server will process all remaining audio data.\n",
-      "name": "ListenControlMessageResponse2",
+      "name": "CloseStreamResponse",
       "shape": {
         "type": "object",
         "extends": [],
@@ -12457,9 +12431,149 @@
         ]
       }
     },
-    "encoding": {
+    "speak_encoding": {
+      "description": "Encoding allows you to specify the expected encoding of your audio output",
+      "name": "speak_encoding",
+      "shape": {
+        "type": "enum",
+        "default": "mp3",
+        "values": [
+          {
+            "value": "linear16"
+          },
+          {
+            "value": "mulaw"
+          },
+          {
+            "value": "alaw"
+          },
+          {
+            "value": "opus"
+          },
+          {
+            "value": "mp3"
+          },
+          {
+            "value": "flac"
+          },
+          {
+            "value": "aac"
+          }
+        ]
+      }
+    },
+    "speak_model": {
+      "description": "AI model used to process submitted text",
+      "name": "speak_model",
+      "shape": {
+        "type": "enum",
+        "default": "aura-asteria-en",
+        "values": [
+          {
+            "value": "aura-asteria-en"
+          },
+          {
+            "value": "aura-luna-en"
+          },
+          {
+            "value": "aura-stella-en"
+          },
+          {
+            "value": "aura-athena-en"
+          },
+          {
+            "value": "aura-hera-en"
+          },
+          {
+            "value": "aura-orion-en"
+          },
+          {
+            "value": "aura-arcas-en"
+          },
+          {
+            "value": "aura-perseus-en"
+          },
+          {
+            "value": "aura-angus-en"
+          },
+          {
+            "value": "aura-orpheus-en"
+          },
+          {
+            "value": "aura-helios-en"
+          },
+          {
+            "value": "aura-zeus-en"
+          }
+        ]
+      }
+    },
+    "speak_sample_rate": {
+      "description": "Sample Rate specifies the sample rate for the output audio. Based on encoding 8000 or 24000 are possible defaults. For some encodings sample rate is not configurable.",
+      "name": "speak_sample_rate",
+      "shape": {
+        "type": "enum",
+        "default": "24000",
+        "values": [
+          {
+            "value": "8000"
+          },
+          {
+            "value": "16000"
+          },
+          {
+            "value": "24000"
+          },
+          {
+            "value": "44100"
+          },
+          {
+            "value": "48000"
+          }
+        ]
+      }
+    },
+    "listen_callback_method": {
+      "description": "HTTP method by which the callback request will be made",
+      "name": "listen_callback_method",
+      "shape": {
+        "type": "enum",
+        "default": "POST",
+        "values": [
+          {
+            "value": "POST"
+          },
+          {
+            "value": "GET"
+          },
+          {
+            "value": "PUT"
+          },
+          {
+            "value": "DELETE"
+          }
+        ]
+      }
+    },
+    "listen_dictation": {
+      "description": "Identify and extract key entities from content in submitted audio",
+      "name": "listen_dictation",
+      "shape": {
+        "type": "enum",
+        "default": "false",
+        "values": [
+          {
+            "value": "true"
+          },
+          {
+            "value": "false"
+          }
+        ]
+      }
+    },
+    "listen_encoding": {
       "description": "Specify the expected encoding of your submitted audio",
-      "name": "encoding",
+      "name": "listen_encoding",
       "shape": {
         "type": "enum",
         "values": [
@@ -12490,171 +12604,9 @@
         ]
       }
     },
-    "model": {
-      "description": "AI model to use for the transcription",
-      "name": "model",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "nova-3"
-          },
-          {
-            "value": "nova-3-general"
-          },
-          {
-            "value": "nova-3-medical"
-          },
-          {
-            "value": "nova-2"
-          },
-          {
-            "value": "nova-2-general"
-          },
-          {
-            "value": "nova-2-meeting"
-          },
-          {
-            "value": "nova-2-finance"
-          },
-          {
-            "value": "nova-2-conversationalai"
-          },
-          {
-            "value": "nova-2-voicemail"
-          },
-          {
-            "value": "nova-2-video"
-          },
-          {
-            "value": "nova-2-medical"
-          },
-          {
-            "value": "nova-2-drivethru"
-          },
-          {
-            "value": "nova-2-automotive"
-          },
-          {
-            "value": "nova"
-          },
-          {
-            "value": "nova-general"
-          },
-          {
-            "value": "nova-phonecall"
-          },
-          {
-            "value": "nova-medical"
-          },
-          {
-            "value": "enhanced"
-          },
-          {
-            "value": "enhanced-general"
-          },
-          {
-            "value": "enhanced-meeting"
-          },
-          {
-            "value": "enhanced-phonecall"
-          },
-          {
-            "value": "enhanced-finance"
-          },
-          {
-            "value": "base"
-          },
-          {
-            "value": "meeting"
-          },
-          {
-            "value": "phonecall"
-          },
-          {
-            "value": "finance"
-          },
-          {
-            "value": "conversationalai"
-          },
-          {
-            "value": "voicemail"
-          },
-          {
-            "value": "video"
-          },
-          {
-            "value": "custom"
-          }
-        ]
-      }
-    },
-    "sample_rate": {
-      "description": "Sample Rate specifies the sample rate for the output audio. Based on encoding 8000 or 24000 are possible defaults. For some encodings sample rate is not configurable.",
-      "name": "sample_rate",
-      "shape": {
-        "type": "enum",
-        "default": "24000",
-        "values": [
-          {
-            "value": "8000"
-          },
-          {
-            "value": "16000"
-          },
-          {
-            "value": "24000"
-          },
-          {
-            "value": "44100"
-          },
-          {
-            "value": "48000"
-          }
-        ]
-      }
-    },
-    "callback_method": {
-      "description": "HTTP method by which the callback request will be made",
-      "name": "callback_method",
-      "shape": {
-        "type": "enum",
-        "default": "POST",
-        "values": [
-          {
-            "value": "POST"
-          },
-          {
-            "value": "GET"
-          },
-          {
-            "value": "PUT"
-          },
-          {
-            "value": "DELETE"
-          }
-        ]
-      }
-    },
-    "dictation": {
-      "description": "Identify and extract key entities from content in submitted audio",
-      "name": "dictation",
-      "shape": {
-        "type": "enum",
-        "default": "false",
-        "values": [
-          {
-            "value": "true"
-          },
-          {
-            "value": "false"
-          }
-        ]
-      }
-    },
-    "filler_words": {
+    "listen_filler_words": {
       "description": "Filler Words can help transcribe interruptions in your audio, like \"uh\" and \"um\"",
-      "name": "filler_words",
+      "name": "listen_filler_words",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -12668,9 +12620,9 @@
         ]
       }
     },
-    "interim_results": {
+    "listen_interim_results": {
       "description": "Specifies whether the streaming endpoint should provide ongoing transcription updates as more audio is received. When set to true, the endpoint sends continuous updates, meaning transcription results may evolve over time",
-      "name": "interim_results",
+      "name": "listen_interim_results",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -12684,9 +12636,9 @@
         ]
       }
     },
-    "language": {
+    "listen_language": {
       "description": "The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model you choose only certain languages are available",
-      "name": "language",
+      "name": "listen_language",
       "shape": {
         "type": "enum",
         "default": "en",
@@ -12862,9 +12814,108 @@
         ]
       }
     },
-    "multichannel": {
+    "listen_model": {
+      "description": "AI model to use for the transcription",
+      "name": "listen_model",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "nova-3"
+          },
+          {
+            "value": "nova-3-general"
+          },
+          {
+            "value": "nova-3-medical"
+          },
+          {
+            "value": "nova-2"
+          },
+          {
+            "value": "nova-2-general"
+          },
+          {
+            "value": "nova-2-meeting"
+          },
+          {
+            "value": "nova-2-finance"
+          },
+          {
+            "value": "nova-2-conversationalai"
+          },
+          {
+            "value": "nova-2-voicemail"
+          },
+          {
+            "value": "nova-2-video"
+          },
+          {
+            "value": "nova-2-medical"
+          },
+          {
+            "value": "nova-2-drivethru"
+          },
+          {
+            "value": "nova-2-automotive"
+          },
+          {
+            "value": "nova"
+          },
+          {
+            "value": "nova-general"
+          },
+          {
+            "value": "nova-phonecall"
+          },
+          {
+            "value": "nova-medical"
+          },
+          {
+            "value": "enhanced"
+          },
+          {
+            "value": "enhanced-general"
+          },
+          {
+            "value": "enhanced-meeting"
+          },
+          {
+            "value": "enhanced-phonecall"
+          },
+          {
+            "value": "enhanced-finance"
+          },
+          {
+            "value": "base"
+          },
+          {
+            "value": "meeting"
+          },
+          {
+            "value": "phonecall"
+          },
+          {
+            "value": "finance"
+          },
+          {
+            "value": "conversationalai"
+          },
+          {
+            "value": "voicemail"
+          },
+          {
+            "value": "video"
+          },
+          {
+            "value": "custom"
+          }
+        ]
+      }
+    },
+    "listen_multichannel": {
       "description": "Transcribe each audio channel independently",
-      "name": "multichannel",
+      "name": "listen_multichannel",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -12878,9 +12929,9 @@
         ]
       }
     },
-    "numerals": {
+    "listen_numerals": {
       "description": "Convert numbers from written format to numerical format",
-      "name": "numerals",
+      "name": "listen_numerals",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -12894,9 +12945,9 @@
         ]
       }
     },
-    "profanity_filter": {
+    "listen_profanity_filter": {
       "description": "Profanity Filter looks for recognized profanity and converts it to the nearest recognized non-profane word or removes it from the transcript completely",
-      "name": "profanity_filter",
+      "name": "listen_profanity_filter",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -12910,9 +12961,9 @@
         ]
       }
     },
-    "punctuate": {
+    "listen_punctuate": {
       "description": "Add punctuation and capitalization to the transcript",
-      "name": "punctuate",
+      "name": "listen_punctuate",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -12926,9 +12977,9 @@
         ]
       }
     },
-    "redact": {
+    "listen_redact": {
       "description": "Redaction removes sensitive information from your transcripts",
-      "name": "redact",
+      "name": "listen_redact",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -12954,9 +13005,9 @@
         ]
       }
     },
-    "smart_format": {
+    "listen_smart_format": {
       "description": "Apply formatting to transcript output. When set to true, additional formatting will be applied to transcripts to improve readability",
-      "name": "smart_format",
+      "name": "listen_smart_format",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -12970,9 +13021,9 @@
         ]
       }
     },
-    "vad_events": {
+    "listen_vad_events": {
       "description": "Indicates that speech has started. You'll begin receiving Speech Started messages upon speech starting",
-      "name": "vad_events",
+      "name": "listen_vad_events",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -13502,10 +13553,24 @@
             "statusCode": 200,
             "description": "Successful transcription"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ListenRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "speechToTextListenExample",
               "description": "",
               "path": "/v1/listen",
               "pathParameters": {},
@@ -14136,10 +14201,24 @@
             "statusCode": 200,
             "description": "Successful text analysis"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "TextReadRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "textIntelligenceTextReadExample",
               "description": "",
               "path": "/v1/read",
               "pathParameters": {},
@@ -14492,10 +14571,63 @@
             "statusCode": 200,
             "description": "Successful text to speech"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "SpeakRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "SpeakRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Insufficient permissions, Model not found",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "SpeakRequestContentTooLargeError"
+                }
+              },
+              "statusCode": 413,
+              "description": "Payload too large",
+              "name": "ContentTooLargeError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "SpeakRequestUnsupportedMediaTypeError"
+                }
+              },
+              "statusCode": 415,
+              "description": "Unsupported media type",
+              "name": "UnsupportedMediaTypeError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "textToSpeechSpeakExample",
               "description": "",
               "path": "/v1/speak",
               "pathParameters": {},
@@ -14572,10 +14704,24 @@
             "statusCode": 200,
             "description": "A list of projects"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ListProjectsRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectsExample",
               "description": "",
               "path": "/v1/projects",
               "pathParameters": {},
@@ -14726,14 +14872,54 @@
             "statusCode": 200,
             "description": "A project"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "GetProjectRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Project Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "GetProjectRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "GetProjectRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getProjectExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/project_id",
               "pathParameters": {
-                "project_id": "foo"
+                "project_id": "project_id"
               },
               "queryParameters": {
                 "limit": 10,
@@ -14822,12 +15008,52 @@
             "statusCode": 200,
             "description": "A project"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "DeleteProjectRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Project Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "DeleteProjectRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "DeleteProjectRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteProjectExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -14926,12 +15152,52 @@
             "statusCode": 200,
             "description": "A project"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "UpdateProjectRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Project Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "UpdateProjectRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "UpdateProjectRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "managementApiUpdateProjectExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -15024,12 +15290,52 @@
             "statusCode": 200,
             "description": "A list of outstanding balances"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "GetProjectBalancesRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Project Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "GetProjectBalancesRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "GetProjectBalancesRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "Management API_getProjectBalances_example",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/balances",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -15145,12 +15451,52 @@
             "statusCode": 200,
             "description": "A specific balance"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "GetProjectBalanceRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Project Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "GetProjectBalanceRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "GetProjectBalanceRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "Management API_getProjectBalance_example",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/balances/123456-7890-1234-5678-901234",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "balance_id": "123456-7890-1234-5678-901234"
@@ -15252,12 +15598,26 @@
             "statusCode": 200,
             "description": "A list of models"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ListProjectModelsRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Project Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectModelsExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/models",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -15377,7 +15737,26 @@
           "originalEndpointId": "Management API.getProjectModel",
           "name": "Get a Project Model",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "key": "project_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "key": "model_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -15418,13 +15797,30 @@
             "statusCode": 200,
             "description": "A specific model"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "GetProjectModelRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Project Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getProjectModelExample",
               "description": "",
-              "path": "/v1/projects/",
-              "pathParameters": {},
+              "path": "/v1/projects/project_id/models/model_id",
+              "pathParameters": {
+                "project_id": "project_id",
+                "model_id": "model_id"
+              },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
@@ -15529,12 +15925,39 @@
             "statusCode": 200,
             "description": "A list of API keys"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ListProjectKeysRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ListProjectKeysRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectKeysExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/keys",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -15667,12 +16090,39 @@
             "statusCode": 200,
             "description": "API key created successfully"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "CreateProjectKeyRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "CreateProjectKeyRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "managementApiCreateProjectKeyExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/keys",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -15797,12 +16247,39 @@
             "statusCode": 200,
             "description": "A specific API key"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "GetProjectKeyRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "GetProjectKeyRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getProjectKeyExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/keys/123456789012345678901234",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "key_id": "123456789012345678901234"
@@ -15935,12 +16412,39 @@
             "statusCode": 200,
             "description": "API key deleted"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "DeleteProjectKeyRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "DeleteProjectKeyRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "Management API_deleteProjectKey_example",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/keys/123456789012345678901234",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "key_id": "123456789012345678901234"
@@ -16025,12 +16529,39 @@
             "statusCode": 200,
             "description": "A list of account objects"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ListProjectMembersRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ListProjectMembersRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectMembersExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/members",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -16140,12 +16671,39 @@
             "statusCode": 200,
             "description": "Delete the specific member from the project"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "DeleteProjectMemberRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "DeleteProjectMemberRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteProjectMemberExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/members/123456789012345678901234",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "member_id": "123456789012345678901234"
@@ -16248,12 +16806,39 @@
             "statusCode": 200,
             "description": "A list of scopes for a specific member"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ListProjectMemberScopesRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ListProjectMemberScopesRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectMemberScopesExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/members/123456789012345678901234/scopes",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "member_id": "123456789012345678901234"
@@ -16375,12 +16960,39 @@
             "statusCode": 200,
             "description": "Updated the scopes for a specific member"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "UpdateProjectMemberScopesRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "UpdateProjectMemberScopesRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "managementApiUpdateProjectMemberScopesExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/members/123456789012345678901234/scopes",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "member_id": "123456789012345678901234"
@@ -16477,9 +17089,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectInvitesExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/invites",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -16588,12 +17200,39 @@
             "statusCode": 200,
             "description": "The invite was successfully generated"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "CreateProjectInviteRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "CreateProjectInviteRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "managementApiCreateProjectInviteExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/invites",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -16706,12 +17345,39 @@
             "statusCode": 200,
             "description": "The invite was successfully deleted"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "DeleteProjectInviteRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "DeleteProjectInviteRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteProjectInviteExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/invites/john.doe@example.com",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "email": "john.doe@example.com"
@@ -16796,12 +17462,39 @@
             "statusCode": 200,
             "description": "Successfully removed account from project"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "DeleteProjectLeaveRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "DeleteProjectLeaveRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteProjectLeaveExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/leave",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -16943,12 +17636,52 @@
             "statusCode": 200,
             "description": "A list of requests for a specific project"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ListProjectRequestsRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Project Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ListProjectRequestsRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ListProjectRequestsRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectRequestsExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/requests",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -17086,9 +17819,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getProjectRequestExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/requests/123456-7890-1234-5678-901234",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "request_id": "123456-7890-1234-5678-901234"
@@ -17233,12 +17966,39 @@
             "statusCode": 200,
             "description": "Usage Summary"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "GetProjectUsageRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "GetProjectUsageRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getProjectUsageExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/usage",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -17364,12 +18124,39 @@
             "statusCode": 200,
             "description": "A list of fields for a specific project"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ListProjectUsageFieldsRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ListProjectUsageFieldsRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectUsageFieldsExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/usage/fields",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -17539,12 +18326,39 @@
             "statusCode": 200,
             "description": "Usage breakdown response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "GetProjectUsageBreakdownRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Project Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "GetProjectUsageBreakdownRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getProjectUsageBreakdownExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/usage/breakdown",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -17716,12 +18530,26 @@
             "statusCode": 200,
             "description": "Successful response with orders list"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ListProjectPurchasesRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Project Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectPurchasesExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/purchases",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -17818,10 +18646,24 @@
             "statusCode": 200,
             "description": "A list of all public models"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ListModelsRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Project Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listModelsExample",
               "description": "",
               "path": "/v1/models",
               "pathParameters": {},
@@ -17977,12 +18819,26 @@
             "statusCode": 200,
             "description": "A model object that can be either STT or TTS"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "GetModelRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Project Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getModelExample",
               "description": "",
-              "path": "/v1/models/",
+              "path": "/v1/models/af6e9977-99f6-4d8f-b6f5-dfdf6fb6e291",
               "pathParameters": {
                 "model_id": "af6e9977-99f6-4d8f-b6f5-dfdf6fb6e291"
               },
@@ -18086,12 +18942,39 @@
             "statusCode": 200,
             "description": "List of distribution credentials"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ListSelfHostedDistCredsRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ListSelfHostedDistCredsRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listSelfHostedDistCredsExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/self-hosted/distribution/credentials",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -18247,9 +19130,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "managementApiCreateSelfHostedDistCredsExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/self-hosted/distribution/credentials",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -18350,12 +19233,39 @@
             "statusCode": 200,
             "description": "Single distribution credential"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "GetSelfHostedCredentialsRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "GetSelfHostedCredentialsRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getSelfHostedCredentialsExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/self-hosted/distribution/credentials/8b36cfd0-472f-4a21-833f-2d6343c3a2f3",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "distribution_credentials_id": "8b36cfd0-472f-4a21-833f-2d6343c3a2f3"
@@ -18482,12 +19392,39 @@
             "statusCode": 200,
             "description": "Single distribution credential"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "DeleteSelfHostedDistCredsRequestForbiddenError"
+                }
+              },
+              "statusCode": 403,
+              "description": "Authentication failed",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "DeleteSelfHostedDistCredsRequestNotFoundError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Project not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteSelfHostedDistCredsExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/self-hosted/distribution/credentials/8b36cfd0-472f-4a21-833f-2d6343c3a2f3",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "distribution_credentials_id": "8b36cfd0-472f-4a21-833f-2d6343c3a2f3"
@@ -18590,7 +19527,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "encoding"
+                  "value": "speak_encoding"
                 }
               }
             },
@@ -18601,7 +19538,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "model"
+                  "value": "speak_model"
                 }
               }
             },
@@ -18612,7 +19549,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "sample_rate"
+                  "value": "speak_sample_rate"
                 }
               }
             }
@@ -18686,23 +19623,39 @@
           ],
           "examples": [
             {
-              "path": "/v1/speak",
-              "pathParameters": {},
-              "queryParameters": {},
+              "name": "",
+              "description": "",
+              "path": "",
+              "pathParameters": {
+                "userSpecifiedExamples": {},
+                "autogeneratedExamples": {}
+              },
+              "queryParameters": {
+                "userSpecifiedExamples": {},
+                "autogeneratedExamples": {}
+              },
               "headers": {
-                "Authorization": "Authorization"
+                "userSpecifiedExamples": {},
+                "autogeneratedExamples": {}
               },
               "messages": [
                 {
-                  "type": "sendText",
+                  "type": "textToSpeechRequest",
                   "body": {
                     "type": "Speak",
-                    "text": "text"
+                    "text": "Hello, world!"
                   }
                 },
                 {
-                  "type": "receiveAudio",
-                  "body": "string"
+                  "type": "textToSpeechRequest",
+                  "body": {
+                    "type": "Speak",
+                    "text": "Welcome to Deepgram!"
+                  }
+                },
+                {
+                  "type": "textToSpeechResponse",
+                  "body": "Y3VyaW91cyBtaW5kcyB0aGluayBhbGlrZSA6KQ=="
                 }
               ]
             }
@@ -18772,7 +19725,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "callback_method"
+                  "value": "listen_callback_method"
                 }
               }
             },
@@ -18824,7 +19777,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "dictation"
+                  "value": "listen_dictation"
                 }
               }
             },
@@ -18835,7 +19788,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "encoding"
+                  "value": "listen_encoding"
                 }
               }
             },
@@ -18873,7 +19826,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "filler_words"
+                  "value": "listen_filler_words"
                 }
               }
             },
@@ -18884,7 +19837,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "interim_results"
+                  "value": "listen_interim_results"
                 }
               }
             },
@@ -18927,7 +19880,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "language"
+                  "value": "listen_language"
                 }
               }
             },
@@ -18938,7 +19891,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "model"
+                  "value": "listen_model"
                 }
               }
             },
@@ -18949,7 +19902,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "multichannel"
+                  "value": "listen_multichannel"
                 }
               }
             },
@@ -18960,7 +19913,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "numerals"
+                  "value": "listen_numerals"
                 }
               }
             },
@@ -18971,7 +19924,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "profanity_filter"
+                  "value": "listen_profanity_filter"
                 }
               }
             },
@@ -18982,7 +19935,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "punctuate"
+                  "value": "listen_punctuate"
                 }
               }
             },
@@ -18993,7 +19946,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "redact"
+                  "value": "listen_redact"
                 }
               }
             },
@@ -19043,7 +19996,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "smart_format"
+                  "value": "listen_smart_format"
                 }
               }
             },
@@ -19080,7 +20033,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "vad_events"
+                  "value": "listen_vad_events"
                 }
               }
             },
@@ -19168,22 +20121,93 @@
           ],
           "examples": [
             {
-              "path": "/v1/listen",
-              "pathParameters": {},
+              "name": "",
+              "description": "",
+              "path": "",
+              "pathParameters": {
+                "userSpecifiedExamples": {},
+                "autogeneratedExamples": {}
+              },
               "queryParameters": {
-                "diarize_version": "v2"
+                "userSpecifiedExamples": {},
+                "autogeneratedExamples": {}
               },
               "headers": {
-                "Authorization": "Authorization"
+                "userSpecifiedExamples": {},
+                "autogeneratedExamples": {}
               },
               "messages": [
                 {
-                  "type": "sendAudio",
-                  "body": "string"
+                  "type": "transcriptionRequest",
+                  "body": "Y3VyaW91cyBtaW5k"
                 },
                 {
-                  "type": "receiveTranscription",
-                  "body": {}
+                  "type": "transcriptionRequest",
+                  "body": "cyB0aGluayBhbGlrZSA6KQ=="
+                },
+                {
+                  "type": "transcriptionResponse",
+                  "body": {
+                    "type": "Results",
+                    "channel": {
+                      "alternatives": [
+                        {
+                          "confidence": 0.98,
+                          "transcript": "Hello, world! Welcome to Deepgram!",
+                          "words": [
+                            {
+                              "confidence": 0.99,
+                              "end": 0.5,
+                              "punctuated_word": "Hello,",
+                              "start": 0.1,
+                              "word": "hello"
+                            },
+                            {
+                              "confidence": 0.98,
+                              "end": 0.8,
+                              "punctuated_word": "world!",
+                              "start": 0.6,
+                              "word": "world"
+                            },
+                            {
+                              "confidence": 0.97,
+                              "end": 1.2,
+                              "punctuated_word": "Welcome",
+                              "start": 0.9,
+                              "word": "welcome"
+                            },
+                            {
+                              "confidence": 0.99,
+                              "end": 1.4,
+                              "punctuated_word": "to",
+                              "start": 1.3,
+                              "word": "to"
+                            },
+                            {
+                              "confidence": 0.98,
+                              "end": 1.9,
+                              "punctuated_word": "Deepgram!",
+                              "start": 1.5,
+                              "word": "deepgram"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "duration": 2,
+                    "is_final": true,
+                    "metadata": {
+                      "model_info": {
+                        "name": "nova-2",
+                        "version": "1.0.0",
+                        "arch": "transformer"
+                      },
+                      "model_uuid": "123e4567-e89b-12d3-a456-426614174000",
+                      "request_id": "987fcdeb-51a2-43b7-91e4-c95bafcda21a"
+                    },
+                    "start": 0,
+                    "speech_final": true
+                  }
                 }
               ]
             }

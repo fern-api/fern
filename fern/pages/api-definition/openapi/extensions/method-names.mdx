@@ -3,12 +3,20 @@ title: Customize SDK Method Names
 description: Use `x-fern-sdk-method-name` and `x-fern-sdk-group-name` to finetune SDK naming.
 ---
 
+## Operation IDs
+
+By default, if you have no extensions present, Fern will try to use your operation ID to generate idiomatic 
+method names for the SDK. We typically recommend formatting your operation IDs like `{tag_name}_{operation_name}`. 
+
+For example, for an endpoint that has the tag `users` and the operation id `users_get`, we will generate an SDK 
+method that is `users.get()`. If your operation id does not start with a tag, then we will simply use it as the method name. 
+
+## Usage
+
 <Note>
   The `x-fern-sdk-group-name` and `x-fern-sdk-method-name` extensions allow you to customize the generated SDK method
   names.
 </Note>
-
-## Usage
 
 In the example below, Fern will generate a method called `client.users.create()` for the `POST /users` endpoint.
 

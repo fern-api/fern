@@ -1,4 +1,3 @@
-export * as SeedServerSentEvents from "./api";
-export { SeedServerSentEventsClient } from "./Client";
-export { SeedServerSentEventsError, SeedServerSentEventsTimeoutError } from "./errors";
-export * as serialization from "./serialization";
+export * as SeedServerSentEvents from "./api/index.js";
+export { SeedServerSentEventsClient } from "./Client.js";
+export { SeedServerSentEventsError, SeedServerSentEventsTimeoutError } from "./errors/index.js";

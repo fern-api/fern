@@ -23,11 +23,18 @@ export abstract class AbstractExtension<Output> {
         this.context = args.context;
     }
 
-    protected getExtensionValue(value: unknown): unknown | undefined {
+    protected getExtensionValue(value: unknown, fallbackKey?: string): unknown | undefined {
         if (typeof value !== "object" || value == null) {
             return undefined;
         }
-        return (value as Record<string, unknown>)[this.key];
+        const primaryExtensionValue = (value as Record<string, unknown>)[this.key];
+        if (primaryExtensionValue != null) {
+            return primaryExtensionValue;
+        }
+        if (fallbackKey != null) {
+            return (value as Record<string, unknown>)[fallbackKey];
+        }
+        return undefined;
     }
 
     /**

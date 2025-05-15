@@ -2,6 +2,7 @@ import { writeFile } from "fs/promises";
 import tmp, { DirectoryResult } from "tmp-promise";
 
 import { Audiences, generatorsYml } from "@fern-api/configuration";
+import { ContainerRunner } from "@fern-api/core-utils";
 import { runDocker } from "@fern-api/docker-utils";
 import { AbsoluteFilePath, streamObjectToFile, waitUntilPathExists } from "@fern-api/fs-utils";
 import { ApiDefinitionSource, IntermediateRepresentation, SourceConfig } from "@fern-api/ir-sdk";
@@ -48,7 +49,8 @@ export async function writeFilesToDiskAndRunGenerator({
     generateOauthClients,
     generatePaginatedClients,
     includeOptionalRequestPropertyExamples,
-    ir
+    ir,
+    runner
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -68,6 +70,7 @@ export async function writeFilesToDiskAndRunGenerator({
     generatePaginatedClients: boolean;
     includeOptionalRequestPropertyExamples?: boolean;
     ir?: IntermediateRepresentation;
+    runner?: ContainerRunner;
 }): Promise<GeneratorRunResponse> {
     const { latest, migrated } = await getIntermediateRepresentation({
         workspace,
@@ -134,7 +137,8 @@ export async function writeFilesToDiskAndRunGenerator({
             writeUnitTests,
             generateOauthClients,
             generatePaginatedClients,
-            sources: workspace.getSources()
+            sources: workspace.getSources(),
+            runner
         });
 
         return {
@@ -197,6 +201,8 @@ export declare namespace runGenerator {
         generateOauthClients: boolean;
         generatePaginatedClients: boolean;
         sources: IdentifiableSource[];
+
+        runner?: ContainerRunner;
     }
 
     export interface Return {
@@ -219,7 +225,8 @@ export async function runGenerator({
     writeUnitTests,
     generateOauthClients,
     generatePaginatedClients,
-    sources
+    sources,
+    runner
 }: runGenerator.Args): Promise<runGenerator.Return> {
     const { name, version, config: customConfig } = generatorInvocation;
     const imageName = `${name}:${version}`;
@@ -264,7 +271,8 @@ export async function runGenerator({
         imageName,
         args: [DOCKER_GENERATOR_CONFIG_PATH],
         binds,
-        removeAfterCompletion: !keepDocker
+        removeAfterCompletion: !keepDocker,
+        runner
     });
 
     return {

@@ -48,8 +48,14 @@ class PathParamClient:
         Examples
         --------
         from seed import SeedEnum
-        client = SeedEnum(base_url="https://yourhost.com/path/to/api", )
-        client.path_param.send(operand=">", operand_or_color="red", )
+
+        client = SeedEnum(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.path_param.send(
+            operand=">",
+            operand_or_color="red",
+        )
         """
         _response = self._raw_client.send(operand, operand_or_color, request_options=request_options)
         return _response.data
@@ -93,11 +99,22 @@ class AsyncPathParamClient:
 
         Examples
         --------
-        from seed import AsyncSeedEnum
         import asyncio
-        client = AsyncSeedEnum(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedEnum
+
+        client = AsyncSeedEnum(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.path_param.send(operand=">", operand_or_color="red", )
+            await client.path_param.send(
+                operand=">",
+                operand_or_color="red",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.send(operand, operand_or_color, request_options=request_options)

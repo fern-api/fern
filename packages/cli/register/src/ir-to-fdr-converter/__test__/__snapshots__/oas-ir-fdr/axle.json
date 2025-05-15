@@ -933,17 +933,17 @@
         ]
       }
     },
-    "IgnitionPostRequestBodySchemaMetadata": {
+    "IgnitionPostRequestBodyContentApplicationJsonSchemaMetadata": {
       "description": "Optional object to store ephermeral information about the session, such as `reservationTime`. Will be returned in webhook events.",
-      "name": "IgnitionPostRequestBodySchemaMetadata",
+      "name": "IgnitionPostRequestBodyContentApplicationJsonSchemaMetadata",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "IgnitionPostResponsesSchemaData": {
-      "name": "IgnitionPostResponsesSchemaData",
+    "IgnitionPostResponsesContentApplicationJsonSchemaData": {
+      "name": "IgnitionPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -989,14 +989,14 @@
             "key": "data",
             "valueType": {
               "type": "id",
-              "value": "IgnitionPostResponsesSchemaData"
+              "value": "IgnitionPostResponsesContentApplicationJsonSchemaData"
             }
           }
         ]
       }
     },
-    "TokenExchangePostResponsesSchemaData": {
-      "name": "TokenExchangePostResponsesSchemaData",
+    "TokenExchangePostResponsesContentApplicationJsonSchemaData": {
+      "name": "TokenExchangePostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1052,7 +1052,7 @@
             "key": "data",
             "valueType": {
               "type": "id",
-              "value": "TokenExchangePostResponsesSchemaData"
+              "value": "TokenExchangePostResponsesContentApplicationJsonSchemaData"
             }
           }
         ]
@@ -1288,7 +1288,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "IgnitionPostRequestBodySchemaMetadata"
+                        "value": "IgnitionPostRequestBodyContentApplicationJsonSchemaMetadata"
                       }
                     }
                   }
@@ -1311,14 +1311,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "Ignition_StartIgnition_example",
               "description": "",
               "path": "/ignition",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "x-client-id": "foo",
-                "x-client-secret": "foo"
+                "x-client-id": "x-client-id",
+                "x-client-secret": "x-client-secret"
               },
               "requestBody": {
                 "redirectUri": "https://example.com/redirect",
@@ -1459,14 +1459,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "tokensExchangeTokenExample",
               "description": "",
               "path": "/token/exchange",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "x-client-id": "foo",
-                "x-client-secret": "foo"
+                "x-client-id": "x-client-id",
+                "x-client-secret": "x-client-secret"
               },
               "requestBody": {
                 "authCode": "foo"
@@ -1620,16 +1620,16 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getAccountExample",
               "description": "",
-              "path": "/accounts/",
+              "path": "/accounts/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {
-                "x-client-id": "foo",
-                "x-client-secret": "foo"
+                "x-client-id": "x-client-id",
+                "x-client-secret": "x-client-secret"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -1788,16 +1788,16 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getPolicyExample",
               "description": "",
-              "path": "/policies/",
+              "path": "/policies/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {
-                "x-client-id": "foo",
-                "x-client-secret": "foo"
+                "x-client-id": "x-client-id",
+                "x-client-secret": "x-client-secret"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -2058,16 +2058,16 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getCarrierExample",
               "description": "",
-              "path": "/carriers/",
+              "path": "/carriers/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {
-                "x-client-id": "foo",
-                "x-client-secret": "foo"
+                "x-client-id": "x-client-id",
+                "x-client-secret": "x-client-secret"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -2188,14 +2188,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getCarriersExample",
               "description": "",
               "path": "/carriers",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "x-client-id": "foo",
-                "x-client-secret": "foo"
+                "x-client-id": "x-client-id",
+                "x-client-secret": "x-client-secret"
               },
               "responseStatusCode": 200,
               "responseBody": {

@@ -1,10 +1,12 @@
+import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { TypeDeclaration, V2SchemaExamples } from "@fern-api/ir-sdk";
+import { V2SchemaExamples } from "@fern-api/ir-sdk";
 
 import { AbstractConverter, AbstractConverterContext } from "../..";
 import { ExampleConverter } from "../ExampleConverter";
 import { SchemaOrReferenceConverter } from "../schema";
+import { SchemaConverter } from "../schema/SchemaConverter";
 
 export declare namespace AbstractMediaTypeObjectConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
@@ -12,14 +14,14 @@ export declare namespace AbstractMediaTypeObjectConverter {
         method: string;
     }
 
+    export interface MediaTypeObject extends SchemaOrReferenceConverter.Output {
+        examples?: Record<string, OpenAPIV3_1.ExampleObject>;
+    }
+
     export interface Output {
         examples?: Record<string, OpenAPIV3_1.ExampleObject>;
-        inlinedTypes: Record<string, TypeDeclaration>;
+        inlinedTypes: Record<string, SchemaConverter.ConvertedSchema>;
     }
-}
-
-export interface MediaTypeObject extends SchemaOrReferenceConverter.Output {
-    examples?: Record<string, OpenAPIV3_1.ExampleObject>;
 }
 
 export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter<
@@ -35,30 +37,44 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
         this.method = method;
     }
 
-    abstract convert(): Promise<AbstractMediaTypeObjectConverter.Output | undefined>;
+    abstract convert(): AbstractMediaTypeObjectConverter.Output | undefined;
 
-    protected async parseMediaTypeObject({
+    protected parseMediaTypeObject({
         mediaTypeObject,
+        resolveSchema,
+        contentType,
         schemaId
     }: {
         mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
+        contentType: string;
+        resolveSchema?: boolean;
         schemaId: string;
-    }): Promise<MediaTypeObject | undefined> {
+    }): AbstractMediaTypeObjectConverter.MediaTypeObject | undefined {
         if (mediaTypeObject == null) {
             return undefined;
         }
         if (mediaTypeObject.schema == null) {
             return undefined;
         }
+        if (resolveSchema) {
+            const resolvedSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: mediaTypeObject.schema,
+                breadcrumbs: [...this.breadcrumbs, "content", contentType]
+            });
+            if (resolvedSchema == null) {
+                return undefined;
+            }
+            mediaTypeObject.schema = resolvedSchema;
+        }
 
         const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
             context: this.context,
-            breadcrumbs: [...this.breadcrumbs, "schema"],
+            breadcrumbs: [...this.breadcrumbs, "content", contentType, "schema"],
             schemaOrReference: mediaTypeObject.schema,
             schemaIdOverride: schemaId
         });
 
-        const convertedSchema = await schemaOrReferenceConverter.convert();
+        const convertedSchema = schemaOrReferenceConverter.convert();
         if (convertedSchema == null) {
             return undefined;
         }
@@ -66,21 +82,26 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
         const examples =
             mediaTypeObject.examples != null
                 ? Object.fromEntries(
-                      await Promise.all(
-                          Object.entries(mediaTypeObject.examples).map(async ([key, example]) => [
-                              key,
-                              this.context.isReferenceObject(example)
-                                  ? await this.context.resolveReference<OpenAPIV3_1.ExampleObject>(example)
-                                  : example
-                          ])
-                      )
+                      Object.entries(mediaTypeObject.examples)
+                          .map(([key, example]) => {
+                              if (this.context.isReferenceObject(example)) {
+                                  const resolved = this.context.resolveReference<OpenAPIV3_1.ExampleObject>({
+                                      reference: example,
+                                      breadcrumbs: [...this.breadcrumbs, "content", contentType, "examples"],
+                                      skipErrorCollector: true
+                                  });
+                                  return resolved.resolved ? [key, resolved.value] : null;
+                              }
+                              return [key, example];
+                          })
+                          .filter((entry): entry is [string, OpenAPIV3_1.ExampleObject] => entry != null)
                   )
                 : undefined;
 
         return { ...convertedSchema, examples };
     }
 
-    protected async convertMediaTypeObjectExamples({
+    protected convertMediaTypeObjectExamples({
         mediaTypeObject,
         generateOptionalProperties,
         exampleGenerationStrategy
@@ -88,7 +109,7 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
         mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
         generateOptionalProperties?: boolean;
         exampleGenerationStrategy?: "request" | "response";
-    }): Promise<V2SchemaExamples> {
+    }): V2SchemaExamples {
         const v2Examples: V2SchemaExamples = {
             userSpecifiedExamples: {},
             autogeneratedExamples: {}
@@ -101,10 +122,10 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
         });
 
         for (const [key, example] of examples) {
-            const resolvedExample = await this.context.resolveExampleWithValue(example);
+            const resolvedExample = this.context.resolveExampleWithValue(example);
             if (resolvedExample != null) {
                 if (schema != null) {
-                    v2Examples.userSpecifiedExamples[key] = await this.generateOrValidateExample({
+                    v2Examples.userSpecifiedExamples[key] = this.generateOrValidateExample({
                         schema,
                         example: resolvedExample,
                         exampleGenerationStrategy
@@ -116,8 +137,8 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
         }
 
         if (Object.keys(v2Examples.userSpecifiedExamples).length === 0 && schema != null) {
-            const exampleName = `${[...this.group, this.method].join("_")}_example`;
-            v2Examples.autogeneratedExamples[exampleName] = await this.generateOrValidateExample({
+            const exampleName = camelCase(`${[...this.group, this.method].join("_")}_example`);
+            v2Examples.autogeneratedExamples[exampleName] = this.generateOrValidateExample({
                 schema,
                 example: undefined,
                 ignoreErrors: true,
@@ -129,7 +150,7 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
         return v2Examples;
     }
 
-    protected async generateOrValidateExample({
+    protected generateOrValidateExample({
         schema,
         example,
         ignoreErrors,
@@ -141,10 +162,12 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
         example: unknown;
         generateOptionalProperties?: boolean;
         exampleGenerationStrategy?: "request" | "response";
-    }): Promise<unknown> {
-        const resolvedSchema = await this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+        skipErrorCollector?: boolean;
+    }): unknown {
+        const resolvedSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
             schemaOrReference: schema,
-            breadcrumbs: this.breadcrumbs
+            breadcrumbs: this.breadcrumbs,
+            skipErrorCollector: true
         });
         if (resolvedSchema == null) {
             return undefined;
@@ -163,7 +186,7 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
             generateOptionalProperties: generateOptionalProperties ?? false,
             exampleGenerationStrategy
         });
-        const { validExample: convertedExample, errors } = await exampleConverter.convert();
+        const { validExample: convertedExample, errors } = exampleConverter.convert();
         if (!ignoreErrors) {
             errors.forEach((error) => {
                 this.context.errorCollector.collect({

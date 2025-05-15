@@ -50,7 +50,7 @@ await client.organizations.getOrganization("organization_id");
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client/Client.ts">getOrganizationUser</a>(organizationId, userId, { ...params }) -> SeedPathParameters.User</code></summary>
+<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client/Client.ts">getOrganizationUser</a>({ ...params }) -> SeedPathParameters.User</code></summary>
 <dl>
 <dd>
 
@@ -63,7 +63,10 @@ await client.organizations.getOrganization("organization_id");
 <dd>
 
 ```typescript
-await client.organizations.getOrganizationUser("organization_id", "user_id");
+await client.organizations.getOrganizationUser({
+    organization_id: "organization_id",
+    user_id: "user_id",
+});
 ```
 
 </dd>
@@ -75,22 +78,6 @@ await client.organizations.getOrganizationUser("organization_id", "user_id");
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**organizationId:** `string`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**userId:** `string`
-
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -174,7 +161,7 @@ await client.organizations.searchOrganizations("organization_id", {
 
 ## User
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getUser</a>(userId, { ...params }) -> SeedPathParameters.User</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getUser</a>({ ...params }) -> SeedPathParameters.User</code></summary>
 <dl>
 <dd>
 
@@ -187,7 +174,9 @@ await client.organizations.searchOrganizations("organization_id", {
 <dd>
 
 ```typescript
-await client.user.getUser("user_id");
+await client.user.getUser({
+    user_id: "user_id",
+});
 ```
 
 </dd>
@@ -199,14 +188,6 @@ await client.user.getUser("user_id");
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**userId:** `string`
-
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -281,7 +262,7 @@ await client.user.createUser({
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">updateUser</a>(userId, { ...params }) -> SeedPathParameters.User</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">updateUser</a>({ ...params }) -> SeedPathParameters.User</code></summary>
 <dl>
 <dd>
 
@@ -294,7 +275,8 @@ await client.user.createUser({
 <dd>
 
 ```typescript
-await client.user.updateUser("user_id", {
+await client.user.updateUser({
+    user_id: "user_id",
     body: {
         name: "name",
         tags: ["tags", "tags"],
@@ -311,14 +293,6 @@ await client.user.updateUser("user_id", {
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**userId:** `string`
-
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -342,7 +316,7 @@ await client.user.updateUser("user_id", {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">searchUsers</a>(userId, { ...params }) -> SeedPathParameters.User[]</code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">searchUsers</a>({ ...params }) -> SeedPathParameters.User[]</code></summary>
 <dl>
 <dd>
 
@@ -355,7 +329,8 @@ await client.user.updateUser("user_id", {
 <dd>
 
 ```typescript
-await client.user.searchUsers("user_id", {
+await client.user.searchUsers({
+    user_id: "user_id",
     limit: 1,
 });
 ```
@@ -369,14 +344,6 @@ await client.user.searchUsers("user_id", {
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**userId:** `string`
-
-</dd>
-</dl>
 
 <dl>
 <dd>

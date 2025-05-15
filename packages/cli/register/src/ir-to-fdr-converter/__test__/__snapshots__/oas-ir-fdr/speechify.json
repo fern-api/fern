@@ -1373,10 +1373,59 @@
               }
             }
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid request params",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 402,
+              "description": "Insufficient credits",
+              "name": "PaymentRequiredError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 403,
+              "description": "Request access rejected",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal server error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "audioExperimentalStreamCreateExample",
               "description": "",
               "path": "/experimental/audio/stream",
               "pathParameters": {},
@@ -1442,10 +1491,59 @@
               }
             }
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid request params",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 402,
+              "description": "Insufficient credits",
+              "name": "PaymentRequiredError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 403,
+              "description": "Request access rejected",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal server error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "audioGetSpeechExample",
               "description": "",
               "path": "/v1/audio/speech",
               "pathParameters": {},
@@ -1519,10 +1617,59 @@
               }
             }
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid request params",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 402,
+              "description": "Insufficient credits",
+              "name": "PaymentRequiredError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 403,
+              "description": "Request access rejected",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal server error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "audioGetStreamExample",
               "description": "",
               "path": "/v1/audio/stream",
               "pathParameters": {},
@@ -1603,7 +1750,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "authCreateAccessTokenExample",
               "description": "",
               "path": "/v1/auth/token",
               "pathParameters": {},
@@ -1667,7 +1814,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listApiKeysExample",
               "description": "",
               "path": "/v1/token",
               "pathParameters": {},
@@ -1712,7 +1859,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "createApiKeyExample",
               "description": "",
               "path": "/v1/token",
               "pathParameters": {},
@@ -1776,11 +1923,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "deleteApiKeyExample",
               "description": "",
-              "path": "/v1/token/",
+              "path": "/v1/token/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -1857,11 +2004,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "apikeyUpdateApiKeyExample",
               "description": "",
-              "path": "/v1/token/",
+              "path": "/v1/token/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -1916,10 +2063,35 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "No voices found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal server error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getVoicesExample",
               "description": "",
               "path": "/v1/voices",
               "pathParameters": {},
@@ -2008,10 +2180,47 @@
               "contentType": "multipart/form-data"
             }
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid request params",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 402,
+              "description": "Current billing plan does not have access to voice cloning",
+              "name": "PaymentRequiredError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal server error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "voicesCreateVoiceExample",
               "description": "",
               "path": "/v1/voices",
               "pathParameters": {},
@@ -2094,14 +2303,51 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Missing or invalid voice ID",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Voice not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal server error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteVoiceExample",
               "description": "",
-              "path": "/v1/voices/",
+              "path": "/v1/voices/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},

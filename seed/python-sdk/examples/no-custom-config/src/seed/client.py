@@ -43,7 +43,11 @@ class SeedExamples:
     --------
     from seed import SeedExamples
     from seed.environment import SeedExamplesEnvironment
-    client = SeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
+
+    client = SeedExamples(
+        token="YOUR_TOKEN",
+        environment=SeedExamplesEnvironment.PRODUCTION,
+    )
     """
 
     def __init__(
@@ -102,8 +106,14 @@ class SeedExamples:
         --------
         from seed import SeedExamples
         from seed.environment import SeedExamplesEnvironment
-        client = SeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
-        client.echo(request='Hello world!\\n\\nwith\\n\\tnewlines', )
+
+        client = SeedExamples(
+            token="YOUR_TOKEN",
+            environment=SeedExamplesEnvironment.PRODUCTION,
+        )
+        client.echo(
+            request="Hello world!\\n\\nwith\\n\\tnewlines",
+        )
         """
         _response = self._raw_client.echo(request=request, request_options=request_options)
         return _response.data
@@ -125,8 +135,14 @@ class SeedExamples:
         --------
         from seed import SeedExamples
         from seed.environment import SeedExamplesEnvironment
-        client = SeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
-        client.create_type(request="primitive", )
+
+        client = SeedExamples(
+            token="YOUR_TOKEN",
+            environment=SeedExamplesEnvironment.PRODUCTION,
+        )
+        client.create_type(
+            request="primitive",
+        )
         """
         _response = self._raw_client.create_type(request=request, request_options=request_options)
         return _response.data
@@ -158,7 +174,11 @@ class AsyncSeedExamples:
     --------
     from seed import AsyncSeedExamples
     from seed.environment import SeedExamplesEnvironment
-    client = AsyncSeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
+
+    client = AsyncSeedExamples(
+        token="YOUR_TOKEN",
+        environment=SeedExamplesEnvironment.PRODUCTION,
+    )
     """
 
     def __init__(
@@ -215,12 +235,23 @@ class AsyncSeedExamples:
 
         Examples
         --------
+        import asyncio
+
         from seed import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
-        import asyncio
-        client = AsyncSeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
+
+        client = AsyncSeedExamples(
+            token="YOUR_TOKEN",
+            environment=SeedExamplesEnvironment.PRODUCTION,
+        )
+
+
         async def main() -> None:
-            await client.echo(request='Hello world!\\n\\nwith\\n\\tnewlines', )
+            await client.echo(
+                request="Hello world!\\n\\nwith\\n\\tnewlines",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.echo(request=request, request_options=request_options)
@@ -243,12 +274,23 @@ class AsyncSeedExamples:
 
         Examples
         --------
+        import asyncio
+
         from seed import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
-        import asyncio
-        client = AsyncSeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
+
+        client = AsyncSeedExamples(
+            token="YOUR_TOKEN",
+            environment=SeedExamplesEnvironment.PRODUCTION,
+        )
+
+
         async def main() -> None:
-            await client.create_type(request="primitive", )
+            await client.create_type(
+                request="primitive",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create_type(request=request, request_options=request_options)

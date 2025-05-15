@@ -1,4 +1,3 @@
-export * as SeedPagination from "./api";
-export { SeedPaginationClient } from "./Client";
-export { SeedPaginationError, SeedPaginationTimeoutError } from "./errors";
-export * as serialization from "./serialization";
+export * as SeedPagination from "./api/index.js";
+export { SeedPaginationClient } from "./Client.js";
+export { SeedPaginationError, SeedPaginationTimeoutError } from "./errors/index.js";

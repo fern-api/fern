@@ -22,8 +22,8 @@
         ]
       }
     },
-    "UsersGetResponsesSchemaItems": {
-      "name": "UsersGetResponsesSchemaItems",
+    "UsersGetResponsesContentApplicationJsonSchemaItems": {
+      "name": "UsersGetResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -83,7 +83,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getUserExample",
             "description": "",
             "path": "/user",
             "pathParameters": {},
@@ -136,7 +136,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "UsersGetResponsesSchemaItems"
+                "value": "UsersGetResponsesContentApplicationJsonSchemaItems"
               }
             }
           },
@@ -146,7 +146,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getUsersExample",
             "description": "",
             "path": "/users",
             "pathParameters": {},

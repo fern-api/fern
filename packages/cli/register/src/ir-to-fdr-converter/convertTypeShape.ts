@@ -34,7 +34,8 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                         description: property.docs ?? undefined,
                         key: FdrCjsSdk.PropertyKey(property.name.wireValue),
                         valueType: convertTypeReference(property.valueType),
-                        availability: convertIrAvailability(property.availability)
+                        availability: convertIrAvailability(property.availability),
+                        propertyAccess: property.propertyAccess
                     })
                 ),
                 extraProperties: convertExtraProperties(object.extraProperties)
@@ -47,7 +48,8 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                         key: FdrCjsSdk.PropertyKey(baseProperty.name.wireValue),
                         valueType: convertTypeReference(baseProperty.valueType),
                         availability: convertIrAvailability(baseProperty.availability),
-                        description: baseProperty.docs
+                        description: baseProperty.docs,
+                        propertyAccess: baseProperty.propertyAccess
                     };
                 }
             );
@@ -78,7 +80,8 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                                                 key: FdrCjsSdk.PropertyKey(singleProperty.name.wireValue),
                                                 valueType: convertTypeReference(singleProperty.type),
                                                 description: undefined,
-                                                availability: undefined
+                                                availability: undefined,
+                                                propertyAccess: undefined
                                             },
                                             ...baseProperties
                                         ],

@@ -13,7 +13,10 @@
 
 ```python
 from seed import SeedApi
-client = SeedApi(base_url="https://yourhost.com/path/to/api", )
+
+client = SeedApi(
+    base_url="https://yourhost.com/path/to/api",
+)
 client.foo()
 
 ```
@@ -57,7 +60,10 @@ client.foo()
 
 ```python
 from seed import SeedApi
-client = SeedApi(base_url="https://yourhost.com/path/to/api", )
+
+client = SeedApi(
+    base_url="https://yourhost.com/path/to/api",
+)
 client.a.b.foo()
 
 ```
@@ -101,7 +107,10 @@ client.a.b.foo()
 
 ```python
 from seed import SeedApi
-client = SeedApi(base_url="https://yourhost.com/path/to/api", )
+
+client = SeedApi(
+    base_url="https://yourhost.com/path/to/api",
+)
 client.a.c.foo()
 
 ```
@@ -145,7 +154,10 @@ client.a.c.foo()
 
 ```python
 from seed import SeedApi
-client = SeedApi(base_url="https://yourhost.com/path/to/api", )
+
+client = SeedApi(
+    base_url="https://yourhost.com/path/to/api",
+)
 client.folder.foo()
 
 ```
@@ -189,7 +201,10 @@ client.folder.foo()
 
 ```python
 from seed import SeedApi
-client = SeedApi(base_url="https://yourhost.com/path/to/api", )
+
+client = SeedApi(
+    base_url="https://yourhost.com/path/to/api",
+)
 client.folder.service.endpoint()
 
 ```
@@ -232,9 +247,13 @@ client.folder.service.endpoint()
 
 ```python
 from seed import SeedApi
-client = SeedApi(base_url="https://yourhost.com/path/to/api", )
-client.folder.service.unknown_request(request={'key': 'value'}
-, )
+
+client = SeedApi(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.folder.service.unknown_request(
+    request={"key": "value"},
+)
 
 ```
 </dd>

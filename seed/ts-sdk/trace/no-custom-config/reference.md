@@ -989,7 +989,7 @@ await client.homepage.setHomepageProblems(["string", "string"]);
 
 ```typescript
 await client.migration.getAttemptedMigrations({
-    adminKeyHeader: "admin-key-header",
+    "admin-key-header": "admin-key-header",
 });
 ```
 

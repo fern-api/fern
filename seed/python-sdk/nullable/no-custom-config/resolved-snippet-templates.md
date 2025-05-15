@@ -1,7 +1,9 @@
 ```python
 
 
-client = SeedNullable(base_url="https://yourhost.com/path/to/api", )        
+client = SeedNullable(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.nullable.get_users(
 	usernames="usernames",
 	avatar="avatar",
@@ -16,7 +18,9 @@ client.nullable.get_users(
 ```python
 from seed.nullable import Metadata
 
-client = SeedNullable(base_url="https://yourhost.com/path/to/api", )        
+client = SeedNullable(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.nullable.create_user(
 	username="username",
 	tags=[
@@ -41,7 +45,9 @@ client.nullable.create_user(
 ```python
 
 
-client = SeedNullable(base_url="https://yourhost.com/path/to/api", )        
+client = SeedNullable(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.nullable.delete_user(
 	username="xy"
 )

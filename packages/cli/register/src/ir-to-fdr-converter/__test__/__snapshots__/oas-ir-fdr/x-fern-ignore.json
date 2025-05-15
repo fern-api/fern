@@ -176,7 +176,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "listExample",
             "description": "",
             "path": "/list",
             "pathParameters": {},

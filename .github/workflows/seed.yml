@@ -48,7 +48,7 @@ jobs:
       php: ${{ steps.filter.outputs.php }}
     steps:
       - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v2
+      - uses: dorny/paths-filter@v3
         id: filter
         with:
           filters: |
@@ -97,6 +97,14 @@ jobs:
               - 'generators/php/**'
               - 'seed/php-sdk/**'
               - 'seed/php-model/**'
+      - name: retry-on-failure
+        if: failure() && steps.filter.outcome == 'failure' && fromJSON(github.run_attempt) < 3
+        env:
+          GH_REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ github.token }}
+          GH_DEBUG: api
+        run: gh workflow run rerun.yml -F run_id=${{ github.run_id }}
+        
   ruby-model:
     runs-on: Seed
     needs: changes

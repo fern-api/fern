@@ -1,7 +1,7 @@
 {
   "types": {
-    "SearchWithObjectUnionGetRequestBodySchema": {
-      "name": "SearchWithObjectUnionGetRequestBodySchema",
+    "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema": {
+      "name": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema",
       "shape": {
         "type": "object",
         "extends": [],
@@ -95,7 +95,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getSearchWithArrayUnionExample",
             "description": "",
             "path": "/search-with-array-union",
             "pathParameters": {},
@@ -156,7 +156,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "SearchWithObjectUnionGetRequestBodySchema"
+                  "value": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema"
                 }
               }
             }
@@ -178,7 +178,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getSearchWithObjectUnionExample",
             "description": "",
             "path": "/search-with-object-union",
             "pathParameters": {},

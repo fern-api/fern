@@ -141,11 +141,14 @@
           },
           "response": {
             "type": {
-              "type": "reference",
-              "value": {
-                "type": "primitive",
+              "type": "stream",
+              "shape": {
+                "type": "reference",
                 "value": {
-                  "type": "string"
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -155,11 +158,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userGetExample",
               "description": "",
-              "path": "/user/",
+              "path": "/user/userId",
               "pathParameters": {
-                "userId": "foo"
+                "userId": "userId"
               },
               "queryParameters": {},
               "headers": {},
@@ -170,12 +173,19 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": "foo"
+                "type": "stream",
+                "value": [
+                  "foo"
+                ]
               },
               "responseBodyV3": {
-                "type": "json",
-                "value": "foo"
+                "type": "stream",
+                "value": [
+                  {
+                    "type": "json",
+                    "value": "foo"
+                  }
+                ]
               }
             }
           ],

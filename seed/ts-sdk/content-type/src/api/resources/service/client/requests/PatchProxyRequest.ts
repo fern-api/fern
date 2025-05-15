@@ -6,10 +6,10 @@
  * @example
  *     {
  *         application: "application",
- *         requireAuth: true
+ *         require_auth: true
  *     }
  */
 export interface PatchProxyRequest {
     application: string | null;
-    requireAuth: boolean | null;
+    require_auth: boolean | null;
 }

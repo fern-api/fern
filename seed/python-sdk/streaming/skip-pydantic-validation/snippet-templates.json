@@ -16,7 +16,7 @@
                     "from seed import SeedStreaming"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedStreaming(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -55,7 +55,7 @@
                         "from seed import AsyncSeedStreaming"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedStreaming(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -106,7 +106,7 @@
                     "from seed import SeedStreaming"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedStreaming(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -145,7 +145,7 @@
                         "from seed import AsyncSeedStreaming"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedStreaming(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

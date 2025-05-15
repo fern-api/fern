@@ -3340,18 +3340,6 @@
         ]
       }
     },
-    "LemurBaseParametersContext0": {
-      "name": "LemurBaseParametersContext0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "LemurBaseParametersContext1": {
       "name": "LemurBaseParametersContext1",
       "shape": {
@@ -3370,10 +3358,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "LemurBaseParametersContext0",
             "type": {
-              "type": "id",
-              "value": "LemurBaseParametersContext0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -3501,18 +3490,6 @@
         ]
       }
     },
-    "LemurQuestionContext0": {
-      "name": "LemurQuestionContext0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "LemurQuestionContext1": {
       "name": "LemurQuestionContext1",
       "shape": {
@@ -3531,10 +3508,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "LemurQuestionContext0",
             "type": {
-              "type": "id",
-              "value": "LemurQuestionContext0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -4228,6 +4206,13 @@
           },
           "queryParameters": [],
           "headers": [],
+          "request": {
+            "type": {
+              "type": "bytes",
+              "isOptional": false,
+              "contentType": "application/octet-stream"
+            }
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -4239,10 +4224,100 @@
             "statusCode": 200,
             "description": "File uploaded successfully"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "uploadExample",
               "description": "",
               "path": "/v2/upload",
               "pathParameters": {},
@@ -4384,10 +4459,100 @@
             "statusCode": 200,
             "description": "A list of transcripts filtered by `limit` and `status`"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/v2/transcript",
               "pathParameters": {},
@@ -4499,10 +4664,100 @@
             "statusCode": 201,
             "description": "Transcript created and queued for processing."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "transcriptCreateExample",
               "description": "",
               "path": "/v2/transcript",
               "pathParameters": {},
@@ -4935,14 +5190,104 @@
             "statusCode": 200,
             "description": "The transcript resource"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/transcript_id",
               "pathParameters": {
-                "transcript_id": "foo"
+                "transcript_id": "transcript_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -5364,14 +5709,104 @@
             "statusCode": 200,
             "description": "The deleted transcript response."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteExample",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/transcript_id",
               "pathParameters": {
-                "transcript_id": "foo"
+                "transcript_id": "transcript_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -5812,19 +6247,125 @@
             }
           ],
           "headers": [],
-          "errorsV2": [],
+          "response": {
+            "statusCode": 200,
+            "type": {
+              "type": "object",
+              "extends": [],
+              "properties": []
+            }
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getSubtitlesExample",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/transcript_id/srt",
               "pathParameters": {
-                "transcript_id": "foo",
+                "transcript_id": "transcript_id",
                 "subtitle_format": "srt"
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": "WEBVTT\n00:12.340 --> 00:16.220\nLast year I showed these two slides said that demonstrate\n00:16.200 --> 00:20.040\nthat the Arctic ice cap which for most of the last 3,000,000 years has been the\n00:20.020 --> 00:25.040\nsize of the lower 48 States has shrunk by 40% but this understates\n"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "WEBVTT\n00:12.340 --> 00:16.220\nLast year I showed these two slides said that demonstrate\n00:16.200 --> 00:20.040\nthat the Arctic ice cap which for most of the last 3,000,000 years has been the\n00:20.020 --> 00:25.040\nsize of the lower 48 States has shrunk by 40% but this understates\n"
+              }
             }
           ],
           "protocol": {
@@ -5890,14 +6431,104 @@
             "statusCode": 200,
             "description": "Exported sentences"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getSentencesExample",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/transcript_id/sentences",
               "pathParameters": {
-                "transcript_id": "foo"
+                "transcript_id": "transcript_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -6017,14 +6648,104 @@
             "statusCode": 200,
             "description": "Exported paragraphs"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getParagraphsExample",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/transcript_id/paragraphs",
               "pathParameters": {
-                "transcript_id": "foo"
+                "transcript_id": "transcript_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -6158,14 +6879,104 @@
             "statusCode": 200,
             "description": "Word search response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "wordSearchExample",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/transcript_id/word-search",
               "pathParameters": {
-                "transcript_id": "foo"
+                "transcript_id": "transcript_id"
               },
               "queryParameters": {
                 "words": [
@@ -6281,14 +7092,104 @@
             "statusCode": 200,
             "description": "The redacted audio object containing the status and URL to the redacted audio."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getRedactedAudioExample",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/transcript_id/redacted-audio",
               "pathParameters": {
-                "transcript_id": "foo"
+                "transcript_id": "transcript_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -6378,10 +7279,100 @@
             "statusCode": 200,
             "description": "Temporary authentication token generated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "realtimeCreateTemporaryTokenExample",
               "description": "",
               "path": "/v2/realtime/token",
               "pathParameters": {},
@@ -6480,10 +7471,100 @@
             "statusCode": 200,
             "description": "LeMUR summary response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "lemurSummaryExample",
               "description": "",
               "path": "/lemur/v3/generate/summary",
               "pathParameters": {},
@@ -6578,10 +7659,100 @@
             "statusCode": 200,
             "description": "LeMUR question & answer response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "lemurQuestionAnswerExample",
               "description": "",
               "path": "/lemur/v3/generate/question-answer",
               "pathParameters": {},
@@ -6696,10 +7867,100 @@
             "statusCode": 200,
             "description": "LeMUR action items response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "lemurActionItemsExample",
               "description": "",
               "path": "/lemur/v3/generate/action-items",
               "pathParameters": {},
@@ -6794,10 +8055,100 @@
             "statusCode": 200,
             "description": "LeMUR task response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "lemurTaskExample",
               "description": "",
               "path": "/lemur/v3/generate/task",
               "pathParameters": {},
@@ -6898,14 +8249,104 @@
             "statusCode": 200,
             "description": "LeMUR request data deleted."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "purgeRequestDataExample",
               "description": "",
-              "path": "/lemur/v3/",
+              "path": "/lemur/v3/request_id",
               "pathParameters": {
-                "request_id": "foo"
+                "request_id": "request_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -6956,7 +8397,18 @@
           "id": "userId",
           "name": "/{userId}",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "description": "The ID of the user.",
+                "key": "userId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -6968,9 +8420,12 @@
             {
               "key": "Authentication",
               "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
                 }
               },
               "description": "Authenticate using your AssemblyAI API key."
@@ -6978,22 +8433,15 @@
           ],
           "queryParameters": [
             {
-              "description": "The ID of the user.",
-              "key": "userId",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            },
-            {
               "description": "The sample rate of the streamed audio.",
               "key": "sample_rate",
               "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer"
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
                 }
               }
             },
@@ -7001,9 +8449,12 @@
               "description": "Add up to 2500 characters of custom vocabulary.\nThe parameter should map to a JSON encoded list of strings.\n",
               "key": "word_boost",
               "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -7011,9 +8462,12 @@
               "description": "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)",
               "key": "token",
               "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -7048,30 +8502,32 @@
           ],
           "examples": [
             {
-              "path": "/{userId}",
-              "pathParameters": {},
+              "name": "",
+              "description": "",
+              "path": "",
+              "pathParameters": {
+                "userSpecifiedExamples": {},
+                "autogeneratedExamples": {}
+              },
               "queryParameters": {
-                "userId": "userId",
-                "sample_rate": 1,
-                "word_boost": "word_boost",
-                "token": "token"
+                "userSpecifiedExamples": {},
+                "autogeneratedExamples": {}
               },
               "headers": {
-                "Authentication": "Authentication"
+                "userSpecifiedExamples": {},
+                "autogeneratedExamples": {}
               },
               "messages": [
                 {
                   "type": "publish",
                   "body": {
-                    "audio_data": "audio_data"
+                    "audio_data": "base64-encoded-audio-data"
                   }
                 },
                 {
-                  "type": "subscribe",
+                  "type": "publish",
                   "body": {
-                    "message_type": "SessionBegins",
-                    "session_id": "session_id",
-                    "expires_at": "2024-01-15T09:30:00Z"
+                    "terminate_session": true
                   }
                 }
               ]

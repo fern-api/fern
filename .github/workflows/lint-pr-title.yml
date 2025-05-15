@@ -47,6 +47,7 @@ jobs:
             deps-dev
             fiber
             pydantic
+            ai-search
           requireScope: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

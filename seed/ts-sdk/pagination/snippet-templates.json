@@ -89,7 +89,7 @@
                                                         {
                                                             "value": {
                                                                 "imports": [],
-                                                                "templateString": "perPage: $FERN_INPUT",
+                                                                "templateString": "per_page: $FERN_INPUT",
                                                                 "isOptional": true,
                                                                 "templateInputs": [
                                                                     {
@@ -105,7 +105,7 @@
                                                         {
                                                             "value": {
                                                                 "imports": [],
-                                                                "templateString": "startingAfter: $FERN_INPUT",
+                                                                "templateString": "starting_after: $FERN_INPUT",
                                                                 "isOptional": true,
                                                                 "templateInputs": [
                                                                     {
@@ -575,7 +575,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "perPage: $FERN_INPUT",
+                                        "templateString": "per_page: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -609,7 +609,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "startingAfter: $FERN_INPUT",
+                                        "templateString": "starting_after: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -937,7 +937,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "perPage: $FERN_INPUT",
+                                        "templateString": "per_page: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -971,7 +971,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "startingAfter: $FERN_INPUT",
+                                        "templateString": "starting_after: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -1087,7 +1087,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "perPage: $FERN_INPUT",
+                                        "templateString": "per_page: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -1121,7 +1121,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "startingAfter: $FERN_INPUT",
+                                        "templateString": "starting_after: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -1801,7 +1801,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "startingAfter: $FERN_INPUT",
+                                        "templateString": "starting_after: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {

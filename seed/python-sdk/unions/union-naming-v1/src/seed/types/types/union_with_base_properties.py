@@ -13,6 +13,7 @@ class Base(UniversalBaseModel):
     Examples
     --------
     from seed.types import IntegerUnionWithBaseProperties
+
     IntegerUnionWithBaseProperties(value=5)
     """
 
@@ -59,6 +60,7 @@ class FooUnionWithBaseProperties(Base):
     Examples
     --------
     from seed.types import IntegerUnionWithBaseProperties
+
     IntegerUnionWithBaseProperties(value=5)
     """
 
@@ -77,6 +79,7 @@ class FooUnionWithBaseProperties(Base):
 
 """
 from seed.types import IntegerUnionWithBaseProperties
+
 IntegerUnionWithBaseProperties(value=5)
 """
 UnionWithBaseProperties = typing.Union[

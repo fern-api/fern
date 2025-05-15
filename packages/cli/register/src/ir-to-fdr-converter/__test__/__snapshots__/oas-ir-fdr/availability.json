@@ -301,14 +301,14 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamExample",
             "description": "",
-            "path": "/collection/",
+            "path": "/collection/id/active_id/deprecated_ref_id/x-fern-availability_path_param",
             "pathParameters": {
-              "id": "foo",
-              "active_id": "foo",
-              "deprecated_ref_id": "foo",
-              "x-fern-availability_path_param": "foo"
+              "id": "id",
+              "active_id": "active_id",
+              "deprecated_ref_id": "deprecated_ref_id",
+              "x-fern-availability_path_param": "x-fern-availability_path_param"
             },
             "queryParameters": {},
             "headers": {},
@@ -379,7 +379,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "postSuccessRefExample",
             "description": "",
             "path": "/success-ref",
             "pathParameters": {},
@@ -481,7 +481,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "postSuccessInlinePropertyDeprecationExample",
             "description": "",
             "path": "/success-inline-property-deprecation",
             "pathParameters": {},
@@ -571,7 +571,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "postSuccessInlineObjectDeprecationExample",
             "description": "",
             "path": "/success-inline-object-deprecation",
             "pathParameters": {},
@@ -660,7 +660,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "postSuccessInlineBetaBodyExample",
             "description": "",
             "path": "/success-inline-beta-body",
             "pathParameters": {},

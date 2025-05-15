@@ -44,8 +44,15 @@ class ServiceClient:
         --------
         from seed import SeedExamples
         from seed.environment import SeedExamplesEnvironment
-        client = SeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
-        client.file.service.get_file(filename='file.txt', x_file_api_version='0.0.2', )
+        
+        client = SeedExamples(
+            token="YOUR_TOKEN",
+            environment=SeedExamplesEnvironment.PRODUCTION,
+        )
+        client.file.service.get_file(
+            filename="file.txt",
+            x_file_api_version="0.0.2",
+        )
         """
         _response = self._raw_client.get_file(filename, x_file_api_version=x_file_api_version, request_options=request_options)
         return _response.data
@@ -84,12 +91,24 @@ class AsyncServiceClient:
         
         Examples
         --------
+        import asyncio
+        
         from seed import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
-        import asyncio
-        client = AsyncSeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
+        
+        client = AsyncSeedExamples(
+            token="YOUR_TOKEN",
+            environment=SeedExamplesEnvironment.PRODUCTION,
+        )
+        
+        
         async def main() -> None:
-            await client.file.service.get_file(filename='file.txt', x_file_api_version='0.0.2', )
+            await client.file.service.get_file(
+                filename="file.txt",
+                x_file_api_version="0.0.2",
+            )
+        
+        
         asyncio.run(main())
         """
         _response = await self._raw_client.get_file(filename, x_file_api_version=x_file_api_version, request_options=request_options)

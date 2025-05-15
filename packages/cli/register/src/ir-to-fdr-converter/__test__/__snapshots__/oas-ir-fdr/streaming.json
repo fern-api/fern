@@ -188,10 +188,13 @@
         },
         "response": {
           "type": {
-            "type": "reference",
-            "value": {
-              "type": "id",
-              "value": "User"
+            "type": "stream",
+            "shape": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "User"
+              }
             }
           },
           "statusCode": 200,
@@ -200,7 +203,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "userExample",
             "description": "",
             "path": "/v1/users",
             "pathParameters": {},
@@ -213,16 +216,23 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo"
-              }
+              "type": "stream",
+              "value": [
+                {
+                  "id": "foo"
+                }
+              ]
             },
             "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "id": "foo"
-              }
+              "type": "stream",
+              "value": [
+                {
+                  "type": "json",
+                  "value": {
+                    "id": "foo"
+                  }
+                }
+              ]
             }
           }
         ],
@@ -278,10 +288,13 @@
         },
         "response": {
           "type": {
-            "type": "reference",
-            "value": {
-              "type": "id",
-              "value": "User"
+            "type": "stream",
+            "shape": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "User"
+              }
             }
           },
           "statusCode": 200,
@@ -290,7 +303,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "userV2Example",
             "description": "",
             "path": "/v2/users",
             "pathParameters": {},
@@ -303,16 +316,23 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo"
-              }
+              "type": "stream",
+              "value": [
+                {
+                  "id": "foo"
+                }
+              ]
             },
             "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "id": "foo"
-              }
+              "type": "stream",
+              "value": [
+                {
+                  "type": "json",
+                  "value": {
+                    "id": "foo"
+                  }
+                }
+              ]
             }
           }
         ],
@@ -368,10 +388,13 @@
         },
         "response": {
           "type": {
-            "type": "reference",
-            "value": {
-              "type": "id",
-              "value": "User"
+            "type": "stream",
+            "shape": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "User"
+              }
             }
           },
           "statusCode": 200,
@@ -380,7 +403,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "userV3Example",
             "description": "",
             "path": "/v3/users",
             "pathParameters": {},
@@ -393,16 +416,23 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo"
-              }
+              "type": "stream",
+              "value": [
+                {
+                  "id": "foo"
+                }
+              ]
             },
             "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "id": "foo"
-              }
+              "type": "stream",
+              "value": [
+                {
+                  "type": "json",
+                  "value": {
+                    "id": "foo"
+                  }
+                }
+              ]
             }
           }
         ],

@@ -81,7 +81,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "name",
@@ -118,7 +119,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "settings",
@@ -184,7 +186,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -222,7 +225,8 @@
                   "type": "integer"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "lastLoginTime",
@@ -235,7 +239,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "accountStatus",
@@ -334,11 +339,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listOrganizationUsersExample",
               "description": "",
-              "path": "/organizations/",
+              "path": "/organizations/organizationId/users",
               "pathParameters": {
-                "organizationId": "foo"
+                "organizationId": "organizationId"
               },
               "queryParameters": {},
               "headers": {},
@@ -465,7 +470,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listUsersExample",
               "description": "",
               "path": "/users",
               "pathParameters": {},
@@ -586,11 +591,11 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getAUserExample",
             "description": "",
-            "path": "/users/",
+            "path": "/users/userId",
             "pathParameters": {
-              "userId": "foo"
+              "userId": "userId"
             },
             "queryParameters": {},
             "headers": {},

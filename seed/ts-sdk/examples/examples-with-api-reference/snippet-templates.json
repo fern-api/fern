@@ -1081,7 +1081,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "xApiVersion: $FERN_INPUT",
+                                        "templateString": "X-API-Version: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {

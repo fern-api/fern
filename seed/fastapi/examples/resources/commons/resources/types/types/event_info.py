@@ -32,7 +32,12 @@ class EventInfo(UniversalRootModel):
     Examples
     --------
     from seed.examples.resources.commons.resources.types import EventInfo_Metadata
-    EventInfo_Metadata(id='metadata-alskjfg8', data={'one': 'two'}, json_string='{"one": "two"}', )
+
+    EventInfo_Metadata(
+        id="metadata-alskjfg8",
+        data={"one": "two"},
+        json_string='{"one": "two"}',
+    )
     """
 
     factory: typing.ClassVar[_Factory] = _Factory()

@@ -28,7 +28,10 @@ class SeedMixedCase:
     Examples
     --------
     from seed import SeedMixedCase
-    client = SeedMixedCase(base_url="https://yourhost.com/path/to/api", )
+
+    client = SeedMixedCase(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
@@ -75,7 +78,10 @@ class AsyncSeedMixedCase:
     Examples
     --------
     from seed import AsyncSeedMixedCase
-    client = AsyncSeedMixedCase(base_url="https://yourhost.com/path/to/api", )
+
+    client = AsyncSeedMixedCase(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(

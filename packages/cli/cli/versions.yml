@@ -1,3 +1,179 @@
+- changelogEntry:
+  - summary: |
+      Introduce `fern check --from-openapi` which prints out validation errors directly from OpenAPI
+      as well as the line numbers that the errors are coming from.
+    type: fix
+  irVersion: 57
+  version: 0.61.13
+
+- changelogEntry:
+  - summary: |
+      When you set `type-dates-as-strings` to `false` in the OpenAPI `settings` in _generators.yml_,
+      schemas of type `string` with format `date` will be converted to a Fern `date` type, instead of a `string` type.
+    type: feat
+  irVersion: 57
+  version: 0.61.12
+
+- changelogEntry:
+  - summary: |
+      Fix an issue where a singular allOf circular reference would lead to an infinite loop in the v3 parser. 
+    type: fix
+  irVersion: 57
+  version: 0.61.11
+
+- changelogEntry:
+  - summary: |
+      Fix a bug where the docs resolver would throw an error when encountering missing or duplicate endpoints.
+    type: fix
+  irVersion: 57
+  version: 0.61.10
+
+- changelogEntry:
+  - summary: |
+      String parameter examples will use the parameter name as the example value if no example is provided.
+    type: fix
+  irVersion: 57
+  version: 0.61.9
+
+- changelogEntry:
+  - summary: |
+      Fix a bug where the broken link checker would incorrectly flag links to llms.txt and llms-full.txt files as broken. 
+      The checker now properly recognizes these file paths as valid.
+    type: fix
+  irVersion: 57
+  version: 0.61.8
+
+- changelogEntry:
+  - summary: |
+      Support text/plain content type response examples in the v3 parser.
+      Skip certain headers from being added to the IR.
+    type: fix
+  irVersion: 57
+  version: 0.61.7
+
+- changelogEntry:
+  - summary: |
+      Support text/plain content type responses in the v3 parser.
+    type: fix
+  irVersion: 57
+  version: 0.61.6
+
+- changelogEntry:
+  - summary: |
+      Fix a bug where the CLI upgrade message was written to stdout. This made it difficult to write shell
+      scripts that act upon the output of the CLI. The upgrade message is now written to stderr.
+    type: fix
+  irVersion: 57
+  version: 0.61.5
+
+- changelogEntry:
+  - summary: |
+      Support application/octet-stream content type requests in the OpenAPI parser.
+    type: fix
+  irVersion: 57
+  version: 0.61.4
+
+- changelogEntry:
+  - summary: |
+      Fix a bug where streaming response examples would not be rendered correctly in the API Reference.
+    type: fix
+  irVersion: 57
+  version: 0.61.3
+
+- changelogEntry: 
+  - summary: |
+      Improve the naming for nested primitive types in union schemas.
+    type: fix
+  irVersion: 57
+  version: 0.61.2
+
+- changelogEntry: 
+  - summary: |
+      Fix a bug where unknown identifiers in the API Reference layout would not be resolved correctly.
+    type: fix
+  irVersion: 57
+  version: 0.61.1
+
+- changelogEntry:
+  - summary: |
+      Implement the first iteration of the `fern diff` command, which can be used
+      to verify backwards compatibility between API changes.
+    type: feat
+  irVersion: 57
+  version: 0.61.0
+
+- changelogEntry: 
+  - summary: |
+      Various bugfixes and improvements to the v3 parser.
+    type: fix
+  irVersion: 57
+  version: 0.60.31
+
+- changelogEntry: 
+  - summary: |
+      Add support for products and versioned products in the docs config file.
+    type: feat
+  irVersion: 57
+  version: 0.60.30
+
+- changelogEntry: 
+  - summary: |
+      Add support for `propertyAccess` in the IR -> FDR SDK conversion.
+    type: feat
+  irVersion: 57
+  version: 0.60.29
+
+- changelogEntry: 
+  - summary: |
+      Fixed an issue where local generation could produce invalid build files (like pyproject.toml) when 
+      GitHub configuration was missing a repository URL. The CLI now ensures a repository URL is always set when possible.
+    type: fix
+  irVersion: 57
+  version: 0.60.28
+
+- changelogEntry: 
+  - summary: |
+      Added support for using Podman as a container runner with `fern generate --runner podman`. 
+      This allows users to run generators locally using Podman instead of Docker.
+    type: fix
+  irVersion: 57
+  version: 0.60.27
+
+- changelogEntry: 
+  - summary: |
+      The v3 parser now supports filtering endpoints by audiences.
+    type: fix
+  irVersion: 57
+  version: 0.60.26
+
+- changelogEntry: 
+  - summary: |
+      Endpoints that are referenced for oauth can now have special characters (previously the CLI would throw on this).
+    type: fix
+  irVersion: 57
+  version: 0.60.25
+
+- changelogEntry: 
+  - summary: |
+      Endpoints that are referenced for oauth can now have special characters (previously the CLI would throw on this).
+    type: fix
+  irVersion: 57
+  version: 0.60.24
+
+- changelogEntry: 
+  - summary: |
+      Auto-detect the `expires_in` property if it exists in the OAuth response.
+    type: chore
+  irVersion: 57
+  version: 0.60.23
+
+- changelogEntry: 
+  - summary: |
+      Parse and render errors in the OpenAPI V3 parser.
+    type: chore
+  irVersion: 57
+  version: 0.60.22
+
 - changelogEntry: 
   - summary: |
       OpenAPI V3 parser handles converting converting schemas that have a singular non-object `allOf`.

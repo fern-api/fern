@@ -166,7 +166,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "listTreesExample",
             "description": "",
             "path": "/trees",
             "pathParameters": {},
@@ -259,7 +259,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "createTreeExample",
             "description": "",
             "path": "/trees",
             "pathParameters": {},
@@ -363,11 +363,11 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getTreeExample",
             "description": "",
-            "path": "/trees/",
+            "path": "/trees/treeId",
             "pathParameters": {
-              "treeId": "foo"
+              "treeId": "treeId"
             },
             "queryParameters": {},
             "headers": {},
@@ -467,7 +467,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "createFernExample",
             "description": "",
             "path": "/ferns",
             "pathParameters": {},
@@ -553,11 +553,11 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getFern_example",
             "description": "",
-            "path": "/ferns/",
+            "path": "/ferns/fernId",
             "pathParameters": {
-              "fernId": "foo"
+              "fernId": "fernId"
             },
             "queryParameters": {},
             "headers": {},
@@ -654,7 +654,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "createGrassExample",
             "description": "",
             "path": "/grasses",
             "pathParameters": {},

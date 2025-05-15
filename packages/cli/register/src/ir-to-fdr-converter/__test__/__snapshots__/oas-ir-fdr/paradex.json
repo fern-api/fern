@@ -42,52 +42,6 @@
         ]
       }
     },
-    "RequestsAlgoOrderRequestSide": {
-      "name": "RequestsAlgoOrderRequestSide",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "BUY"
-          },
-          {
-            "value": "SELL"
-          }
-        ]
-      }
-    },
-    "RequestsAlgoOrderRequestType": {
-      "name": "RequestsAlgoOrderRequestType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "MARKET"
-          },
-          {
-            "value": "LIMIT"
-          },
-          {
-            "value": "STOP_LIMIT"
-          },
-          {
-            "value": "STOP_MARKET"
-          },
-          {
-            "value": "TAKE_PROFIT_LIMIT"
-          },
-          {
-            "value": "TAKE_PROFIT_MARKET"
-          },
-          {
-            "value": "STOP_LOSS_MARKET"
-          },
-          {
-            "value": "STOP_LOSS_LIMIT"
-          }
-        ]
-      }
-    },
     "requests.AlgoOrderRequest": {
       "name": "requests.AlgoOrderRequest",
       "shape": {
@@ -129,7 +83,7 @@
             "key": "side",
             "valueType": {
               "type": "id",
-              "value": "RequestsAlgoOrderRequestSide"
+              "value": "responses.OrderSide"
             }
           },
           {
@@ -167,7 +121,7 @@
             "key": "type",
             "valueType": {
               "type": "id",
-              "value": "RequestsAlgoOrderRequestType"
+              "value": "responses.OrderType"
             }
           }
         ]
@@ -451,52 +405,6 @@
         ]
       }
     },
-    "RequestsOrderRequestSide": {
-      "name": "RequestsOrderRequestSide",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "BUY"
-          },
-          {
-            "value": "SELL"
-          }
-        ]
-      }
-    },
-    "RequestsOrderRequestType": {
-      "name": "RequestsOrderRequestType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "MARKET"
-          },
-          {
-            "value": "LIMIT"
-          },
-          {
-            "value": "STOP_LIMIT"
-          },
-          {
-            "value": "STOP_MARKET"
-          },
-          {
-            "value": "TAKE_PROFIT_LIMIT"
-          },
-          {
-            "value": "TAKE_PROFIT_MARKET"
-          },
-          {
-            "value": "STOP_LOSS_MARKET"
-          },
-          {
-            "value": "STOP_LOSS_LIMIT"
-          }
-        ]
-      }
-    },
     "requests.OrderRequest": {
       "name": "requests.OrderRequest",
       "shape": {
@@ -592,7 +500,7 @@
             "key": "side",
             "valueType": {
               "type": "id",
-              "value": "RequestsOrderRequestSide"
+              "value": "responses.OrderSide"
             }
           },
           {
@@ -656,7 +564,7 @@
             "key": "type",
             "valueType": {
               "type": "id",
-              "value": "RequestsOrderRequestType"
+              "value": "responses.OrderType"
             }
           }
         ]
@@ -787,29 +695,6 @@
         ]
       }
     },
-    "ResponsesAccountInfoResponseKind": {
-      "name": "ResponsesAccountInfoResponseKind",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": ""
-          },
-          {
-            "value": "main"
-          },
-          {
-            "value": "subaccount"
-          },
-          {
-            "value": "vault_operator"
-          },
-          {
-            "value": "vault_sub_operator"
-          }
-        ]
-      }
-    },
     "responses.AccountInfoResponse": {
       "name": "responses.AccountInfoResponse",
       "shape": {
@@ -885,7 +770,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesAccountInfoResponseKind"
+                "value": "responses.AccountKind"
               }
             }
           },
@@ -1319,54 +1204,6 @@
         ]
       }
     },
-    "ResponsesAlgoOrderRespAlgoType": {
-      "name": "ResponsesAlgoOrderRespAlgoType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": ""
-          },
-          {
-            "value": "TWAP"
-          }
-        ]
-      }
-    },
-    "ResponsesAlgoOrderRespSide": {
-      "name": "ResponsesAlgoOrderRespSide",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "BUY"
-          },
-          {
-            "value": "SELL"
-          }
-        ]
-      }
-    },
-    "ResponsesAlgoOrderRespStatus": {
-      "name": "ResponsesAlgoOrderRespStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "NEW"
-          },
-          {
-            "value": "UNTRIGGERED"
-          },
-          {
-            "value": "OPEN"
-          },
-          {
-            "value": "CLOSED"
-          }
-        ]
-      }
-    },
     "responses.AlgoOrderResp": {
       "name": "responses.AlgoOrderResp",
       "shape": {
@@ -1393,7 +1230,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesAlgoOrderRespAlgoType"
+                "value": "responses.AlgoType"
               }
             }
           },
@@ -1508,7 +1345,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesAlgoOrderRespSide"
+                "value": "responses.OrderSide"
               }
             }
           },
@@ -1532,7 +1369,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesAlgoOrderRespStatus"
+                "value": "responses.OrderStatus"
               }
             }
           }
@@ -1553,200 +1390,6 @@
         ]
       }
     },
-    "ResponsesApiErrorError": {
-      "name": "ResponsesApiErrorError",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "VALIDATION_ERROR"
-          },
-          {
-            "value": "BINDING_ERROR"
-          },
-          {
-            "value": "INTERNAL_ERROR"
-          },
-          {
-            "value": "NOT_FOUND"
-          },
-          {
-            "value": "SERVICE_UNAVAILABLE"
-          },
-          {
-            "value": "INVALID_REQUEST_PARAMETER"
-          },
-          {
-            "value": "ORDER_ID_NOT_FOUND"
-          },
-          {
-            "value": "ORDER_IS_CLOSED"
-          },
-          {
-            "value": "ORDER_IS_NOT_OPEN"
-          },
-          {
-            "value": "INVALID_ORDER_SIZE"
-          },
-          {
-            "value": "CLIENT_ORDER_ID_NOT_FOUND"
-          },
-          {
-            "value": "DUPLICATED_CLIENT_ID"
-          },
-          {
-            "value": "INVALID_PRICE_PRECISION"
-          },
-          {
-            "value": "INVALID_SYMBOL"
-          },
-          {
-            "value": "INVALID_TOKEN"
-          },
-          {
-            "value": "INVALID_ETHEREUM_ADDRESS"
-          },
-          {
-            "value": "INVALID_ETHEREUM_SIGNATURE"
-          },
-          {
-            "value": "INVALID_STARKNET_ADDRESS"
-          },
-          {
-            "value": "INVALID_STARKNET_SIGNATURE"
-          },
-          {
-            "value": "STARKNET_SIGNATURE_VERIFICATION_FAILED"
-          },
-          {
-            "value": "BAD_STARKNET_REQUEST"
-          },
-          {
-            "value": "ETHEREUM_SIGNER_MISMATCH"
-          },
-          {
-            "value": "ETHEREUM_HASH_MISMATCH"
-          },
-          {
-            "value": "NOT_ONBOARDED"
-          },
-          {
-            "value": "INVALID_TIMESTAMP"
-          },
-          {
-            "value": "INVALID_SIGNATURE_EXPIRATION"
-          },
-          {
-            "value": "ACCOUNT_NOT_FOUND"
-          },
-          {
-            "value": "INVALID_ORDER_SIGNATURE"
-          },
-          {
-            "value": "PUBLIC_KEY_INVALID"
-          },
-          {
-            "value": "UNAUTHORIZED_ETHEREUM_ADDRESS"
-          },
-          {
-            "value": "UNAUTHORIZED_ERROR"
-          },
-          {
-            "value": "ETHEREUM_ADDRESS_ALREADY_ONBOARDED"
-          },
-          {
-            "value": "MARKET_NOT_FOUND"
-          },
-          {
-            "value": "ALLOWLIST_ENTRY_NOT_FOUND"
-          },
-          {
-            "value": "USERNAME_IN_USE"
-          },
-          {
-            "value": "GEO_IP_BLOCK"
-          },
-          {
-            "value": "ETHEREUM_ADDRESS_BLOCKED"
-          },
-          {
-            "value": "PROGRAM_NOT_FOUND"
-          },
-          {
-            "value": "PROGRAM_NOT_SUPPORTED"
-          },
-          {
-            "value": "INVALID_DASHBOARD"
-          },
-          {
-            "value": "MARKET_NOT_OPEN"
-          },
-          {
-            "value": "INVALID_REFERRAL_CODE"
-          },
-          {
-            "value": "REQUEST_NOT_ALLOWED"
-          },
-          {
-            "value": "PARENT_ADDRESS_ALREADY_ONBOARDED"
-          },
-          {
-            "value": "INVALID_PARENT_ACCOUNT"
-          },
-          {
-            "value": "INVALID_VAULT_OPERATOR_CHAIN"
-          },
-          {
-            "value": "VAULT_OPERATOR_ALREADY_ONBOARDED"
-          },
-          {
-            "value": "VAULT_NAME_IN_USE"
-          },
-          {
-            "value": "VAULT_NOT_FOUND"
-          },
-          {
-            "value": "VAULT_STRATEGY_NOT_FOUND"
-          },
-          {
-            "value": "VAULT_LIMIT_REACHED"
-          },
-          {
-            "value": "BATCH_SIZE_OUT_OF_RANGE"
-          },
-          {
-            "value": "ISOLATED_MARKET_ACCOUNT_MISMATCH"
-          },
-          {
-            "value": "NO_ACCESS_TO_MARKET"
-          },
-          {
-            "value": "POINTS_SUMMARY_NOT_FOUND"
-          },
-          {
-            "value": "ALGO_ID_NOT_FOUND"
-          },
-          {
-            "value": "INVALID_DERIVATION_PATH"
-          },
-          {
-            "value": "PROFILE_STATS_NOT_FOUND"
-          },
-          {
-            "value": "INVALID_CHAIN"
-          },
-          {
-            "value": "INVALID_LAYERSWAP_SWAP"
-          },
-          {
-            "value": "SOCIAL_USERNAME_IN_USE"
-          },
-          {
-            "value": "INVALID_OAUTH_REQUEST"
-          }
-        ]
-      }
-    },
     "responses.ApiError": {
       "name": "responses.ApiError",
       "shape": {
@@ -1754,13 +1397,23 @@
         "extends": [],
         "properties": [
           {
+            "description": "any additional data related to the error",
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "unknown"
+              }
+            }
+          },
+          {
             "description": "unique immutable string identifier for specific error",
             "key": "error",
             "valueType": {
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesApiErrorError"
+                "value": "responses.ErrorCode"
               }
             }
           },
@@ -2675,56 +2328,6 @@
         ]
       }
     },
-    "ResponsesFillResultFillType": {
-      "name": "ResponsesFillResultFillType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "LIQUIDATION"
-          },
-          {
-            "value": "TRANSFER"
-          },
-          {
-            "value": "FILL"
-          },
-          {
-            "value": "SETTLE_MARKET"
-          }
-        ]
-      }
-    },
-    "ResponsesFillResultLiquidity": {
-      "description": "Maker or Taker",
-      "name": "ResponsesFillResultLiquidity",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "TAKER"
-          },
-          {
-            "value": "MAKER"
-          }
-        ]
-      }
-    },
-    "ResponsesFillResultSide": {
-      "description": "Taker side",
-      "name": "ResponsesFillResultSide",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "BUY"
-          },
-          {
-            "value": "SELL"
-          }
-        ]
-      }
-    },
     "responses.FillResult": {
       "name": "responses.FillResult",
       "shape": {
@@ -2803,7 +2406,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesFillResultFillType"
+                "value": "responses.FillType"
               }
             }
           },
@@ -2827,7 +2430,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesFillResultLiquidity"
+                "value": "responses.TraderRole"
               }
             }
           },
@@ -2916,7 +2519,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesFillResultSide"
+                "value": "responses.OrderSide"
               }
             }
           },
@@ -3564,54 +3167,6 @@
         ]
       }
     },
-    "ResponsesMarketRespChainDetails": {
-      "description": "Chain details",
-      "name": "ResponsesMarketRespChainDetails",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "responses.MarketChainDetails"
-        ],
-        "properties": []
-      }
-    },
-    "ResponsesMarketRespDelta1CrossMarginParams": {
-      "description": "Delta1 Cross margin parameters",
-      "name": "ResponsesMarketRespDelta1CrossMarginParams",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "responses.Delta1CrossMarginParams"
-        ],
-        "properties": []
-      }
-    },
-    "ResponsesMarketRespMarketKind": {
-      "description": "Market's margin mode",
-      "name": "ResponsesMarketRespMarketKind",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "cross"
-          },
-          {
-            "value": "isolated"
-          }
-        ]
-      }
-    },
-    "ResponsesMarketRespOptionCrossMarginParams": {
-      "description": "Option Cross margin parameters",
-      "name": "ResponsesMarketRespOptionCrossMarginParams",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "responses.PerpetualOptionCrossMarginParams"
-        ],
-        "properties": []
-      }
-    },
     "ResponsesMarketRespOptionType": {
       "description": "Type of option",
       "name": "ResponsesMarketRespOptionType",
@@ -3664,7 +3219,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesMarketRespChainDetails"
+                "value": "responses.MarketChainDetails"
               }
             }
           },
@@ -3688,7 +3243,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesMarketRespDelta1CrossMarginParams"
+                "value": "responses.Delta1CrossMarginParams"
               }
             }
           },
@@ -3751,7 +3306,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesMarketRespMarketKind"
+                "value": "responses.MarketKind"
               }
             }
           },
@@ -3853,7 +3408,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesMarketRespOptionCrossMarginParams"
+                "value": "responses.PerpetualOptionCrossMarginParams"
               }
             }
           },
@@ -4017,46 +3572,6 @@
         ]
       }
     },
-    "ResponsesMarketSummaryRespGreeks": {
-      "description": "Greeks",
-      "name": "ResponsesMarketSummaryRespGreeks",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "description": "Market Delta",
-            "key": "delta",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "description": "Market Gamma",
-            "key": "gamma",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "description": "Market Vega",
-            "key": "vega",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          }
-        ]
-      }
-    },
     "responses.MarketSummaryResp": {
       "name": "responses.MarketSummaryResp",
       "shape": {
@@ -4174,7 +3689,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesMarketSummaryRespGreeks"
+                "value": "responses.Greeks"
               }
             }
           },
@@ -4426,161 +3941,6 @@
         ]
       }
     },
-    "ResponsesOrderRespInstruction": {
-      "description": "OrderInstruction (GTC, IOC, POST_ONLY)",
-      "name": "ResponsesOrderRespInstruction",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "GTC"
-          },
-          {
-            "value": "POST_ONLY"
-          },
-          {
-            "value": "IOC"
-          }
-        ]
-      }
-    },
-    "ResponsesOrderRespRequestInfo": {
-      "description": "Request info for modify order",
-      "name": "ResponsesOrderRespRequestInfo",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "description": "Request id",
-            "key": "id",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "description": "Error message for failed requests",
-            "key": "message",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "description": "Type of request (MODIFY_ORDER)",
-            "key": "request_type",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "description": "Status of modify order request",
-            "key": "status",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          }
-        ]
-      }
-    },
-    "ResponsesOrderRespSide": {
-      "description": "Order side",
-      "name": "ResponsesOrderRespSide",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "BUY"
-          },
-          {
-            "value": "SELL"
-          }
-        ]
-      }
-    },
-    "ResponsesOrderRespStatus": {
-      "description": "Order status",
-      "name": "ResponsesOrderRespStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "NEW"
-          },
-          {
-            "value": "UNTRIGGERED"
-          },
-          {
-            "value": "OPEN"
-          },
-          {
-            "value": "CLOSED"
-          }
-        ]
-      }
-    },
-    "ResponsesOrderRespStp": {
-      "description": "Self Trade Prevention mode (EXEPIRE_MAKER, EXPIRE_TAKER, EXPIRE_BOTH)",
-      "name": "ResponsesOrderRespStp",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "EXPIRE_MAKER"
-          },
-          {
-            "value": "EXPIRE_TAKER"
-          },
-          {
-            "value": "EXPIRE_BOTH"
-          }
-        ]
-      }
-    },
-    "ResponsesOrderRespType": {
-      "description": "Order type",
-      "name": "ResponsesOrderRespType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "MARKET"
-          },
-          {
-            "value": "LIMIT"
-          },
-          {
-            "value": "STOP_LIMIT"
-          },
-          {
-            "value": "STOP_MARKET"
-          },
-          {
-            "value": "TAKE_PROFIT_LIMIT"
-          },
-          {
-            "value": "TAKE_PROFIT_MARKET"
-          },
-          {
-            "value": "STOP_LOSS_MARKET"
-          },
-          {
-            "value": "STOP_LOSS_LIMIT"
-          }
-        ]
-      }
-    },
     "responses.OrderResp": {
       "name": "responses.OrderResp",
       "shape": {
@@ -4686,7 +4046,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesOrderRespInstruction"
+                "value": "responses.OrderInstruction"
               }
             }
           },
@@ -4775,7 +4135,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesOrderRespRequestInfo"
+                "value": "responses.RequestInfo"
               }
             }
           },
@@ -4799,7 +4159,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesOrderRespSide"
+                "value": "responses.OrderSide"
               }
             }
           },
@@ -4823,7 +4183,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesOrderRespStatus"
+                "value": "responses.OrderStatus"
               }
             }
           },
@@ -4834,7 +4194,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesOrderRespStp"
+                "value": "responses.STPMode"
               }
             }
           },
@@ -4871,7 +4231,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesOrderRespType"
+                "value": "responses.OrderType"
               }
             }
           }
@@ -6077,23 +5437,6 @@
         ]
       }
     },
-    "ResponsesSystemStateResponseStatus": {
-      "name": "ResponsesSystemStateResponseStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ok"
-          },
-          {
-            "value": "maintenance"
-          },
-          {
-            "value": "cancel_only"
-          }
-        ]
-      }
-    },
     "responses.SystemStateResponse": {
       "name": "responses.SystemStateResponse",
       "shape": {
@@ -6107,7 +5450,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesSystemStateResponseStatus"
+                "value": "responses.SystemStatus"
               }
             }
           }
@@ -6149,41 +5492,6 @@
                 }
               }
             }
-          }
-        ]
-      }
-    },
-    "ResponsesTradeResultSide": {
-      "description": "Taker side",
-      "name": "ResponsesTradeResultSide",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "BUY"
-          },
-          {
-            "value": "SELL"
-          }
-        ]
-      }
-    },
-    "ResponsesTradeResultTradeType": {
-      "name": "ResponsesTradeResultTradeType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "LIQUIDATION"
-          },
-          {
-            "value": "TRANSFER"
-          },
-          {
-            "value": "FILL"
-          },
-          {
-            "value": "SETTLE_MARKET"
           }
         ]
       }
@@ -6253,7 +5561,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesTradeResultSide"
+                "value": "responses.OrderSide"
               }
             }
           },
@@ -6277,7 +5585,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesTradeResultTradeType"
+                "value": "responses.FillType"
               }
             }
           }
@@ -6534,90 +5842,6 @@
         ]
       }
     },
-    "ResponsesTransferResultBridge": {
-      "description": "Bridge used for the transfer",
-      "name": "ResponsesTransferResultBridge",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": ""
-          },
-          {
-            "value": "STARKGATE"
-          },
-          {
-            "value": "LAYERSWAP"
-          },
-          {
-            "value": "RHINOFI"
-          }
-        ]
-      }
-    },
-    "ResponsesTransferResultDirection": {
-      "description": "Transfer direction (IN, OUT)",
-      "name": "ResponsesTransferResultDirection",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "IN"
-          },
-          {
-            "value": "OUT"
-          }
-        ]
-      }
-    },
-    "ResponsesTransferResultKind": {
-      "description": "Transfer Kind (DEPOSIT, WITHDRAWAL)",
-      "name": "ResponsesTransferResultKind",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "DEPOSIT"
-          },
-          {
-            "value": "WITHDRAWAL"
-          },
-          {
-            "value": "UNWINDING"
-          },
-          {
-            "value": "VAULT_DEPOSIT"
-          },
-          {
-            "value": "VAULT_WITHDRAWAL"
-          },
-          {
-            "value": "AUTO_WITHDRAWAL"
-          }
-        ]
-      }
-    },
-    "ResponsesTransferResultStatus": {
-      "description": "Transfer External State (PENDING, AVAILABLE, COMPLETED, FAILED)",
-      "name": "ResponsesTransferResultStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "PENDING"
-          },
-          {
-            "value": "AVAILABLE"
-          },
-          {
-            "value": "COMPLETED"
-          },
-          {
-            "value": "FAILED"
-          }
-        ]
-      }
-    },
     "responses.TransferResult": {
       "description": "TransferResult",
       "name": "responses.TransferResult",
@@ -6671,7 +5895,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesTransferResultBridge"
+                "value": "responses.TransferBridge"
               }
             }
           },
@@ -6708,7 +5932,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesTransferResultDirection"
+                "value": "responses.TransferDirection"
               }
             }
           },
@@ -6784,7 +6008,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesTransferResultKind"
+                "value": "responses.TransferKind"
               }
             }
           },
@@ -6821,7 +6045,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesTransferResultStatus"
+                "value": "responses.TransferStatus"
               }
             }
           },
@@ -7161,40 +6385,6 @@
         ]
       }
     },
-    "ResponsesVaultRespKind": {
-      "name": "ResponsesVaultRespKind",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "user"
-          },
-          {
-            "value": "protocol"
-          }
-        ]
-      }
-    },
-    "ResponsesVaultRespStatus": {
-      "name": "ResponsesVaultRespStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "INITIALIZING"
-          },
-          {
-            "value": "ACTIVE"
-          },
-          {
-            "value": "CLOSED"
-          },
-          {
-            "value": "FAILED"
-          }
-        ]
-      }
-    },
     "responses.VaultResp": {
       "name": "responses.VaultResp",
       "shape": {
@@ -7247,7 +6437,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesVaultRespKind"
+                "value": "responses.VaultKind"
               }
             }
           },
@@ -7349,7 +6539,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResponsesVaultRespStatus"
+                "value": "responses.VaultStatus"
               }
             }
           },
@@ -8849,6 +8039,36 @@
         ]
       }
     },
+    "ResponsesFillResultLiquidity": {
+      "description": "Maker or Taker",
+      "name": "ResponsesFillResultLiquidity",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "TAKER"
+          },
+          {
+            "value": "MAKER"
+          }
+        ]
+      }
+    },
+    "ResponsesFillResultSide": {
+      "description": "Taker side",
+      "name": "ResponsesFillResultSide",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "BUY"
+          },
+          {
+            "value": "SELL"
+          }
+        ]
+      }
+    },
     "ResponsesFillResult": {
       "name": "ResponsesFillResult",
       "shape": {
@@ -9186,6 +8406,46 @@
         ]
       }
     },
+    "ResponsesMarketSummaryRespGreeks": {
+      "description": "Greeks",
+      "name": "ResponsesMarketSummaryRespGreeks",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Market Delta",
+            "key": "delta",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "Market Gamma",
+            "key": "gamma",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "Market Vega",
+            "key": "vega",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
     "ResponsesMarketSummaryResp": {
       "name": "ResponsesMarketSummaryResp",
       "shape": {
@@ -9400,6 +8660,161 @@
                 "type": "string"
               }
             }
+          }
+        ]
+      }
+    },
+    "ResponsesOrderRespInstruction": {
+      "description": "OrderInstruction (GTC, IOC, POST_ONLY)",
+      "name": "ResponsesOrderRespInstruction",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "GTC"
+          },
+          {
+            "value": "POST_ONLY"
+          },
+          {
+            "value": "IOC"
+          }
+        ]
+      }
+    },
+    "ResponsesOrderRespRequestInfo": {
+      "description": "Request info for modify order",
+      "name": "ResponsesOrderRespRequestInfo",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Request id",
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "Error message for failed requests",
+            "key": "message",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "Type of request (MODIFY_ORDER)",
+            "key": "request_type",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "Status of modify order request",
+            "key": "status",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ResponsesOrderRespSide": {
+      "description": "Order side",
+      "name": "ResponsesOrderRespSide",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "BUY"
+          },
+          {
+            "value": "SELL"
+          }
+        ]
+      }
+    },
+    "ResponsesOrderRespStatus": {
+      "description": "Order status",
+      "name": "ResponsesOrderRespStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "NEW"
+          },
+          {
+            "value": "UNTRIGGERED"
+          },
+          {
+            "value": "OPEN"
+          },
+          {
+            "value": "CLOSED"
+          }
+        ]
+      }
+    },
+    "ResponsesOrderRespStp": {
+      "description": "Self Trade Prevention mode (EXEPIRE_MAKER, EXPIRE_TAKER, EXPIRE_BOTH)",
+      "name": "ResponsesOrderRespStp",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "EXPIRE_MAKER"
+          },
+          {
+            "value": "EXPIRE_TAKER"
+          },
+          {
+            "value": "EXPIRE_BOTH"
+          }
+        ]
+      }
+    },
+    "ResponsesOrderRespType": {
+      "description": "Order type",
+      "name": "ResponsesOrderRespType",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "MARKET"
+          },
+          {
+            "value": "LIMIT"
+          },
+          {
+            "value": "STOP_LIMIT"
+          },
+          {
+            "value": "STOP_MARKET"
+          },
+          {
+            "value": "TAKE_PROFIT_LIMIT"
+          },
+          {
+            "value": "TAKE_PROFIT_MARKET"
+          },
+          {
+            "value": "STOP_LOSS_MARKET"
+          },
+          {
+            "value": "STOP_LOSS_LIMIT"
           }
         ]
       }
@@ -10107,6 +9522,21 @@
         ]
       }
     },
+    "ResponsesTradeResultSide": {
+      "description": "Taker side",
+      "name": "ResponsesTradeResultSide",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "BUY"
+          },
+          {
+            "value": "SELL"
+          }
+        ]
+      }
+    },
     "ResponsesTradeResult": {
       "name": "ResponsesTradeResult",
       "shape": {
@@ -10288,6 +9718,90 @@
                 "type": "string"
               }
             }
+          }
+        ]
+      }
+    },
+    "ResponsesTransferResultBridge": {
+      "description": "Bridge used for the transfer",
+      "name": "ResponsesTransferResultBridge",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": ""
+          },
+          {
+            "value": "STARKGATE"
+          },
+          {
+            "value": "LAYERSWAP"
+          },
+          {
+            "value": "RHINOFI"
+          }
+        ]
+      }
+    },
+    "ResponsesTransferResultDirection": {
+      "description": "Transfer direction (IN, OUT)",
+      "name": "ResponsesTransferResultDirection",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "IN"
+          },
+          {
+            "value": "OUT"
+          }
+        ]
+      }
+    },
+    "ResponsesTransferResultKind": {
+      "description": "Transfer Kind (DEPOSIT, WITHDRAWAL)",
+      "name": "ResponsesTransferResultKind",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "DEPOSIT"
+          },
+          {
+            "value": "WITHDRAWAL"
+          },
+          {
+            "value": "UNWINDING"
+          },
+          {
+            "value": "VAULT_DEPOSIT"
+          },
+          {
+            "value": "VAULT_WITHDRAWAL"
+          },
+          {
+            "value": "AUTO_WITHDRAWAL"
+          }
+        ]
+      }
+    },
+    "ResponsesTransferResultStatus": {
+      "description": "Transfer External State (PENDING, AVAILABLE, COMPLETED, FAILED)",
+      "name": "ResponsesTransferResultStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "PENDING"
+          },
+          {
+            "value": "AVAILABLE"
+          },
+          {
+            "value": "COMPLETED"
+          },
+          {
+            "value": "FAILED"
           }
         ]
       }
@@ -13114,10 +12628,24 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getOpenAlgoOrdersExample",
               "description": "",
               "path": "/algo/orders",
               "pathParameters": {},
@@ -13229,10 +12757,24 @@
             "statusCode": 201,
             "description": "Created"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "algosCreateAlgoOrderExample",
               "description": "",
               "path": "/algo/orders",
               "pathParameters": {},
@@ -13459,10 +13001,24 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getAlgoOrdersHistoryExample",
               "description": "",
               "path": "/algo/orders-history",
               "pathParameters": {},
@@ -13585,14 +13141,28 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getAlgoOrderByIdExample",
               "description": "",
-              "path": "/algo/orders/",
+              "path": "/algo/orders/algo_id",
               "pathParameters": {
-                "algo_id": "foo"
+                "algo_id": "algo_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -13687,14 +13257,28 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "cancelAlgoOrderExample",
               "description": "",
-              "path": "/algo/orders/",
+              "path": "/algo/orders/algo_id",
               "pathParameters": {
-                "algo_id": "foo"
+                "algo_id": "algo_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -13812,18 +13396,45 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "authExample",
               "description": "",
               "path": "/auth",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "PARADEX-STARKNET-ACCOUNT": "foo",
-                "PARADEX-STARKNET-SIGNATURE": "foo",
-                "PARADEX-TIMESTAMP": "foo"
+                "PARADEX-STARKNET-ACCOUNT": "PARADEX-STARKNET-ACCOUNT",
+                "PARADEX-STARKNET-SIGNATURE": "PARADEX-STARKNET-SIGNATURE",
+                "PARADEX-TIMESTAMP": "PARADEX-TIMESTAMP"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -13919,18 +13530,45 @@
             },
             "description": "Onboarding user public_key"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "authenticationOnboardingExample",
               "description": "",
               "path": "/onboarding",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "PARADEX-ETHEREUM-ACCOUNT": "foo",
-                "PARADEX-STARKNET-ACCOUNT": "foo",
-                "PARADEX-STARKNET-SIGNATURE": "foo"
+                "PARADEX-ETHEREUM-ACCOUNT": "PARADEX-ETHEREUM-ACCOUNT",
+                "PARADEX-STARKNET-ACCOUNT": "PARADEX-STARKNET-ACCOUNT",
+                "PARADEX-STARKNET-SIGNATURE": "PARADEX-STARKNET-SIGNATURE"
               },
               "requestBody": {},
               "requestBodyV3": {
@@ -14013,14 +13651,28 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getBboExample",
               "description": "",
-              "path": "/bbo/",
+              "path": "/bbo/market",
               "pathParameters": {
-                "market": "foo"
+                "market": "market"
               },
               "queryParameters": {},
               "headers": {},
@@ -14161,10 +13813,24 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getFundingDataExample",
               "description": "",
               "path": "/funding/data",
               "pathParameters": {},
@@ -14265,10 +13931,24 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getMarketsExample",
               "description": "",
               "path": "/markets",
               "pathParameters": {},
@@ -14504,18 +14184,32 @@
             }
           ],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "klinesExample",
               "description": "",
               "path": "/markets/klines",
               "pathParameters": {},
               "queryParameters": {
                 "end_at": 42,
-                "resolution": "foo",
+                "resolution": "resolution",
                 "start_at": 42,
-                "symbol": "foo"
+                "symbol": "symbol"
               },
               "headers": {},
               "responseStatusCode": 200
@@ -14602,10 +14296,24 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getMarketsSummaryExample",
               "description": "",
               "path": "/markets/summary",
               "pathParameters": {},
@@ -14764,14 +14472,28 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getOrderbookExample",
               "description": "",
-              "path": "/orderbook/",
+              "path": "/orderbook/market",
               "pathParameters": {
-                "market": "foo"
+                "market": "market"
               },
               "queryParameters": {},
               "headers": {},
@@ -14871,7 +14593,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getInsuranceFundExample",
               "description": "",
               "path": "/insurance",
               "pathParameters": {},
@@ -14979,10 +14701,24 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getLiquidationsExample",
               "description": "",
               "path": "/liquidations",
               "pathParameters": {},
@@ -15042,7 +14778,19 @@
           "id": "orders",
           "name": "SUB orders",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
+                "key": "market_symbol",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^([A-Z0-9]+-[A-Z0-9]+|ALL)$"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -15051,19 +14799,7 @@
             ]
           },
           "headers": [],
-          "queryParameters": [
-            {
-              "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
-              "key": "market_symbol",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "regex": "^([A-Z0-9]+-[A-Z0-9]+|ALL)$"
-                }
-              }
-            }
-          ],
+          "queryParameters": [],
           "messages": [
             {
               "type": "subscribe",
@@ -15093,10 +14829,10 @@
           "examples": [
             {
               "path": "",
-              "pathParameters": {},
-              "queryParameters": {
+              "pathParameters": {
                 "market_symbol": "market_symbol"
               },
+              "queryParameters": {},
               "headers": {},
               "messages": [
                 {
@@ -15191,7 +14927,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getReferralQrCodeExample",
               "description": "",
               "path": "/referrals/qr-code",
               "pathParameters": {},
@@ -15244,10 +14980,37 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getReferralsSummaryExample",
               "description": "",
               "path": "/referrals/summary",
               "pathParameters": {},
@@ -15341,7 +15104,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getSystemConfigExample",
               "description": "",
               "path": "/system/config",
               "pathParameters": {},
@@ -15467,7 +15230,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getSystemStateExample",
               "description": "",
               "path": "/system/state",
               "pathParameters": {},
@@ -15535,7 +15298,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getSystemTimeUnixMillisecondsExample",
               "description": "",
               "path": "/system/time",
               "pathParameters": {},
@@ -15737,10 +15500,24 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
               "path": "/vaults",
               "pathParameters": {},
@@ -15905,19 +15682,33 @@
             "statusCode": 201,
             "description": "Created"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "vaultsCreateExample",
               "description": "",
               "path": "/vaults",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "PARADEX-PARENT-ACCOUNT": "foo",
-                "PARADEX-STARKNET-SIGNATURE": "foo",
-                "PARADEX-STARKNET-ACCOUNT": "foo",
-                "PARADEX-STARKNET-ACCOUNT-DERIVATION-PATH": "foo"
+                "PARADEX-PARENT-ACCOUNT": "PARADEX-PARENT-ACCOUNT",
+                "PARADEX-STARKNET-SIGNATURE": "PARADEX-STARKNET-SIGNATURE",
+                "PARADEX-STARKNET-ACCOUNT": "PARADEX-STARKNET-ACCOUNT",
+                "PARADEX-STARKNET-ACCOUNT-DERIVATION-PATH": "PARADEX-STARKNET-ACCOUNT-DERIVATION-PATH"
               },
               "requestBody": {},
               "requestBodyV3": {
@@ -16033,10 +15824,24 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getAccountSummaryExample",
               "description": "",
               "path": "/vaults/account-summary",
               "pathParameters": {},
@@ -16143,15 +15948,29 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getBalanceExample",
               "description": "",
               "path": "/vaults/balance",
               "pathParameters": {},
               "queryParameters": {
-                "address": "foo"
+                "address": "address"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -16225,10 +16044,24 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getConfigExample",
               "description": "",
               "path": "/vaults/config",
               "pathParameters": {},
@@ -16343,15 +16176,29 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getHistoricalDataExample",
               "description": "",
               "path": "/vaults/history",
               "pathParameters": {},
               "queryParameters": {
-                "address": "foo",
+                "address": "address",
                 "type": "pnl",
                 "resolution": "alltime"
               },
@@ -16459,15 +16306,29 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getPositionsExample",
               "description": "",
               "path": "/vaults/positions",
               "pathParameters": {},
               "queryParameters": {
-                "address": "foo"
+                "address": "address"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -16595,10 +16456,24 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getSummaryExample",
               "description": "",
               "path": "/vaults/summary",
               "pathParameters": {},
@@ -16728,15 +16603,29 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getTransfersExample",
               "description": "",
               "path": "/vaults/transfers",
               "pathParameters": {},
               "queryParameters": {
-                "address": "foo"
+                "address": "address"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -16934,7 +16823,19 @@
           "id": "bbo",
           "name": "SUB bbo",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
+                "key": "market_symbol",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^[A-Z0-9]+-[A-Z0-9]+$"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -16943,19 +16844,7 @@
             ]
           },
           "headers": [],
-          "queryParameters": [
-            {
-              "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
-              "key": "market_symbol",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "regex": "^[A-Z0-9]+-[A-Z0-9]+$"
-                }
-              }
-            }
-          ],
+          "queryParameters": [],
           "messages": [
             {
               "type": "subscribe",
@@ -16985,10 +16874,10 @@
           "examples": [
             {
               "path": "",
-              "pathParameters": {},
-              "queryParameters": {
+              "pathParameters": {
                 "market_symbol": "market_symbol"
               },
+              "queryParameters": {},
               "headers": {},
               "messages": [
                 {
@@ -17048,7 +16937,19 @@
           "id": "fills",
           "name": "SUB fills",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
+                "key": "market_symbol",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^([A-Z0-9]+-[A-Z0-9]+|ALL)$"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -17057,19 +16958,7 @@
             ]
           },
           "headers": [],
-          "queryParameters": [
-            {
-              "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
-              "key": "market_symbol",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "regex": "^([A-Z0-9]+-[A-Z0-9]+|ALL)$"
-                }
-              }
-            }
-          ],
+          "queryParameters": [],
           "messages": [
             {
               "type": "subscribe",
@@ -17099,10 +16988,10 @@
           "examples": [
             {
               "path": "",
-              "pathParameters": {},
-              "queryParameters": {
+              "pathParameters": {
                 "market_symbol": "market_symbol"
               },
+              "queryParameters": {},
               "headers": {},
               "messages": [
                 {
@@ -17170,7 +17059,19 @@
           "id": "fundingData",
           "name": "SUB funding_data",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
+                "key": "market_symbol",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^([A-Z0-9]+-[A-Z0-9]+|ALL)$"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -17179,19 +17080,7 @@
             ]
           },
           "headers": [],
-          "queryParameters": [
-            {
-              "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
-              "key": "market_symbol",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "regex": "^([A-Z0-9]+-[A-Z0-9]+|ALL)$"
-                }
-              }
-            }
-          ],
+          "queryParameters": [],
           "messages": [
             {
               "type": "subscribe",
@@ -17221,10 +17110,10 @@
           "examples": [
             {
               "path": "",
-              "pathParameters": {},
-              "queryParameters": {
+              "pathParameters": {
                 "market_symbol": "market_symbol"
               },
+              "queryParameters": {},
               "headers": {},
               "messages": [
                 {
@@ -17282,7 +17171,19 @@
           "id": "fundingPayments",
           "name": "SUB funding_payments",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
+                "key": "market_symbol",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^([A-Z0-9]+-[A-Z0-9]+|ALL)$"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -17291,19 +17192,7 @@
             ]
           },
           "headers": [],
-          "queryParameters": [
-            {
-              "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
-              "key": "market_symbol",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "regex": "^([A-Z0-9]+-[A-Z0-9]+|ALL)$"
-                }
-              }
-            }
-          ],
+          "queryParameters": [],
           "messages": [
             {
               "type": "subscribe",
@@ -17333,10 +17222,10 @@
           "examples": [
             {
               "path": "",
-              "pathParameters": {},
-              "queryParameters": {
+              "pathParameters": {
                 "market_symbol": "market_symbol"
               },
+              "queryParameters": {},
               "headers": {},
               "messages": [
                 {
@@ -17394,7 +17283,15 @@
           "id": "fundingRateComparison",
           "name": "/funding_rate_comparison",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "key": "refresh_rate",
+                "type": {
+                  "type": "id",
+                  "value": "refresh_rate"
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -17403,15 +17300,7 @@
             ]
           },
           "headers": [],
-          "queryParameters": [
-            {
-              "key": "refresh_rate",
-              "type": {
-                "type": "id",
-                "value": "refresh_rate"
-              }
-            }
-          ],
+          "queryParameters": [],
           "messages": [
             {
               "type": "subscribe",
@@ -17441,10 +17330,10 @@
           "examples": [
             {
               "path": "/funding_rate_comparison",
-              "pathParameters": {},
-              "queryParameters": {
+              "pathParameters": {
                 "refresh_rate": "50ms"
               },
+              "queryParameters": {},
               "headers": {},
               "messages": [
                 {
@@ -17607,7 +17496,35 @@
           "id": "orderBook",
           "name": "SUB order_book",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
+                "key": "market_symbol",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^[A-Z0-9]+-[A-Z0-9]+$"
+                  }
+                }
+              },
+              {
+                "description": "Optional price tick parameter for grouping order book prices, valid values are below.",
+                "key": "price_tick",
+                "type": {
+                  "type": "id",
+                  "value": "price_tick"
+                }
+              },
+              {
+                "description": "Rate of sending updates",
+                "key": "refresh_rate",
+                "type": {
+                  "type": "id",
+                  "value": "refresh_rate"
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -17616,35 +17533,7 @@
             ]
           },
           "headers": [],
-          "queryParameters": [
-            {
-              "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
-              "key": "market_symbol",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "regex": "^[A-Z0-9]+-[A-Z0-9]+$"
-                }
-              }
-            },
-            {
-              "description": "Optional price tick parameter for grouping order book prices, valid values are below.",
-              "key": "price_tick",
-              "type": {
-                "type": "id",
-                "value": "price_tick"
-              }
-            },
-            {
-              "description": "Rate of sending updates",
-              "key": "refresh_rate",
-              "type": {
-                "type": "id",
-                "value": "refresh_rate"
-              }
-            }
-          ],
+          "queryParameters": [],
           "messages": [
             {
               "type": "subscribe",
@@ -17674,12 +17563,12 @@
           "examples": [
             {
               "path": "",
-              "pathParameters": {},
-              "queryParameters": {
+              "pathParameters": {
                 "market_symbol": "market_symbol",
                 "price_tick": "0_0000001",
                 "refresh_rate": "50ms"
               },
+              "queryParameters": {},
               "headers": {},
               "messages": [
                 {
@@ -17980,7 +17869,19 @@
           "id": "trades",
           "name": "SUB trades",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
+                "key": "market_symbol",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^([A-Z0-9]+-[A-Z0-9]+|ALL)$"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -17989,19 +17890,7 @@
             ]
           },
           "headers": [],
-          "queryParameters": [
-            {
-              "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
-              "key": "market_symbol",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "regex": "^([A-Z0-9]+-[A-Z0-9]+|ALL)$"
-                }
-              }
-            }
-          ],
+          "queryParameters": [],
           "messages": [
             {
               "type": "subscribe",
@@ -18031,10 +17920,10 @@
           "examples": [
             {
               "path": "",
-              "pathParameters": {},
-              "queryParameters": {
+              "pathParameters": {
                 "market_symbol": "market_symbol"
               },
+              "queryParameters": {},
               "headers": {},
               "messages": [
                 {
@@ -18283,10 +18172,24 @@
           "statusCode": 200,
           "description": "OK"
         },
-        "errorsV2": [],
+        "errorsV2": [
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "value": "responses.ApiError"
+              }
+            },
+            "statusCode": 400,
+            "description": "Bad Request",
+            "name": "BadRequestError",
+            "examples": []
+          }
+        ],
         "examples": [
           {
-            "name": "",
+            "name": "tradesExample",
             "description": "",
             "path": "/trades",
             "pathParameters": {},

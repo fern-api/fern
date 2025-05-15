@@ -14,7 +14,13 @@ class Type(UniversalBaseModel):
     Examples
     --------
     from seed import Type
-    Type(decimal=1.1, even=2, name='rules', shape="SQUARE", )
+
+    Type(
+        decimal=1.1,
+        even=2,
+        name="rules",
+        shape="SQUARE",
+    )
     """
 
     decimal: float

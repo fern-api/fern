@@ -24,9 +24,9 @@
         ]
       }
     },
-    "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess": {
+    "OrganizationsOrganizationIdSearchPostRequestBodyContentApplicationJsonSchemaAccess": {
       "description": "Access level",
-      "name": "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess",
+      "name": "OrganizationsOrganizationIdSearchPostRequestBodyContentApplicationJsonSchemaAccess",
       "shape": {
         "type": "enum",
         "values": [
@@ -133,7 +133,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess"
+                        "value": "OrganizationsOrganizationIdSearchPostRequestBodyContentApplicationJsonSchemaAccess"
                       }
                     }
                   }
@@ -155,12 +155,12 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "organizationsSearchExample",
               "description": "",
-              "path": "/organizations/",
+              "path": "/organizations/organization_id/search",
               "pathParameters": {
-                "id": "foo",
-                "organization_id": "foo"
+                "id": "id",
+                "organization_id": "organization_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -244,11 +244,11 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getUserExample",
             "description": "",
-            "path": "/users/",
+            "path": "/users/user_id",
             "pathParameters": {
-              "user_id": "foo"
+              "user_id": "user_id"
             },
             "queryParameters": {},
             "headers": {},
@@ -340,12 +340,12 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getOrganizationUserExample",
             "description": "",
-            "path": "/organizations/",
+            "path": "/organizations/organization_id/users/user_id",
             "pathParameters": {
-              "organization_id": "foo",
-              "user_id": "foo"
+              "organization_id": "organization_id",
+              "user_id": "user_id"
             },
             "queryParameters": {
               "limit": 42

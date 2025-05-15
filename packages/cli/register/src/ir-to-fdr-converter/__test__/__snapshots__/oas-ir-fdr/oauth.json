@@ -1,8 +1,8 @@
 {
   "types": {
-    "OauthTokenPostRequestBodySchemaGrantType": {
+    "OauthTokenPostRequestBodyContentApplicationJsonSchemaGrantType": {
       "description": "The type of grant to request",
-      "name": "OauthTokenPostRequestBodySchemaGrantType",
+      "name": "OauthTokenPostRequestBodyContentApplicationJsonSchemaGrantType",
       "shape": {
         "type": "enum",
         "values": [
@@ -124,7 +124,7 @@
                     "key": "grant_type",
                     "valueType": {
                       "type": "id",
-                      "value": "OauthTokenPostRequestBodySchemaGrantType"
+                      "value": "OauthTokenPostRequestBodyContentApplicationJsonSchemaGrantType"
                     }
                   },
                   {
@@ -201,10 +201,35 @@
             "statusCode": 200,
             "description": "Successful token response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "authGetTokenExample",
               "description": "",
               "path": "/oauth/token",
               "pathParameters": {},
