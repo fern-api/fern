@@ -9306,29 +9306,6 @@
         ]
       }
     },
-    "EorEntitlementListItemRolloverType": {
-      "name": "EorEntitlementListItemRolloverType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "EXPIRATION"
-          },
-          {
-            "value": "PAY_OUT"
-          },
-          {
-            "value": "UNLIMITED_ROLLOVER"
-          },
-          {
-            "value": "LIMITED_ROLLOVER"
-          },
-          {
-            "value": "UNSET"
-          }
-        ]
-      }
-    },
     "EorEntitlementListItem": {
       "description": "Entitlement Item for a given year.",
       "name": "EorEntitlementListItem",
@@ -9536,7 +9513,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "EorEntitlementListItemRolloverType"
+                "value": "EorHolidaysRolloverType"
               }
             }
           },
@@ -9680,12 +9657,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "format": "date",
-                  "regex": "^\\d{4}-\\d{2}-\\d{2}$"
-                }
+                "type": "id",
+                "value": "DateString"
               }
             }
           }
@@ -12001,47 +11974,6 @@
         }
       }
     },
-    "EorTimeoffsItemUpdatedAt": {
-      "name": "EorTimeoffsItemUpdatedAt",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "DateTimeString"
-        ],
-        "properties": []
-      }
-    },
-    "EorTimeoffsItemStartDate": {
-      "name": "EorTimeoffsItemStartDate",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "DateTimeString"
-        ],
-        "properties": []
-      }
-    },
-    "EorTimeoffsItemEndDate": {
-      "name": "EorTimeoffsItemEndDate",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "DateTimeString"
-        ],
-        "properties": []
-      }
-    },
-    "EorTimeoffsItemChangeRequest": {
-      "description": "Only valid if the requester asks to change existing time off and it has been reviewed.",
-      "name": "EorTimeoffsItemChangeRequest",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "EorTimeoffsBaseItem"
-        ],
-        "properties": []
-      }
-    },
     "EorTimeoffsItem": {
       "name": "EorTimeoffsItem",
       "shape": {
@@ -12074,11 +12006,8 @@
           {
             "key": "created_at",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string",
-                "format": "date-time"
-              }
+              "type": "id",
+              "value": "DateTimeString"
             }
           },
           {
@@ -12089,7 +12018,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EorTimeoffsItemUpdatedAt"
+                  "value": "DateTimeString"
                 }
               }
             }
@@ -12100,7 +12029,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "EorTimeoffsItemStartDate"
+                "value": "DateTimeString"
               }
             }
           },
@@ -12112,7 +12041,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EorTimeoffsItemEndDate"
+                  "value": "DateTimeString"
                 }
               }
             }
@@ -12158,7 +12087,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EorTimeoffsItemChangeRequest"
+                  "value": "EorTimeoffsBaseItem"
                 }
               }
             }
@@ -12178,93 +12107,6 @@
             }
           }
         ]
-      }
-    },
-    "EorTimeoffsBaseItemType": {
-      "name": "EorTimeoffsBaseItemType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "VACATION"
-          },
-          {
-            "value": "SICK_LEAVE"
-          },
-          {
-            "value": "OTHER"
-          }
-        ]
-      }
-    },
-    "EorTimeoffsBaseItemReviewedAt": {
-      "description": "Timestamp when time off was reviewed.",
-      "name": "EorTimeoffsBaseItemReviewedAt",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "DateTimeString"
-        ],
-        "properties": []
-      }
-    },
-    "EorTimeoffsBaseItemStatus": {
-      "name": "EorTimeoffsBaseItemStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "REQUESTED"
-          },
-          {
-            "value": "APPROVED"
-          },
-          {
-            "value": "REJECTED"
-          }
-        ]
-      }
-    },
-    "EorTimeoffsBaseItemRequester": {
-      "description": "Employee who requested the time off.",
-      "name": "EorTimeoffsBaseItemRequester",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "TimeoffsProfile"
-        ],
-        "properties": []
-      }
-    },
-    "EorTimeoffsBaseItemReviewer": {
-      "description": "User who reviewed the time off.",
-      "name": "EorTimeoffsBaseItemReviewer",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "TimeoffsProfile"
-        ],
-        "properties": []
-      }
-    },
-    "EorTimeoffsBaseItemSingleDate": {
-      "name": "EorTimeoffsBaseItemSingleDate",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "DateTimeString"
-        ],
-        "properties": []
-      }
-    },
-    "EorTimeoffsBaseItemAttachments": {
-      "name": "EorTimeoffsBaseItemAttachments",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "TimeoffsAttachments"
-        ],
-        "properties": []
       }
     },
     "EorTimeoffsBaseItem": {
@@ -12294,18 +12136,15 @@
             "key": "type",
             "valueType": {
               "type": "id",
-              "value": "EorTimeoffsBaseItemType"
+              "value": "TimeoffsTypeEnum"
             }
           },
           {
             "description": "Timestamp when time off was requested.",
             "key": "requested_at",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string",
-                "format": "date-time"
-              }
+              "type": "id",
+              "value": "DateTimeString"
             }
           },
           {
@@ -12317,7 +12156,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EorTimeoffsBaseItemReviewedAt"
+                  "value": "DateTimeString"
                 }
               }
             }
@@ -12359,7 +12198,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "EorTimeoffsBaseItemStatus"
+              "value": "TimeoffsStatusEnum"
             }
           },
           {
@@ -12387,7 +12226,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EorTimeoffsBaseItemRequester"
+                  "value": "TimeoffsProfile"
                 }
               }
             }
@@ -12401,7 +12240,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EorTimeoffsBaseItemReviewer"
+                  "value": "TimeoffsProfile"
                 }
               }
             }
@@ -12479,7 +12318,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EorTimeoffsBaseItemSingleDate"
+                  "value": "DateTimeString"
                 }
               }
             }
@@ -12508,7 +12347,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EorTimeoffsBaseItemAttachments"
+                  "value": "TimeoffsAttachments"
                 }
               }
             }
@@ -12702,43 +12541,6 @@
         ]
       }
     },
-    "TimeoffsProfilePicUrl": {
-      "description": "Avatar or selfie.",
-      "name": "TimeoffsProfilePicUrl",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "UrlType"
-        ],
-        "properties": []
-      }
-    },
-    "TimeoffsProfileProfileType": {
-      "name": "TimeoffsProfileProfileType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "client"
-          },
-          {
-            "value": "contractor"
-          },
-          {
-            "value": "icp"
-          },
-          {
-            "value": "direct_employee"
-          },
-          {
-            "value": "hris_direct_employee"
-          },
-          {
-            "value": "service_account"
-          }
-        ]
-      }
-    },
     "TimeoffsProfile": {
       "name": "TimeoffsProfile",
       "shape": {
@@ -12772,7 +12574,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "TimeoffsProfilePicUrl"
+                  "value": "UrlType"
                 }
               }
             }
@@ -12781,7 +12583,7 @@
             "key": "profile_type",
             "valueType": {
               "type": "id",
-              "value": "TimeoffsProfileProfileType"
+              "value": "ProfileTypeEnum"
             }
           },
           {
@@ -14003,22 +13805,16 @@
             "description": "Timestamp when payment was paid.",
             "key": "paid_at",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string",
-                "format": "date-time"
-              }
+              "type": "id",
+              "value": "DateTimeString"
             }
           },
           {
             "description": "Timestamp when the record was created.",
             "key": "created_at",
             "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string",
-                "format": "date-time"
-              }
+              "type": "id",
+              "value": "DateTimeString"
             }
           },
           {
@@ -16247,32 +16043,6 @@
         ]
       }
     },
-    "PeopleMeProfileType": {
-      "name": "PeopleMeProfileType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "client"
-          },
-          {
-            "value": "contractor"
-          },
-          {
-            "value": "icp"
-          },
-          {
-            "value": "direct_employee"
-          },
-          {
-            "value": "hris_direct_employee"
-          },
-          {
-            "value": "service_account"
-          }
-        ]
-      }
-    },
     "PeopleMe": {
       "description": "People object representing a Deel",
       "name": "PeopleMe",
@@ -16409,7 +16179,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PeopleMeProfileType"
+                "value": "ProfileTypeEnum"
               }
             }
           },

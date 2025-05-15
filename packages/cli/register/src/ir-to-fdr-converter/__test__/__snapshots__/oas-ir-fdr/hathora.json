@@ -1250,16 +1250,6 @@
         ]
       }
     },
-    "PickRoomExcludeKeyofRoomAllocationsCurrentAllocation": {
-      "name": "PickRoomExcludeKeyofRoomAllocationsCurrentAllocation",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "RoomAllocation"
-        ],
-        "properties": []
-      }
-    },
     "Pick_Room.Exclude_keyofRoom.allocations__": {
       "description": "From T, pick a set of properties whose keys are in the union K",
       "name": "Pick_Room.Exclude_keyofRoom.allocations__",
@@ -1294,7 +1284,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "PickRoomExcludeKeyofRoomAllocationsCurrentAllocation"
+                "value": "RoomAllocation"
               }
             }
           }
@@ -1350,16 +1340,6 @@
         ]
       }
     },
-    "RoomCurrentAllocation": {
-      "name": "RoomCurrentAllocation",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "RoomAllocation"
-        ],
-        "properties": []
-      }
-    },
     "Room": {
       "name": "Room",
       "shape": {
@@ -1372,7 +1352,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "RoomCurrentAllocation"
+                "value": "RoomAllocation"
               }
             }
           },

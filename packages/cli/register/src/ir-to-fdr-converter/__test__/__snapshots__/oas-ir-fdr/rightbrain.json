@@ -3480,17 +3480,6 @@
         ]
       }
     },
-    "InvalidMemberErrorResponseInvalidMemberError": {
-      "description": "Metadata detailing more information about the error.",
-      "name": "InvalidMemberErrorResponseInvalidMemberError",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "InvalidMemberErrorDetails"
-        ],
-        "properties": []
-      }
-    },
     "InvalidMemberErrorResponse": {
       "name": "InvalidMemberErrorResponse",
       "shape": {
@@ -3520,7 +3509,7 @@
             "key": "invalidMemberError",
             "valueType": {
               "type": "id",
-              "value": "InvalidMemberErrorResponseInvalidMemberError"
+              "value": "InvalidMemberErrorDetails"
             }
           }
         ]
@@ -3569,17 +3558,6 @@
         ]
       }
     },
-    "InvalidRoleErrorResponseInvalidRoleError": {
-      "description": "Metadata detailing more information about the error.",
-      "name": "InvalidRoleErrorResponseInvalidRoleError",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "InvalidRoleErrorDetails"
-        ],
-        "properties": []
-      }
-    },
     "InvalidRoleErrorResponse": {
       "name": "InvalidRoleErrorResponse",
       "shape": {
@@ -3609,7 +3587,7 @@
             "key": "invalidRoleError",
             "valueType": {
               "type": "id",
-              "value": "InvalidRoleErrorResponseInvalidRoleError"
+              "value": "InvalidRoleErrorDetails"
             }
           }
         ]
@@ -3649,17 +3627,6 @@
         ]
       }
     },
-    "InvalidSubjectTypeErrorResponseInvalidSubjectTypeError": {
-      "description": "Metadata detailing more information about the error.",
-      "name": "InvalidSubjectTypeErrorResponseInvalidSubjectTypeError",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "InvalidSubjectTypeErrorDetails"
-        ],
-        "properties": []
-      }
-    },
     "InvalidSubjectTypeErrorResponse": {
       "name": "InvalidSubjectTypeErrorResponse",
       "shape": {
@@ -3689,7 +3656,7 @@
             "key": "invalidSubjectTypeError",
             "valueType": {
               "type": "id",
-              "value": "InvalidSubjectTypeErrorResponseInvalidSubjectTypeError"
+              "value": "InvalidSubjectTypeErrorDetails"
             }
           }
         ]
@@ -4148,17 +4115,6 @@
         ]
       }
     },
-    "MalformedResourceIdentifierErrorResponseMalformedResourceIdentifierError": {
-      "description": "Metadata detailing more information about the error.",
-      "name": "MalformedResourceIdentifierErrorResponseMalformedResourceIdentifierError",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "MalformedResourceIdentifierErrorDetails"
-        ],
-        "properties": []
-      }
-    },
     "MalformedResourceIdentifierErrorResponse": {
       "name": "MalformedResourceIdentifierErrorResponse",
       "shape": {
@@ -4188,7 +4144,7 @@
             "key": "malformedResourceIdentifierError",
             "valueType": {
               "type": "id",
-              "value": "MalformedResourceIdentifierErrorResponseMalformedResourceIdentifierError"
+              "value": "MalformedResourceIdentifierErrorDetails"
             }
           }
         ]
@@ -4204,17 +4160,6 @@
             "value": "MISSING_AUTHENTICATION"
           }
         ]
-      }
-    },
-    "MissingAuthenticationErrorResponseMissingAuthenticationError": {
-      "description": "Metadata detailing more information about the error.",
-      "name": "MissingAuthenticationErrorResponseMissingAuthenticationError",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "EmptyErrorDetails"
-        ],
-        "properties": []
       }
     },
     "MissingAuthenticationErrorResponse": {
@@ -4246,7 +4191,7 @@
             "key": "missingAuthenticationError",
             "valueType": {
               "type": "id",
-              "value": "MissingAuthenticationErrorResponseMissingAuthenticationError"
+              "value": "EmptyErrorDetails"
             }
           }
         ]
@@ -4298,17 +4243,6 @@
         ]
       }
     },
-    "MultipleRolesNotAllowedErrorResponseMultipleRolesNotAllowedError": {
-      "description": "Metadata detailing more information about the error.",
-      "name": "MultipleRolesNotAllowedErrorResponseMultipleRolesNotAllowedError",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "MultipleRolesNotAllowedErrorDetails"
-        ],
-        "properties": []
-      }
-    },
     "MultipleRolesNotAllowedErrorResponse": {
       "name": "MultipleRolesNotAllowedErrorResponse",
       "shape": {
@@ -4338,28 +4272,8 @@
             "key": "multipleRolesNotAllowedError",
             "valueType": {
               "type": "id",
-              "value": "MultipleRolesNotAllowedErrorResponseMultipleRolesNotAllowedError"
+              "value": "MultipleRolesNotAllowedErrorDetails"
             }
-          }
-        ]
-      }
-    },
-    "OAuthClientCreateProfile": {
-      "name": "OAuthClientCreateProfile",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "rightbrain_docs"
-          },
-          {
-            "value": "rightbrain_tasks"
-          },
-          {
-            "value": "user_defined"
-          },
-          {
-            "value": "zendesk"
           }
         ]
       }
@@ -4390,7 +4304,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "OAuthClientCreateProfile"
+                "value": "OAuthClientProfile"
               }
             }
           },
@@ -5156,17 +5070,6 @@
         ]
       }
     },
-    "OrganizationInviteAlreadyExistsErrorResponseOrganizationInviteAlreadyExistsError": {
-      "description": "Metadata detailing more information about the error.",
-      "name": "OrganizationInviteAlreadyExistsErrorResponseOrganizationInviteAlreadyExistsError",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "OrganizationInviteAlreadyExistsErrorDetails"
-        ],
-        "properties": []
-      }
-    },
     "OrganizationInviteAlreadyExistsErrorResponse": {
       "name": "OrganizationInviteAlreadyExistsErrorResponse",
       "shape": {
@@ -5196,7 +5099,7 @@
             "key": "organizationInviteAlreadyExistsError",
             "valueType": {
               "type": "id",
-              "value": "OrganizationInviteAlreadyExistsErrorResponseOrganizationInviteAlreadyExistsError"
+              "value": "OrganizationInviteAlreadyExistsErrorDetails"
             }
           }
         ]
@@ -5241,17 +5144,6 @@
         ]
       }
     },
-    "OrganizationMemberAlreadyExistsErrorResponseOrganizationMemberAlreadyExistsError": {
-      "description": "Metadata detailing more information about the error.",
-      "name": "OrganizationMemberAlreadyExistsErrorResponseOrganizationMemberAlreadyExistsError",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "OrganizationMemberAlreadyExistsErrorDetails"
-        ],
-        "properties": []
-      }
-    },
     "OrganizationMemberAlreadyExistsErrorResponse": {
       "name": "OrganizationMemberAlreadyExistsErrorResponse",
       "shape": {
@@ -5281,7 +5173,7 @@
             "key": "organizationMemberAlreadyExistsError",
             "valueType": {
               "type": "id",
-              "value": "OrganizationMemberAlreadyExistsErrorResponseOrganizationMemberAlreadyExistsError"
+              "value": "OrganizationMemberAlreadyExistsErrorDetails"
             }
           }
         ]
@@ -5837,17 +5729,6 @@
         ]
       }
     },
-    "PermissionCheckFailedErrorResponsePermissionCheckFailedError": {
-      "description": "Metadata detailing more information about the error.",
-      "name": "PermissionCheckFailedErrorResponsePermissionCheckFailedError",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "PermissionCheckFailedErrorDetails"
-        ],
-        "properties": []
-      }
-    },
     "PermissionCheckFailedErrorResponse": {
       "name": "PermissionCheckFailedErrorResponse",
       "shape": {
@@ -5877,7 +5758,7 @@
             "key": "permissionCheckFailedError",
             "valueType": {
               "type": "id",
-              "value": "PermissionCheckFailedErrorResponsePermissionCheckFailedError"
+              "value": "PermissionCheckFailedErrorDetails"
             }
           }
         ]
@@ -6831,17 +6712,6 @@
         ]
       }
     },
-    "TaskCreateLlmConfig": {
-      "description": "Specific configuration parameters for the LLM model.",
-      "name": "TaskCreateLlmConfig",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "TaskLLMConfig"
-        ],
-        "properties": []
-      }
-    },
     "TaskCreateOutputFormat": {
       "name": "TaskCreateOutputFormat",
       "shape": {
@@ -6906,7 +6776,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "TaskCreateLlmConfig"
+                "value": "TaskLLMConfig"
               }
             }
           },
@@ -7547,17 +7417,6 @@
         ]
       }
     },
-    "TaskRevisionLlmConfig": {
-      "description": "Specific configuration parameters for the LLM model.",
-      "name": "TaskRevisionLlmConfig",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "TaskLLMConfig"
-        ],
-        "properties": []
-      }
-    },
     "TaskRevisionOutputFormat": {
       "name": "TaskRevisionOutputFormat",
       "shape": {
@@ -7622,7 +7481,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "TaskRevisionLlmConfig"
+                "value": "TaskLLMConfig"
               }
             }
           },
@@ -8398,26 +8257,6 @@
         ]
       }
     },
-    "OrgGetParametersSchema": {
-      "name": "OrgGetParametersSchema",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "active"
-          },
-          {
-            "value": "joinable"
-          },
-          {
-            "value": "joinable_by_domain"
-          },
-          {
-            "value": "joinable_by_invite"
-          }
-        ]
-      }
-    },
     "Org_get_org__org_id__getRequestForbiddenError": {
       "name": "Org_get_org__org_id__getRequestForbiddenError",
       "shape": {
@@ -8480,23 +8319,6 @@
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
             }
-          }
-        ]
-      }
-    },
-    "OrgOrgIdInviteGetParametersSchema": {
-      "name": "OrgOrgIdInviteGetParametersSchema",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "all"
-          },
-          {
-            "value": "pending"
-          },
-          {
-            "value": "accepted"
           }
         ]
       }
@@ -9106,20 +8928,6 @@
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
             }
-          }
-        ]
-      }
-    },
-    "OrgOrgIdProjectProjectIdCollectionCollectionIdChatGetParametersSchema": {
-      "name": "OrgOrgIdProjectProjectIdCollectionCollectionIdChatGetParametersSchema",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "all"
-          },
-          {
-            "value": "viewable"
           }
         ]
       }
@@ -12518,7 +12326,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "OrgGetParametersSchema"
+                  "value": "OrgMembership"
                 }
               }
             },
@@ -13145,7 +12953,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "OrgOrgIdInviteGetParametersSchema"
+                  "value": "OrgInviteShow"
                 }
               }
             },
@@ -17461,7 +17269,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "OrgOrgIdProjectProjectIdCollectionCollectionIdChatGetParametersSchema"
+                  "value": "CollectionChatShow"
                 }
               }
             },

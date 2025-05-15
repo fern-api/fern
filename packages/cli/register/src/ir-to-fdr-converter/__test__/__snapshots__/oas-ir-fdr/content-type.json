@@ -83,6 +83,18 @@
                 },
                 {
                   "type": "bodyProperty",
+                  "key": "chunking_strategy",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "unknown"
+                    }
+                  },
+                  "contentType": "multipart/form-data",
+                  "exploded": false
+                },
+                {
+                  "type": "bodyProperty",
                   "key": "filename",
                   "valueType": {
                     "type": "optional",
@@ -145,6 +157,9 @@
               "type": "form",
               "value": {
                 "metadata": {
+                  "type": "json"
+                },
+                "chunking_strategy": {
                   "type": "json"
                 },
                 "filename": {

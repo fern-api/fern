@@ -152,33 +152,6 @@
         ]
       }
     },
-    "AttributeBlockEditableType": {
-      "description": "supported attribute primitives",
-      "name": "AttributeBlockEditableType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "bool"
-          },
-          {
-            "value": "number"
-          },
-          {
-            "value": "string"
-          },
-          {
-            "value": "time"
-          },
-          {
-            "value": "array"
-          },
-          {
-            "value": "json"
-          }
-        ]
-      }
-    },
     "AttributeBlockEditable": {
       "name": "AttributeBlockEditable",
       "shape": {
@@ -190,7 +163,7 @@
             "key": "type",
             "valueType": {
               "type": "id",
-              "value": "AttributeBlockEditableType"
+              "value": "AttributeType"
             }
           },
           {
@@ -209,33 +182,6 @@
         ]
       }
     },
-    "AttributeBlockReadType": {
-      "description": "supported attribute primitives",
-      "name": "AttributeBlockReadType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "bool"
-          },
-          {
-            "value": "number"
-          },
-          {
-            "value": "string"
-          },
-          {
-            "value": "time"
-          },
-          {
-            "value": "array"
-          },
-          {
-            "value": "json"
-          }
-        ]
-      }
-    },
     "AttributeBlockRead": {
       "name": "AttributeBlockRead",
       "shape": {
@@ -247,7 +193,7 @@
             "key": "type",
             "valueType": {
               "type": "id",
-              "value": "AttributeBlockReadType"
+              "value": "AttributeType"
             }
           },
           {
@@ -361,21 +307,6 @@
         ]
       }
     },
-    "ConditionSetCreateType": {
-      "description": "An enumeration.",
-      "name": "ConditionSetCreateType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "userset"
-          },
-          {
-            "value": "resourceset"
-          }
-        ]
-      }
-    },
     "ConditionSetCreateResourceId": {
       "description": "For ResourceSets, the id of the base resource.",
       "name": "ConditionSetCreateResourceId",
@@ -462,7 +393,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ConditionSetCreateType"
+                "value": "ConditionSetType"
               }
             }
           },
@@ -535,21 +466,6 @@
                 "value": "ConditionSetCreateParentId"
               }
             }
-          }
-        ]
-      }
-    },
-    "ConditionSetReadType": {
-      "description": "An enumeration.",
-      "name": "ConditionSetReadType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "userset"
-          },
-          {
-            "value": "resourceset"
           }
         ]
       }
@@ -638,7 +554,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ConditionSetReadType"
+                "value": "ConditionSetType"
               }
             }
           },
@@ -1147,17 +1063,6 @@
         ]
       }
     },
-    "EnvironmentCopyTargetEnv": {
-      "description": "If copying a new environment, the environment configuration. If copying to an existing environment, the environment identifier",
-      "name": "EnvironmentCopyTargetEnv",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "EnvironmentCopyTarget"
-        ],
-        "properties": []
-      }
-    },
     "EnvironmentCopyConflictStrategy": {
       "description": "Action to take when detecting a conflict when copying. Only applies to copying into an existing environment",
       "name": "EnvironmentCopyConflictStrategy",
@@ -1174,59 +1079,6 @@
         ]
       }
     },
-    "EnvironmentCopyScope": {
-      "name": "EnvironmentCopyScope",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "description": "Resources to copy",
-            "key": "resources",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "EnvironmentCopyScopeResources"
-              }
-            }
-          },
-          {
-            "description": "Roles to copy",
-            "key": "roles",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "EnvironmentCopyScopeRoles"
-              }
-            }
-          },
-          {
-            "description": "User sets to copy",
-            "key": "user_sets",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "EnvironmentCopyScopeUserSets"
-              }
-            }
-          },
-          {
-            "description": "Resource sets to copy",
-            "key": "resource_sets",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "EnvironmentCopyScopeResourceSets"
-              }
-            }
-          }
-        ]
-      }
-    },
     "EnvironmentCopy": {
       "name": "EnvironmentCopy",
       "shape": {
@@ -1238,7 +1090,7 @@
             "key": "target_env",
             "valueType": {
               "type": "id",
-              "value": "EnvironmentCopyTargetEnv"
+              "value": "EnvironmentCopyTarget"
             }
           },
           {
@@ -1266,48 +1118,57 @@
         ]
       }
     },
-    "EnvironmentCopyScopeResources": {
-      "description": "Resources to copy",
-      "name": "EnvironmentCopyScopeResources",
+    "EnvironmentCopyScope": {
+      "name": "EnvironmentCopyScope",
       "shape": {
         "type": "object",
-        "extends": [
-          "EnvironmentCopyScopeFilters"
-        ],
-        "properties": []
-      }
-    },
-    "EnvironmentCopyScopeRoles": {
-      "description": "Roles to copy",
-      "name": "EnvironmentCopyScopeRoles",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "EnvironmentCopyScopeFilters"
-        ],
-        "properties": []
-      }
-    },
-    "EnvironmentCopyScopeUserSets": {
-      "description": "User sets to copy",
-      "name": "EnvironmentCopyScopeUserSets",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "EnvironmentCopyScopeFilters"
-        ],
-        "properties": []
-      }
-    },
-    "EnvironmentCopyScopeResourceSets": {
-      "description": "Resource sets to copy",
-      "name": "EnvironmentCopyScopeResourceSets",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "EnvironmentCopyScopeFilters"
-        ],
-        "properties": []
+        "extends": [],
+        "properties": [
+          {
+            "description": "Resources to copy",
+            "key": "resources",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "EnvironmentCopyScopeFilters"
+              }
+            }
+          },
+          {
+            "description": "Roles to copy",
+            "key": "roles",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "EnvironmentCopyScopeFilters"
+              }
+            }
+          },
+          {
+            "description": "User sets to copy",
+            "key": "user_sets",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "EnvironmentCopyScopeFilters"
+              }
+            }
+          },
+          {
+            "description": "Resource sets to copy",
+            "key": "resource_sets",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "EnvironmentCopyScopeFilters"
+              }
+            }
+          }
+        ]
       }
     },
     "EnvironmentCopyScopeFilters": {
@@ -1351,17 +1212,6 @@
         ]
       }
     },
-    "EnvironmentCopyTargetNew": {
-      "description": "Description of the environment to create. This environment must not already exist.",
-      "name": "EnvironmentCopyTargetNew",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "EnvironmentCreate"
-        ],
-        "properties": []
-      }
-    },
     "EnvironmentCopyTarget": {
       "name": "EnvironmentCopyTarget",
       "shape": {
@@ -1388,22 +1238,11 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "EnvironmentCopyTargetNew"
+                "value": "EnvironmentCreate"
               }
             }
           }
         ]
-      }
-    },
-    "EnvironmentCreateJwks": {
-      "description": "jwks for element frontend only login",
-      "name": "EnvironmentCreateJwks",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "JwksObj"
-        ],
-        "properties": []
       }
     },
     "EnvironmentCreateSettings": {
@@ -1475,7 +1314,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "EnvironmentCreateJwks"
+                "value": "JwksObj"
               }
             }
           },
@@ -1491,17 +1330,6 @@
             }
           }
         ]
-      }
-    },
-    "EnvironmentReadJwks": {
-      "description": "jwks for element frontend only login",
-      "name": "EnvironmentReadJwks",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "JwksObj"
-        ],
-        "properties": []
       }
     },
     "EnvironmentReadSettings": {
@@ -1627,7 +1455,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "EnvironmentReadJwks"
+                "value": "JwksObj"
               }
             }
           },
@@ -1643,17 +1471,6 @@
             }
           }
         ]
-      }
-    },
-    "EnvironmentStatsJwks": {
-      "description": "jwks for element frontend only login",
-      "name": "EnvironmentStatsJwks",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "JwksObj"
-        ],
-        "properties": []
       }
     },
     "EnvironmentStatsSettings": {
@@ -1779,7 +1596,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "EnvironmentStatsJwks"
+                "value": "JwksObj"
               }
             }
           },
@@ -1812,17 +1629,6 @@
             }
           }
         ]
-      }
-    },
-    "EnvironmentUpdateJwks": {
-      "description": "jwks for element frontend only login",
-      "name": "EnvironmentUpdateJwks",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "JwksObj"
-        ],
-        "properties": []
       }
     },
     "EnvironmentUpdateSettings": {
@@ -1886,7 +1692,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "EnvironmentUpdateJwks"
+                "value": "JwksObj"
               }
             }
           },
@@ -2003,48 +1809,6 @@
         ]
       }
     },
-    "InviteReadRole": {
-      "description": "An enumeration.",
-      "name": "InviteReadRole",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "admin"
-          },
-          {
-            "value": "write"
-          },
-          {
-            "value": "read"
-          },
-          {
-            "value": "no_access"
-          }
-        ]
-      }
-    },
-    "InviteReadStatus": {
-      "description": "An enumeration.",
-      "name": "InviteReadStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "pending"
-          },
-          {
-            "value": "accepted"
-          },
-          {
-            "value": "failed"
-          },
-          {
-            "value": "canceled"
-          }
-        ]
-      }
-    },
     "InviteRead": {
       "name": "InviteRead",
       "shape": {
@@ -2083,7 +1847,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "InviteReadRole"
+                "value": "MemberAccessLevel"
               }
             }
           },
@@ -2136,7 +1900,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "InviteReadStatus"
+              "value": "InviteStatus"
             }
           },
           {
@@ -2246,39 +2010,6 @@
     "OnboardingStep": {
       "description": "An enumeration.",
       "name": "OnboardingStep",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "create_organization"
-          },
-          {
-            "value": "create_project"
-          },
-          {
-            "value": "create_resource"
-          },
-          {
-            "value": "create_actions"
-          },
-          {
-            "value": "assign_permissions"
-          },
-          {
-            "value": "assign_user_roles"
-          },
-          {
-            "value": "connect_sdk"
-          },
-          {
-            "value": "done"
-          }
-        ]
-      }
-    },
-    "OrgMemberReadWithGrantsOnboardingStep": {
-      "description": "An enumeration.",
-      "name": "OrgMemberReadWithGrantsOnboardingStep",
       "shape": {
         "type": "enum",
         "values": [
@@ -2433,7 +2164,7 @@
             "key": "onboarding_step",
             "valueType": {
               "type": "id",
-              "value": "OrgMemberReadWithGrantsOnboardingStep"
+              "value": "OnboardingStep"
             }
           },
           {
@@ -4196,33 +3927,6 @@
         ]
       }
     },
-    "ResourceAttributeCreateType": {
-      "description": "supported attribute primitives",
-      "name": "ResourceAttributeCreateType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "bool"
-          },
-          {
-            "value": "number"
-          },
-          {
-            "value": "string"
-          },
-          {
-            "value": "time"
-          },
-          {
-            "value": "array"
-          },
-          {
-            "value": "json"
-          }
-        ]
-      }
-    },
     "ResourceAttributeCreate": {
       "name": "ResourceAttributeCreate",
       "shape": {
@@ -4245,7 +3949,7 @@
             "key": "type",
             "valueType": {
               "type": "id",
-              "value": "ResourceAttributeCreateType"
+              "value": "AttributeType"
             }
           },
           {
@@ -4264,33 +3968,6 @@
         ]
       }
     },
-    "ResourceAttributeReadType": {
-      "description": "supported attribute primitives",
-      "name": "ResourceAttributeReadType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "bool"
-          },
-          {
-            "value": "number"
-          },
-          {
-            "value": "string"
-          },
-          {
-            "value": "time"
-          },
-          {
-            "value": "array"
-          },
-          {
-            "value": "json"
-          }
-        ]
-      }
-    },
     "ResourceAttributeRead": {
       "name": "ResourceAttributeRead",
       "shape": {
@@ -4302,7 +3979,7 @@
             "key": "type",
             "valueType": {
               "type": "id",
-              "value": "ResourceAttributeReadType"
+              "value": "AttributeType"
             }
           },
           {
@@ -4428,33 +4105,6 @@
         ]
       }
     },
-    "ResourceAttributeUpdateType": {
-      "description": "supported attribute primitives",
-      "name": "ResourceAttributeUpdateType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "bool"
-          },
-          {
-            "value": "number"
-          },
-          {
-            "value": "string"
-          },
-          {
-            "value": "time"
-          },
-          {
-            "value": "array"
-          },
-          {
-            "value": "json"
-          }
-        ]
-      }
-    },
     "ResourceAttributeUpdate": {
       "name": "ResourceAttributeUpdate",
       "shape": {
@@ -4468,7 +4118,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ResourceAttributeUpdateType"
+                "value": "AttributeType"
               }
             }
           },
@@ -6757,21 +6407,6 @@
         "properties": []
       }
     },
-    "UserInTenantStatus": {
-      "description": "An enumeration.",
-      "name": "UserInTenantStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "active"
-          },
-          {
-            "value": "pending"
-          }
-        ]
-      }
-    },
     "UserInTenant": {
       "name": "UserInTenant",
       "shape": {
@@ -6806,7 +6441,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "UserInTenantStatus"
+              "value": "UserStatus"
             }
           }
         ]
@@ -7287,21 +6922,6 @@
               "type": "id",
               "value": "RolesListRolesResponse2001"
             }
-          }
-        ]
-      }
-    },
-    "V2SchemaProjIdEnvIdConditionSetsGetParametersSchema": {
-      "description": "An enumeration.",
-      "name": "V2SchemaProjIdEnvIdConditionSetsGetParametersSchema",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "userset"
-          },
-          {
-            "value": "resourceset"
           }
         ]
       }
@@ -18446,7 +18066,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V2SchemaProjIdEnvIdConditionSetsGetParametersSchema"
+                  "value": "ConditionSetType"
                 }
               }
             },
