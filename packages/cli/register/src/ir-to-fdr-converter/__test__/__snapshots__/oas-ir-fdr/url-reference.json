@@ -1563,7 +1563,7 @@
             }
           ],
           "id": "petowners",
-          "name": "/petowners",
+          "name": "Petowners",
           "path": {
             "pathParameters": [],
             "parts": [

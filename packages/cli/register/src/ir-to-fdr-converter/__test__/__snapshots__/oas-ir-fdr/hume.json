@@ -5105,7 +5105,7 @@
             }
           ],
           "id": "chat",
-          "name": "/chat",
+          "name": "Chat",
           "path": {
             "pathParameters": [],
             "parts": [
