@@ -314,6 +314,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
  */
 function deepSetProperty(obj: object, path: Name[] | undefined, finalProp: Name, value: unknown): boolean {
     // Start with the provided object
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let current: any = obj;
     if (!path) {
         path = [];
