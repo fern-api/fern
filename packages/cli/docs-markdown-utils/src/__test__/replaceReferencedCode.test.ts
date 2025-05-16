@@ -42,4 +42,39 @@ describe("replaceReferencedCode", () => {
 
         `);
     });
+
+    it("should preserve maxLines and focus attributes when replacing code references", async () => {
+        const markdown = `
+            <Code src="../snippets/test.py" maxLines={20} focus={1-18} />
+            <Code src="../snippets/test.ts" maxLines="20" focus={1-18} />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "test content";
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.ts")) {
+                    return "test2 content\nwith multiple lines";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`py title="test.py" maxLines={20} focus={1-18}
+            test content
+            \`\`\`
+
+            \`\`\`ts title="test.ts" maxLines={20} focus={1-18}
+            test2 content
+            with multiple lines
+            \`\`\`
+
+        `);
+    });
 });
