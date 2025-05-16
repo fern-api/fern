@@ -312,31 +312,42 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
  * @param value The value to set the property to
  * @returns A boolean indicating if the property was set
  */
-function deepSetProperty(obj: object, path: Name[] | undefined, finalProp: Name, value: unknown): boolean {
+function deepSetProperty(
+    obj: Record<string, unknown>,
+    path: Name[] | undefined,
+    finalProp: Name,
+    value: unknown
+): boolean {
     // Start with the provided object
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let current: any = obj;
+    let current: Record<string, unknown> | unknown = obj;
     if (!path) {
         path = [];
     }
     // Traverse the path
     for (const prop of path) {
-        // Check if the current level has the property
-        if (current == null || !Object.prototype.hasOwnProperty.call(current, prop.originalName)) {
+        if (current == null || typeof current !== "object") {
+            return false;
+        }
+        if (prop.originalName in current === false) {
             // Property path doesn't exist, return false
             return false;
         }
 
         // Move to the next level
-        current = current[prop.originalName];
+        current = (current as Record<string, unknown>)[prop.originalName];
     }
 
     // Check if the final property exists at the current level
-    if (current == null || !Object.prototype.hasOwnProperty.call(current, finalProp.originalName)) {
+    if (current == null || typeof current !== "object") {
+        return false;
+    }
+    if (finalProp.originalName in current === false) {
+        // Property path doesn't exist, return false
         return false;
     }
 
     // Set the property value
-    current[finalProp.originalName] = value;
+    (current as Record<string, unknown>)[finalProp.originalName] = value;
     return true;
 }
