@@ -1,6 +1,6 @@
 {
   "types": {
-    "e_t_h___b_l_o_c_k_N_u_m_b_e_r_Result": {
+    "eth_blockNumber_Result": {
       "name": "EthBlockNumberResult",
       "shape": {
         "type": "alias",
@@ -71,8 +71,8 @@
         ]
       }
     },
-    "MethodsParams0AccessListItems": {
-      "name": "MethodsParams0AccessListItems",
+    "EthCallParamTransactionAccessListItems": {
+      "name": "EthCallParamTransactionAccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -274,7 +274,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "MethodsParams0AccessListItems"
+                  "value": "EthCallParamTransactionAccessListItems"
                 }
               }
             }
@@ -330,7 +330,7 @@
         ]
       }
     },
-    "e_t_h___c_a_l_l_Result": {
+    "eth_call_Result": {
       "name": "EthCallResult",
       "shape": {
         "type": "alias",
@@ -343,7 +343,7 @@
         }
       }
     },
-    "e_t_h___c_h_a_i_n_I_d_Result": {
+    "eth_chainId_Result": {
       "name": "EthChainIdResult",
       "shape": {
         "type": "alias",
@@ -400,6 +400,44 @@
             "type": {
               "type": "id",
               "value": "EthEstimateGasParamBlock1"
+            }
+          }
+        ]
+      }
+    },
+    "EthEstimateGasParamTransactionAccessListItems": {
+      "name": "EthEstimateGasParamTransactionAccessListItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
+            }
+          },
+          {
+            "key": "storageKeys",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^0x[0-9a-f]{64}$"
+                  }
+                }
+              }
             }
           }
         ]
@@ -570,7 +608,7 @@
                 "type": "list",
                 "itemType": {
                   "type": "id",
-                  "value": "MethodsParams0AccessListItems"
+                  "value": "EthEstimateGasParamTransactionAccessListItems"
                 }
               }
             }
@@ -626,7 +664,7 @@
         ]
       }
     },
-    "e_t_h___e_s_t_i_m_a_t_e_G_a_s_Result": {
+    "eth_estimateGas_Result": {
       "name": "EthEstimateGasResult",
       "shape": {
         "type": "alias",
@@ -639,7 +677,7 @@
         }
       }
     },
-    "e_t_h___g_a_s_P_r_i_c_e_Result": {
+    "eth_gasPrice_Result": {
       "name": "EthGasPriceResult",
       "shape": {
         "type": "alias",
@@ -723,7 +761,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_B_a_l_a_n_c_e_Result": {
+    "eth_getBalance_Result": {
       "name": "EthGetBalanceResult",
       "shape": {
         "type": "alias",
@@ -2167,7 +2205,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_B_y_H_a_s_h_Result": {
+    "eth_getBlockByHash_Result": {
       "name": "EthGetBlockByHashResult",
       "shape": {
         "type": "alias",
@@ -3647,7 +3685,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Result": {
+    "eth_getBlockByNumber_Result": {
       "name": "EthGetBlockByNumberResult",
       "shape": {
         "type": "alias",
@@ -3673,7 +3711,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_B_y_H_a_s_h_Result": {
+    "eth_getBlockTransactionCountByHash_Result": {
       "name": "EthGetBlockTransactionCountByHashResult",
       "shape": {
         "type": "alias",
@@ -3738,7 +3776,7 @@
         ]
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_B_y_N_u_m_b_e_r_Result": {
+    "eth_getBlockTransactionCountByNumber_Result": {
       "name": "EthGetBlockTransactionCountByNumberResult",
       "shape": {
         "type": "alias",
@@ -3825,7 +3863,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_C_o_d_e_Result": {
+    "eth_getCode_Result": {
       "name": "EthGetCodeResult",
       "shape": {
         "type": "alias",
@@ -4003,8 +4041,8 @@
         ]
       }
     },
-    "MethodsParams0Address": {
-      "name": "MethodsParams0Address",
+    "EthGetLogsParamFilterAddress": {
+      "name": "EthGetLogsParamFilterAddress",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -4032,8 +4070,8 @@
         ]
       }
     },
-    "MethodsParams0TopicsItems": {
-      "name": "MethodsParams0TopicsItems",
+    "EthGetLogsParamFilterTopicsItems": {
+      "name": "EthGetLogsParamFilterTopicsItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -4101,7 +4139,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "MethodsParams0Address"
+                  "value": "EthGetLogsParamFilterAddress"
                 }
               }
             }
@@ -4116,7 +4154,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "MethodsParams0TopicsItems"
+                    "value": "EthGetLogsParamFilterTopicsItems"
                   }
                 }
               }
@@ -4125,7 +4163,7 @@
         ]
       }
     },
-    "e_t_h___g_e_t_L_o_g_s_Result": {
+    "eth_getLogs_Result": {
       "name": "EthGetLogsResult",
       "shape": {
         "type": "undiscriminatedUnion",
@@ -4363,7 +4401,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_P_r_o_o_f_Result": {
+    "eth_getProof_Result": {
       "name": "EthGetProofResult",
       "shape": {
         "type": "object",
@@ -4529,7 +4567,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_S_t_o_r_a_g_e_A_t_Result": {
+    "eth_getStorageAt_Result": {
       "name": "EthGetStorageAtResult",
       "shape": {
         "type": "alias",
@@ -5605,7 +5643,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_H_a_s_h_A_n_d_I_n_d_e_x_Result": {
+    "eth_getTransactionByBlockHashAndIndex_Result": {
       "name": "EthGetTransactionByBlockHashAndIndexResult",
       "shape": {
         "type": "alias",
@@ -6717,7 +6755,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Result": {
+    "eth_getTransactionByBlockNumberAndIndex_Result": {
       "name": "EthGetTransactionByBlockNumberAndIndexResult",
       "shape": {
         "type": "alias",
@@ -7780,7 +7818,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_H_a_s_h_Result": {
+    "eth_getTransactionByHash_Result": {
       "name": "EthGetTransactionByHashResult",
       "shape": {
         "type": "alias",
@@ -7864,7 +7902,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_Result": {
+    "eth_getTransactionCount_Result": {
       "name": "EthGetTransactionCountResult",
       "shape": {
         "type": "alias",
@@ -8230,7 +8268,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_R_e_c_e_i_p_t_Result": {
+    "eth_getTransactionReceipt_Result": {
       "name": "EthGetTransactionReceiptResult",
       "shape": {
         "type": "alias",
@@ -8256,7 +8294,7 @@
         }
       }
     },
-    "e_t_h___s_e_n_d_R_a_w_T_r_a_n_s_a_c_t_i_o_n_Result": {
+    "eth_sendRawTransaction_Result": {
       "name": "EthSendRawTransactionResult",
       "shape": {
         "type": "alias",
@@ -8364,7 +8402,7 @@
         ]
       }
     },
-    "e_t_h___s_y_n_c_i_n_g_Result": {
+    "eth_syncing_Result": {
       "name": "EthSyncingResult",
       "shape": {
         "type": "undiscriminatedUnion",
@@ -8387,7 +8425,7 @@
         ]
       }
     },
-    "n_e_t___v_e_r_s_i_o_n_Result": {
+    "net_version_Result": {
       "name": "NetVersionResult",
       "shape": {
         "type": "alias",
@@ -8399,7 +8437,7 @@
         }
       }
     },
-    "w_e_b_3___c_l_i_e_n_t_V_e_r_s_i_o_n_Result": {
+    "web3_clientVersion_Result": {
       "name": "Web3ClientVersionResult",
       "shape": {
         "type": "alias",
@@ -8424,7 +8462,7 @@
         }
       }
     },
-    "w_e_b_3___s_h_a_3_Result": {
+    "web3_sha3_Result": {
       "name": "Web3Sha3Result",
       "shape": {
         "type": "alias",

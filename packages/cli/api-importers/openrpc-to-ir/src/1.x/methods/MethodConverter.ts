@@ -82,7 +82,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             }
             const schemaId = [this.method.name, "Param", resolvedParam.name].join("_");
             const parameterSchemaConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
-                breadcrumbs: [...this.breadcrumbs, `params[${index}]`],
+                breadcrumbs: [this.method.name, "Param", resolvedParam.name],
                 schemaIdOverride: schemaId,
                 context: this.context,
                 schemaOrReference: resolvedParam.schema as OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
@@ -123,7 +123,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                     context: this.context,
                     schemaOrReference: resolvedResult.schema as OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
                 });
-                const schemaId = [...this.method.name, "Result"].join("_");
+                const schemaId = [this.method.name, "Result"].join("_");
                 const convertedResultSchema = resultSchemaConverter.convert();
                 if (convertedResultSchema != null) {
                     jsonResponseBody = {

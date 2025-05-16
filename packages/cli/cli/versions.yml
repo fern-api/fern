@@ -1,5 +1,14 @@
 - changelogEntry:
     - summary: |
+        Fix OpenRPC converter to use proper breadcrumbs when generating request and response schemas. 
+        This ensures that schemas with the same name but different contexts (such as parameters and results) 
+        don't overwrite each other during conversion, maintaining the integrity of the API definition.
+      type: fix
+  irVersion: 57
+  version: 0.61.18
+
+- changelogEntry:
+    - summary: |
         Add support for preserving `maxLines` and `focus` attributes when using `<Code src="..." />` components in docs. 
         These attributes are now properly carried over to the generated code blocks, allowing you to control 
         the display of referenced code snippets with features like line limits and syntax highlighting focus.
