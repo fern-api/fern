@@ -281,6 +281,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_app:GetAppResponse"
             },
             "shape": {
@@ -349,6 +350,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                                 }
                             }
                         },
+                        "displayName": null,
                         "typeId": "type_commons:Deployment"
                     }
                 ],
@@ -485,6 +487,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                                     }
                                 }
                             },
+                            "displayName": null,
                             "typeId": "type_commons:AppId",
                             "default": null,
                             "inline": null
@@ -621,7 +624,8 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                                                     "unsafeName": "AppId",
                                                     "safeName": "AppId"
                                                 }
-                                            }
+                                            },
+                                            "displayName": null
                                         },
                                         "shape": {
                                             "type": "alias",
@@ -704,6 +708,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_commons:Deployment"
                                 }
                             },
@@ -805,6 +810,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_app:GetAppResponse"
                                 }
                             }
@@ -887,6 +893,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_commons:AppId"
             },
             "shape": {
@@ -1030,6 +1037,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_commons:Deployment"
             },
             "shape": {
@@ -1123,6 +1131,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                                     }
                                 }
                             },
+                            "displayName": null,
                             "typeId": "type_commons:AppId",
                             "default": null,
                             "inline": null
@@ -10491,6 +10500,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_nested:Response"
             },
             "shape": {
@@ -10603,6 +10613,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                     }
                                                 }
                                             },
+                                            "displayName": null,
                                             "typeId": "type_nested:Product",
                                             "default": null,
                                             "inline": null
@@ -10702,6 +10713,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_nested:Product"
             },
             "shape": {
@@ -10829,6 +10841,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_nested:StringAlias"
             },
             "shape": {
@@ -11082,6 +11095,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_nested:Response",
                                     "default": null,
                                     "inline": null
@@ -11176,7 +11190,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                             "unsafeName": "Response",
                                                             "safeName": "Response"
                                                         }
-                                                    }
+                                                    },
+                                                    "displayName": null
                                                 },
                                                 "shape": {
                                                     "type": "object",
@@ -11294,7 +11309,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                                                                 "unsafeName": "Product",
                                                                                                                 "safeName": "Product"
                                                                                                             }
-                                                                                                        }
+                                                                                                        },
+                                                                                                        "displayName": null
                                                                                                     },
                                                                                                     "shape": {
                                                                                                         "type": "object",
@@ -11419,7 +11435,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                                                                             "unsafeName": "Product",
                                                                                                                             "safeName": "Product"
                                                                                                                         }
-                                                                                                                    }
+                                                                                                                    },
+                                                                                                                    "displayName": null
                                                                                                                 }
                                                                                                             }
                                                                                                         ]
@@ -11511,6 +11528,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                                                 }
                                                                                             }
                                                                                         },
+                                                                                        "displayName": null,
                                                                                         "typeId": "type_nested:Product",
                                                                                         "default": null,
                                                                                         "inline": null
@@ -11607,6 +11625,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                                             }
                                                                                         }
                                                                                     },
+                                                                                    "displayName": null,
                                                                                     "typeId": "type_nested:Product",
                                                                                     "default": null,
                                                                                     "inline": null
@@ -11689,7 +11708,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                         "unsafeName": "Response",
                                                                         "safeName": "Response"
                                                                     }
-                                                                }
+                                                                },
+                                                                "displayName": null
                                                             }
                                                         }
                                                     ]
@@ -11718,7 +11738,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "36988529",
+                                "id": "3b66328b",
                                 "url": "/nested",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -11824,6 +11844,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                         }
                                                                     }
                                                                 },
+                                                                "displayName": null,
                                                                 "typeId": "type_nested:Response"
                                                             },
                                                             "value": {
@@ -11942,6 +11963,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                                                                             }
                                                                                                                         }
                                                                                                                     },
+                                                                                                                    "displayName": null,
                                                                                                                     "typeId": "type_nested:Product"
                                                                                                                 },
                                                                                                                 "value": {
@@ -12035,6 +12057,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                                                                 }
                                                                                                             }
                                                                                                         },
+                                                                                                        "displayName": null,
                                                                                                         "typeId": "type_nested:Product"
                                                                                                     }
                                                                                                 },
@@ -12121,6 +12144,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                                                 }
                                                                                             }
                                                                                         },
+                                                                                        "displayName": null,
                                                                                         "typeId": "type_nested:Product",
                                                                                         "default": null,
                                                                                         "inline": null
@@ -12214,6 +12238,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                                                             }
                                                                                         }
                                                                                     },
+                                                                                    "displayName": null,
                                                                                     "typeId": "type_nested:Product",
                                                                                     "default": null,
                                                                                     "inline": null
@@ -12296,6 +12321,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                                             }
                                                         }
                                                     },
+                                                    "displayName": null,
                                                     "typeId": "type_nested:Response"
                                                 }
                                             },
@@ -12955,6 +12981,7 @@ exports[`ir > {"name":"packages"} 1`] = `
                     "packagePath": [],
                     "file": null
                 },
+                "displayName": null,
                 "typeId": "type_:RootString"
             },
             "shape": {
@@ -13061,6 +13088,7 @@ exports[`ir > {"name":"packages"} 1`] = `
                     ],
                     "file": null
                 },
+                "displayName": null,
                 "typeId": "type_package:PackageString"
             },
             "shape": {
@@ -13165,6 +13193,7 @@ exports[`ir > {"name":"packages"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_importer:Foo"
             },
             "shape": {
@@ -13220,6 +13249,7 @@ exports[`ir > {"name":"packages"} 1`] = `
                                 "packagePath": [],
                                 "file": null
                             },
+                            "displayName": null,
                             "typeId": "type_:RootString",
                             "default": null,
                             "inline": null
@@ -13321,6 +13351,7 @@ exports[`ir > {"name":"packages"} 1`] = `
                                 ],
                                 "file": null
                             },
+                            "displayName": null,
                             "typeId": "type_package:PackageString",
                             "default": null,
                             "inline": null
@@ -13456,6 +13487,7 @@ exports[`ir > {"name":"packages"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_package/a:A"
             },
             "shape": {
@@ -14626,6 +14658,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_service:WithDocs"
             },
             "shape": {
@@ -14755,6 +14788,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_service:Movie"
             },
             "shape": {
@@ -14884,6 +14918,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_service:Response"
             },
             "shape": {
@@ -14952,6 +14987,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                 }
                             }
                         },
+                        "displayName": null,
                         "typeId": "type_service:WithDocs"
                     }
                 ],
@@ -15043,6 +15079,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                     }
                                 }
                             },
+                            "displayName": null,
                             "typeId": "type_service:Movie",
                             "default": null,
                             "inline": null
@@ -15349,6 +15386,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_service:Response",
                                     "default": null,
                                     "inline": null
@@ -15440,6 +15478,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                                 }
                                             }
                                         },
+                                        "displayName": null,
                                         "typeId": "type_service:Movie",
                                         "default": null,
                                         "inline": null
@@ -15463,7 +15502,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "dd37bb60",
+                                "id": "8b2c487d",
                                 "url": "/movie",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -15581,6 +15620,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                                                         }
                                                                     }
                                                                 },
+                                                                "displayName": null,
                                                                 "typeId": "type_service:WithDocs"
                                                             },
                                                             "value": {
@@ -15682,6 +15722,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                                                         }
                                                                     }
                                                                 },
+                                                                "displayName": null,
                                                                 "typeId": "type_service:Response"
                                                             },
                                                             "value": {
@@ -15776,6 +15817,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                                                                             }
                                                                                         }
                                                                                     },
+                                                                                    "displayName": null,
                                                                                     "typeId": "type_service:Movie"
                                                                                 },
                                                                                 "value": {
@@ -15856,6 +15898,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                                                                 }
                                                                             }
                                                                         },
+                                                                        "displayName": null,
                                                                         "typeId": "type_service:Movie"
                                                                     }
                                                                 },
@@ -15929,6 +15972,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                                             }
                                                         }
                                                     },
+                                                    "displayName": null,
                                                     "typeId": "type_service:Response"
                                                 }
                                             },
@@ -16119,6 +16163,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_service:Response",
                                     "default": null,
                                     "inline": null
@@ -16176,7 +16221,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "dd37bb60",
+                                "id": "8b2c487d",
                                 "url": "/movie",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -16294,6 +16339,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                                                         }
                                                                     }
                                                                 },
+                                                                "displayName": null,
                                                                 "typeId": "type_service:WithDocs"
                                                             },
                                                             "value": {
@@ -16395,6 +16441,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                                                         }
                                                                     }
                                                                 },
+                                                                "displayName": null,
                                                                 "typeId": "type_service:Response"
                                                             },
                                                             "value": {
@@ -16489,6 +16536,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                                                                             }
                                                                                         }
                                                                                     },
+                                                                                    "displayName": null,
                                                                                     "typeId": "type_service:Movie"
                                                                                 },
                                                                                 "value": {
@@ -16569,6 +16617,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                                                                 }
                                                                             }
                                                                         },
+                                                                        "displayName": null,
                                                                         "typeId": "type_service:Movie"
                                                                     }
                                                                 },
@@ -16642,6 +16691,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                                             }
                                                         }
                                                     },
+                                                    "displayName": null,
                                                     "typeId": "type_service:Response"
                                                 }
                                             },
@@ -17479,6 +17529,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_commons:Internal"
             },
             "shape": {
@@ -17608,6 +17659,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_imdb:UnknownRequest"
             },
             "shape": {
@@ -17975,6 +18027,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                                     }
                                 }
                             },
+                            "displayName": null,
                             "typeId": "type_imdb:UnknownRequest",
                             "default": null,
                             "inline": null
@@ -18052,6 +18105,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_imdb:UnknownRequest",
                                     "default": null,
                                     "inline": null
@@ -18178,7 +18232,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "87ad9f7e",
+                                "id": "f7fc1306",
                                 "url": "/test/rootPathParam/movies",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -18314,6 +18368,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                                                                 }
                                                             }
                                                         },
+                                                        "displayName": null,
                                                         "typeId": "type_imdb:UnknownRequest"
                                                     },
                                                     "value": {
@@ -18393,6 +18448,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                                                     }
                                                 }
                                             },
+                                            "displayName": null,
                                             "typeId": "type_imdb:UnknownRequest"
                                         }
                                     },
@@ -19261,6 +19317,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_commons:Type"
             },
             "shape": {
@@ -19390,6 +19447,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_imdb:MovieId"
             },
             "shape": {
@@ -19535,6 +19593,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_imdb:CreateMovieRequest"
             },
             "shape": {
@@ -19763,6 +19822,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_imdb:CreateMovieRequest"
                                 }
                             },
@@ -19908,6 +19968,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_imdb:CreateMovieRequest"
                                 }
                             }
@@ -20240,6 +20301,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                     }
                                 }
                             },
+                            "displayName": null,
                             "typeId": "type_imdb:CreateMovieRequest",
                             "default": null,
                             "inline": null
@@ -20317,6 +20379,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_imdb:CreateMovieRequest",
                                     "default": null,
                                     "inline": null
@@ -20416,6 +20479,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_imdb:MovieId",
                                     "default": null,
                                     "inline": null
@@ -20609,7 +20673,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                     "unsafeName": "CreateMovieRequest",
                                                     "safeName": "CreateMovieRequest"
                                                 }
-                                            }
+                                            },
+                                            "displayName": null
                                         },
                                         "shape": {
                                             "type": "object",
@@ -20712,7 +20777,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                                 "unsafeName": "CreateMovieRequest",
                                                                 "safeName": "CreateMovieRequest"
                                                             }
-                                                        }
+                                                        },
+                                                        "displayName": null
                                                     }
                                                 },
                                                 {
@@ -20868,7 +20934,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                                 "unsafeName": "CreateMovieRequest",
                                                                 "safeName": "CreateMovieRequest"
                                                             }
-                                                        }
+                                                        },
+                                                        "displayName": null
                                                     }
                                                 }
                                             ]
@@ -20954,7 +21021,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                             "unsafeName": "MovieId",
                                                             "safeName": "MovieId"
                                                         }
-                                                    }
+                                                    },
+                                                    "displayName": null
                                                 },
                                                 "shape": {
                                                     "type": "alias",
@@ -21092,7 +21160,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                     "unsafeName": "CreateMovieRequest",
                                                     "safeName": "CreateMovieRequest"
                                                 }
-                                            }
+                                            },
+                                            "displayName": null
                                         },
                                         "shape": {
                                             "type": "object",
@@ -21195,7 +21264,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                                 "unsafeName": "CreateMovieRequest",
                                                                 "safeName": "CreateMovieRequest"
                                                             }
-                                                        }
+                                                        },
+                                                        "displayName": null
                                                     }
                                                 },
                                                 {
@@ -21340,7 +21410,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                                 "unsafeName": "CreateMovieRequest",
                                                                 "safeName": "CreateMovieRequest"
                                                             }
-                                                        }
+                                                        },
+                                                        "displayName": null
                                                     }
                                                 }
                                             ]
@@ -21425,7 +21496,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                             "unsafeName": "MovieId",
                                                             "safeName": "MovieId"
                                                         }
-                                                    }
+                                                    },
+                                                    "displayName": null
                                                 },
                                                 "shape": {
                                                     "type": "alias",
@@ -21455,7 +21527,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "a8e31e71",
+                                "id": "25a62d07",
                                 "url": "/test/rootPathParam/movies",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -21591,6 +21663,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                                 }
                                                             }
                                                         },
+                                                        "displayName": null,
                                                         "typeId": "type_imdb:CreateMovieRequest"
                                                     },
                                                     "value": {
@@ -21692,6 +21765,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                                 }
                                                             }
                                                         },
+                                                        "displayName": null,
                                                         "typeId": "type_imdb:CreateMovieRequest"
                                                     },
                                                     "value": {
@@ -21805,6 +21879,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                     }
                                                 }
                                             },
+                                            "displayName": null,
                                             "typeId": "type_imdb:CreateMovieRequest"
                                         }
                                     },
@@ -21901,6 +21976,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                                             }
                                                         }
                                                     },
+                                                    "displayName": null,
                                                     "typeId": "type_imdb:MovieId"
                                                 }
                                             },
@@ -22854,6 +22930,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_commons:Internal"
             },
             "shape": {
@@ -22983,6 +23060,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_commons:Type"
             },
             "shape": {
@@ -23112,6 +23190,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_commons:UndiscriminatedUnion"
             },
             "shape": {
@@ -23270,6 +23349,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_director:Director"
             },
             "shape": {
@@ -23405,6 +23485,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     }
                                 }
                             },
+                            "displayName": null,
                             "typeId": "type_director:Age",
                             "default": null,
                             "inline": null
@@ -23551,6 +23632,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_director:Director"
                                 }
                             },
@@ -23643,7 +23725,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                     "unsafeName": "Age",
                                                     "safeName": "Age"
                                                 }
-                                            }
+                                            },
+                                            "displayName": null
                                         },
                                         "shape": {
                                             "type": "alias",
@@ -23724,6 +23807,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_director:Director"
                                 }
                             }
@@ -23806,6 +23890,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_director:Age"
             },
             "shape": {
@@ -23947,6 +24032,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_director:LiteralBoolean"
             },
             "shape": {
@@ -24049,6 +24135,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_director:LiteralString"
             },
             "shape": {
@@ -24151,6 +24238,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_imdb:CurrencyAmount"
             },
             "shape": {
@@ -24276,6 +24364,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_imdb:MovieId"
             },
             "shape": {
@@ -24421,6 +24510,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_imdb:ActorId"
             },
             "shape": {
@@ -24525,6 +24615,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_imdb:Movie"
             },
             "shape": {
@@ -24618,6 +24709,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     }
                                 }
                             },
+                            "displayName": null,
                             "typeId": "type_imdb:MovieId",
                             "default": null,
                             "inline": null
@@ -24821,7 +24913,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                     "unsafeName": "MovieId",
                                                     "safeName": "MovieId"
                                                 }
-                                            }
+                                            },
+                                            "displayName": null
                                         },
                                         "shape": {
                                             "type": "alias",
@@ -24904,6 +24997,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_imdb:Movie"
                                 }
                             },
@@ -25005,6 +25099,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_imdb:Movie"
                                 }
                             },
@@ -25104,6 +25199,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_imdb:Movie"
                                 }
                             }
@@ -25187,6 +25283,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_imdb:CreateMovieRequest"
             },
             "shape": {
@@ -25415,6 +25512,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_imdb:CreateMovieRequest"
                                 }
                             },
@@ -25560,6 +25658,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_imdb:CreateMovieRequest"
                                 }
                             }
@@ -25646,6 +25745,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_imdb:DirectorWrapper"
             },
             "shape": {
@@ -25739,6 +25839,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     }
                                 }
                             },
+                            "displayName": null,
                             "typeId": "type_director:Director",
                             "default": null,
                             "inline": null
@@ -25859,7 +25960,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                     "unsafeName": "Director",
                                                     "safeName": "Director"
                                                 }
-                                            }
+                                            },
+                                            "displayName": null
                                         },
                                         "shape": {
                                             "type": "object",
@@ -25962,7 +26064,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                 "unsafeName": "Director",
                                                                 "safeName": "Director"
                                                             }
-                                                        }
+                                                        },
+                                                        "displayName": null
                                                     }
                                                 },
                                                 {
@@ -26054,7 +26157,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                         "unsafeName": "Age",
                                                                         "safeName": "Age"
                                                                     }
-                                                                }
+                                                                },
+                                                                "displayName": null
                                                             },
                                                             "shape": {
                                                                 "type": "alias",
@@ -26135,7 +26239,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                 "unsafeName": "Director",
                                                                 "safeName": "Director"
                                                             }
-                                                        }
+                                                        },
+                                                        "displayName": null
                                                     }
                                                 }
                                             ]
@@ -26209,6 +26314,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_imdb:DirectorWrapper"
                                 }
                             }
@@ -26293,6 +26399,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_imdb:EmptyObject"
             },
             "shape": {
@@ -26379,6 +26486,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_imdb:Person"
             },
             "shape": {
@@ -26519,6 +26627,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         }
                                     }
                                 },
+                                "displayName": null,
                                 "typeId": "type_imdb:ActorId",
                                 "default": null,
                                 "inline": null
@@ -26615,6 +26724,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     }
                                 }
                             },
+                            "displayName": null,
                             "typeId": "type_director:Director"
                         },
                         "displayName": null,
@@ -26708,6 +26818,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     }
                                 }
                             },
+                            "displayName": null,
                             "typeId": "type_imdb:EmptyObject"
                         },
                         "displayName": null,
@@ -26801,6 +26912,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     }
                                 }
                             },
+                            "displayName": null,
                             "typeId": "type_imdb:EmptyObject"
                         },
                         "displayName": null,
@@ -26955,7 +27067,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                 "unsafeName": "ActorId",
                                                 "safeName": "ActorId"
                                             }
-                                        }
+                                        },
+                                        "displayName": null
                                     },
                                     "shape": {
                                         "type": "alias",
@@ -27135,7 +27248,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                         "unsafeName": "Director",
                                                         "safeName": "Director"
                                                     }
-                                                }
+                                                },
+                                                "displayName": null
                                             }
                                         },
                                         {
@@ -27227,7 +27341,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                 "unsafeName": "Age",
                                                                 "safeName": "Age"
                                                             }
-                                                        }
+                                                        },
+                                                        "displayName": null
                                                     },
                                                     "shape": {
                                                         "type": "alias",
@@ -27308,7 +27423,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                         "unsafeName": "Director",
                                                         "safeName": "Director"
                                                     }
-                                                }
+                                                },
+                                                "displayName": null
                                             }
                                         }
                                     ]
@@ -27457,6 +27573,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_imdb:UnknownRequest"
             },
             "shape": {
@@ -27578,6 +27695,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_imdb:RecursiveType"
             },
             "shape": {
@@ -27646,6 +27764,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 }
                             }
                         },
+                        "displayName": null,
                         "typeId": "type_imdb:CreateMovieRequest"
                     }
                 ],
@@ -27741,6 +27860,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_imdb:RecursiveType",
                                     "default": null,
                                     "inline": null
@@ -27963,6 +28083,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_imdb:CreateMovieRequest"
                                 }
                             },
@@ -28108,6 +28229,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_imdb:CreateMovieRequest"
                                 }
                             },
@@ -28206,7 +28328,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                     "unsafeName": "RecursiveType",
                                                                     "safeName": "RecursiveType"
                                                                 }
-                                                            }
+                                                            },
+                                                            "displayName": null
                                                         },
                                                         "shape": {
                                                             "type": "object",
@@ -28309,6 +28432,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                                 }
                                                                             }
                                                                         },
+                                                                        "displayName": null,
                                                                         "typeId": "type_imdb:CreateMovieRequest"
                                                                     }
                                                                 },
@@ -28443,6 +28567,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                                 }
                                                                             }
                                                                         },
+                                                                        "displayName": null,
                                                                         "typeId": "type_imdb:CreateMovieRequest"
                                                                     }
                                                                 },
@@ -28539,6 +28664,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                                             }
                                                                                         }
                                                                                     },
+                                                                                    "displayName": null,
                                                                                     "typeId": "type_imdb:RecursiveType",
                                                                                     "default": null,
                                                                                     "inline": null
@@ -28610,7 +28736,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                                 "unsafeName": "RecursiveType",
                                                                                 "safeName": "RecursiveType"
                                                                             }
-                                                                        }
+                                                                        },
+                                                                        "displayName": null
                                                                     }
                                                                 }
                                                             ]
@@ -28691,7 +28818,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                     "unsafeName": "RecursiveType",
                                                                     "safeName": "RecursiveType"
                                                                 }
-                                                            }
+                                                            },
+                                                            "displayName": null
                                                         },
                                                         "shape": {
                                                             "type": "object",
@@ -28794,6 +28922,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                                 }
                                                                             }
                                                                         },
+                                                                        "displayName": null,
                                                                         "typeId": "type_imdb:CreateMovieRequest"
                                                                     }
                                                                 },
@@ -28904,6 +29033,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                                 }
                                                                             }
                                                                         },
+                                                                        "displayName": null,
                                                                         "typeId": "type_imdb:CreateMovieRequest"
                                                                     }
                                                                 },
@@ -29000,6 +29130,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                                             }
                                                                                         }
                                                                                     },
+                                                                                    "displayName": null,
                                                                                     "typeId": "type_imdb:RecursiveType",
                                                                                     "default": null,
                                                                                     "inline": null
@@ -29071,7 +29202,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                                 "unsafeName": "RecursiveType",
                                                                                 "safeName": "RecursiveType"
                                                                             }
-                                                                        }
+                                                                        },
+                                                                        "displayName": null
                                                                     }
                                                                 }
                                                             ]
@@ -29148,6 +29280,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                         }
                                                     }
                                                 },
+                                                "displayName": null,
                                                 "typeId": "type_imdb:RecursiveType",
                                                 "default": null,
                                                 "inline": null
@@ -29233,6 +29366,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_imdb:RecursiveType"
                                 }
                             }
@@ -29366,6 +29500,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_imdb:CreateMovieRequest"
                                 }
                             },
@@ -29511,6 +29646,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_imdb:CreateMovieRequest"
                                 }
                             },
@@ -29607,6 +29743,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                         }
                                                     }
                                                 },
+                                                "displayName": null,
                                                 "typeId": "type_imdb:RecursiveType",
                                                 "default": null,
                                                 "inline": null
@@ -29678,6 +29815,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_imdb:RecursiveType"
                                 }
                             }
@@ -30116,6 +30254,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     }
                                 }
                             },
+                            "displayName": null,
                             "typeId": "type_imdb:UnknownRequest",
                             "default": null,
                             "inline": null
@@ -30193,6 +30332,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_imdb:UnknownRequest",
                                     "default": null,
                                     "inline": null
@@ -30319,7 +30459,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "87ad9f7e",
+                                "id": "f7fc1306",
                                 "url": "/test/rootPathParam/movies",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -30455,6 +30595,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                 }
                                                             }
                                                         },
+                                                        "displayName": null,
                                                         "typeId": "type_imdb:UnknownRequest"
                                                     },
                                                     "value": {
@@ -30534,6 +30675,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                     }
                                                 }
                                             },
+                                            "displayName": null,
                                             "typeId": "type_imdb:UnknownRequest"
                                         }
                                     },
@@ -30722,6 +30864,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     }
                                 }
                             },
+                            "displayName": null,
                             "typeId": "type_imdb:CreateMovieRequest",
                             "default": null,
                             "inline": null
@@ -30799,6 +30942,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_imdb:CreateMovieRequest",
                                     "default": null,
                                     "inline": null
@@ -30898,6 +31042,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_imdb:MovieId",
                                     "default": null,
                                     "inline": null
@@ -31091,7 +31236,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                     "unsafeName": "CreateMovieRequest",
                                                     "safeName": "CreateMovieRequest"
                                                 }
-                                            }
+                                            },
+                                            "displayName": null
                                         },
                                         "shape": {
                                             "type": "object",
@@ -31194,7 +31340,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                 "unsafeName": "CreateMovieRequest",
                                                                 "safeName": "CreateMovieRequest"
                                                             }
-                                                        }
+                                                        },
+                                                        "displayName": null
                                                     }
                                                 },
                                                 {
@@ -31350,7 +31497,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                 "unsafeName": "CreateMovieRequest",
                                                                 "safeName": "CreateMovieRequest"
                                                             }
-                                                        }
+                                                        },
+                                                        "displayName": null
                                                     }
                                                 }
                                             ]
@@ -31436,7 +31584,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                             "unsafeName": "MovieId",
                                                             "safeName": "MovieId"
                                                         }
-                                                    }
+                                                    },
+                                                    "displayName": null
                                                 },
                                                 "shape": {
                                                     "type": "alias",
@@ -31574,7 +31723,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                     "unsafeName": "CreateMovieRequest",
                                                     "safeName": "CreateMovieRequest"
                                                 }
-                                            }
+                                            },
+                                            "displayName": null
                                         },
                                         "shape": {
                                             "type": "object",
@@ -31677,7 +31827,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                 "unsafeName": "CreateMovieRequest",
                                                                 "safeName": "CreateMovieRequest"
                                                             }
-                                                        }
+                                                        },
+                                                        "displayName": null
                                                     }
                                                 },
                                                 {
@@ -31822,7 +31973,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                 "unsafeName": "CreateMovieRequest",
                                                                 "safeName": "CreateMovieRequest"
                                                             }
-                                                        }
+                                                        },
+                                                        "displayName": null
                                                     }
                                                 }
                                             ]
@@ -31907,7 +32059,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                             "unsafeName": "MovieId",
                                                             "safeName": "MovieId"
                                                         }
-                                                    }
+                                                    },
+                                                    "displayName": null
                                                 },
                                                 "shape": {
                                                     "type": "alias",
@@ -31937,7 +32090,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "a8e31e71",
+                                "id": "25a62d07",
                                 "url": "/test/rootPathParam/movies",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -32073,6 +32226,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                 }
                                                             }
                                                         },
+                                                        "displayName": null,
                                                         "typeId": "type_imdb:CreateMovieRequest"
                                                     },
                                                     "value": {
@@ -32174,6 +32328,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                 }
                                                             }
                                                         },
+                                                        "displayName": null,
                                                         "typeId": "type_imdb:CreateMovieRequest"
                                                     },
                                                     "value": {
@@ -32287,6 +32442,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                     }
                                                 }
                                             },
+                                            "displayName": null,
                                             "typeId": "type_imdb:CreateMovieRequest"
                                         }
                                     },
@@ -32383,6 +32539,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                             }
                                                         }
                                                     },
+                                                    "displayName": null,
                                                     "typeId": "type_imdb:MovieId"
                                                 }
                                             },
@@ -32535,6 +32692,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         }
                                     }
                                 },
+                                "displayName": null,
                                 "typeId": "type_imdb:MovieId",
                                 "default": null,
                                 "inline": null
@@ -32672,6 +32830,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         }
                                     }
                                 },
+                                "displayName": null,
                                 "typeId": "type_imdb:MovieId",
                                 "default": null,
                                 "inline": null
@@ -32865,6 +33024,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                             }
                                         }
                                     },
+                                    "displayName": null,
                                     "typeId": "type_imdb:Movie",
                                     "default": null,
                                     "inline": null
@@ -33141,7 +33301,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                             "unsafeName": "MovieId",
                                                             "safeName": "MovieId"
                                                         }
-                                                    }
+                                                    },
+                                                    "displayName": null
                                                 },
                                                 "shape": {
                                                     "type": "alias",
@@ -33278,7 +33439,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                             "unsafeName": "Movie",
                                                             "safeName": "Movie"
                                                         }
-                                                    }
+                                                    },
+                                                    "displayName": null
                                                 },
                                                 "shape": {
                                                     "type": "object",
@@ -33372,7 +33534,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                                 "unsafeName": "MovieId",
                                                                                 "safeName": "MovieId"
                                                                             }
-                                                                        }
+                                                                        },
+                                                                        "displayName": null
                                                                     },
                                                                     "shape": {
                                                                         "type": "alias",
@@ -33455,7 +33618,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                         "unsafeName": "Movie",
                                                                         "safeName": "Movie"
                                                                     }
-                                                                }
+                                                                },
+                                                                "displayName": null
                                                             }
                                                         },
                                                         {
@@ -33556,7 +33720,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                         "unsafeName": "Movie",
                                                                         "safeName": "Movie"
                                                                     }
-                                                                }
+                                                                },
+                                                                "displayName": null
                                                             }
                                                         },
                                                         {
@@ -33655,7 +33820,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                         "unsafeName": "Movie",
                                                                         "safeName": "Movie"
                                                                     }
-                                                                }
+                                                                },
+                                                                "displayName": null
                                                             }
                                                         }
                                                     ]
@@ -33800,7 +33966,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                             "unsafeName": "MovieId",
                                                             "safeName": "MovieId"
                                                         }
-                                                    }
+                                                    },
+                                                    "displayName": null
                                                 },
                                                 "shape": {
                                                     "type": "alias",
@@ -33955,7 +34122,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "bfedede4",
+                                "id": "863fe7b6",
                                 "url": "/test/rootPathParam/movies/movieId",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -34061,6 +34228,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                             }
                                                         }
                                                     },
+                                                    "displayName": null,
                                                     "typeId": "type_imdb:MovieId"
                                                 }
                                             },
@@ -34243,6 +34411,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                         }
                                                                     }
                                                                 },
+                                                                "displayName": null,
                                                                 "typeId": "type_imdb:Movie"
                                                             },
                                                             "value": {
@@ -34326,6 +34495,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                                 }
                                                                             }
                                                                         },
+                                                                        "displayName": null,
                                                                         "typeId": "type_imdb:MovieId"
                                                                     }
                                                                 },
@@ -34418,6 +34588,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                         }
                                                                     }
                                                                 },
+                                                                "displayName": null,
                                                                 "typeId": "type_imdb:Movie"
                                                             },
                                                             "value": {
@@ -34519,6 +34690,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                                         }
                                                                     }
                                                                 },
+                                                                "displayName": null,
                                                                 "typeId": "type_imdb:Movie"
                                                             },
                                                             "value": {
@@ -34597,6 +34769,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                             }
                                                         }
                                                     },
+                                                    "displayName": null,
                                                     "typeId": "type_imdb:Movie"
                                                 }
                                             },
@@ -34753,6 +34926,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         }
                                     }
                                 },
+                                "displayName": null,
                                 "typeId": "type_imdb:MovieId",
                                 "default": null,
                                 "inline": null
@@ -34890,6 +35064,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         }
                                     }
                                 },
+                                "displayName": null,
                                 "typeId": "type_imdb:MovieId",
                                 "default": null,
                                 "inline": null
@@ -34985,7 +35160,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "65f29a80",
+                                "id": "11fbe0a1",
                                 "url": "/test/rootPathParam/movies/movieId",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -35091,6 +35266,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                             }
                                                         }
                                                     },
+                                                    "displayName": null,
                                                     "typeId": "type_imdb:MovieId"
                                                 }
                                             },
@@ -38927,6 +39103,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_commons:StringAlias"
             },
             "shape": {
@@ -39165,6 +39342,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                                         }
                                     }
                                 },
+                                "displayName": null,
                                 "typeId": "type_commons:StringAlias",
                                 "default": null,
                                 "inline": null
@@ -39263,6 +39441,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                                         }
                                     }
                                 },
+                                "displayName": null,
                                 "typeId": "type_commons:StringAlias",
                                 "default": null,
                                 "inline": null
@@ -39359,6 +39538,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                                         }
                                     }
                                 },
+                                "displayName": null,
                                 "typeId": "type_commons:StringAlias",
                                 "default": null,
                                 "inline": null
@@ -39385,7 +39565,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "ffd72d9c",
+                                "id": "6c0225ea",
                                 "url": "/root/movies/foo",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -39491,6 +39671,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                                                             }
                                                         }
                                                     },
+                                                    "displayName": null,
                                                     "typeId": "type_commons:StringAlias"
                                                 }
                                             },
@@ -39603,6 +39784,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                                                             }
                                                         }
                                                     },
+                                                    "displayName": null,
                                                     "typeId": "type_commons:StringAlias"
                                                 }
                                             },
@@ -39754,6 +39936,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_commons:StringAlias",
                 "default": null,
                 "inline": null
@@ -39853,6 +40036,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_commons:StringAlias",
                 "default": null,
                 "inline": null

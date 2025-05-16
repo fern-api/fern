@@ -1827,7 +1827,7 @@
     },
     "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatement1": {
       "description": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
-      "name": "ParameterizedQuery",
+      "name": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatement1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2007,7 +2007,7 @@
     },
     "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItems1": {
       "description": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
-      "name": "ParameterizedQuery",
+      "name": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItems1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2288,7 +2288,7 @@
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaFrom1": {
       "description": "An email address and name",
-      "name": "EmailNameAndAddress",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaFrom1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2343,7 +2343,7 @@
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaTo01": {
       "description": "An email address and name",
-      "name": "EmailNameAndAddress",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo01",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2373,7 +2373,7 @@
       }
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaTo0": {
-      "name": "EmailData",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo0",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -2398,7 +2398,7 @@
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaToOneOf1Items1": {
       "description": "An email address and name",
-      "name": "EmailNameAndAddress",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaToOneOf1Items1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2452,7 +2452,7 @@
       }
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaTo1": {
-      "name": "EmailDataList",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo1",
       "shape": {
         "type": "alias",
         "value": {
@@ -2489,7 +2489,7 @@
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaCc01": {
       "description": "An email address and name",
-      "name": "EmailNameAndAddress",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc01",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2519,7 +2519,7 @@
       }
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaCc0": {
-      "name": "EmailData",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc0",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -2544,7 +2544,7 @@
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaCcOneOf1Items1": {
       "description": "An email address and name",
-      "name": "EmailNameAndAddress",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaCcOneOf1Items1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2598,7 +2598,7 @@
       }
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaCc1": {
-      "name": "EmailDataList",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc1",
       "shape": {
         "type": "alias",
         "value": {
@@ -2635,7 +2635,7 @@
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc01": {
       "description": "An email address and name",
-      "name": "EmailNameAndAddress",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc01",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2665,7 +2665,7 @@
       }
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc0": {
-      "name": "EmailData",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc0",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -2690,7 +2690,7 @@
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaBccOneOf1Items1": {
       "description": "An email address and name",
-      "name": "EmailNameAndAddress",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaBccOneOf1Items1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2744,7 +2744,7 @@
       }
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc1": {
-      "name": "EmailDataList",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc1",
       "shape": {
         "type": "alias",
         "value": {
@@ -2844,7 +2844,7 @@
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList0": {
       "description": "An email address and name",
-      "name": "EmailNameAndAddress",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2905,7 +2905,7 @@
       }
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList1": {
-      "name": "EmailList",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList1",
       "shape": {
         "type": "alias",
         "value": {
