@@ -51774,7 +51774,6 @@
           "safeName": "Chat"
         }
       },
-      "displayName": "/chat",
       "baseUrl": "prod",
       "path": {
         "head": "/chat",
