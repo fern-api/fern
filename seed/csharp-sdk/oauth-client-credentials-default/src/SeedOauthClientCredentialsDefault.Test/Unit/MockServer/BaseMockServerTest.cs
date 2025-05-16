@@ -19,8 +19,8 @@ public class BaseMockServerTest
     {
         const string requestJson = """
             {
-              "client_id": "client_id",
-              "client_secret": "client_secret",
+              "client_id": "CLIENT_ID",
+              "client_secret": "CLIENT_SECRET",
               "grant_type": "client_credentials"
             }
             """;

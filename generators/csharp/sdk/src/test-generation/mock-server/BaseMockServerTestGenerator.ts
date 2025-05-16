@@ -220,6 +220,24 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
             const response = example?.response;
             return response?.type === "ok" && response.value.type === "body";
         });
+        useableExamples.forEach((example) => {
+            const jsonExample = example.request?.jsonExample as Record<string, unknown> | undefined;
+            if (!jsonExample) {
+                return;
+            }
+            for (const prop in jsonExample) {
+                let value = jsonExample[prop];
+                if (typeof value === "string") {
+                    value = value.toLowerCase();
+                    if (value === "client_id") {
+                        jsonExample[prop] = "CLIENT_ID";
+                    }
+                    if (value === "client_secret") {
+                        jsonExample[prop] = "CLIENT_SECRET";
+                    }
+                }
+            }
+        });
         return csharp.method({
             access: csharp.Access.Private,
             name: MOCK_OAUTH_METHOD_NAME,
