@@ -15,6 +15,44 @@ public class BaseMockServerTest
 
     protected static RequestOptions RequestOptions { get; set; } = new();
 
+    private void MockOAuthEndpoint()
+    {
+        const string requestJson = """
+            {
+              "cid": "cid",
+              "csr": "csr",
+              "scp": "scp",
+              "entity_id": "entity_id",
+              "audience": "https://api.example.com",
+              "grant_type": "client_credentials",
+              "scope": "scope"
+            }
+            """;
+
+        const string mockResponse = """
+            {
+              "access_token": "access_token",
+              "expires_in": 1,
+              "refresh_token": "refresh_token"
+            }
+            """;
+
+        Server
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/token")
+                    .UsingPost()
+                    .WithBodyAsJson(requestJson)
+            )
+            .RespondWith(
+                WireMock
+                    .ResponseBuilders.Response.Create()
+                    .WithStatusCode(200)
+                    .WithBody(mockResponse)
+            );
+    }
+
     [OneTimeSetUp]
     public void GlobalSetup()
     {
@@ -29,6 +67,7 @@ public class BaseMockServerTest
             "CLIENT_SECRET",
             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
+        MockOAuthEndpoint();
     }
 
     [OneTimeTearDown]
