@@ -6,6 +6,12 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+- version: 1.17.4
+  changelogEntry:
+    - summary: Mock the OAuth endpoint for the wire tests.
+      type: fix
+  createdAt: '2025-05-16'
+  irVersion: 57
 - version: 1.17.3
   changelogEntry:
     - summary: |
