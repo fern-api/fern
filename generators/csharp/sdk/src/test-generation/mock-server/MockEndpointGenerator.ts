@@ -32,7 +32,7 @@ export class MockEndpointGenerator {
                     jsonExampleResponse = example.response.value.value?.jsonExample;
                 }
                 const responseBodyType = endpoint.response?.body?.type;
-                // where or not we support this response type in this generator; the example json may
+                // whether or not we support this response type in this generator; the example json may
                 // have a response that we can return, but our generated method actually returns void
                 responseSupported =
                     jsonExampleResponse != null && (responseBodyType === "json" || responseBodyType === "text");
