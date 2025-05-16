@@ -1,6 +1,7 @@
 irVersion: v55
 displayName: TypeScript SDK
 image: fernapi/fern-typescript-node-sdk
+changelogLocation: ../../generators/typescript/sdk/versions.yml
 publish:
   workingDirectory: generators/typescript
   versionSubstitution: "$VERSION"
