@@ -60,6 +60,7 @@
         "variants": [
           {
             "discriminantValue": "request",
+            "displayName": "request",
             "additionalProperties": {
               "extends": [
                 "Request"
@@ -69,6 +70,7 @@
           },
           {
             "discriminantValue": "response",
+            "displayName": "response",
             "additionalProperties": {
               "extends": [
                 "Response"

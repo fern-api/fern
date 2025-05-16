@@ -88,7 +88,7 @@
     },
     "Mammal0": {
       "description": "A pet for sale in the pet store",
-      "name": "a Pet",
+      "name": "Mammal0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -166,7 +166,7 @@
     },
     "Mammal1": {
       "description": "A User who is purchasing from the pet store",
-      "name": "a User",
+      "name": "Mammal1",
       "shape": {
         "type": "object",
         "extends": [],
