@@ -1,6 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { FernIr, HttpEndpoint, HttpEndpointSource } from "@fern-api/ir-sdk";
+import { FernIr, HttpEndpoint, HttpEndpointSource, HttpPath } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
 import { AbstractConverter, ServersConverter } from "@fern-api/v2-importer-commons";
 
@@ -98,7 +98,7 @@ export class OperationConverter extends AbstractOperationConverter {
         const baseUrl = this.getEndpointBaseUrl();
 
         const fernExamples = this.convertExamples({
-            pathHead: path.head,
+            httpPath: path,
             httpMethod,
             baseUrl
         });
@@ -246,11 +246,11 @@ export class OperationConverter extends AbstractOperationConverter {
     }
 
     private convertExamples({
-        pathHead,
+        httpPath,
         httpMethod,
         baseUrl
     }: {
-        pathHead: string;
+        httpPath: HttpPath;
         httpMethod: FernIr.HttpMethod;
         baseUrl: string | undefined;
     }): Record<string, FernIr.V2HttpEndpointExample> {
@@ -272,7 +272,7 @@ export class OperationConverter extends AbstractOperationConverter {
                             docs: undefined,
                             endpoint: {
                                 method: httpMethod,
-                                path: pathHead
+                                path: this.buildExamplePath(httpPath, example["path-parameters"] ?? {})
                             },
                             baseUrl: undefined,
                             environment: baseUrl,
@@ -314,6 +314,18 @@ export class OperationConverter extends AbstractOperationConverter {
             server: serverToUse,
             context: this.context
         });
+    }
+
+    private buildExamplePath(httpPath: HttpPath, pathParameters: Record<string, unknown>): string {
+        return (
+            httpPath.head +
+            httpPath.parts
+                .map((part) => {
+                    const pathParam = pathParameters[part.pathParameter] ?? part.pathParameter;
+                    return `${pathParam}${part.tail}`;
+                })
+                .join("")
+        );
     }
 
     private filterOutTopLevelServers(servers: OpenAPIV3_1.ServerObject[]): OpenAPIV3_1.ServerObject[] {
