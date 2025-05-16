@@ -1,5 +1,14 @@
 - changelogEntry:
     - summary: |
+        Add support for preserving `maxLines` and `focus` attributes when using `<Code src="..." />` components in docs. 
+        These attributes are now properly carried over to the generated code blocks, allowing you to control 
+        the display of referenced code snippets with features like line limits and syntax highlighting focus.
+      type: fix
+  irVersion: 57
+  version: 0.61.17
+
+- changelogEntry:
+    - summary: |
         Fix docs preview server by properly killing the Next.js process on exit and setting 
         a memory limit (--max-old-space-size=2048) to prevent out-of-memory errors during development.
       type: fix
