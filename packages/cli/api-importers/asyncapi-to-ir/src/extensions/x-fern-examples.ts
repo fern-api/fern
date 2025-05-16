@@ -53,7 +53,7 @@ export class FernExamplesExtension extends AbstractExtension<FernExamplesExtensi
         return result.data.map((example) => ({
             summary: example.summary,
             description: example.description,
-            queryParameters: example.queryParameters,
+            queryParameters: example["query-parameters"],
             headers: example.headers,
             messages: example.messages.map((message) => ({
                 type: message.type,

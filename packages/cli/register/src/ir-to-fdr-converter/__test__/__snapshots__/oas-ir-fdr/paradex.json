@@ -12503,7 +12503,7 @@
             "parts": [
               {
                 "type": "literal",
-                "value": ""
+                "value": "/"
               }
             ]
           },
@@ -12537,7 +12537,7 @@
           ],
           "examples": [
             {
-              "path": "",
+              "path": "/",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
@@ -14758,7 +14758,7 @@
             "parts": [
               {
                 "type": "literal",
-                "value": ""
+                "value": "/"
               }
             ]
           },
@@ -14792,7 +14792,7 @@
           ],
           "examples": [
             {
-              "path": "",
+              "path": "/",
               "pathParameters": {
                 "market_symbol": "market_symbol"
               },
@@ -15304,7 +15304,7 @@
             "parts": [
               {
                 "type": "literal",
-                "value": ""
+                "value": "/"
               }
             ]
           },
@@ -15338,7 +15338,7 @@
           ],
           "examples": [
             {
-              "path": "",
+              "path": "/",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
@@ -16647,7 +16647,7 @@
             "parts": [
               {
                 "type": "literal",
-                "value": ""
+                "value": "/"
               }
             ]
           },
@@ -16681,7 +16681,7 @@
           ],
           "examples": [
             {
-              "path": "",
+              "path": "/",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
@@ -16764,7 +16764,7 @@
             "parts": [
               {
                 "type": "literal",
-                "value": ""
+                "value": "/"
               }
             ]
           },
@@ -16798,7 +16798,7 @@
           ],
           "examples": [
             {
-              "path": "",
+              "path": "/",
               "pathParameters": {
                 "market_symbol": "market_symbol"
               },
@@ -16878,7 +16878,7 @@
             "parts": [
               {
                 "type": "literal",
-                "value": ""
+                "value": "/"
               }
             ]
           },
@@ -16912,7 +16912,7 @@
           ],
           "examples": [
             {
-              "path": "",
+              "path": "/",
               "pathParameters": {
                 "market_symbol": "market_symbol"
               },
@@ -17000,7 +17000,7 @@
             "parts": [
               {
                 "type": "literal",
-                "value": ""
+                "value": "/"
               }
             ]
           },
@@ -17034,7 +17034,7 @@
           ],
           "examples": [
             {
-              "path": "",
+              "path": "/",
               "pathParameters": {
                 "market_symbol": "market_symbol"
               },
@@ -17112,7 +17112,7 @@
             "parts": [
               {
                 "type": "literal",
-                "value": ""
+                "value": "/"
               }
             ]
           },
@@ -17146,7 +17146,7 @@
           ],
           "examples": [
             {
-              "path": "",
+              "path": "/",
               "pathParameters": {
                 "market_symbol": "market_symbol"
               },
@@ -17206,7 +17206,7 @@
             }
           ],
           "id": "fundingRateComparison",
-          "name": "/funding_rate_comparison",
+          "name": "Funding Rate Comparison",
           "path": {
             "pathParameters": [
               {
@@ -17320,7 +17320,7 @@
             "parts": [
               {
                 "type": "literal",
-                "value": ""
+                "value": "/"
               }
             ]
           },
@@ -17354,7 +17354,7 @@
           ],
           "examples": [
             {
-              "path": "",
+              "path": "/",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
@@ -17453,7 +17453,7 @@
             "parts": [
               {
                 "type": "literal",
-                "value": ""
+                "value": "/"
               }
             ]
           },
@@ -17487,7 +17487,7 @@
           ],
           "examples": [
             {
-              "path": "",
+              "path": "/",
               "pathParameters": {
                 "market_symbol": "market_symbol",
                 "price_tick": "0_0000001",
@@ -17590,7 +17590,7 @@
             "parts": [
               {
                 "type": "literal",
-                "value": ""
+                "value": "/"
               }
             ]
           },
@@ -17624,7 +17624,7 @@
           ],
           "examples": [
             {
-              "path": "",
+              "path": "/",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
@@ -17702,7 +17702,7 @@
             "parts": [
               {
                 "type": "literal",
-                "value": ""
+                "value": "/"
               }
             ]
           },
@@ -17736,7 +17736,7 @@
           ],
           "examples": [
             {
-              "path": "",
+              "path": "/",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
@@ -17810,7 +17810,7 @@
             "parts": [
               {
                 "type": "literal",
-                "value": ""
+                "value": "/"
               }
             ]
           },
@@ -17844,7 +17844,7 @@
           ],
           "examples": [
             {
-              "path": "",
+              "path": "/",
               "pathParameters": {
                 "market_symbol": "market_symbol"
               },
@@ -17912,7 +17912,7 @@
             "parts": [
               {
                 "type": "literal",
-                "value": ""
+                "value": "/"
               }
             ]
           },
@@ -17946,7 +17946,7 @@
           ],
           "examples": [
             {
-              "path": "",
+              "path": "/",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
