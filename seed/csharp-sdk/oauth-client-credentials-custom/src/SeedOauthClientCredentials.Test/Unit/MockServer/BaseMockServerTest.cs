@@ -19,8 +19,8 @@ public class BaseMockServerTest
     {
         const string requestJson = """
             {
-              "cid": "cid",
-              "csr": "csr",
+              "cid": "CLIENT_ID",
+              "csr": "CLIENT_SECRET",
               "scp": "scp",
               "entity_id": "entity_id",
               "audience": "https://api.example.com",
