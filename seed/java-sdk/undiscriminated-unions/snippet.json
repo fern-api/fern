@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "1676d0a5",
+            "example_identifier": "f438a51f",
             "id": {
                 "method": "POST",
                 "path": "/",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "example_identifier": "76479fe8",
+            "example_identifier": "3dbd6f62",
             "id": {
                 "method": "GET",
                 "path": "/metadata",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "1e21c8a5",
+            "example_identifier": "615c76f",
             "id": {
                 "method": "PUT",
                 "path": "/metadata",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "458f76a5",
+            "example_identifier": "bfe747c8",
             "id": {
                 "method": "POST",
                 "path": "/call",
