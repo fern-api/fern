@@ -23,6 +23,7 @@ types:
       pascalCase: SafeAndUnsafeString
       snakeCase: SafeAndUnsafeString
       screamingSnakeCase: SafeAndUnsafeString
+  DisplayName: string
   NameAndWireValue:
     properties:
       wireValue: string

@@ -20,7 +20,8 @@ export function parseTypeName({ typeName, file }: { typeName: string; file: Fern
         fernFilepath: convertToFernFilepath({
             relativeFilepath: reference.relativeFilepath,
             casingsGenerator: file.casingsGenerator
-        })
+        }),
+        displayName: undefined
     };
 
     return {

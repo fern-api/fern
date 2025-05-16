@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { TypeId } from "../../commons/types/TypeId";
 import { FernFilepath } from "../../commons/types/FernFilepath";
 import { Name } from "../../commons/types/Name";
+import { DisplayName } from "../../commons/types/DisplayName";
 import { NamedTypeDefault } from "./NamedTypeDefault";
 
 export const NamedType: core.serialization.ObjectSchema<serializers.NamedType.Raw, FernIr.NamedType> =
@@ -15,6 +16,7 @@ export const NamedType: core.serialization.ObjectSchema<serializers.NamedType.Ra
         typeId: TypeId,
         fernFilepath: FernFilepath,
         name: Name,
+        displayName: DisplayName.optional(),
         default: NamedTypeDefault.optional(),
         inline: core.serialization.boolean().optional(),
     });
@@ -24,6 +26,7 @@ export declare namespace NamedType {
         typeId: TypeId.Raw;
         fernFilepath: FernFilepath.Raw;
         name: Name.Raw;
+        displayName?: DisplayName.Raw | null;
         default?: NamedTypeDefault.Raw | null;
         inline?: boolean | null;
     }

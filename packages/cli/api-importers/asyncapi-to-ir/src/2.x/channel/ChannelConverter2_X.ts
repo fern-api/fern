@@ -203,6 +203,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 fernFilepath: context.createFernFilepath(),
                 name: convertedTypeDeclaration.typeDeclaration.name.name,
                 typeId: convertedTypeDeclaration.typeDeclaration.name.typeId,
+                displayName: convertedTypeDeclaration.typeDeclaration.name.displayName,
                 default: undefined,
                 inline: false
             });
