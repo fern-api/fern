@@ -6,12 +6,13 @@ import { z } from "zod";
 
 import { getMarkdownFormat, parseImagePaths, parseMarkdownToTree } from "@fern-api/docs-markdown-utils";
 import { AbsoluteFilePath, dirname } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
 
 import { Rule } from "../../Rule";
 
 export const ValidMarkdownRule: Rule = {
     name: "valid-markdown",
-    create: ({ workspace }) => {
+    create: ({ logger, workspace }) => {
         return {
             markdownPage: async ({ content, absoluteFilepath }) => {
                 let format: "mdx" | "md";
@@ -28,7 +29,8 @@ export const ValidMarkdownRule: Rule = {
                 const markdownParseResult = await parseMarkdown({
                     markdown: content,
                     absoluteFilepath,
-                    absolutePathToFernFolder: dirname(workspace.absoluteFilepathToDocsConfig)
+                    absolutePathToFernFolder: dirname(workspace.absoluteFilepathToDocsConfig),
+                    logger
                 });
                 if (markdownParseResult.type === "failure") {
                     const message =
@@ -84,18 +86,23 @@ export const FrontmatterSchema = z.object({
 async function parseMarkdown({
     markdown,
     absoluteFilepath,
-    absolutePathToFernFolder
+    absolutePathToFernFolder,
+    logger
 }: {
     markdown: string;
     absoluteFilepath: AbsoluteFilePath;
     absolutePathToFernFolder: AbsoluteFilePath;
+    logger: Logger;
 }): Promise<MarkdownParseResult> {
     try {
+        logger.trace(`Starting markdown parse for file: ${absoluteFilepath}`);
+
         parseImagePaths(markdown, {
             absolutePathToMarkdownFile: absoluteFilepath,
             absolutePathToFernFolder
         });
 
+        logger.trace("Serializing markdown with MDX");
         const parsed = await serialize(markdown, {
             scope: {},
             mdxOptions: {
@@ -105,8 +112,13 @@ async function parseMarkdown({
             },
             parseFrontmatter: true
         });
+
+        logger.trace("Validating frontmatter");
         const frontmatterParseResult = FrontmatterSchema.safeParse(parsed.frontmatter);
         if (!frontmatterParseResult.success) {
+            logger.trace(
+                `Frontmatter validation failed: ${frontmatterParseResult.error.errors.map((e) => e.message).join(", ")}`
+            );
             return {
                 type: "failure",
                 message: `Failed to parse frontmatter: ${frontmatterParseResult.error.errors
@@ -114,10 +126,13 @@ async function parseMarkdown({
                     .join("\n")}`
             };
         }
+
+        logger.trace("Markdown parse completed successfully");
         return {
             type: "success"
         };
     } catch (err) {
+        logger.trace(`Markdown parse failed with error: ${err instanceof Error ? err.message : String(err)}`);
         return {
             type: "failure",
             message: err instanceof Error ? err.message : undefined
