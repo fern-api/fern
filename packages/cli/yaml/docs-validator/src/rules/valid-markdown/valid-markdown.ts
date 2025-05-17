@@ -4,13 +4,14 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import { z } from "zod";
 
-import { getMarkdownFormat, parseMarkdownToTree } from "@fern-api/docs-markdown-utils";
+import { getMarkdownFormat, parseImagePaths, parseMarkdownToTree } from "@fern-api/docs-markdown-utils";
+import { AbsoluteFilePath, dirname } from "@fern-api/fs-utils";
 
 import { Rule } from "../../Rule";
 
 export const ValidMarkdownRule: Rule = {
     name: "valid-markdown",
-    create: () => {
+    create: ({ workspace }) => {
         return {
             markdownPage: async ({ content, absoluteFilepath }) => {
                 let format: "mdx" | "md";
@@ -24,7 +25,11 @@ export const ValidMarkdownRule: Rule = {
                         }
                     ];
                 }
-                const markdownParseResult = await parseMarkdown({ markdown: content });
+                const markdownParseResult = await parseMarkdown({ 
+                    markdown: content,
+                    absoluteFilepath,
+                    absolutePathToFernFolder: dirname(workspace.absoluteFilepathToDocsConfig)
+                });
                 if (markdownParseResult.type === "failure") {
                     const message =
                         markdownParseResult.message != null
@@ -76,9 +81,20 @@ export const FrontmatterSchema = z.object({
     excerpt: z.optional(z.string(), { description: "Deprecated. Use `subtitle` instead." })
 });
 
-async function parseMarkdown({ markdown }: { markdown: string }): Promise<MarkdownParseResult> {
+async function parseMarkdown({ 
+    markdown,
+    absoluteFilepath,
+    absolutePathToFernFolder
+}: { 
+    markdown: string;
+    absoluteFilepath: AbsoluteFilePath;
+    absolutePathToFernFolder: AbsoluteFilePath;
+}): Promise<MarkdownParseResult> {
     try {
-        parseMarkdownToTree(markdown);
+        parseImagePaths(markdown, { 
+            absolutePathToMarkdownFile: absoluteFilepath,
+            absolutePathToFernFolder
+        });
 
         const parsed = await serialize(markdown, {
             scope: {},
