@@ -194,7 +194,9 @@ export class DocsDefinitionResolver {
                     filesToUploadSet.add(filepath);
                 }
             } catch (error) {
-                this.taskContext.logger.error(`Failed to parse ${relativePath}: ${error instanceof Error ? error.message : String(error)}`);
+                this.taskContext.logger.error(
+                    `Failed to parse ${relativePath}: ${error instanceof Error ? error.message : String(error)}`
+                );
                 throw error;
             }
         }

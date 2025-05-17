@@ -1,6 +1,6 @@
 const packageJson = require("./package.json");
 const tsup = require('tsup');
-const { writeFile } = require("fs/promises");
+const { writeFile, truncate } = require("fs/promises");
 const path = require("path");
 
 main();
@@ -9,7 +9,7 @@ async function main() {
     await tsup.build({
         entry: ['src/cli.ts'],
         format: ['cjs'],
-        minify: false,
+        minify: true,
         outDir: 'dist/prod',
         env: {
             AUTH0_DOMAIN: "fern-prod.us.auth0.com",

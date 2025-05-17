@@ -6,9 +6,10 @@ import { z } from "zod";
 
 import { getMarkdownFormat, parseImagePaths, parseMarkdownToTree } from "@fern-api/docs-markdown-utils";
 import { AbsoluteFilePath, dirname } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
 
 import { Rule } from "../../Rule";
-import { Logger } from "@fern-api/logger";
+
 export const ValidMarkdownRule: Rule = {
     name: "valid-markdown",
     create: ({ logger, workspace }) => {
@@ -29,7 +30,7 @@ export const ValidMarkdownRule: Rule = {
                     markdown: content,
                     absoluteFilepath,
                     absolutePathToFernFolder: dirname(workspace.absoluteFilepathToDocsConfig),
-                    logger,
+                    logger
                 });
                 if (markdownParseResult.type === "failure") {
                     const message =
@@ -87,7 +88,7 @@ async function parseMarkdown({
     absoluteFilepath,
     absolutePathToFernFolder,
     logger
-}: { 
+}: {
     markdown: string;
     absoluteFilepath: AbsoluteFilePath;
     absolutePathToFernFolder: AbsoluteFilePath;
@@ -95,8 +96,8 @@ async function parseMarkdown({
 }): Promise<MarkdownParseResult> {
     try {
         logger.trace(`Starting markdown parse for file: ${absoluteFilepath}`);
-        
-        parseImagePaths(markdown, { 
+
+        parseImagePaths(markdown, {
             absolutePathToMarkdownFile: absoluteFilepath,
             absolutePathToFernFolder
         });
@@ -115,7 +116,9 @@ async function parseMarkdown({
         logger.trace("Validating frontmatter");
         const frontmatterParseResult = FrontmatterSchema.safeParse(parsed.frontmatter);
         if (!frontmatterParseResult.success) {
-            logger.trace(`Frontmatter validation failed: ${frontmatterParseResult.error.errors.map(e => e.message).join(", ")}`);
+            logger.trace(
+                `Frontmatter validation failed: ${frontmatterParseResult.error.errors.map((e) => e.message).join(", ")}`
+            );
             return {
                 type: "failure",
                 message: `Failed to parse frontmatter: ${frontmatterParseResult.error.errors
