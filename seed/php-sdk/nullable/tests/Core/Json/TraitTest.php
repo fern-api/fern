@@ -33,6 +33,8 @@ class TypeWithTrait extends JsonSerializableType
      */
     public function __construct(array $values)
     {
+        parent::__construct($values);
+
         $this->integerProperty = $values['integerProperty'];
         $this->stringProperty = $values['stringProperty'];
     }
