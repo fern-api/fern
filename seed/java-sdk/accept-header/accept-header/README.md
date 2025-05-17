@@ -83,18 +83,15 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
 - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
 
-Use the `maxRetries` request option to configure this behavior.
+Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.accept.core.RequestOptions;
+import com.seed.accept.SeedAcceptClient;
 
-client.service().endpoint(
-    ...,
-    RequestOptions
-        .builder()
-        .maxRetries(1)
-        .build()
-);
+SeedAcceptClient client = SeedAcceptClient
+    .builder()
+    .maxRetries(1)
+    .build();
 ```
 
 ### Timeouts
