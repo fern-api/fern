@@ -32,6 +32,15 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                 if (stringConst != null) {
                     return TypeReference.container(ContainerType.literal(Literal.string(stringConst)));
                 }
+
+                console.log("this.context.settings?.typeDatesAsStrings", this.context.settings?.typeDatesAsStrings);
+                if(this.context.settings?.typeDatesAsStrings === false && this.schema.format === "date") {
+                    return TypeReference.primitive({
+                        v1: "DATE",
+                        v2: PrimitiveTypeV2.date({})
+                    })
+                }
+
                 return TypeReference.primitive({
                     v1: "STRING",
                     v2: PrimitiveTypeV2.string({
