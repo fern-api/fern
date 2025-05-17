@@ -1,4 +1,12 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.20.3
+  changelogEntry:
+    - summary: |
+        Fix all mypy errors in the Fern Python source code.
+      type: chore
+  createdAt: '2025-05-15'
+  irVersion: 57
+
 - version: 4.20.2
   changelogEntry:
     - summary: |

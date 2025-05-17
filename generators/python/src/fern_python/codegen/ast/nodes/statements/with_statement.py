@@ -14,7 +14,7 @@ class WithContextManager:
     expression: Expression
     as_variable: Optional[str] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not isinstance(self.expression, Expression):
             self.expression = Expression(self.expression)
 

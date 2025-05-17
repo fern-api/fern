@@ -1,3 +1,5 @@
+from abc import abstractmethod
+
 from .base_client_generator import BaseClientGenerator
 from .endpoint_function_generator import EndpointFunctionGenerator
 from .generated_root_client import GeneratedRootClient
@@ -8,6 +10,14 @@ import fern.ir.resources as ir_types
 
 class BaseWrappedClientGenerator(BaseClientGenerator):
     """Base class for client generators that wrap a raw client."""
+
+    @abstractmethod
+    def get_raw_client_class_name(self, *, is_async: bool) -> str:
+        """Returns the name of the raw client class associated with this client class."""
+
+    @abstractmethod
+    def get_raw_client_class_reference(self, *, is_async: bool) -> AST.ClassReference:
+        """Returns the reference to the raw client class associated with this client class."""
 
     def _create_with_raw_response_method(self, *, is_async: bool) -> AST.FunctionDeclaration:
         """Create a method that returns the raw client for more control over the response."""
@@ -86,6 +96,9 @@ class BaseWrappedClientGenerator(BaseClientGenerator):
                 body=AST.CodeWriter(lambda writer: writer.write_line("pass")),
                 decorators=[],
             )
+
+        if self._package.service is None:
+            raise ValueError("cannot create wrapper method for client with no service name")
 
         # Use EndpointFunctionGenerator to create the wrapper method
         endpoint_generator = EndpointFunctionGenerator(
