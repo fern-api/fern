@@ -210,7 +210,7 @@ async function visitNavigationItem({
 
         if (await doesPathExist(changelogDir)) {
             const files = await readdir(changelogDir);
-            context.logger.trace(`Validting ${files.length} files in changelog directory ${changelogDir}`);
+            context.logger.trace(`Validating ${files.length} files in changelog directory ${changelogDir}`);
 
             await Promise.all(
                 files
