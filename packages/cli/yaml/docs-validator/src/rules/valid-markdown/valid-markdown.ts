@@ -25,7 +25,7 @@ export const ValidMarkdownRule: Rule = {
                         }
                     ];
                 }
-                const markdownParseResult = await parseMarkdown({ 
+                const markdownParseResult = await parseMarkdown({
                     markdown: content,
                     absoluteFilepath,
                     absolutePathToFernFolder: dirname(workspace.absoluteFilepathToDocsConfig)
@@ -81,17 +81,17 @@ export const FrontmatterSchema = z.object({
     excerpt: z.optional(z.string(), { description: "Deprecated. Use `subtitle` instead." })
 });
 
-async function parseMarkdown({ 
+async function parseMarkdown({
     markdown,
     absoluteFilepath,
     absolutePathToFernFolder
-}: { 
+}: {
     markdown: string;
     absoluteFilepath: AbsoluteFilePath;
     absolutePathToFernFolder: AbsoluteFilePath;
 }): Promise<MarkdownParseResult> {
     try {
-        parseImagePaths(markdown, { 
+        parseImagePaths(markdown, {
             absolutePathToMarkdownFile: absoluteFilepath,
             absolutePathToFernFolder
         });

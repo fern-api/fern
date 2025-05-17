@@ -83,9 +83,7 @@ export async function replaceReferencedCode({
             replacement = replacement + "\n"; // add newline after the code block
             newMarkdown = newMarkdown.replace(matchString, replacement);
         } catch (e) {
-            context.logger.warn(
-                `Failed to read markdown file "${src}" referenced in ${absolutePathToMarkdownFile}`,
-            );
+            context.logger.warn(`Failed to read markdown file "${src}" referenced in ${absolutePathToMarkdownFile}`);
             break;
         }
     }
