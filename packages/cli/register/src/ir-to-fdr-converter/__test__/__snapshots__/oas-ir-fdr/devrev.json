@@ -255,6 +255,7 @@
         "variants": [
           {
             "discriminantValue": "google_apps",
+            "displayName": "google_apps",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-google-apps"
@@ -308,6 +309,7 @@
           },
           {
             "discriminantValue": "oidc",
+            "displayName": "oidc",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-oidc"
@@ -361,6 +363,7 @@
           },
           {
             "discriminantValue": "samlp",
+            "displayName": "samlp",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-saml"
@@ -414,6 +417,7 @@
           },
           {
             "discriminantValue": "social",
+            "displayName": "social",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-social"
@@ -467,6 +471,7 @@
           },
           {
             "discriminantValue": "waad",
+            "displayName": "waad",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-azure-ad"
@@ -1490,6 +1495,7 @@
         "variants": [
           {
             "discriminantValue": "google_apps",
+            "displayName": "google_apps",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-google-apps"
@@ -1520,6 +1526,7 @@
           },
           {
             "discriminantValue": "oidc",
+            "displayName": "oidc",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-oidc"
@@ -1550,6 +1557,7 @@
           },
           {
             "discriminantValue": "samlp",
+            "displayName": "samlp",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-saml"
@@ -1580,6 +1588,7 @@
           },
           {
             "discriminantValue": "waad",
+            "displayName": "waad",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-azure-ad"
@@ -1746,6 +1755,7 @@
         "variants": [
           {
             "discriminantValue": "google_apps",
+            "displayName": "google_apps",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-google-apps"
@@ -1786,6 +1796,7 @@
           },
           {
             "discriminantValue": "none",
+            "displayName": "none",
             "additionalProperties": {
               "extends": [
                 "empty"
@@ -1826,6 +1837,7 @@
           },
           {
             "discriminantValue": "oidc",
+            "displayName": "oidc",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-oidc"
@@ -1866,6 +1878,7 @@
           },
           {
             "discriminantValue": "samlp",
+            "displayName": "samlp",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-saml"
@@ -1906,6 +1919,7 @@
           },
           {
             "discriminantValue": "waad",
+            "displayName": "waad",
             "additionalProperties": {
               "extends": [
                 "auth-connection-options-azure-ad"
@@ -3026,6 +3040,7 @@
         "variants": [
           {
             "discriminantValue": "rev_org",
+            "displayName": "rev_org",
             "additionalProperties": {
               "extends": [
                 "rev-org-summary"
@@ -3063,6 +3078,7 @@
         "variants": [
           {
             "discriminantValue": "capability",
+            "displayName": "capability",
             "additionalProperties": {
               "extends": [
                 "capability"
@@ -3080,6 +3096,7 @@
           },
           {
             "discriminantValue": "enhancement",
+            "displayName": "enhancement",
             "additionalProperties": {
               "extends": [
                 "enhancement"
@@ -3097,6 +3114,7 @@
           },
           {
             "discriminantValue": "feature",
+            "displayName": "feature",
             "additionalProperties": {
               "extends": [
                 "feature"
@@ -3114,6 +3132,7 @@
           },
           {
             "discriminantValue": "product",
+            "displayName": "product",
             "additionalProperties": {
               "extends": [
                 "product"
@@ -3234,6 +3253,7 @@
         "variants": [
           {
             "discriminantValue": "capability",
+            "displayName": "capability",
             "additionalProperties": {
               "extends": [
                 "capability-summary"
@@ -3251,6 +3271,7 @@
           },
           {
             "discriminantValue": "enhancement",
+            "displayName": "enhancement",
             "additionalProperties": {
               "extends": [
                 "enhancement-summary"
@@ -3268,6 +3289,7 @@
           },
           {
             "discriminantValue": "feature",
+            "displayName": "feature",
             "additionalProperties": {
               "extends": [
                 "feature-summary"
@@ -3285,6 +3307,7 @@
           },
           {
             "discriminantValue": "product",
+            "displayName": "product",
             "additionalProperties": {
               "extends": [
                 "product-summary"
@@ -3331,6 +3354,7 @@
         "variants": [
           {
             "discriminantValue": "capability",
+            "displayName": "capability",
             "additionalProperties": {
               "extends": [
                 "parts-create-request-capability"
@@ -3384,6 +3408,7 @@
           },
           {
             "discriminantValue": "enhancement",
+            "displayName": "enhancement",
             "additionalProperties": {
               "extends": [
                 "parts-create-request-enhancement"
@@ -3437,6 +3462,7 @@
           },
           {
             "discriminantValue": "feature",
+            "displayName": "feature",
             "additionalProperties": {
               "extends": [
                 "parts-create-request-feature"
@@ -3490,6 +3516,7 @@
           },
           {
             "discriminantValue": "product",
+            "displayName": "product",
             "additionalProperties": {
               "extends": [
                 "parts-create-request-product"
@@ -3745,6 +3772,7 @@
         "variants": [
           {
             "discriminantValue": "capability",
+            "displayName": "capability",
             "additionalProperties": {
               "extends": [
                 "parts-update-request-capability"
@@ -3808,6 +3836,7 @@
           },
           {
             "discriminantValue": "enhancement",
+            "displayName": "enhancement",
             "additionalProperties": {
               "extends": [
                 "parts-update-request-enhancement"
@@ -3871,6 +3900,7 @@
           },
           {
             "discriminantValue": "feature",
+            "displayName": "feature",
             "additionalProperties": {
               "extends": [
                 "parts-update-request-feature"
@@ -3934,6 +3964,7 @@
           },
           {
             "discriminantValue": "none",
+            "displayName": "none",
             "additionalProperties": {
               "extends": [
                 "empty"
@@ -3997,6 +4028,7 @@
           },
           {
             "discriminantValue": "product",
+            "displayName": "product",
             "additionalProperties": {
               "extends": [
                 "parts-update-request-product"
@@ -5187,6 +5219,7 @@
         "variants": [
           {
             "discriminantValue": "timeline_comment",
+            "displayName": "timeline_comment",
             "additionalProperties": {
               "extends": [
                 "timeline-entries-create-request-timeline-comment"
@@ -5394,6 +5427,7 @@
         "variants": [
           {
             "discriminantValue": "timeline_comment",
+            "displayName": "timeline_comment",
             "additionalProperties": {
               "extends": [
                 "timeline-entries-update-request-timeline-comment"
@@ -5577,6 +5611,7 @@
         "variants": [
           {
             "discriminantValue": "timeline_comment",
+            "displayName": "timeline_comment",
             "additionalProperties": {
               "extends": [
                 "timeline-comment"
@@ -5816,6 +5851,7 @@
         "variants": [
           {
             "discriminantValue": "dev_user",
+            "displayName": "dev_user",
             "additionalProperties": {
               "extends": [
                 "dev-user-summary"
@@ -5833,6 +5869,7 @@
           },
           {
             "discriminantValue": "rev_user",
+            "displayName": "rev_user",
             "additionalProperties": {
               "extends": [
                 "rev-user-summary"
@@ -5850,6 +5887,7 @@
           },
           {
             "discriminantValue": "sys_user",
+            "displayName": "sys_user",
             "additionalProperties": {
               "extends": [
                 "sys-user-summary"
@@ -6598,6 +6636,7 @@
         "variants": [
           {
             "discriminantValue": "issue",
+            "displayName": "issue",
             "additionalProperties": {
               "extends": [
                 "issue"
@@ -6615,6 +6654,7 @@
           },
           {
             "discriminantValue": "ticket",
+            "displayName": "ticket",
             "additionalProperties": {
               "extends": [
                 "ticket"
@@ -6776,6 +6816,7 @@
         "variants": [
           {
             "discriminantValue": "issue",
+            "displayName": "issue",
             "additionalProperties": {
               "extends": [
                 "works-create-request-issue"
@@ -6909,6 +6950,7 @@
           },
           {
             "discriminantValue": "ticket",
+            "displayName": "ticket",
             "additionalProperties": {
               "extends": [
                 "works-create-request-ticket"
@@ -7253,6 +7295,7 @@
         "variants": [
           {
             "discriminantValue": "issue",
+            "displayName": "issue",
             "additionalProperties": {
               "extends": [
                 "works-update-request-issue"
@@ -7383,6 +7426,7 @@
           },
           {
             "discriminantValue": "none",
+            "displayName": "none",
             "additionalProperties": {
               "extends": [
                 "empty"
@@ -7513,6 +7557,7 @@
           },
           {
             "discriminantValue": "ticket",
+            "displayName": "ticket",
             "additionalProperties": {
               "extends": [
                 "works-update-request-ticket"

@@ -1839,7 +1839,7 @@
     },
     "EthGetProofResult0": {
       "description": "The merkle proofs of the specified account connecting them to the blockhash of the block specified",
-      "name": "proofAccount",
+      "name": "EthGetProofResult0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2142,7 +2142,7 @@
     },
     "EthSyncingResult0": {
       "description": "An object with sync status data",
-      "name": "syncingData",
+      "name": "EthSyncingResult0",
       "shape": {
         "type": "object",
         "extends": [],

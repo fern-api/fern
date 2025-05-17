@@ -2995,7 +2995,7 @@
       }
     },
     "AttachContactToConversationRequestCustomer0": {
-      "name": "Intercom User ID",
+      "name": "AttachContactToConversationRequestCustomer0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3024,7 +3024,7 @@
       }
     },
     "AttachContactToConversationRequestCustomer1": {
-      "name": "User ID",
+      "name": "AttachContactToConversationRequestCustomer1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3053,7 +3053,7 @@
       }
     },
     "AttachContactToConversationRequestCustomer2": {
-      "name": "Email",
+      "name": "AttachContactToConversationRequestCustomer2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7874,7 +7874,7 @@
       }
     },
     "CreateContactRequest0": {
-      "name": "Create contact with email",
+      "name": "CreateContactRequest0",
       "shape": {
         "type": "alias",
         "value": {
@@ -7883,7 +7883,7 @@
       }
     },
     "CreateContactRequest1": {
-      "name": "Create contact with external_id",
+      "name": "CreateContactRequest1",
       "shape": {
         "type": "alias",
         "value": {
@@ -7892,7 +7892,7 @@
       }
     },
     "CreateContactRequest2": {
-      "name": "Create contact with role",
+      "name": "CreateContactRequest2",
       "shape": {
         "type": "alias",
         "value": {
@@ -8126,7 +8126,7 @@
       }
     },
     "CreateDataEventRequest0": {
-      "name": "id required",
+      "name": "CreateDataEventRequest0",
       "shape": {
         "type": "alias",
         "value": {
@@ -8135,7 +8135,7 @@
       }
     },
     "CreateDataEventRequest1": {
-      "name": "user_id required",
+      "name": "CreateDataEventRequest1",
       "shape": {
         "type": "alias",
         "value": {
@@ -8144,7 +8144,7 @@
       }
     },
     "CreateDataEventRequest2": {
-      "name": "email required",
+      "name": "CreateDataEventRequest2",
       "shape": {
         "type": "alias",
         "value": {
@@ -8309,7 +8309,7 @@
       }
     },
     "CreateMessageRequest0": {
-      "name": "message_type: `email`.",
+      "name": "CreateMessageRequest0",
       "shape": {
         "type": "alias",
         "value": {
@@ -8318,7 +8318,7 @@
       }
     },
     "CreateMessageRequest1": {
-      "name": "message_type: `inapp`.",
+      "name": "CreateMessageRequest1",
       "shape": {
         "type": "alias",
         "value": {
@@ -8571,7 +8571,7 @@
       }
     },
     "CreateTicketRequestContactsItems0": {
-      "name": "ID",
+      "name": "CreateTicketRequestContactsItems0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8590,7 +8590,7 @@
       }
     },
     "CreateTicketRequestContactsItems1": {
-      "name": "External ID",
+      "name": "CreateTicketRequestContactsItems1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8609,7 +8609,7 @@
       }
     },
     "CreateTicketRequestContactsItems2": {
-      "name": "Email",
+      "name": "CreateTicketRequestContactsItems2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9173,7 +9173,7 @@
       }
     },
     "CustomerRequest0": {
-      "name": "Intercom User ID",
+      "name": "CustomerRequest0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9192,7 +9192,7 @@
       }
     },
     "CustomerRequest1": {
-      "name": "User ID",
+      "name": "CustomerRequest1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9211,7 +9211,7 @@
       }
     },
     "CustomerRequest2": {
-      "name": "Email",
+      "name": "CustomerRequest2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -11882,7 +11882,7 @@
     },
     "MultipleFilterSearchRequestValue0": {
       "description": "Add mutiple filters.",
-      "name": "multiple filter search request",
+      "name": "MultipleFilterSearchRequestValue0",
       "shape": {
         "type": "alias",
         "value": {
@@ -11896,7 +11896,7 @@
     },
     "MultipleFilterSearchRequestValue1": {
       "description": "Add a single filter field.",
-      "name": "single filter search request",
+      "name": "MultipleFilterSearchRequestValue1",
       "shape": {
         "type": "alias",
         "value": {
@@ -13000,7 +13000,7 @@
     },
     "RedactConversationRequest0": {
       "description": "Payload of the request to redact a conversation part",
-      "name": "Redact Conversation Part Request",
+      "name": "RedactConversationRequest0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -13050,7 +13050,7 @@
     },
     "RedactConversationRequest1": {
       "description": "Payload of the request to redact a conversation source",
-      "name": "Redact Conversation Source Request",
+      "name": "RedactConversationRequest1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17942,7 +17942,7 @@
       }
     },
     "EventsGetParametersSchema0": {
-      "name": "user_id query parameter",
+      "name": "EventsGetParametersSchema0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17960,7 +17960,7 @@
       }
     },
     "EventsGetParametersSchema1": {
-      "name": "intercom_user_id query parameter",
+      "name": "EventsGetParametersSchema1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17978,7 +17978,7 @@
       }
     },
     "EventsGetParametersSchema2": {
-      "name": "email query parameter",
+      "name": "EventsGetParametersSchema2",
       "shape": {
         "type": "object",
         "extends": [],

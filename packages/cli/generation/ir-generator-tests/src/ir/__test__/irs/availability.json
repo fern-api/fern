@@ -96,6 +96,7 @@
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_service:Object"
             },
             "shape": {

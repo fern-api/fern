@@ -3321,7 +3321,7 @@
     },
     "V1SpeakPostParametersSchema0": {
       "description": "Encoding - linear16. Supported sample rates - 8000, 16000, 24000, 32000, 48000 Hz.",
-      "name": "linear16",
+      "name": "V1SpeakPostParametersSchema0",
       "shape": {
         "type": "enum",
         "values": [
@@ -3393,7 +3393,7 @@
     },
     "V1SpeakPostParametersSchema1": {
       "description": "Encoding - mulaw. Supported sample rates - 8000, 16000 Hz.",
-      "name": "mulaw",
+      "name": "V1SpeakPostParametersSchema1",
       "shape": {
         "type": "enum",
         "values": [
@@ -3408,7 +3408,7 @@
     },
     "V1SpeakPostParametersSchema2": {
       "description": "Encoding - alaw. Supported sample rates - 8000, 16000 Hz.",
-      "name": "alaw",
+      "name": "V1SpeakPostParametersSchema2",
       "shape": {
         "type": "enum",
         "values": [
@@ -3423,7 +3423,7 @@
     },
     "V1SpeakPostParametersSchema3": {
       "description": "Encoding - mp3. Sample rate is fixed and not configurable (22050 Hz).",
-      "name": "mp3",
+      "name": "V1SpeakPostParametersSchema3",
       "shape": {
         "type": "enum",
         "values": [
@@ -3435,7 +3435,7 @@
     },
     "V1SpeakPostParametersSchema4": {
       "description": "Encoding - opus. Sample rate is fixed at 48000 Hz.",
-      "name": "opus",
+      "name": "V1SpeakPostParametersSchema4",
       "shape": {
         "type": "enum",
         "values": [
@@ -3447,7 +3447,7 @@
     },
     "V1SpeakPostParametersSchema5": {
       "description": "Encoding - opus. High-compression audio format optimized for real-time communications.",
-      "name": "opus",
+      "name": "V1SpeakPostParametersSchema5",
       "shape": {
         "type": "enum",
         "values": [
@@ -3459,7 +3459,7 @@
     },
     "V1SpeakPostParametersSchema6": {
       "description": "Encoding - aac. Advanced audio format offering better quality at smaller file sizes than mp3.",
-      "name": "aac",
+      "name": "V1SpeakPostParametersSchema6",
       "shape": {
         "type": "enum",
         "values": [
@@ -10733,7 +10733,7 @@
     },
     "ListenControlMessageResponse0": {
       "description": "The server will process all remaining audio data and return the final results. You may receive a response with the from_finalize attribute set to true, indicating that the finalization process is complete. This response typically occurs when there is a noticeable amount of audio buffered in the server.\n",
-      "name": "FinalizeResponse",
+      "name": "ListenControlMessageResponse0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10778,7 +10778,7 @@
     },
     "ListenControlMessageResponse1": {
       "description": "Provides real-time metadata during audio streaming, including audio characteristics\nand processing details. This response is sent periodically during streaming to\nprovide updates about the audio being processed.\n",
-      "name": "MetadataResponse",
+      "name": "ListenControlMessageResponse1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -10891,7 +10891,7 @@
     },
     "ListenControlMessageResponse2": {
       "description": "Indicates that the server has closed the WebSocket connection and the server will process all remaining audio data.\n",
-      "name": "CloseStreamResponse",
+      "name": "ListenControlMessageResponse2",
       "shape": {
         "type": "object",
         "extends": [],

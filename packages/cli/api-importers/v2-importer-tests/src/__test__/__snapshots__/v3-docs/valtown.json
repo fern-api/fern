@@ -9327,24 +9327,25 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "ParameterizedQuery",
+          "originalName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatement1",
           "camelCase": {
-            "unsafeName": "parameterizedQuery",
-            "safeName": "parameterizedQuery"
+            "unsafeName": "v1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatement1",
+            "safeName": "v1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatement1"
           },
           "snakeCase": {
-            "unsafeName": "parameterized_query",
-            "safeName": "parameterized_query"
+            "unsafeName": "v_1_sqlite_execute_post_request_body_content_application_json_schema_statement_1",
+            "safeName": "v_1_sqlite_execute_post_request_body_content_application_json_schema_statement_1"
           },
           "screamingSnakeCase": {
-            "unsafeName": "PARAMETERIZED_QUERY",
-            "safeName": "PARAMETERIZED_QUERY"
+            "unsafeName": "V_1_SQLITE_EXECUTE_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_STATEMENT_1",
+            "safeName": "V_1_SQLITE_EXECUTE_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_STATEMENT_1"
           },
           "pascalCase": {
-            "unsafeName": "ParameterizedQuery",
-            "safeName": "ParameterizedQuery"
+            "unsafeName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatement1",
+            "safeName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatement1"
           }
-        }
+        },
+        "displayName": "ParameterizedQuery"
       },
       "shape": {
         "properties": [
@@ -9537,6 +9538,7 @@
                 }
               },
               "typeId": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatement1",
+              "displayName": "ParameterizedQuery",
               "inline": false,
               "type": "named"
             },
@@ -10088,24 +10090,25 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "ParameterizedQuery",
+          "originalName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItems1",
           "camelCase": {
-            "unsafeName": "parameterizedQuery",
-            "safeName": "parameterizedQuery"
+            "unsafeName": "v1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItems1",
+            "safeName": "v1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItems1"
           },
           "snakeCase": {
-            "unsafeName": "parameterized_query",
-            "safeName": "parameterized_query"
+            "unsafeName": "v_1_sqlite_batch_post_request_body_content_application_json_schema_statements_items_1",
+            "safeName": "v_1_sqlite_batch_post_request_body_content_application_json_schema_statements_items_1"
           },
           "screamingSnakeCase": {
-            "unsafeName": "PARAMETERIZED_QUERY",
-            "safeName": "PARAMETERIZED_QUERY"
+            "unsafeName": "V_1_SQLITE_BATCH_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_STATEMENTS_ITEMS_1",
+            "safeName": "V_1_SQLITE_BATCH_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_STATEMENTS_ITEMS_1"
           },
           "pascalCase": {
-            "unsafeName": "ParameterizedQuery",
-            "safeName": "ParameterizedQuery"
+            "unsafeName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItems1",
+            "safeName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItems1"
           }
-        }
+        },
+        "displayName": "ParameterizedQuery"
       },
       "shape": {
         "properties": [
@@ -10298,6 +10301,7 @@
                 }
               },
               "typeId": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItems1",
+              "displayName": "ParameterizedQuery",
               "inline": false,
               "type": "named"
             },
@@ -11357,24 +11361,25 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "EmailNameAndAddress",
+          "originalName": "V1EmailPostRequestBodyContentApplicationJsonSchemaFrom1",
           "camelCase": {
-            "unsafeName": "emailNameAndAddress",
-            "safeName": "emailNameAndAddress"
+            "unsafeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaFrom1",
+            "safeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaFrom1"
           },
           "snakeCase": {
-            "unsafeName": "email_name_and_address",
-            "safeName": "email_name_and_address"
+            "unsafeName": "v_1_email_post_request_body_content_application_json_schema_from_1",
+            "safeName": "v_1_email_post_request_body_content_application_json_schema_from_1"
           },
           "screamingSnakeCase": {
-            "unsafeName": "EMAIL_NAME_AND_ADDRESS",
-            "safeName": "EMAIL_NAME_AND_ADDRESS"
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_FROM_1",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_FROM_1"
           },
           "pascalCase": {
-            "unsafeName": "EmailNameAndAddress",
-            "safeName": "EmailNameAndAddress"
+            "unsafeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaFrom1",
+            "safeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaFrom1"
           }
-        }
+        },
+        "displayName": "EmailNameAndAddress"
       },
       "shape": {
         "properties": [
@@ -11551,6 +11556,7 @@
                 }
               },
               "typeId": "V1EmailPostRequestBodyContentApplicationJsonSchemaFrom1",
+              "displayName": "EmailNameAndAddress",
               "inline": false,
               "type": "named"
             },
@@ -11578,24 +11584,25 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "EmailNameAndAddress",
+          "originalName": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo01",
           "camelCase": {
-            "unsafeName": "emailNameAndAddress",
-            "safeName": "emailNameAndAddress"
+            "unsafeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaTo01",
+            "safeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaTo01"
           },
           "snakeCase": {
-            "unsafeName": "email_name_and_address",
-            "safeName": "email_name_and_address"
+            "unsafeName": "v_1_email_post_request_body_content_application_json_schema_to_01",
+            "safeName": "v_1_email_post_request_body_content_application_json_schema_to_01"
           },
           "screamingSnakeCase": {
-            "unsafeName": "EMAIL_NAME_AND_ADDRESS",
-            "safeName": "EMAIL_NAME_AND_ADDRESS"
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_TO_01",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_TO_01"
           },
           "pascalCase": {
-            "unsafeName": "EmailNameAndAddress",
-            "safeName": "EmailNameAndAddress"
+            "unsafeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo01",
+            "safeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo01"
           }
-        }
+        },
+        "displayName": "EmailNameAndAddress"
       },
       "shape": {
         "properties": [
@@ -11713,24 +11720,25 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "EmailData",
+          "originalName": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo0",
           "camelCase": {
-            "unsafeName": "emailData",
-            "safeName": "emailData"
+            "unsafeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaTo0",
+            "safeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaTo0"
           },
           "snakeCase": {
-            "unsafeName": "email_data",
-            "safeName": "email_data"
+            "unsafeName": "v_1_email_post_request_body_content_application_json_schema_to_0",
+            "safeName": "v_1_email_post_request_body_content_application_json_schema_to_0"
           },
           "screamingSnakeCase": {
-            "unsafeName": "EMAIL_DATA",
-            "safeName": "EMAIL_DATA"
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_TO_0",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_TO_0"
           },
           "pascalCase": {
-            "unsafeName": "EmailData",
-            "safeName": "EmailData"
+            "unsafeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo0",
+            "safeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo0"
           }
-        }
+        },
+        "displayName": "EmailData"
       },
       "shape": {
         "members": [
@@ -11772,6 +11780,7 @@
                 }
               },
               "typeId": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo01",
+              "displayName": "EmailNameAndAddress",
               "inline": false,
               "type": "named"
             },
@@ -11799,24 +11808,25 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "EmailNameAndAddress",
+          "originalName": "V1EmailPostRequestBodyContentApplicationJsonSchemaToOneOf1Items1",
           "camelCase": {
-            "unsafeName": "emailNameAndAddress",
-            "safeName": "emailNameAndAddress"
+            "unsafeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaToOneOf1Items1",
+            "safeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaToOneOf1Items1"
           },
           "snakeCase": {
-            "unsafeName": "email_name_and_address",
-            "safeName": "email_name_and_address"
+            "unsafeName": "v_1_email_post_request_body_content_application_json_schema_to_one_of_1_items_1",
+            "safeName": "v_1_email_post_request_body_content_application_json_schema_to_one_of_1_items_1"
           },
           "screamingSnakeCase": {
-            "unsafeName": "EMAIL_NAME_AND_ADDRESS",
-            "safeName": "EMAIL_NAME_AND_ADDRESS"
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_TO_ONE_OF_1_ITEMS_1",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_TO_ONE_OF_1_ITEMS_1"
           },
           "pascalCase": {
-            "unsafeName": "EmailNameAndAddress",
-            "safeName": "EmailNameAndAddress"
+            "unsafeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaToOneOf1Items1",
+            "safeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaToOneOf1Items1"
           }
-        }
+        },
+        "displayName": "EmailNameAndAddress"
       },
       "shape": {
         "properties": [
@@ -11993,6 +12003,7 @@
                 }
               },
               "typeId": "V1EmailPostRequestBodyContentApplicationJsonSchemaToOneOf1Items1",
+              "displayName": "EmailNameAndAddress",
               "inline": false,
               "type": "named"
             },
@@ -12020,24 +12031,25 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "EmailDataList",
+          "originalName": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo1",
           "camelCase": {
-            "unsafeName": "emailDataList",
-            "safeName": "emailDataList"
+            "unsafeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaTo1",
+            "safeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaTo1"
           },
           "snakeCase": {
-            "unsafeName": "email_data_list",
-            "safeName": "email_data_list"
+            "unsafeName": "v_1_email_post_request_body_content_application_json_schema_to_1",
+            "safeName": "v_1_email_post_request_body_content_application_json_schema_to_1"
           },
           "screamingSnakeCase": {
-            "unsafeName": "EMAIL_DATA_LIST",
-            "safeName": "EMAIL_DATA_LIST"
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_TO_1",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_TO_1"
           },
           "pascalCase": {
-            "unsafeName": "EmailDataList",
-            "safeName": "EmailDataList"
+            "unsafeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo1",
+            "safeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo1"
           }
-        }
+        },
+        "displayName": "EmailDataList"
       },
       "shape": {
         "aliasOf": {
@@ -12178,6 +12190,7 @@
                 }
               },
               "typeId": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo0",
+              "displayName": "EmailData",
               "inline": false,
               "type": "named"
             }
@@ -12208,6 +12221,7 @@
                 }
               },
               "typeId": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo1",
+              "displayName": "EmailDataList",
               "inline": false,
               "type": "named"
             }
@@ -12235,24 +12249,25 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "EmailNameAndAddress",
+          "originalName": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc01",
           "camelCase": {
-            "unsafeName": "emailNameAndAddress",
-            "safeName": "emailNameAndAddress"
+            "unsafeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaCc01",
+            "safeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaCc01"
           },
           "snakeCase": {
-            "unsafeName": "email_name_and_address",
-            "safeName": "email_name_and_address"
+            "unsafeName": "v_1_email_post_request_body_content_application_json_schema_cc_01",
+            "safeName": "v_1_email_post_request_body_content_application_json_schema_cc_01"
           },
           "screamingSnakeCase": {
-            "unsafeName": "EMAIL_NAME_AND_ADDRESS",
-            "safeName": "EMAIL_NAME_AND_ADDRESS"
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_CC_01",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_CC_01"
           },
           "pascalCase": {
-            "unsafeName": "EmailNameAndAddress",
-            "safeName": "EmailNameAndAddress"
+            "unsafeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc01",
+            "safeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc01"
           }
-        }
+        },
+        "displayName": "EmailNameAndAddress"
       },
       "shape": {
         "properties": [
@@ -12370,24 +12385,25 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "EmailData",
+          "originalName": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc0",
           "camelCase": {
-            "unsafeName": "emailData",
-            "safeName": "emailData"
+            "unsafeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaCc0",
+            "safeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaCc0"
           },
           "snakeCase": {
-            "unsafeName": "email_data",
-            "safeName": "email_data"
+            "unsafeName": "v_1_email_post_request_body_content_application_json_schema_cc_0",
+            "safeName": "v_1_email_post_request_body_content_application_json_schema_cc_0"
           },
           "screamingSnakeCase": {
-            "unsafeName": "EMAIL_DATA",
-            "safeName": "EMAIL_DATA"
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_CC_0",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_CC_0"
           },
           "pascalCase": {
-            "unsafeName": "EmailData",
-            "safeName": "EmailData"
+            "unsafeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc0",
+            "safeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc0"
           }
-        }
+        },
+        "displayName": "EmailData"
       },
       "shape": {
         "members": [
@@ -12429,6 +12445,7 @@
                 }
               },
               "typeId": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc01",
+              "displayName": "EmailNameAndAddress",
               "inline": false,
               "type": "named"
             },
@@ -12456,24 +12473,25 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "EmailNameAndAddress",
+          "originalName": "V1EmailPostRequestBodyContentApplicationJsonSchemaCcOneOf1Items1",
           "camelCase": {
-            "unsafeName": "emailNameAndAddress",
-            "safeName": "emailNameAndAddress"
+            "unsafeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaCcOneOf1Items1",
+            "safeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaCcOneOf1Items1"
           },
           "snakeCase": {
-            "unsafeName": "email_name_and_address",
-            "safeName": "email_name_and_address"
+            "unsafeName": "v_1_email_post_request_body_content_application_json_schema_cc_one_of_1_items_1",
+            "safeName": "v_1_email_post_request_body_content_application_json_schema_cc_one_of_1_items_1"
           },
           "screamingSnakeCase": {
-            "unsafeName": "EMAIL_NAME_AND_ADDRESS",
-            "safeName": "EMAIL_NAME_AND_ADDRESS"
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_CC_ONE_OF_1_ITEMS_1",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_CC_ONE_OF_1_ITEMS_1"
           },
           "pascalCase": {
-            "unsafeName": "EmailNameAndAddress",
-            "safeName": "EmailNameAndAddress"
+            "unsafeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaCcOneOf1Items1",
+            "safeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaCcOneOf1Items1"
           }
-        }
+        },
+        "displayName": "EmailNameAndAddress"
       },
       "shape": {
         "properties": [
@@ -12650,6 +12668,7 @@
                 }
               },
               "typeId": "V1EmailPostRequestBodyContentApplicationJsonSchemaCcOneOf1Items1",
+              "displayName": "EmailNameAndAddress",
               "inline": false,
               "type": "named"
             },
@@ -12677,24 +12696,25 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "EmailDataList",
+          "originalName": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc1",
           "camelCase": {
-            "unsafeName": "emailDataList",
-            "safeName": "emailDataList"
+            "unsafeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaCc1",
+            "safeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaCc1"
           },
           "snakeCase": {
-            "unsafeName": "email_data_list",
-            "safeName": "email_data_list"
+            "unsafeName": "v_1_email_post_request_body_content_application_json_schema_cc_1",
+            "safeName": "v_1_email_post_request_body_content_application_json_schema_cc_1"
           },
           "screamingSnakeCase": {
-            "unsafeName": "EMAIL_DATA_LIST",
-            "safeName": "EMAIL_DATA_LIST"
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_CC_1",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_CC_1"
           },
           "pascalCase": {
-            "unsafeName": "EmailDataList",
-            "safeName": "EmailDataList"
+            "unsafeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc1",
+            "safeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc1"
           }
-        }
+        },
+        "displayName": "EmailDataList"
       },
       "shape": {
         "aliasOf": {
@@ -12835,6 +12855,7 @@
                 }
               },
               "typeId": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc0",
+              "displayName": "EmailData",
               "inline": false,
               "type": "named"
             }
@@ -12865,6 +12886,7 @@
                 }
               },
               "typeId": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc1",
+              "displayName": "EmailDataList",
               "inline": false,
               "type": "named"
             }
@@ -12892,24 +12914,25 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "EmailNameAndAddress",
+          "originalName": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc01",
           "camelCase": {
-            "unsafeName": "emailNameAndAddress",
-            "safeName": "emailNameAndAddress"
+            "unsafeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaBcc01",
+            "safeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaBcc01"
           },
           "snakeCase": {
-            "unsafeName": "email_name_and_address",
-            "safeName": "email_name_and_address"
+            "unsafeName": "v_1_email_post_request_body_content_application_json_schema_bcc_01",
+            "safeName": "v_1_email_post_request_body_content_application_json_schema_bcc_01"
           },
           "screamingSnakeCase": {
-            "unsafeName": "EMAIL_NAME_AND_ADDRESS",
-            "safeName": "EMAIL_NAME_AND_ADDRESS"
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_BCC_01",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_BCC_01"
           },
           "pascalCase": {
-            "unsafeName": "EmailNameAndAddress",
-            "safeName": "EmailNameAndAddress"
+            "unsafeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc01",
+            "safeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc01"
           }
-        }
+        },
+        "displayName": "EmailNameAndAddress"
       },
       "shape": {
         "properties": [
@@ -13027,24 +13050,25 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "EmailData",
+          "originalName": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc0",
           "camelCase": {
-            "unsafeName": "emailData",
-            "safeName": "emailData"
+            "unsafeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaBcc0",
+            "safeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaBcc0"
           },
           "snakeCase": {
-            "unsafeName": "email_data",
-            "safeName": "email_data"
+            "unsafeName": "v_1_email_post_request_body_content_application_json_schema_bcc_0",
+            "safeName": "v_1_email_post_request_body_content_application_json_schema_bcc_0"
           },
           "screamingSnakeCase": {
-            "unsafeName": "EMAIL_DATA",
-            "safeName": "EMAIL_DATA"
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_BCC_0",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_BCC_0"
           },
           "pascalCase": {
-            "unsafeName": "EmailData",
-            "safeName": "EmailData"
+            "unsafeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc0",
+            "safeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc0"
           }
-        }
+        },
+        "displayName": "EmailData"
       },
       "shape": {
         "members": [
@@ -13086,6 +13110,7 @@
                 }
               },
               "typeId": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc01",
+              "displayName": "EmailNameAndAddress",
               "inline": false,
               "type": "named"
             },
@@ -13113,24 +13138,25 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "EmailNameAndAddress",
+          "originalName": "V1EmailPostRequestBodyContentApplicationJsonSchemaBccOneOf1Items1",
           "camelCase": {
-            "unsafeName": "emailNameAndAddress",
-            "safeName": "emailNameAndAddress"
+            "unsafeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaBccOneOf1Items1",
+            "safeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaBccOneOf1Items1"
           },
           "snakeCase": {
-            "unsafeName": "email_name_and_address",
-            "safeName": "email_name_and_address"
+            "unsafeName": "v_1_email_post_request_body_content_application_json_schema_bcc_one_of_1_items_1",
+            "safeName": "v_1_email_post_request_body_content_application_json_schema_bcc_one_of_1_items_1"
           },
           "screamingSnakeCase": {
-            "unsafeName": "EMAIL_NAME_AND_ADDRESS",
-            "safeName": "EMAIL_NAME_AND_ADDRESS"
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_BCC_ONE_OF_1_ITEMS_1",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_BCC_ONE_OF_1_ITEMS_1"
           },
           "pascalCase": {
-            "unsafeName": "EmailNameAndAddress",
-            "safeName": "EmailNameAndAddress"
+            "unsafeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaBccOneOf1Items1",
+            "safeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaBccOneOf1Items1"
           }
-        }
+        },
+        "displayName": "EmailNameAndAddress"
       },
       "shape": {
         "properties": [
@@ -13307,6 +13333,7 @@
                 }
               },
               "typeId": "V1EmailPostRequestBodyContentApplicationJsonSchemaBccOneOf1Items1",
+              "displayName": "EmailNameAndAddress",
               "inline": false,
               "type": "named"
             },
@@ -13334,24 +13361,25 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "EmailDataList",
+          "originalName": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc1",
           "camelCase": {
-            "unsafeName": "emailDataList",
-            "safeName": "emailDataList"
+            "unsafeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaBcc1",
+            "safeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaBcc1"
           },
           "snakeCase": {
-            "unsafeName": "email_data_list",
-            "safeName": "email_data_list"
+            "unsafeName": "v_1_email_post_request_body_content_application_json_schema_bcc_1",
+            "safeName": "v_1_email_post_request_body_content_application_json_schema_bcc_1"
           },
           "screamingSnakeCase": {
-            "unsafeName": "EMAIL_DATA_LIST",
-            "safeName": "EMAIL_DATA_LIST"
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_BCC_1",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_BCC_1"
           },
           "pascalCase": {
-            "unsafeName": "EmailDataList",
-            "safeName": "EmailDataList"
+            "unsafeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc1",
+            "safeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc1"
           }
-        }
+        },
+        "displayName": "EmailDataList"
       },
       "shape": {
         "aliasOf": {
@@ -13492,6 +13520,7 @@
                 }
               },
               "typeId": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc0",
+              "displayName": "EmailData",
               "inline": false,
               "type": "named"
             }
@@ -13522,6 +13551,7 @@
                 }
               },
               "typeId": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc1",
+              "displayName": "EmailDataList",
               "inline": false,
               "type": "named"
             }
@@ -13816,24 +13846,25 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "EmailNameAndAddress",
+          "originalName": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList0",
           "camelCase": {
-            "unsafeName": "emailNameAndAddress",
-            "safeName": "emailNameAndAddress"
+            "unsafeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList0",
+            "safeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList0"
           },
           "snakeCase": {
-            "unsafeName": "email_name_and_address",
-            "safeName": "email_name_and_address"
+            "unsafeName": "v_1_email_post_request_body_content_application_json_schema_reply_to_list_0",
+            "safeName": "v_1_email_post_request_body_content_application_json_schema_reply_to_list_0"
           },
           "screamingSnakeCase": {
-            "unsafeName": "EMAIL_NAME_AND_ADDRESS",
-            "safeName": "EMAIL_NAME_AND_ADDRESS"
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_REPLY_TO_LIST_0",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_REPLY_TO_LIST_0"
           },
           "pascalCase": {
-            "unsafeName": "EmailNameAndAddress",
-            "safeName": "EmailNameAndAddress"
+            "unsafeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList0",
+            "safeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList0"
           }
-        }
+        },
+        "displayName": "EmailNameAndAddress"
       },
       "shape": {
         "properties": [
@@ -14086,24 +14117,25 @@
           "packagePath": []
         },
         "name": {
-          "originalName": "EmailList",
+          "originalName": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList1",
           "camelCase": {
-            "unsafeName": "emailList",
-            "safeName": "emailList"
+            "unsafeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList1",
+            "safeName": "v1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList1"
           },
           "snakeCase": {
-            "unsafeName": "email_list",
-            "safeName": "email_list"
+            "unsafeName": "v_1_email_post_request_body_content_application_json_schema_reply_to_list_1",
+            "safeName": "v_1_email_post_request_body_content_application_json_schema_reply_to_list_1"
           },
           "screamingSnakeCase": {
-            "unsafeName": "EMAIL_LIST",
-            "safeName": "EMAIL_LIST"
+            "unsafeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_REPLY_TO_LIST_1",
+            "safeName": "V_1_EMAIL_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_REPLY_TO_LIST_1"
           },
           "pascalCase": {
-            "unsafeName": "EmailList",
-            "safeName": "EmailList"
+            "unsafeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList1",
+            "safeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList1"
           }
-        }
+        },
+        "displayName": "EmailList"
       },
       "shape": {
         "aliasOf": {
@@ -14246,6 +14278,7 @@
                 }
               },
               "typeId": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList0",
+              "displayName": "EmailNameAndAddress",
               "inline": false,
               "type": "named"
             },
@@ -14277,6 +14310,7 @@
                 }
               },
               "typeId": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList1",
+              "displayName": "EmailList",
               "inline": false,
               "type": "named"
             }
@@ -15899,7 +15933,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "fb433907",
+                "id": "ea741a8d",
                 "url": "/v1/search/vals",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -19377,7 +19411,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "850c7f51",
+                "id": "dc1adde8",
                 "url": "/v1/alias/username",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
@@ -20262,7 +20296,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "8c64beb4",
+                "id": "dd4a6f0f",
                 "url": "/v1/alias/username/val_name",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
@@ -22124,7 +22158,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "b72a473c",
+                "id": "4f5d4e77",
                 "url": "/v1/me",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -23144,7 +23178,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "2e60e8be",
+                "id": "30b884c0",
                 "url": "/v1/me/likes",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -26734,7 +26768,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "1c9763ba",
+                "id": "6c2b8ebd",
                 "url": "/v1/me/comments",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -30073,7 +30107,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "117d5ee4",
+                "id": "1f947562",
                 "url": "/v1/me/references",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -32693,7 +32727,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "abbf7204",
+                "id": "d3560433",
                 "url": "/v1/blob",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -34164,7 +34198,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "41092c3e",
+                "id": "cb1d7703",
                 "url": "/v1/users/user_id",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
@@ -35098,7 +35132,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "160506bb",
+                "id": "f25490b9",
                 "url": "/v1/users/user_id/vals",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
@@ -38675,7 +38709,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "752f15e1",
+                "id": "82362fd5",
                 "url": "/v1/sqlite/execute",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -39566,6 +39600,7 @@
                   },
                   "typeId": "ResultSet",
                   "inline": false,
+                  "displayName": "ResultSet",
                   "type": "named"
                 },
                 "docs": "Default Response",
@@ -39802,7 +39837,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "224fa966",
+                "id": "409b7de8",
                 "url": "/v1/sqlite/batch",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -41484,6 +41519,7 @@
                             },
                             "typeId": "ResultSet",
                             "inline": false,
+                            "displayName": "ResultSet",
                             "type": "named"
                           },
                           "type": "list"
@@ -41584,6 +41620,7 @@
                       },
                       "typeId": "ResultSet",
                       "inline": false,
+                      "displayName": "ResultSet",
                       "type": "named"
                     },
                     "type": "list"
@@ -41873,7 +41910,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "8ce5477",
+                "id": "c6877997",
                 "url": "/v1/eval",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -42334,7 +42371,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "fce6ae4d",
+                "id": "25c79131",
                 "url": "/v1/eval/blackcurrant....................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
@@ -43571,7 +43608,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "a2854f47",
+                "id": "af731fc",
                 "url": "/v1/vals",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -45820,7 +45857,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "3d8c936a",
+                "id": "c3f09115",
                 "url": "/v1/vals/val_id",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
@@ -47869,7 +47906,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "64d81836",
+                "id": "1e58669a",
                 "url": "/v1/vals/val_id",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
@@ -48652,7 +48689,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "8c54bc5d",
+                "id": "e097d3eb",
                 "url": "/v1/vals/val_id/versions",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
@@ -50256,7 +50293,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "107ae60a",
+                "id": "340c7d45",
                 "url": "/v1/vals/val_id/versions",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
@@ -52432,7 +52469,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "7db99d6d",
+                "id": "8de53196",
                 "url": "/v1/vals/val_id/versions/1",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
@@ -54805,7 +54842,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "3107774b",
+                "id": "98dfd87f",
                 "url": "/v1/vals/val_id/evaluations/evaluation_id/cancel",
                 "endpointHeaders": [],
                 "endpointPathParameters": [
@@ -55869,7 +55906,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "5cb35f2e",
+                "id": "ef8a0662",
                 "url": "/v1/email",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],

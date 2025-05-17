@@ -2274,6 +2274,7 @@
         "variants": [
           {
             "discriminantValue": "url",
+            "displayName": "url",
             "additionalProperties": {
               "extends": [
                 "Source_Url"
@@ -2283,6 +2284,7 @@
           },
           {
             "discriminantValue": "file",
+            "displayName": "file",
             "additionalProperties": {
               "extends": [
                 "Source_File"
@@ -2380,6 +2382,7 @@
         "variants": [
           {
             "discriminantValue": "QUEUED",
+            "displayName": "QUEUED",
             "additionalProperties": {
               "extends": [
                 "State_Queued"
@@ -2389,6 +2392,7 @@
           },
           {
             "discriminantValue": "IN_PROGRESS",
+            "displayName": "IN_PROGRESS",
             "additionalProperties": {
               "extends": [
                 "State_InProgress"
@@ -2398,6 +2402,7 @@
           },
           {
             "discriminantValue": "COMPLETED",
+            "displayName": "COMPLETED",
             "additionalProperties": {
               "extends": [
                 "State_Completed"
@@ -2407,6 +2412,7 @@
           },
           {
             "discriminantValue": "FAILED",
+            "displayName": "FAILED",
             "additionalProperties": {
               "extends": [
                 "State_Failed"

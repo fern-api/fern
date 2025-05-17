@@ -5854,6 +5854,7 @@
         "variants": [
           {
             "discriminantValue": "STRING",
+            "displayName": "STRING",
             "additionalProperties": {
               "extends": [
                 "WorkflowRequestStringInputRequest"
@@ -5863,6 +5864,7 @@
           },
           {
             "discriminantValue": "JSON",
+            "displayName": "JSON",
             "additionalProperties": {
               "extends": [
                 "WorkflowRequestJSONInputRequest"
@@ -5872,6 +5874,7 @@
           },
           {
             "discriminantValue": "CHAT_HISTORY",
+            "displayName": "CHAT_HISTORY",
             "additionalProperties": {
               "extends": [
                 "WorkflowRequestChatHistoryInputRequest"

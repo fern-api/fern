@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { TypeId } from "../../commons/types/TypeId";
 import { FernFilepath } from "../../commons/types/FernFilepath";
 import { Name } from "../../commons/types/Name";
+import { DisplayName } from "../../commons/types/DisplayName";
 
 export const DeclaredTypeName: core.serialization.ObjectSchema<
     serializers.DeclaredTypeName.Raw,
@@ -16,6 +17,7 @@ export const DeclaredTypeName: core.serialization.ObjectSchema<
     typeId: TypeId,
     fernFilepath: FernFilepath,
     name: Name,
+    displayName: DisplayName.optional(),
 });
 
 export declare namespace DeclaredTypeName {
@@ -23,5 +25,6 @@ export declare namespace DeclaredTypeName {
         typeId: TypeId.Raw;
         fernFilepath: FernFilepath.Raw;
         name: Name.Raw;
+        displayName?: DisplayName.Raw | null;
     }
 }

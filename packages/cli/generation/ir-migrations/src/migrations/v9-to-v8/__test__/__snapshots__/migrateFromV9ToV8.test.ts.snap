@@ -184,6 +184,7 @@ exports[`migrateFromV9ToV8 > migrates maps to list 1`] = `
       "docs": undefined,
       "examples": [],
       "name": {
+        "displayName": undefined,
         "fernFilepath": {
           "allParts": [
             {

@@ -101,6 +101,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     ],
                     "file": null
                 },
+                "displayName": null,
                 "typeId": "type_imported:RootString"
             },
             "shape": {
@@ -205,6 +206,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_y:IntegerAlias"
             },
             "shape": {
@@ -348,6 +350,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                         }
                     }
                 },
+                "displayName": null,
                 "typeId": "type_imported/x:StringAlias"
             },
             "shape": {
@@ -1230,4 +1233,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `3516675`;
+exports[`dependencies > file dependencies 1`] = `3539632`;

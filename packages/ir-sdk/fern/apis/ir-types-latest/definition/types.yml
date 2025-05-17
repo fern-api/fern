@@ -46,6 +46,7 @@ types:
       typeId: commons.TypeId
       fernFilepath: commons.FernFilepath
       name: commons.Name
+      displayName: optional<commons.DisplayName>
 
   Type:
     discriminant:
@@ -187,6 +188,7 @@ types:
       typeId: commons.TypeId
       fernFilepath: commons.FernFilepath
       name: commons.Name
+      displayName: optional<commons.DisplayName>
       default: optional<NamedTypeDefault>
       inline:
         type: optional<boolean>
