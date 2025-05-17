@@ -216,6 +216,9 @@ navigation:
           - section: Changelogs
             slug: changelog
             contents:
+              - changelog: ./pages/changelogs/ts-sdk
+                title: TypeScript
+                slug: ts            
               - changelog: ./pages/changelogs/python-sdk
                 title: Python
                 slug: python
@@ -233,7 +236,7 @@ navigation:
                 slug: php
               - changelog: ./pages/changelogs/ruby-sdk
                 title: Ruby
-                slug: ruby
+                slug: ruby                
       - section: Capabilities
         contents:
           - page: Strongly Typed
