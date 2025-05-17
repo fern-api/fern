@@ -1,5 +1,14 @@
 - changelogEntry:
     - summary: |
+        Add logging of filepaths when markdown parsing fails to help with debugging. This includes logging the 
+        absolute filepath of the markdown file being parsed and any associated image paths that were 
+        being processed when the error occurred.
+      type: fix
+  irVersion: 57
+  version: 0.61.20
+
+- changelogEntry:
+    - summary: |
         Correctly build paths for `x-fern-examples` when compiling v2 examples.
         AsyncAPI endpoints now have the correct associated path parameters.
       type: fix

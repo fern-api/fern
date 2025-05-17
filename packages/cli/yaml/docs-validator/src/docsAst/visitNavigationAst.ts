@@ -1,4 +1,4 @@
-import { readFile } from "fs/promises";
+import { readdir, readFile } from "fs/promises";
 
 import { docsYml } from "@fern-api/configuration-loader";
 import { noop, visitObjectAsync } from "@fern-api/core-utils";
@@ -203,18 +203,54 @@ async function visitNavigationItem({
             );
         }
     }
+
+    if (navigationItemIsChangelog(navigationItem)) {
+        const changelogDir = resolve(dirname(absoluteFilepathToConfiguration), navigationItem.changelog);
+        context.logger.trace(`Starting changelog processing for directory: ${changelogDir}`);
+        
+        if (await doesPathExist(changelogDir)) {
+            const files = await readdir(changelogDir);
+            context.logger.trace(`Validting ${files.length} files in changelog directory ${changelogDir}`);
+            
+            await Promise.all(
+                files
+                    .filter(file => file.endsWith('.md') || file.endsWith('.mdx'))
+                    .map(async file => {
+                        const absoluteFilepath = resolve(changelogDir, file);
+                        const content = (await readFile(absoluteFilepath)).toString();
+                        context.logger.trace(`Validating markdown file: ${absoluteFilepath}`);
+                        
+                        await visitor.markdownPage?.(
+                            {
+                                title: file,
+                                content,
+                                absoluteFilepath
+                            },
+                            [...nodePath, "changelog", file]
+                        );
+                    })
+            );
+        } else {
+            context.logger.trace(`Changelog directory does not exist: ${changelogDir}`);
+        }
+    }
+}
+
+function navigationItemIsChangelog(item: docsYml.RawSchemas.NavigationItem): item is docsYml.RawSchemas.ChangelogConfiguration {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (item as docsYml.RawSchemas.ChangelogConfiguration)?.changelog != null;
 }
 
 function navigationItemIsPage(item: docsYml.RawSchemas.NavigationItem): item is docsYml.RawSchemas.PageConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as docsYml.RawSchemas.PageConfiguration).page != null;
+    return (item as docsYml.RawSchemas.PageConfiguration)?.page != null;
 }
 
 function navigationItemIsApi(
     item: docsYml.RawSchemas.NavigationItem
 ): item is docsYml.RawSchemas.ApiReferenceConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as docsYml.RawSchemas.ApiReferenceConfiguration).api != null;
+    return (item as docsYml.RawSchemas.ApiReferenceConfiguration)?.api != null;
 }
 
 function navigationConfigIsTabbed(

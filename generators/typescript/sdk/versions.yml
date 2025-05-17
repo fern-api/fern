@@ -72,7 +72,7 @@
 
 - version: 0.50.0
   changelogEntry:
-    - summary: Return HttpResponsePromise<T> from endpoint functions with withRawResponse() support
+    - summary: Return `HttpResponsePromise<T>` from endpoint functions with withRawResponse() support
       type: feat
   createdAt: '2025-04-07'
   irVersion: 57
