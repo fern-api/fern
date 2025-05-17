@@ -49,7 +49,7 @@ groups:
   python:
     generators:
       - name: fernapi/fern-pydantic-model
-        version: 1.4.2
+        version: 1.4.7
         output:
           location: pypi
           url: pypi.buildwithfern.com
@@ -58,7 +58,7 @@ groups:
           # wrapped_aliases: true
           include_union_utils: true
           frozen: true
-          version: v2
+          version: both
           enum_type: python_enums
   go:
     generators:
