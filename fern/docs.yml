@@ -644,6 +644,9 @@ navigation:
         api-name: public-api
         icon: fa-regular fa-pro
         paginated: true
+        snippets:
+          python: fern-api
+          typescript: '@fern-api/node-sdk'
         audiences:
           - external
         layout:
