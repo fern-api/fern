@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Fix AsyncAPI parser to properly handle reference objects in headers and query parameters.
+      type: fix
+  irVersion: 57
+  version: 0.61.21
+
+- changelogEntry:
+    - summary: |
         Add logging of filepaths when markdown parsing fails to help with debugging. This includes logging the 
         absolute filepath of the markdown file being parsed and any associated image paths that were 
         being processed when the error occurred.

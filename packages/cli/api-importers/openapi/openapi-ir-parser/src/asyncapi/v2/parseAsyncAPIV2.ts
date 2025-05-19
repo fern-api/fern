@@ -17,7 +17,7 @@ import { getExtension } from "../../getExtension";
 import { FernOpenAPIExtension } from "../../openapi/v3/extensions/fernExtensions";
 import { ParseOpenAPIOptions } from "../../options";
 import { convertAvailability } from "../../schema/convertAvailability";
-import { convertSchema } from "../../schema/convertSchemas";
+import { convertReferenceObject, convertSchema } from "../../schema/convertSchemas";
 import { UndiscriminatedOneOfPrefix, convertUndiscriminatedOneOf } from "../../schema/convertUndiscriminatedOneOf";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
@@ -110,21 +110,41 @@ export function parseAsyncAPIV2({
             if (channel.bindings.ws.headers != null) {
                 const required = channel.bindings.ws.headers.required ?? [];
                 for (const [name, schema] of Object.entries(channel.bindings.ws.headers.properties ?? {})) {
-                    const resolvedHeader = isReferenceObject(schema) ? context.resolveSchemaReference(schema) : schema;
+                    if (isReferenceObject(schema)) {
+                        const resolvedSchema = context.resolveSchemaReference(schema);
+                        headers.push({
+                            name,
+                            schema: convertReferenceObject(
+                                schema,
+                                false,
+                                context,
+                                breadcrumbs,
+                                undefined,
+                                source,
+                                context.namespace
+                            ),
+                            description: resolvedSchema.description,
+                            parameterNameOverride: undefined,
+                            env: undefined,
+                            availability: convertAvailability(resolvedSchema),
+                            source
+                        });
+                        continue;
+                    }
                     headers.push({
                         name,
                         schema: convertSchema(
-                            resolvedHeader,
+                            schema,
                             !required.includes(name),
                             context,
                             [...breadcrumbs, name],
                             source,
                             context.namespace
                         ),
-                        description: resolvedHeader.description,
+                        description: schema.description,
                         parameterNameOverride: undefined,
                         env: undefined,
-                        availability: convertAvailability(resolvedHeader),
+                        availability: convertAvailability(schema),
                         source
                     });
                 }
@@ -133,22 +153,39 @@ export function parseAsyncAPIV2({
             if (channel.bindings.ws.query != null) {
                 const required = channel.bindings.ws.query.required ?? [];
                 for (const [name, schema] of Object.entries(channel.bindings.ws.query.properties ?? {})) {
-                    const resolvedQueryParameter = isReferenceObject(schema)
-                        ? context.resolveSchemaReference(schema)
-                        : schema;
+                    if (isReferenceObject(schema)) {
+                        const resolvedSchema = context.resolveSchemaReference(schema);
+                        queryParameters.push({
+                            name,
+                            schema: convertReferenceObject(
+                                schema,
+                                false,
+                                context,
+                                breadcrumbs,
+                                undefined,
+                                source,
+                                context.namespace
+                            ),
+                            description: resolvedSchema.description,
+                            parameterNameOverride: undefined,
+                            availability: convertAvailability(resolvedSchema),
+                            source
+                        });
+                        continue;
+                    }
                     queryParameters.push({
                         name,
                         schema: convertSchema(
-                            resolvedQueryParameter,
+                            schema,
                             !required.includes(name),
                             context,
                             [...breadcrumbs, name],
                             source,
                             context.namespace
                         ),
-                        description: resolvedQueryParameter.description,
+                        description: schema.description,
                         parameterNameOverride: undefined,
-                        availability: convertAvailability(resolvedQueryParameter),
+                        availability: convertAvailability(schema),
                         source
                     });
                 }
