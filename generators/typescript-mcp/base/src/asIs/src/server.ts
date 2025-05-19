@@ -4,27 +4,27 @@ import { Implementation } from "@modelcontextprotocol/sdk/types.js";
 
 import * as tools from "./tools";
 
-// Read name and version from package.json
 const packageJson = require("../package.json") as any;
 if (!packageJson.name || !packageJson.version) {
     throw new Error("!packageJson.name || !packageJson.version");
 }
 
-// Describe the name and version of an MCP implementation
+// Default MCP implementation (uses name and version from package.json by default).
 export const implementation: Implementation = {
     name: packageJson.name,
     version: packageJson.version
 };
 
-// Describe how to use the MCP server, its features, and its capabilities
-export const serverOptions: ServerOptions = {};
+// Default MCP server options.
+export const serverOptions: ServerOptions = {
+    /* no-op */
+};
 
-// Create an MCP server
 export function createServer(implementation: Implementation, serverOptions?: ServerOptions) {
     return new McpServer(implementation, serverOptions);
 }
 
-// Register MCP tools
+// Default MCP tools.
 export function registerTools(server: McpServer) {
     for (const tool of Object.values(tools)) {
         tool.register(server);

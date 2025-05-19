@@ -52,7 +52,7 @@ export class ToolsGenerator extends FileGenerator<
                                                 parameters: [],
                                                 body: ts.codeblock((writer) => {
                                                     writer.write("return ");
-                                                    writer.write(`""`);
+                                                    writer.write("\"\"");
                                                 })
                                             })
                                         }
@@ -182,11 +182,15 @@ export class ToolDefinitionNode extends ts.AstNode {
         };
 
         const writeExtractParams = (writer: ts.Writer) => {
-            writer.write("const { ");
-            writer.write(partsFromPath?.map((part) => part.key).join(", "));
-            writer.write(hasSchema && hasPartsFromPath ? ", " : "");
-            writer.write(hasSchema ? "...restParams" : "");
-            writer.write(" } = params;");
+            if (hasPartsFromPath) {
+                writer.write("const { ");
+                writer.write(partsFromPath?.map((part) => part.key).join(", "));
+                writer.write(hasSchema && hasPartsFromPath ? ", " : "");
+                writer.write(hasSchema ? "...request" : "");
+                writer.write(" } = params;");
+            } else if (hasSchema) {
+                writer.write("const request = params;");
+            }
         };
 
         writer.writeNode(
@@ -247,17 +251,22 @@ export class ToolDefinitionNode extends ts.AstNode {
                                                                                     ),
                                                                                     method: this.sdkMethodPath,
                                                                                     arguments_: [
-                                                                                        ...partsFromPath?.map((part) =>
-                                                                                            ts.codeblock((writer) => {
-                                                                                                writer.write(part.key);
-                                                                                            })
+                                                                                        ...(partsFromPath ?? []).map(
+                                                                                            (part) =>
+                                                                                                ts.codeblock(
+                                                                                                    (writer) => {
+                                                                                                        writer.write(
+                                                                                                            part.key
+                                                                                                        );
+                                                                                                    }
+                                                                                                )
                                                                                         ),
                                                                                         ...(hasSchema
                                                                                             ? [
                                                                                                   ts.codeblock(
                                                                                                       (writer) => {
                                                                                                           writer.write(
-                                                                                                              "restParams"
+                                                                                                              "request"
                                                                                                           );
                                                                                                       }
                                                                                                   )
@@ -277,7 +286,7 @@ export class ToolDefinitionNode extends ts.AstNode {
                                                                                 name: "content",
                                                                                 value: ts.codeblock((writer) => {
                                                                                     writer.write(
-                                                                                        `[{ type: "text", text: JSON.stringify(result) }]`
+                                                                                        "[{ type: \"text\", text: JSON.stringify(result) }]"
                                                                                     );
                                                                                 })
                                                                             }
