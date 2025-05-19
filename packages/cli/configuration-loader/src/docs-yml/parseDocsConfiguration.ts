@@ -412,6 +412,8 @@ async function getNavigationConfiguration({
         const productNavbars: docsYml.ProductInfo[] = [];
         for (const product of products) {
             const absoluteFilepathToProductFile = resolve(absolutePathToFernFolder, product.path);
+            const productImageFile =
+                product.image != null ? resolve(absolutePathToFernFolder, product.image) : undefined;
             const content = yaml.load((await readFile(absoluteFilepathToProductFile)).toString());
             const result = docsYml.RawSchemas.Serializer.ProductFileConfig.parseOrThrow(content);
 
@@ -441,7 +443,8 @@ async function getNavigationConfiguration({
                 navigation,
                 slug: product.slug,
                 subtitle: product.subtitle,
-                icon: product.icon || "fa-solid fa-code"
+                icon: product.icon || "fa-solid fa-code",
+                image: productImageFile
             });
         }
         return {
