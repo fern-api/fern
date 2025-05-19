@@ -4241,7 +4241,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "&&"
     },
     "FnCall1": {
       "name": "FnCall1",
@@ -4260,7 +4261,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "||"
     },
     "FnCall2": {
       "name": "FnCall2",
@@ -4279,7 +4281,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "=="
     },
     "FnCall3": {
       "name": "FnCall3",
@@ -4298,7 +4301,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "+"
     },
     "FnCall4": {
       "name": "FnCall4",
@@ -4317,7 +4321,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "-"
     },
     "FnCall5": {
       "name": "FnCall5",
@@ -4336,7 +4341,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "*"
     },
     "FnCall6": {
       "name": "FnCall6",
@@ -4355,7 +4361,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "/"
     },
     "FnCall7": {
       "name": "FnCall7",
@@ -4374,7 +4381,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "//"
     },
     "FnCall8": {
       "name": "FnCall8",
@@ -4393,7 +4401,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "<"
     },
     "FnCall9": {
       "name": "FnCall9",
@@ -4412,7 +4421,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "<="
     },
     "FnCall10": {
       "name": "FnCall10",
@@ -4431,7 +4441,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": ">"
     },
     "FnCall11": {
       "name": "FnCall11",
@@ -4450,7 +4461,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": ">="
     },
     "FnCall12": {
       "name": "FnCall12",
@@ -4466,7 +4478,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "!"
     },
     "FnCall13": {
       "name": "FnCall13",
@@ -4485,7 +4498,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "is_substring"
     },
     "FnCall14": {
       "name": "FnCall14",
@@ -4504,7 +4518,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "starts_with"
     },
     "FnCall15": {
       "name": "FnCall15",
@@ -4523,7 +4538,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "ends_with"
     },
     "FnCall16": {
       "name": "FnCall16",
@@ -4539,7 +4555,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "to_lower"
     },
     "FnCall17": {
       "name": "FnCall17",
@@ -4555,7 +4572,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "to_upper"
     },
     "FnCall18": {
       "name": "FnCall18",
@@ -4571,7 +4589,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "has_label"
     },
     "FnCall19": {
       "name": "FnCall19",
@@ -4587,7 +4606,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "has_mcc"
     },
     "FnCall20": {
       "name": "FnCall20",
@@ -4603,7 +4623,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "get property"
     },
     "FnCall": {
       "name": "FnCall",
@@ -4845,7 +4866,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "add_label"
     },
     "ModifyLabels1": {
       "name": "ModifyLabels1",
@@ -4861,7 +4883,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "remove_label"
     },
     "ModifyLabels2": {
       "name": "ModifyLabels2",
@@ -4880,7 +4903,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "set_labels"
     },
     "ModifyLabels3": {
       "name": "ModifyLabels3",
@@ -4896,7 +4920,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "add_mcc"
     },
     "ModifyLabels4": {
       "name": "ModifyLabels4",
@@ -4912,7 +4937,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "remove_mcc"
     },
     "ModifyLabels5": {
       "name": "ModifyLabels5",
@@ -4931,7 +4957,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "set_mcc"
     },
     "ModifyLabels": {
       "name": "ModifyLabels",

@@ -3021,7 +3021,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Intercom User ID"
     },
     "AttachContactToConversationRequestCustomer1": {
       "name": "AttachContactToConversationRequestCustomer1",
@@ -3050,7 +3051,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "User ID"
     },
     "AttachContactToConversationRequestCustomer2": {
       "name": "AttachContactToConversationRequestCustomer2",
@@ -3079,7 +3081,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Email"
     },
     "AttachContactToConversationRequestCustomer": {
       "name": "AttachContactToConversationRequestCustomer",
@@ -7880,7 +7883,8 @@
         "value": {
           "type": "unknown"
         }
-      }
+      },
+      "displayName": "Create contact with email"
     },
     "CreateContactRequest1": {
       "name": "CreateContactRequest1",
@@ -7889,7 +7893,8 @@
         "value": {
           "type": "unknown"
         }
-      }
+      },
+      "displayName": "Create contact with external_id"
     },
     "CreateContactRequest2": {
       "name": "CreateContactRequest2",
@@ -7898,7 +7903,8 @@
         "value": {
           "type": "unknown"
         }
-      }
+      },
+      "displayName": "Create contact with role"
     },
     "create_contact_request": {
       "description": "Payload to create a contact",
@@ -8132,7 +8138,8 @@
         "value": {
           "type": "unknown"
         }
-      }
+      },
+      "displayName": "id required"
     },
     "CreateDataEventRequest1": {
       "name": "CreateDataEventRequest1",
@@ -8141,7 +8148,8 @@
         "value": {
           "type": "unknown"
         }
-      }
+      },
+      "displayName": "user_id required"
     },
     "CreateDataEventRequest2": {
       "name": "CreateDataEventRequest2",
@@ -8150,7 +8158,8 @@
         "value": {
           "type": "unknown"
         }
-      }
+      },
+      "displayName": "email required"
     },
     "create_data_event_request": {
       "description": "",
@@ -8315,7 +8324,8 @@
         "value": {
           "type": "unknown"
         }
-      }
+      },
+      "displayName": "message_type: `email`."
     },
     "CreateMessageRequest1": {
       "name": "CreateMessageRequest1",
@@ -8324,7 +8334,8 @@
         "value": {
           "type": "unknown"
         }
-      }
+      },
+      "displayName": "message_type: `inapp`."
     },
     "create_message_request": {
       "description": "You can create a message",
@@ -8587,7 +8598,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "ID"
     },
     "CreateTicketRequestContactsItems1": {
       "name": "CreateTicketRequestContactsItems1",
@@ -8606,7 +8618,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "External ID"
     },
     "CreateTicketRequestContactsItems2": {
       "name": "CreateTicketRequestContactsItems2",
@@ -8625,7 +8638,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Email"
     },
     "CreateTicketRequestContactsItems": {
       "name": "CreateTicketRequestContactsItems",
@@ -9189,7 +9203,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Intercom User ID"
     },
     "CustomerRequest1": {
       "name": "CustomerRequest1",
@@ -9208,7 +9223,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "User ID"
     },
     "CustomerRequest2": {
       "name": "CustomerRequest2",
@@ -9227,7 +9243,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Email"
     },
     "customer_request": {
       "name": "customer_request",
@@ -11892,7 +11909,8 @@
             "value": "multiple_filter_search_request"
           }
         }
-      }
+      },
+      "displayName": "multiple filter search request"
     },
     "MultipleFilterSearchRequestValue1": {
       "description": "Add a single filter field.",
@@ -11906,7 +11924,8 @@
             "value": "single_filter_search_request"
           }
         }
-      }
+      },
+      "displayName": "single filter search request"
     },
     "MultipleFilterSearchRequestValue": {
       "name": "MultipleFilterSearchRequestValue",
@@ -13034,7 +13053,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Redact Conversation Part Request"
     },
     "RedactConversationRequestOneOf1Type": {
       "description": "The type of resource being redacted.",
@@ -13084,7 +13104,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Redact Conversation Source Request"
     },
     "redact_conversation_request": {
       "name": "redact_conversation_request",
@@ -17957,7 +17978,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "user_id query parameter"
     },
     "EventsGetParametersSchema1": {
       "name": "EventsGetParametersSchema1",
@@ -17975,7 +17997,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "intercom_user_id query parameter"
     },
     "EventsGetParametersSchema2": {
       "name": "EventsGetParametersSchema2",
@@ -17993,7 +18016,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "email query parameter"
     },
     "EventsGetParametersSchema": {
       "name": "EventsGetParametersSchema",

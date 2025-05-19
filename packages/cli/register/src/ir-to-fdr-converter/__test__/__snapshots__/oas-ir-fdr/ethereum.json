@@ -1920,7 +1920,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "proofAccount"
     },
     "EthGetProofResult": {
       "name": "EthGetProofResult",
@@ -2203,7 +2204,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "syncingData"
     },
     "EthSyncingResult": {
       "name": "EthSyncingResult",
