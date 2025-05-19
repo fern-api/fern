@@ -438,14 +438,14 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_petsV1.petsV1",
-        "subpackage_petsV1.pet",
-        "subpackage_petsV1.store",
-        "subpackage_petsV1.user"
+        "subpackage_petsV1/petsV1",
+        "subpackage_petsV1/pet",
+        "subpackage_petsV1/store",
+        "subpackage_petsV1/user"
       ]
     },
-    "subpackage_petsV1.petsV1": {
-      "subpackageId": "subpackage_petsV1.petsV1",
+    "subpackage_petsV1/petsV1": {
+      "subpackageId": "subpackage_petsV1/petsV1",
       "name": "petsV1",
       "endpoints": [],
       "webhooks": [],
@@ -460,8 +460,8 @@
       ],
       "subpackages": []
     },
-    "subpackage_petsV1.pet": {
-      "subpackageId": "subpackage_petsV1.pet",
+    "subpackage_petsV1/pet": {
+      "subpackageId": "subpackage_petsV1/pet",
       "name": "pet",
       "endpoints": [
         {
@@ -1567,8 +1567,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_petsV1.store": {
-      "subpackageId": "subpackage_petsV1.store",
+    "subpackage_petsV1/store": {
+      "subpackageId": "subpackage_petsV1/store",
       "name": "store",
       "endpoints": [
         {
@@ -1979,8 +1979,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_petsV1.user": {
-      "subpackageId": "subpackage_petsV1.user",
+    "subpackage_petsV1/user": {
+      "subpackageId": "subpackage_petsV1/user",
       "name": "user",
       "endpoints": [
         {
@@ -2675,14 +2675,14 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_petsV2.petsV2",
-        "subpackage_petsV2.pet",
-        "subpackage_petsV2.store",
-        "subpackage_petsV2.user"
+        "subpackage_petsV2/petsV2",
+        "subpackage_petsV2/pet",
+        "subpackage_petsV2/store",
+        "subpackage_petsV2/user"
       ]
     },
-    "subpackage_petsV2.petsV2": {
-      "subpackageId": "subpackage_petsV2.petsV2",
+    "subpackage_petsV2/petsV2": {
+      "subpackageId": "subpackage_petsV2/petsV2",
       "name": "petsV2",
       "endpoints": [],
       "webhooks": [],
@@ -2697,8 +2697,8 @@
       ],
       "subpackages": []
     },
-    "subpackage_petsV2.pet": {
-      "subpackageId": "subpackage_petsV2.pet",
+    "subpackage_petsV2/pet": {
+      "subpackageId": "subpackage_petsV2/pet",
       "name": "pet",
       "endpoints": [
         {
@@ -3804,8 +3804,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_petsV2.store": {
-      "subpackageId": "subpackage_petsV2.store",
+    "subpackage_petsV2/store": {
+      "subpackageId": "subpackage_petsV2/store",
       "name": "store",
       "endpoints": [
         {
@@ -4216,8 +4216,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_petsV2.user": {
-      "subpackageId": "subpackage_petsV2.user",
+    "subpackage_petsV2/user": {
+      "subpackageId": "subpackage_petsV2/user",
       "name": "user",
       "endpoints": [
         {
@@ -4914,6 +4914,10 @@
       "subpackage_petsV1",
       "subpackage_petsV2"
     ]
+  },
+  "auth": {
+    "type": "bearerAuth",
+    "tokenName": "token"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

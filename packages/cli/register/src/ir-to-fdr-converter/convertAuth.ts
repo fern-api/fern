@@ -12,8 +12,8 @@ export function convertAuth(
     ir: Ir.ir.IntermediateRepresentation,
     playgroundConfig?: PlaygroundConfig
 ): FdrCjsSdk.api.v1.register.ApiAuth | undefined {
-    const scheme = auth.schemes[0];
-    if (auth.schemes.length === 1 && scheme != null) {
+    if (auth.schemes.length > 0 && auth.schemes[0] != null) {
+        const scheme = auth.schemes[0];
         switch (scheme.type) {
             case "basic":
                 return {

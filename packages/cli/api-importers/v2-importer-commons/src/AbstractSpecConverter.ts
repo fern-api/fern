@@ -90,6 +90,52 @@ export abstract class AbstractSpecConverter<
         };
     }
 
+    protected removeXFernIgnores({
+        document,
+        breadcrumbs = []
+    }: {
+        document: unknown;
+        breadcrumbs?: string[];
+    }): unknown {
+        if (Array.isArray(document)) {
+            return document
+                .filter((item, index) => {
+                    const shouldIgnore = new FernIgnoreExtension({
+                        breadcrumbs: [...breadcrumbs, String(index)],
+                        operation: item,
+                        context: this.context
+                    }).convert();
+                    return !shouldIgnore;
+                })
+                .map((item, index) =>
+                    this.removeXFernIgnores({
+                        document: item,
+                        breadcrumbs: [...breadcrumbs, String(index)]
+                    })
+                );
+        } else if (document != null && typeof document === "object") {
+            return Object.fromEntries(
+                Object.entries(document)
+                    .filter(([key, value]) => {
+                        const shouldIgnore = new FernIgnoreExtension({
+                            breadcrumbs: [...breadcrumbs, key],
+                            operation: value,
+                            context: this.context
+                        }).convert();
+                        return !shouldIgnore;
+                    })
+                    .map(([key, value]) => [
+                        key,
+                        this.removeXFernIgnores({
+                            document: value,
+                            breadcrumbs: [...breadcrumbs, key]
+                        })
+                    ])
+            );
+        }
+        return document;
+    }
+
     protected finalizeIr(): IntermediateRepresentation {
         const ir = {
             ...this.ir,
@@ -141,6 +187,58 @@ export abstract class AbstractSpecConverter<
         }
     }
 
+    protected async resolveAllExternalRefs({ spec }: { spec: unknown }): Promise<unknown> {
+        const queue = [spec];
+
+        while (queue.length > 0) {
+            const current = queue.shift();
+            if (current == null) {
+                continue;
+            }
+
+            if (Array.isArray(current)) {
+                await this.resolveExternalRefsInArray(current, queue);
+            } else if (typeof current === "object") {
+                await this.resolveExternalRefsInObject(current as Record<string, unknown>, queue);
+            }
+        }
+        return spec;
+    }
+
+    private async resolveExternalRefsInArray(arr: unknown[], queue: unknown[]): Promise<void> {
+        for (let i = 0; i < arr.length; i++) {
+            arr[i] = await this.resolveReferenceChain(arr[i], queue);
+        }
+    }
+
+    private async resolveExternalRefsInObject(obj: Record<string, unknown>, queue: unknown[]): Promise<void> {
+        for (const [key, value] of Object.entries(obj)) {
+            obj[key] = await this.resolveReferenceChain(value, queue);
+        }
+    }
+
+    private async resolveReferenceChain(value: unknown, queue: unknown[]): Promise<unknown | null> {
+        let resolvedRefVal = value;
+        if (!this.context.isReferenceObject(resolvedRefVal)) {
+            queue.push(resolvedRefVal);
+            return value;
+        }
+
+        while (this.context.isReferenceObject(resolvedRefVal)) {
+            const isExternalRef = this.context.isExternalReference(resolvedRefVal.$ref);
+            const nextResolvedRef = await this.context.resolveMaybeExternalReference({ $ref: resolvedRefVal.$ref });
+            if (nextResolvedRef.resolved) {
+                resolvedRefVal = nextResolvedRef.value;
+                if (isExternalRef) {
+                    return resolvedRefVal;
+                }
+            } else {
+                return value;
+            }
+        }
+        return value;
+    }
+
     protected addEndpointToIr({
         endpoint,
         audiences,
@@ -162,7 +260,7 @@ export abstract class AbstractSpecConverter<
         const finalpart = allParts[allParts.length - 1];
 
         if (pkg.service == null) {
-            pkg.service = serviceName ?? `service_${group.join(".")}`;
+            pkg.service = serviceName ?? `service_${group.map((part) => camelCase(part)).join("/")}`;
         }
 
         if (this.ir.services[pkg.service] == null) {
@@ -311,104 +409,6 @@ export abstract class AbstractSpecConverter<
         }
     }
 
-    protected async resolveAllExternalRefs({ spec }: { spec: unknown }): Promise<unknown> {
-        const queue = [spec];
-
-        while (queue.length > 0) {
-            const current = queue.shift();
-            if (current == null) {
-                continue;
-            }
-
-            if (Array.isArray(current)) {
-                await this.resolveExternalRefsInArray(current, queue);
-            } else if (typeof current === "object") {
-                await this.resolveExternalRefsInObject(current as Record<string, unknown>, queue);
-            }
-        }
-        return spec;
-    }
-
-    private async resolveExternalRefsInArray(arr: unknown[], queue: unknown[]): Promise<void> {
-        for (let i = 0; i < arr.length; i++) {
-            arr[i] = await this.resolveReferenceChain(arr[i], queue);
-        }
-    }
-
-    private async resolveExternalRefsInObject(obj: Record<string, unknown>, queue: unknown[]): Promise<void> {
-        for (const [key, value] of Object.entries(obj)) {
-            obj[key] = await this.resolveReferenceChain(value, queue);
-        }
-    }
-
-    private async resolveReferenceChain(value: unknown, queue: unknown[]): Promise<unknown | null> {
-        let resolvedRefVal = value;
-        if (!this.context.isReferenceObject(resolvedRefVal)) {
-            queue.push(resolvedRefVal);
-            return value;
-        }
-
-        while (this.context.isReferenceObject(resolvedRefVal)) {
-            const isExternalRef = this.context.isExternalReference(resolvedRefVal.$ref);
-            const nextResolvedRef = await this.context.resolveMaybeExternalReference({ $ref: resolvedRefVal.$ref });
-            if (nextResolvedRef.resolved) {
-                resolvedRefVal = nextResolvedRef.value;
-                if (isExternalRef) {
-                    return resolvedRefVal;
-                }
-            } else {
-                return value;
-            }
-        }
-        return value;
-    }
-
-    protected removeXFernIgnores({
-        document,
-        breadcrumbs = []
-    }: {
-        document: unknown;
-        breadcrumbs?: string[];
-    }): unknown {
-        if (Array.isArray(document)) {
-            return document
-                .filter((item, index) => {
-                    const shouldIgnore = new FernIgnoreExtension({
-                        breadcrumbs: [...breadcrumbs, String(index)],
-                        operation: item,
-                        context: this.context
-                    }).convert();
-                    return !shouldIgnore;
-                })
-                .map((item, index) =>
-                    this.removeXFernIgnores({
-                        document: item,
-                        breadcrumbs: [...breadcrumbs, String(index)]
-                    })
-                );
-        } else if (document != null && typeof document === "object") {
-            return Object.fromEntries(
-                Object.entries(document)
-                    .filter(([key, value]) => {
-                        const shouldIgnore = new FernIgnoreExtension({
-                            breadcrumbs: [...breadcrumbs, key],
-                            operation: value,
-                            context: this.context
-                        }).convert();
-                        return !shouldIgnore;
-                    })
-                    .map(([key, value]) => [
-                        key,
-                        this.removeXFernIgnores({
-                            document: value,
-                            breadcrumbs: [...breadcrumbs, key]
-                        })
-                    ])
-            );
-        }
-        return document;
-    }
-
     protected createNewService({
         allParts,
         finalpart
@@ -476,7 +476,7 @@ export abstract class AbstractSpecConverter<
         for (let i = 0; i < groupParts.length; i++) {
             const name = camelCase(groupParts[i]);
             const camelCasedGroupParts = groupParts.slice(0, i + 1).map((part) => camelCase(part));
-            const subpackageId = `subpackage_${camelCasedGroupParts.join(".")}`;
+            const subpackageId = `subpackage_${camelCasedGroupParts.join("/")}`;
             if (this.ir.subpackages[subpackageId] == null) {
                 this.ir.subpackages[subpackageId] = {
                     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

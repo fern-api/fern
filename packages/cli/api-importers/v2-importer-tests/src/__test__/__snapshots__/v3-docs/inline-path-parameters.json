@@ -1149,7 +1149,7 @@
         }
       ]
     },
-    "service_Organizations": {
+    "service_organizations": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -2000,7 +2000,7 @@
           }
         }
       },
-      "service": "service_Organizations",
+      "service": "service_organizations",
       "types": [],
       "errors": [],
       "subpackages": [],

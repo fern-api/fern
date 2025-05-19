@@ -50736,8 +50736,8 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_sites.activityLogs",
-        "subpackage_sites.scripts"
+        "subpackage_sites/activityLogs",
+        "subpackage_sites/scripts"
       ]
     },
     "subpackage_orders": {
@@ -59648,7 +59648,7 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_pages.scripts"
+        "subpackage_pages/scripts"
       ]
     },
     "subpackage_token": {
@@ -59874,8 +59874,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_sites.activityLogs": {
-      "subpackageId": "subpackage_sites.activityLogs",
+    "subpackage_sites/activityLogs": {
+      "subpackageId": "subpackage_sites/activityLogs",
       "name": "activityLogs",
       "endpoints": [
         {
@@ -60999,12 +60999,12 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_collections.fields",
-        "subpackage_collections.items"
+        "subpackage_collections/fields",
+        "subpackage_collections/items"
       ]
     },
-    "subpackage_collections.fields": {
-      "subpackageId": "subpackage_collections.fields",
+    "subpackage_collections/fields": {
+      "subpackageId": "subpackage_collections/fields",
       "name": "fields",
       "endpoints": [
         {
@@ -61492,8 +61492,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_collections.items": {
-      "subpackageId": "subpackage_collections.items",
+    "subpackage_collections/items": {
+      "subpackageId": "subpackage_collections/items",
       "name": "items",
       "endpoints": [
         {
@@ -64604,8 +64604,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_pages.scripts": {
-      "subpackageId": "subpackage_pages.scripts",
+    "subpackage_pages/scripts": {
+      "subpackageId": "subpackage_pages/scripts",
       "name": "scripts",
       "endpoints": [
         {
@@ -65200,8 +65200,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_sites.scripts": {
-      "subpackageId": "subpackage_sites.scripts",
+    "subpackage_sites/scripts": {
+      "subpackageId": "subpackage_sites/scripts",
       "name": "scripts",
       "endpoints": [
         {
@@ -71683,6 +71683,10 @@
       "subpackage_products",
       "subpackage_ecommerce"
     ]
+  },
+  "auth": {
+    "type": "bearerAuth",
+    "tokenName": "token"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

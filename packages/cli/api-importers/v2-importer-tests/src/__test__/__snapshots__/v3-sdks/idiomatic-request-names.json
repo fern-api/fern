@@ -1190,7 +1190,7 @@
     }
   },
   "services": {
-    "service_OrganizationUsers": {
+    "service_organizationUsers": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -4282,7 +4282,7 @@
         }
       ]
     },
-    "service_Users": {
+    "service_users": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -8838,7 +8838,7 @@
           }
         }
       },
-      "service": "service_OrganizationUsers",
+      "service": "service_organizationUsers",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -8907,7 +8907,7 @@
           }
         }
       },
-      "service": "service_Users",
+      "service": "service_users",
       "types": [],
       "errors": [],
       "subpackages": [],

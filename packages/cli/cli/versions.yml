@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Fix an issue where multiple auth schemes would not be converted during IR -> FDR conversion.
+      type: fix
+  irVersion: 57
+  version: 0.61.22
+
+- changelogEntry:
+    - summary: |
         Fix AsyncAPI parser to properly handle reference objects in headers and query parameters.
       type: fix
   irVersion: 57
