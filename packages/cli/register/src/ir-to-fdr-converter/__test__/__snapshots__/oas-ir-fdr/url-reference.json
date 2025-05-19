@@ -162,7 +162,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "a Pet"
     },
     "Mammal1": {
       "description": "A User who is purchasing from the pet store",
@@ -269,7 +270,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "a User"
     },
     "Mammal": {
       "name": "Mammal",

@@ -3341,7 +3341,8 @@
             "value": "48000"
           }
         ]
-      }
+      },
+      "displayName": "linear16"
     },
     "V1SpeakPostParametersSchema": {
       "name": "V1SpeakPostParametersSchema",
@@ -3404,7 +3405,8 @@
             "value": "16000"
           }
         ]
-      }
+      },
+      "displayName": "mulaw"
     },
     "V1SpeakPostParametersSchema2": {
       "description": "Encoding - alaw. Supported sample rates - 8000, 16000 Hz.",
@@ -3419,7 +3421,8 @@
             "value": "16000"
           }
         ]
-      }
+      },
+      "displayName": "alaw"
     },
     "V1SpeakPostParametersSchema3": {
       "description": "Encoding - mp3. Sample rate is fixed and not configurable (22050 Hz).",
@@ -3431,7 +3434,8 @@
             "value": "22050"
           }
         ]
-      }
+      },
+      "displayName": "mp3"
     },
     "V1SpeakPostParametersSchema4": {
       "description": "Encoding - opus. Sample rate is fixed at 48000 Hz.",
@@ -3443,7 +3447,8 @@
             "value": "48000"
           }
         ]
-      }
+      },
+      "displayName": "opus"
     },
     "V1SpeakPostParametersSchema5": {
       "description": "Encoding - opus. High-compression audio format optimized for real-time communications.",
@@ -3455,7 +3460,8 @@
             "value": "opus"
           }
         ]
-      }
+      },
+      "displayName": "opus"
     },
     "V1SpeakPostParametersSchema6": {
       "description": "Encoding - aac. Advanced audio format offering better quality at smaller file sizes than mp3.",
@@ -3467,7 +3473,8 @@
             "value": "aac"
           }
         ]
-      }
+      },
+      "displayName": "aac"
     },
     "SpeakRequestBadRequestError": {
       "name": "SpeakRequestBadRequestError",
@@ -10763,7 +10770,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "FinalizeResponse"
     },
     "ChannelsListenMessagesControlMessageResponseOneOf1Type": {
       "name": "ChannelsListenMessagesControlMessageResponseOneOf1Type",
@@ -10876,7 +10884,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "MetadataResponse"
     },
     "ChannelsListenMessagesControlMessageResponseOneOf2Type": {
       "name": "ChannelsListenMessagesControlMessageResponseOneOf2Type",
@@ -10989,7 +10998,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "CloseStreamResponse"
     },
     "listen_controlMessageResponse": {
       "name": "listen_controlMessageResponse",

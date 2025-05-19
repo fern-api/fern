@@ -19,7 +19,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Field 1"
     },
     "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems1": {
       "name": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems1",
@@ -40,7 +41,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Field 2"
     },
     "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems": {
       "name": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",

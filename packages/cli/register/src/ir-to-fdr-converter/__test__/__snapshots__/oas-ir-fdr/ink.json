@@ -35,7 +35,8 @@
             "value": "pending"
           }
         ]
-      }
+      },
+      "displayName": "Block tag"
     },
     "eth_call_Param_Block": {
       "name": "eth_call_Param_Block",
@@ -378,7 +379,8 @@
             "value": "pending"
           }
         ]
-      }
+      },
+      "displayName": "Block tag"
     },
     "eth_estimateGas_Param_Block": {
       "name": "eth_estimateGas_Param_Block",
@@ -712,7 +714,8 @@
             "value": "pending"
           }
         ]
-      }
+      },
+      "displayName": "Block tag"
     },
     "eth_getBalance_Param_Block": {
       "name": "eth_getBalance_Param_Block",
@@ -1044,7 +1047,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 4844 Transaction"
     },
     "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf1AccessListItems": {
       "name": "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf1AccessListItems",
@@ -1322,7 +1326,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 1559 Transaction"
     },
     "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf2AccessListItems": {
       "name": "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf2AccessListItems",
@@ -1578,7 +1583,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 2930 Transaction"
     },
     "EthGetBlockByHashResultTransactionsOneOf1Items3": {
       "name": "EthGetBlockByHashResultTransactionsOneOf1Items3",
@@ -1773,7 +1779,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed Legacy Transaction"
     },
     "EthGetBlockByHashResultTransactionsOneOf1Items": {
       "name": "EthGetBlockByHashResultTransactionsOneOf1Items",
@@ -1822,7 +1829,8 @@
             "value": "EthGetBlockByHashResultTransactionsOneOf1Items"
           }
         }
-      }
+      },
+      "displayName": "Full transactions"
     },
     "EthGetBlockByHashResultTransactions": {
       "name": "EthGetBlockByHashResultTransactions",
@@ -2488,7 +2496,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 4844 Transaction"
     },
     "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf1AccessListItems": {
       "name": "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf1AccessListItems",
@@ -2766,7 +2775,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 1559 Transaction"
     },
     "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf2AccessListItems": {
       "name": "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf2AccessListItems",
@@ -3022,7 +3032,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 2930 Transaction"
     },
     "EthGetBlockByNumberResultTransactionsOneOf1Items3": {
       "name": "EthGetBlockByNumberResultTransactionsOneOf1Items3",
@@ -3217,7 +3228,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed Legacy Transaction"
     },
     "EthGetBlockByNumberResultTransactionsOneOf1Items": {
       "name": "EthGetBlockByNumberResultTransactionsOneOf1Items",
@@ -3266,7 +3278,8 @@
             "value": "EthGetBlockByNumberResultTransactionsOneOf1Items"
           }
         }
-      }
+      },
+      "displayName": "Full transactions"
     },
     "EthGetBlockByNumberResultTransactions": {
       "name": "EthGetBlockByNumberResultTransactions",
@@ -3646,7 +3659,8 @@
             "value": "pending"
           }
         ]
-      }
+      },
+      "displayName": "Block tag"
     },
     "eth_getBlockByNumber_Param_Block number or tag": {
       "name": "eth_getBlockByNumber_Param_Block number or tag",
@@ -3749,7 +3763,8 @@
             "value": "pending"
           }
         ]
-      }
+      },
+      "displayName": "Block tag"
     },
     "eth_getBlockTransactionCountByNumber_Param_Block number or tag": {
       "name": "eth_getBlockTransactionCountByNumber_Param_Block number or tag",
@@ -3814,7 +3829,8 @@
             "value": "pending"
           }
         ]
-      }
+      },
+      "displayName": "Block tag"
     },
     "eth_getCode_Param_Block": {
       "name": "eth_getCode_Param_Block",
@@ -4012,7 +4028,8 @@
             "value": "EthGetLogsResultOneOf1Items"
           }
         }
-      }
+      },
+      "displayName": "new logs"
     },
     "EthGetLogsResult": {
       "name": "EthGetLogsResult",
@@ -4336,7 +4353,8 @@
             "value": "pending"
           }
         ]
-      }
+      },
+      "displayName": "Block tag"
     },
     "eth_getProof_Param_Block": {
       "name": "eth_getProof_Param_Block",
@@ -4505,7 +4523,8 @@
             "value": "pending"
           }
         ]
-      }
+      },
+      "displayName": "Block tag"
     },
     "eth_getStorageAt_Param_Block": {
       "name": "eth_getStorageAt_Param_Block",
@@ -4850,7 +4869,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 4844 Transaction"
     },
     "EthGetTransactionByBlockHashAndIndexResultOneOf1AccessListItems": {
       "name": "EthGetTransactionByBlockHashAndIndexResultOneOf1AccessListItems",
@@ -5128,7 +5148,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 1559 Transaction"
     },
     "EthGetTransactionByBlockHashAndIndexResultOneOf2AccessListItems": {
       "name": "EthGetTransactionByBlockHashAndIndexResultOneOf2AccessListItems",
@@ -5384,7 +5405,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 2930 Transaction"
     },
     "EthGetTransactionByBlockHashAndIndexResult3": {
       "name": "EthGetTransactionByBlockHashAndIndexResult3",
@@ -5579,7 +5601,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed Legacy Transaction"
     },
     "EthGetTransactionByBlockHashAndIndexResult": {
       "name": "EthGetTransactionByBlockHashAndIndexResult",
@@ -5926,7 +5949,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 4844 Transaction"
     },
     "EthGetTransactionByBlockNumberAndIndexResultOneOf1AccessListItems": {
       "name": "EthGetTransactionByBlockNumberAndIndexResultOneOf1AccessListItems",
@@ -6204,7 +6228,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 1559 Transaction"
     },
     "EthGetTransactionByBlockNumberAndIndexResultOneOf2AccessListItems": {
       "name": "EthGetTransactionByBlockNumberAndIndexResultOneOf2AccessListItems",
@@ -6460,7 +6485,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 2930 Transaction"
     },
     "EthGetTransactionByBlockNumberAndIndexResult3": {
       "name": "EthGetTransactionByBlockNumberAndIndexResult3",
@@ -6655,7 +6681,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed Legacy Transaction"
     },
     "EthGetTransactionByBlockNumberAndIndexResult": {
       "name": "EthGetTransactionByBlockNumberAndIndexResult",
@@ -6715,7 +6742,8 @@
             "value": "pending"
           }
         ]
-      }
+      },
+      "displayName": "Block tag"
     },
     "eth_getTransactionByBlockNumberAndIndex_Param_Block": {
       "name": "eth_getTransactionByBlockNumberAndIndex_Param_Block",
@@ -7038,7 +7066,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 4844 Transaction"
     },
     "EthGetTransactionByHashResultOneOf1AccessListItems": {
       "name": "EthGetTransactionByHashResultOneOf1AccessListItems",
@@ -7316,7 +7345,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 1559 Transaction"
     },
     "EthGetTransactionByHashResultOneOf2AccessListItems": {
       "name": "EthGetTransactionByHashResultOneOf2AccessListItems",
@@ -7572,7 +7602,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed 2930 Transaction"
     },
     "EthGetTransactionByHashResult3": {
       "name": "EthGetTransactionByHashResult3",
@@ -7767,7 +7798,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Signed Legacy Transaction"
     },
     "EthGetTransactionByHashResult": {
       "name": "EthGetTransactionByHashResult",
@@ -7853,7 +7885,8 @@
             "value": "pending"
           }
         ]
-      }
+      },
+      "displayName": "Block tag"
     },
     "eth_getTransactionCount_Param_Block": {
       "name": "eth_getTransactionCount_Param_Block",
@@ -8353,7 +8386,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Syncing progress"
     },
     "EthSyncingResult1": {
       "name": "EthSyncingResult1",
@@ -8377,7 +8411,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "Syncing status"
     },
     "EthSyncingResult": {
       "name": "EthSyncingResult",
