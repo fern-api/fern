@@ -1,4 +1,5 @@
 import { mkdir, readdir, rm } from "fs/promises";
+import moment from "moment";
 
 import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
@@ -66,7 +67,7 @@ export async function generateCliChangelog({
     }
 
     // Here we'll collect the changelogs so they're keyed by date, the map is essentially Release Date -> Version -> Changelog string
-    const writtenVersions = new Map<Date, Map<string, string>>();
+    const writtenVersions = new Map<string, Map<string, string>>();
     // TODO: we might need to make an API call instead, to be able to have the date of the release filled in
     await parseCliReleasesFile({
         changelogPath: absolutePathToChangelogLocation,
@@ -80,7 +81,7 @@ export async function generateCliChangelog({
                         `Release ${release.version} does not have a createdAt value, and could not retrieve one from FDR, skipping this release.`
                     );
                     // This will typically happen if you've added a new release to the versions file and haven't yet registered it with FDR yet
-                    createdAt = new Date().toISOString();
+                    createdAt = moment(new Date()).format("YYYY-MM-DD");
                 } else {
                     createdAt = releaseRequest.body.createdAt;
                 }
@@ -89,14 +90,14 @@ export async function generateCliChangelog({
                 context.logger.error(`Release ${release.version} has been yanked, skipping this release.`);
                 return;
             }
+            createdAt = moment(createdAt).format("YYYY-MM-DD");
 
-            const releaseDate = new Date(createdAt);
-            if (!writtenVersions.has(releaseDate)) {
-                writtenVersions.set(releaseDate, new Map());
+            if (!writtenVersions.has(createdAt)) {
+                writtenVersions.set(createdAt, new Map());
             }
 
             writtenVersions
-                .get(releaseDate)!
+                .get(createdAt)!
                 .set(release.version, writeChangelogEntries(release.version, release.changelogEntry));
         }
     });
