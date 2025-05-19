@@ -166,13 +166,11 @@ await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"])
 <dd>
 
 ```typescript
-await client.endpoints.container.getAndReturnSetOfObjects(
-    new Set([
-        {
-            string: "string",
-        },
-    ]),
-);
+await client.endpoints.container.getAndReturnSetOfObjects([
+    {
+        string: "string",
+    },
+]);
 ```
 
 </dd>

@@ -69,7 +69,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             packageJson: parsed?.packageJson,
             publishToJsr: parsed?.publishToJsr ?? false,
             omitUndefined: parsed?.omitUndefined ?? true,
-            generateWireTests: parsed?.generateWireTests ?? false,
+            generateWireTests: parsed?.generateWireTests ?? true,
             noScripts: parsed?.noScripts ?? false,
             useBigInt: parsed?.useBigInt ?? false,
             useLegacyExports: parsed?.useLegacyExports ?? false

@@ -8,7 +8,9 @@ import {
     ExampleContainer,
     ExamplePrimitive,
     ExampleTypeReference,
-    ExampleTypeReferenceShape
+    ExampleTypeReferenceShape,
+    ShapeType,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 
 export declare namespace GeneratedTypeReferenceExampleImpl {
@@ -89,14 +91,23 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                                 this.buildExample({ example: exampleItem, context, opts })
                             )
                         ),
-                    set: (exampleItems) =>
-                        ts.factory.createNewExpression(ts.factory.createIdentifier("Set"), undefined, [
-                            ts.factory.createArrayLiteralExpression(
+                    set: (exampleItems) => {
+                        if (this.includeSerdeLayer && this.isTypeReferencePrimitive(exampleItems.itemType, context)) {
+                            return ts.factory.createNewExpression(ts.factory.createIdentifier("Set"), undefined, [
+                                ts.factory.createArrayLiteralExpression(
+                                    exampleItems.set.map((exampleItem) =>
+                                        this.buildExample({ example: exampleItem, context, opts })
+                                    )
+                                )
+                            ]);
+                        } else {
+                            return ts.factory.createArrayLiteralExpression(
                                 exampleItems.set.map((exampleItem) =>
                                     this.buildExample({ example: exampleItem, context, opts })
                                 )
-                            )
-                        ]),
+                            );
+                        }
+                    },
                     map: (examplePairs) =>
                         ts.factory.createObjectLiteralExpression(
                             examplePairs.map.map((examplePair) =>
@@ -260,6 +271,17 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                 throw new Error("Unknown example type: " + example.shape.type);
             }
         });
+    }
+
+    protected isTypeReferencePrimitive(typeReference: TypeReference, context: BaseContext): boolean {
+        const resolvedType = context.type.resolveTypeReference(typeReference);
+        if (resolvedType.type === "primitive") {
+            return true;
+        }
+        if (resolvedType.type === "named" && resolvedType.shape === ShapeType.Enum) {
+            return true;
+        }
+        return false;
     }
 }
 
