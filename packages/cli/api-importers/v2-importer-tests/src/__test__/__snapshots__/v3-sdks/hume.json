@@ -20,7 +20,7 @@
   },
   "selfHosted": false,
   "auth": {
-    "requirement": "ANY",
+    "requirement": "ALL",
     "schemes": [
       {
         "name": {
@@ -46802,7 +46802,7 @@
         }
       ]
     },
-    "service_Get Job Predictions": {
+    "service_getJobPredictions": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -51712,7 +51712,7 @@
           }
         }
       },
-      "service": "service_Get Job Predictions",
+      "service": "service_getJobPredictions",
       "types": [],
       "errors": [],
       "subpackages": [],

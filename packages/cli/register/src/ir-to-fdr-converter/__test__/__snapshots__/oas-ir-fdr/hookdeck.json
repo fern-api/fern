@@ -36731,6 +36731,10 @@
       "subpackage_connections"
     ]
   },
+  "auth": {
+    "type": "bearerAuth",
+    "tokenName": "token"
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

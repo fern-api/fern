@@ -2745,6 +2745,10 @@
       "subpackage_traces"
     ]
   },
+  "auth": {
+    "type": "bearerAuth",
+    "tokenName": "token"
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

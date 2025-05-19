@@ -1,6 +1,6 @@
 {
   "auth": {
-    "requirement": "ANY",
+    "requirement": "ALL",
     "schemes": [
       {
         "username": {

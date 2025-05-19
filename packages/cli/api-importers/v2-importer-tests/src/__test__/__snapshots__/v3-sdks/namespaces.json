@@ -2644,7 +2644,7 @@
     }
   },
   "services": {
-    "service_petsV1.pet": {
+    "service_petsV1/pet": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -22701,7 +22701,7 @@
         }
       ]
     },
-    "service_petsV1.store": {
+    "service_petsV1/store": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -26369,7 +26369,7 @@
         }
       ]
     },
-    "service_petsV1.user": {
+    "service_petsV1/user": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -35055,7 +35055,7 @@
         }
       ]
     },
-    "service_petsV2.pet": {
+    "service_petsV2/pet": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -55112,7 +55112,7 @@
         }
       ]
     },
-    "service_petsV2.store": {
+    "service_petsV2/store": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -58780,7 +58780,7 @@
         }
       ]
     },
-    "service_petsV2.user": {
+    "service_petsV2/user": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -67574,14 +67574,14 @@
       "types": [],
       "errors": [],
       "subpackages": [
-        "subpackage_petsV1.petsV1",
-        "subpackage_petsV1.pet",
-        "subpackage_petsV1.store",
-        "subpackage_petsV1.user"
+        "subpackage_petsV1/petsV1",
+        "subpackage_petsV1/pet",
+        "subpackage_petsV1/store",
+        "subpackage_petsV1/user"
       ],
       "hasEndpointsInTree": false
     },
-    "subpackage_petsV1.petsV1": {
+    "subpackage_petsV1/petsV1": {
       "name": {
         "originalName": "petsV1",
         "camelCase": {
@@ -67695,7 +67695,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "subpackage_petsV1.pet": {
+    "subpackage_petsV1/pet": {
       "name": {
         "originalName": "pet",
         "camelCase": {
@@ -67797,13 +67797,13 @@
           }
         }
       },
-      "service": "service_petsV1.pet",
+      "service": "service_petsV1/pet",
       "types": [],
       "errors": [],
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "subpackage_petsV1.store": {
+    "subpackage_petsV1/store": {
       "name": {
         "originalName": "store",
         "camelCase": {
@@ -67905,13 +67905,13 @@
           }
         }
       },
-      "service": "service_petsV1.store",
+      "service": "service_petsV1/store",
       "types": [],
       "errors": [],
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "subpackage_petsV1.user": {
+    "subpackage_petsV1/user": {
       "name": {
         "originalName": "user",
         "camelCase": {
@@ -68013,7 +68013,7 @@
           }
         }
       },
-      "service": "service_petsV1.user",
+      "service": "service_petsV1/user",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -68124,14 +68124,14 @@
       "types": [],
       "errors": [],
       "subpackages": [
-        "subpackage_petsV2.petsV2",
-        "subpackage_petsV2.pet",
-        "subpackage_petsV2.store",
-        "subpackage_petsV2.user"
+        "subpackage_petsV2/petsV2",
+        "subpackage_petsV2/pet",
+        "subpackage_petsV2/store",
+        "subpackage_petsV2/user"
       ],
       "hasEndpointsInTree": false
     },
-    "subpackage_petsV2.petsV2": {
+    "subpackage_petsV2/petsV2": {
       "name": {
         "originalName": "petsV2",
         "camelCase": {
@@ -68245,7 +68245,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "subpackage_petsV2.pet": {
+    "subpackage_petsV2/pet": {
       "name": {
         "originalName": "pet",
         "camelCase": {
@@ -68347,13 +68347,13 @@
           }
         }
       },
-      "service": "service_petsV2.pet",
+      "service": "service_petsV2/pet",
       "types": [],
       "errors": [],
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "subpackage_petsV2.store": {
+    "subpackage_petsV2/store": {
       "name": {
         "originalName": "store",
         "camelCase": {
@@ -68455,13 +68455,13 @@
           }
         }
       },
-      "service": "service_petsV2.store",
+      "service": "service_petsV2/store",
       "types": [],
       "errors": [],
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "subpackage_petsV2.user": {
+    "subpackage_petsV2/user": {
       "name": {
         "originalName": "user",
         "camelCase": {
@@ -68563,7 +68563,7 @@
           }
         }
       },
-      "service": "service_petsV2.user",
+      "service": "service_petsV2/user",
       "types": [],
       "errors": [],
       "subpackages": [],

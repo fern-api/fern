@@ -2471,7 +2471,7 @@
     }
   },
   "services": {
-    "service_Agent": {
+    "service_agent": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -4702,7 +4702,7 @@
         }
       ]
     },
-    "service_Auth": {
+    "service_auth": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -5619,7 +5619,7 @@
         }
       ]
     },
-    "service_User": {
+    "service_user": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -6054,7 +6054,7 @@
         }
       ]
     },
-    "service_Api token": {
+    "service_apiToken": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -7049,7 +7049,7 @@
         }
       ]
     },
-    "service_Documents": {
+    "service_documents": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -8482,7 +8482,7 @@
         }
       ]
     },
-    "service_Prompts": {
+    "service_prompts": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -9956,7 +9956,7 @@
         }
       ]
     },
-    "service_Tools": {
+    "service_tools": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -11102,7 +11102,7 @@
         }
       ]
     },
-    "service_Traces": {
+    "service_traces": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -13123,7 +13123,7 @@
           }
         }
       },
-      "service": "service_Agent",
+      "service": "service_agent",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -13192,7 +13192,7 @@
           }
         }
       },
-      "service": "service_Auth",
+      "service": "service_auth",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -13261,7 +13261,7 @@
           }
         }
       },
-      "service": "service_User",
+      "service": "service_user",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -13330,7 +13330,7 @@
           }
         }
       },
-      "service": "service_Api token",
+      "service": "service_apiToken",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -13399,7 +13399,7 @@
           }
         }
       },
-      "service": "service_Documents",
+      "service": "service_documents",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -13468,7 +13468,7 @@
           }
         }
       },
-      "service": "service_Prompts",
+      "service": "service_prompts",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -13537,7 +13537,7 @@
           }
         }
       },
-      "service": "service_Tools",
+      "service": "service_tools",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -13606,7 +13606,7 @@
           }
         }
       },
-      "service": "service_Traces",
+      "service": "service_traces",
       "types": [],
       "errors": [],
       "subpackages": [],

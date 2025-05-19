@@ -139,6 +139,10 @@
       "subpackage_status2"
     ]
   },
+  "auth": {
+    "type": "bearerAuth",
+    "tokenName": "token"
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }
