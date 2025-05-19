@@ -93,6 +93,8 @@ export class ReExportAsNamedNode extends ts.AstNode {
                             writer.write(this.args.name);
                             break;
                     }
+                    // TODO: re-write to support non-relative imports
+                    // SEE: https://github.com/fern-api/fern/pull/7121#discussion_r2095771293
                     writer.write(` from "./${this.args.importFrom.moduleName}"`);
                 })
             })

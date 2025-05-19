@@ -8,7 +8,6 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { ExportNode } from "../ast";
 
 export class EnumGenerator extends FileGenerator<TypescriptFile, TypescriptCustomConfigSchema, ModelGeneratorContext> {
-    private readonly zodReference: ts.Reference;
     private readonly schemaVariableName: string;
 
     constructor(
@@ -17,10 +16,6 @@ export class EnumGenerator extends FileGenerator<TypescriptFile, TypescriptCusto
         private readonly enumDeclaration: EnumTypeDeclaration
     ) {
         super(context);
-        this.zodReference = ts.reference({
-            name: "z",
-            importFrom: { type: "default", moduleName: "zod" }
-        });
         this.schemaVariableName = this.context.project.builder.getSchemaVariableName(
             this.typeDeclaration.name.name,
             this.typeDeclaration.name.fernFilepath
@@ -33,7 +28,7 @@ export class EnumGenerator extends FileGenerator<TypescriptFile, TypescriptCusto
                 writer.writeNodeStatement(
                     new ExportNode({
                         initializer: new ZodEnumNode({
-                            zodReference: this.zodReference,
+                            zodReference: this.context.project.builder.zodReference,
                             enumDeclaration: this.enumDeclaration
                         }),
                         default: true

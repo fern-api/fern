@@ -5,7 +5,7 @@ import path from "path";
 import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
-import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
+import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
 
 import { FernFilepath, Name } from "@fern-fern/ir-sdk/api";
 
@@ -161,6 +161,7 @@ class TypescriptMcpProjectBuilder {
     public readonly description: string;
     public readonly sdkModuleName: string;
     public readonly sdkClientClassName: string;
+    public readonly zodReference: ts.Reference;
 
     constructor({ context }: TypescriptMcpProjectBuilder.Args) {
         const { organization, workspaceName } = context.config;
@@ -168,6 +169,10 @@ class TypescriptMcpProjectBuilder {
         this.description = `Model Context Protocol (MCP) server for ${organization}'s ${workspaceName}.`;
         this.sdkModuleName = this.inferSdkModuleName(organization, workspaceName);
         this.sdkClientClassName = this.inferSdkClientClassName(organization, workspaceName);
+        this.zodReference = ts.reference({
+            name: "z",
+            importFrom: { type: "default", moduleName: "zod" }
+        });
     }
 
     private inferSdkModuleName(organization: string, workspaceName: string): string {

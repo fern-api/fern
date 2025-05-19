@@ -13,7 +13,6 @@ export class ObjectGenerator extends FileGenerator<
     TypescriptCustomConfigSchema,
     ModelGeneratorContext
 > {
-    private readonly zodReference: ts.Reference;
     private readonly schemaVariableName: string;
 
     constructor(
@@ -22,10 +21,6 @@ export class ObjectGenerator extends FileGenerator<
         private readonly objectDeclaration: ObjectTypeDeclaration
     ) {
         super(context);
-        this.zodReference = ts.reference({
-            name: "z",
-            importFrom: { type: "default", moduleName: "zod" }
-        });
         this.schemaVariableName = this.context.project.builder.getSchemaVariableName(
             this.typeDeclaration.name.name,
             this.typeDeclaration.name.fernFilepath
@@ -38,7 +33,7 @@ export class ObjectGenerator extends FileGenerator<
                 writer.writeNodeStatement(
                     new ExportNode({
                         initializer: new ZodObjectNode({
-                            zodReference: this.zodReference,
+                            zodReference: this.context.project.builder.zodReference,
                             objectDeclaration: this.objectDeclaration
                         }),
                         default: true

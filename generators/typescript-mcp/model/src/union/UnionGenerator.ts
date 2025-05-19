@@ -8,7 +8,6 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { ExportNode, singleUnionTypeMapper } from "../ast";
 
 export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCustomConfigSchema, ModelGeneratorContext> {
-    private readonly zodReference: ts.Reference;
     private readonly schemaVariableName: string;
 
     constructor(
@@ -17,10 +16,6 @@ export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCust
         private readonly unionDeclaration: UnionTypeDeclaration
     ) {
         super(context);
-        this.zodReference = ts.reference({
-            name: "z",
-            importFrom: { type: "default", moduleName: "zod" }
-        });
         this.schemaVariableName = this.context.project.builder.getSchemaVariableName(
             this.typeDeclaration.name.name,
             this.typeDeclaration.name.fernFilepath
@@ -33,7 +28,7 @@ export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCust
                 writer.writeNodeStatement(
                     new ExportNode({
                         initializer: new ZodUnionNode({
-                            zodReference: this.zodReference,
+                            zodReference: this.context.project.builder.zodReference,
                             unionDeclaration: this.unionDeclaration
                         }),
                         default: true
