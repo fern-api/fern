@@ -1,0 +1,59 @@
+---
+title: 'Tooltips'
+description: 'Add interactive tooltips to your documentation.'
+---
+
+The Tooltips component provides a way to display additional information when users hover over an element. This is particularly useful for providing context or explanations without cluttering the interface.
+
+## Properties
+
+<ParamField path="data" type="object" required={true}>
+  Key-value pairs for replaceable values. Use `{{KEY}}` syntax in your code blocks.
+</ParamField>
+
+<ParamField path="tooltips" type="object" required={false}>
+  Key-value pairs matching `data` keys with React elements for tooltips.
+</ParamField>
+
+
+## Example
+
+<Tabs>
+<Tab title="Tooltip">
+<Template
+	data={{ API_KEY: "123456" }}
+	tooltips={{
+		API_KEY: (
+			<p>
+				This is a tooltip, you can use jsx here. 
+			</p>
+		)
+	}}
+>
+
+```ts
+console.log(`{{API_KEY}}`);
+```
+</Template>
+</Tab>
+<Tab title="Markdown">
+`````tsx
+<Template
+	data={{ API_KEY: "123456" }}
+	tooltips={{
+		API_KEY: (
+			<p>
+				This is a tooltip, you can use jsx here. 
+			</p>
+		)
+	}}
+>
+
+```ts
+console.log(`{{API_KEY}}`);
+```
+
+</Template>
+`````
+</Tab>
+</Tabs>
