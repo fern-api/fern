@@ -5,12 +5,14 @@ on:
     branches:
       - main
     paths:
+      - "packages/seed/src/commands/validate/**/*"
       - "packages/cli/cli/versions.yml"
       - "generators/**/versions.yml"
   pull_request:
     branches:
       - main
     paths:
+      - "packages/seed/src/commands/validate/**/*"
       - "packages/cli/cli/versions.yml"
       - "generators/**/versions.yml"
 
