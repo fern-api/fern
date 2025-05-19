@@ -73,7 +73,7 @@ export async function generateCliChangelog({
         changelogPath: absolutePathToChangelogLocation,
         context,
         action: async (release) => {
-            let createdAt = release.createdAt;
+            let createdAt: string | undefined | Date = release.createdAt;
             if (createdAt == null) {
                 const releaseRequest = await fdrClient.generators.cli.getCliRelease(release.version);
                 if (!releaseRequest.ok || releaseRequest.body.createdAt == null) {
@@ -81,7 +81,7 @@ export async function generateCliChangelog({
                         `Release ${release.version} does not have a createdAt value, and could not retrieve one from FDR, skipping this release.`
                     );
                     // This will typically happen if you've added a new release to the versions file and haven't yet registered it with FDR yet
-                    createdAt = moment(new Date()).format("YYYY-MM-DD");
+                    createdAt = new Date();
                 } else {
                     createdAt = releaseRequest.body.createdAt;
                 }

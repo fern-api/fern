@@ -72,7 +72,7 @@ export async function generateGeneratorChangelog({
         changelogPath: absolutePathToChangelogLocation,
         context,
         action: async (release) => {
-            let createdAt = release.createdAt;
+            let createdAt: string | undefined | Date = release.createdAt;
             if (release.isYanked != null) {
                 context.logger.error(
                     `Release ${release.version} for generator ${generatorId} has been yanked, skipping this release.`
@@ -90,7 +90,7 @@ export async function generateGeneratorChangelog({
                         `Release ${release.version} for generator ${generatorId} does not have a createdAt value, and could not retrieve one from FDR, defaulting to today...`
                     );
                     // This will typically happen if you've added a new release to the versions file and haven't yet registered it with FDR yet
-                    createdAt = moment(new Date()).format("YYYY-MM-DD");
+                    createdAt = new Date();
                 } else {
                     createdAt = releaseRequest.body.createdAt;
                 }
