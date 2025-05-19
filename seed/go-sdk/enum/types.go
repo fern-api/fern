@@ -36,14 +36,6 @@ type ColorOrOperand struct {
 	typ string
 }
 
-func NewColorOrOperandFromColor(value Color) *ColorOrOperand {
-	return &ColorOrOperand{typ: "Color", Color: value}
-}
-
-func NewColorOrOperandFromOperand(value Operand) *ColorOrOperand {
-	return &ColorOrOperand{typ: "Operand", Operand: value}
-}
-
 func (c *ColorOrOperand) GetColor() Color {
 	if c == nil {
 		return ""

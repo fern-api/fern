@@ -57,7 +57,7 @@ func (c *CreateOrganizationRequest) String() string {
 type Organization struct {
 	Id    Id      `json:"id" url:"id"`
 	Name  string  `json:"name" url:"name"`
-	Users []*User `json:"users,omitempty" url:"users,omitempty"`
+	Users []*User `json:"users" url:"users"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage

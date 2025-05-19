@@ -11,7 +11,7 @@ import (
 type MyAlias = interface{}
 
 type MyObject struct {
-	Unknown interface{} `json:"unknown,omitempty" url:"unknown,omitempty"`
+	Unknown interface{} `json:"unknown" url:"unknown"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage

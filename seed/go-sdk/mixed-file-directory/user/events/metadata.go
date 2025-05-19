@@ -15,7 +15,7 @@ type GetEventMetadataRequest struct {
 
 type Metadata struct {
 	Id    fern.Id     `json:"id" url:"id"`
-	Value interface{} `json:"value,omitempty" url:"value,omitempty"`
+	Value interface{} `json:"value" url:"value"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage

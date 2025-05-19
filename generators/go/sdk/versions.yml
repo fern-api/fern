@@ -1,3 +1,10 @@
+- version: 1.0.0
+  changelogEntry:
+    - summary: |
+        Major version release to update the generator's default set of configuration options.
+      type: feat
+  createdAt: '2025-05-19'
+  irVersion: 57
 - version: 0.38.0
   changelogEntry:
     - summary: |
