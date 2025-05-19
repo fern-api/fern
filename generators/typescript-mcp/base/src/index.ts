@@ -1,4 +1,5 @@
 export * from "./AsIs";
+export * from "./ast";
 export { AbstractTypescriptMcpGeneratorCli } from "./cli/AbstractTypescriptMcpGeneratorCli";
 export {
     AbstractTypescriptMcpGeneratorContext,

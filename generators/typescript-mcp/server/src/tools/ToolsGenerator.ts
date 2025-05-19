@@ -1,11 +1,18 @@
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
-import { FileGenerator, TypescriptFile } from "@fern-api/typescript-mcp-base";
+import {
+    FileGenerator,
+    FunctionNode,
+    FunctionParameterNode,
+    MethodInvocationNode,
+    ObjectLiteralNode,
+    TypescriptFile
+} from "@fern-api/typescript-mcp-base";
 
 import { FernFilepath, HttpEndpoint, HttpService, Name } from "@fern-fern/ir-sdk/api";
 
 import { ServerGeneratorContext } from "../ServerGeneratorContext";
-import { FunctionNode, MethodInvocationNode, ObjectLiteralNode, ParameterNode, sdkRequestMapper } from "../ast";
+import { sdkRequestMapper } from "../ast";
 
 export class ToolsGenerator extends FileGenerator<
     TypescriptFile,
@@ -206,7 +213,7 @@ export class ToolDefinitionNode extends ts.AstNode {
                                     name: "register",
                                     value: new FunctionNode({
                                         parameters: [
-                                            new ParameterNode({
+                                            new FunctionParameterNode({
                                                 name: "server",
                                                 type: this.args.mcpSdkReference
                                             })
@@ -232,7 +239,7 @@ export class ToolDefinitionNode extends ts.AstNode {
                                                         new FunctionNode({
                                                             async: true,
                                                             parameters: [
-                                                                new ParameterNode({
+                                                                new FunctionParameterNode({
                                                                     name: "params"
                                                                 })
                                                             ],

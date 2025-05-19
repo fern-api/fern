@@ -1,11 +1,11 @@
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
-import { FileGenerator, TypescriptFile } from "@fern-api/typescript-mcp-base";
+import { ExportNode, FileGenerator, TypescriptFile } from "@fern-api/typescript-mcp-base";
 
 import { TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { ExportNode, singleUnionTypeMapper } from "../ast";
+import { singleUnionTypeMapper } from "../ast";
 
 export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCustomConfigSchema, ModelGeneratorContext> {
     private readonly schemaVariableName: string;

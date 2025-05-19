@@ -1,12 +1,11 @@
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
-import { FileGenerator, TypescriptFile } from "@fern-api/typescript-mcp-base";
+import { ExportNode, FileGenerator, TypescriptFile } from "@fern-api/typescript-mcp-base";
 
 import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { ZodAliasNode } from "../alias/AliasGenerator";
-import { ExportNode } from "../ast";
 
 export class ObjectGenerator extends FileGenerator<
     TypescriptFile,

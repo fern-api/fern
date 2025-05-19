@@ -167,19 +167,19 @@ class TypescriptMcpProjectBuilder {
         const { organization, workspaceName } = context.config;
         this.packageName = context.publishConfig?.packageName ?? `${organization}-mcp-server`;
         this.description = `Model Context Protocol (MCP) server for ${organization}'s ${workspaceName}.`;
-        this.sdkModuleName = this.inferSdkModuleName(organization, workspaceName);
-        this.sdkClientClassName = this.inferSdkClientClassName(organization, workspaceName);
+        this.sdkModuleName = this.getSdkModuleName(organization, workspaceName);
+        this.sdkClientClassName = this.getSdkClientClassName(organization, workspaceName);
         this.zodReference = ts.reference({
             name: "z",
             importFrom: { type: "default", moduleName: "zod" }
         });
     }
 
-    private inferSdkModuleName(organization: string, workspaceName: string): string {
+    private getSdkModuleName(organization: string, workspaceName: string): string {
         return `${kebabCase(organization)}-${kebabCase(workspaceName)}`;
     }
 
-    private inferSdkClientClassName(organization: string, workspaceName: string): string {
+    private getSdkClientClassName(organization: string, workspaceName: string): string {
         return `${capitalize(organization)}${capitalize(workspaceName)}Client`;
     }
 
