@@ -18,6 +18,7 @@ export const ProductConfig: core.serialization.ObjectSchema<
         path: core.serialization.string(),
         subtitle: core.serialization.string().optional(),
         icon: core.serialization.string().optional(),
+        image: core.serialization.string().optional(),
         slug: core.serialization.string().optional(),
         versions: core.serialization.list(VersionConfig).optional(),
     })
@@ -30,6 +31,7 @@ export declare namespace ProductConfig {
         path: string;
         subtitle?: string | null;
         icon?: string | null;
+        image?: string | null;
         slug?: string | null;
         versions?: VersionConfig.Raw[] | null;
     }
