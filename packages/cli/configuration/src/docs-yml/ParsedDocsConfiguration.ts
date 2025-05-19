@@ -165,6 +165,7 @@ export interface ProductInfo {
     navigation: UnversionedNavigationConfiguration | VersionedDocsNavigation;
     slug: string | undefined;
     icon: string;
+    image: AbsoluteFilePath | undefined;
 }
 
 export type DocsNavigationConfiguration =

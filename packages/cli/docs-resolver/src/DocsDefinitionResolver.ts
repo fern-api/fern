@@ -674,6 +674,7 @@ export class DocsDefinitionResolver {
             hidden: undefined,
             authed: undefined,
             icon: product.icon,
+            image: product.image != null ? this.getFileId(product.image) : undefined,
             pointsTo: undefined,
             viewers: undefined,
             orphaned: undefined,
