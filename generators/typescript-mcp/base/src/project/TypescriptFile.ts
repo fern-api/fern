@@ -3,7 +3,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
 import { TypeScriptFormatter } from "@fern-api/typescript-formatter";
 
-export declare namespace TypescriptMcpFile {
+export declare namespace TypescriptFile {
     interface Args {
         /* The node to be written to the typescript source file */
         node: ts.AstNode;
@@ -18,8 +18,8 @@ export declare namespace TypescriptMcpFile {
     }
 }
 
-export class TypescriptMcpFile extends File {
-    constructor({ node, directory, filename, customConfig, formatter }: TypescriptMcpFile.Args) {
+export class TypescriptFile extends File {
+    constructor({ node, directory, filename, customConfig, formatter }: TypescriptFile.Args) {
         const _formatter = formatter ?? new TypeScriptFormatter();
         super(
             filename,

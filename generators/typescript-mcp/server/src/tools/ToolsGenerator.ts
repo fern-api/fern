@@ -1,6 +1,6 @@
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
-import { FileGenerator, TypescriptMcpFile } from "@fern-api/typescript-mcp-base";
+import { FileGenerator, TypescriptFile } from "@fern-api/typescript-mcp-base";
 
 import { FernFilepath, HttpEndpoint, HttpService, Name } from "@fern-fern/ir-sdk/api";
 
@@ -8,7 +8,7 @@ import { ServerGeneratorContext } from "../ServerGeneratorContext";
 import { FunctionNode, MethodInvocationNode, ObjectLiteralNode, ParameterNode, sdkRequestMapper } from "../ast";
 
 export class ToolsGenerator extends FileGenerator<
-    TypescriptMcpFile,
+    TypescriptFile,
     TypescriptCustomConfigSchema,
     ServerGeneratorContext
 > {
@@ -33,8 +33,8 @@ export class ToolsGenerator extends FileGenerator<
         });
     }
 
-    public doGenerate(): TypescriptMcpFile {
-        return new TypescriptMcpFile({
+    public doGenerate(): TypescriptFile {
+        return new TypescriptFile({
             node: ts.codeblock((writer) => {
                 writer.writeNodeStatement(
                     ts.variable({
@@ -52,7 +52,7 @@ export class ToolsGenerator extends FileGenerator<
                                                 parameters: [],
                                                 body: ts.codeblock((writer) => {
                                                     writer.write("return ");
-                                                    writer.write("\"\"");
+                                                    writer.write('""');
                                                 })
                                             })
                                         }
@@ -286,7 +286,7 @@ export class ToolDefinitionNode extends ts.AstNode {
                                                                                 name: "content",
                                                                                 value: ts.codeblock((writer) => {
                                                                                     writer.write(
-                                                                                        "[{ type: \"text\", text: JSON.stringify(result) }]"
+                                                                                        '[{ type: "text", text: JSON.stringify(result) }]'
                                                                                     );
                                                                                 })
                                                                             }

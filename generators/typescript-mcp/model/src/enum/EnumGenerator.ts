@@ -1,17 +1,13 @@
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
-import { FileGenerator, TypescriptMcpFile } from "@fern-api/typescript-mcp-base";
+import { FileGenerator, TypescriptFile } from "@fern-api/typescript-mcp-base";
 
 import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { ExportDefaultNode } from "../ast";
 
-export class EnumGenerator extends FileGenerator<
-    TypescriptMcpFile,
-    TypescriptCustomConfigSchema,
-    ModelGeneratorContext
-> {
+export class EnumGenerator extends FileGenerator<TypescriptFile, TypescriptCustomConfigSchema, ModelGeneratorContext> {
     private readonly zodReference: ts.Reference;
     private readonly schemaVariableName: string;
 
@@ -31,8 +27,8 @@ export class EnumGenerator extends FileGenerator<
         );
     }
 
-    public doGenerate(): TypescriptMcpFile {
-        return new TypescriptMcpFile({
+    public doGenerate(): TypescriptFile {
+        return new TypescriptFile({
             node: ts.codeblock((writer) => {
                 writer.writeNodeStatement(
                     new ExportDefaultNode({

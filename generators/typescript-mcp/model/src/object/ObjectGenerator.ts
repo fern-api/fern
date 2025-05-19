@@ -1,6 +1,6 @@
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
-import { FileGenerator, TypescriptMcpFile } from "@fern-api/typescript-mcp-base";
+import { FileGenerator, TypescriptFile } from "@fern-api/typescript-mcp-base";
 
 import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
@@ -9,7 +9,7 @@ import { ZodAliasNode } from "../alias/AliasGenerator";
 import { ExportDefaultNode } from "../ast";
 
 export class ObjectGenerator extends FileGenerator<
-    TypescriptMcpFile,
+    TypescriptFile,
     TypescriptCustomConfigSchema,
     ModelGeneratorContext
 > {
@@ -32,8 +32,8 @@ export class ObjectGenerator extends FileGenerator<
         );
     }
 
-    public doGenerate(): TypescriptMcpFile {
-        return new TypescriptMcpFile({
+    public doGenerate(): TypescriptFile {
+        return new TypescriptFile({
             node: ts.codeblock((writer) => {
                 writer.writeNodeStatement(
                     new ExportDefaultNode({
