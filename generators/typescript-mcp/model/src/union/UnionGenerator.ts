@@ -5,7 +5,7 @@ import { FileGenerator, TypescriptFile } from "@fern-api/typescript-mcp-base";
 import { TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { ExportDefaultNode, singleUnionTypeMapper } from "../ast";
+import { ExportNode, singleUnionTypeMapper } from "../ast";
 
 export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCustomConfigSchema, ModelGeneratorContext> {
     private readonly zodReference: ts.Reference;
@@ -31,11 +31,12 @@ export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCust
         return new TypescriptFile({
             node: ts.codeblock((writer) => {
                 writer.writeNodeStatement(
-                    new ExportDefaultNode({
+                    new ExportNode({
                         initializer: new ZodUnionNode({
                             zodReference: this.zodReference,
                             unionDeclaration: this.unionDeclaration
-                        })
+                        }),
+                        default: true
                     })
                 );
             }),

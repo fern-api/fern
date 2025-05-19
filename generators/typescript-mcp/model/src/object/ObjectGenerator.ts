@@ -6,7 +6,7 @@ import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { ZodAliasNode } from "../alias/AliasGenerator";
-import { ExportDefaultNode } from "../ast";
+import { ExportNode } from "../ast";
 
 export class ObjectGenerator extends FileGenerator<
     TypescriptFile,
@@ -36,11 +36,12 @@ export class ObjectGenerator extends FileGenerator<
         return new TypescriptFile({
             node: ts.codeblock((writer) => {
                 writer.writeNodeStatement(
-                    new ExportDefaultNode({
+                    new ExportNode({
                         initializer: new ZodObjectNode({
                             zodReference: this.zodReference,
                             objectDeclaration: this.objectDeclaration
-                        })
+                        }),
+                        default: true
                     })
                 );
             }),

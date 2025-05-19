@@ -5,7 +5,7 @@ import { FileGenerator, TypescriptFile } from "@fern-api/typescript-mcp-base";
 import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { ExportDefaultNode } from "../ast";
+import { ExportNode } from "../ast";
 
 export class EnumGenerator extends FileGenerator<TypescriptFile, TypescriptCustomConfigSchema, ModelGeneratorContext> {
     private readonly zodReference: ts.Reference;
@@ -31,11 +31,12 @@ export class EnumGenerator extends FileGenerator<TypescriptFile, TypescriptCusto
         return new TypescriptFile({
             node: ts.codeblock((writer) => {
                 writer.writeNodeStatement(
-                    new ExportDefaultNode({
+                    new ExportNode({
                         initializer: new ZodEnumNode({
                             zodReference: this.zodReference,
                             enumDeclaration: this.enumDeclaration
-                        })
+                        }),
+                        default: true
                     })
                 );
             }),
