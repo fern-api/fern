@@ -56,7 +56,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                 break;
             }
             case "oauth2": {
-                // Treat OAuth as bearer auth for now
+                // TODO: Correctly implement OAuth.
                 return AuthScheme.bearer({
                     token: this.context.casingsGenerator.generateName("token"),
                     tokenEnvVar: undefined,
