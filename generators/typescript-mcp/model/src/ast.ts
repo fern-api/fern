@@ -42,36 +42,6 @@ export function typeReferenceMapper(typeReference: TypeReference) {
     });
 }
 
-export declare namespace ReExportAsNamedNode {
-    interface Args {
-        name: string;
-        importFrom: ts.Reference.ModuleImport;
-    }
-}
-
-// TODO: generalize and move into @fern-api/typescript-ast
-export class ReExportAsNamedNode extends ts.AstNode {
-    public constructor(private readonly args: ReExportAsNamedNode.Args) {
-        super();
-    }
-
-    public write(writer: ts.Writer) {
-        writer.write("export ");
-        switch (this.args.importFrom.type) {
-            case "default":
-                writer.write(`{ default as ${this.args.name} }`);
-                break;
-            case "star":
-                writer.write(`{ * as ${this.args.name} }`);
-                break;
-            case "named":
-                writer.write(this.args.name);
-                break;
-        }
-        writer.write(` from "./${this.args.importFrom.moduleName}"`);
-    }
-}
-
 export declare namespace ExportNode {
     interface Args {
         initializer: ts.AstNode;
@@ -92,5 +62,40 @@ export class ExportNode extends ts.AstNode {
             writer.write("export ");
         }
         writer.writeNode(this.args.initializer);
+    }
+}
+
+export declare namespace ReExportAsNamedNode {
+    interface Args {
+        name: string;
+        importFrom: ts.Reference.ModuleImport;
+    }
+}
+
+// TODO: generalize and move into @fern-api/typescript-ast
+export class ReExportAsNamedNode extends ts.AstNode {
+    public constructor(private readonly args: ReExportAsNamedNode.Args) {
+        super();
+    }
+
+    public write(writer: ts.Writer) {
+        writer.writeNode(
+            new ExportNode({
+                initializer: ts.codeblock((writer) => {
+                    switch (this.args.importFrom.type) {
+                        case "default":
+                            writer.write(`{ default as ${this.args.name} }`);
+                            break;
+                        case "star":
+                            writer.write(`{ * as ${this.args.name} }`);
+                            break;
+                        case "named":
+                            writer.write(this.args.name);
+                            break;
+                    }
+                    writer.write(` from "./${this.args.importFrom.moduleName}"`);
+                })
+            })
+        );
     }
 }
