@@ -368,10 +368,6 @@ function mergeServicesAndChannels(
         }
     }
 
-    const services = {
-        ...(ir1.services ?? {}),
-        ...(ir2.services ?? {})
-    };
     const websocketChannels = {
         ...(ir1.websocketChannels ?? {}),
         ...(ir2.websocketChannels ?? {})
