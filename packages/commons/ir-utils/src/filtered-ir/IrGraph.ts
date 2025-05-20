@@ -302,6 +302,10 @@ export class IrGraph {
         }
     }
 
+    public getFilteredSubpackages(): Set<string> {
+        return this.subpackagesNeededForAudience;
+    }
+
     public getFilteredServices(): Set<ServiceId> {
         return this.servicesNeededForAudience;
     }
