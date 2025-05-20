@@ -6,7 +6,6 @@ from typing import AsyncIterator, Awaitable, Callable, Generic, Iterator, List, 
 from .http_response import BaseHttpResponse
 
 T = TypeVar("T")
-"""Generic to represent the underlying type of the results within a page"""
 
 
 # SDKs implement a Page ABC per-pagination request, the endpoint then returns a pager that wraps this type

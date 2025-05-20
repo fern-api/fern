@@ -63,24 +63,9 @@ jobs:
           cd ../unaliased_models
           fern generate --group dummy_unaliased_types --local || true
 
-      - name: Install Dependencies - Pydantic V1
+      - name: Unit Test
         working-directory: ./generators/python
         run: |
-          poetry add pydantic=^1.10
           poetry lock
           poetry install
-      - name: Unit Test - Pydantic V1
-        working-directory: ./generators/python
-        # We have to ignore these tests as they pull in the custom config which uses a model validator,
-        # the syntax of which is not valid in Pydantic V1, now that we've moved to V2.
-        run: poetry run pytest -sv --ignore ./tests/utils/casing --ignore ./tests/sdk
-
-      - name: Install Dependencies - Pydantic V2
-        working-directory: ./generators/python
-        run: |
-          poetry add pydantic=^2.8.2
-          poetry lock
-          poetry install
-      - name: Unit Test - Pydantic V2
-        working-directory: ./generators/python
-        run: poetry run pytest -sv
+          poetry run pytest -sv

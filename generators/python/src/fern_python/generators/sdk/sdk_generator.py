@@ -43,7 +43,6 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 from fern_python.snippet.snippet_template_factory import SnippetTemplateFactory
-from fern_python.snippet.snippet_test_factory import SnippetTestFactory
 from fern_python.utils import build_snippet_writer
 
 import fern.ir.resources as ir_types
@@ -356,22 +355,6 @@ class SdkGenerator(AbstractGenerator):
             generator_config=generator_config,
             ir=ir,
         )
-
-        test_fac = SnippetTestFactory(
-            project=project,
-            context=context,
-            generator_exec_wrapper=generator_exec_wrapper,
-            generated_root_client=generated_root_client,
-            generated_environment=base_environment,
-        )
-
-        # Only write unit tests if specified in config
-        if context.custom_config.include_legacy_wire_tests and generator_config.write_unit_tests:
-            self._write_snippet_tests(
-                snippet_test_factory=test_fac,
-                snippet_writer=snippet_writer,
-                ir=ir,
-            )
 
     def postrun(self, *, generator_exec_wrapper: GeneratorExecWrapper) -> None:
         # Finally, run the python-v2 generator.
@@ -729,14 +712,6 @@ __version__ = metadata.version("{project._project_config.package_name}")
                 ),
                 contents,
             )
-
-    def _write_snippet_tests(
-        self,
-        snippet_test_factory: SnippetTestFactory,
-        snippet_writer: SnippetWriter,
-        ir: ir_types.IntermediateRepresentation,
-    ) -> None:
-        snippet_test_factory.tests(ir, snippet_writer)
 
     def get_sorted_modules(self) -> Sequence[str]:
         # always import types/errors before resources (nested packages)

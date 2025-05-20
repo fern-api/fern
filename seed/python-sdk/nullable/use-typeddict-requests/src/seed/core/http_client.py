@@ -11,12 +11,11 @@ from random import random
 
 import httpx
 from .file import File, convert_file_dict_to_httpx_tuples
-from .force_multipart import FORCE_MULTIPART
 from .jsonable_encoder import jsonable_encoder
 from .query_encoder import encode_query
 from .remove_none_from_dict import remove_none_from_dict
 from .request_options import RequestOptions
-from httpx._types import RequestFiles
+from httpx._types import FileTypes, RequestFiles
 
 INITIAL_RETRY_DELAY_SECONDS = 0.5
 MAX_RETRY_DELAY_SECONDS = 10
@@ -541,3 +540,18 @@ class AsyncHttpClient:
             timeout=timeout,
         ) as stream:
             yield stream
+
+
+class ForceMultipartDict(typing.Dict[str, FileTypes]):
+    """
+    A dictionary subclass that always evaluates to True in boolean contexts.
+
+    This is used to force multipart/form-data encoding in HTTP requests even when
+    the dictionary is empty, which would normally evaluate to False.
+    """
+
+    def __bool__(self) -> typing.Literal[True]:
+        return True
+
+
+FORCE_MULTIPART = ForceMultipartDict()
