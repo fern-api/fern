@@ -351,7 +351,8 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "The previous version of the API (e.g. 1.1.0)"
                 })
                 .option("quiet", {
-                    boolean: false,
+                    boolean: true,
+                    default: false,
                     alias: "q",
                     description: "Whether to suppress output written to stderr"
                 }),
@@ -368,7 +369,7 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 // JSON object to stdout.
                 cliContext.logger.info(JSON.stringify(result));
             }
-            if (result.errors.length > 0) {
+            if (!argv.quiet && result.errors.length > 0) {
                 cliContext.stderr.info(result.errors.join("\n"));
             }
             const code = result.bump === "major" ? 1 : 0;
