@@ -70,9 +70,6 @@ class Pydantic:
     def PrivateAttr(self) -> AST.ClassReference:
         return _export(self.version_compatibility, "PrivateAttr")
 
-    def RootModel(self) -> AST.ClassReference:
-        return _export(self.version_compatibility, "RootModel")
-
     def validator(self, pre: bool = False) -> AST.Expression:
         if self.version_compatibility == PydanticVersionCompatibility.V2:
             return AST.Expression(f'validator("*", pre={str(pre).lower()})')

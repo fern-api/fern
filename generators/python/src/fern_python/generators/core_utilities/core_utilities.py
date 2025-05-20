@@ -259,14 +259,15 @@ class CoreUtilities:
         )
 
     def get_universal_root_model(self) -> AST.ClassReference:
-        if self._pydantic_compatibility == PydanticVersionCompatibility.Both:
+        if (
+            self._pydantic_compatibility == PydanticVersionCompatibility.Both
+            or self._pydantic_compatibility == PydanticVersionCompatibility.V2
+        ):
             return AST.ClassReference(
                 qualified_name_excluding_import=(),
                 import_=AST.ReferenceImport(
                     module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="UniversalRootModel"
                 ),
             )
-        elif self._pydantic_compatibility == PydanticVersionCompatibility.V2:
-            return Pydantic(self._pydantic_compatibility).RootModel()
         else:  # V1 or V1_ON_V2
             return Pydantic(self._pydantic_compatibility).BaseModel()
