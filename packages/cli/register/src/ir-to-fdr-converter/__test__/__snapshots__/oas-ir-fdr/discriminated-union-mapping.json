@@ -80,14 +80,16 @@
             "type": {
               "type": "id",
               "value": "RequestOne"
-            }
+            },
+            "displayName": "A simple request title"
           },
           {
             "typeName": "RequestTwo",
             "type": {
               "type": "id",
               "value": "RequestTwo"
-            }
+            },
+            "displayName": "A simple response title"
           }
         ]
       }
