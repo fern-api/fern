@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v57.10.0] - 2024-04-23
 
-- Fix: `examples.yml` cannot have any recurisve reference to `http.yml` in fern otherwise the Python SDK will not build.
+- Fix: `examples.yml` cannot have any recursive reference to `http.yml` in fern otherwise the Python SDK will not build.
 
 ## [v57.8.0] - 2024-04-23
 

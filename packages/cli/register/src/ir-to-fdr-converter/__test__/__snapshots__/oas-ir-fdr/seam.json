@@ -16751,7 +16751,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "access_codes.create",
+          "originalEndpointId": "endpoint_accessCodes.create",
           "name": "/access_codes/create",
           "path": {
             "pathParameters": [],
@@ -17114,7 +17114,7 @@
             }
           ],
           "id": "create_multiple",
-          "originalEndpointId": "access_codes.create_multiple",
+          "originalEndpointId": "endpoint_accessCodes.create_multiple",
           "name": "/access_codes/create_multiple",
           "path": {
             "pathParameters": [],
@@ -17471,7 +17471,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "access_codes.delete",
+          "originalEndpointId": "endpoint_accessCodes.delete",
           "name": "/access_codes/delete",
           "path": {
             "pathParameters": [],
@@ -17631,7 +17631,7 @@
             }
           ],
           "id": "generate_code",
-          "originalEndpointId": "access_codes.generate_code",
+          "originalEndpointId": "endpoint_accessCodes.generate_code",
           "name": "/access_codes/generate_code",
           "path": {
             "pathParameters": [],
@@ -17797,7 +17797,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "access_codes.get",
+          "originalEndpointId": "endpoint_accessCodes.get",
           "name": "/access_codes/get",
           "path": {
             "pathParameters": [],
@@ -17987,7 +17987,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "access_codes.list",
+          "originalEndpointId": "endpoint_accessCodes.list",
           "name": "/access_codes/list",
           "path": {
             "pathParameters": [],
@@ -18184,7 +18184,7 @@
             }
           ],
           "id": "pull_backup_access_code",
-          "originalEndpointId": "access_codes.pull_backup_access_code",
+          "originalEndpointId": "endpoint_accessCodes.pull_backup_access_code",
           "name": "/access_codes/pull_backup_access_code",
           "path": {
             "pathParameters": [],
@@ -18350,7 +18350,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "access_codes.update",
+          "originalEndpointId": "endpoint_accessCodes.update",
           "name": "/access_codes/update",
           "path": {
             "pathParameters": [],
@@ -18684,8 +18684,8 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_accessCodes.simulate",
-        "subpackage_accessCodes.unmanaged"
+        "subpackage_accessCodes/simulate",
+        "subpackage_accessCodes/unmanaged"
       ]
     },
     "subpackage_actionAttempts": {
@@ -18703,7 +18703,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "action_attempts.get",
+          "originalEndpointId": "endpoint_actionAttempts.get",
           "name": "/action_attempts/get",
           "path": {
             "pathParameters": [],
@@ -18837,7 +18837,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "action_attempts.list",
+          "originalEndpointId": "endpoint_actionAttempts.list",
           "name": "/action_attempts/list",
           "path": {
             "pathParameters": [],
@@ -18992,7 +18992,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "client_sessions.create",
+          "originalEndpointId": "endpoint_clientSessions.create",
           "name": "/client_sessions/create",
           "path": {
             "pathParameters": [],
@@ -19206,7 +19206,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "client_sessions.delete",
+          "originalEndpointId": "endpoint_clientSessions.delete",
           "name": "/client_sessions/delete",
           "path": {
             "pathParameters": [],
@@ -19326,7 +19326,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "client_sessions.get",
+          "originalEndpointId": "endpoint_clientSessions.get",
           "name": "/client_sessions/get",
           "path": {
             "pathParameters": [],
@@ -19490,7 +19490,7 @@
             }
           ],
           "id": "get_or_create",
-          "originalEndpointId": "client_sessions.get_or_create",
+          "originalEndpointId": "endpoint_clientSessions.get_or_create",
           "name": "/client_sessions/get_or_create",
           "path": {
             "pathParameters": [],
@@ -19704,7 +19704,7 @@
             }
           ],
           "id": "grant_access",
-          "originalEndpointId": "client_sessions.grant_access",
+          "originalEndpointId": "endpoint_clientSessions.grant_access",
           "name": "/client_sessions/grant_access",
           "path": {
             "pathParameters": [],
@@ -19913,7 +19913,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "client_sessions.list",
+          "originalEndpointId": "endpoint_clientSessions.list",
           "name": "/client_sessions/list",
           "path": {
             "pathParameters": [],
@@ -20117,7 +20117,7 @@
             }
           ],
           "id": "revoke",
-          "originalEndpointId": "client_sessions.revoke",
+          "originalEndpointId": "endpoint_clientSessions.revoke",
           "name": "/client_sessions/revoke",
           "path": {
             "pathParameters": [],
@@ -20247,7 +20247,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "connect_webviews.create",
+          "originalEndpointId": "endpoint_connectWebviews.create",
           "name": "/connect_webviews/create",
           "path": {
             "pathParameters": [],
@@ -20505,7 +20505,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "connect_webviews.delete",
+          "originalEndpointId": "endpoint_connectWebviews.delete",
           "name": "/connect_webviews/delete",
           "path": {
             "pathParameters": [],
@@ -20625,7 +20625,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "connect_webviews.get",
+          "originalEndpointId": "endpoint_connectWebviews.get",
           "name": "/connect_webviews/get",
           "path": {
             "pathParameters": [],
@@ -20795,7 +20795,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "connect_webviews.list",
+          "originalEndpointId": "endpoint_connectWebviews.list",
           "name": "/connect_webviews/list",
           "path": {
             "pathParameters": [],
@@ -21013,7 +21013,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "connected_accounts.delete",
+          "originalEndpointId": "endpoint_connectedAccounts.delete",
           "name": "/connected_accounts/delete",
           "path": {
             "pathParameters": [],
@@ -21146,7 +21146,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "connected_accounts.get",
+          "originalEndpointId": "endpoint_connectedAccounts.get",
           "name": "/connected_accounts/get",
           "path": {
             "pathParameters": [],
@@ -21291,7 +21291,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "connected_accounts.list",
+          "originalEndpointId": "endpoint_connectedAccounts.list",
           "name": "/connected_accounts/list",
           "path": {
             "pathParameters": [],
@@ -21455,7 +21455,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "connected_accounts.update",
+          "originalEndpointId": "endpoint_connectedAccounts.update",
           "name": "/connected_accounts/update",
           "path": {
             "pathParameters": [],
@@ -21650,7 +21650,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "devices.delete",
+          "originalEndpointId": "endpoint_devices.delete",
           "name": "/devices/delete",
           "path": {
             "pathParameters": [],
@@ -21770,7 +21770,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "devices.get",
+          "originalEndpointId": "endpoint_devices.get",
           "name": "/devices/get",
           "path": {
             "pathParameters": [],
@@ -21977,7 +21977,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "devices.list",
+          "originalEndpointId": "endpoint_devices.list",
           "name": "/devices/list",
           "path": {
             "pathParameters": [],
@@ -22344,7 +22344,7 @@
             }
           ],
           "id": "list_device_providers",
-          "originalEndpointId": "devices.list_device_providers",
+          "originalEndpointId": "endpoint_devices.list_device_providers",
           "name": "/devices/list_device_providers",
           "path": {
             "pathParameters": [],
@@ -22480,7 +22480,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "devices.update",
+          "originalEndpointId": "endpoint_devices.update",
           "name": "/devices/update",
           "path": {
             "pathParameters": [],
@@ -22651,8 +22651,8 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_devices.simulate",
-        "subpackage_devices.unmanaged"
+        "subpackage_devices/simulate",
+        "subpackage_devices/unmanaged"
       ]
     },
     "subpackage_events": {
@@ -22670,7 +22670,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "events.get",
+          "originalEndpointId": "endpoint_events.get",
           "name": "/events/get",
           "path": {
             "pathParameters": [],
@@ -22844,7 +22844,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "events.list",
+          "originalEndpointId": "endpoint_events.list",
           "name": "/events/list",
           "path": {
             "pathParameters": [],
@@ -23127,7 +23127,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "locks.get",
+          "originalEndpointId": "endpoint_locks.get",
           "name": "/locks/get",
           "path": {
             "pathParameters": [],
@@ -23410,7 +23410,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "locks.list",
+          "originalEndpointId": "endpoint_locks.list",
           "name": "/locks/list",
           "path": {
             "pathParameters": [],
@@ -23857,7 +23857,7 @@
             }
           ],
           "id": "lock_door",
-          "originalEndpointId": "locks.lock_door",
+          "originalEndpointId": "endpoint_locks.lock_door",
           "name": "/locks/lock_door",
           "path": {
             "pathParameters": [],
@@ -24004,7 +24004,7 @@
             }
           ],
           "id": "unlock_door",
-          "originalEndpointId": "locks.unlock_door",
+          "originalEndpointId": "endpoint_locks.unlock_door",
           "name": "/locks/unlock_door",
           "path": {
             "pathParameters": [],
@@ -24161,7 +24161,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "networks.get",
+          "originalEndpointId": "endpoint_networks.get",
           "name": "/networks/get",
           "path": {
             "pathParameters": [],
@@ -24293,7 +24293,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "networks.list",
+          "originalEndpointId": "endpoint_networks.list",
           "name": "/networks/list",
           "path": {
             "pathParameters": [],
@@ -24424,7 +24424,7 @@
             }
           ],
           "id": "deactivate",
-          "originalEndpointId": "phones.deactivate",
+          "originalEndpointId": "endpoint_phones.deactivate",
           "name": "/phones/deactivate",
           "path": {
             "pathParameters": [],
@@ -24543,7 +24543,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "phones.list",
+          "originalEndpointId": "endpoint_phones.list",
           "name": "/phones/list",
           "path": {
             "pathParameters": [],
@@ -24754,7 +24754,7 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_phones.simulate"
+        "subpackage_phones/simulate"
       ]
     },
     "subpackage_thermostats": {
@@ -24772,7 +24772,7 @@
             }
           ],
           "id": "cool",
-          "originalEndpointId": "thermostats.cool",
+          "originalEndpointId": "endpoint_thermostats.cool",
           "name": "/thermostats/cool",
           "path": {
             "pathParameters": [],
@@ -24943,7 +24943,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "thermostats.get",
+          "originalEndpointId": "endpoint_thermostats.get",
           "name": "/thermostats/get",
           "path": {
             "pathParameters": [],
@@ -25150,7 +25150,7 @@
             }
           ],
           "id": "heat",
-          "originalEndpointId": "thermostats.heat",
+          "originalEndpointId": "endpoint_thermostats.heat",
           "name": "/thermostats/heat",
           "path": {
             "pathParameters": [],
@@ -25321,7 +25321,7 @@
             }
           ],
           "id": "heat_cool",
-          "originalEndpointId": "thermostats.heat_cool",
+          "originalEndpointId": "endpoint_thermostats.heat_cool",
           "name": "/thermostats/heat_cool",
           "path": {
             "pathParameters": [],
@@ -25516,7 +25516,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "thermostats.list",
+          "originalEndpointId": "endpoint_thermostats.list",
           "name": "/thermostats/list",
           "path": {
             "pathParameters": [],
@@ -25883,7 +25883,7 @@
             }
           ],
           "id": "off",
-          "originalEndpointId": "thermostats.off",
+          "originalEndpointId": "endpoint_thermostats.off",
           "name": "/thermostats/off",
           "path": {
             "pathParameters": [],
@@ -26030,7 +26030,7 @@
             }
           ],
           "id": "set_fan_mode",
-          "originalEndpointId": "thermostats.set_fan_mode",
+          "originalEndpointId": "endpoint_thermostats.set_fan_mode",
           "name": "/thermostats/set_fan_mode",
           "path": {
             "pathParameters": [],
@@ -26197,7 +26197,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "thermostats.update",
+          "originalEndpointId": "endpoint_thermostats.update",
           "name": "/thermostats/update",
           "path": {
             "pathParameters": [],
@@ -26320,7 +26320,7 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_thermostats.climateSettingSchedules"
+        "subpackage_thermostats/climateSettingSchedules"
       ]
     },
     "subpackage_userIdentities": {
@@ -26338,7 +26338,7 @@
             }
           ],
           "id": "add_acs_user",
-          "originalEndpointId": "user_identities.add_acs_user",
+          "originalEndpointId": "endpoint_userIdentities.add_acs_user",
           "name": "/user_identities/add_acs_user",
           "path": {
             "pathParameters": [],
@@ -26470,7 +26470,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "user_identities.create",
+          "originalEndpointId": "endpoint_userIdentities.create",
           "name": "/user_identities/create",
           "path": {
             "pathParameters": [],
@@ -26659,7 +26659,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "user_identities.delete",
+          "originalEndpointId": "endpoint_userIdentities.delete",
           "name": "/user_identities/delete",
           "path": {
             "pathParameters": [],
@@ -26779,7 +26779,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "user_identities.get",
+          "originalEndpointId": "endpoint_userIdentities.get",
           "name": "/user_identities/get",
           "path": {
             "pathParameters": [],
@@ -26910,7 +26910,7 @@
             }
           ],
           "id": "grant_access_to_device",
-          "originalEndpointId": "user_identities.grant_access_to_device",
+          "originalEndpointId": "endpoint_userIdentities.grant_access_to_device",
           "name": "/user_identities/grant_access_to_device",
           "path": {
             "pathParameters": [],
@@ -27042,7 +27042,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "user_identities.list",
+          "originalEndpointId": "endpoint_userIdentities.list",
           "name": "/user_identities/list",
           "path": {
             "pathParameters": [],
@@ -27185,7 +27185,7 @@
             }
           ],
           "id": "list_accessible_devices",
-          "originalEndpointId": "user_identities.list_accessible_devices",
+          "originalEndpointId": "endpoint_userIdentities.list_accessible_devices",
           "name": "/user_identities/list_accessible_devices",
           "path": {
             "pathParameters": [],
@@ -27465,7 +27465,7 @@
             }
           ],
           "id": "list_acs_systems",
-          "originalEndpointId": "user_identities.list_acs_systems",
+          "originalEndpointId": "endpoint_userIdentities.list_acs_systems",
           "name": "/user_identities/list_acs_systems",
           "path": {
             "pathParameters": [],
@@ -27647,7 +27647,7 @@
             }
           ],
           "id": "list_acs_users",
-          "originalEndpointId": "user_identities.list_acs_users",
+          "originalEndpointId": "endpoint_userIdentities.list_acs_users",
           "name": "/user_identities/list_acs_users",
           "path": {
             "pathParameters": [],
@@ -27817,7 +27817,7 @@
             }
           ],
           "id": "remove_acs_user",
-          "originalEndpointId": "user_identities.remove_acs_user",
+          "originalEndpointId": "endpoint_userIdentities.remove_acs_user",
           "name": "/user_identities/remove_acs_user",
           "path": {
             "pathParameters": [],
@@ -27949,7 +27949,7 @@
             }
           ],
           "id": "revoke_access_to_device",
-          "originalEndpointId": "user_identities.revoke_access_to_device",
+          "originalEndpointId": "endpoint_userIdentities.revoke_access_to_device",
           "name": "/user_identities/revoke_access_to_device",
           "path": {
             "pathParameters": [],
@@ -28081,7 +28081,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "user_identities.update",
+          "originalEndpointId": "endpoint_userIdentities.update",
           "name": "/user_identities/update",
           "path": {
             "pathParameters": [],
@@ -28258,7 +28258,7 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_userIdentities.enrollmentAutomations"
+        "subpackage_userIdentities/enrollmentAutomations"
       ]
     },
     "subpackage_webhooks": {
@@ -28276,7 +28276,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "webhooks.create",
+          "originalEndpointId": "endpoint_webhooks.create",
           "name": "/webhooks/create",
           "path": {
             "pathParameters": [],
@@ -28427,7 +28427,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "webhooks.delete",
+          "originalEndpointId": "endpoint_webhooks.delete",
           "name": "/webhooks/delete",
           "path": {
             "pathParameters": [],
@@ -28546,7 +28546,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "webhooks.get",
+          "originalEndpointId": "endpoint_webhooks.get",
           "name": "/webhooks/get",
           "path": {
             "pathParameters": [],
@@ -28681,7 +28681,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "webhooks.list",
+          "originalEndpointId": "endpoint_webhooks.list",
           "name": "/webhooks/list",
           "path": {
             "pathParameters": [],
@@ -28790,7 +28790,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "webhooks.update",
+          "originalEndpointId": "endpoint_webhooks.update",
           "name": "/webhooks/update",
           "path": {
             "pathParameters": [],
@@ -28937,7 +28937,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "workspaces.create",
+          "originalEndpointId": "endpoint_workspaces.create",
           "name": "/workspaces/create",
           "path": {
             "pathParameters": [],
@@ -29133,7 +29133,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "workspaces.get",
+          "originalEndpointId": "endpoint_workspaces.get",
           "name": "/workspaces/get",
           "path": {
             "pathParameters": [],
@@ -29236,7 +29236,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "workspaces.list",
+          "originalEndpointId": "endpoint_workspaces.list",
           "name": "/workspaces/list",
           "path": {
             "pathParameters": [],
@@ -29343,7 +29343,7 @@
             }
           ],
           "id": "reset_sandbox",
-          "originalEndpointId": "workspaces.reset_sandbox",
+          "originalEndpointId": "endpoint_workspaces.reset_sandbox",
           "name": "/workspaces/reset_sandbox",
           "path": {
             "pathParameters": [],
@@ -29441,8 +29441,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_accessCodes.simulate": {
-      "subpackageId": "subpackage_accessCodes.simulate",
+    "subpackage_accessCodes/simulate": {
+      "subpackageId": "subpackage_accessCodes/simulate",
       "name": "simulate",
       "endpoints": [
         {
@@ -29456,7 +29456,7 @@
             }
           ],
           "id": "create_unmanaged_access_code",
-          "originalEndpointId": "access_codes.simulate.create_unmanaged_access_code",
+          "originalEndpointId": "endpoint_accessCodes/simulate.create_unmanaged_access_code",
           "name": "/access_codes/simulate/create_unmanaged_access_code",
           "path": {
             "pathParameters": [],
@@ -29624,8 +29624,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_accessCodes.unmanaged": {
-      "subpackageId": "subpackage_accessCodes.unmanaged",
+    "subpackage_accessCodes/unmanaged": {
+      "subpackageId": "subpackage_accessCodes/unmanaged",
       "name": "unmanaged",
       "endpoints": [
         {
@@ -29639,7 +29639,7 @@
             }
           ],
           "id": "convert_to_managed",
-          "originalEndpointId": "access_codes.unmanaged.convert_to_managed",
+          "originalEndpointId": "endpoint_accessCodes/unmanaged.convert_to_managed",
           "name": "/access_codes/unmanaged/convert_to_managed",
           "path": {
             "pathParameters": [],
@@ -29808,7 +29808,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "access_codes.unmanaged.delete",
+          "originalEndpointId": "endpoint_accessCodes/unmanaged.delete",
           "name": "/access_codes/unmanaged/delete",
           "path": {
             "pathParameters": [],
@@ -29955,7 +29955,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "access_codes.unmanaged.get",
+          "originalEndpointId": "endpoint_accessCodes/unmanaged.get",
           "name": "/access_codes/unmanaged/get",
           "path": {
             "pathParameters": [],
@@ -30127,7 +30127,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "access_codes.unmanaged.list",
+          "originalEndpointId": "endpoint_accessCodes/unmanaged.list",
           "name": "/access_codes/unmanaged/list",
           "path": {
             "pathParameters": [],
@@ -30291,7 +30291,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "access_codes.unmanaged.update",
+          "originalEndpointId": "endpoint_accessCodes/unmanaged.update",
           "name": "/access_codes/unmanaged/update",
           "path": {
             "pathParameters": [],
@@ -30461,17 +30461,17 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_acs.accessGroups",
-        "subpackage_acs.credentialPools",
-        "subpackage_acs.credentialProvisioningAutomations",
-        "subpackage_acs.credentials",
-        "subpackage_acs.entrances",
-        "subpackage_acs.systems",
-        "subpackage_acs.users"
+        "subpackage_acs/accessGroups",
+        "subpackage_acs/credentialPools",
+        "subpackage_acs/credentialProvisioningAutomations",
+        "subpackage_acs/credentials",
+        "subpackage_acs/entrances",
+        "subpackage_acs/systems",
+        "subpackage_acs/users"
       ]
     },
-    "subpackage_acs.accessGroups": {
-      "subpackageId": "subpackage_acs.accessGroups",
+    "subpackage_acs/accessGroups": {
+      "subpackageId": "subpackage_acs/accessGroups",
       "name": "accessGroups",
       "endpoints": [
         {
@@ -30485,7 +30485,7 @@
             }
           ],
           "id": "add_user",
-          "originalEndpointId": "acs.access_groups.add_user",
+          "originalEndpointId": "endpoint_acs/accessGroups.add_user",
           "name": "/acs/access_groups/add_user",
           "path": {
             "pathParameters": [],
@@ -30617,7 +30617,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "acs.access_groups.get",
+          "originalEndpointId": "endpoint_acs/accessGroups.get",
           "name": "/acs/access_groups/get",
           "path": {
             "pathParameters": [],
@@ -30761,7 +30761,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "acs.access_groups.list",
+          "originalEndpointId": "endpoint_acs/accessGroups.list",
           "name": "/acs/access_groups/list",
           "path": {
             "pathParameters": [],
@@ -30921,7 +30921,7 @@
             }
           ],
           "id": "list_users",
-          "originalEndpointId": "acs.access_groups.list_users",
+          "originalEndpointId": "endpoint_acs/accessGroups.list_users",
           "name": "/acs/access_groups/list_users",
           "path": {
             "pathParameters": [],
@@ -31091,7 +31091,7 @@
             }
           ],
           "id": "remove_user",
-          "originalEndpointId": "acs.access_groups.remove_user",
+          "originalEndpointId": "endpoint_acs/accessGroups.remove_user",
           "name": "/acs/access_groups/remove_user",
           "path": {
             "pathParameters": [],
@@ -31218,8 +31218,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_acs.credentialPools": {
-      "subpackageId": "subpackage_acs.credentialPools",
+    "subpackage_acs/credentialPools": {
+      "subpackageId": "subpackage_acs/credentialPools",
       "name": "credentialPools",
       "endpoints": [
         {
@@ -31233,7 +31233,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "acs.credential_pools.list",
+          "originalEndpointId": "endpoint_acs/credentialPools.list",
           "name": "/acs/credential_pools/list",
           "path": {
             "pathParameters": [],
@@ -31370,8 +31370,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_acs.credentialProvisioningAutomations": {
-      "subpackageId": "subpackage_acs.credentialProvisioningAutomations",
+    "subpackage_acs/credentialProvisioningAutomations": {
+      "subpackageId": "subpackage_acs/credentialProvisioningAutomations",
       "name": "credentialProvisioningAutomations",
       "endpoints": [
         {
@@ -31385,7 +31385,7 @@
             }
           ],
           "id": "launch",
-          "originalEndpointId": "acs.credential_provisioning_automations.launch",
+          "originalEndpointId": "endpoint_acs/credentialProvisioningAutomations.launch",
           "name": "/acs/credential_provisioning_automations/launch",
           "path": {
             "pathParameters": [],
@@ -31564,8 +31564,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_acs.credentials": {
-      "subpackageId": "subpackage_acs.credentials",
+    "subpackage_acs/credentials": {
+      "subpackageId": "subpackage_acs/credentials",
       "name": "credentials",
       "endpoints": [
         {
@@ -31579,7 +31579,7 @@
             }
           ],
           "id": "assign",
-          "originalEndpointId": "acs.credentials.assign",
+          "originalEndpointId": "endpoint_acs/credentials.assign",
           "name": "/acs/credentials/assign",
           "path": {
             "pathParameters": [],
@@ -31797,7 +31797,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "acs.credentials.create",
+          "originalEndpointId": "endpoint_acs/credentials.create",
           "name": "/acs/credentials/create",
           "path": {
             "pathParameters": [],
@@ -32103,7 +32103,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "acs.credentials.delete",
+          "originalEndpointId": "endpoint_acs/credentials.delete",
           "name": "/acs/credentials/delete",
           "path": {
             "pathParameters": [],
@@ -32223,7 +32223,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "acs.credentials.get",
+          "originalEndpointId": "endpoint_acs/credentials.get",
           "name": "/acs/credentials/get",
           "path": {
             "pathParameters": [],
@@ -32429,7 +32429,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "acs.credentials.list",
+          "originalEndpointId": "endpoint_acs/credentials.list",
           "name": "/acs/credentials/list",
           "path": {
             "pathParameters": [],
@@ -32641,7 +32641,7 @@
             }
           ],
           "id": "list_accessible_entrances",
-          "originalEndpointId": "acs.credentials.list_accessible_entrances",
+          "originalEndpointId": "endpoint_acs/credentials.list_accessible_entrances",
           "name": "/acs/credentials/list_accessible_entrances",
           "path": {
             "pathParameters": [],
@@ -32821,7 +32821,7 @@
             }
           ],
           "id": "unassign",
-          "originalEndpointId": "acs.credentials.unassign",
+          "originalEndpointId": "endpoint_acs/credentials.unassign",
           "name": "/acs/credentials/unassign",
           "path": {
             "pathParameters": [],
@@ -33039,7 +33039,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "acs.credentials.update",
+          "originalEndpointId": "endpoint_acs/credentials.update",
           "name": "/acs/credentials/update",
           "path": {
             "pathParameters": [],
@@ -33265,8 +33265,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_acs.entrances": {
-      "subpackageId": "subpackage_acs.entrances",
+    "subpackage_acs/entrances": {
+      "subpackageId": "subpackage_acs/entrances",
       "name": "entrances",
       "endpoints": [
         {
@@ -33280,7 +33280,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "acs.entrances.get",
+          "originalEndpointId": "endpoint_acs/entrances.get",
           "name": "/acs/entrances/get",
           "path": {
             "pathParameters": [],
@@ -33456,7 +33456,7 @@
             }
           ],
           "id": "grant_access",
-          "originalEndpointId": "acs.entrances.grant_access",
+          "originalEndpointId": "endpoint_acs/entrances.grant_access",
           "name": "/acs/entrances/grant_access",
           "path": {
             "pathParameters": [],
@@ -33588,7 +33588,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "acs.entrances.list",
+          "originalEndpointId": "endpoint_acs/entrances.list",
           "name": "/acs/entrances/list",
           "path": {
             "pathParameters": [],
@@ -33780,7 +33780,7 @@
             }
           ],
           "id": "list_credentials_with_access",
-          "originalEndpointId": "acs.entrances.list_credentials_with_access",
+          "originalEndpointId": "endpoint_acs/entrances.list_credentials_with_access",
           "name": "/acs/entrances/list_credentials_with_access",
           "path": {
             "pathParameters": [],
@@ -33998,8 +33998,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_acs.systems": {
-      "subpackageId": "subpackage_acs.systems",
+    "subpackage_acs/systems": {
+      "subpackageId": "subpackage_acs/systems",
       "name": "systems",
       "endpoints": [
         {
@@ -34013,7 +34013,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "acs.systems.get",
+          "originalEndpointId": "endpoint_acs/systems.get",
           "name": "/acs/systems/get",
           "path": {
             "pathParameters": [],
@@ -34191,7 +34191,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "acs.systems.list",
+          "originalEndpointId": "endpoint_acs/systems.list",
           "name": "/acs/systems/list",
           "path": {
             "pathParameters": [],
@@ -34372,7 +34372,7 @@
             }
           ],
           "id": "list_compatible_credential_manager_acs_systems",
-          "originalEndpointId": "acs.systems.list_compatible_credential_manager_acs_systems",
+          "originalEndpointId": "endpoint_acs/systems.list_compatible_credential_manager_acs_systems",
           "name": "/acs/systems/list_compatible_credential_manager_acs_systems",
           "path": {
             "pathParameters": [],
@@ -34549,8 +34549,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_acs.users": {
-      "subpackageId": "subpackage_acs.users",
+    "subpackage_acs/users": {
+      "subpackageId": "subpackage_acs/users",
       "name": "users",
       "endpoints": [
         {
@@ -34564,7 +34564,7 @@
             }
           ],
           "id": "add_to_access_group",
-          "originalEndpointId": "acs.users.add_to_access_group",
+          "originalEndpointId": "endpoint_acs/users.add_to_access_group",
           "name": "/acs/users/add_to_access_group",
           "path": {
             "pathParameters": [],
@@ -34696,7 +34696,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "acs.users.create",
+          "originalEndpointId": "endpoint_acs/users.create",
           "name": "/acs/users/create",
           "path": {
             "pathParameters": [],
@@ -34955,7 +34955,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "acs.users.delete",
+          "originalEndpointId": "endpoint_acs/users.delete",
           "name": "/acs/users/delete",
           "path": {
             "pathParameters": [],
@@ -35075,7 +35075,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "acs.users.get",
+          "originalEndpointId": "endpoint_acs/users.get",
           "name": "/acs/users/get",
           "path": {
             "pathParameters": [],
@@ -35241,7 +35241,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "acs.users.list",
+          "originalEndpointId": "endpoint_acs/users.list",
           "name": "/acs/users/list",
           "path": {
             "pathParameters": [],
@@ -35450,7 +35450,7 @@
             }
           ],
           "id": "list_accessible_entrances",
-          "originalEndpointId": "acs.users.list_accessible_entrances",
+          "originalEndpointId": "endpoint_acs/users.list_accessible_entrances",
           "name": "/acs/users/list_accessible_entrances",
           "path": {
             "pathParameters": [],
@@ -35630,7 +35630,7 @@
             }
           ],
           "id": "remove_from_access_group",
-          "originalEndpointId": "acs.users.remove_from_access_group",
+          "originalEndpointId": "endpoint_acs/users.remove_from_access_group",
           "name": "/acs/users/remove_from_access_group",
           "path": {
             "pathParameters": [],
@@ -35762,7 +35762,7 @@
             }
           ],
           "id": "revoke_access_to_all_entrances",
-          "originalEndpointId": "acs.users.revoke_access_to_all_entrances",
+          "originalEndpointId": "endpoint_acs/users.revoke_access_to_all_entrances",
           "name": "/acs/users/revoke_access_to_all_entrances",
           "path": {
             "pathParameters": [],
@@ -35882,7 +35882,7 @@
             }
           ],
           "id": "suspend",
-          "originalEndpointId": "acs.users.suspend",
+          "originalEndpointId": "endpoint_acs/users.suspend",
           "name": "/acs/users/suspend",
           "path": {
             "pathParameters": [],
@@ -36002,7 +36002,7 @@
             }
           ],
           "id": "unsuspend",
-          "originalEndpointId": "acs.users.unsuspend",
+          "originalEndpointId": "endpoint_acs/users.unsuspend",
           "name": "/acs/users/unsuspend",
           "path": {
             "pathParameters": [],
@@ -36122,7 +36122,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "acs.users.update",
+          "originalEndpointId": "endpoint_acs/users.update",
           "name": "/acs/users/update",
           "path": {
             "pathParameters": [],
@@ -36314,8 +36314,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_devices.simulate": {
-      "subpackageId": "subpackage_devices.simulate",
+    "subpackage_devices/simulate": {
+      "subpackageId": "subpackage_devices/simulate",
       "name": "simulate",
       "endpoints": [
         {
@@ -36329,7 +36329,7 @@
             }
           ],
           "id": "connect",
-          "originalEndpointId": "devices.simulate.connect",
+          "originalEndpointId": "endpoint_devices/simulate.connect",
           "name": "/devices/simulate/connect",
           "path": {
             "pathParameters": [],
@@ -36449,7 +36449,7 @@
             }
           ],
           "id": "disconnect",
-          "originalEndpointId": "devices.simulate.disconnect",
+          "originalEndpointId": "endpoint_devices/simulate.disconnect",
           "name": "/devices/simulate/disconnect",
           "path": {
             "pathParameters": [],
@@ -36569,7 +36569,7 @@
             }
           ],
           "id": "remove",
-          "originalEndpointId": "devices.simulate.remove",
+          "originalEndpointId": "endpoint_devices/simulate.remove",
           "name": "/devices/simulate/remove",
           "path": {
             "pathParameters": [],
@@ -36684,8 +36684,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_devices.unmanaged": {
-      "subpackageId": "subpackage_devices.unmanaged",
+    "subpackage_devices/unmanaged": {
+      "subpackageId": "subpackage_devices/unmanaged",
       "name": "unmanaged",
       "endpoints": [
         {
@@ -36699,7 +36699,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "devices.unmanaged.get",
+          "originalEndpointId": "endpoint_devices/unmanaged.get",
           "name": "/devices/unmanaged/get",
           "path": {
             "pathParameters": [],
@@ -36948,7 +36948,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "devices.unmanaged.list",
+          "originalEndpointId": "endpoint_devices/unmanaged.list",
           "name": "/devices/unmanaged/list",
           "path": {
             "pathParameters": [],
@@ -37357,7 +37357,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "devices.unmanaged.update",
+          "originalEndpointId": "endpoint_devices/unmanaged.update",
           "name": "/devices/unmanaged/update",
           "path": {
             "pathParameters": [],
@@ -37491,12 +37491,12 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_noiseSensors.noiseThresholds",
-        "subpackage_noiseSensors.simulate"
+        "subpackage_noiseSensors/noiseThresholds",
+        "subpackage_noiseSensors/simulate"
       ]
     },
-    "subpackage_noiseSensors.noiseThresholds": {
-      "subpackageId": "subpackage_noiseSensors.noiseThresholds",
+    "subpackage_noiseSensors/noiseThresholds": {
+      "subpackageId": "subpackage_noiseSensors/noiseThresholds",
       "name": "noiseThresholds",
       "endpoints": [
         {
@@ -37510,7 +37510,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "noise_sensors.noise_thresholds.create",
+          "originalEndpointId": "endpoint_noiseSensors/noiseThresholds.create",
           "name": "/noise_sensors/noise_thresholds/create",
           "path": {
             "pathParameters": [],
@@ -37733,7 +37733,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "noise_sensors.noise_thresholds.delete",
+          "originalEndpointId": "endpoint_noiseSensors/noiseThresholds.delete",
           "name": "/noise_sensors/noise_thresholds/delete",
           "path": {
             "pathParameters": [],
@@ -37892,7 +37892,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "noise_sensors.noise_thresholds.get",
+          "originalEndpointId": "endpoint_noiseSensors/noiseThresholds.get",
           "name": "/noise_sensors/noise_thresholds/get",
           "path": {
             "pathParameters": [],
@@ -38030,7 +38030,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "noise_sensors.noise_thresholds.list",
+          "originalEndpointId": "endpoint_noiseSensors/noiseThresholds.list",
           "name": "/noise_sensors/noise_thresholds/list",
           "path": {
             "pathParameters": [],
@@ -38184,7 +38184,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "noise_sensors.noise_thresholds.update",
+          "originalEndpointId": "endpoint_noiseSensors/noiseThresholds.update",
           "name": "/noise_sensors/noise_thresholds/update",
           "path": {
             "pathParameters": [],
@@ -38398,8 +38398,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_noiseSensors.simulate": {
-      "subpackageId": "subpackage_noiseSensors.simulate",
+    "subpackage_noiseSensors/simulate": {
+      "subpackageId": "subpackage_noiseSensors/simulate",
       "name": "simulate",
       "endpoints": [
         {
@@ -38413,7 +38413,7 @@
             }
           ],
           "id": "trigger_noise_threshold",
-          "originalEndpointId": "noise_sensors.simulate.trigger_noise_threshold",
+          "originalEndpointId": "endpoint_noiseSensors/simulate.trigger_noise_threshold",
           "name": "/noise_sensors/simulate/trigger_noise_threshold",
           "path": {
             "pathParameters": [],
@@ -38528,8 +38528,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_phones.simulate": {
-      "subpackageId": "subpackage_phones.simulate",
+    "subpackage_phones/simulate": {
+      "subpackageId": "subpackage_phones/simulate",
       "name": "simulate",
       "endpoints": [
         {
@@ -38543,7 +38543,7 @@
             }
           ],
           "id": "create_sandbox_phone",
-          "originalEndpointId": "phones.simulate.create_sandbox_phone",
+          "originalEndpointId": "endpoint_phones/simulate.create_sandbox_phone",
           "name": "/phones/simulate/create_sandbox_phone",
           "path": {
             "pathParameters": [],
@@ -38784,8 +38784,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_thermostats.climateSettingSchedules": {
-      "subpackageId": "subpackage_thermostats.climateSettingSchedules",
+    "subpackage_thermostats/climateSettingSchedules": {
+      "subpackageId": "subpackage_thermostats/climateSettingSchedules",
       "name": "climateSettingSchedules",
       "endpoints": [
         {
@@ -38799,7 +38799,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "thermostats.climate_setting_schedules.create",
+          "originalEndpointId": "endpoint_thermostats/climateSettingSchedules.create",
           "name": "/thermostats/climate_setting_schedules/create",
           "path": {
             "pathParameters": [],
@@ -39092,7 +39092,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "thermostats.climate_setting_schedules.delete",
+          "originalEndpointId": "endpoint_thermostats/climateSettingSchedules.delete",
           "name": "/thermostats/climate_setting_schedules/delete",
           "path": {
             "pathParameters": [],
@@ -39212,7 +39212,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "thermostats.climate_setting_schedules.get",
+          "originalEndpointId": "endpoint_thermostats/climateSettingSchedules.get",
           "name": "/thermostats/climate_setting_schedules/get",
           "path": {
             "pathParameters": [],
@@ -39380,7 +39380,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "thermostats.climate_setting_schedules.list",
+          "originalEndpointId": "endpoint_thermostats/climateSettingSchedules.list",
           "name": "/thermostats/climate_setting_schedules/list",
           "path": {
             "pathParameters": [],
@@ -39552,7 +39552,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "thermostats.climate_setting_schedules.update",
+          "originalEndpointId": "endpoint_thermostats/climateSettingSchedules.update",
           "name": "/thermostats/climate_setting_schedules/update",
           "path": {
             "pathParameters": [],
@@ -39843,8 +39843,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_userIdentities.enrollmentAutomations": {
-      "subpackageId": "subpackage_userIdentities.enrollmentAutomations",
+    "subpackage_userIdentities/enrollmentAutomations": {
+      "subpackageId": "subpackage_userIdentities/enrollmentAutomations",
       "name": "enrollmentAutomations",
       "endpoints": [
         {
@@ -39858,7 +39858,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "user_identities.enrollment_automations.delete",
+          "originalEndpointId": "endpoint_userIdentities/enrollmentAutomations.delete",
           "name": "/user_identities/enrollment_automations/delete",
           "path": {
             "pathParameters": [],
@@ -39978,7 +39978,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "user_identities.enrollment_automations.get",
+          "originalEndpointId": "endpoint_userIdentities/enrollmentAutomations.get",
           "name": "/user_identities/enrollment_automations/get",
           "path": {
             "pathParameters": [],
@@ -40112,7 +40112,7 @@
             }
           ],
           "id": "launch",
-          "originalEndpointId": "user_identities.enrollment_automations.launch",
+          "originalEndpointId": "endpoint_userIdentities/enrollmentAutomations.launch",
           "name": "/user_identities/enrollment_automations/launch",
           "path": {
             "pathParameters": [],
@@ -40298,7 +40298,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "user_identities.enrollment_automations.list",
+          "originalEndpointId": "endpoint_userIdentities/enrollmentAutomations.list",
           "name": "/user_identities/enrollment_automations/list",
           "path": {
             "pathParameters": [],
@@ -40482,6 +40482,10 @@
       "subpackage_acs",
       "subpackage_noiseSensors"
     ]
+  },
+  "auth": {
+    "type": "bearerAuth",
+    "tokenName": "token"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

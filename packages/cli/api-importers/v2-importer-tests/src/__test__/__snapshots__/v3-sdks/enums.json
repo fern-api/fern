@@ -503,7 +503,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "getExample",
+          "id": "endpoint_.getExample",
           "displayName": "Get Example",
           "method": "GET",
           "name": {

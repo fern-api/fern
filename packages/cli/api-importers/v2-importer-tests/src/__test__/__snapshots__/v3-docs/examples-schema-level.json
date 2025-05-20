@@ -655,7 +655,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "listTrees",
+          "id": "endpoint_.listTrees",
           "displayName": "List all trees",
           "method": "GET",
           "name": {
@@ -2239,7 +2239,7 @@
           }
         },
         {
-          "id": "createTree",
+          "id": "endpoint_.createTree",
           "displayName": "Create a new tree",
           "method": "POST",
           "name": {
@@ -3430,7 +3430,7 @@
           }
         },
         {
-          "id": "getTree",
+          "id": "endpoint_.getTree",
           "displayName": "Get a tree by ID",
           "method": "GET",
           "name": {
@@ -4377,7 +4377,7 @@
           }
         },
         {
-          "id": "createFern",
+          "id": "endpoint_.createFern",
           "displayName": "Create a new fern",
           "method": "POST",
           "name": {
@@ -4724,7 +4724,7 @@
           }
         },
         {
-          "id": "getFern",
+          "id": "endpoint_.getFern",
           "displayName": "Get a fern by ID",
           "method": "GET",
           "name": {
@@ -5024,7 +5024,7 @@
           }
         },
         {
-          "id": "createGrass",
+          "id": "endpoint_.createGrass",
           "displayName": "Create a new grass",
           "method": "POST",
           "name": {

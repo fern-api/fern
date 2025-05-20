@@ -143,7 +143,7 @@
         "auth": false,
         "method": "GET",
         "id": "defaultAndValidationRules",
-        "originalEndpointId": "defaultAndValidationRules",
+        "originalEndpointId": "endpoint_.defaultAndValidationRules",
         "name": "Default and validation rules",
         "path": {
           "pathParameters": [],

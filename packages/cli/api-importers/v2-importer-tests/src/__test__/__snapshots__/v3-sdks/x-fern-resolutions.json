@@ -210,7 +210,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "getUser",
+          "id": "endpoint_.getUser",
           "method": "GET",
           "name": {
             "originalName": "getUser",
@@ -465,7 +465,7 @@
           }
         },
         {
-          "id": "getUsers",
+          "id": "endpoint_.getUsers",
           "method": "GET",
           "name": {
             "originalName": "getUsers",

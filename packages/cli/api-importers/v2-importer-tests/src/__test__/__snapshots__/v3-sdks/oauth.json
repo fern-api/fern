@@ -1,6 +1,6 @@
 {
   "auth": {
-    "requirement": "ANY",
+    "requirement": "ALL",
     "schemes": [
       {
         "token": {
@@ -431,7 +431,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "auth.get-token",
+          "id": "endpoint_auth.get-token",
           "displayName": "Request an access token",
           "method": "POST",
           "name": {

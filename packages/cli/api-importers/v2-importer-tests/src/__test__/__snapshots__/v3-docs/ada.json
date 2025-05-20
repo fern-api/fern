@@ -1,6 +1,6 @@
 {
   "auth": {
-    "requirement": "ANY",
+    "requirement": "ALL",
     "schemes": [
       {
         "token": {
@@ -3272,7 +3272,7 @@
     }
   },
   "services": {
-    "service_End users": {
+    "service_endUsers": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -3326,7 +3326,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "End users.getEndUserById",
+          "id": "endpoint_endUsers.getEndUserById",
           "displayName": "Get an end user by ID",
           "method": "GET",
           "name": {
@@ -6216,7 +6216,7 @@
           }
         },
         {
-          "id": "End users.updateEndUserById",
+          "id": "endpoint_endUsers.updateEndUserById",
           "displayName": "Update an end user by ID",
           "method": "PATCH",
           "name": {
@@ -9732,7 +9732,7 @@
           }
         },
         {
-          "id": "End users.getEndUsers",
+          "id": "endpoint_endUsers.getEndUsers",
           "displayName": "Get multiple end users by ID",
           "method": "GET",
           "name": {
@@ -16906,7 +16906,7 @@
           }
         }
       },
-      "service": "service_End users",
+      "service": "service_endUsers",
       "types": [],
       "errors": [],
       "subpackages": [],

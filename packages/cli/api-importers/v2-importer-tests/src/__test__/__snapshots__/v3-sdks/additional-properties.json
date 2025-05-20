@@ -298,7 +298,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "getObjectWithArrayOfObjects",
+          "id": "endpoint_.getObjectWithArrayOfObjects",
           "method": "GET",
           "name": {
             "originalName": "getObjectWithArrayOfObjects",
@@ -943,7 +943,7 @@
           }
         },
         {
-          "id": "getImplicitObjectWithArrayOfObjects",
+          "id": "endpoint_.getImplicitObjectWithArrayOfObjects",
           "method": "GET",
           "name": {
             "originalName": "getImplicitObjectWithArrayOfObjects",

@@ -1,5 +1,26 @@
 - changelogEntry:
     - summary: |
+        Standardize package, service, and endpoint naming in the v3 parser.
+      type: fix
+  irVersion: 57
+  version: 0.61.24
+
+- changelogEntry:
+    - summary: |
+        Remove warning for unrecognized PHP SDK generator name.
+      type: fix
+  irVersion: 57
+  version: 0.61.23
+
+- changelogEntry:
+    - summary: |
+        Fix an issue where multiple auth schemes would not be converted during IR -> FDR conversion.
+      type: fix
+  irVersion: 57
+  version: 0.61.22
+
+- changelogEntry:
+    - summary: |
         Fix AsyncAPI parser to properly handle reference objects in headers and query parameters.
       type: fix
   irVersion: 57
@@ -65,7 +86,7 @@
 - changelogEntry:
     - summary: |
         Introduce `fern check --from-openapi` which prints out validation errors directly from OpenAPI
-        as well as the line numbers that the errors are coming from.
+        as well as the corresponding line numbers originating the errors.
       type: fix
   irVersion: 57
   version: 0.61.13

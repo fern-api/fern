@@ -57,10 +57,6 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             return {};
         }
 
-        const topLevelSchemes = new Set<string>(
-            this.context.spec.security?.flatMap((securityRequirement) => Object.keys(securityRequirement)) ?? []
-        );
-
         // Create a map to store converted auth schemes by their ID
         const idToAuthScheme: Record<string, AuthScheme> = {};
         const securitySchemes: AuthScheme[] = [];
@@ -80,17 +76,27 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 securityScheme: resolvedSecurityScheme
             });
             const convertedScheme = securitySchemeConverter.convert();
+            if (convertedScheme == null) {
+                continue;
+            }
+
             // if no top level schemes, then just add the scheme to the whole api
-            if (convertedScheme != null && (topLevelSchemes.size === 0 || topLevelSchemes.has(id))) {
+            if (
+                this.shouldAddSchemeToApi({
+                    authScheme: convertedScheme,
+                    schemeId: id,
+                    currentSecuritySchemes: securitySchemes
+                })
+            ) {
                 securitySchemes.push(convertedScheme);
-            } else if (convertedScheme != null) {
+            } else {
                 idToAuthScheme[id] = convertedScheme;
             }
         }
 
         if (securitySchemes.length > 0) {
             this.addAuthToIR({
-                requirement: "ANY",
+                requirement: securitySchemes.length === 1 ? "ALL" : "ANY",
                 schemes: securitySchemes,
                 docs: undefined
             });
@@ -268,5 +274,30 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             }
         }
         return { endpointLevelServers, errors };
+    }
+
+    private shouldAddSchemeToApi({
+        authScheme,
+        schemeId,
+        currentSecuritySchemes
+    }: {
+        authScheme: AuthScheme;
+        schemeId: string;
+        currentSecuritySchemes: AuthScheme[];
+    }): boolean {
+        const schemeAlreadyExists = currentSecuritySchemes.some((scheme) => {
+            if (scheme.type === authScheme.type) {
+                if (scheme.type === "bearer" && authScheme.type === "bearer") {
+                    return scheme.token === authScheme.token;
+                }
+                // TODO: Add other scheme types as needed
+            }
+            return false;
+        });
+
+        const topLevelSchemes = new Set<string>(
+            this.context.spec.security?.flatMap((securityRequirement) => Object.keys(securityRequirement)) ?? []
+        );
+        return (topLevelSchemes.size === 0 || topLevelSchemes.has(schemeId)) && !schemeAlreadyExists;
     }
 }

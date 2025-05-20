@@ -97,7 +97,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "exampleEndpoint",
+          "id": "endpoint_.exampleEndpoint",
           "displayName": "Example endpoint",
           "method": "GET",
           "name": {

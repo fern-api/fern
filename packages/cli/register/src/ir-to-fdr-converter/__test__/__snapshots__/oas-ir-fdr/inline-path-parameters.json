@@ -74,7 +74,7 @@
           "description": "",
           "method": "POST",
           "id": "Search",
-          "originalEndpointId": "Organizations.Search",
+          "originalEndpointId": "endpoint_organizations.Search",
           "name": "Search an organization",
           "path": {
             "pathParameters": [
@@ -203,7 +203,7 @@
         "description": "Returns the user with the provided user ID.",
         "method": "GET",
         "id": "GetUser",
-        "originalEndpointId": "GetUser",
+        "originalEndpointId": "endpoint_.GetUser",
         "name": "Get User",
         "path": {
           "pathParameters": [
@@ -261,7 +261,7 @@
         "description": "Returns the user with the provided user ID.",
         "method": "GET",
         "id": "GetOrganizationUser",
-        "originalEndpointId": "GetOrganizationUser",
+        "originalEndpointId": "endpoint_.GetOrganizationUser",
         "name": "Get Organization User",
         "path": {
           "pathParameters": [

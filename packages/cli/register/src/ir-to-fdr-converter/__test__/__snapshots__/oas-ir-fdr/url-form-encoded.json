@@ -41,7 +41,7 @@
         "auth": false,
         "method": "POST",
         "id": "submitFormData",
-        "originalEndpointId": "submitFormData",
+        "originalEndpointId": "endpoint_.submitFormData",
         "name": "Submit form data",
         "path": {
           "pathParameters": [],

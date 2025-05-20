@@ -20,7 +20,7 @@
   },
   "selfHosted": false,
   "auth": {
-    "requirement": "ANY",
+    "requirement": "ALL",
     "schemes": [
       {
         "name": {
@@ -25403,7 +25403,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "List Jobs",
+          "id": "endpoint_.List Jobs",
           "displayName": "List Jobs",
           "method": "GET",
           "name": {
@@ -34673,7 +34673,7 @@
           }
         },
         {
-          "id": "Start Job",
+          "id": "endpoint_.Start Job",
           "displayName": "Start Job",
           "method": "POST",
           "name": {
@@ -35374,7 +35374,7 @@
           }
         },
         {
-          "id": "Get Job Predictions",
+          "id": "endpoint_.Get Job Predictions",
           "displayName": "Get Job Predictions",
           "method": "GET",
           "name": {
@@ -46802,7 +46802,7 @@
         }
       ]
     },
-    "service_Get Job Predictions": {
+    "service_getJobPredictions": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -46856,7 +46856,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Get Job Predictions.get_job_artifacts",
+          "id": "endpoint_getJobPredictions.get_job_artifacts",
           "displayName": "Get Job Artifacts",
           "method": "GET",
           "name": {
@@ -47029,7 +47029,7 @@
           }
         },
         {
-          "id": "Get Job Predictions.get_job",
+          "id": "endpoint_getJobPredictions.get_job",
           "displayName": "Get Job Details",
           "method": "GET",
           "name": {
@@ -51712,7 +51712,7 @@
           }
         }
       },
-      "service": "service_Get Job Predictions",
+      "service": "service_getJobPredictions",
       "types": [],
       "errors": [],
       "subpackages": [],

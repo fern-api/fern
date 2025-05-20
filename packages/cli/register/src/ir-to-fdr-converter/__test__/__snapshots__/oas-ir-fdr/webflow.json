@@ -48527,7 +48527,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "forms.list",
+          "originalEndpointId": "endpoint_forms.list",
           "name": "List Forms",
           "path": {
             "pathParameters": [
@@ -48868,7 +48868,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "forms.get",
+          "originalEndpointId": "endpoint_forms.get",
           "name": "Get Form Schema",
           "path": {
             "pathParameters": [
@@ -49087,7 +49087,7 @@
             }
           ],
           "id": "list-submissions",
-          "originalEndpointId": "forms.list-submissions",
+          "originalEndpointId": "endpoint_forms.list-submissions",
           "name": "List Form Submissions",
           "path": {
             "pathParameters": [
@@ -49334,7 +49334,7 @@
             }
           ],
           "id": "get-submission",
-          "originalEndpointId": "forms.get-submission",
+          "originalEndpointId": "endpoint_forms.get-submission",
           "name": "Get Form Submission",
           "path": {
             "pathParameters": [
@@ -49511,7 +49511,7 @@
             }
           ],
           "id": "update-submission",
-          "originalEndpointId": "forms.update-submission",
+          "originalEndpointId": "endpoint_forms.update-submission",
           "name": "Modify Form Submission",
           "path": {
             "pathParameters": [
@@ -49780,7 +49780,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "sites.list",
+          "originalEndpointId": "endpoint_sites.list",
           "name": "List Sites",
           "path": {
             "pathParameters": [],
@@ -50137,7 +50137,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "sites.get",
+          "originalEndpointId": "endpoint_sites.get",
           "name": "Get Site",
           "path": {
             "pathParameters": [
@@ -50326,7 +50326,7 @@
             }
           ],
           "id": "get-custom-domain",
-          "originalEndpointId": "sites.get-custom-domain",
+          "originalEndpointId": "endpoint_sites.get-custom-domain",
           "name": "Get Custom Domains",
           "path": {
             "pathParameters": [
@@ -50493,7 +50493,7 @@
             }
           ],
           "id": "publish",
-          "originalEndpointId": "sites.publish",
+          "originalEndpointId": "endpoint_sites.publish",
           "name": "Publish site",
           "path": {
             "pathParameters": [
@@ -50736,8 +50736,8 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_sites.activityLogs",
-        "subpackage_sites.scripts"
+        "subpackage_sites/activityLogs",
+        "subpackage_sites/scripts"
       ]
     },
     "subpackage_orders": {
@@ -50756,7 +50756,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "orders.list",
+          "originalEndpointId": "endpoint_orders.list",
           "name": "List Orders",
           "path": {
             "pathParameters": [
@@ -51728,7 +51728,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "orders.get",
+          "originalEndpointId": "endpoint_orders.get",
           "name": "Get Order",
           "path": {
             "pathParameters": [
@@ -52341,7 +52341,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "orders.update",
+          "originalEndpointId": "endpoint_orders.update",
           "name": "Update Order",
           "path": {
             "pathParameters": [
@@ -53024,7 +53024,7 @@
             }
           ],
           "id": "update-fulfill",
-          "originalEndpointId": "orders.update-fulfill",
+          "originalEndpointId": "endpoint_orders.update-fulfill",
           "name": "Fulfill Order",
           "path": {
             "pathParameters": [
@@ -53669,7 +53669,7 @@
             }
           ],
           "id": "update-unfulfill",
-          "originalEndpointId": "orders.update-unfulfill",
+          "originalEndpointId": "endpoint_orders.update-unfulfill",
           "name": "Unfulfill Order",
           "path": {
             "pathParameters": [
@@ -54282,7 +54282,7 @@
             }
           ],
           "id": "refund",
-          "originalEndpointId": "orders.refund",
+          "originalEndpointId": "endpoint_orders.refund",
           "name": "Refund Order",
           "path": {
             "pathParameters": [
@@ -55841,7 +55841,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "inventory.list",
+          "originalEndpointId": "endpoint_inventory.list",
           "name": "List Inventory",
           "path": {
             "pathParameters": [
@@ -56040,7 +56040,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "inventory.update",
+          "originalEndpointId": "endpoint_inventory.update",
           "name": "Update Item Inventory",
           "path": {
             "pathParameters": [
@@ -56360,7 +56360,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "users.list",
+          "originalEndpointId": "endpoint_users.list",
           "name": "List Users",
           "path": {
             "pathParameters": [
@@ -56714,7 +56714,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "users.get",
+          "originalEndpointId": "endpoint_users.get",
           "name": "Get User",
           "path": {
             "pathParameters": [
@@ -56922,7 +56922,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "users.delete",
+          "originalEndpointId": "endpoint_users.delete",
           "name": "Delete User",
           "path": {
             "pathParameters": [
@@ -57084,7 +57084,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "users.update",
+          "originalEndpointId": "endpoint_users.update",
           "name": "Update User",
           "path": {
             "pathParameters": [
@@ -57357,7 +57357,7 @@
             }
           ],
           "id": "invite",
-          "originalEndpointId": "users.invite",
+          "originalEndpointId": "endpoint_users.invite",
           "name": "Create and Invite a User",
           "path": {
             "pathParameters": [
@@ -58065,7 +58065,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "pages.list",
+          "originalEndpointId": "endpoint_pages.list",
           "name": "List Pages",
           "path": {
             "pathParameters": [
@@ -58362,7 +58362,7 @@
             }
           ],
           "id": "get-metadata",
-          "originalEndpointId": "pages.get-metadata",
+          "originalEndpointId": "endpoint_pages.get-metadata",
           "name": "Get Page Metadata",
           "path": {
             "pathParameters": [
@@ -58567,7 +58567,7 @@
             }
           ],
           "id": "update-page-settings",
-          "originalEndpointId": "Pages.update-page-settings",
+          "originalEndpointId": "endpoint_pages.update-page-settings",
           "name": "Update Page Metadata",
           "path": {
             "pathParameters": [
@@ -59026,7 +59026,7 @@
             }
           ],
           "id": "get-content",
-          "originalEndpointId": "pages.get-content",
+          "originalEndpointId": "endpoint_pages.get-content",
           "name": "Get Page Content",
           "path": {
             "pathParameters": [
@@ -59299,7 +59299,7 @@
             }
           ],
           "id": "update-static-content",
-          "originalEndpointId": "Pages.update-static-content",
+          "originalEndpointId": "endpoint_pages.update-static-content",
           "name": "Update Page Content",
           "path": {
             "pathParameters": [
@@ -59648,7 +59648,7 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_pages.scripts"
+        "subpackage_pages/scripts"
       ]
     },
     "subpackage_token": {
@@ -59667,7 +59667,7 @@
             }
           ],
           "id": "authorized-by",
-          "originalEndpointId": "token.authorized-by",
+          "originalEndpointId": "endpoint_token.authorized-by",
           "name": "Get Authorization User Info",
           "path": {
             "pathParameters": [],
@@ -59764,7 +59764,7 @@
             }
           ],
           "id": "introspect",
-          "originalEndpointId": "token.introspect",
+          "originalEndpointId": "endpoint_token.introspect",
           "name": "Get Authorization Info",
           "path": {
             "pathParameters": [],
@@ -59874,8 +59874,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_sites.activityLogs": {
-      "subpackageId": "subpackage_sites.activityLogs",
+    "subpackage_sites/activityLogs": {
+      "subpackageId": "subpackage_sites/activityLogs",
       "name": "activityLogs",
       "endpoints": [
         {
@@ -59890,7 +59890,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "sites.activity-logs.list",
+          "originalEndpointId": "endpoint_sites/activityLogs.list",
           "name": "Get Site Activity Logs",
           "path": {
             "pathParameters": [
@@ -60112,7 +60112,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "collections.list",
+          "originalEndpointId": "endpoint_collections.list",
           "name": "List Collections",
           "path": {
             "pathParameters": [
@@ -60311,7 +60311,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "collections.create",
+          "originalEndpointId": "endpoint_collections.create",
           "name": "Create Collection",
           "path": {
             "pathParameters": [
@@ -60549,7 +60549,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "collections.get",
+          "originalEndpointId": "endpoint_collections.get",
           "name": "Get Collection Details",
           "path": {
             "pathParameters": [
@@ -60728,7 +60728,7 @@
             }
           ],
           "id": "delete-collection",
-          "originalEndpointId": "Collections.delete-collection",
+          "originalEndpointId": "endpoint_collections.delete-collection",
           "name": "Delete Collection",
           "path": {
             "pathParameters": [
@@ -60857,7 +60857,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "collections.delete",
+          "originalEndpointId": "endpoint_collections.delete",
           "name": "Delete Collection Field",
           "path": {
             "pathParameters": [
@@ -60999,12 +60999,12 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_collections.fields",
-        "subpackage_collections.items"
+        "subpackage_collections/fields",
+        "subpackage_collections/items"
       ]
     },
-    "subpackage_collections.fields": {
-      "subpackageId": "subpackage_collections.fields",
+    "subpackage_collections/fields": {
+      "subpackageId": "subpackage_collections/fields",
       "name": "fields",
       "endpoints": [
         {
@@ -61019,7 +61019,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "collections.fields.create",
+          "originalEndpointId": "endpoint_collections/fields.create",
           "name": "Create Collection Field",
           "path": {
             "pathParameters": [
@@ -61252,7 +61252,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "collections.fields.update",
+          "originalEndpointId": "endpoint_collections/fields.update",
           "name": "Update Collection Field",
           "path": {
             "pathParameters": [
@@ -61492,8 +61492,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_collections.items": {
-      "subpackageId": "subpackage_collections.items",
+    "subpackage_collections/items": {
+      "subpackageId": "subpackage_collections/items",
       "name": "items",
       "endpoints": [
         {
@@ -61508,7 +61508,7 @@
             }
           ],
           "id": "list-items",
-          "originalEndpointId": "collections.items.list-items",
+          "originalEndpointId": "endpoint_collections/items.list-items",
           "name": "List Collection Items",
           "path": {
             "pathParameters": [
@@ -61823,7 +61823,7 @@
             }
           ],
           "id": "create-item",
-          "originalEndpointId": "collections.items.create-item",
+          "originalEndpointId": "endpoint_collections/items.create-item",
           "name": "Create Collection Item",
           "path": {
             "pathParameters": [
@@ -62129,7 +62129,7 @@
             }
           ],
           "id": "list-items-live",
-          "originalEndpointId": "collections.items.list-items-live",
+          "originalEndpointId": "endpoint_collections/items.list-items-live",
           "name": "List Live Collection Items",
           "path": {
             "pathParameters": [
@@ -62444,7 +62444,7 @@
             }
           ],
           "id": "create-item-live",
-          "originalEndpointId": "collections.items.create-item-live",
+          "originalEndpointId": "endpoint_collections/items.create-item-live",
           "name": "Create Live Collection Item",
           "path": {
             "pathParameters": [
@@ -62750,7 +62750,7 @@
             }
           ],
           "id": "create-item-for-multiple-locales",
-          "originalEndpointId": "collections.items.create-item-for-multiple-locales",
+          "originalEndpointId": "endpoint_collections/items.create-item-for-multiple-locales",
           "name": "Create Item for Multiple Locales",
           "path": {
             "pathParameters": [
@@ -63026,7 +63026,7 @@
             }
           ],
           "id": "get-item",
-          "originalEndpointId": "collections.items.get-item",
+          "originalEndpointId": "endpoint_collections/items.get-item",
           "name": "Get Collection Item",
           "path": {
             "pathParameters": [
@@ -63229,7 +63229,7 @@
             }
           ],
           "id": "delete-item",
-          "originalEndpointId": "collections.items.delete-item",
+          "originalEndpointId": "endpoint_collections/items.delete-item",
           "name": "Delete Collection Item",
           "path": {
             "pathParameters": [
@@ -63392,7 +63392,7 @@
             }
           ],
           "id": "update-item",
-          "originalEndpointId": "collections.items.update-item",
+          "originalEndpointId": "endpoint_collections/items.update-item",
           "name": "Update Collection Item",
           "path": {
             "pathParameters": [
@@ -63718,7 +63718,7 @@
             }
           ],
           "id": "get-item-live",
-          "originalEndpointId": "collections.items.get-item-live",
+          "originalEndpointId": "endpoint_collections/items.get-item-live",
           "name": "Get Live Collection Item",
           "path": {
             "pathParameters": [
@@ -63921,7 +63921,7 @@
             }
           ],
           "id": "delete-item-live",
-          "originalEndpointId": "collections.items.delete-item-live",
+          "originalEndpointId": "endpoint_collections/items.delete-item-live",
           "name": "Delete Collection Item (Live)",
           "path": {
             "pathParameters": [
@@ -64084,7 +64084,7 @@
             }
           ],
           "id": "update-item-live",
-          "originalEndpointId": "collections.items.update-item-live",
+          "originalEndpointId": "endpoint_collections/items.update-item-live",
           "name": "Update Live Collection Item",
           "path": {
             "pathParameters": [
@@ -64410,7 +64410,7 @@
             }
           ],
           "id": "publish-item",
-          "originalEndpointId": "collections.items.publish-item",
+          "originalEndpointId": "endpoint_collections/items.publish-item",
           "name": "Publish Collection Item",
           "path": {
             "pathParameters": [
@@ -64604,8 +64604,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_pages.scripts": {
-      "subpackageId": "subpackage_pages.scripts",
+    "subpackage_pages/scripts": {
+      "subpackageId": "subpackage_pages/scripts",
       "name": "scripts",
       "endpoints": [
         {
@@ -64620,7 +64620,7 @@
             }
           ],
           "id": "get-custom-code",
-          "originalEndpointId": "pages.scripts.get-custom-code",
+          "originalEndpointId": "endpoint_pages/scripts.get-custom-code",
           "name": "Get Custom Code",
           "path": {
             "pathParameters": [
@@ -64803,7 +64803,7 @@
             }
           ],
           "id": "upsert-custom-code",
-          "originalEndpointId": "pages.scripts.upsert-custom-code",
+          "originalEndpointId": "endpoint_pages/scripts.upsert-custom-code",
           "name": "Add/Update Custom Code",
           "path": {
             "pathParameters": [
@@ -65077,7 +65077,7 @@
             }
           ],
           "id": "delete-custom-code",
-          "originalEndpointId": "pages.scripts.delete-custom-code",
+          "originalEndpointId": "endpoint_pages/scripts.delete-custom-code",
           "name": "Delete Custom Code",
           "path": {
             "pathParameters": [
@@ -65200,8 +65200,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_sites.scripts": {
-      "subpackageId": "subpackage_sites.scripts",
+    "subpackage_sites/scripts": {
+      "subpackageId": "subpackage_sites/scripts",
       "name": "scripts",
       "endpoints": [
         {
@@ -65216,7 +65216,7 @@
             }
           ],
           "id": "get-custom-code",
-          "originalEndpointId": "sites.scripts.get-custom-code",
+          "originalEndpointId": "endpoint_sites/scripts.get-custom-code",
           "name": "Get Custom Code",
           "path": {
             "pathParameters": [
@@ -65399,7 +65399,7 @@
             }
           ],
           "id": "upsert-custom-code",
-          "originalEndpointId": "sites.scripts.upsert-custom-code",
+          "originalEndpointId": "endpoint_sites/scripts.upsert-custom-code",
           "name": "Add/Update Custom Code",
           "path": {
             "pathParameters": [
@@ -65667,7 +65667,7 @@
             }
           ],
           "id": "delete-custom-code",
-          "originalEndpointId": "sites.scripts.delete-custom-code",
+          "originalEndpointId": "endpoint_sites/scripts.delete-custom-code",
           "name": "Delete Custom Code",
           "path": {
             "pathParameters": [
@@ -65796,7 +65796,7 @@
             }
           ],
           "id": "list-custom-code-blocks",
-          "originalEndpointId": "sites.scripts.list-custom-code-blocks",
+          "originalEndpointId": "endpoint_sites/scripts.list-custom-code-blocks",
           "name": "List Custom Code Blocks",
           "path": {
             "pathParameters": [
@@ -66073,7 +66073,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "scripts.list",
+          "originalEndpointId": "endpoint_scripts.list",
           "name": "Get Registered Scripts",
           "path": {
             "pathParameters": [
@@ -66274,7 +66274,7 @@
             }
           ],
           "id": "register-hosted",
-          "originalEndpointId": "scripts.register-hosted",
+          "originalEndpointId": "endpoint_scripts.register-hosted",
           "name": "Register Script - Hosted",
           "path": {
             "pathParameters": [
@@ -66519,7 +66519,7 @@
             }
           ],
           "id": "register-inline",
-          "originalEndpointId": "scripts.register-inline",
+          "originalEndpointId": "endpoint_scripts.register-inline",
           "name": "Register Script - Inline",
           "path": {
             "pathParameters": [
@@ -66771,7 +66771,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "assets.list",
+          "originalEndpointId": "endpoint_assets.list",
           "name": "List Assets",
           "path": {
             "pathParameters": [
@@ -66964,7 +66964,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "assets.create",
+          "originalEndpointId": "endpoint_assets.create",
           "name": "Create Asset Metadata",
           "path": {
             "pathParameters": [
@@ -67212,7 +67212,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "assets.get",
+          "originalEndpointId": "endpoint_assets.get",
           "name": "Get Asset",
           "path": {
             "pathParameters": [
@@ -67403,7 +67403,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "assets.delete",
+          "originalEndpointId": "endpoint_assets.delete",
           "name": "Delete Asset",
           "path": {
             "pathParameters": [
@@ -67532,7 +67532,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "assets.update",
+          "originalEndpointId": "endpoint_assets.update",
           "name": "Update Asset",
           "path": {
             "pathParameters": [
@@ -67755,7 +67755,7 @@
             }
           ],
           "id": "list-folders",
-          "originalEndpointId": "assets.list-folders",
+          "originalEndpointId": "endpoint_assets.list-folders",
           "name": "List Asset Folders",
           "path": {
             "pathParameters": [
@@ -67938,7 +67938,7 @@
             }
           ],
           "id": "create-folder",
-          "originalEndpointId": "assets.create-folder",
+          "originalEndpointId": "endpoint_assets.create-folder",
           "name": "Create Asset Folder",
           "path": {
             "pathParameters": [
@@ -68149,7 +68149,7 @@
             }
           ],
           "id": "get-folder",
-          "originalEndpointId": "assets.get-folder",
+          "originalEndpointId": "endpoint_assets.get-folder",
           "name": "Get Asset Folder",
           "path": {
             "pathParameters": [
@@ -68326,7 +68326,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "webhooks.list",
+          "originalEndpointId": "endpoint_webhooks.list",
           "name": "List Webhooks",
           "path": {
             "pathParameters": [
@@ -68549,7 +68549,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "webhooks.create",
+          "originalEndpointId": "endpoint_webhooks.create",
           "name": "Create Webhook",
           "path": {
             "pathParameters": [
@@ -68839,7 +68839,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "webhooks.get",
+          "originalEndpointId": "endpoint_webhooks.get",
           "name": "Get Webhook",
           "path": {
             "pathParameters": [
@@ -69000,7 +69000,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "webhooks.delete",
+          "originalEndpointId": "endpoint_webhooks.delete",
           "name": "Remove Webhook",
           "path": {
             "pathParameters": [
@@ -69139,7 +69139,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "access-groups.list",
+          "originalEndpointId": "endpoint_accessGroups.list",
           "name": "List Access Groups",
           "path": {
             "pathParameters": [
@@ -69391,7 +69391,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "products.list",
+          "originalEndpointId": "endpoint_products.list",
           "name": "List Products & SKUs",
           "path": {
             "pathParameters": [
@@ -69762,7 +69762,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "products.create",
+          "originalEndpointId": "endpoint_products.create",
           "name": "Create Product & SKU",
           "path": {
             "pathParameters": [
@@ -70135,7 +70135,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "products.get",
+          "originalEndpointId": "endpoint_products.get",
           "name": "Get Product and SKUs",
           "path": {
             "pathParameters": [
@@ -70478,7 +70478,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "products.update",
+          "originalEndpointId": "endpoint_products.update",
           "name": "Update Product",
           "path": {
             "pathParameters": [
@@ -70842,7 +70842,7 @@
             }
           ],
           "id": "create-sku",
-          "originalEndpointId": "products.create-sku",
+          "originalEndpointId": "endpoint_products.create-sku",
           "name": "Create SKU",
           "path": {
             "pathParameters": [
@@ -71157,7 +71157,7 @@
             }
           ],
           "id": "update-sku",
-          "originalEndpointId": "products.update-sku",
+          "originalEndpointId": "endpoint_products.update-sku",
           "name": "Update SKU",
           "path": {
             "pathParameters": [
@@ -71487,7 +71487,7 @@
             }
           ],
           "id": "get-settings",
-          "originalEndpointId": "ecommerce.get-settings",
+          "originalEndpointId": "endpoint_ecommerce.get-settings",
           "name": "Get Ecommerce Settings",
           "path": {
             "pathParameters": [
@@ -71683,6 +71683,10 @@
       "subpackage_products",
       "subpackage_ecommerce"
     ]
+  },
+  "auth": {
+    "type": "bearerAuth",
+    "tokenName": "token"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

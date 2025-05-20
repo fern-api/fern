@@ -1,6 +1,6 @@
 {
   "auth": {
-    "requirement": "ANY",
+    "requirement": "ALL",
     "schemes": [
       {
         "token": {
@@ -8904,7 +8904,7 @@
     }
   },
   "services": {
-    "service_Auth": {
+    "service_auth": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -8958,7 +8958,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Auth.andRedirect",
+          "id": "endpoint_auth.andRedirect",
           "displayName": "Auth and redirect sessions",
           "method": "GET",
           "name": {
@@ -9139,7 +9139,7 @@
         }
       ]
     },
-    "service_Extensions": {
+    "service_extensions": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -9193,7 +9193,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Extensions.get",
+          "id": "endpoint_extensions.get",
           "displayName": "Get extensions",
           "method": "GET",
           "name": {
@@ -12346,7 +12346,7 @@
           }
         },
         {
-          "id": "Extensions.post",
+          "id": "endpoint_extensions.post",
           "displayName": "Create an extension",
           "method": "POST",
           "name": {
@@ -15161,7 +15161,7 @@
           }
         },
         {
-          "id": "Extensions.delete",
+          "id": "endpoint_extensions.delete",
           "displayName": "Delete extensions matching name query",
           "method": "DELETE",
           "name": {
@@ -15295,7 +15295,7 @@
           }
         },
         {
-          "id": "Extensions.getById",
+          "id": "endpoint_extensions.getById",
           "displayName": "Get an extension",
           "method": "GET",
           "name": {
@@ -18185,7 +18185,7 @@
         }
       ]
     },
-    "service_Profiles": {
+    "service_profiles": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -18239,7 +18239,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Profiles.get",
+          "id": "endpoint_profiles.get",
           "displayName": "Get profiles",
           "method": "GET",
           "name": {
@@ -21647,7 +21647,7 @@
           }
         },
         {
-          "id": "Profiles.post",
+          "id": "endpoint_profiles.post",
           "displayName": "Create a profile",
           "method": "POST",
           "name": {
@@ -24635,7 +24635,7 @@
           }
         },
         {
-          "id": "Profiles.delete",
+          "id": "endpoint_profiles.delete",
           "displayName": "Delete profiles matching query",
           "method": "DELETE",
           "name": {
@@ -24830,7 +24830,7 @@
           }
         },
         {
-          "id": "Profiles.getById",
+          "id": "endpoint_profiles.getById",
           "displayName": "Get a profile",
           "method": "GET",
           "name": {
@@ -27809,7 +27809,7 @@
         }
       ]
     },
-    "service_Sessions": {
+    "service_sessions": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -27863,7 +27863,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Sessions.list",
+          "id": "endpoint_sessions.list",
           "displayName": "Get a list of sessions",
           "method": "GET",
           "name": {
@@ -34781,7 +34781,7 @@
           }
         },
         {
-          "id": "Sessions.post",
+          "id": "endpoint_sessions.post",
           "displayName": "Create a session",
           "method": "POST",
           "name": {
@@ -38963,7 +38963,7 @@
           }
         },
         {
-          "id": "Sessions.getinfo",
+          "id": "endpoint_sessions.getinfo",
           "displayName": "Get info for a session",
           "method": "GET",
           "name": {
@@ -43201,7 +43201,7 @@
           }
         },
         {
-          "id": "Sessions.terminate",
+          "id": "endpoint_sessions.terminate",
           "displayName": "Ends a session",
           "method": "DELETE",
           "name": {
@@ -43410,7 +43410,7 @@
           }
         },
         {
-          "id": "Sessions.events",
+          "id": "endpoint_sessions.events",
           "displayName": "Get a session event stream",
           "method": "GET",
           "name": {
@@ -43759,7 +43759,7 @@
         }
       ]
     },
-    "service_Windows": {
+    "service_windows": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -43813,7 +43813,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Windows.get-window-info",
+          "id": "endpoint_windows.get-window-info",
           "displayName": "Get information about a browser window in a session",
           "method": "GET",
           "name": {
@@ -46791,7 +46791,7 @@
           }
         },
         {
-          "id": "Windows.prompt-content",
+          "id": "endpoint_windows.prompt-content",
           "displayName": "Submit a prompt about the content in a specific browser window.",
           "method": "POST",
           "name": {
@@ -50556,7 +50556,7 @@
           }
         },
         {
-          "id": "Windows.scrape-content",
+          "id": "endpoint_windows.scrape-content",
           "displayName": "Scrape a window",
           "method": "GET",
           "name": {
@@ -54322,7 +54322,7 @@
           }
         },
         {
-          "id": "Windows.summarize-content",
+          "id": "endpoint_windows.summarize-content",
           "displayName": "Get a summary of content in a browser window",
           "method": "POST",
           "name": {
@@ -59412,7 +59412,7 @@
           }
         }
       },
-      "service": "service_Auth",
+      "service": "service_auth",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -59481,7 +59481,7 @@
           }
         }
       },
-      "service": "service_Extensions",
+      "service": "service_extensions",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -59550,7 +59550,7 @@
           }
         }
       },
-      "service": "service_Profiles",
+      "service": "service_profiles",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -59619,7 +59619,7 @@
           }
         }
       },
-      "service": "service_Sessions",
+      "service": "service_sessions",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -59688,7 +59688,7 @@
           }
         }
       },
-      "service": "service_Windows",
+      "service": "service_windows",
       "types": [],
       "errors": [],
       "subpackages": [],

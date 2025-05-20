@@ -1,6 +1,6 @@
 {
   "auth": {
-    "requirement": "ANY",
+    "requirement": "ALL",
     "schemes": [
       {
         "name": {
@@ -6049,7 +6049,7 @@
     }
   },
   "services": {
-    "service_Ignition": {
+    "service_ignition": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -6103,7 +6103,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Ignition.StartIgnition",
+          "id": "endpoint_ignition.StartIgnition",
           "displayName": "Start Ignition",
           "method": "POST",
           "name": {
@@ -7235,7 +7235,7 @@
         }
       ]
     },
-    "service_Tokens": {
+    "service_tokens": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -7289,7 +7289,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Tokens.ExchangeToken",
+          "id": "endpoint_tokens.ExchangeToken",
           "displayName": "Exchange Token",
           "method": "POST",
           "name": {
@@ -8186,7 +8186,7 @@
         }
       ]
     },
-    "service_Accounts": {
+    "service_accounts": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -8240,7 +8240,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Accounts.GetAccount",
+          "id": "endpoint_accounts.GetAccount",
           "displayName": "Get Account",
           "method": "GET",
           "name": {
@@ -9769,7 +9769,7 @@
         }
       ]
     },
-    "service_Policies": {
+    "service_policies": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -9823,7 +9823,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Policies.GetPolicy",
+          "id": "endpoint_policies.GetPolicy",
           "displayName": "Get Policy",
           "method": "GET",
           "name": {
@@ -18491,7 +18491,7 @@
         }
       ]
     },
-    "service_Carriers": {
+    "service_carriers": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -18545,7 +18545,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Carriers.GetCarrier",
+          "id": "endpoint_carriers.GetCarrier",
           "displayName": "Get Carrier",
           "method": "GET",
           "name": {
@@ -20309,7 +20309,7 @@
           }
         },
         {
-          "id": "Carriers.GetCarriers",
+          "id": "endpoint_carriers.GetCarriers",
           "displayName": "Get Carriers",
           "method": "GET",
           "name": {
@@ -23257,7 +23257,7 @@
           }
         }
       },
-      "service": "service_Ignition",
+      "service": "service_ignition",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -23326,7 +23326,7 @@
           }
         }
       },
-      "service": "service_Tokens",
+      "service": "service_tokens",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -23395,7 +23395,7 @@
           }
         }
       },
-      "service": "service_Accounts",
+      "service": "service_accounts",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -23464,7 +23464,7 @@
           }
         }
       },
-      "service": "service_Policies",
+      "service": "service_policies",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -23533,7 +23533,7 @@
           }
         }
       },
-      "service": "service_Carriers",
+      "service": "service_carriers",
       "types": [],
       "errors": [],
       "subpackages": [],

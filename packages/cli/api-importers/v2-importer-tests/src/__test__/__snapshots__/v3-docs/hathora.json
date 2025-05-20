@@ -1,6 +1,6 @@
 {
   "auth": {
-    "requirement": "ANY",
+    "requirement": "ALL",
     "schemes": [
       {
         "token": {
@@ -9410,7 +9410,7 @@
     }
   },
   "services": {
-    "service_AppV1": {
+    "service_appV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -9464,7 +9464,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "AppV1.GetApps",
+          "id": "endpoint_appV1.GetApps",
           "method": "GET",
           "name": {
             "originalName": "GetApps",
@@ -14947,7 +14947,7 @@
           }
         },
         {
-          "id": "AppV1.CreateApp",
+          "id": "endpoint_appV1.CreateApp",
           "method": "POST",
           "name": {
             "originalName": "CreateApp",
@@ -16815,7 +16815,7 @@
           }
         },
         {
-          "id": "AppV1.UpdateApp",
+          "id": "endpoint_appV1.UpdateApp",
           "method": "POST",
           "name": {
             "originalName": "UpdateApp",
@@ -18878,7 +18878,7 @@
           }
         },
         {
-          "id": "AppV1.GetAppInfo",
+          "id": "endpoint_appV1.GetAppInfo",
           "method": "GET",
           "name": {
             "originalName": "GetAppInfo",
@@ -20419,7 +20419,7 @@
           }
         },
         {
-          "id": "AppV1.DeleteApp",
+          "id": "endpoint_appV1.DeleteApp",
           "method": "DELETE",
           "name": {
             "originalName": "DeleteApp",
@@ -20755,7 +20755,7 @@
         }
       ]
     },
-    "service_AuthV1": {
+    "service_authV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -20809,7 +20809,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "AuthV1.LoginAnonymous",
+          "id": "endpoint_authV1.LoginAnonymous",
           "method": "POST",
           "name": {
             "originalName": "LoginAnonymous",
@@ -21270,7 +21270,7 @@
           }
         },
         {
-          "id": "AuthV1.LoginNickname",
+          "id": "endpoint_authV1.LoginNickname",
           "method": "POST",
           "name": {
             "originalName": "LoginNickname",
@@ -21854,7 +21854,7 @@
           }
         },
         {
-          "id": "AuthV1.LoginGoogle",
+          "id": "endpoint_authV1.LoginGoogle",
           "method": "POST",
           "name": {
             "originalName": "LoginGoogle",
@@ -22468,7 +22468,7 @@
         }
       ]
     },
-    "service_BuildV1": {
+    "service_buildV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -22522,7 +22522,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "BuildV1.GetBuilds",
+          "id": "endpoint_buildV1.GetBuilds",
           "method": "GET",
           "name": {
             "originalName": "GetBuilds",
@@ -25612,7 +25612,7 @@
           }
         },
         {
-          "id": "BuildV1.GetBuildInfo",
+          "id": "endpoint_buildV1.GetBuildInfo",
           "method": "GET",
           "name": {
             "originalName": "GetBuildInfo",
@@ -27492,7 +27492,7 @@
           }
         },
         {
-          "id": "BuildV1.CreateBuild",
+          "id": "endpoint_buildV1.CreateBuild",
           "method": "POST",
           "name": {
             "originalName": "CreateBuild",
@@ -29243,7 +29243,7 @@
           }
         },
         {
-          "id": "BuildV1.RunBuild",
+          "id": "endpoint_buildV1.RunBuild",
           "method": "POST",
           "name": {
             "originalName": "RunBuild",
@@ -29696,7 +29696,7 @@
           }
         },
         {
-          "id": "BuildV1.DeleteBuild",
+          "id": "endpoint_buildV1.DeleteBuild",
           "method": "DELETE",
           "name": {
             "originalName": "DeleteBuild",
@@ -30248,7 +30248,7 @@
         }
       ]
     },
-    "service_DeploymentV1": {
+    "service_deploymentV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -30302,7 +30302,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "DeploymentV1.GetDeployments",
+          "id": "endpoint_deploymentV1.GetDeployments",
           "method": "GET",
           "name": {
             "originalName": "GetDeployments",
@@ -33490,7 +33490,7 @@
           }
         },
         {
-          "id": "DeploymentV1.GetDeploymentInfo",
+          "id": "endpoint_deploymentV1.GetDeploymentInfo",
           "method": "GET",
           "name": {
             "originalName": "GetDeploymentInfo",
@@ -35419,7 +35419,7 @@
           }
         },
         {
-          "id": "DeploymentV1.CreateDeployment",
+          "id": "endpoint_deploymentV1.CreateDeployment",
           "method": "POST",
           "name": {
             "originalName": "CreateDeployment",
@@ -38281,7 +38281,7 @@
         }
       ]
     },
-    "service_DiscoveryV1": {
+    "service_discoveryV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -38335,7 +38335,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "DiscoveryV1.GetPingServiceEndpoints",
+          "id": "endpoint_discoveryV1.GetPingServiceEndpoints",
           "method": "GET",
           "name": {
             "originalName": "GetPingServiceEndpoints",
@@ -39115,7 +39115,7 @@
         }
       ]
     },
-    "service_LobbyV1": {
+    "service_lobbyV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -39169,7 +39169,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "LobbyV1.CreatePrivateLobbyDeprecated",
+          "id": "endpoint_lobbyV1.CreatePrivateLobbyDeprecated",
           "method": "POST",
           "name": {
             "originalName": "CreatePrivateLobbyDeprecated",
@@ -39884,7 +39884,7 @@
           }
         },
         {
-          "id": "LobbyV1.CreatePublicLobbyDeprecated",
+          "id": "endpoint_lobbyV1.CreatePublicLobbyDeprecated",
           "method": "POST",
           "name": {
             "originalName": "CreatePublicLobbyDeprecated",
@@ -40599,7 +40599,7 @@
           }
         },
         {
-          "id": "LobbyV1.ListActivePublicLobbiesDeprecated",
+          "id": "endpoint_lobbyV1.ListActivePublicLobbiesDeprecated",
           "method": "GET",
           "name": {
             "originalName": "ListActivePublicLobbiesDeprecated",
@@ -42969,7 +42969,7 @@
         }
       ]
     },
-    "service_LobbyV2": {
+    "service_lobbyV2": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -43023,7 +43023,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "LobbyV2.CreatePrivateLobby",
+          "id": "endpoint_lobbyV2.CreatePrivateLobby",
           "method": "POST",
           "name": {
             "originalName": "CreatePrivateLobby",
@@ -44817,7 +44817,7 @@
           }
         },
         {
-          "id": "LobbyV2.CreatePublicLobby",
+          "id": "endpoint_lobbyV2.CreatePublicLobby",
           "method": "POST",
           "name": {
             "originalName": "CreatePublicLobby",
@@ -46611,7 +46611,7 @@
           }
         },
         {
-          "id": "LobbyV2.CreateLocalLobby",
+          "id": "endpoint_lobbyV2.CreateLocalLobby",
           "method": "POST",
           "name": {
             "originalName": "CreateLocalLobby",
@@ -48405,7 +48405,7 @@
           }
         },
         {
-          "id": "LobbyV2.CreateLobby",
+          "id": "endpoint_lobbyV2.CreateLobby",
           "method": "POST",
           "name": {
             "originalName": "CreateLobby",
@@ -50338,7 +50338,7 @@
           }
         },
         {
-          "id": "LobbyV2.ListActivePublicLobbies",
+          "id": "endpoint_lobbyV2.ListActivePublicLobbies",
           "method": "GET",
           "name": {
             "originalName": "ListActivePublicLobbies",
@@ -52518,7 +52518,7 @@
           }
         },
         {
-          "id": "LobbyV2.GetLobbyInfo",
+          "id": "endpoint_lobbyV2.GetLobbyInfo",
           "method": "GET",
           "name": {
             "originalName": "GetLobbyInfo",
@@ -53931,7 +53931,7 @@
           }
         },
         {
-          "id": "LobbyV2.SetLobbyState",
+          "id": "endpoint_lobbyV2.SetLobbyState",
           "method": "POST",
           "name": {
             "originalName": "SetLobbyState",
@@ -55539,7 +55539,7 @@
         }
       ]
     },
-    "service_LogV1": {
+    "service_logV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -55593,7 +55593,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "LogV1.GetLogsForApp",
+          "id": "endpoint_logV1.GetLogsForApp",
           "method": "GET",
           "name": {
             "originalName": "GetLogsForApp",
@@ -56108,7 +56108,7 @@
           }
         },
         {
-          "id": "LogV1.GetLogsForProcess",
+          "id": "endpoint_logV1.GetLogsForProcess",
           "method": "GET",
           "name": {
             "originalName": "GetLogsForProcess",
@@ -56747,7 +56747,7 @@
           }
         },
         {
-          "id": "LogV1.GetLogsForDeployment",
+          "id": "endpoint_logV1.GetLogsForDeployment",
           "method": "GET",
           "name": {
             "originalName": "GetLogsForDeployment",
@@ -57382,7 +57382,7 @@
         }
       ]
     },
-    "service_MetricsV1": {
+    "service_metricsV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -57436,7 +57436,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "MetricsV1.GetMetrics",
+          "id": "endpoint_metricsV1.GetMetrics",
           "method": "GET",
           "name": {
             "originalName": "GetMetrics",
@@ -58325,7 +58325,7 @@
         }
       ]
     },
-    "service_ProcessesV1": {
+    "service_processesV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -58379,7 +58379,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "ProcessesV1.GetRunningProcesses",
+          "id": "endpoint_processesV1.GetRunningProcesses",
           "method": "GET",
           "name": {
             "originalName": "GetRunningProcesses",
@@ -62001,7 +62001,7 @@
           }
         },
         {
-          "id": "ProcessesV1.GetStoppedProcesses",
+          "id": "endpoint_processesV1.GetStoppedProcesses",
           "method": "GET",
           "name": {
             "originalName": "GetStoppedProcesses",
@@ -65075,7 +65075,7 @@
           }
         },
         {
-          "id": "ProcessesV1.GetProcessInfo",
+          "id": "endpoint_processesV1.GetProcessInfo",
           "method": "GET",
           "name": {
             "originalName": "GetProcessInfo",
@@ -66921,7 +66921,7 @@
         }
       ]
     },
-    "service_RoomV1": {
+    "service_roomV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -66975,7 +66975,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "RoomV1.CreateRoom",
+          "id": "endpoint_roomV1.CreateRoom",
           "method": "POST",
           "name": {
             "originalName": "CreateRoom",
@@ -67591,7 +67591,7 @@
           }
         },
         {
-          "id": "RoomV1.GetRoomInfo",
+          "id": "endpoint_roomV1.GetRoomInfo",
           "method": "GET",
           "name": {
             "originalName": "GetRoomInfo",
@@ -69871,7 +69871,7 @@
           }
         },
         {
-          "id": "RoomV1.GetActiveRoomsForProcess",
+          "id": "endpoint_roomV1.GetActiveRoomsForProcess",
           "method": "GET",
           "name": {
             "originalName": "GetActiveRoomsForProcess",
@@ -70568,7 +70568,7 @@
           }
         },
         {
-          "id": "RoomV1.GetInactiveRoomsForProcess",
+          "id": "endpoint_roomV1.GetInactiveRoomsForProcess",
           "method": "GET",
           "name": {
             "originalName": "GetInactiveRoomsForProcess",
@@ -71265,7 +71265,7 @@
           }
         },
         {
-          "id": "RoomV1.DestroyRoom",
+          "id": "endpoint_roomV1.DestroyRoom",
           "method": "POST",
           "name": {
             "originalName": "DestroyRoom",
@@ -71789,7 +71789,7 @@
           }
         },
         {
-          "id": "RoomV1.SuspendRoom",
+          "id": "endpoint_roomV1.SuspendRoom",
           "method": "POST",
           "name": {
             "originalName": "SuspendRoom",
@@ -72313,7 +72313,7 @@
           }
         },
         {
-          "id": "RoomV1.GetConnectionInfo",
+          "id": "endpoint_roomV1.GetConnectionInfo",
           "method": "GET",
           "name": {
             "originalName": "GetConnectionInfo",
@@ -78581,7 +78581,7 @@
           }
         }
       },
-      "service": "service_AppV1",
+      "service": "service_appV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -78650,7 +78650,7 @@
           }
         }
       },
-      "service": "service_AuthV1",
+      "service": "service_authV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -78719,7 +78719,7 @@
           }
         }
       },
-      "service": "service_BuildV1",
+      "service": "service_buildV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -78788,7 +78788,7 @@
           }
         }
       },
-      "service": "service_DeploymentV1",
+      "service": "service_deploymentV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -78857,7 +78857,7 @@
           }
         }
       },
-      "service": "service_DiscoveryV1",
+      "service": "service_discoveryV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -78926,7 +78926,7 @@
           }
         }
       },
-      "service": "service_LobbyV1",
+      "service": "service_lobbyV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -78995,7 +78995,7 @@
           }
         }
       },
-      "service": "service_LobbyV2",
+      "service": "service_lobbyV2",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -79064,7 +79064,7 @@
           }
         }
       },
-      "service": "service_LogV1",
+      "service": "service_logV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -79133,7 +79133,7 @@
           }
         }
       },
-      "service": "service_MetricsV1",
+      "service": "service_metricsV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -79202,7 +79202,7 @@
           }
         }
       },
-      "service": "service_ProcessesV1",
+      "service": "service_processesV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -79271,7 +79271,7 @@
           }
         }
       },
-      "service": "service_RoomV1",
+      "service": "service_roomV1",
       "types": [],
       "errors": [],
       "subpackages": [],

@@ -182,7 +182,7 @@
         "auth": false,
         "method": "GET",
         "id": "getWorkspaceAuditLogs",
-        "originalEndpointId": "getWorkspaceAuditLogs",
+        "originalEndpointId": "endpoint_.getWorkspaceAuditLogs",
         "name": "Get Workspace Audit Logs",
         "path": {
           "pathParameters": [],
