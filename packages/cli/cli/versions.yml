@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Remove warning for unrecognized PHP SDK generator name.
+      type: fix
+  irVersion: 57
+  version: 0.61.23
+
+- changelogEntry:
+    - summary: |
         Fix an issue where multiple auth schemes would not be converted during IR -> FDR conversion.
       type: fix
   irVersion: 57
