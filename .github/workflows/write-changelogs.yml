@@ -57,6 +57,9 @@ jobs:
           echo "Generating changelogs for CLI"
           pnpm seed:local generate changelog cli -o ./fern/pages/changelogs/cli/ --clean-directory
 
+      - name: DEBUG
+        run: git status
+
       - uses: stefanzweifel/git-auto-commit-action@v5
         if: ${{ github.event_name == 'pull_request' }}
         with:
@@ -75,17 +78,17 @@ jobs:
           branch: update-changelog
           delete-branch: true
 
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
+      # - name: Enable Pull Request Automerge
+      #   if: steps.cpr.outputs.pull-request-operation == 'created'
+      #   uses: peter-evans/enable-pull-request-automerge@v3
+      #   with:
+      #     token: ${{ secrets.FERN_GITHUB_PAT }}
+      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+      #     merge-method: squash
 
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
+      # - name: Approve PR
+      #   if: steps.cpr.outputs.pull-request-operation == 'created'
+      #   uses: ./.github/actions/auto-approve
+      #   with:
+      #     approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}     
