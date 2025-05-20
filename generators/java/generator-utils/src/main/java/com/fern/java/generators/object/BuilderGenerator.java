@@ -335,6 +335,8 @@ public final class BuilderGenerator {
         return MethodSpec.methodBuilder(enrichedObjectProperty.fieldSpec.name)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(returnClass)
+                .addJavadoc(
+                        enrichedObjectProperty.enrichedObjectProperty.docs().get())
                 .addParameter(parameterSpecBuilder.build());
     }
 
@@ -425,6 +427,10 @@ public final class BuilderGenerator {
                 .returns(returnClass);
         if (isOverridden) {
             setter.addAnnotation(ClassName.get("", "java.lang.Override"));
+        }
+        if (enrichedProperty.enrichedObjectProperty.docs().isPresent()) {
+            setter.addJavadoc(JavaDocUtils.render(
+                    enrichedProperty.enrichedObjectProperty.docs().get()));
         }
         return setter;
     }
