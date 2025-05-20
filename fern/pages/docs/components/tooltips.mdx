@@ -8,31 +8,31 @@ The Tooltips component provides a way to display additional information when use
 ## Properties
 
 <ParamField path="data" type="object" required={true}>
-  Key-value pairs for replaceable values. Use `{{KEY}}` syntax to access a key's value.
+  Key-value pairs where the values are displayed in your code blocks.
 </ParamField>
 
 <ParamField path="tooltips" type="object" required={false}>
-  Key-value pairs matching `data` keys with React elements for tooltips.
+  Key-value pairs where the values are displayed in the tooltips. The Key for `tooltips` must match the Key for `data`.
 </ParamField>
 
 
-## Example
+## Examples
 
 <Tabs>
-<Tab title="Tooltip">
+<Tab title="Basic Tooltip">
 <Template
 	data={{ API_KEY: "123456" }}
 	tooltips={{
 		API_KEY: (
 			<p>
-				This is a tooltip, you can use jsx here. 
+				Your API key is used to authenticate requests to our API. Keep this secure and never expose it in client-side code.
 			</p>
 		)
 	}}
 >
 
 ```ts
-console.log(`{{API_KEY}}`);
+const apiKey = "{{API_KEY}}";
 ```
 </Template>
 </Tab>
@@ -43,14 +43,92 @@ console.log(`{{API_KEY}}`);
 	tooltips={{
 		API_KEY: (
 			<p>
-				This is a tooltip, you can use jsx here. 
+				Your API key is used to authenticate requests to our API. Keep this secure and never expose it in client-side code. 
 			</p>
 		)
 	}}
 >
 
 ```ts
-console.log(`{{API_KEY}}`);
+const apiKey = "{{API_KEY}}";
+```
+
+</Template>
+`````
+</Tab>
+</Tabs>
+
+<Tabs>
+<Tab title="Multiple Tooltips">
+<Template
+	data={{ API_KEY: "example-key-test-123456789",
+			BASE_URL: "https://api.example.com/v1",
+	}}
+	tooltips={{
+		API_KEY: (<p>
+		Your API key is used to authenticate requests to our API. Keep this secure and never expose it in client-side code.
+		<br /><br />
+		You can find your API keys in the <a href="https://dashboard.example.com/settings/api-keys">Dashboard</a>
+		<br /><br />
+		<strong>Note:</strong> Keys prefixed with <code>example-key-test-</code> are for testing, while keys with <code>example-key-live-</code> are for production.
+		</p>),
+		BASE_URL: (<p>
+		The base URL for all API requests. Different environments (test/production) use different base URLs.
+		<br /><br />
+		See our <a href="https://docs.example.com/environments">Environments documentation</a> for more details.
+		</p>),
+	}}
+>
+
+```ts
+// Import required libraries
+import axios from "axios";
+
+// Configure API client with authentication
+const api = axios.create({
+	baseURL: "{{BASE_URL}}",
+	headers: {
+	Authorization: `Bearer {{API_KEY}}`,
+	"Content-Type": "application/json",
+	},
+});
+```
+</Template>
+</Tab>
+<Tab title="Markdown">
+`````tsx
+<Template
+	data={{ API_KEY: "example-key-test-123456789",
+			BASE_URL: "https://api.example.com/v1",
+	}}
+	tooltips={{
+		API_KEY: (<p>
+		Your API key is used to authenticate requests to our API. Keep this secure and never expose it in client-side code.
+		<br /><br />
+		You can find your API keys in the <a href="https://dashboard.example.com/settings/api-keys">Dashboard</a>.
+		<br /><br />
+		<strong>Note:</strong> Keys prefixed with <code>example-key-test-</code> are for testing, while keys with <code>example-key-live-</code> are for production.
+		</p>),
+		BASE_URL: (<p>
+		The base URL for all API requests. Different environments (test/production) use different base URLs.
+		<br /><br />
+		See our <a href="https://docs.example.com/environments">Environments documentation</a> for more details.
+		</p>),
+	}}
+>
+
+```ts
+// Import required libraries
+import axios from "axios";
+
+// Configure API client with authentication
+const api = axios.create({
+baseURL: "{{BASE_URL}}",
+headers: {
+	Authorization: `Bearer {{API_KEY}}`,
+	"Content-Type": "application/json",
+},
+});
 ```
 
 </Template>
