@@ -26,6 +26,7 @@ jobs:
             chore
           scopes: |
             docs
+            changelog
             internal
             cli
             typescript
