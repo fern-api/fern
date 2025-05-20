@@ -14039,7 +14039,541 @@
         }
       ],
       "webhooks": [],
-      "websockets": [],
+      "websockets": [
+        {
+          "auth": false,
+          "description": "Deepgram Speech to Text WebSocket",
+          "defaultEnvironment": "Deepgram Production API",
+          "environments": [
+            {
+              "id": "Deepgram Production API",
+              "baseUrl": "wss://api.deepgram.com"
+            }
+          ],
+          "id": "speechToText",
+          "name": "speechToText",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/v1/listen"
+              }
+            ]
+          },
+          "headers": [
+            {
+              "key": "Authorization",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "description": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>"
+            }
+          ],
+          "queryParameters": [
+            {
+              "description": "URL to which we'll make the callback request",
+              "key": "callback",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "description": "HTTP method by which the callback request will be made",
+              "key": "callback_method",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "listen_callback_method"
+                }
+              }
+            },
+            {
+              "description": "The number of channels in the submitted audio",
+              "key": "channels",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "default": "1"
+                  }
+                }
+              }
+            },
+            {
+              "description": "Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0",
+              "key": "diarize",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "description": "Version of the diarization feature to use. Only used when the diarization feature is enabled (`diarize=true` is passed to the API)",
+              "key": "diarize_version",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "default": "v2"
+                }
+              }
+            },
+            {
+              "description": "Identify and extract key entities from content in submitted audio",
+              "key": "dictation",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "listen_dictation"
+                }
+              }
+            },
+            {
+              "description": "Specify the expected encoding of your submitted audio",
+              "key": "encoding",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "listen_encoding"
+                }
+              }
+            },
+            {
+              "description": "Indicates how long Deepgram will wait to detect whether a speaker has finished speaking or pauses for a significant period of time. When set to a value, the streaming endpoint immediately finalizes the transcription for the processed time range and returns the transcript with a speech_final parameter set to true. Can also be set to false to disable endpointing",
+              "key": "endpointing",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "default": "10"
+                  }
+                }
+              }
+            },
+            {
+              "description": "Arbitrary key-value pairs that are attached to the API response for usage in downstream processing",
+              "key": "extra",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "description": "Filler Words can help transcribe interruptions in your audio, like \"uh\" and \"um\"",
+              "key": "filler_words",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "listen_filler_words"
+                }
+              }
+            },
+            {
+              "description": "Specifies whether the streaming endpoint should provide ongoing transcription updates as more audio is received. When set to true, the endpoint sends continuous updates, meaning transcription results may evolve over time",
+              "key": "interim_results",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "listen_interim_results"
+                }
+              }
+            },
+            {
+              "description": "Key term prompting can boost or suppress specialized terminology and brands. Only compatible with Nova-3",
+              "key": "keyterm",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "description": "Keywords can boost or suppress specialized terminology and brands",
+              "key": "keywords",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "description": "The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model you choose only certain languages are available",
+              "key": "language",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "listen_language"
+                }
+              }
+            },
+            {
+              "description": "AI model to use for the transcription",
+              "key": "model",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "listen_model"
+                }
+              }
+            },
+            {
+              "description": "Transcribe each audio channel independently",
+              "key": "multichannel",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "listen_multichannel"
+                }
+              }
+            },
+            {
+              "description": "Convert numbers from written format to numerical format",
+              "key": "numerals",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "listen_numerals"
+                }
+              }
+            },
+            {
+              "description": "Profanity Filter looks for recognized profanity and converts it to the nearest recognized non-profane word or removes it from the transcript completely",
+              "key": "profanity_filter",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "listen_profanity_filter"
+                }
+              }
+            },
+            {
+              "description": "Add punctuation and capitalization to the transcript",
+              "key": "punctuate",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "listen_punctuate"
+                }
+              }
+            },
+            {
+              "description": "Redaction removes sensitive information from your transcripts",
+              "key": "redact",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "listen_redact"
+                }
+              }
+            },
+            {
+              "description": "Search for terms or phrases in submitted audio and replaces them",
+              "key": "replace",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "description": "Sample rate of submitted audio. Required (and only read) when a value is provided for encoding",
+              "key": "sample_rate",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "description": "Search for terms or phrases in submitted audio",
+              "key": "search",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "description": "Apply formatting to transcript output. When set to true, additional formatting will be applied to transcripts to improve readability",
+              "key": "smart_format",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "listen_smart_format"
+                }
+              }
+            },
+            {
+              "description": "Label your requests for the purpose of identification during usage reporting",
+              "key": "tag",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "description": "Indicates how long Deepgram will wait to send an UtteranceEnd message after a word has been transcribed. Use with interim_results",
+              "key": "utterance_end",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "description": "Indicates that speech has started. You'll begin receiving Speech Started messages upon speech starting",
+              "key": "vad_events",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "listen_vad_events"
+                }
+              }
+            },
+            {
+              "description": "Version of an AI model to use",
+              "key": "version",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "default": "latest"
+                  }
+                }
+              }
+            }
+          ],
+          "messages": [
+            {
+              "type": "sendAudio",
+              "displayName": "sendAudio",
+              "origin": "client",
+              "body": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "listen_transcriptionRequest"
+                }
+              },
+              "description": "Send audio to Deepgram's Speech to Text API"
+            },
+            {
+              "type": "sendListenControlMessage",
+              "displayName": "sendListenControlMessage",
+              "origin": "client",
+              "body": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "listen_controlMessagesRequest"
+                }
+              },
+              "description": "Send control messages to Deepgram's Speech to Text API"
+            },
+            {
+              "type": "receiveTranscription",
+              "displayName": "receiveTranscription",
+              "origin": "server",
+              "body": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "listen_transcriptionResponse"
+                }
+              },
+              "description": "Receive transcription from Deepgram's Speech to Text API"
+            },
+            {
+              "type": "receiveListenControlResponse",
+              "displayName": "receiveListenControlResponse",
+              "origin": "server",
+              "body": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "listen_controlMessageResponse"
+                }
+              },
+              "description": "Receive control messages from Deepgram's Speech to Text API"
+            },
+            {
+              "type": "receiveListenCloseFrame",
+              "displayName": "receiveListenCloseFrame",
+              "origin": "server",
+              "body": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "listen_closeFrame"
+                }
+              },
+              "description": "Receive close frame from Deepgram's Speech to Text API"
+            }
+          ],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/v1/listen",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "messages": [
+                {
+                  "type": "transcriptionRequest",
+                  "body": "Y3VyaW91cyBtaW5k"
+                },
+                {
+                  "type": "transcriptionRequest",
+                  "body": "cyB0aGluayBhbGlrZSA6KQ=="
+                },
+                {
+                  "type": "transcriptionResponse",
+                  "body": {
+                    "type": "Results",
+                    "channel": {
+                      "alternatives": [
+                        {
+                          "confidence": 0.98,
+                          "transcript": "Hello, world! Welcome to Deepgram!",
+                          "words": [
+                            {
+                              "confidence": 0.99,
+                              "end": 0.5,
+                              "punctuated_word": "Hello,",
+                              "start": 0.1,
+                              "word": "hello"
+                            },
+                            {
+                              "confidence": 0.98,
+                              "end": 0.8,
+                              "punctuated_word": "world!",
+                              "start": 0.6,
+                              "word": "world"
+                            },
+                            {
+                              "confidence": 0.97,
+                              "end": 1.2,
+                              "punctuated_word": "Welcome",
+                              "start": 0.9,
+                              "word": "welcome"
+                            },
+                            {
+                              "confidence": 0.99,
+                              "end": 1.4,
+                              "punctuated_word": "to",
+                              "start": 1.3,
+                              "word": "to"
+                            },
+                            {
+                              "confidence": 0.98,
+                              "end": 1.9,
+                              "punctuated_word": "Deepgram!",
+                              "start": 1.5,
+                              "word": "deepgram"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "duration": 2,
+                    "is_final": true,
+                    "metadata": {
+                      "model_info": {
+                        "name": "nova-2",
+                        "version": "1.0.0",
+                        "arch": "transformer"
+                      },
+                      "model_uuid": "123e4567-e89b-12d3-a456-426614174000",
+                      "request_id": "987fcdeb-51a2-43b7-91e4-c95bafcda21a"
+                    },
+                    "start": 0,
+                    "speech_final": true
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
       "types": [],
       "subpackages": []
     },
@@ -14668,7 +15202,174 @@
         }
       ],
       "webhooks": [],
-      "websockets": [],
+      "websockets": [
+        {
+          "auth": false,
+          "description": "Deepgram Text to Speech WebSocket",
+          "defaultEnvironment": "Deepgram Production API",
+          "environments": [
+            {
+              "id": "Deepgram Production API",
+              "baseUrl": "wss://api.deepgram.com"
+            }
+          ],
+          "id": "textToSpeech",
+          "name": "textToSpeech",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/v1/speak"
+              }
+            ]
+          },
+          "headers": [
+            {
+              "key": "Authorization",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "description": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>"
+            }
+          ],
+          "queryParameters": [
+            {
+              "description": "Encoding allows you to specify the expected encoding of your audio output",
+              "key": "encoding",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "speak_encoding"
+                }
+              }
+            },
+            {
+              "description": "AI model used to process submitted text",
+              "key": "model",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "speak_model"
+                }
+              }
+            },
+            {
+              "description": "Sample Rate specifies the sample rate for the output audio. Based on encoding 8000 or 24000 are possible defaults. For some encodings sample rate is not configurable.",
+              "key": "sample_rate",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "speak_sample_rate"
+                }
+              }
+            }
+          ],
+          "messages": [
+            {
+              "type": "sendText",
+              "displayName": "sendText",
+              "origin": "client",
+              "body": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "speak_textToSpeechRequest"
+                }
+              },
+              "description": "Send text to Deepgram's Text to Speech API"
+            },
+            {
+              "type": "sendSpeakControlMessage",
+              "displayName": "sendSpeakControlMessage",
+              "origin": "client",
+              "body": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "speak_controlMessagesRequest"
+                }
+              },
+              "description": "Send control messages to Deepgram's Text to Speech API"
+            },
+            {
+              "type": "receiveAudio",
+              "displayName": "receiveAudio",
+              "origin": "server",
+              "body": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "speak_textToSpeechResponse"
+                }
+              },
+              "description": "Receive audio from Deepgram's Text to Speech API"
+            },
+            {
+              "type": "receiveSpeakControlResponse",
+              "displayName": "receiveSpeakControlResponse",
+              "origin": "server",
+              "body": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "speak_controlMessagesResponse"
+                }
+              },
+              "description": "Receive control messages from Deepgram's Text to Speech API"
+            },
+            {
+              "type": "receiveSpeakCloseFrame",
+              "displayName": "receiveSpeakCloseFrame",
+              "origin": "server",
+              "body": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "speak_closeFrame"
+                }
+              },
+              "description": "Receive close frame from Deepgram's Text to Speech API"
+            }
+          ],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/v1/speak",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "messages": [
+                {
+                  "type": "textToSpeechRequest",
+                  "body": {
+                    "type": "Speak",
+                    "text": "Hello, world!"
+                  }
+                },
+                {
+                  "type": "textToSpeechRequest",
+                  "body": {
+                    "type": "Speak",
+                    "text": "Welcome to Deepgram!"
+                  }
+                },
+                {
+                  "type": "textToSpeechResponse",
+                  "body": "Y3VyaW91cyBtaW5kcyB0aGluayBhbGlrZSA6KQ=="
+                }
+              ]
+            }
+          ]
+        }
+      ],
       "types": [],
       "subpackages": []
     },
@@ -19399,725 +20100,6 @@
       "types": [],
       "subpackages": []
     },
-    "textToSpeech": {
-      "subpackageId": "textToSpeech",
-      "name": "textToSpeech",
-      "endpoints": [],
-      "webhooks": [],
-      "websockets": [
-        {
-          "auth": false,
-          "description": "Deepgram Text to Speech WebSocket",
-          "defaultEnvironment": "Deepgram Production API",
-          "environments": [
-            {
-              "id": "Deepgram Production API",
-              "baseUrl": "wss://api.deepgram.com"
-            }
-          ],
-          "id": "speak",
-          "name": "speak",
-          "path": {
-            "pathParameters": [],
-            "parts": [
-              {
-                "type": "literal",
-                "value": "/v1/speak"
-              }
-            ]
-          },
-          "headers": [
-            {
-              "key": "Authorization",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              },
-              "description": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>"
-            }
-          ],
-          "queryParameters": [
-            {
-              "description": "Encoding allows you to specify the expected encoding of your audio output",
-              "key": "encoding",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "id",
-                  "value": "speak_encoding"
-                }
-              }
-            },
-            {
-              "description": "AI model used to process submitted text",
-              "key": "model",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "id",
-                  "value": "speak_model"
-                }
-              }
-            },
-            {
-              "description": "Sample Rate specifies the sample rate for the output audio. Based on encoding 8000 or 24000 are possible defaults. For some encodings sample rate is not configurable.",
-              "key": "sample_rate",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "id",
-                  "value": "speak_sample_rate"
-                }
-              }
-            }
-          ],
-          "messages": [
-            {
-              "type": "sendText",
-              "displayName": "sendText",
-              "origin": "client",
-              "body": {
-                "type": "reference",
-                "value": {
-                  "type": "id",
-                  "value": "speak_textToSpeechRequest"
-                }
-              },
-              "description": "Send text to Deepgram's Text to Speech API"
-            },
-            {
-              "type": "sendSpeakControlMessage",
-              "displayName": "sendSpeakControlMessage",
-              "origin": "client",
-              "body": {
-                "type": "reference",
-                "value": {
-                  "type": "id",
-                  "value": "speak_controlMessagesRequest"
-                }
-              },
-              "description": "Send control messages to Deepgram's Text to Speech API"
-            },
-            {
-              "type": "receiveAudio",
-              "displayName": "receiveAudio",
-              "origin": "server",
-              "body": {
-                "type": "reference",
-                "value": {
-                  "type": "id",
-                  "value": "speak_textToSpeechResponse"
-                }
-              },
-              "description": "Receive audio from Deepgram's Text to Speech API"
-            },
-            {
-              "type": "receiveSpeakControlResponse",
-              "displayName": "receiveSpeakControlResponse",
-              "origin": "server",
-              "body": {
-                "type": "reference",
-                "value": {
-                  "type": "id",
-                  "value": "speak_controlMessagesResponse"
-                }
-              },
-              "description": "Receive control messages from Deepgram's Text to Speech API"
-            },
-            {
-              "type": "receiveSpeakCloseFrame",
-              "displayName": "receiveSpeakCloseFrame",
-              "origin": "server",
-              "body": {
-                "type": "reference",
-                "value": {
-                  "type": "id",
-                  "value": "speak_closeFrame"
-                }
-              },
-              "description": "Receive close frame from Deepgram's Text to Speech API"
-            }
-          ],
-          "examples": [
-            {
-              "name": "",
-              "description": "",
-              "path": "/v1/speak",
-              "pathParameters": {},
-              "queryParameters": {},
-              "headers": {},
-              "messages": [
-                {
-                  "type": "textToSpeechRequest",
-                  "body": {
-                    "type": "Speak",
-                    "text": "Hello, world!"
-                  }
-                },
-                {
-                  "type": "textToSpeechRequest",
-                  "body": {
-                    "type": "Speak",
-                    "text": "Welcome to Deepgram!"
-                  }
-                },
-                {
-                  "type": "textToSpeechResponse",
-                  "body": "Y3VyaW91cyBtaW5kcyB0aGluayBhbGlrZSA6KQ=="
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "types": [],
-      "subpackages": []
-    },
-    "speechToText": {
-      "subpackageId": "speechToText",
-      "name": "speechToText",
-      "endpoints": [],
-      "webhooks": [],
-      "websockets": [
-        {
-          "auth": false,
-          "description": "Deepgram Speech to Text WebSocket",
-          "defaultEnvironment": "Deepgram Production API",
-          "environments": [
-            {
-              "id": "Deepgram Production API",
-              "baseUrl": "wss://api.deepgram.com"
-            }
-          ],
-          "id": "listen",
-          "name": "listen",
-          "path": {
-            "pathParameters": [],
-            "parts": [
-              {
-                "type": "literal",
-                "value": "/v1/listen"
-              }
-            ]
-          },
-          "headers": [
-            {
-              "key": "Authorization",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              },
-              "description": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>"
-            }
-          ],
-          "queryParameters": [
-            {
-              "description": "URL to which we'll make the callback request",
-              "key": "callback",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            },
-            {
-              "description": "HTTP method by which the callback request will be made",
-              "key": "callback_method",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "id",
-                  "value": "listen_callback_method"
-                }
-              }
-            },
-            {
-              "description": "The number of channels in the submitted audio",
-              "key": "channels",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string",
-                    "default": "1"
-                  }
-                }
-              }
-            },
-            {
-              "description": "Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0",
-              "key": "diarize",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "optional",
-                  "itemType": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              }
-            },
-            {
-              "description": "Version of the diarization feature to use. Only used when the diarization feature is enabled (`diarize=true` is passed to the API)",
-              "key": "diarize_version",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "default": "v2"
-                }
-              }
-            },
-            {
-              "description": "Identify and extract key entities from content in submitted audio",
-              "key": "dictation",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "id",
-                  "value": "listen_dictation"
-                }
-              }
-            },
-            {
-              "description": "Specify the expected encoding of your submitted audio",
-              "key": "encoding",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "id",
-                  "value": "listen_encoding"
-                }
-              }
-            },
-            {
-              "description": "Indicates how long Deepgram will wait to detect whether a speaker has finished speaking or pauses for a significant period of time. When set to a value, the streaming endpoint immediately finalizes the transcription for the processed time range and returns the transcript with a speech_final parameter set to true. Can also be set to false to disable endpointing",
-              "key": "endpointing",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string",
-                    "default": "10"
-                  }
-                }
-              }
-            },
-            {
-              "description": "Arbitrary key-value pairs that are attached to the API response for usage in downstream processing",
-              "key": "extra",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            },
-            {
-              "description": "Filler Words can help transcribe interruptions in your audio, like \"uh\" and \"um\"",
-              "key": "filler_words",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "id",
-                  "value": "listen_filler_words"
-                }
-              }
-            },
-            {
-              "description": "Specifies whether the streaming endpoint should provide ongoing transcription updates as more audio is received. When set to true, the endpoint sends continuous updates, meaning transcription results may evolve over time",
-              "key": "interim_results",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "id",
-                  "value": "listen_interim_results"
-                }
-              }
-            },
-            {
-              "description": "Key term prompting can boost or suppress specialized terminology and brands. Only compatible with Nova-3",
-              "key": "keyterm",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "optional",
-                  "itemType": {
-                    "type": "list",
-                    "itemType": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            {
-              "description": "Keywords can boost or suppress specialized terminology and brands",
-              "key": "keywords",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            },
-            {
-              "description": "The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model you choose only certain languages are available",
-              "key": "language",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "id",
-                  "value": "listen_language"
-                }
-              }
-            },
-            {
-              "description": "AI model to use for the transcription",
-              "key": "model",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "id",
-                  "value": "listen_model"
-                }
-              }
-            },
-            {
-              "description": "Transcribe each audio channel independently",
-              "key": "multichannel",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "id",
-                  "value": "listen_multichannel"
-                }
-              }
-            },
-            {
-              "description": "Convert numbers from written format to numerical format",
-              "key": "numerals",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "id",
-                  "value": "listen_numerals"
-                }
-              }
-            },
-            {
-              "description": "Profanity Filter looks for recognized profanity and converts it to the nearest recognized non-profane word or removes it from the transcript completely",
-              "key": "profanity_filter",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "id",
-                  "value": "listen_profanity_filter"
-                }
-              }
-            },
-            {
-              "description": "Add punctuation and capitalization to the transcript",
-              "key": "punctuate",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "id",
-                  "value": "listen_punctuate"
-                }
-              }
-            },
-            {
-              "description": "Redaction removes sensitive information from your transcripts",
-              "key": "redact",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "id",
-                  "value": "listen_redact"
-                }
-              }
-            },
-            {
-              "description": "Search for terms or phrases in submitted audio and replaces them",
-              "key": "replace",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            },
-            {
-              "description": "Sample rate of submitted audio. Required (and only read) when a value is provided for encoding",
-              "key": "sample_rate",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            },
-            {
-              "description": "Search for terms or phrases in submitted audio",
-              "key": "search",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            },
-            {
-              "description": "Apply formatting to transcript output. When set to true, additional formatting will be applied to transcripts to improve readability",
-              "key": "smart_format",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "id",
-                  "value": "listen_smart_format"
-                }
-              }
-            },
-            {
-              "description": "Label your requests for the purpose of identification during usage reporting",
-              "key": "tag",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            },
-            {
-              "description": "Indicates how long Deepgram will wait to send an UtteranceEnd message after a word has been transcribed. Use with interim_results",
-              "key": "utterance_end",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            },
-            {
-              "description": "Indicates that speech has started. You'll begin receiving Speech Started messages upon speech starting",
-              "key": "vad_events",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "id",
-                  "value": "listen_vad_events"
-                }
-              }
-            },
-            {
-              "description": "Version of an AI model to use",
-              "key": "version",
-              "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string",
-                    "default": "latest"
-                  }
-                }
-              }
-            }
-          ],
-          "messages": [
-            {
-              "type": "sendAudio",
-              "displayName": "sendAudio",
-              "origin": "client",
-              "body": {
-                "type": "reference",
-                "value": {
-                  "type": "id",
-                  "value": "listen_transcriptionRequest"
-                }
-              },
-              "description": "Send audio to Deepgram's Speech to Text API"
-            },
-            {
-              "type": "sendListenControlMessage",
-              "displayName": "sendListenControlMessage",
-              "origin": "client",
-              "body": {
-                "type": "reference",
-                "value": {
-                  "type": "id",
-                  "value": "listen_controlMessagesRequest"
-                }
-              },
-              "description": "Send control messages to Deepgram's Speech to Text API"
-            },
-            {
-              "type": "receiveTranscription",
-              "displayName": "receiveTranscription",
-              "origin": "server",
-              "body": {
-                "type": "reference",
-                "value": {
-                  "type": "id",
-                  "value": "listen_transcriptionResponse"
-                }
-              },
-              "description": "Receive transcription from Deepgram's Speech to Text API"
-            },
-            {
-              "type": "receiveListenControlResponse",
-              "displayName": "receiveListenControlResponse",
-              "origin": "server",
-              "body": {
-                "type": "reference",
-                "value": {
-                  "type": "id",
-                  "value": "listen_controlMessageResponse"
-                }
-              },
-              "description": "Receive control messages from Deepgram's Speech to Text API"
-            },
-            {
-              "type": "receiveListenCloseFrame",
-              "displayName": "receiveListenCloseFrame",
-              "origin": "server",
-              "body": {
-                "type": "reference",
-                "value": {
-                  "type": "id",
-                  "value": "listen_closeFrame"
-                }
-              },
-              "description": "Receive close frame from Deepgram's Speech to Text API"
-            }
-          ],
-          "examples": [
-            {
-              "name": "",
-              "description": "",
-              "path": "/v1/listen",
-              "pathParameters": {},
-              "queryParameters": {},
-              "headers": {},
-              "messages": [
-                {
-                  "type": "transcriptionRequest",
-                  "body": "Y3VyaW91cyBtaW5k"
-                },
-                {
-                  "type": "transcriptionRequest",
-                  "body": "cyB0aGluayBhbGlrZSA6KQ=="
-                },
-                {
-                  "type": "transcriptionResponse",
-                  "body": {
-                    "type": "Results",
-                    "channel": {
-                      "alternatives": [
-                        {
-                          "confidence": 0.98,
-                          "transcript": "Hello, world! Welcome to Deepgram!",
-                          "words": [
-                            {
-                              "confidence": 0.99,
-                              "end": 0.5,
-                              "punctuated_word": "Hello,",
-                              "start": 0.1,
-                              "word": "hello"
-                            },
-                            {
-                              "confidence": 0.98,
-                              "end": 0.8,
-                              "punctuated_word": "world!",
-                              "start": 0.6,
-                              "word": "world"
-                            },
-                            {
-                              "confidence": 0.97,
-                              "end": 1.2,
-                              "punctuated_word": "Welcome",
-                              "start": 0.9,
-                              "word": "welcome"
-                            },
-                            {
-                              "confidence": 0.99,
-                              "end": 1.4,
-                              "punctuated_word": "to",
-                              "start": 1.3,
-                              "word": "to"
-                            },
-                            {
-                              "confidence": 0.98,
-                              "end": 1.9,
-                              "punctuated_word": "Deepgram!",
-                              "start": 1.5,
-                              "word": "deepgram"
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    "duration": 2,
-                    "is_final": true,
-                    "metadata": {
-                      "model_info": {
-                        "name": "nova-2",
-                        "version": "1.0.0",
-                        "arch": "transformer"
-                      },
-                      "model_uuid": "123e4567-e89b-12d3-a456-426614174000",
-                      "request_id": "987fcdeb-51a2-43b7-91e4-c95bafcda21a"
-                    },
-                    "start": 0,
-                    "speech_final": true
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "types": [],
-      "subpackages": []
-    },
     "subpackage_agent": {
       "subpackageId": "subpackage_agent",
       "name": "agent",
@@ -20486,8 +20468,6 @@
       "subpackage_textIntelligence",
       "subpackage_textToSpeech",
       "subpackage_managementApi",
-      "textToSpeech",
-      "speechToText",
       "subpackage_agent"
     ]
   },
