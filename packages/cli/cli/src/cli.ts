@@ -349,6 +349,11 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("from-version", {
                     string: true,
                     description: "The previous version of the API (e.g. 1.1.0)"
+                })
+                .option("quiet", {
+                    boolean: false,
+                    alias: "q",
+                    description: "Whether to suppress output written to stderr"
                 }),
         async (argv) => {
             const fromVersion = argv.fromVersion != null ? argv.fromVersion : undefined;
@@ -362,6 +367,9 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 // If the user specified the --from-version flag, we write the full
                 // JSON object to stdout.
                 cliContext.logger.info(JSON.stringify(result));
+            }
+            if (result.errors.length > 0) {
+                cliContext.stderr.info(result.errors.join("\n"));
             }
             const code = result.bump === "major" ? 1 : 0;
             await cliContext.exit({ code });
@@ -606,6 +614,11 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     boolean: true,
                     description: "Whether to use the new parser and go directly from OpenAPI to IR",
                     default: false
+                })
+                .option("disable-examples", {
+                    boolean: true,
+                    description: "Whether to disable automatic example generation in the IR",
+                    default: false
                 }),
         async (argv) => {
             await generateIrForWorkspaces({
@@ -622,7 +635,8 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 keywords: undefined,
                 smartCasing: argv.smartCasing ?? false,
                 readme: undefined,
-                directFromOpenapi: argv.fromOpenapi
+                directFromOpenapi: argv.fromOpenapi,
+                disableExamples: argv.disableExamples
             });
         }
     );
