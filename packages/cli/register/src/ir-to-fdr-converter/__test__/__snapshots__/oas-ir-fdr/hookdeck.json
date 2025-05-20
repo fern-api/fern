@@ -16004,7 +16004,7 @@
             }
           ],
           "id": "getIssueTriggers",
-          "originalEndpointId": "Issue Triggers.getIssueTriggers",
+          "originalEndpointId": "endpoint_issueTriggers.getIssueTriggers",
           "name": "Get issue triggers",
           "path": {
             "pathParameters": [],
@@ -16274,7 +16274,7 @@
             }
           ],
           "id": "createIssueTrigger",
-          "originalEndpointId": "Issue Triggers.createIssueTrigger",
+          "originalEndpointId": "endpoint_issueTriggers.createIssueTrigger",
           "name": "Create an issue trigger",
           "path": {
             "pathParameters": [],
@@ -16488,7 +16488,7 @@
             }
           ],
           "id": "upsertIssueTrigger",
-          "originalEndpointId": "Issue Triggers.upsertIssueTrigger",
+          "originalEndpointId": "endpoint_issueTriggers.upsertIssueTrigger",
           "name": "Create or update an issue trigger",
           "path": {
             "pathParameters": [],
@@ -16701,7 +16701,7 @@
             }
           ],
           "id": "getIssueTrigger",
-          "originalEndpointId": "Issue Triggers.getIssueTrigger",
+          "originalEndpointId": "endpoint_issueTriggers.getIssueTrigger",
           "name": "Get a single issue trigger",
           "path": {
             "pathParameters": [
@@ -16860,7 +16860,7 @@
             }
           ],
           "id": "updateIssueTrigger",
-          "originalEndpointId": "Issue Triggers.updateIssueTrigger",
+          "originalEndpointId": "endpoint_issueTriggers.updateIssueTrigger",
           "name": "Update an issue trigger",
           "path": {
             "pathParameters": [
@@ -17101,7 +17101,7 @@
             }
           ],
           "id": "deleteIssueTrigger",
-          "originalEndpointId": "Issue Triggers.deleteIssueTrigger",
+          "originalEndpointId": "endpoint_issueTriggers.deleteIssueTrigger",
           "name": "Delete an issue trigger",
           "path": {
             "pathParameters": [
@@ -17224,7 +17224,7 @@
             }
           ],
           "id": "disableIssueTrigger",
-          "originalEndpointId": "Issue Triggers.disableIssueTrigger",
+          "originalEndpointId": "endpoint_issueTriggers.disableIssueTrigger",
           "name": "Disable an issue trigger",
           "path": {
             "pathParameters": [
@@ -17383,7 +17383,7 @@
             }
           ],
           "id": "enableIssueTrigger",
-          "originalEndpointId": "Issue Triggers.enableIssueTrigger",
+          "originalEndpointId": "endpoint_issueTriggers.enableIssueTrigger",
           "name": "Enable an issue trigger",
           "path": {
             "pathParameters": [
@@ -17552,7 +17552,7 @@
             }
           ],
           "id": "getAttempts",
-          "originalEndpointId": "Attempts.getAttempts",
+          "originalEndpointId": "endpoint_attempts.getAttempts",
           "name": "Get attempts",
           "path": {
             "pathParameters": [],
@@ -17803,7 +17803,7 @@
             }
           ],
           "id": "getAttempt",
-          "originalEndpointId": "Attempts.getAttempt",
+          "originalEndpointId": "endpoint_attempts.getAttempt",
           "name": "Get a single attempt",
           "path": {
             "pathParameters": [
@@ -17976,7 +17976,7 @@
             }
           ],
           "id": "getBookmarks",
-          "originalEndpointId": "Bookmarks.getBookmarks",
+          "originalEndpointId": "endpoint_bookmarks.getBookmarks",
           "name": "Get bookmarks",
           "path": {
             "pathParameters": [],
@@ -18269,7 +18269,7 @@
             }
           ],
           "id": "createBookmark",
-          "originalEndpointId": "Bookmarks.createBookmark",
+          "originalEndpointId": "endpoint_bookmarks.createBookmark",
           "name": "Create a bookmark",
           "path": {
             "pathParameters": [],
@@ -18490,7 +18490,7 @@
             }
           ],
           "id": "getBookmark",
-          "originalEndpointId": "Bookmarks.getBookmark",
+          "originalEndpointId": "endpoint_bookmarks.getBookmark",
           "name": "Get a single bookmark",
           "path": {
             "pathParameters": [
@@ -18645,7 +18645,7 @@
             }
           ],
           "id": "updateBookmark",
-          "originalEndpointId": "Bookmarks.updateBookmark",
+          "originalEndpointId": "endpoint_bookmarks.updateBookmark",
           "name": "Update a bookmark",
           "path": {
             "pathParameters": [
@@ -18900,7 +18900,7 @@
             }
           ],
           "id": "deleteBookmark",
-          "originalEndpointId": "Bookmarks.deleteBookmark",
+          "originalEndpointId": "endpoint_bookmarks.deleteBookmark",
           "name": "Delete a bookmark",
           "path": {
             "pathParameters": [
@@ -19023,7 +19023,7 @@
             }
           ],
           "id": "triggerBookmark",
-          "originalEndpointId": "Bookmarks.triggerBookmark",
+          "originalEndpointId": "endpoint_bookmarks.triggerBookmark",
           "name": "Trigger a bookmark",
           "path": {
             "pathParameters": [
@@ -19264,7 +19264,7 @@
             }
           ],
           "id": "getDestinations",
-          "originalEndpointId": "Destinations.getDestinations",
+          "originalEndpointId": "endpoint_destinations.getDestinations",
           "name": "Get destinations",
           "path": {
             "pathParameters": [],
@@ -19547,7 +19547,7 @@
             }
           ],
           "id": "createDestination",
-          "originalEndpointId": "Destinations.createDestination",
+          "originalEndpointId": "endpoint_destinations.createDestination",
           "name": "Create a destination",
           "path": {
             "pathParameters": [],
@@ -19788,7 +19788,7 @@
             }
           ],
           "id": "upsertDestination",
-          "originalEndpointId": "Destinations.upsertDestination",
+          "originalEndpointId": "endpoint_destinations.upsertDestination",
           "name": "Update or create a destination",
           "path": {
             "pathParameters": [],
@@ -20029,7 +20029,7 @@
             }
           ],
           "id": "getDestination",
-          "originalEndpointId": "Destinations.getDestination",
+          "originalEndpointId": "endpoint_destinations.getDestination",
           "name": "Get a destination",
           "path": {
             "pathParameters": [
@@ -20172,7 +20172,7 @@
             }
           ],
           "id": "updateDestination",
-          "originalEndpointId": "Destinations.updateDestination",
+          "originalEndpointId": "endpoint_destinations.updateDestination",
           "name": "Update a destination",
           "path": {
             "pathParameters": [
@@ -20463,7 +20463,7 @@
             }
           ],
           "id": "archiveDestination",
-          "originalEndpointId": "Destinations.archiveDestination",
+          "originalEndpointId": "endpoint_destinations.archiveDestination",
           "name": "Archive a destination",
           "path": {
             "pathParameters": [
@@ -20606,7 +20606,7 @@
             }
           ],
           "id": "unarchiveDestination",
-          "originalEndpointId": "Destinations.unarchiveDestination",
+          "originalEndpointId": "endpoint_destinations.unarchiveDestination",
           "name": "Unarchive a destination",
           "path": {
             "pathParameters": [
@@ -20759,7 +20759,7 @@
             }
           ],
           "id": "getEvents",
-          "originalEndpointId": "Events.getEvents",
+          "originalEndpointId": "endpoint_events.getEvents",
           "name": "Get events",
           "path": {
             "pathParameters": [],
@@ -21222,7 +21222,7 @@
             }
           ],
           "id": "getEvent",
-          "originalEndpointId": "Events.getEvent",
+          "originalEndpointId": "endpoint_events.getEvent",
           "name": "Get an event",
           "path": {
             "pathParameters": [
@@ -21395,7 +21395,7 @@
             }
           ],
           "id": "getRequestRawBody",
-          "originalEndpointId": "Events.getRequestRawBody",
+          "originalEndpointId": "endpoint_events.getRequestRawBody",
           "name": "Get a event raw body data",
           "path": {
             "pathParameters": [
@@ -21518,7 +21518,7 @@
             }
           ],
           "id": "retryEvent",
-          "originalEndpointId": "Events.retryEvent",
+          "originalEndpointId": "endpoint_events.retryEvent",
           "name": "Retry an event",
           "path": {
             "pathParameters": [
@@ -21741,7 +21741,7 @@
             }
           ],
           "id": "muteEvent",
-          "originalEndpointId": "Events.muteEvent",
+          "originalEndpointId": "endpoint_events.muteEvent",
           "name": "Mute an event",
           "path": {
             "pathParameters": [
@@ -21924,7 +21924,7 @@
             }
           ],
           "id": "getEventBulkRetries",
-          "originalEndpointId": "Bulk retry events.getEventBulkRetries",
+          "originalEndpointId": "endpoint_bulkRetryEvents.getEventBulkRetries",
           "name": "Get events bulk retries",
           "path": {
             "pathParameters": [],
@@ -22227,7 +22227,7 @@
             }
           ],
           "id": "createEventBulkRetry",
-          "originalEndpointId": "Bulk retry events.createEventBulkRetry",
+          "originalEndpointId": "endpoint_bulkRetryEvents.createEventBulkRetry",
           "name": "Create an events bulk retry",
           "path": {
             "pathParameters": [],
@@ -22399,7 +22399,7 @@
             }
           ],
           "id": "generateEventBulkRetryPlan",
-          "originalEndpointId": "Bulk retry events.generateEventBulkRetryPlan",
+          "originalEndpointId": "endpoint_bulkRetryEvents.generateEventBulkRetryPlan",
           "name": "Generate an events bulk retry plan",
           "path": {
             "pathParameters": [],
@@ -22530,7 +22530,7 @@
             }
           ],
           "id": "getEventBulkRetry",
-          "originalEndpointId": "Bulk retry events.getEventBulkRetry",
+          "originalEndpointId": "endpoint_bulkRetryEvents.getEventBulkRetry",
           "name": "Get an events bulk retry",
           "path": {
             "pathParameters": [
@@ -22681,7 +22681,7 @@
             }
           ],
           "id": "cancelEventBulkRetry",
-          "originalEndpointId": "Bulk retry events.cancelEventBulkRetry",
+          "originalEndpointId": "endpoint_bulkRetryEvents.cancelEventBulkRetry",
           "name": "Cancel an events bulk retry",
           "path": {
             "pathParameters": [
@@ -22842,7 +22842,7 @@
             }
           ],
           "id": "getIgnoredEventBulkRetries",
-          "originalEndpointId": "Bulk retry ignored events.getIgnoredEventBulkRetries",
+          "originalEndpointId": "endpoint_bulkRetryIgnoredEvents.getIgnoredEventBulkRetries",
           "name": "Get ignored events bulk retries",
           "path": {
             "pathParameters": [],
@@ -23145,7 +23145,7 @@
             }
           ],
           "id": "createIgnoredEventBulkRetry",
-          "originalEndpointId": "Bulk retry ignored events.createIgnoredEventBulkRetry",
+          "originalEndpointId": "endpoint_bulkRetryIgnoredEvents.createIgnoredEventBulkRetry",
           "name": "Create an ignored events bulk retry",
           "path": {
             "pathParameters": [],
@@ -23317,7 +23317,7 @@
             }
           ],
           "id": "generateIgnoredEventBulkRetryPlan",
-          "originalEndpointId": "Bulk retry ignored events.generateIgnoredEventBulkRetryPlan",
+          "originalEndpointId": "endpoint_bulkRetryIgnoredEvents.generateIgnoredEventBulkRetryPlan",
           "name": "Generate an ignored events bulk retry plan",
           "path": {
             "pathParameters": [],
@@ -23448,7 +23448,7 @@
             }
           ],
           "id": "getIgnoredEventBulkRetry",
-          "originalEndpointId": "Bulk retry ignored events.getIgnoredEventBulkRetry",
+          "originalEndpointId": "endpoint_bulkRetryIgnoredEvents.getIgnoredEventBulkRetry",
           "name": "Get an ignored events bulk retry",
           "path": {
             "pathParameters": [
@@ -23599,7 +23599,7 @@
             }
           ],
           "id": "cancelIgnoredEventBulkRetry",
-          "originalEndpointId": "Bulk retry ignored events.cancelIgnoredEventBulkRetry",
+          "originalEndpointId": "endpoint_bulkRetryIgnoredEvents.cancelIgnoredEventBulkRetry",
           "name": "Cancel an ignored events bulk retry",
           "path": {
             "pathParameters": [
@@ -23760,7 +23760,7 @@
             }
           ],
           "id": "getIntegrations",
-          "originalEndpointId": "Integrations.getIntegrations",
+          "originalEndpointId": "endpoint_integrations.getIntegrations",
           "name": "Get integrations",
           "path": {
             "pathParameters": [],
@@ -23957,7 +23957,7 @@
             }
           ],
           "id": "createIntegration",
-          "originalEndpointId": "Integrations.createIntegration",
+          "originalEndpointId": "endpoint_integrations.createIntegration",
           "name": "Create an integration",
           "path": {
             "pathParameters": [],
@@ -24184,7 +24184,7 @@
             }
           ],
           "id": "getIntegration",
-          "originalEndpointId": "Integrations.getIntegration",
+          "originalEndpointId": "endpoint_integrations.getIntegration",
           "name": "Get an integration",
           "path": {
             "pathParameters": [
@@ -24341,7 +24341,7 @@
             }
           ],
           "id": "updateIntegration",
-          "originalEndpointId": "Integrations.updateIntegration",
+          "originalEndpointId": "endpoint_integrations.updateIntegration",
           "name": "Update an integration",
           "path": {
             "pathParameters": [
@@ -24589,7 +24589,7 @@
             }
           ],
           "id": "deleteIntegration",
-          "originalEndpointId": "Integrations.deleteIntegration",
+          "originalEndpointId": "endpoint_integrations.deleteIntegration",
           "name": "Delete an integration",
           "path": {
             "pathParameters": [
@@ -24712,7 +24712,7 @@
             }
           ],
           "id": "attachIntegrationToSource",
-          "originalEndpointId": "Integrations.attachIntegrationToSource",
+          "originalEndpointId": "endpoint_integrations.attachIntegrationToSource",
           "name": "Attach an integration to a source",
           "path": {
             "pathParameters": [
@@ -24866,7 +24866,7 @@
             }
           ],
           "id": "detachIntegrationToSource",
-          "originalEndpointId": "Integrations.detachIntegrationToSource",
+          "originalEndpointId": "endpoint_integrations.detachIntegrationToSource",
           "name": "Detach an integration from a source",
           "path": {
             "pathParameters": [
@@ -25026,7 +25026,7 @@
             }
           ],
           "id": "getIssues",
-          "originalEndpointId": "Issues.getIssues",
+          "originalEndpointId": "endpoint_issues.getIssues",
           "name": "Get issues",
           "path": {
             "pathParameters": [],
@@ -25487,7 +25487,7 @@
             }
           ],
           "id": "getIssueCount",
-          "originalEndpointId": "Issues.getIssueCount",
+          "originalEndpointId": "endpoint_issues.getIssueCount",
           "name": "Get the number of issues",
           "path": {
             "pathParameters": [],
@@ -25751,7 +25751,7 @@
             }
           ],
           "id": "getIssue",
-          "originalEndpointId": "Issues.getIssue",
+          "originalEndpointId": "endpoint_issues.getIssue",
           "name": "Get a single issue",
           "path": {
             "pathParameters": [
@@ -26034,7 +26034,7 @@
             }
           ],
           "id": "updateIssue",
-          "originalEndpointId": "Issues.updateIssue",
+          "originalEndpointId": "endpoint_issues.updateIssue",
           "name": "Update issue",
           "path": {
             "pathParameters": [
@@ -26253,7 +26253,7 @@
             }
           ],
           "id": "dismissIssue",
-          "originalEndpointId": "Issues.dismissIssue",
+          "originalEndpointId": "endpoint_issues.dismissIssue",
           "name": "Dismiss an issue",
           "path": {
             "pathParameters": [
@@ -26440,7 +26440,7 @@
             }
           ],
           "id": "getRequests",
-          "originalEndpointId": "Requests.getRequests",
+          "originalEndpointId": "endpoint_requests.getRequests",
           "name": "Get requests",
           "path": {
             "pathParameters": [],
@@ -26841,7 +26841,7 @@
             }
           ],
           "id": "getRequest",
-          "originalEndpointId": "Requests.getRequest",
+          "originalEndpointId": "endpoint_requests.getRequest",
           "name": "Get a request",
           "path": {
             "pathParameters": [
@@ -27010,7 +27010,7 @@
             }
           ],
           "id": "getRequestRawBody",
-          "originalEndpointId": "Requests.getRequestRawBody",
+          "originalEndpointId": "endpoint_requests.getRequestRawBody",
           "name": "Get a request raw body data",
           "path": {
             "pathParameters": [
@@ -27133,7 +27133,7 @@
             }
           ],
           "id": "retryRequest",
-          "originalEndpointId": "Requests.retryRequest",
+          "originalEndpointId": "endpoint_requests.retryRequest",
           "name": "Retry a request",
           "path": {
             "pathParameters": [
@@ -27431,7 +27431,7 @@
             }
           ],
           "id": "getRequestEvents",
-          "originalEndpointId": "Requests.getRequestEvents",
+          "originalEndpointId": "endpoint_requests.getRequestEvents",
           "name": "Get request events",
           "path": {
             "pathParameters": [
@@ -27927,7 +27927,7 @@
             }
           ],
           "id": "getRequestIgnoredEvents",
-          "originalEndpointId": "Requests.getRequestIgnoredEvents",
+          "originalEndpointId": "endpoint_requests.getRequestIgnoredEvents",
           "name": "Get request ignored events",
           "path": {
             "pathParameters": [
@@ -28195,7 +28195,7 @@
             }
           ],
           "id": "getRequestBulkRetries",
-          "originalEndpointId": "Bulk retry requests.getRequestBulkRetries",
+          "originalEndpointId": "endpoint_bulkRetryRequests.getRequestBulkRetries",
           "name": "Get request bulk retries",
           "path": {
             "pathParameters": [],
@@ -28498,7 +28498,7 @@
             }
           ],
           "id": "createRequestBulkRetry",
-          "originalEndpointId": "Bulk retry requests.createRequestBulkRetry",
+          "originalEndpointId": "endpoint_bulkRetryRequests.createRequestBulkRetry",
           "name": "Create a requests bulk retry",
           "path": {
             "pathParameters": [],
@@ -28670,7 +28670,7 @@
             }
           ],
           "id": "generateRequestBulkRetryPlan",
-          "originalEndpointId": "Bulk retry requests.generateRequestBulkRetryPlan",
+          "originalEndpointId": "endpoint_bulkRetryRequests.generateRequestBulkRetryPlan",
           "name": "Generate a requests bulk retry plan",
           "path": {
             "pathParameters": [],
@@ -28801,7 +28801,7 @@
             }
           ],
           "id": "getRequestBulkRetry",
-          "originalEndpointId": "Bulk retry requests.getRequestBulkRetry",
+          "originalEndpointId": "endpoint_bulkRetryRequests.getRequestBulkRetry",
           "name": "Get a requests bulk retry",
           "path": {
             "pathParameters": [
@@ -28952,7 +28952,7 @@
             }
           ],
           "id": "cancelRequestBulkRetry",
-          "originalEndpointId": "Bulk retry requests.cancelRequestBulkRetry",
+          "originalEndpointId": "endpoint_bulkRetryRequests.cancelRequestBulkRetry",
           "name": "Cancel a requests bulk retry",
           "path": {
             "pathParameters": [
@@ -29113,7 +29113,7 @@
             }
           ],
           "id": "getRulesets",
-          "originalEndpointId": "Rulesets.getRulesets",
+          "originalEndpointId": "endpoint_rulesets.getRulesets",
           "name": "Get rulesets",
           "path": {
             "pathParameters": [],
@@ -29384,7 +29384,7 @@
             }
           ],
           "id": "createRuleset",
-          "originalEndpointId": "Rulesets.createRuleset",
+          "originalEndpointId": "endpoint_rulesets.createRuleset",
           "name": "Create a ruleset",
           "path": {
             "pathParameters": [],
@@ -29587,7 +29587,7 @@
             }
           ],
           "id": "upsertRuleset",
-          "originalEndpointId": "Rulesets.upsertRuleset",
+          "originalEndpointId": "endpoint_rulesets.upsertRuleset",
           "name": "Update or create a ruleset",
           "path": {
             "pathParameters": [],
@@ -29790,7 +29790,7 @@
             }
           ],
           "id": "getRuleset",
-          "originalEndpointId": "Rulesets.getRuleset",
+          "originalEndpointId": "endpoint_rulesets.getRuleset",
           "name": "Get a ruleset",
           "path": {
             "pathParameters": [
@@ -29941,7 +29941,7 @@
             }
           ],
           "id": "updateRuleset",
-          "originalEndpointId": "Rulesets.updateRuleset",
+          "originalEndpointId": "endpoint_rulesets.updateRuleset",
           "name": "Update a ruleset",
           "path": {
             "pathParameters": [
@@ -30193,7 +30193,7 @@
             }
           ],
           "id": "archiveRuleset",
-          "originalEndpointId": "Rulesets.archiveRuleset",
+          "originalEndpointId": "endpoint_rulesets.archiveRuleset",
           "name": "Archive a ruleset",
           "path": {
             "pathParameters": [
@@ -30344,7 +30344,7 @@
             }
           ],
           "id": "unarchiveRuleset",
-          "originalEndpointId": "Rulesets.unarchiveRuleset",
+          "originalEndpointId": "endpoint_rulesets.unarchiveRuleset",
           "name": "Unarchive a ruleset",
           "path": {
             "pathParameters": [
@@ -30505,7 +30505,7 @@
             }
           ],
           "id": "getSources",
-          "originalEndpointId": "Sources.getSources",
+          "originalEndpointId": "endpoint_sources.getSources",
           "name": "Get sources",
           "path": {
             "pathParameters": [],
@@ -30788,7 +30788,7 @@
             }
           ],
           "id": "createSource",
-          "originalEndpointId": "Sources.createSource",
+          "originalEndpointId": "endpoint_sources.createSource",
           "name": "Create a source",
           "path": {
             "pathParameters": [],
@@ -30967,7 +30967,7 @@
             }
           ],
           "id": "upsertSource",
-          "originalEndpointId": "Sources.upsertSource",
+          "originalEndpointId": "endpoint_sources.upsertSource",
           "name": "Update or create a source",
           "path": {
             "pathParameters": [],
@@ -31146,7 +31146,7 @@
             }
           ],
           "id": "getSource",
-          "originalEndpointId": "Sources.getSource",
+          "originalEndpointId": "endpoint_sources.getSource",
           "name": "Get a source",
           "path": {
             "pathParameters": [
@@ -31299,7 +31299,7 @@
             }
           ],
           "id": "updateSource",
-          "originalEndpointId": "Sources.updateSource",
+          "originalEndpointId": "endpoint_sources.updateSource",
           "name": "Update a source",
           "path": {
             "pathParameters": [
@@ -31527,7 +31527,7 @@
             }
           ],
           "id": "archiveSource",
-          "originalEndpointId": "Sources.archiveSource",
+          "originalEndpointId": "endpoint_sources.archiveSource",
           "name": "Archive a source",
           "path": {
             "pathParameters": [
@@ -31680,7 +31680,7 @@
             }
           ],
           "id": "unarchiveSource",
-          "originalEndpointId": "Sources.unarchiveSource",
+          "originalEndpointId": "endpoint_sources.unarchiveSource",
           "name": "Unarchive a source",
           "path": {
             "pathParameters": [
@@ -31843,7 +31843,7 @@
             }
           ],
           "id": "toggleWebhookNotifications",
-          "originalEndpointId": "Notifications.toggleWebhookNotifications",
+          "originalEndpointId": "endpoint_notifications.toggleWebhookNotifications",
           "name": "Toggle webhook notifications for the workspace",
           "path": {
             "pathParameters": [],
@@ -32007,7 +32007,7 @@
             }
           ],
           "id": "getTransformations",
-          "originalEndpointId": "Transformations.getTransformations",
+          "originalEndpointId": "endpoint_transformations.getTransformations",
           "name": "Get transformations",
           "path": {
             "pathParameters": [],
@@ -32244,7 +32244,7 @@
             }
           ],
           "id": "createTransformation",
-          "originalEndpointId": "Transformations.createTransformation",
+          "originalEndpointId": "endpoint_transformations.createTransformation",
           "name": "Create a transformation",
           "path": {
             "pathParameters": [],
@@ -32432,7 +32432,7 @@
             }
           ],
           "id": "upsertTransformation",
-          "originalEndpointId": "Transformations.upsertTransformation",
+          "originalEndpointId": "endpoint_transformations.upsertTransformation",
           "name": "Update or create a transformation",
           "path": {
             "pathParameters": [],
@@ -32620,7 +32620,7 @@
             }
           ],
           "id": "getTransformation",
-          "originalEndpointId": "Transformations.getTransformation",
+          "originalEndpointId": "endpoint_transformations.getTransformation",
           "name": "Get a transformation",
           "path": {
             "pathParameters": [
@@ -32759,7 +32759,7 @@
             }
           ],
           "id": "updateTransformation",
-          "originalEndpointId": "Transformations.updateTransformation",
+          "originalEndpointId": "endpoint_transformations.updateTransformation",
           "name": "Update a transformation",
           "path": {
             "pathParameters": [
@@ -32980,7 +32980,7 @@
             }
           ],
           "id": "testTransformation",
-          "originalEndpointId": "Transformations.testTransformation",
+          "originalEndpointId": "endpoint_transformations.testTransformation",
           "name": "Test a transformation code",
           "path": {
             "pathParameters": [],
@@ -33218,7 +33218,7 @@
             }
           ],
           "id": "getTransformationExecutions",
-          "originalEndpointId": "Transformations.getTransformationExecutions",
+          "originalEndpointId": "endpoint_transformations.getTransformationExecutions",
           "name": "Get transformation executions",
           "path": {
             "pathParameters": [
@@ -33541,7 +33541,7 @@
             }
           ],
           "id": "getTransformationExecution",
-          "originalEndpointId": "Transformations.getTransformationExecution",
+          "originalEndpointId": "endpoint_transformations.getTransformationExecution",
           "name": "Get a transformation execution",
           "path": {
             "pathParameters": [
@@ -33754,7 +33754,7 @@
             }
           ],
           "id": "getConnections",
-          "originalEndpointId": "Connections.getConnections",
+          "originalEndpointId": "endpoint_connections.getConnections",
           "name": "Get connections",
           "path": {
             "pathParameters": [],
@@ -34181,7 +34181,7 @@
             }
           ],
           "id": "createConnection",
-          "originalEndpointId": "Connections.createConnection",
+          "originalEndpointId": "endpoint_connections.createConnection",
           "name": "Create a connection",
           "path": {
             "pathParameters": [],
@@ -34568,7 +34568,7 @@
             }
           ],
           "id": "upsertConnection",
-          "originalEndpointId": "Connections.upsertConnection",
+          "originalEndpointId": "endpoint_connections.upsertConnection",
           "name": "Update or create a connection",
           "path": {
             "pathParameters": [],
@@ -34955,7 +34955,7 @@
             }
           ],
           "id": "getConnection",
-          "originalEndpointId": "Connections.getConnection",
+          "originalEndpointId": "endpoint_connections.getConnection",
           "name": "Get a single connection",
           "path": {
             "pathParameters": [
@@ -35218,7 +35218,7 @@
             }
           ],
           "id": "updateConnection",
-          "originalEndpointId": "Connections.updateConnection",
+          "originalEndpointId": "endpoint_connections.updateConnection",
           "name": "Update a connection",
           "path": {
             "pathParameters": [
@@ -35581,7 +35581,7 @@
             }
           ],
           "id": "archiveConnection",
-          "originalEndpointId": "Connections.archiveConnection",
+          "originalEndpointId": "endpoint_connections.archiveConnection",
           "name": "Archive a connection",
           "path": {
             "pathParameters": [
@@ -35844,7 +35844,7 @@
             }
           ],
           "id": "unarchiveConnection",
-          "originalEndpointId": "Connections.unarchiveConnection",
+          "originalEndpointId": "endpoint_connections.unarchiveConnection",
           "name": "Unarchive a connection",
           "path": {
             "pathParameters": [
@@ -36107,7 +36107,7 @@
             }
           ],
           "id": "pauseConnection",
-          "originalEndpointId": "Connections.pauseConnection",
+          "originalEndpointId": "endpoint_connections.pauseConnection",
           "name": "Pause a connection",
           "path": {
             "pathParameters": [
@@ -36370,7 +36370,7 @@
             }
           ],
           "id": "unpauseConnection",
-          "originalEndpointId": "Connections.unpauseConnection",
+          "originalEndpointId": "endpoint_connections.unpauseConnection",
           "name": "Unpause a connection",
           "path": {
             "pathParameters": [

@@ -1227,7 +1227,7 @@
             }
           ],
           "id": "updateAnExistingPet",
-          "originalEndpointId": "pet.updateAnExistingPet",
+          "originalEndpointId": "endpoint_pet.updateAnExistingPet",
           "name": "Update an existing pet",
           "path": {
             "pathParameters": [],
@@ -1475,7 +1475,7 @@
             }
           ],
           "id": "getAnOrder",
-          "originalEndpointId": "order.getAnOrder",
+          "originalEndpointId": "endpoint_order.getAnOrder",
           "name": "Get an order",
           "path": {
             "pathParameters": [],

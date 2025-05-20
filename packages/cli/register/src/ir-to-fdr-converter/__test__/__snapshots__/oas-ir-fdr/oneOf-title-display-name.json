@@ -92,7 +92,7 @@
         "auth": false,
         "method": "POST",
         "id": "postTestOneOfDisplayName",
-        "originalEndpointId": "postTestOneOfDisplayName",
+        "originalEndpointId": "endpoint_.postTestOneOfDisplayName",
         "name": "Post Test One Of Display Name",
         "path": {
           "pathParameters": [],

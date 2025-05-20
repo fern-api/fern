@@ -13065,7 +13065,7 @@
             }
           ],
           "id": "listen",
-          "originalEndpointId": "Speech to Text.listen",
+          "originalEndpointId": "endpoint_speechToText.listen",
           "name": "Transcribe and analyze pre-recorded audio",
           "path": {
             "pathParameters": [],
@@ -14051,7 +14051,7 @@
             }
           ],
           "id": "TextRead",
-          "originalEndpointId": "Text Intelligence.TextRead",
+          "originalEndpointId": "endpoint_textIntelligence.TextRead",
           "name": "Analyze text content",
           "path": {
             "pathParameters": [],
@@ -14467,7 +14467,7 @@
             }
           ],
           "id": "speak",
-          "originalEndpointId": "Text to Speech.speak",
+          "originalEndpointId": "endpoint_textToSpeech.speak",
           "name": "Text to Speech transformation",
           "path": {
             "pathParameters": [],
@@ -14680,7 +14680,7 @@
             }
           ],
           "id": "listProjects",
-          "originalEndpointId": "Management API.listProjects",
+          "originalEndpointId": "endpoint_managementApi.listProjects",
           "name": "List Projects",
           "path": {
             "pathParameters": [],
@@ -14769,7 +14769,7 @@
             }
           ],
           "id": "getProject",
-          "originalEndpointId": "Management API.getProject",
+          "originalEndpointId": "endpoint_managementApi.getProject",
           "name": "Get a Project",
           "path": {
             "pathParameters": [
@@ -14959,7 +14959,7 @@
             }
           ],
           "id": "deleteProject",
-          "originalEndpointId": "Management API.deleteProject",
+          "originalEndpointId": "endpoint_managementApi.deleteProject",
           "name": "Delete a Project",
           "path": {
             "pathParameters": [
@@ -15085,7 +15085,7 @@
             }
           ],
           "id": "updateProject",
-          "originalEndpointId": "Management API.updateProject",
+          "originalEndpointId": "endpoint_managementApi.updateProject",
           "name": "Update a Project",
           "path": {
             "pathParameters": [
@@ -15235,7 +15235,7 @@
             }
           ],
           "id": "getProjectBalances",
-          "originalEndpointId": "Management API.getProjectBalances",
+          "originalEndpointId": "endpoint_managementApi.getProjectBalances",
           "name": "Get Project Balances",
           "path": {
             "pathParameters": [
@@ -15375,7 +15375,7 @@
             }
           ],
           "id": "getProjectBalance",
-          "originalEndpointId": "Management API.getProjectBalance",
+          "originalEndpointId": "endpoint_managementApi.getProjectBalance",
           "name": "Get a Project Balance",
           "path": {
             "pathParameters": [
@@ -15526,7 +15526,7 @@
             }
           ],
           "id": "listProjectModels",
-          "originalEndpointId": "Management API.listProjectModels",
+          "originalEndpointId": "endpoint_managementApi.listProjectModels",
           "name": "Returns metadata on all the latest models",
           "path": {
             "pathParameters": [
@@ -15717,7 +15717,7 @@
             }
           ],
           "id": "getProjectModel",
-          "originalEndpointId": "Management API.getProjectModel",
+          "originalEndpointId": "endpoint_managementApi.getProjectModel",
           "name": "Get a Project Model",
           "path": {
             "pathParameters": [
@@ -15858,7 +15858,7 @@
             }
           ],
           "id": "listProjectKeys",
-          "originalEndpointId": "Management API.listProjectKeys",
+          "originalEndpointId": "endpoint_managementApi.listProjectKeys",
           "name": "List Project Keys",
           "path": {
             "pathParameters": [
@@ -16005,7 +16005,7 @@
             }
           ],
           "id": "createProjectKey",
-          "originalEndpointId": "Management API.createProjectKey",
+          "originalEndpointId": "endpoint_managementApi.createProjectKey",
           "name": "Create a Project Key",
           "path": {
             "pathParameters": [
@@ -16156,7 +16156,7 @@
             }
           ],
           "id": "getProjectKey",
-          "originalEndpointId": "Management API.getProjectKey",
+          "originalEndpointId": "endpoint_managementApi.getProjectKey",
           "name": "Get a Project Key",
           "path": {
             "pathParameters": [
@@ -16318,7 +16318,7 @@
             }
           ],
           "id": "deleteProjectKey",
-          "originalEndpointId": "Management API.deleteProjectKey",
+          "originalEndpointId": "endpoint_managementApi.deleteProjectKey",
           "name": "Deletes an API key for a specific project",
           "path": {
             "pathParameters": [
@@ -16450,7 +16450,7 @@
             }
           ],
           "id": "listProjectMembers",
-          "originalEndpointId": "Management API.listProjectMembers",
+          "originalEndpointId": "endpoint_managementApi.listProjectMembers",
           "name": "List Project Members",
           "path": {
             "pathParameters": [
@@ -16571,7 +16571,7 @@
             }
           ],
           "id": "deleteProjectMember",
-          "originalEndpointId": "Management API.deleteProjectMember",
+          "originalEndpointId": "endpoint_managementApi.deleteProjectMember",
           "name": "Delete a Project Member",
           "path": {
             "pathParameters": [
@@ -16703,7 +16703,7 @@
             }
           ],
           "id": "listProjectMemberScopes",
-          "originalEndpointId": "Management API.listProjectMemberScopes",
+          "originalEndpointId": "endpoint_managementApi.listProjectMemberScopes",
           "name": "List Project Member Scopes",
           "path": {
             "pathParameters": [
@@ -16839,7 +16839,7 @@
             }
           ],
           "id": "updateProjectMemberScopes",
-          "originalEndpointId": "Management API.updateProjectMemberScopes",
+          "originalEndpointId": "endpoint_managementApi.updateProjectMemberScopes",
           "name": "Update Project Member Scopes",
           "path": {
             "pathParameters": [
@@ -16995,7 +16995,7 @@
             }
           ],
           "id": "listProjectInvites",
-          "originalEndpointId": "Management API.listProjectInvites",
+          "originalEndpointId": "endpoint_managementApi.listProjectInvites",
           "name": "List Project Invites",
           "path": {
             "pathParameters": [
@@ -17091,7 +17091,7 @@
             }
           ],
           "id": "createProjectInvite",
-          "originalEndpointId": "Management API.createProjectInvite",
+          "originalEndpointId": "endpoint_managementApi.createProjectInvite",
           "name": "Create a Project Invite",
           "path": {
             "pathParameters": [
@@ -17230,7 +17230,7 @@
             }
           ],
           "id": "deleteProjectInvite",
-          "originalEndpointId": "Management API.deleteProjectInvite",
+          "originalEndpointId": "endpoint_managementApi.deleteProjectInvite",
           "name": "Delete a Project Invite",
           "path": {
             "pathParameters": [
@@ -17362,7 +17362,7 @@
             }
           ],
           "id": "deleteProjectLeave",
-          "originalEndpointId": "Management API.deleteProjectLeave",
+          "originalEndpointId": "endpoint_managementApi.deleteProjectLeave",
           "name": "Leave a Project",
           "path": {
             "pathParameters": [
@@ -17475,7 +17475,7 @@
             }
           ],
           "id": "listProjectRequests",
-          "originalEndpointId": "Management API.listProjectRequests",
+          "originalEndpointId": "endpoint_managementApi.listProjectRequests",
           "name": "List Project Requests",
           "path": {
             "pathParameters": [
@@ -17692,7 +17692,7 @@
             }
           ],
           "id": "getProjectRequest",
-          "originalEndpointId": "Management API.getProjectRequest",
+          "originalEndpointId": "endpoint_managementApi.getProjectRequest",
           "name": "Get a Project Request",
           "path": {
             "pathParameters": [
@@ -17817,7 +17817,7 @@
             }
           ],
           "id": "getProjectUsage",
-          "originalEndpointId": "Management API.getProjectUsage",
+          "originalEndpointId": "endpoint_managementApi.getProjectUsage",
           "name": "Get Project Usage",
           "path": {
             "pathParameters": [
@@ -17983,7 +17983,7 @@
             }
           ],
           "id": "listProjectUsageFields",
-          "originalEndpointId": "Management API.listProjectUsageFields",
+          "originalEndpointId": "endpoint_managementApi.listProjectUsageFields",
           "name": "List Project Usage Fields",
           "path": {
             "pathParameters": [
@@ -18160,7 +18160,7 @@
             }
           ],
           "id": "getProjectUsageBreakdown",
-          "originalEndpointId": "Management API.getProjectUsageBreakdown",
+          "originalEndpointId": "endpoint_managementApi.getProjectUsageBreakdown",
           "name": "Get Project Usage Breakdown",
           "path": {
             "pathParameters": [
@@ -18381,7 +18381,7 @@
             }
           ],
           "id": "listProjectPurchases",
-          "originalEndpointId": "Management API.listProjectPurchases",
+          "originalEndpointId": "endpoint_managementApi.listProjectPurchases",
           "name": "List Project Purchases",
           "path": {
             "pathParameters": [
@@ -18533,7 +18533,7 @@
             }
           ],
           "id": "listModels",
-          "originalEndpointId": "Management API.listModels",
+          "originalEndpointId": "endpoint_managementApi.listModels",
           "name": "List Project Models",
           "path": {
             "pathParameters": [],
@@ -18695,7 +18695,7 @@
             }
           ],
           "id": "getModel",
-          "originalEndpointId": "Management API.getModel",
+          "originalEndpointId": "endpoint_managementApi.getModel",
           "name": "Returns metadata for a specific model",
           "path": {
             "pathParameters": [
@@ -18815,7 +18815,7 @@
             }
           ],
           "id": "listSelfHostedDistCreds",
-          "originalEndpointId": "Management API.listSelfHostedDistCreds",
+          "originalEndpointId": "endpoint_managementApi.listSelfHostedDistCreds",
           "name": "List Project Self-Hosted Distribution Credentials",
           "path": {
             "pathParameters": [
@@ -18960,7 +18960,7 @@
             }
           ],
           "id": "createSelfHostedDistCreds",
-          "originalEndpointId": "Management API.createSelfHostedDistCreds",
+          "originalEndpointId": "endpoint_managementApi.createSelfHostedDistCreds",
           "name": "Create a Project Self-Hosted Distribution Credential",
           "path": {
             "pathParameters": [
@@ -19085,7 +19085,7 @@
             }
           ],
           "id": "getSelfHostedCredentials",
-          "originalEndpointId": "Management API.getSelfHostedCredentials",
+          "originalEndpointId": "endpoint_managementApi.getSelfHostedCredentials",
           "name": "Get a Project Self-Hosted Distribution Credential",
           "path": {
             "pathParameters": [
@@ -19241,7 +19241,7 @@
             }
           ],
           "id": "deleteSelfHostedDistCreds",
-          "originalEndpointId": "Management API.deleteSelfHostedDistCreds",
+          "originalEndpointId": "endpoint_managementApi.deleteSelfHostedDistCreds",
           "name": "Delete a Project Self-Hosted Distribution Credential",
           "path": {
             "pathParameters": [

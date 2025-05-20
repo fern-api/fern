@@ -16358,7 +16358,7 @@
             }
           ],
           "id": "createDirectEmployee",
-          "originalEndpointId": "Hris.createDirectEmployee",
+          "originalEndpointId": "endpoint_hris.createDirectEmployee",
           "name": "Create a new Hris direct employee",
           "path": {
             "pathParameters": [],
@@ -16659,7 +16659,7 @@
             }
           ],
           "id": "getEorCountryValidations",
-          "originalEndpointId": "EOR.getEorCountryValidations",
+          "originalEndpointId": "endpoint_eor.getEorCountryValidations",
           "name": "Retrieve country guide",
           "path": {
             "pathParameters": [
@@ -16948,7 +16948,7 @@
             }
           ],
           "id": "createEorContract",
-          "originalEndpointId": "EOR.createEorContract",
+          "originalEndpointId": "endpoint_eor.createEorContract",
           "name": "Create an EOR contract",
           "path": {
             "pathParameters": [],
@@ -17201,7 +17201,7 @@
             }
           ],
           "id": "createContractTimeBased",
-          "originalEndpointId": "Contractors.createContractTimeBased",
+          "originalEndpointId": "endpoint_contractors.createContractTimeBased",
           "name": "Create a new contract (time-based)",
           "path": {
             "pathParameters": [],
@@ -17629,7 +17629,7 @@
             }
           ],
           "id": "createContractTaskBased",
-          "originalEndpointId": "Contractors.createContractTaskBased",
+          "originalEndpointId": "endpoint_contractors.createContractTaskBased",
           "name": "Create a new contract (task-based)",
           "path": {
             "pathParameters": [],
@@ -18053,7 +18053,7 @@
             }
           ],
           "id": "createContractMilestoneBased",
-          "originalEndpointId": "Contractors.createContractMilestoneBased",
+          "originalEndpointId": "endpoint_contractors.createContractMilestoneBased",
           "name": "Create a new contract (milestone-based)",
           "path": {
             "pathParameters": [],
@@ -18477,7 +18477,7 @@
             }
           ],
           "id": "createContractFixedRate",
-          "originalEndpointId": "Contractors.createContractFixedRate",
+          "originalEndpointId": "endpoint_contractors.createContractFixedRate",
           "name": "Create a new contract (fixed-rate)",
           "path": {
             "pathParameters": [],
@@ -18906,7 +18906,7 @@
             }
           ],
           "id": "createContract",
-          "originalEndpointId": "Contractors.createContract",
+          "originalEndpointId": "endpoint_contractors.createContract",
           "name": "Create a new contract",
           "path": {
             "pathParameters": [],
@@ -19335,7 +19335,7 @@
             }
           ],
           "id": "getContractPreview",
-          "originalEndpointId": "Contractors.getContractPreview",
+          "originalEndpointId": "endpoint_contractors.getContractPreview",
           "name": "Preview a contract agreement",
           "path": {
             "pathParameters": [
@@ -19524,7 +19524,7 @@
             }
           ],
           "id": "amendContractDetails",
-          "originalEndpointId": "Contractors.amendContractDetails",
+          "originalEndpointId": "endpoint_contractors.amendContractDetails",
           "name": "Amend contract",
           "path": {
             "pathParameters": [
@@ -19734,7 +19734,7 @@
             }
           ],
           "id": "terminateContract",
-          "originalEndpointId": "Contractors.terminateContract",
+          "originalEndpointId": "endpoint_contractors.terminateContract",
           "name": "Terminate contract",
           "path": {
             "pathParameters": [
@@ -19946,7 +19946,7 @@
             }
           ],
           "id": "addPremium",
-          "originalEndpointId": "Contractors.addPremium",
+          "originalEndpointId": "endpoint_contractors.addPremium",
           "name": "Upgrade to Premium",
           "path": {
             "pathParameters": [
@@ -20149,7 +20149,7 @@
             }
           ],
           "id": "removePremiumFromContract",
-          "originalEndpointId": "Contractors.removePremiumFromContract",
+          "originalEndpointId": "endpoint_contractors.removePremiumFromContract",
           "name": "Downgrade from Premium",
           "path": {
             "pathParameters": [
@@ -20359,7 +20359,7 @@
             }
           ],
           "id": "getContractList",
-          "originalEndpointId": "Contracts.getContractList",
+          "originalEndpointId": "endpoint_contracts.getContractList",
           "name": "List of contracts",
           "path": {
             "pathParameters": [],
@@ -20744,7 +20744,7 @@
             }
           ],
           "id": "getContractById",
-          "originalEndpointId": "Contracts.getContractById",
+          "originalEndpointId": "endpoint_contracts.getContractById",
           "name": "Retrieve a single contract",
           "path": {
             "pathParameters": [
@@ -21120,7 +21120,7 @@
             }
           ],
           "id": "attachExternalId",
-          "originalEndpointId": "Contracts.attachExternalId",
+          "originalEndpointId": "endpoint_contracts.attachExternalId",
           "name": "External Id",
           "path": {
             "pathParameters": [
@@ -21334,7 +21334,7 @@
             }
           ],
           "id": "addContractDocument",
-          "originalEndpointId": "Contracts.addContractDocument",
+          "originalEndpointId": "endpoint_contracts.addContractDocument",
           "name": "Add documents",
           "path": {
             "pathParameters": [
@@ -21555,7 +21555,7 @@
             }
           ],
           "id": "editContractDocument",
-          "originalEndpointId": "Contracts.editContractDocument",
+          "originalEndpointId": "endpoint_contracts.editContractDocument",
           "name": "Edit the file attached to contract document.",
           "path": {
             "pathParameters": [
@@ -21776,7 +21776,7 @@
             }
           ],
           "id": "getAlternateEmailsByContractId",
-          "originalEndpointId": "Contracts.getAlternateEmailsByContractId",
+          "originalEndpointId": "endpoint_contracts.getAlternateEmailsByContractId",
           "name": "Find contract emails by ID",
           "path": {
             "pathParameters": [
@@ -21938,7 +21938,7 @@
             }
           ],
           "id": "signContract",
-          "originalEndpointId": "Contracts.signContract",
+          "originalEndpointId": "endpoint_contracts.signContract",
           "name": "Sign a contract",
           "path": {
             "pathParameters": [
@@ -22152,7 +22152,7 @@
             }
           ],
           "id": "archiveContract",
-          "originalEndpointId": "Contracts.archiveContract",
+          "originalEndpointId": "endpoint_contracts.archiveContract",
           "name": "Archive a contract",
           "path": {
             "pathParameters": [
@@ -22312,7 +22312,7 @@
             }
           ],
           "id": "inviteToSignContract",
-          "originalEndpointId": "Contracts.inviteToSignContract",
+          "originalEndpointId": "endpoint_contracts.inviteToSignContract",
           "name": "Send contract to worker",
           "path": {
             "pathParameters": [
@@ -22528,7 +22528,7 @@
             }
           ],
           "id": "uninviteToSignContract",
-          "originalEndpointId": "Contracts.uninviteToSignContract",
+          "originalEndpointId": "endpoint_contracts.uninviteToSignContract",
           "name": "Remove invite",
           "path": {
             "pathParameters": [
@@ -22714,7 +22714,7 @@
             }
           ],
           "id": "calculateFinalPayment",
-          "originalEndpointId": "Contracts.calculateFinalPayment",
+          "originalEndpointId": "endpoint_contracts.calculateFinalPayment",
           "name": "Calculate final payment",
           "path": {
             "pathParameters": [
@@ -22930,7 +22930,7 @@
             }
           ],
           "id": "postContractEstimate",
-          "originalEndpointId": "Contracts.postContractEstimate",
+          "originalEndpointId": "endpoint_contracts.postContractEstimate",
           "name": "Calculate first payment amount",
           "path": {
             "pathParameters": [],
@@ -23120,7 +23120,7 @@
             }
           ],
           "id": "getContractTemplates",
-          "originalEndpointId": "Contracts.getContractTemplates",
+          "originalEndpointId": "endpoint_contracts.getContractTemplates",
           "name": "Get contract templates",
           "path": {
             "pathParameters": [],
@@ -23288,7 +23288,7 @@
             }
           ],
           "id": "getTasksByContract",
-          "originalEndpointId": "Tasks.getTasksByContract",
+          "originalEndpointId": "endpoint_tasks.getTasksByContract",
           "name": "List of tasks",
           "path": {
             "pathParameters": [
@@ -23494,7 +23494,7 @@
             }
           ],
           "id": "createContractPgoTak",
-          "originalEndpointId": "Tasks.createContractPgoTak",
+          "originalEndpointId": "endpoint_tasks.createContractPgoTak",
           "name": "Create new task",
           "path": {
             "pathParameters": [
@@ -23712,7 +23712,7 @@
             }
           ],
           "id": "createTaskManyReview",
-          "originalEndpointId": "Tasks.createTaskManyReview",
+          "originalEndpointId": "endpoint_tasks.createTaskManyReview",
           "name": "Review multiple tasks",
           "path": {
             "pathParameters": [
@@ -23952,7 +23952,7 @@
             }
           ],
           "id": "createTaskReviewById",
-          "originalEndpointId": "Tasks.createTaskReviewById",
+          "originalEndpointId": "endpoint_tasks.createTaskReviewById",
           "name": "Review a single task",
           "path": {
             "pathParameters": [
@@ -24205,7 +24205,7 @@
             }
           ],
           "id": "deleteContractPgoTak",
-          "originalEndpointId": "Tasks.deleteContractPgoTak",
+          "originalEndpointId": "endpoint_tasks.deleteContractPgoTak",
           "name": "Delete task",
           "path": {
             "pathParameters": [
@@ -24434,7 +24434,7 @@
             }
           ],
           "id": "getTimesheetsByContract",
-          "originalEndpointId": "Timesheets.getTimesheetsByContract",
+          "originalEndpointId": "endpoint_timesheets.getTimesheetsByContract",
           "name": "List of timesheets by contract",
           "path": {
             "pathParameters": [
@@ -24805,7 +24805,7 @@
             }
           ],
           "id": "getTimesheets",
-          "originalEndpointId": "Timesheets.getTimesheets",
+          "originalEndpointId": "endpoint_timesheets.getTimesheets",
           "name": "List of timesheets",
           "path": {
             "pathParameters": [],
@@ -25168,7 +25168,7 @@
             }
           ],
           "id": "createTimesheet",
-          "originalEndpointId": "Timesheets.createTimesheet",
+          "originalEndpointId": "endpoint_timesheets.createTimesheet",
           "name": "Create a timesheet entry",
           "path": {
             "pathParameters": [],
@@ -25381,7 +25381,7 @@
             }
           ],
           "id": "getTimesheetById",
-          "originalEndpointId": "Timesheets.getTimesheetById",
+          "originalEndpointId": "endpoint_timesheets.getTimesheetById",
           "name": "Retrieve a single timesheet entry",
           "path": {
             "pathParameters": [
@@ -25667,7 +25667,7 @@
             }
           ],
           "id": "deleteTimesheetById",
-          "originalEndpointId": "Timesheets.deleteTimesheetById",
+          "originalEndpointId": "endpoint_timesheets.deleteTimesheetById",
           "name": "Delete a timesheet entry",
           "path": {
             "pathParameters": [
@@ -25867,7 +25867,7 @@
             }
           ],
           "id": "updateTimesheetById",
-          "originalEndpointId": "Timesheets.updateTimesheetById",
+          "originalEndpointId": "endpoint_timesheets.updateTimesheetById",
           "name": "Update a timesheet entry",
           "path": {
             "pathParameters": [
@@ -26083,7 +26083,7 @@
             }
           ],
           "id": "createTimesheetReview",
-          "originalEndpointId": "Timesheets.createTimesheetReview",
+          "originalEndpointId": "endpoint_timesheets.createTimesheetReview",
           "name": "Review a single timesheet",
           "path": {
             "pathParameters": [
@@ -26297,7 +26297,7 @@
             }
           ],
           "id": "createTimesheetReviews",
-          "originalEndpointId": "Timesheets.createTimesheetReviews",
+          "originalEndpointId": "endpoint_timesheets.createTimesheetReviews",
           "name": "Review multiple timesheets",
           "path": {
             "pathParameters": [],
@@ -26506,7 +26506,7 @@
             }
           ],
           "id": "getMilestonesByContract",
-          "originalEndpointId": "Milestones.getMilestonesByContract",
+          "originalEndpointId": "endpoint_milestones.getMilestonesByContract",
           "name": "List of milestones by contract",
           "path": {
             "pathParameters": [
@@ -26724,7 +26724,7 @@
             }
           ],
           "id": "createMilestone",
-          "originalEndpointId": "Milestones.createMilestone",
+          "originalEndpointId": "endpoint_milestones.createMilestone",
           "name": "Create a milestone",
           "path": {
             "pathParameters": [
@@ -26942,7 +26942,7 @@
             }
           ],
           "id": "getMilestonesByContractAndId",
-          "originalEndpointId": "Milestones.getMilestonesByContractAndId",
+          "originalEndpointId": "endpoint_milestones.getMilestonesByContractAndId",
           "name": "Retrieve a single milestone",
           "path": {
             "pathParameters": [
@@ -27175,7 +27175,7 @@
             }
           ],
           "id": "deleteMilestoneById",
-          "originalEndpointId": "Milestones.deleteMilestoneById",
+          "originalEndpointId": "endpoint_milestones.deleteMilestoneById",
           "name": "Delete a milestone",
           "path": {
             "pathParameters": [
@@ -27380,7 +27380,7 @@
             }
           ],
           "id": "createMilestoneReview",
-          "originalEndpointId": "Milestones.createMilestoneReview",
+          "originalEndpointId": "endpoint_milestones.createMilestoneReview",
           "name": "Review a single milestone",
           "path": {
             "pathParameters": [
@@ -27613,7 +27613,7 @@
             }
           ],
           "id": "createMilestoneReviews",
-          "originalEndpointId": "Milestones.createMilestoneReviews",
+          "originalEndpointId": "endpoint_milestones.createMilestoneReviews",
           "name": "Review multiple milestones",
           "path": {
             "pathParameters": [
@@ -27843,7 +27843,7 @@
             }
           ],
           "id": "getOffCyclePaymentsByContract",
-          "originalEndpointId": "Off-cycle Payments.getOffCyclePaymentsByContract",
+          "originalEndpointId": "endpoint_offCyclePayments.getOffCyclePaymentsByContract",
           "name": "List of off-cycle payments",
           "path": {
             "pathParameters": [
@@ -28073,7 +28073,7 @@
             }
           ],
           "id": "createOffCyclePayment",
-          "originalEndpointId": "Off-cycle Payments.createOffCyclePayment",
+          "originalEndpointId": "endpoint_offCyclePayments.createOffCyclePayment",
           "name": "Add off-cycle payment",
           "path": {
             "pathParameters": [
@@ -28289,7 +28289,7 @@
             }
           ],
           "id": "getOffCyclePaymentByContractAndId",
-          "originalEndpointId": "Off-cycle Payments.getOffCyclePaymentByContractAndId",
+          "originalEndpointId": "endpoint_offCyclePayments.getOffCyclePaymentByContractAndId",
           "name": "Retrieve a single off-cycle payment",
           "path": {
             "pathParameters": [
@@ -28544,7 +28544,7 @@
             }
           ],
           "id": "getEorTimeOffs",
-          "originalEndpointId": "Time Off.getEorTimeOffs",
+          "originalEndpointId": "endpoint_timeOff.getEorTimeOffs",
           "name": "List time off by contract",
           "path": {
             "pathParameters": [
@@ -28937,7 +28937,7 @@
             }
           ],
           "id": "createEorTimeOffs",
-          "originalEndpointId": "Time Off.createEorTimeOffs",
+          "originalEndpointId": "endpoint_timeOff.createEorTimeOffs",
           "name": "Add a time off request",
           "path": {
             "pathParameters": [
@@ -29356,7 +29356,7 @@
             }
           ],
           "id": "editEorTimeOffs",
-          "originalEndpointId": "Time Off.editEorTimeOffs",
+          "originalEndpointId": "endpoint_timeOff.editEorTimeOffs",
           "name": "Edit a time off request",
           "path": {
             "pathParameters": [
@@ -29794,7 +29794,7 @@
             }
           ],
           "id": "deleteEorTimeOffs",
-          "originalEndpointId": "Time Off.deleteEorTimeOffs",
+          "originalEndpointId": "endpoint_timeOff.deleteEorTimeOffs",
           "name": "Cancel a time off request",
           "path": {
             "pathParameters": [
@@ -29960,7 +29960,7 @@
             }
           ],
           "id": "getEorEntitlements",
-          "originalEndpointId": "Time Off.getEorEntitlements",
+          "originalEndpointId": "endpoint_timeOff.getEorEntitlements",
           "name": "List time off entitlements",
           "path": {
             "pathParameters": [
@@ -30147,7 +30147,7 @@
             }
           ],
           "id": "getEorClientTimeOffs",
-          "originalEndpointId": "Time Off.getEorClientTimeOffs",
+          "originalEndpointId": "endpoint_timeOff.getEorClientTimeOffs",
           "name": "List of time offs",
           "path": {
             "pathParameters": [],
@@ -31059,7 +31059,7 @@
             }
           ],
           "id": "reviewTimeoff",
-          "originalEndpointId": "Time Off.reviewTimeoff",
+          "originalEndpointId": "endpoint_timeOff.reviewTimeoff",
           "name": "Review a time off request",
           "path": {
             "pathParameters": [
@@ -31283,7 +31283,7 @@
             }
           ],
           "id": "getInvoiceAdjustmentsByContractId",
-          "originalEndpointId": "Invoices.getInvoiceAdjustmentsByContractId",
+          "originalEndpointId": "endpoint_invoices.getInvoiceAdjustmentsByContractId",
           "name": "Invoice details by contract",
           "path": {
             "pathParameters": [
@@ -31681,7 +31681,7 @@
             }
           ],
           "id": "getInvoiceAdjustments",
-          "originalEndpointId": "Invoices.getInvoiceAdjustments",
+          "originalEndpointId": "endpoint_invoices.getInvoiceAdjustments",
           "name": "List of invoice details",
           "path": {
             "pathParameters": [],
@@ -32071,7 +32071,7 @@
             }
           ],
           "id": "createInvoiceAdjustment",
-          "originalEndpointId": "Invoices.createInvoiceAdjustment",
+          "originalEndpointId": "endpoint_invoices.createInvoiceAdjustment",
           "name": "Create an invoice adjustment",
           "path": {
             "pathParameters": [],
@@ -32284,7 +32284,7 @@
             }
           ],
           "id": "deleteInvoiceAdjustmentById",
-          "originalEndpointId": "Invoices.deleteInvoiceAdjustmentById",
+          "originalEndpointId": "endpoint_invoices.deleteInvoiceAdjustmentById",
           "name": "Delete an invoice adjustment",
           "path": {
             "pathParameters": [
@@ -32484,7 +32484,7 @@
             }
           ],
           "id": "updateInvoiceAdjustmentById",
-          "originalEndpointId": "Invoices.updateInvoiceAdjustmentById",
+          "originalEndpointId": "endpoint_invoices.updateInvoiceAdjustmentById",
           "name": "Update an invoice adjustment",
           "path": {
             "pathParameters": [
@@ -32698,7 +32698,7 @@
             }
           ],
           "id": "createInvoiceAdjustmentReview",
-          "originalEndpointId": "Invoices.createInvoiceAdjustmentReview",
+          "originalEndpointId": "endpoint_invoices.createInvoiceAdjustmentReview",
           "name": "Review an invoice adjustment",
           "path": {
             "pathParameters": [
@@ -32912,7 +32912,7 @@
             }
           ],
           "id": "createInvoiceAdjustmentReviews",
-          "originalEndpointId": "Invoices.createInvoiceAdjustmentReviews",
+          "originalEndpointId": "endpoint_invoices.createInvoiceAdjustmentReviews",
           "name": "Bulk review invoice adjustments",
           "path": {
             "pathParameters": [],
@@ -33121,7 +33121,7 @@
             }
           ],
           "id": "getLegalEntityList",
-          "originalEndpointId": "Organizations.getLegalEntityList",
+          "originalEndpointId": "endpoint_organizations.getLegalEntityList",
           "name": "List of legal entities",
           "path": {
             "pathParameters": [],
@@ -33296,7 +33296,7 @@
             }
           ],
           "id": "getOrganizations",
-          "originalEndpointId": "Organizations.getOrganizations",
+          "originalEndpointId": "endpoint_organizations.getOrganizations",
           "name": "Get current organization",
           "path": {
             "pathParameters": [],
@@ -33467,7 +33467,7 @@
             }
           ],
           "id": "getTeams",
-          "originalEndpointId": "Organizations.getTeams",
+          "originalEndpointId": "endpoint_organizations.getTeams",
           "name": "Get team list",
           "path": {
             "pathParameters": [],
@@ -33638,7 +33638,7 @@
             }
           ],
           "id": "getAgreements",
-          "originalEndpointId": "Organizations.getAgreements",
+          "originalEndpointId": "endpoint_organizations.getAgreements",
           "name": "Get agreements with Deel.",
           "path": {
             "pathParameters": [],
@@ -33876,7 +33876,7 @@
             }
           ],
           "id": "getCountries",
-          "originalEndpointId": "Lookups.getCountries",
+          "originalEndpointId": "endpoint_lookups.getCountries",
           "name": "Country list",
           "path": {
             "pathParameters": [],
@@ -34065,7 +34065,7 @@
             }
           ],
           "id": "getCurrencies",
-          "originalEndpointId": "Lookups.getCurrencies",
+          "originalEndpointId": "endpoint_lookups.getCurrencies",
           "name": "Currency list",
           "path": {
             "pathParameters": [],
@@ -34236,7 +34236,7 @@
             }
           ],
           "id": "getJobTitleList",
-          "originalEndpointId": "Lookups.getJobTitleList",
+          "originalEndpointId": "endpoint_lookups.getJobTitleList",
           "name": "Job titles list",
           "path": {
             "pathParameters": [],
@@ -34441,7 +34441,7 @@
             }
           ],
           "id": "getSeniorityList",
-          "originalEndpointId": "Lookups.getSeniorityList",
+          "originalEndpointId": "endpoint_lookups.getSeniorityList",
           "name": "Seniority levels",
           "path": {
             "pathParameters": [],
@@ -34629,7 +34629,7 @@
             }
           ],
           "id": "getTimeoffTypeList",
-          "originalEndpointId": "Lookups.getTimeoffTypeList",
+          "originalEndpointId": "endpoint_lookups.getTimeoffTypeList",
           "name": "Time-off types",
           "path": {
             "pathParameters": [],
@@ -34804,7 +34804,7 @@
             }
           ],
           "id": "createFileRef",
-          "originalEndpointId": "Attachments.createFileRef",
+          "originalEndpointId": "endpoint_attachments.createFileRef",
           "name": "Upload file to Deel",
           "path": {
             "pathParameters": [],
@@ -34996,7 +34996,7 @@
             }
           ],
           "id": "getInvoiceList",
-          "originalEndpointId": "Accounting.getInvoiceList",
+          "originalEndpointId": "endpoint_accounting.getInvoiceList",
           "name": "Retrieve invoices",
           "path": {
             "pathParameters": [],
@@ -35240,7 +35240,7 @@
             }
           ],
           "id": "getInvoiceDownloadLink",
-          "originalEndpointId": "Accounting.getInvoiceDownloadLink",
+          "originalEndpointId": "endpoint_accounting.getInvoiceDownloadLink",
           "name": "Download invoice PDF",
           "path": {
             "pathParameters": [
@@ -35430,7 +35430,7 @@
             }
           ],
           "id": "getBillingInvoiceDownloadLink",
-          "originalEndpointId": "Accounting.getBillingInvoiceDownloadLink",
+          "originalEndpointId": "endpoint_accounting.getBillingInvoiceDownloadLink",
           "name": "Download Deel invoice PDF",
           "path": {
             "pathParameters": [
@@ -35620,7 +35620,7 @@
             }
           ],
           "id": "getPaymentList",
-          "originalEndpointId": "Accounting.getPaymentList",
+          "originalEndpointId": "endpoint_accounting.getPaymentList",
           "name": "Retrieve payment reciepts",
           "path": {
             "pathParameters": [],
@@ -35860,7 +35860,7 @@
             }
           ],
           "id": "GetPaymentsBreakDownById",
-          "originalEndpointId": "Accounting.GetPaymentsBreakDownById",
+          "originalEndpointId": "endpoint_accounting.GetPaymentsBreakDownById",
           "name": "Retrieve a payment breakdown",
           "path": {
             "pathParameters": [
@@ -36112,7 +36112,7 @@
             }
           ],
           "id": "getPeopleList",
-          "originalEndpointId": "Contract.getPeopleList",
+          "originalEndpointId": "endpoint_contract.getPeopleList",
           "name": "Get people list",
           "path": {
             "pathParameters": [],
@@ -36498,7 +36498,7 @@
             }
           ],
           "id": "getPeople",
-          "originalEndpointId": "Contract.getPeople",
+          "originalEndpointId": "endpoint_contract.getPeople",
           "name": "Get my current profile",
           "path": {
             "pathParameters": [],
@@ -36699,7 +36699,7 @@
             }
           ],
           "id": "getAllWebhooks",
-          "originalEndpointId": "Webhooks.getAllWebhooks",
+          "originalEndpointId": "endpoint_webhooks.getAllWebhooks",
           "name": "List of webhooks",
           "path": {
             "pathParameters": [],
@@ -36892,7 +36892,7 @@
             }
           ],
           "id": "createWebhook",
-          "originalEndpointId": "Webhooks.createWebhook",
+          "originalEndpointId": "endpoint_webhooks.createWebhook",
           "name": "Create a webhook",
           "path": {
             "pathParameters": [],
@@ -37119,7 +37119,7 @@
             }
           ],
           "id": "WebhookController_getById",
-          "originalEndpointId": "Webhooks.WebhookController_getById",
+          "originalEndpointId": "endpoint_webhooks.WebhookController_getById",
           "name": "Retrieve a single webhook",
           "path": {
             "pathParameters": [
@@ -37328,7 +37328,7 @@
             }
           ],
           "id": "WebhookController_deleteById",
-          "originalEndpointId": "Webhooks.WebhookController_deleteById",
+          "originalEndpointId": "endpoint_webhooks.WebhookController_deleteById",
           "name": "Delete a webhook",
           "path": {
             "pathParameters": [
@@ -37489,7 +37489,7 @@
             }
           ],
           "id": "WebhookController_editById",
-          "originalEndpointId": "Webhooks.WebhookController_editById",
+          "originalEndpointId": "endpoint_webhooks.WebhookController_editById",
           "name": "Edit a webhook",
           "path": {
             "pathParameters": [

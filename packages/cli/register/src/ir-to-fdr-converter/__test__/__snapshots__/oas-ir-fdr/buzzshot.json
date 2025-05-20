@@ -1750,7 +1750,7 @@
           "description": "",
           "method": "GET",
           "id": "listAccounts",
-          "originalEndpointId": "api.listAccounts",
+          "originalEndpointId": "endpoint_api.listAccounts",
           "name": "List Accounts",
           "path": {
             "pathParameters": [],
@@ -1840,7 +1840,7 @@
           "description": "",
           "method": "GET",
           "id": "retrieveAccount",
-          "originalEndpointId": "api.retrieveAccount",
+          "originalEndpointId": "endpoint_api.retrieveAccount",
           "name": "Retrieve Account",
           "path": {
             "pathParameters": [
@@ -1923,7 +1923,7 @@
           "description": "",
           "method": "GET",
           "id": "listGames",
-          "originalEndpointId": "api.listGames",
+          "originalEndpointId": "endpoint_api.listGames",
           "name": "List Games",
           "path": {
             "pathParameters": [],
@@ -2123,7 +2123,7 @@
           "description": "",
           "method": "GET",
           "id": "retrieveGame",
-          "originalEndpointId": "api.retrieveGame",
+          "originalEndpointId": "endpoint_api.retrieveGame",
           "name": "Retrieve Game",
           "path": {
             "pathParameters": [
@@ -2317,7 +2317,7 @@
           "description": "",
           "method": "GET",
           "id": "listGroups",
-          "originalEndpointId": "api.listGroups",
+          "originalEndpointId": "endpoint_api.listGroups",
           "name": "List Groups",
           "path": {
             "pathParameters": [],
@@ -2555,7 +2555,7 @@
           "description": "",
           "method": "GET",
           "id": "retrieveGroup",
-          "originalEndpointId": "api.retrieveGroup",
+          "originalEndpointId": "endpoint_api.retrieveGroup",
           "name": "Retrieve Group",
           "path": {
             "pathParameters": [
@@ -2787,7 +2787,7 @@
           "description": "",
           "method": "GET",
           "id": "listPlayers",
-          "originalEndpointId": "api.listPlayers",
+          "originalEndpointId": "endpoint_api.listPlayers",
           "name": "List Players",
           "path": {
             "pathParameters": [],
@@ -2903,7 +2903,7 @@
           "description": "",
           "method": "GET",
           "id": "retrievePlayer",
-          "originalEndpointId": "api.retrievePlayer",
+          "originalEndpointId": "endpoint_api.retrievePlayer",
           "name": "Retrieve Player",
           "path": {
             "pathParameters": [
@@ -3012,7 +3012,7 @@
           "description": "",
           "method": "GET",
           "id": "listLocations",
-          "originalEndpointId": "api.listLocations",
+          "originalEndpointId": "endpoint_api.listLocations",
           "name": "List Locations",
           "path": {
             "pathParameters": [],
@@ -3102,7 +3102,7 @@
           "description": "",
           "method": "GET",
           "id": "retrieveLocation",
-          "originalEndpointId": "api.retrieveLocation",
+          "originalEndpointId": "endpoint_api.retrieveLocation",
           "name": "Retrieve Location",
           "path": {
             "pathParameters": [
@@ -3185,7 +3185,7 @@
           "description": "",
           "method": "GET",
           "id": "listPhotos",
-          "originalEndpointId": "api.listPhotos",
+          "originalEndpointId": "endpoint_api.listPhotos",
           "name": "List Photos",
           "path": {
             "pathParameters": [],
@@ -3295,7 +3295,7 @@
           "description": "",
           "method": "GET",
           "id": "retrievePhoto",
-          "originalEndpointId": "api.retrievePhoto",
+          "originalEndpointId": "endpoint_api.retrievePhoto",
           "name": "Retrieve Photo",
           "path": {
             "pathParameters": [

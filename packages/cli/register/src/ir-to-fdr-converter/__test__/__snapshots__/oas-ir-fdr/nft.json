@@ -17241,7 +17241,7 @@
             }
           ],
           "id": "getNFTsForOwner-v3",
-          "originalEndpointId": "NFT Ownership Endpoints.getNFTsForOwner-v3",
+          "originalEndpointId": "endpoint_nftOwnershipEndpoints.getNFTsForOwner-v3",
           "name": "NFTs By Owner",
           "path": {
             "pathParameters": [
@@ -18097,7 +18097,7 @@
             }
           ],
           "id": "getOwnersForNFT-v3",
-          "originalEndpointId": "NFT Ownership Endpoints.getOwnersForNFT-v3",
+          "originalEndpointId": "endpoint_nftOwnershipEndpoints.getOwnersForNFT-v3",
           "name": "Owners By NFT",
           "path": {
             "pathParameters": [
@@ -18345,7 +18345,7 @@
             }
           ],
           "id": "getOwnersForContract-v3",
-          "originalEndpointId": "NFT Ownership Endpoints.getOwnersForContract-v3",
+          "originalEndpointId": "endpoint_nftOwnershipEndpoints.getOwnersForContract-v3",
           "name": "Owners By Contract",
           "path": {
             "pathParameters": [
@@ -18624,7 +18624,7 @@
             }
           ],
           "id": "isHolderOfContract-v3",
-          "originalEndpointId": "NFT Ownership Endpoints.isHolderOfContract-v3",
+          "originalEndpointId": "endpoint_nftOwnershipEndpoints.isHolderOfContract-v3",
           "name": "Is Holder Of Contract",
           "path": {
             "pathParameters": [
@@ -18868,7 +18868,7 @@
             }
           ],
           "id": "getContractsForOwner-v3",
-          "originalEndpointId": "NFT Ownership Endpoints.getContractsForOwner-v3",
+          "originalEndpointId": "endpoint_nftOwnershipEndpoints.getContractsForOwner-v3",
           "name": "Contracts By Owner",
           "path": {
             "pathParameters": [
@@ -19305,7 +19305,7 @@
             }
           ],
           "id": "getCollectionsForOwner-v3",
-          "originalEndpointId": "NFT Ownership Endpoints.getCollectionsForOwner-v3",
+          "originalEndpointId": "endpoint_nftOwnershipEndpoints.getCollectionsForOwner-v3",
           "name": "Collections By Owner",
           "path": {
             "pathParameters": [
@@ -19736,7 +19736,7 @@
             }
           ],
           "id": "getNFTsForContract-v3",
-          "originalEndpointId": "NFT Metadata Endpoints.getNFTsForContract-v3",
+          "originalEndpointId": "endpoint_nftMetadataEndpoints.getNFTsForContract-v3",
           "name": "NFTs By Contract",
           "path": {
             "pathParameters": [
@@ -20155,7 +20155,7 @@
             }
           ],
           "id": "getNFTsForCollection-v3",
-          "originalEndpointId": "NFT Metadata Endpoints.getNFTsForCollection-v3",
+          "originalEndpointId": "endpoint_nftMetadataEndpoints.getNFTsForCollection-v3",
           "name": "NFTs By Collection",
           "path": {
             "pathParameters": [
@@ -20567,7 +20567,7 @@
             }
           ],
           "id": "getNFTMetadata-v3",
-          "originalEndpointId": "NFT Metadata Endpoints.getNFTMetadata-v3",
+          "originalEndpointId": "endpoint_nftMetadataEndpoints.getNFTMetadata-v3",
           "name": "NFT Metadata By Token ID",
           "path": {
             "pathParameters": [
@@ -20975,7 +20975,7 @@
             }
           ],
           "id": "getNFTMetadataBatch-v3",
-          "originalEndpointId": "NFT Metadata Endpoints.getNFTMetadataBatch-v3",
+          "originalEndpointId": "endpoint_nftMetadataEndpoints.getNFTMetadataBatch-v3",
           "name": "NFT Metadata By Token ID [Batch]",
           "path": {
             "pathParameters": [
@@ -21380,7 +21380,7 @@
             }
           ],
           "id": "getContractMetadata-v3",
-          "originalEndpointId": "NFT Metadata Endpoints.getContractMetadata-v3",
+          "originalEndpointId": "endpoint_nftMetadataEndpoints.getContractMetadata-v3",
           "name": "Contract Metadata By Address",
           "path": {
             "pathParameters": [
@@ -21646,7 +21646,7 @@
             }
           ],
           "id": "getCollectionMetadata-v3",
-          "originalEndpointId": "NFT Metadata Endpoints.getCollectionMetadata-v3",
+          "originalEndpointId": "endpoint_nftMetadataEndpoints.getCollectionMetadata-v3",
           "name": "Collection Metadata By Slug",
           "path": {
             "pathParameters": [
@@ -21898,7 +21898,7 @@
             }
           ],
           "id": "invalidateContract-v3",
-          "originalEndpointId": "NFT Metadata Endpoints.invalidateContract-v3",
+          "originalEndpointId": "endpoint_nftMetadataEndpoints.invalidateContract-v3",
           "name": "Invalidate Contract Cache",
           "path": {
             "pathParameters": [
@@ -22132,7 +22132,7 @@
             }
           ],
           "id": "getContractMetadataBatch-v3",
-          "originalEndpointId": "NFT Metadata Endpoints.getContractMetadataBatch-v3",
+          "originalEndpointId": "endpoint_nftMetadataEndpoints.getContractMetadataBatch-v3",
           "name": "Contract Metadata By Address [Batch]",
           "path": {
             "pathParameters": [
@@ -22425,7 +22425,7 @@
             }
           ],
           "id": "summarizeNFTAttributes-v3",
-          "originalEndpointId": "NFT Metadata Endpoints.summarizeNFTAttributes-v3",
+          "originalEndpointId": "endpoint_nftMetadataEndpoints.summarizeNFTAttributes-v3",
           "name": "Attributes Summary By Contract",
           "path": {
             "pathParameters": [
@@ -23085,7 +23085,7 @@
             }
           ],
           "id": "searchContractMetadata-v3",
-          "originalEndpointId": "NFT Metadata Endpoints.searchContractMetadata-v3",
+          "originalEndpointId": "endpoint_nftMetadataEndpoints.searchContractMetadata-v3",
           "name": "Search Contract Metadata",
           "path": {
             "pathParameters": [
@@ -23358,7 +23358,7 @@
             }
           ],
           "id": "computeRarity-v3",
-          "originalEndpointId": "NFT Metadata Endpoints.computeRarity-v3",
+          "originalEndpointId": "endpoint_nftMetadataEndpoints.computeRarity-v3",
           "name": "Attribute Rarity By NFT",
           "path": {
             "pathParameters": [
@@ -23614,7 +23614,7 @@
             }
           ],
           "id": "refreshNftMetadata-v3",
-          "originalEndpointId": "NFT Metadata Endpoints.refreshNftMetadata-v3",
+          "originalEndpointId": "endpoint_nftMetadataEndpoints.refreshNftMetadata-v3",
           "name": "Refresh NFT Metadata",
           "path": {
             "pathParameters": [
@@ -23889,7 +23889,7 @@
             }
           ],
           "id": "getSpamContracts-v3",
-          "originalEndpointId": "NFT Spam Endpoints.getSpamContracts-v3",
+          "originalEndpointId": "endpoint_nftSpamEndpoints.getSpamContracts-v3",
           "name": "Spam Contracts",
           "path": {
             "pathParameters": [
@@ -24111,7 +24111,7 @@
             }
           ],
           "id": "isSpamContract-v3",
-          "originalEndpointId": "NFT Spam Endpoints.isSpamContract-v3",
+          "originalEndpointId": "endpoint_nftSpamEndpoints.isSpamContract-v3",
           "name": "Is Spam Contract",
           "path": {
             "pathParameters": [
@@ -24343,7 +24343,7 @@
             }
           ],
           "id": "isAirdropNFT-v3",
-          "originalEndpointId": "NFT Spam Endpoints.isAirdropNFT-v3",
+          "originalEndpointId": "endpoint_nftSpamEndpoints.isAirdropNFT-v3",
           "name": "Is Airdrop NFT",
           "path": {
             "pathParameters": [
@@ -24587,7 +24587,7 @@
             }
           ],
           "id": "reportSpam-v3",
-          "originalEndpointId": "NFT Spam Endpoints.reportSpam-v3",
+          "originalEndpointId": "endpoint_nftSpamEndpoints.reportSpam-v3",
           "name": "Report Spam Address",
           "path": {
             "pathParameters": [
@@ -24827,7 +24827,7 @@
             }
           ],
           "id": "getFloorPrice-v3",
-          "originalEndpointId": "NFT Sales Endpoints.getFloorPrice-v3",
+          "originalEndpointId": "endpoint_nftSalesEndpoints.getFloorPrice-v3",
           "name": "Floor Prices By Slug",
           "path": {
             "pathParameters": [
@@ -25086,7 +25086,7 @@
             }
           ],
           "id": "getNFTSales-v3",
-          "originalEndpointId": "NFT Sales Endpoints.getNFTSales-v3",
+          "originalEndpointId": "endpoint_nftSalesEndpoints.getNFTSales-v3",
           "name": "NFT Sales",
           "path": {
             "pathParameters": [
@@ -25582,7 +25582,7 @@
             }
           ],
           "id": "getNFTs",
-          "originalEndpointId": "NFT API V2 Methods (Older Version).getNFTs",
+          "originalEndpointId": "endpoint_nftApiV2MethodsOlderVersion.getNFTs",
           "name": "getNFTs",
           "path": {
             "pathParameters": [
@@ -26432,7 +26432,7 @@
             }
           ],
           "id": "getNFTMetadata",
-          "originalEndpointId": "NFT API V2 Methods (Older Version).getNFTMetadata",
+          "originalEndpointId": "endpoint_nftApiV2MethodsOlderVersion.getNFTMetadata",
           "name": "getNFTMetadata",
           "path": {
             "pathParameters": [
@@ -26866,7 +26866,7 @@
             }
           ],
           "id": "getNFTMetadataBatch",
-          "originalEndpointId": "NFT API V2 Methods (Older Version).getNFTMetadataBatch",
+          "originalEndpointId": "endpoint_nftApiV2MethodsOlderVersion.getNFTMetadataBatch",
           "name": "getNFTMetadataBatch",
           "path": {
             "pathParameters": [
@@ -27297,7 +27297,7 @@
             }
           ],
           "id": "getContractMetadata",
-          "originalEndpointId": "NFT API V2 Methods (Older Version).getContractMetadata",
+          "originalEndpointId": "endpoint_nftApiV2MethodsOlderVersion.getContractMetadata",
           "name": "getContractMetadata",
           "path": {
             "pathParameters": [
@@ -27567,7 +27567,7 @@
             }
           ],
           "id": "getContractMetadataBatch",
-          "originalEndpointId": "NFT API V2 Methods (Older Version).getContractMetadataBatch",
+          "originalEndpointId": "endpoint_nftApiV2MethodsOlderVersion.getContractMetadataBatch",
           "name": "getContractMetadataBatch",
           "path": {
             "pathParameters": [
@@ -27892,7 +27892,7 @@
             }
           ],
           "id": "getNFTsForCollection",
-          "originalEndpointId": "NFT API V2 Methods (Older Version).getNFTsForCollection",
+          "originalEndpointId": "endpoint_nftApiV2MethodsOlderVersion.getNFTsForCollection",
           "name": "getNFTsForCollection",
           "path": {
             "pathParameters": [
@@ -28304,7 +28304,7 @@
             }
           ],
           "id": "getOwnersForToken",
-          "originalEndpointId": "NFT API V2 Methods (Older Version).getOwnersForToken",
+          "originalEndpointId": "endpoint_nftApiV2MethodsOlderVersion.getOwnersForToken",
           "name": "getOwnersForToken",
           "path": {
             "pathParameters": [
@@ -28578,7 +28578,7 @@
             }
           ],
           "id": "getOwnersForCollection",
-          "originalEndpointId": "NFT API V2 Methods (Older Version).getOwnersForCollection",
+          "originalEndpointId": "endpoint_nftApiV2MethodsOlderVersion.getOwnersForCollection",
           "name": "getOwnersForCollection",
           "path": {
             "pathParameters": [
@@ -28842,7 +28842,7 @@
             }
           ],
           "id": "getSpamContracts",
-          "originalEndpointId": "NFT API V2 Methods (Older Version).getSpamContracts",
+          "originalEndpointId": "endpoint_nftApiV2MethodsOlderVersion.getSpamContracts",
           "name": "getSpamContracts",
           "path": {
             "pathParameters": [
@@ -29064,7 +29064,7 @@
             }
           ],
           "id": "isSpamContract",
-          "originalEndpointId": "NFT API V2 Methods (Older Version).isSpamContract",
+          "originalEndpointId": "endpoint_nftApiV2MethodsOlderVersion.isSpamContract",
           "name": "isSpamContract",
           "path": {
             "pathParameters": [
@@ -29294,7 +29294,7 @@
             }
           ],
           "id": "isAirdrop",
-          "originalEndpointId": "NFT API V2 Methods (Older Version).isAirdrop",
+          "originalEndpointId": "endpoint_nftApiV2MethodsOlderVersion.isAirdrop",
           "name": "isAirdrop",
           "path": {
             "pathParameters": [
@@ -29536,7 +29536,7 @@
             }
           ],
           "id": "invalidateContract",
-          "originalEndpointId": "NFT API V2 Methods (Older Version).invalidateContract",
+          "originalEndpointId": "endpoint_nftApiV2MethodsOlderVersion.invalidateContract",
           "name": "invalidateContract",
           "path": {
             "pathParameters": [
@@ -29770,7 +29770,7 @@
             }
           ],
           "id": "getFloorPrice",
-          "originalEndpointId": "NFT API V2 Methods (Older Version).getFloorPrice",
+          "originalEndpointId": "endpoint_nftApiV2MethodsOlderVersion.getFloorPrice",
           "name": "getFloorPrice",
           "path": {
             "pathParameters": [
@@ -30014,7 +30014,7 @@
             }
           ],
           "id": "computeRarity",
-          "originalEndpointId": "NFT API V2 Methods (Older Version).computeRarity",
+          "originalEndpointId": "endpoint_nftApiV2MethodsOlderVersion.computeRarity",
           "name": "computeRarity",
           "path": {
             "pathParameters": [
@@ -30270,7 +30270,7 @@
             }
           ],
           "id": "searchContractMetadata",
-          "originalEndpointId": "NFT API V2 Methods (Older Version).searchContractMetadata",
+          "originalEndpointId": "endpoint_nftApiV2MethodsOlderVersion.searchContractMetadata",
           "name": "searchContractMetadata",
           "path": {
             "pathParameters": [
@@ -30547,7 +30547,7 @@
             }
           ],
           "id": "summarizeNFTAttributes",
-          "originalEndpointId": "NFT API V2 Methods (Older Version).summarizeNFTAttributes",
+          "originalEndpointId": "endpoint_nftApiV2MethodsOlderVersion.summarizeNFTAttributes",
           "name": "summarizeNFTAttributes",
           "path": {
             "pathParameters": [
@@ -30783,7 +30783,7 @@
             }
           ],
           "id": "isHolderOfCollection",
-          "originalEndpointId": "NFT API V2 Methods (Older Version).isHolderOfCollection",
+          "originalEndpointId": "endpoint_nftApiV2MethodsOlderVersion.isHolderOfCollection",
           "name": "isHolderOfCollection",
           "path": {
             "pathParameters": [
@@ -31027,7 +31027,7 @@
             }
           ],
           "id": "getNFTSales",
-          "originalEndpointId": "NFT API V2 Methods (Older Version).getNFTSales",
+          "originalEndpointId": "endpoint_nftApiV2MethodsOlderVersion.getNFTSales",
           "name": "getNFTSales",
           "path": {
             "pathParameters": [
@@ -31503,7 +31503,7 @@
             }
           ],
           "id": "getContractsForOwner",
-          "originalEndpointId": "NFT API V2 Methods (Older Version).getContractsForOwner",
+          "originalEndpointId": "endpoint_nftApiV2MethodsOlderVersion.getContractsForOwner",
           "name": "getContractsForOwner",
           "path": {
             "pathParameters": [
@@ -31924,7 +31924,7 @@
             }
           ],
           "id": "reportSpam",
-          "originalEndpointId": "NFT API V2 Methods (Older Version).reportSpam",
+          "originalEndpointId": "endpoint_nftApiV2MethodsOlderVersion.reportSpam",
           "name": "reportSpam",
           "path": {
             "pathParameters": [

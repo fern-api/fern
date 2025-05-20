@@ -89,7 +89,7 @@
         "auth": false,
         "method": "POST",
         "id": "Post",
-        "originalEndpointId": "Post",
+        "originalEndpointId": "endpoint_.Post",
         "name": "Post",
         "path": {
           "pathParameters": [],

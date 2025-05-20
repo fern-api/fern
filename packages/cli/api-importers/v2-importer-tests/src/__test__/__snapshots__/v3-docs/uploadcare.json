@@ -12263,7 +12263,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Upload.baseUpload",
+          "id": "endpoint_upload.baseUpload",
           "displayName": "Direct uploads",
           "method": "POST",
           "name": {
@@ -12799,7 +12799,7 @@
           }
         },
         {
-          "id": "Upload.multipartFileUploadStart",
+          "id": "endpoint_upload.multipartFileUploadStart",
           "displayName": "Start multipart upload",
           "method": "POST",
           "name": {
@@ -13471,7 +13471,7 @@
           }
         },
         {
-          "id": "Upload.multipartFileUploadPart",
+          "id": "endpoint_upload.multipartFileUploadPart",
           "displayName": "Upload individual file parts",
           "method": "PUT",
           "name": {
@@ -13546,7 +13546,7 @@
           }
         },
         {
-          "id": "Upload.multipartFileUploadComplete",
+          "id": "endpoint_upload.multipartFileUploadComplete",
           "displayName": "Complete multipart upload",
           "method": "POST",
           "name": {
@@ -13917,7 +13917,7 @@
           }
         },
         {
-          "id": "Upload.fromURLUpload",
+          "id": "endpoint_upload.fromURLUpload",
           "displayName": "Upload files from URLs",
           "method": "POST",
           "name": {
@@ -14656,7 +14656,7 @@
           }
         },
         {
-          "id": "Upload.fromURLUploadStatus",
+          "id": "endpoint_upload.fromURLUploadStatus",
           "displayName": "Check the status of a task to fetch/upload a file from a URL",
           "method": "GET",
           "name": {
@@ -15205,7 +15205,7 @@
           }
         },
         {
-          "id": "Upload.fileUploadInfo",
+          "id": "endpoint_upload.fileUploadInfo",
           "displayName": "Get information about an uploaded file",
           "method": "GET",
           "name": {
@@ -22813,7 +22813,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Groups.createFilesGroup",
+          "id": "endpoint_groups.createFilesGroup",
           "displayName": "Create a file group",
           "method": "POST",
           "name": {
@@ -23228,7 +23228,7 @@
           }
         },
         {
-          "id": "Groups.filesGroupInfo",
+          "id": "endpoint_groups.filesGroupInfo",
           "displayName": "Get information about a file group",
           "method": "GET",
           "name": {

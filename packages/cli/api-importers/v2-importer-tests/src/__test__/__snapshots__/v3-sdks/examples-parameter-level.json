@@ -21,7 +21,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "get",
+          "id": "endpoint_.get",
           "displayName": "Simple endpoint",
           "method": "GET",
           "name": {

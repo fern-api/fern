@@ -52,7 +52,7 @@
         "auth": false,
         "method": "GET",
         "id": "getUser",
-        "originalEndpointId": "getUser",
+        "originalEndpointId": "endpoint_.getUser",
         "name": "Get User",
         "path": {
           "pathParameters": [],
@@ -109,7 +109,7 @@
         "auth": false,
         "method": "GET",
         "id": "getUsers",
-        "originalEndpointId": "getUsers",
+        "originalEndpointId": "endpoint_.getUsers",
         "name": "Get Users",
         "path": {
           "pathParameters": [],

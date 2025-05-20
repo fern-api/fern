@@ -18132,7 +18132,7 @@
             }
           ],
           "id": "identifyAdmin",
-          "originalEndpointId": "Admins.identifyAdmin",
+          "originalEndpointId": "endpoint_admins.identifyAdmin",
           "name": "Identify an admin",
           "path": {
             "pathParameters": [],
@@ -18252,7 +18252,7 @@
             }
           ],
           "id": "setAwayAdmin",
-          "originalEndpointId": "Admins.setAwayAdmin",
+          "originalEndpointId": "endpoint_admins.setAwayAdmin",
           "name": "Set an admin to away",
           "path": {
             "pathParameters": [
@@ -18487,7 +18487,7 @@
             }
           ],
           "id": "listActivityLogs",
-          "originalEndpointId": "Admins.listActivityLogs",
+          "originalEndpointId": "endpoint_admins.listActivityLogs",
           "name": "List all activity logs",
           "path": {
             "pathParameters": [],
@@ -18680,7 +18680,7 @@
             }
           ],
           "id": "listAdmins",
-          "originalEndpointId": "Admins.listAdmins",
+          "originalEndpointId": "endpoint_admins.listAdmins",
           "name": "List all admins",
           "path": {
             "pathParameters": [],
@@ -18802,7 +18802,7 @@
             }
           ],
           "id": "retrieveAdmin",
-          "originalEndpointId": "Admins.retrieveAdmin",
+          "originalEndpointId": "endpoint_admins.retrieveAdmin",
           "name": "Retrieve an admin",
           "path": {
             "pathParameters": [
@@ -18958,7 +18958,7 @@
             }
           ],
           "id": "listArticles",
-          "originalEndpointId": "Articles.listArticles",
+          "originalEndpointId": "endpoint_articles.listArticles",
           "name": "List all articles",
           "path": {
             "pathParameters": [],
@@ -19106,7 +19106,7 @@
             }
           ],
           "id": "createArticle",
-          "originalEndpointId": "Articles.createArticle",
+          "originalEndpointId": "endpoint_articles.createArticle",
           "name": "Create an article",
           "path": {
             "pathParameters": [],
@@ -19337,7 +19337,7 @@
             }
           ],
           "id": "retrieveArticle",
-          "originalEndpointId": "Articles.retrieveArticle",
+          "originalEndpointId": "endpoint_articles.retrieveArticle",
           "name": "Retrieve an article",
           "path": {
             "pathParameters": [
@@ -19511,7 +19511,7 @@
             }
           ],
           "id": "updateArticle",
-          "originalEndpointId": "Articles.updateArticle",
+          "originalEndpointId": "endpoint_articles.updateArticle",
           "name": "Update an article",
           "path": {
             "pathParameters": [
@@ -19731,7 +19731,7 @@
             }
           ],
           "id": "deleteArticle",
-          "originalEndpointId": "Articles.deleteArticle",
+          "originalEndpointId": "endpoint_articles.deleteArticle",
           "name": "Delete an article",
           "path": {
             "pathParameters": [
@@ -19867,7 +19867,7 @@
             }
           ],
           "id": "searchArticles",
-          "originalEndpointId": "Articles.searchArticles",
+          "originalEndpointId": "endpoint_articles.searchArticles",
           "name": "Search for articles",
           "path": {
             "pathParameters": [],
@@ -20089,7 +20089,7 @@
             }
           ],
           "id": "listAllCollections",
-          "originalEndpointId": "Help Center.listAllCollections",
+          "originalEndpointId": "endpoint_helpCenter.listAllCollections",
           "name": "List all collections",
           "path": {
             "pathParameters": [],
@@ -20257,7 +20257,7 @@
             }
           ],
           "id": "createCollection",
-          "originalEndpointId": "Help Center.createCollection",
+          "originalEndpointId": "endpoint_helpCenter.createCollection",
           "name": "Create a collection",
           "path": {
             "pathParameters": [],
@@ -20430,7 +20430,7 @@
             }
           ],
           "id": "retrieveCollection",
-          "originalEndpointId": "Help Center.retrieveCollection",
+          "originalEndpointId": "endpoint_helpCenter.retrieveCollection",
           "name": "Retrieve a collection",
           "path": {
             "pathParameters": [
@@ -20582,7 +20582,7 @@
             }
           ],
           "id": "updateCollection",
-          "originalEndpointId": "Help Center.updateCollection",
+          "originalEndpointId": "endpoint_helpCenter.updateCollection",
           "name": "Update a collection",
           "path": {
             "pathParameters": [
@@ -20776,7 +20776,7 @@
             }
           ],
           "id": "deleteCollection",
-          "originalEndpointId": "Help Center.deleteCollection",
+          "originalEndpointId": "endpoint_helpCenter.deleteCollection",
           "name": "Delete a collection",
           "path": {
             "pathParameters": [
@@ -20912,7 +20912,7 @@
             }
           ],
           "id": "retrieveHelpCenter",
-          "originalEndpointId": "Help Center.retrieveHelpCenter",
+          "originalEndpointId": "endpoint_helpCenter.retrieveHelpCenter",
           "name": "Retrieve a Help Center",
           "path": {
             "pathParameters": [
@@ -21056,7 +21056,7 @@
             }
           ],
           "id": "listHelpCenters",
-          "originalEndpointId": "Help Center.listHelpCenters",
+          "originalEndpointId": "endpoint_helpCenter.listHelpCenters",
           "name": "List all Help Centers",
           "path": {
             "pathParameters": [],
@@ -21166,7 +21166,7 @@
             }
           ],
           "id": "retrieveCompany",
-          "originalEndpointId": "Companies.retrieveCompany",
+          "originalEndpointId": "endpoint_companies.retrieveCompany",
           "name": "Retrieve companies",
           "path": {
             "pathParameters": [],
@@ -21427,7 +21427,7 @@
             }
           ],
           "id": "createOrUpdateCompany",
-          "originalEndpointId": "Companies.createOrUpdateCompany",
+          "originalEndpointId": "endpoint_companies.createOrUpdateCompany",
           "name": "Create or Update a company",
           "path": {
             "pathParameters": [],
@@ -21622,7 +21622,7 @@
             }
           ],
           "id": "RetrieveACompanyById",
-          "originalEndpointId": "Companies.RetrieveACompanyById",
+          "originalEndpointId": "endpoint_companies.RetrieveACompanyById",
           "name": "Retrieve a company by ID",
           "path": {
             "pathParameters": [
@@ -21794,7 +21794,7 @@
             }
           ],
           "id": "UpdateCompany",
-          "originalEndpointId": "Companies.UpdateCompany",
+          "originalEndpointId": "endpoint_companies.UpdateCompany",
           "name": "Update a company",
           "path": {
             "pathParameters": [
@@ -21966,7 +21966,7 @@
             }
           ],
           "id": "deleteCompany",
-          "originalEndpointId": "Companies.deleteCompany",
+          "originalEndpointId": "endpoint_companies.deleteCompany",
           "name": "Delete a company",
           "path": {
             "pathParameters": [
@@ -22102,7 +22102,7 @@
             }
           ],
           "id": "ListAttachedContacts",
-          "originalEndpointId": "Companies.ListAttachedContacts",
+          "originalEndpointId": "endpoint_companies.ListAttachedContacts",
           "name": "List attached contacts",
           "path": {
             "pathParameters": [
@@ -22250,7 +22250,7 @@
             }
           ],
           "id": "ListAttachedSegmentsForCompanies",
-          "originalEndpointId": "Companies.ListAttachedSegmentsForCompanies",
+          "originalEndpointId": "endpoint_companies.ListAttachedSegmentsForCompanies",
           "name": "List attached segments for companies",
           "path": {
             "pathParameters": [
@@ -22384,7 +22384,7 @@
             }
           ],
           "id": "listAllCompanies",
-          "originalEndpointId": "Companies.listAllCompanies",
+          "originalEndpointId": "endpoint_companies.listAllCompanies",
           "name": "List all companies",
           "path": {
             "pathParameters": [],
@@ -22590,7 +22590,7 @@
             }
           ],
           "id": "scrollOverAllCompanies",
-          "originalEndpointId": "Companies.scrollOverAllCompanies",
+          "originalEndpointId": "endpoint_companies.scrollOverAllCompanies",
           "name": "Scroll over all companies",
           "path": {
             "pathParameters": [],
@@ -22756,7 +22756,7 @@
             }
           ],
           "id": "attachContactToACompany",
-          "originalEndpointId": "Companies.attachContactToACompany",
+          "originalEndpointId": "endpoint_companies.attachContactToACompany",
           "name": "Attach a Contact to a Company",
           "path": {
             "pathParameters": [
@@ -22992,7 +22992,7 @@
             }
           ],
           "id": "detachContactFromACompany",
-          "originalEndpointId": "Companies.detachContactFromACompany",
+          "originalEndpointId": "endpoint_companies.detachContactFromACompany",
           "name": "Detach a contact from a company",
           "path": {
             "pathParameters": [
@@ -23193,7 +23193,7 @@
             }
           ],
           "id": "listCompaniesForAContact",
-          "originalEndpointId": "Contacts.listCompaniesForAContact",
+          "originalEndpointId": "endpoint_contacts.listCompaniesForAContact",
           "name": "List attached companies for contact",
           "path": {
             "pathParameters": [
@@ -23341,7 +23341,7 @@
             }
           ],
           "id": "listSegmentsForAContact",
-          "originalEndpointId": "Contacts.listSegmentsForAContact",
+          "originalEndpointId": "endpoint_contacts.listSegmentsForAContact",
           "name": "List attached segments for contact",
           "path": {
             "pathParameters": [
@@ -23493,7 +23493,7 @@
             }
           ],
           "id": "listSubscriptionsForAContact",
-          "originalEndpointId": "Contacts.listSubscriptionsForAContact",
+          "originalEndpointId": "endpoint_contacts.listSubscriptionsForAContact",
           "name": "List subscriptions for a contact",
           "path": {
             "pathParameters": [
@@ -23713,7 +23713,7 @@
             }
           ],
           "id": "listTagsForAContact",
-          "originalEndpointId": "Contacts.listTagsForAContact",
+          "originalEndpointId": "endpoint_contacts.listTagsForAContact",
           "name": "List tags attached to a contact",
           "path": {
             "pathParameters": [
@@ -23859,7 +23859,7 @@
             }
           ],
           "id": "ShowContact",
-          "originalEndpointId": "Contacts.ShowContact",
+          "originalEndpointId": "endpoint_contacts.ShowContact",
           "name": "Get a contact",
           "path": {
             "pathParameters": [
@@ -24106,7 +24106,7 @@
             }
           ],
           "id": "UpdateContact",
-          "originalEndpointId": "Contacts.UpdateContact",
+          "originalEndpointId": "endpoint_contacts.UpdateContact",
           "name": "Update a contact",
           "path": {
             "pathParameters": [
@@ -24377,7 +24377,7 @@
             }
           ],
           "id": "DeleteContact",
-          "originalEndpointId": "Contacts.DeleteContact",
+          "originalEndpointId": "endpoint_contacts.DeleteContact",
           "name": "Delete a contact",
           "path": {
             "pathParameters": [
@@ -24502,7 +24502,7 @@
             }
           ],
           "id": "MergeContact",
-          "originalEndpointId": "Contacts.MergeContact",
+          "originalEndpointId": "endpoint_contacts.MergeContact",
           "name": "Merge a lead and a user",
           "path": {
             "pathParameters": [],
@@ -24752,7 +24752,7 @@
             }
           ],
           "id": "SearchContacts",
-          "originalEndpointId": "Contacts.SearchContacts",
+          "originalEndpointId": "endpoint_contacts.SearchContacts",
           "name": "Search contacts",
           "path": {
             "pathParameters": [],
@@ -24912,7 +24912,7 @@
             }
           ],
           "id": "ListContacts",
-          "originalEndpointId": "Contacts.ListContacts",
+          "originalEndpointId": "endpoint_contacts.ListContacts",
           "name": "List all contacts",
           "path": {
             "pathParameters": [],
@@ -25026,7 +25026,7 @@
             }
           ],
           "id": "CreateContact",
-          "originalEndpointId": "Contacts.CreateContact",
+          "originalEndpointId": "endpoint_contacts.CreateContact",
           "name": "Create contact",
           "path": {
             "pathParameters": [],
@@ -25270,7 +25270,7 @@
             }
           ],
           "id": "ArchiveContact",
-          "originalEndpointId": "Contacts.ArchiveContact",
+          "originalEndpointId": "endpoint_contacts.ArchiveContact",
           "name": "Archive contact",
           "path": {
             "pathParameters": [
@@ -25381,7 +25381,7 @@
             }
           ],
           "id": "UnarchiveContact",
-          "originalEndpointId": "Contacts.UnarchiveContact",
+          "originalEndpointId": "endpoint_contacts.UnarchiveContact",
           "name": "Unarchive contact",
           "path": {
             "pathParameters": [
@@ -25502,7 +25502,7 @@
             }
           ],
           "id": "listNotes",
-          "originalEndpointId": "Notes.listNotes",
+          "originalEndpointId": "endpoint_notes.listNotes",
           "name": "List all notes",
           "path": {
             "pathParameters": [
@@ -25747,7 +25747,7 @@
             }
           ],
           "id": "createNote",
-          "originalEndpointId": "Notes.createNote",
+          "originalEndpointId": "endpoint_notes.createNote",
           "name": "Create a note",
           "path": {
             "pathParameters": [
@@ -26005,7 +26005,7 @@
             }
           ],
           "id": "retrieveNote",
-          "originalEndpointId": "Notes.retrieveNote",
+          "originalEndpointId": "endpoint_notes.retrieveNote",
           "name": "Retrieve a note",
           "path": {
             "pathParameters": [
@@ -26177,7 +26177,7 @@
             }
           ],
           "id": "attachSubscriptionTypeToContact",
-          "originalEndpointId": "Subscription Types.attachSubscriptionTypeToContact",
+          "originalEndpointId": "endpoint_subscriptionTypes.attachSubscriptionTypeToContact",
           "name": "Add subscription to a contact",
           "path": {
             "pathParameters": [
@@ -26432,7 +26432,7 @@
             }
           ],
           "id": "detachSubscriptionTypeToContact",
-          "originalEndpointId": "Subscription Types.detachSubscriptionTypeToContact",
+          "originalEndpointId": "endpoint_subscriptionTypes.detachSubscriptionTypeToContact",
           "name": "Remove subscription from a contact",
           "path": {
             "pathParameters": [
@@ -26619,7 +26619,7 @@
             }
           ],
           "id": "listSubscriptionTypes",
-          "originalEndpointId": "Subscription Types.listSubscriptionTypes",
+          "originalEndpointId": "endpoint_subscriptionTypes.listSubscriptionTypes",
           "name": "List subscription types",
           "path": {
             "pathParameters": [],
@@ -26773,7 +26773,7 @@
             }
           ],
           "id": "attachTagToContact",
-          "originalEndpointId": "Tags.attachTagToContact",
+          "originalEndpointId": "endpoint_tags.attachTagToContact",
           "name": "Add tag to a contact",
           "path": {
             "pathParameters": [
@@ -26980,7 +26980,7 @@
             }
           ],
           "id": "detachTagFromContact",
-          "originalEndpointId": "Tags.detachTagFromContact",
+          "originalEndpointId": "endpoint_tags.detachTagFromContact",
           "name": "Remove tag from a contact",
           "path": {
             "pathParameters": [
@@ -27135,7 +27135,7 @@
             }
           ],
           "id": "attachTagToConversation",
-          "originalEndpointId": "Tags.attachTagToConversation",
+          "originalEndpointId": "endpoint_tags.attachTagToConversation",
           "name": "Add tag to a conversation",
           "path": {
             "pathParameters": [
@@ -27336,7 +27336,7 @@
             }
           ],
           "id": "detachTagFromConversation",
-          "originalEndpointId": "Tags.detachTagFromConversation",
+          "originalEndpointId": "endpoint_tags.detachTagFromConversation",
           "name": "Remove tag from a conversation",
           "path": {
             "pathParameters": [
@@ -27564,7 +27564,7 @@
             }
           ],
           "id": "listTags",
-          "originalEndpointId": "Tags.listTags",
+          "originalEndpointId": "endpoint_tags.listTags",
           "name": "List all tags",
           "path": {
             "pathParameters": [],
@@ -27676,7 +27676,7 @@
             }
           ],
           "id": "createTag",
-          "originalEndpointId": "Tags.createTag",
+          "originalEndpointId": "endpoint_tags.createTag",
           "name": "Create or update a tag, Tag or untag companies, Tag contacts",
           "path": {
             "pathParameters": [],
@@ -27880,7 +27880,7 @@
             }
           ],
           "id": "findTag",
-          "originalEndpointId": "Tags.findTag",
+          "originalEndpointId": "endpoint_tags.findTag",
           "name": "Find a specific tag",
           "path": {
             "pathParameters": [
@@ -28016,7 +28016,7 @@
             }
           ],
           "id": "deleteTag",
-          "originalEndpointId": "Tags.deleteTag",
+          "originalEndpointId": "endpoint_tags.deleteTag",
           "name": "Delete tag",
           "path": {
             "pathParameters": [
@@ -28141,7 +28141,7 @@
             }
           ],
           "id": "attachTagToTicket",
-          "originalEndpointId": "Tags.attachTagToTicket",
+          "originalEndpointId": "endpoint_tags.attachTagToTicket",
           "name": "Add tag to a ticket",
           "path": {
             "pathParameters": [
@@ -28342,7 +28342,7 @@
             }
           ],
           "id": "detachTagFromTicket",
-          "originalEndpointId": "Tags.detachTagFromTicket",
+          "originalEndpointId": "endpoint_tags.detachTagFromTicket",
           "name": "Remove tag from a ticket",
           "path": {
             "pathParameters": [
@@ -28580,7 +28580,7 @@
             }
           ],
           "id": "listConversations",
-          "originalEndpointId": "Conversations.listConversations",
+          "originalEndpointId": "endpoint_conversations.listConversations",
           "name": "List all conversations",
           "path": {
             "pathParameters": [],
@@ -28734,7 +28734,7 @@
             }
           ],
           "id": "createConversation",
-          "originalEndpointId": "Conversations.createConversation",
+          "originalEndpointId": "endpoint_conversations.createConversation",
           "name": "Creates a conversation",
           "path": {
             "pathParameters": [],
@@ -28924,7 +28924,7 @@
             }
           ],
           "id": "retrieveConversation",
-          "originalEndpointId": "Conversations.retrieveConversation",
+          "originalEndpointId": "endpoint_conversations.retrieveConversation",
           "name": "Retrieve a conversation",
           "path": {
             "pathParameters": [
@@ -29197,7 +29197,7 @@
             }
           ],
           "id": "updateConversation",
-          "originalEndpointId": "Conversations.updateConversation",
+          "originalEndpointId": "endpoint_conversations.updateConversation",
           "name": "Update a conversation",
           "path": {
             "pathParameters": [
@@ -29614,7 +29614,7 @@
             }
           ],
           "id": "searchConversations",
-          "originalEndpointId": "Conversations.searchConversations",
+          "originalEndpointId": "endpoint_conversations.searchConversations",
           "name": "Search conversations",
           "path": {
             "pathParameters": [],
@@ -29870,7 +29870,7 @@
             }
           ],
           "id": "replyConversation",
-          "originalEndpointId": "Conversations.replyConversation",
+          "originalEndpointId": "endpoint_conversations.replyConversation",
           "name": "Reply to a conversation",
           "path": {
             "pathParameters": [
@@ -30615,7 +30615,7 @@
             }
           ],
           "id": "manageConversation",
-          "originalEndpointId": "Conversations.manageConversation",
+          "originalEndpointId": "endpoint_conversations.manageConversation",
           "name": "Manage a conversation",
           "path": {
             "pathParameters": [
@@ -31527,7 +31527,7 @@
             }
           ],
           "id": "autoAssignConversation",
-          "originalEndpointId": "Conversations.autoAssignConversation",
+          "originalEndpointId": "endpoint_conversations.autoAssignConversation",
           "name": "Run Assignment Rules on a conversation",
           "path": {
             "pathParameters": [
@@ -31830,7 +31830,7 @@
             }
           ],
           "id": "attachContactToConversation",
-          "originalEndpointId": "Conversations.attachContactToConversation",
+          "originalEndpointId": "endpoint_conversations.attachContactToConversation",
           "name": "Attach a contact to a conversation",
           "path": {
             "pathParameters": [
@@ -32025,7 +32025,7 @@
             }
           ],
           "id": "detachContactFromConversation",
-          "originalEndpointId": "Conversations.detachContactFromConversation",
+          "originalEndpointId": "endpoint_conversations.detachContactFromConversation",
           "name": "Detach a contact from a group conversation",
           "path": {
             "pathParameters": [
@@ -32283,7 +32283,7 @@
             }
           ],
           "id": "redactConversation",
-          "originalEndpointId": "Conversations.redactConversation",
+          "originalEndpointId": "endpoint_conversations.redactConversation",
           "name": "Redact a conversation part",
           "path": {
             "pathParameters": [],
@@ -32604,7 +32604,7 @@
             }
           ],
           "id": "convertConversationToTicket",
-          "originalEndpointId": "Conversations.convertConversationToTicket",
+          "originalEndpointId": "endpoint_conversations.convertConversationToTicket",
           "name": "Convert a conversation to a ticket",
           "path": {
             "pathParameters": [
@@ -32941,7 +32941,7 @@
             }
           ],
           "id": "lisDataAttributes",
-          "originalEndpointId": "Data Attributes.lisDataAttributes",
+          "originalEndpointId": "endpoint_dataAttributes.lisDataAttributes",
           "name": "List all data attributes",
           "path": {
             "pathParameters": [],
@@ -33555,7 +33555,7 @@
             }
           ],
           "id": "createDataAttribute",
-          "originalEndpointId": "Data Attributes.createDataAttribute",
+          "originalEndpointId": "endpoint_dataAttributes.createDataAttribute",
           "name": "Create a data attribute",
           "path": {
             "pathParameters": [],
@@ -33838,7 +33838,7 @@
             }
           ],
           "id": "updateDataAttribute",
-          "originalEndpointId": "Data Attributes.updateDataAttribute",
+          "originalEndpointId": "endpoint_dataAttributes.updateDataAttribute",
           "name": "Update a data attribute",
           "path": {
             "pathParameters": [
@@ -34156,7 +34156,7 @@
             }
           ],
           "id": "lisDataEvents",
-          "originalEndpointId": "Data Events.lisDataEvents",
+          "originalEndpointId": "endpoint_dataEvents.lisDataEvents",
           "name": "List all data events",
           "path": {
             "pathParameters": [],
@@ -34298,7 +34298,7 @@
             }
           ],
           "id": "createDataEvent",
-          "originalEndpointId": "Data Events.createDataEvent",
+          "originalEndpointId": "endpoint_dataEvents.createDataEvent",
           "name": "Submit a data event",
           "path": {
             "pathParameters": [],
@@ -34394,7 +34394,7 @@
             }
           ],
           "id": "dataEventSummaries",
-          "originalEndpointId": "Data Events.dataEventSummaries",
+          "originalEndpointId": "endpoint_dataEvents.dataEventSummaries",
           "name": "Create event summaries",
           "path": {
             "pathParameters": [],
@@ -34500,7 +34500,7 @@
             }
           ],
           "id": "createDataExport",
-          "originalEndpointId": "Data Export.createDataExport",
+          "originalEndpointId": "endpoint_dataExport.createDataExport",
           "name": "Create content data export",
           "path": {
             "pathParameters": [],
@@ -34612,7 +34612,7 @@
             }
           ],
           "id": "getDataExport",
-          "originalEndpointId": "Data Export.getDataExport",
+          "originalEndpointId": "endpoint_dataExport.getDataExport",
           "name": "Show content data export",
           "path": {
             "pathParameters": [
@@ -34721,7 +34721,7 @@
             }
           ],
           "id": "cancelDataExport",
-          "originalEndpointId": "Data Export.cancelDataExport",
+          "originalEndpointId": "endpoint_dataExport.cancelDataExport",
           "name": "Cancel content data export",
           "path": {
             "pathParameters": [
@@ -34830,7 +34830,7 @@
             }
           ],
           "id": "downloadDataExport",
-          "originalEndpointId": "Data Export.downloadDataExport",
+          "originalEndpointId": "endpoint_dataExport.downloadDataExport",
           "name": "Download content data export",
           "path": {
             "pathParameters": [
@@ -34925,7 +34925,7 @@
             }
           ],
           "id": "createMessage",
-          "originalEndpointId": "Messages.createMessage",
+          "originalEndpointId": "endpoint_messages.createMessage",
           "name": "Create a message",
           "path": {
             "pathParameters": [],
@@ -35208,7 +35208,7 @@
             }
           ],
           "id": "listNewsItems",
-          "originalEndpointId": "News.listNewsItems",
+          "originalEndpointId": "endpoint_news.listNewsItems",
           "name": "List all news items",
           "path": {
             "pathParameters": [],
@@ -35408,7 +35408,7 @@
             }
           ],
           "id": "createNewsItem",
-          "originalEndpointId": "News.createNewsItem",
+          "originalEndpointId": "endpoint_news.createNewsItem",
           "name": "Create a news item",
           "path": {
             "pathParameters": [],
@@ -35616,7 +35616,7 @@
             }
           ],
           "id": "retrieveNewsItem",
-          "originalEndpointId": "News.retrieveNewsItem",
+          "originalEndpointId": "endpoint_news.retrieveNewsItem",
           "name": "Retrieve a news item",
           "path": {
             "pathParameters": [
@@ -35793,7 +35793,7 @@
             }
           ],
           "id": "updateNewsItem",
-          "originalEndpointId": "News.updateNewsItem",
+          "originalEndpointId": "endpoint_news.updateNewsItem",
           "name": "Update a news item",
           "path": {
             "pathParameters": [
@@ -36023,7 +36023,7 @@
             }
           ],
           "id": "deleteNewsItem",
-          "originalEndpointId": "News.deleteNewsItem",
+          "originalEndpointId": "endpoint_news.deleteNewsItem",
           "name": "Delete a news item",
           "path": {
             "pathParameters": [
@@ -36159,7 +36159,7 @@
             }
           ],
           "id": "listLiveNewsfeedItems",
-          "originalEndpointId": "News.listLiveNewsfeedItems",
+          "originalEndpointId": "endpoint_news.listLiveNewsfeedItems",
           "name": "List all live newsfeed items",
           "path": {
             "pathParameters": [
@@ -36294,7 +36294,7 @@
             }
           ],
           "id": "listNewsfeeds",
-          "originalEndpointId": "News.listNewsfeeds",
+          "originalEndpointId": "endpoint_news.listNewsfeeds",
           "name": "List all newsfeeds",
           "path": {
             "pathParameters": [],
@@ -36438,7 +36438,7 @@
             }
           ],
           "id": "retrieveNewsfeed",
-          "originalEndpointId": "News.retrieveNewsfeed",
+          "originalEndpointId": "endpoint_news.retrieveNewsfeed",
           "name": "Retrieve a newsfeed",
           "path": {
             "pathParameters": [
@@ -36575,7 +36575,7 @@
             }
           ],
           "id": "listSegments",
-          "originalEndpointId": "Segments.listSegments",
+          "originalEndpointId": "endpoint_segments.listSegments",
           "name": "List all segments",
           "path": {
             "pathParameters": [],
@@ -36725,7 +36725,7 @@
             }
           ],
           "id": "retrieveSegment",
-          "originalEndpointId": "Segments.retrieveSegment",
+          "originalEndpointId": "endpoint_segments.retrieveSegment",
           "name": "Retrieve a segment",
           "path": {
             "pathParameters": [
@@ -36877,7 +36877,7 @@
             }
           ],
           "id": "createPhoneSwitch",
-          "originalEndpointId": "Switch.createPhoneSwitch",
+          "originalEndpointId": "endpoint_switch.createPhoneSwitch",
           "name": "Create a phone Switch",
           "path": {
             "pathParameters": [],
@@ -37093,7 +37093,7 @@
             }
           ],
           "id": "listTeams",
-          "originalEndpointId": "Teams.listTeams",
+          "originalEndpointId": "endpoint_teams.listTeams",
           "name": "List all teams",
           "path": {
             "pathParameters": [],
@@ -37193,7 +37193,7 @@
             }
           ],
           "id": "retrieveTeam",
-          "originalEndpointId": "Teams.retrieveTeam",
+          "originalEndpointId": "endpoint_teams.retrieveTeam",
           "name": "Retrieve a team",
           "path": {
             "pathParameters": [
@@ -37341,7 +37341,7 @@
             }
           ],
           "id": "createTicketTypeAttribute",
-          "originalEndpointId": "Ticket Type Attributes.createTicketTypeAttribute",
+          "originalEndpointId": "endpoint_ticketTypeAttributes.createTicketTypeAttribute",
           "name": "Create a new attribute for a ticket type",
           "path": {
             "pathParameters": [
@@ -37524,7 +37524,7 @@
             }
           ],
           "id": "updateTicketTypeAttribute",
-          "originalEndpointId": "Ticket Type Attributes.updateTicketTypeAttribute",
+          "originalEndpointId": "endpoint_ticketTypeAttributes.updateTicketTypeAttribute",
           "name": "Update an existing attribute for a ticket type",
           "path": {
             "pathParameters": [
@@ -37724,7 +37724,7 @@
             }
           ],
           "id": "listTicketTypes",
-          "originalEndpointId": "Ticket Types.listTicketTypes",
+          "originalEndpointId": "endpoint_ticketTypes.listTicketTypes",
           "name": "List all ticket types",
           "path": {
             "pathParameters": [],
@@ -37822,7 +37822,7 @@
             }
           ],
           "id": "createTicketType",
-          "originalEndpointId": "Ticket Types.createTicketType",
+          "originalEndpointId": "endpoint_ticketTypes.createTicketType",
           "name": "Create a ticket type",
           "path": {
             "pathParameters": [],
@@ -37972,7 +37972,7 @@
             }
           ],
           "id": "getTicketType",
-          "originalEndpointId": "Ticket Types.getTicketType",
+          "originalEndpointId": "endpoint_ticketTypes.getTicketType",
           "name": "Retrieve a ticket type",
           "path": {
             "pathParameters": [
@@ -38115,7 +38115,7 @@
             }
           ],
           "id": "updateTicketType",
-          "originalEndpointId": "Ticket Types.updateTicketType",
+          "originalEndpointId": "endpoint_ticketTypes.updateTicketType",
           "name": "Update a ticket type",
           "path": {
             "pathParameters": [
@@ -38290,7 +38290,7 @@
             }
           ],
           "id": "replyTicket",
-          "originalEndpointId": "Tickets.replyTicket",
+          "originalEndpointId": "endpoint_tickets.replyTicket",
           "name": "Reply to a ticket",
           "path": {
             "pathParameters": [
@@ -38617,7 +38617,7 @@
             }
           ],
           "id": "createTicket",
-          "originalEndpointId": "Tickets.createTicket",
+          "originalEndpointId": "endpoint_tickets.createTicket",
           "name": "Create a ticket",
           "path": {
             "pathParameters": [],
@@ -38895,7 +38895,7 @@
             }
           ],
           "id": "getTicket",
-          "originalEndpointId": "Tickets.getTicket",
+          "originalEndpointId": "endpoint_tickets.getTicket",
           "name": "Retrieve a ticket",
           "path": {
             "pathParameters": [
@@ -39154,7 +39154,7 @@
             }
           ],
           "id": "updateTicket",
-          "originalEndpointId": "Tickets.updateTicket",
+          "originalEndpointId": "endpoint_tickets.updateTicket",
           "name": "Update a ticket",
           "path": {
             "pathParameters": [
@@ -39691,7 +39691,7 @@
             }
           ],
           "id": "searchTickets",
-          "originalEndpointId": "Tickets.searchTickets",
+          "originalEndpointId": "endpoint_tickets.searchTickets",
           "name": "Search tickets",
           "path": {
             "pathParameters": [],
@@ -39995,7 +39995,7 @@
             }
           ],
           "id": "retrieveVisitorWithUserId",
-          "originalEndpointId": "Visitors.retrieveVisitorWithUserId",
+          "originalEndpointId": "endpoint_visitors.retrieveVisitorWithUserId",
           "name": "Retrieve a visitor with User ID",
           "path": {
             "pathParameters": [],
@@ -40211,7 +40211,7 @@
             }
           ],
           "id": "updateVisitor",
-          "originalEndpointId": "Visitors.updateVisitor",
+          "originalEndpointId": "endpoint_visitors.updateVisitor",
           "name": "Update a visitor",
           "path": {
             "pathParameters": [],
@@ -40446,7 +40446,7 @@
             }
           ],
           "id": "convertVisitor",
-          "originalEndpointId": "Visitors.convertVisitor",
+          "originalEndpointId": "endpoint_visitors.convertVisitor",
           "name": "Convert a visitor",
           "path": {
             "pathParameters": [],

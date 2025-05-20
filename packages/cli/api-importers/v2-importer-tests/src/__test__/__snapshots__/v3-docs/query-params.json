@@ -553,7 +553,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "search",
+          "id": "endpoint_.search",
           "method": "GET",
           "name": {
             "originalName": "search",

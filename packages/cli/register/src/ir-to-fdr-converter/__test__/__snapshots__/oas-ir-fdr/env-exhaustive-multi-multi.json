@@ -77,7 +77,7 @@
             }
           ],
           "id": "listPets",
-          "originalEndpointId": "alpha.listPets",
+          "originalEndpointId": "endpoint_alpha.listPets",
           "name": "List Pets",
           "path": {
             "pathParameters": [],
@@ -307,7 +307,7 @@
             }
           ],
           "id": "listPets",
-          "originalEndpointId": "beta.listPets",
+          "originalEndpointId": "endpoint_beta.listPets",
           "name": "List Pets",
           "path": {
             "pathParameters": [],

@@ -781,7 +781,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "getWorkspaceAuditLogs",
+          "id": "endpoint_.getWorkspaceAuditLogs",
           "displayName": "Get Workspace Audit Logs",
           "method": "GET",
           "name": {

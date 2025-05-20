@@ -4831,7 +4831,7 @@
             }
           ],
           "id": "get_job_artifacts",
-          "originalEndpointId": "Get Job Predictions.get_job_artifacts",
+          "originalEndpointId": "endpoint_getJobPredictions.get_job_artifacts",
           "name": "Get Job Artifacts",
           "path": {
             "pathParameters": [
@@ -4904,7 +4904,7 @@
             }
           ],
           "id": "get_job",
-          "originalEndpointId": "Get Job Predictions.get_job",
+          "originalEndpointId": "endpoint_getJobPredictions.get_job",
           "name": "Get Job Details",
           "path": {
             "pathParameters": [
@@ -5254,7 +5254,7 @@
           }
         ],
         "id": "List Jobs",
-        "originalEndpointId": "List Jobs",
+        "originalEndpointId": "endpoint_.List Jobs",
         "name": "List Jobs",
         "path": {
           "pathParameters": [],
@@ -5505,7 +5505,7 @@
           }
         ],
         "id": "Start Job",
-        "originalEndpointId": "Start Job",
+        "originalEndpointId": "endpoint_.Start Job",
         "name": "Start Job",
         "path": {
           "pathParameters": [],
@@ -5588,7 +5588,7 @@
           }
         ],
         "id": "Get Job Predictions",
-        "originalEndpointId": "Get Job Predictions",
+        "originalEndpointId": "endpoint_.Get Job Predictions",
         "name": "Get Job Predictions",
         "path": {
           "pathParameters": [

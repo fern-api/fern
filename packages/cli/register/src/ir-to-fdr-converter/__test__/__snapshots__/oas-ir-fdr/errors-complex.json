@@ -66,7 +66,7 @@
           }
         ],
         "id": "list",
-        "originalEndpointId": "list",
+        "originalEndpointId": "endpoint_.list",
         "name": "List",
         "path": {
           "pathParameters": [],
@@ -199,7 +199,7 @@
           }
         ],
         "id": "postTrees",
-        "originalEndpointId": "postTrees",
+        "originalEndpointId": "endpoint_.postTrees",
         "name": "Post Trees",
         "path": {
           "pathParameters": [],

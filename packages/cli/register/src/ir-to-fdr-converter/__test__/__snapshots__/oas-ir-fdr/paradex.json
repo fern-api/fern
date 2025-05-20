@@ -12600,7 +12600,7 @@
             }
           ],
           "id": "get-open-algo-orders",
-          "originalEndpointId": "Algos.get-open-algo-orders",
+          "originalEndpointId": "endpoint_algos.get-open-algo-orders",
           "name": "Get open algo orders",
           "path": {
             "pathParameters": [],
@@ -12711,7 +12711,7 @@
             }
           ],
           "id": "create-algo-order",
-          "originalEndpointId": "Algos.create-algo-order",
+          "originalEndpointId": "endpoint_algos.create-algo-order",
           "name": "Create algo order",
           "path": {
             "pathParameters": [],
@@ -12852,7 +12852,7 @@
             }
           ],
           "id": "get-algo-orders-history",
-          "originalEndpointId": "Algos.get-algo-orders-history",
+          "originalEndpointId": "endpoint_algos.get-algo-orders-history",
           "name": "Get algo orders history",
           "path": {
             "pathParameters": [],
@@ -13085,7 +13085,7 @@
             }
           ],
           "id": "get-algo-order-by-id",
-          "originalEndpointId": "Algos.get-algo-order-by-id",
+          "originalEndpointId": "endpoint_algos.get-algo-order-by-id",
           "name": "Get algo order by id",
           "path": {
             "pathParameters": [
@@ -13209,7 +13209,7 @@
             }
           ],
           "id": "cancel-algo-order",
-          "originalEndpointId": "Algos.cancel-algo-order",
+          "originalEndpointId": "endpoint_algos.cancel-algo-order",
           "name": "Cancel algo order by id",
           "path": {
             "pathParameters": [
@@ -13299,7 +13299,7 @@
             }
           ],
           "id": "auth",
-          "originalEndpointId": "Authentication.auth",
+          "originalEndpointId": "endpoint_authentication.auth",
           "name": "Get JWT",
           "path": {
             "pathParameters": [],
@@ -13452,7 +13452,7 @@
             }
           ],
           "id": "onboarding",
-          "originalEndpointId": "Authentication.onboarding",
+          "originalEndpointId": "endpoint_authentication.onboarding",
           "name": "Onboarding",
           "path": {
             "pathParameters": [],
@@ -13589,7 +13589,7 @@
             }
           ],
           "id": "get-bbo",
-          "originalEndpointId": "Markets.get-bbo",
+          "originalEndpointId": "endpoint_markets.get-bbo",
           "name": "Get market bbo",
           "path": {
             "pathParameters": [
@@ -13701,7 +13701,7 @@
             }
           ],
           "id": "get-funding-data",
-          "originalEndpointId": "Markets.get-funding-data",
+          "originalEndpointId": "endpoint_markets.get-funding-data",
           "name": "Funding data history",
           "path": {
             "pathParameters": [],
@@ -13868,7 +13868,7 @@
             }
           ],
           "id": "get-markets",
-          "originalEndpointId": "Markets.get-markets",
+          "originalEndpointId": "endpoint_markets.get-markets",
           "name": "List available markets",
           "path": {
             "pathParameters": [],
@@ -14091,7 +14091,7 @@
             }
           ],
           "id": "klines",
-          "originalEndpointId": "Markets.klines",
+          "originalEndpointId": "endpoint_markets.klines",
           "name": "OHLCV for a symbol",
           "path": {
             "pathParameters": [],
@@ -14207,7 +14207,7 @@
             }
           ],
           "id": "get-markets-summary",
-          "originalEndpointId": "Markets.get-markets-summary",
+          "originalEndpointId": "endpoint_markets.get-markets-summary",
           "name": "List available markets summary",
           "path": {
             "pathParameters": [],
@@ -14383,7 +14383,7 @@
             }
           ],
           "id": "get-orderbook",
-          "originalEndpointId": "Markets.get-orderbook",
+          "originalEndpointId": "endpoint_markets.get-orderbook",
           "name": "Get market orderbook",
           "path": {
             "pathParameters": [
@@ -14532,7 +14532,7 @@
             }
           ],
           "id": "get-insurance-fund",
-          "originalEndpointId": "Insurance.get-insurance-fund",
+          "originalEndpointId": "endpoint_insurance.get-insurance-fund",
           "name": "Get insurance fund account information",
           "path": {
             "pathParameters": [],
@@ -14613,7 +14613,7 @@
             }
           ],
           "id": "get-liquidations",
-          "originalEndpointId": "Liquidations.get-liquidations",
+          "originalEndpointId": "endpoint_liquidations.get-liquidations",
           "name": "List liquidations",
           "path": {
             "pathParameters": [],
@@ -14871,7 +14871,7 @@
             }
           ],
           "id": "get-referral-qr-code",
-          "originalEndpointId": "Referrals.get-referral-qr-code",
+          "originalEndpointId": "endpoint_referrals.get-referral-qr-code",
           "name": "Get Referral QR Code",
           "path": {
             "pathParameters": [],
@@ -14916,7 +14916,7 @@
             }
           ],
           "id": "get-referrals-summary",
-          "originalEndpointId": "Referrals.get-referrals-summary",
+          "originalEndpointId": "endpoint_referrals.get-referrals-summary",
           "name": "Get account referral details",
           "path": {
             "pathParameters": [],
@@ -15034,7 +15034,7 @@
             }
           ],
           "id": "getSystemConfig",
-          "originalEndpointId": "System.getSystemConfig",
+          "originalEndpointId": "endpoint_system.getSystemConfig",
           "name": "Get system config",
           "path": {
             "pathParameters": [],
@@ -15157,7 +15157,7 @@
             }
           ],
           "id": "getSystemState",
-          "originalEndpointId": "System.getSystemState",
+          "originalEndpointId": "endpoint_system.getSystemState",
           "name": "Get system state",
           "path": {
             "pathParameters": [],
@@ -15222,7 +15222,7 @@
             }
           ],
           "id": "getSystemTimeUnixMilliseconds",
-          "originalEndpointId": "System.getSystemTimeUnixMilliseconds",
+          "originalEndpointId": "endpoint_system.getSystemTimeUnixMilliseconds",
           "name": "Get system time (unix milliseconds)",
           "path": {
             "pathParameters": [],
@@ -15410,7 +15410,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "Vaults.get",
+          "originalEndpointId": "endpoint_vaults.get",
           "name": "Get vaults",
           "path": {
             "pathParameters": [],
@@ -15547,7 +15547,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "Vaults.create",
+          "originalEndpointId": "endpoint_vaults.create",
           "name": "Create vault",
           "path": {
             "pathParameters": [],
@@ -15728,7 +15728,7 @@
             }
           ],
           "id": "getAccountSummary",
-          "originalEndpointId": "Vaults.getAccountSummary",
+          "originalEndpointId": "endpoint_vaults.getAccountSummary",
           "name": "Get vault account summary",
           "path": {
             "pathParameters": [],
@@ -15839,7 +15839,7 @@
             }
           ],
           "id": "getBalance",
-          "originalEndpointId": "Vaults.getBalance",
+          "originalEndpointId": "endpoint_vaults.getBalance",
           "name": "Get vault balances",
           "path": {
             "pathParameters": [],
@@ -15956,7 +15956,7 @@
             }
           ],
           "id": "getConfig",
-          "originalEndpointId": "Vaults.getConfig",
+          "originalEndpointId": "endpoint_vaults.getConfig",
           "name": "Get vaults config",
           "path": {
             "pathParameters": [],
@@ -16045,7 +16045,7 @@
             }
           ],
           "id": "getHistoricalData",
-          "originalEndpointId": "Vaults.getHistoricalData",
+          "originalEndpointId": "endpoint_vaults.getHistoricalData",
           "name": "Get vault historical data",
           "path": {
             "pathParameters": [],
@@ -16188,7 +16188,7 @@
             }
           ],
           "id": "getPositions",
-          "originalEndpointId": "Vaults.getPositions",
+          "originalEndpointId": "endpoint_vaults.getPositions",
           "name": "Get vault positions",
           "path": {
             "pathParameters": [],
@@ -16345,7 +16345,7 @@
             }
           ],
           "id": "getSummary",
-          "originalEndpointId": "Vaults.getSummary",
+          "originalEndpointId": "endpoint_vaults.getSummary",
           "name": "Get vault summary",
           "path": {
             "pathParameters": [],
@@ -16492,7 +16492,7 @@
             }
           ],
           "id": "getTransfers",
-          "originalEndpointId": "Vaults.getTransfers",
+          "originalEndpointId": "endpoint_vaults.getTransfers",
           "name": "Get vault transfers",
           "path": {
             "pathParameters": [],
@@ -18003,7 +18003,7 @@
           }
         ],
         "id": "Trades",
-        "originalEndpointId": "Trades",
+        "originalEndpointId": "endpoint_.Trades",
         "name": "Trade tape",
         "path": {
           "pathParameters": [],

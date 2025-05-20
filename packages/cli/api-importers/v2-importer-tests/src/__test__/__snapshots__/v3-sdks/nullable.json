@@ -1342,7 +1342,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "createAUser",
+          "id": "endpoint_.createAUser",
           "displayName": "Create a user",
           "method": "POST",
           "name": {
@@ -3240,7 +3240,7 @@
           }
         },
         {
-          "id": "updateAUser",
+          "id": "endpoint_.updateAUser",
           "displayName": "Update a user",
           "method": "PUT",
           "name": {
@@ -5144,7 +5144,7 @@
           }
         },
         {
-          "id": "getAUser",
+          "id": "endpoint_.getAUser",
           "displayName": "Get a user",
           "method": "GET",
           "name": {

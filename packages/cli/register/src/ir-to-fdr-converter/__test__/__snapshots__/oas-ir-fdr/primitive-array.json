@@ -56,7 +56,7 @@
         "auth": false,
         "method": "GET",
         "id": "getSearch",
-        "originalEndpointId": "getSearch",
+        "originalEndpointId": "endpoint_.getSearch",
         "name": "Get Search",
         "path": {
           "pathParameters": [],
@@ -134,7 +134,7 @@
         "auth": false,
         "method": "GET",
         "id": "getSearchWithUnion",
-        "originalEndpointId": "getSearchWithUnion",
+        "originalEndpointId": "endpoint_.getSearchWithUnion",
         "name": "Get Search With Union",
         "path": {
           "pathParameters": [],
@@ -207,7 +207,7 @@
         "auth": false,
         "method": "GET",
         "id": "getSearchWithUnionAndNull",
-        "originalEndpointId": "getSearchWithUnionAndNull",
+        "originalEndpointId": "endpoint_.getSearchWithUnionAndNull",
         "name": "Get Search With Union And Null",
         "path": {
           "pathParameters": [],
