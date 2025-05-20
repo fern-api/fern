@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        No changes.
+      type: internal
+  irVersion: 57
+  createdAt: "2025-05-20"
+  version: 0.62.1
+
+- changelogEntry:
+    - summary: |
         Add `--quiet` (-q) flag to `fern diff` command to suppress output written to stderr.
       type: feat
     - summary: |
