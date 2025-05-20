@@ -3,6 +3,13 @@
         Standardize package, service, and endpoint naming in the v3 parser.
       type: fix
   irVersion: 57
+  version: 0.61.24
+
+- changelogEntry:
+    - summary: |
+        Remove warning for unrecognized PHP SDK generator name.
+      type: fix
+  irVersion: 57
   version: 0.61.23
 
 - changelogEntry:

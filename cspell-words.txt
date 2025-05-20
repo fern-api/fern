@@ -2,6 +2,7 @@ aadd
 abarrell
 abelardo
 abvthecity
+Acai
 acked
 aclassify
 addtl
@@ -50,18 +51,27 @@ BAAI
 babbage*
 babbagedocs
 BAML
+Bbaz
+Bcontact
 belvo
 Benzo
+Bfoo
+Bfoo
 Bhargava
+Bhello
 bing
+Binner
+Binner
 bitnami
 Bkey
 Blandie
 Blandy
 blueprintjs
+Bmapkey
 boolish
 boto
 bsinghvi
+bufbuild
 bufio
 buie
 buildvcs
@@ -87,6 +97,7 @@ claude
 clazz
 cmdrc
 CMMC
+cname
 cobo
 COBQKQ
 colorama
@@ -149,6 +160,7 @@ ecommerce
 EDITMSG
 edrevo
 EEXIST
+elems
 EMEA
 endent
 Entra
@@ -190,6 +202,7 @@ fhirpath
 Fhirpath
 fibonacci
 FINRA
+Fira
 FISMA
 FLAC
 flowise
@@ -363,6 +376,7 @@ ndjson
 neeeeeeeeeed
 neopets
 nextjs
+ngpg
 ngrok
 nint
 noauth
@@ -485,6 +499,7 @@ rdmd
 recategorize
 recategorized
 recents
+redef
 redocly
 Redocly
 REDOCLY
@@ -541,8 +556,10 @@ sutp
 svgz
 sysprop
 tailwindcss
+tbody
 Teis
 templ
+thead
 thollander
 tiangolo
 tina
@@ -600,6 +617,7 @@ Uuid
 uuids
 uuidv
 uutd
+vapi
 Vapi
 vectorizing
 venus
@@ -616,6 +634,7 @@ Vlaue
 vmcontext
 vread
 waivable
+WCAG
 WEBP
 websocat
 WEBVTT
