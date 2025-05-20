@@ -162,7 +162,7 @@
           }
         ],
         "id": "list",
-        "originalEndpointId": "list",
+        "originalEndpointId": "endpoint_.list",
         "name": "List",
         "path": {
           "pathParameters": [],

@@ -82,7 +82,7 @@
           "auth": false,
           "method": "POST",
           "id": "create",
-          "originalEndpointId": "chatCompletions.create",
+          "originalEndpointId": "endpoint_chatCompletions.create",
           "name": "Create",
           "path": {
             "pathParameters": [],

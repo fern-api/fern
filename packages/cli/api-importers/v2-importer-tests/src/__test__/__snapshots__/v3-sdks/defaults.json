@@ -254,7 +254,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "getTest",
+          "id": "endpoint_.getTest",
           "method": "GET",
           "name": {
             "originalName": "getTest",

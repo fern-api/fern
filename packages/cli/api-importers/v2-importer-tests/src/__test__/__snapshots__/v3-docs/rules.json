@@ -549,7 +549,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "defaultAndValidationRules",
+          "id": "endpoint_.defaultAndValidationRules",
           "displayName": "Default and validation rules",
           "method": "GET",
           "name": {

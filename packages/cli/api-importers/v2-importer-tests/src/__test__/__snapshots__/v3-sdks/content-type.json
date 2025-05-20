@@ -114,7 +114,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "testUpload",
+          "id": "endpoint_.testUpload",
           "displayName": "Test upload",
           "method": "POST",
           "name": {
@@ -515,7 +515,7 @@
           }
         },
         {
-          "id": "testWithDualContentTypeRequestTypes",
+          "id": "endpoint_.testWithDualContentTypeRequestTypes",
           "displayName": "Test with dual Content-Type request types",
           "method": "POST",
           "name": {

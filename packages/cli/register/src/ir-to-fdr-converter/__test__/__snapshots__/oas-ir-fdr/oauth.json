@@ -94,7 +94,7 @@
             }
           ],
           "id": "get-token",
-          "originalEndpointId": "auth.get-token",
+          "originalEndpointId": "endpoint_auth.get-token",
           "name": "Request an access token",
           "path": {
             "pathParameters": [],

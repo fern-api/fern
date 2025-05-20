@@ -3211,7 +3211,7 @@
             }
           ],
           "id": "vals",
-          "originalEndpointId": "search.vals",
+          "originalEndpointId": "endpoint_search.vals",
           "name": "Vals",
           "path": {
             "pathParameters": [],
@@ -3380,7 +3380,7 @@
             }
           ],
           "id": "username",
-          "originalEndpointId": "alias.username",
+          "originalEndpointId": "endpoint_alias.username",
           "name": "Username",
           "path": {
             "pathParameters": [
@@ -3480,7 +3480,7 @@
             }
           ],
           "id": "val",
-          "originalEndpointId": "alias.val",
+          "originalEndpointId": "endpoint_alias.val",
           "name": "Val",
           "path": {
             "pathParameters": [
@@ -3635,7 +3635,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "me.get",
+          "originalEndpointId": "endpoint_me.get",
           "name": "Get",
           "path": {
             "pathParameters": [],
@@ -3718,7 +3718,7 @@
             }
           ],
           "id": "likes",
-          "originalEndpointId": "me.likes",
+          "originalEndpointId": "endpoint_me.likes",
           "name": "Likes",
           "path": {
             "pathParameters": [],
@@ -3864,7 +3864,7 @@
             }
           ],
           "id": "comments",
-          "originalEndpointId": "me.comments",
+          "originalEndpointId": "endpoint_me.comments",
           "name": "Comments",
           "path": {
             "pathParameters": [],
@@ -4045,7 +4045,7 @@
             }
           ],
           "id": "references",
-          "originalEndpointId": "me.references",
+          "originalEndpointId": "endpoint_me.references",
           "name": "References",
           "path": {
             "pathParameters": [],
@@ -4219,7 +4219,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "blobs.list",
+          "originalEndpointId": "endpoint_blobs.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -4309,7 +4309,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "blobs.get",
+          "originalEndpointId": "endpoint_blobs.get",
           "name": "Get",
           "path": {
             "pathParameters": [
@@ -4384,7 +4384,7 @@
             }
           ],
           "id": "store",
-          "originalEndpointId": "blobs.store",
+          "originalEndpointId": "endpoint_blobs.store",
           "name": "Store",
           "path": {
             "pathParameters": [
@@ -4475,7 +4475,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "blobs.delete",
+          "originalEndpointId": "endpoint_blobs.delete",
           "name": "Delete",
           "path": {
             "pathParameters": [
@@ -4553,7 +4553,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "users.get",
+          "originalEndpointId": "endpoint_users.get",
           "name": "Get",
           "path": {
             "pathParameters": [
@@ -4653,7 +4653,7 @@
             }
           ],
           "id": "vals",
-          "originalEndpointId": "users.vals",
+          "originalEndpointId": "endpoint_users.vals",
           "name": "Vals",
           "path": {
             "pathParameters": [
@@ -4830,7 +4830,7 @@
             }
           ],
           "id": "execute",
-          "originalEndpointId": "sqlite.execute",
+          "originalEndpointId": "endpoint_sqlite.execute",
           "name": "Execute",
           "path": {
             "pathParameters": [],
@@ -5009,7 +5009,7 @@
             }
           ],
           "id": "batch",
-          "originalEndpointId": "sqlite.batch",
+          "originalEndpointId": "endpoint_sqlite.batch",
           "name": "Batch",
           "path": {
             "pathParameters": [],
@@ -5161,7 +5161,7 @@
             }
           ],
           "id": "evalPost",
-          "originalEndpointId": "vals.evalPost",
+          "originalEndpointId": "endpoint_vals.evalPost",
           "name": "Eval Post",
           "path": {
             "pathParameters": [],
@@ -5313,7 +5313,7 @@
             }
           ],
           "id": "evalGet",
-          "originalEndpointId": "vals.evalGet",
+          "originalEndpointId": "endpoint_vals.evalGet",
           "name": "Eval Get",
           "path": {
             "pathParameters": [
@@ -5427,7 +5427,7 @@
             }
           ],
           "id": "runGet",
-          "originalEndpointId": "vals.runGet",
+          "originalEndpointId": "endpoint_vals.runGet",
           "name": "Run Get",
           "path": {
             "pathParameters": [
@@ -5509,7 +5509,7 @@
             }
           ],
           "id": "runPost",
-          "originalEndpointId": "vals.runPost",
+          "originalEndpointId": "endpoint_vals.runPost",
           "name": "Run Post",
           "path": {
             "pathParameters": [
@@ -5614,7 +5614,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "vals.create",
+          "originalEndpointId": "endpoint_vals.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -5812,7 +5812,7 @@
             }
           ],
           "id": "put",
-          "originalEndpointId": "vals.put",
+          "originalEndpointId": "endpoint_vals.put",
           "name": "Put",
           "path": {
             "pathParameters": [],
@@ -5905,7 +5905,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "vals.get",
+          "originalEndpointId": "endpoint_vals.get",
           "name": "Get",
           "path": {
             "pathParameters": [
@@ -6032,7 +6032,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "vals.update",
+          "originalEndpointId": "endpoint_vals.update",
           "name": "Update",
           "path": {
             "pathParameters": [
@@ -6194,7 +6194,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "vals.delete",
+          "originalEndpointId": "endpoint_vals.delete",
           "name": "Delete",
           "path": {
             "pathParameters": [
@@ -6274,7 +6274,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "vals.list",
+          "originalEndpointId": "endpoint_vals.list",
           "name": "List",
           "path": {
             "pathParameters": [
@@ -6412,7 +6412,7 @@
             }
           ],
           "id": "createVersion",
-          "originalEndpointId": "vals.createVersion",
+          "originalEndpointId": "endpoint_vals.createVersion",
           "name": "Create Version",
           "path": {
             "pathParameters": [
@@ -6632,7 +6632,7 @@
             }
           ],
           "id": "getVersion",
-          "originalEndpointId": "vals.getVersion",
+          "originalEndpointId": "endpoint_vals.getVersion",
           "name": "Get Version",
           "path": {
             "pathParameters": [
@@ -6808,7 +6808,7 @@
             }
           ],
           "id": "deleteVersion",
-          "originalEndpointId": "vals.deleteVersion",
+          "originalEndpointId": "endpoint_vals.deleteVersion",
           "name": "Delete Version",
           "path": {
             "pathParameters": [
@@ -6908,7 +6908,7 @@
             }
           ],
           "id": "cancel",
-          "originalEndpointId": "vals.cancel",
+          "originalEndpointId": "endpoint_vals.cancel",
           "name": "Cancel",
           "path": {
             "pathParameters": [
@@ -7041,7 +7041,7 @@
             }
           ],
           "id": "send",
-          "originalEndpointId": "emails.send",
+          "originalEndpointId": "endpoint_emails.send",
           "name": "Send",
           "path": {
             "pathParameters": [],

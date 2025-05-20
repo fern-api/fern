@@ -157,7 +157,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "list",
+          "id": "endpoint_.list",
           "method": "GET",
           "name": {
             "originalName": "list",

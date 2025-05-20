@@ -38,7 +38,7 @@
             }
           ],
           "id": "GenerateContent",
-          "originalEndpointId": "generativelanguage.GenerateContent",
+          "originalEndpointId": "endpoint_generativelanguage.GenerateContent",
           "name": "Generate Content",
           "path": {
             "pathParameters": [

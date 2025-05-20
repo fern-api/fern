@@ -7372,7 +7372,7 @@
           }
         ],
         "id": "post-consumer-transaction",
-        "originalEndpointId": "post-consumer-transaction",
+        "originalEndpointId": "endpoint_.post-consumer-transaction",
         "name": "Verify a Transaction",
         "path": {
           "pathParameters": [],
@@ -7622,7 +7622,7 @@
           }
         ],
         "id": "get-consumer-transaction",
-        "originalEndpointId": "get-consumer-transaction",
+        "originalEndpointId": "endpoint_.get-consumer-transaction",
         "name": "Retrieve a Transaction",
         "path": {
           "pathParameters": [
@@ -7842,7 +7842,7 @@
           }
         ],
         "id": "post-transaction-event",
-        "originalEndpointId": "post-transaction-event",
+        "originalEndpointId": "endpoint_.post-transaction-event",
         "name": "Create a Transaction Event",
         "path": {
           "pathParameters": [],
@@ -8105,7 +8105,7 @@
           }
         ],
         "id": "post-consumer-user",
-        "originalEndpointId": "post-consumer-user",
+        "originalEndpointId": "endpoint_.post-consumer-user",
         "name": "Create a Consumer User",
         "path": {
           "pathParameters": [],
@@ -8365,7 +8365,7 @@
           }
         ],
         "id": "get-consumer-user",
-        "originalEndpointId": "get-consumer-user",
+        "originalEndpointId": "endpoint_.get-consumer-user",
         "name": "Retrieve a Consumer User",
         "path": {
           "pathParameters": [
@@ -8571,7 +8571,7 @@
           }
         ],
         "id": "post-business-user",
-        "originalEndpointId": "post-business-user",
+        "originalEndpointId": "endpoint_.post-business-user",
         "name": "Create a Business User",
         "path": {
           "pathParameters": [],
@@ -8713,7 +8713,7 @@
           }
         ],
         "id": "get-business-user-userId",
-        "originalEndpointId": "get-business-user-userId",
+        "originalEndpointId": "endpoint_.get-business-user-userId",
         "name": "Retrieve a Business User",
         "path": {
           "pathParameters": [
@@ -9159,7 +9159,7 @@
           }
         ],
         "id": "post-user-event",
-        "originalEndpointId": "post-user-event",
+        "originalEndpointId": "endpoint_.post-user-event",
         "name": "Create a Consumer User Event",
         "path": {
           "pathParameters": [],
@@ -10409,7 +10409,7 @@
           }
         ],
         "id": "post-business-user-event",
-        "originalEndpointId": "post-business-user-event",
+        "originalEndpointId": "endpoint_.post-business-user-event",
         "name": "Create a Business User Event",
         "path": {
           "pathParameters": [],

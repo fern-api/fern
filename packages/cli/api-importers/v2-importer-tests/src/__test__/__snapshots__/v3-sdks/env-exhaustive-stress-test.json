@@ -323,7 +323,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "alpha.getAlpha",
+          "id": "endpoint_alpha.getAlpha",
           "method": "GET",
           "name": {
             "originalName": "getAlpha",
@@ -503,7 +503,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "beta.getBeta",
+          "id": "endpoint_beta.getBeta",
           "method": "GET",
           "name": {
             "originalName": "getBeta",
@@ -683,7 +683,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "gamma.getGamma",
+          "id": "endpoint_gamma.getGamma",
           "method": "GET",
           "name": {
             "originalName": "getGamma",
@@ -863,7 +863,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "delta.getDelta",
+          "id": "endpoint_delta.getDelta",
           "method": "GET",
           "name": {
             "originalName": "getDelta",
@@ -1043,7 +1043,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "mu.getMu",
+          "id": "endpoint_mu.getMu",
           "method": "GET",
           "name": {
             "originalName": "getMu",
@@ -1223,7 +1223,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "omega.getOmega",
+          "id": "endpoint_omega.getOmega",
           "method": "GET",
           "name": {
             "originalName": "getOmega",
@@ -1403,7 +1403,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "zeta.getZeta",
+          "id": "endpoint_zeta.getZeta",
           "method": "GET",
           "name": {
             "originalName": "getZeta",
@@ -1583,7 +1583,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "eta.getEta",
+          "id": "endpoint_eta.getEta",
           "method": "GET",
           "name": {
             "originalName": "getEta",

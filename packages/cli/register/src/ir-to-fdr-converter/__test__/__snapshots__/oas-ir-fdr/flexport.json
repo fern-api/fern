@@ -22433,7 +22433,7 @@
             }
           ],
           "id": "booking_amendment_create",
-          "originalEndpointId": "BookingAmendment.booking_amendment_create",
+          "originalEndpointId": "endpoint_bookingAmendment.booking_amendment_create",
           "name": "Create a new booking amendment.",
           "path": {
             "pathParameters": [],
@@ -22888,7 +22888,7 @@
             }
           ],
           "id": "booking_line_item_index",
-          "originalEndpointId": "BookingLineItem.booking_line_item_index",
+          "originalEndpointId": "endpoint_bookingLineItem.booking_line_item_index",
           "name": "List all booking line items",
           "path": {
             "pathParameters": [],
@@ -23099,7 +23099,7 @@
             }
           ],
           "id": "booking_line_item_create",
-          "originalEndpointId": "BookingLineItem.booking_line_item_create",
+          "originalEndpointId": "endpoint_bookingLineItem.booking_line_item_create",
           "name": "Create a booking line item",
           "path": {
             "pathParameters": [],
@@ -23254,7 +23254,7 @@
             }
           ],
           "id": "booking_line_item_show",
-          "originalEndpointId": "BookingLineItem.booking_line_item_show",
+          "originalEndpointId": "endpoint_bookingLineItem.booking_line_item_show",
           "name": "Retrieves the details of a single booking line item.",
           "path": {
             "pathParameters": [
@@ -23402,7 +23402,7 @@
             }
           ],
           "id": "bookings_index",
-          "originalEndpointId": "Booking.bookings_index",
+          "originalEndpointId": "endpoint_booking.bookings_index",
           "name": "List all bookings",
           "path": {
             "pathParameters": [],
@@ -24147,7 +24147,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "Booking.create",
+          "originalEndpointId": "endpoint_booking.create",
           "name": "Create and return a booking",
           "path": {
             "pathParameters": [],
@@ -24870,7 +24870,7 @@
             }
           ],
           "id": "show",
-          "originalEndpointId": "Booking.show",
+          "originalEndpointId": "endpoint_booking.show",
           "name": "Retrieve a booking",
           "path": {
             "pathParameters": [
@@ -25410,7 +25410,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "Carbon Calculation.create",
+          "originalEndpointId": "endpoint_carbonCalculation.create",
           "name": "Calculate carbon emissions",
           "path": {
             "pathParameters": [],
@@ -25571,7 +25571,7 @@
             }
           ],
           "id": "index",
-          "originalEndpointId": "Commercial Invoices.index",
+          "originalEndpointId": "endpoint_commercialInvoices.index",
           "name": "List commercial invoices",
           "path": {
             "pathParameters": [],
@@ -25904,7 +25904,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "Commercial Invoices.create",
+          "originalEndpointId": "endpoint_commercialInvoices.create",
           "name": "Create and return a new commercial invoice",
           "path": {
             "pathParameters": [],
@@ -26201,7 +26201,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "Commercial Invoices.update",
+          "originalEndpointId": "endpoint_commercialInvoices.update",
           "name": "Update an existing commercial invoice",
           "path": {
             "pathParameters": [],
@@ -26468,7 +26468,7 @@
             }
           ],
           "id": "show",
-          "originalEndpointId": "Commercial Invoices.show",
+          "originalEndpointId": "endpoint_commercialInvoices.show",
           "name": "Retrieve a commercial invoice",
           "path": {
             "pathParameters": [
@@ -26750,7 +26750,7 @@
             }
           ],
           "id": "customs_entry_index",
-          "originalEndpointId": "Customs Entries.customs_entry_index",
+          "originalEndpointId": "endpoint_customsEntries.customs_entry_index",
           "name": "List customs entry objects",
           "path": {
             "pathParameters": [],
@@ -26916,7 +26916,7 @@
             }
           ],
           "id": "show",
-          "originalEndpointId": "Customs Entries.show",
+          "originalEndpointId": "endpoint_customsEntries.show",
           "name": "Retrieve a customs entry",
           "path": {
             "pathParameters": [
@@ -27056,7 +27056,7 @@
             }
           ],
           "id": "documents_index",
-          "originalEndpointId": "Document.documents_index",
+          "originalEndpointId": "endpoint_document.documents_index",
           "name": "List document objects",
           "path": {
             "pathParameters": [],
@@ -27312,7 +27312,7 @@
             }
           ],
           "id": "documents_create",
-          "originalEndpointId": "Document.documents_create",
+          "originalEndpointId": "endpoint_document.documents_create",
           "name": "Create a document",
           "path": {
             "pathParameters": [],
@@ -27439,7 +27439,7 @@
             }
           ],
           "id": "documents_show",
-          "originalEndpointId": "Document.documents_show",
+          "originalEndpointId": "endpoint_document.documents_show",
           "name": "Retrieve a document",
           "path": {
             "pathParameters": [
@@ -27579,7 +27579,7 @@
             }
           ],
           "id": "documents_download",
-          "originalEndpointId": "Document.documents_download",
+          "originalEndpointId": "endpoint_document.documents_download",
           "name": "Download a document",
           "path": {
             "pathParameters": [
@@ -27676,7 +27676,7 @@
             }
           ],
           "id": "events_index",
-          "originalEndpointId": "Event.events_index",
+          "originalEndpointId": "endpoint_event.events_index",
           "name": "List all webhook events",
           "path": {
             "pathParameters": [],
@@ -29424,7 +29424,7 @@
             }
           ],
           "id": "events_show",
-          "originalEndpointId": "Event.events_show",
+          "originalEndpointId": "endpoint_event.events_show",
           "name": "Retrieve a single webhook event",
           "path": {
             "pathParameters": [
@@ -31124,7 +31124,7 @@
             }
           ],
           "id": "invoice_index",
-          "originalEndpointId": "Invoices.invoice_index",
+          "originalEndpointId": "endpoint_invoices.invoice_index",
           "name": "List all invoices",
           "path": {
             "pathParameters": [],
@@ -31882,7 +31882,7 @@
             }
           ],
           "id": "show",
-          "originalEndpointId": "Invoices.show",
+          "originalEndpointId": "endpoint_invoices.show",
           "name": "Retrieve an invoice",
           "path": {
             "pathParameters": [
@@ -32450,7 +32450,7 @@
             }
           ],
           "id": "network_company_index",
-          "originalEndpointId": "Company.network_company_index",
+          "originalEndpointId": "endpoint_company.network_company_index",
           "name": "List company objects",
           "path": {
             "pathParameters": [],
@@ -32696,7 +32696,7 @@
             }
           ],
           "id": "network_company_create",
-          "originalEndpointId": "Company.network_company_create",
+          "originalEndpointId": "endpoint_company.network_company_create",
           "name": "Create a new company object",
           "path": {
             "pathParameters": [],
@@ -32879,7 +32879,7 @@
             }
           ],
           "id": "network_company_show",
-          "originalEndpointId": "Company.network_company_show",
+          "originalEndpointId": "endpoint_company.network_company_show",
           "name": "Retrieve a company",
           "path": {
             "pathParameters": [
@@ -33060,7 +33060,7 @@
             }
           ],
           "id": "network_company_update",
-          "originalEndpointId": "Company.network_company_update",
+          "originalEndpointId": "endpoint_company.network_company_update",
           "name": "Update an existing company",
           "path": {
             "pathParameters": [
@@ -33260,7 +33260,7 @@
             }
           ],
           "id": "network_company_me",
-          "originalEndpointId": "Company.network_company_me",
+          "originalEndpointId": "endpoint_company.network_company_me",
           "name": "Retrieve your company",
           "path": {
             "pathParameters": [],
@@ -33431,7 +33431,7 @@
             }
           ],
           "id": "company_entity_index",
-          "originalEndpointId": "CompanyEntity.company_entity_index",
+          "originalEndpointId": "endpoint_companyEntity.company_entity_index",
           "name": "List of company entity objects",
           "path": {
             "pathParameters": [],
@@ -33650,7 +33650,7 @@
             }
           ],
           "id": "network_company_entity_create",
-          "originalEndpointId": "CompanyEntity.network_company_entity_create",
+          "originalEndpointId": "endpoint_companyEntity.network_company_entity_create",
           "name": "Create and return a new company entity",
           "path": {
             "pathParameters": [],
@@ -33809,7 +33809,7 @@
             }
           ],
           "id": "network_company_entity_show",
-          "originalEndpointId": "CompanyEntity.network_company_entity_show",
+          "originalEndpointId": "endpoint_companyEntity.network_company_entity_show",
           "name": "Retrieve a company entity",
           "path": {
             "pathParameters": [
@@ -33964,7 +33964,7 @@
             }
           ],
           "id": "network_company_entity_update",
-          "originalEndpointId": "CompanyEntity.network_company_entity_update",
+          "originalEndpointId": "endpoint_companyEntity.network_company_entity_update",
           "name": "Update a company entity",
           "path": {
             "pathParameters": [
@@ -34148,7 +34148,7 @@
             }
           ],
           "id": "network_contact_index",
-          "originalEndpointId": "Contact.network_contact_index",
+          "originalEndpointId": "endpoint_contact.network_contact_index",
           "name": "List contact objects",
           "path": {
             "pathParameters": [],
@@ -34351,7 +34351,7 @@
             }
           ],
           "id": "network_contact_create",
-          "originalEndpointId": "Contact.network_contact_create",
+          "originalEndpointId": "endpoint_contact.network_contact_create",
           "name": "Create a new contact object",
           "path": {
             "pathParameters": [],
@@ -34496,7 +34496,7 @@
             }
           ],
           "id": "network_contact_show",
-          "originalEndpointId": "Contact.network_contact_show",
+          "originalEndpointId": "endpoint_contact.network_contact_show",
           "name": "Retrieve a contact",
           "path": {
             "pathParameters": [
@@ -34635,7 +34635,7 @@
             }
           ],
           "id": "network_contact_update",
-          "originalEndpointId": "Contact.network_contact_update",
+          "originalEndpointId": "endpoint_contact.network_contact_update",
           "name": "Update an existing contact",
           "path": {
             "pathParameters": [
@@ -34803,7 +34803,7 @@
             }
           ],
           "id": "index",
-          "originalEndpointId": "Location.index",
+          "originalEndpointId": "endpoint_location.index",
           "name": "List of location objects",
           "path": {
             "pathParameters": [],
@@ -35058,7 +35058,7 @@
             }
           ],
           "id": "network_location_create",
-          "originalEndpointId": "Location.network_location_create",
+          "originalEndpointId": "endpoint_location.network_location_create",
           "name": "Create and return a new location",
           "path": {
             "pathParameters": [],
@@ -35229,7 +35229,7 @@
             }
           ],
           "id": "network_location_show",
-          "originalEndpointId": "Location.network_location_show",
+          "originalEndpointId": "endpoint_location.network_location_show",
           "name": "Retrieve a location by id",
           "path": {
             "pathParameters": [
@@ -35394,7 +35394,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "Location.update",
+          "originalEndpointId": "endpoint_location.update",
           "name": "Update a network location",
           "path": {
             "pathParameters": [
@@ -35585,7 +35585,7 @@
             }
           ],
           "id": "ocean_container_legs_index",
-          "originalEndpointId": "ContainerLeg.ocean_container_legs_index",
+          "originalEndpointId": "endpoint_containerLeg.ocean_container_legs_index",
           "name": "List all container legs",
           "path": {
             "pathParameters": [],
@@ -35792,7 +35792,7 @@
             }
           ],
           "id": "ocean_container_legs_show",
-          "originalEndpointId": "ContainerLeg.ocean_container_legs_show",
+          "originalEndpointId": "endpoint_containerLeg.ocean_container_legs_show",
           "name": "Retrieve a container leg on an Ocean shipment",
           "path": {
             "pathParameters": [
@@ -35946,7 +35946,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "Container.list",
+          "originalEndpointId": "endpoint_container.list",
           "name": "List all containers.",
           "path": {
             "pathParameters": [],
@@ -36230,7 +36230,7 @@
             }
           ],
           "id": "show",
-          "originalEndpointId": "Container.show",
+          "originalEndpointId": "endpoint_container.show",
           "name": "Retrieve a container.",
           "path": {
             "pathParameters": [
@@ -36459,7 +36459,7 @@
             }
           ],
           "id": "index",
-          "originalEndpointId": "Ports.index",
+          "originalEndpointId": "endpoint_ports.index",
           "name": "List of ports",
           "path": {
             "pathParameters": [],
@@ -36744,7 +36744,7 @@
             }
           ],
           "id": "index",
-          "originalEndpointId": "Product.index",
+          "originalEndpointId": "endpoint_product.index",
           "name": "List all products for a client",
           "path": {
             "pathParameters": [],
@@ -36947,7 +36947,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "Product.create",
+          "originalEndpointId": "endpoint_product.create",
           "name": "Create a product",
           "path": {
             "pathParameters": [],
@@ -37124,7 +37124,7 @@
             }
           ],
           "id": "show",
-          "originalEndpointId": "Product.show",
+          "originalEndpointId": "endpoint_product.show",
           "name": "Retrieve a single product",
           "path": {
             "pathParameters": [
@@ -37294,7 +37294,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "Product.update",
+          "originalEndpointId": "endpoint_product.update",
           "name": "Update a product",
           "path": {
             "pathParameters": [
@@ -37492,7 +37492,7 @@
             }
           ],
           "id": "purchase_order_line_item_index",
-          "originalEndpointId": "PurchaseOrderLineItem.purchase_order_line_item_index",
+          "originalEndpointId": "endpoint_purchaseOrderLineItem.purchase_order_line_item_index",
           "name": "List all purchase order line items.",
           "path": {
             "pathParameters": [],
@@ -37884,7 +37884,7 @@
             }
           ],
           "id": "purchase_order_line_item_show",
-          "originalEndpointId": "PurchaseOrderLineItem.purchase_order_line_item_show",
+          "originalEndpointId": "endpoint_purchaseOrderLineItem.purchase_order_line_item_show",
           "name": "Retrieve a purchase order line item",
           "path": {
             "pathParameters": [
@@ -38200,7 +38200,7 @@
             }
           ],
           "id": "purchase_order_index",
-          "originalEndpointId": "PurchaseOrder.purchase_order_index",
+          "originalEndpointId": "endpoint_purchaseOrder.purchase_order_index",
           "name": "List all purchase orders",
           "path": {
             "pathParameters": [],
@@ -38830,7 +38830,7 @@
             }
           ],
           "id": "purchase_order_create",
-          "originalEndpointId": "PurchaseOrder.purchase_order_create",
+          "originalEndpointId": "endpoint_purchaseOrder.purchase_order_create",
           "name": "Create and return a purchase order",
           "path": {
             "pathParameters": [],
@@ -39171,7 +39171,7 @@
             }
           ],
           "id": "purchase_order_show",
-          "originalEndpointId": "PurchaseOrder.purchase_order_show",
+          "originalEndpointId": "endpoint_purchaseOrder.purchase_order_show",
           "name": "Retrieve a purchase order",
           "path": {
             "pathParameters": [
@@ -39284,7 +39284,7 @@
             }
           ],
           "id": "purchase_order_update",
-          "originalEndpointId": "PurchaseOrder.purchase_order_update",
+          "originalEndpointId": "endpoint_purchaseOrder.purchase_order_update",
           "name": "Update and return a purchase order",
           "path": {
             "pathParameters": [
@@ -39618,7 +39618,7 @@
             }
           ],
           "id": "shipment_leg_index",
-          "originalEndpointId": "ShipmentLeg.shipment_leg_index",
+          "originalEndpointId": "endpoint_shipmentLeg.shipment_leg_index",
           "name": "List all shipment route legs",
           "path": {
             "pathParameters": [],
@@ -40036,7 +40036,7 @@
             }
           ],
           "id": "shipment_leg_show",
-          "originalEndpointId": "ShipmentLeg.shipment_leg_show",
+          "originalEndpointId": "endpoint_shipmentLeg.shipment_leg_show",
           "name": "Retrieve a shipment route leg",
           "path": {
             "pathParameters": [
@@ -40415,7 +40415,7 @@
             }
           ],
           "id": "index",
-          "originalEndpointId": "Shipment.index",
+          "originalEndpointId": "endpoint_shipment.index",
           "name": "List all shipments",
           "path": {
             "pathParameters": [],
@@ -41417,7 +41417,7 @@
             }
           ],
           "id": "show",
-          "originalEndpointId": "Shipment.show",
+          "originalEndpointId": "endpoint_shipment.show",
           "name": "Retrieve a shipment",
           "path": {
             "pathParameters": [
@@ -42024,7 +42024,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "Shipment.update",
+          "originalEndpointId": "endpoint_shipment.update",
           "name": "Update an existing shipment",
           "path": {
             "pathParameters": [
@@ -42656,7 +42656,7 @@
             }
           ],
           "id": "shipments_shareable",
-          "originalEndpointId": "Shipment.shipments_shareable",
+          "originalEndpointId": "endpoint_shipment.shipments_shareable",
           "name": "Create shareable URLs for shipments",
           "path": {
             "pathParameters": [],

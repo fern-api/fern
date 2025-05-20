@@ -7,7 +7,7 @@
         "auth": false,
         "method": "POST",
         "id": "send",
-        "originalEndpointId": "send",
+        "originalEndpointId": "endpoint_.send",
         "name": "Send",
         "path": {
           "pathParameters": [],

@@ -29263,7 +29263,7 @@
             }
           ],
           "id": "ListLinks",
-          "originalEndpointId": "Links.ListLinks",
+          "originalEndpointId": "endpoint_links.ListLinks",
           "name": "List all links",
           "path": {
             "pathParameters": [],
@@ -29688,7 +29688,7 @@
             }
           ],
           "id": "RegisterLink",
-          "originalEndpointId": "Links.RegisterLink",
+          "originalEndpointId": "endpoint_links.RegisterLink",
           "name": "Register a new link",
           "path": {
             "pathParameters": [],
@@ -29895,7 +29895,7 @@
             }
           ],
           "id": "PatchLinks",
-          "originalEndpointId": "Links.PatchLinks",
+          "originalEndpointId": "endpoint_links.PatchLinks",
           "name": "Complete a links request",
           "path": {
             "pathParameters": [],
@@ -30102,7 +30102,7 @@
             }
           ],
           "id": "DetailLink",
-          "originalEndpointId": "Links.DetailLink",
+          "originalEndpointId": "endpoint_links.DetailLink",
           "name": "Get a link's details",
           "path": {
             "pathParameters": [
@@ -30275,7 +30275,7 @@
             }
           ],
           "id": "UpdateLink",
-          "originalEndpointId": "Links.UpdateLink",
+          "originalEndpointId": "endpoint_links.UpdateLink",
           "name": "Update a link's credentials",
           "path": {
             "pathParameters": [
@@ -30518,7 +30518,7 @@
             }
           ],
           "id": "DestroyLink",
-          "originalEndpointId": "Links.DestroyLink",
+          "originalEndpointId": "endpoint_links.DestroyLink",
           "name": "Delete a link",
           "path": {
             "pathParameters": [
@@ -30626,7 +30626,7 @@
             }
           ],
           "id": "ChangeLinkAccessMode",
-          "originalEndpointId": "Links.ChangeLinkAccessMode",
+          "originalEndpointId": "endpoint_links.ChangeLinkAccessMode",
           "name": "Change a link's access mode",
           "path": {
             "pathParameters": [
@@ -30879,7 +30879,7 @@
             }
           ],
           "id": "ListAccounts",
-          "originalEndpointId": "Accounts.ListAccounts",
+          "originalEndpointId": "endpoint_accounts.ListAccounts",
           "name": "List all accounts",
           "path": {
             "pathParameters": [],
@@ -31664,7 +31664,7 @@
             }
           ],
           "id": "RetrieveAccounts",
-          "originalEndpointId": "Accounts.RetrieveAccounts",
+          "originalEndpointId": "endpoint_accounts.RetrieveAccounts",
           "name": "Retrieve accounts for a link",
           "path": {
             "pathParameters": [],
@@ -32392,7 +32392,7 @@
             }
           ],
           "id": "PatchAccounts",
-          "originalEndpointId": "Accounts.PatchAccounts",
+          "originalEndpointId": "endpoint_accounts.PatchAccounts",
           "name": "Complete an accounts request",
           "path": {
             "pathParameters": [],
@@ -33130,7 +33130,7 @@
             }
           ],
           "id": "DetailAccount",
-          "originalEndpointId": "Accounts.DetailAccount",
+          "originalEndpointId": "endpoint_accounts.DetailAccount",
           "name": "Get an account's details",
           "path": {
             "pathParameters": [
@@ -33759,7 +33759,7 @@
             }
           ],
           "id": "DestroyAccount",
-          "originalEndpointId": "Accounts.DestroyAccount",
+          "originalEndpointId": "endpoint_accounts.DestroyAccount",
           "name": "Delete an account",
           "path": {
             "pathParameters": [
@@ -33877,7 +33877,7 @@
             }
           ],
           "id": "ListTransactions",
-          "originalEndpointId": "Transactions.ListTransactions",
+          "originalEndpointId": "endpoint_transactions.ListTransactions",
           "name": "List all transactions",
           "path": {
             "pathParameters": [],
@@ -35118,7 +35118,7 @@
             }
           ],
           "id": "RetrieveTransactions",
-          "originalEndpointId": "Transactions.RetrieveTransactions",
+          "originalEndpointId": "endpoint_transactions.RetrieveTransactions",
           "name": "Retrieve transactions for a link",
           "path": {
             "pathParameters": [],
@@ -35725,7 +35725,7 @@
             }
           ],
           "id": "PatchTransactions",
-          "originalEndpointId": "Transactions.PatchTransactions",
+          "originalEndpointId": "endpoint_transactions.PatchTransactions",
           "name": "Complete a transactions request",
           "path": {
             "pathParameters": [],
@@ -36315,7 +36315,7 @@
             }
           ],
           "id": "DetailTransaction",
-          "originalEndpointId": "Transactions.DetailTransaction",
+          "originalEndpointId": "endpoint_transactions.DetailTransaction",
           "name": "Get a transaction's details",
           "path": {
             "pathParameters": [
@@ -36822,7 +36822,7 @@
             }
           ],
           "id": "DestroyTransaction",
-          "originalEndpointId": "Transactions.DestroyTransaction",
+          "originalEndpointId": "endpoint_transactions.DestroyTransaction",
           "name": "Delete a transaction",
           "path": {
             "pathParameters": [
@@ -36940,7 +36940,7 @@
             }
           ],
           "id": "ListBalances",
-          "originalEndpointId": "Balances.ListBalances",
+          "originalEndpointId": "endpoint_balances.ListBalances",
           "name": "List all balances",
           "path": {
             "pathParameters": [],
@@ -37478,7 +37478,7 @@
             }
           ],
           "id": "RetrieveBalances",
-          "originalEndpointId": "Balances.RetrieveBalances",
+          "originalEndpointId": "endpoint_balances.RetrieveBalances",
           "name": "Retrieve balances for a link",
           "path": {
             "pathParameters": [],
@@ -37756,7 +37756,7 @@
             }
           ],
           "id": "PatchBalances",
-          "originalEndpointId": "Balances.PatchBalances",
+          "originalEndpointId": "endpoint_balances.PatchBalances",
           "name": "Complete a balances request",
           "path": {
             "pathParameters": [],
@@ -38032,7 +38032,7 @@
             }
           ],
           "id": "DetailBalance",
-          "originalEndpointId": "Balances.DetailBalance",
+          "originalEndpointId": "endpoint_balances.DetailBalance",
           "name": "Get a balance's details",
           "path": {
             "pathParameters": [
@@ -38251,7 +38251,7 @@
             }
           ],
           "id": "DestroyBalance",
-          "originalEndpointId": "Balances.DestroyBalance",
+          "originalEndpointId": "endpoint_balances.DestroyBalance",
           "name": "Delete a balance",
           "path": {
             "pathParameters": [
@@ -38369,7 +38369,7 @@
             }
           ],
           "id": "ListInstitutions",
-          "originalEndpointId": "Institutions.ListInstitutions",
+          "originalEndpointId": "endpoint_institutions.ListInstitutions",
           "name": "List all institutions",
           "path": {
             "pathParameters": [],
@@ -38753,7 +38753,7 @@
             }
           ],
           "id": "DetailInstitution",
-          "originalEndpointId": "Institutions.DetailInstitution",
+          "originalEndpointId": "endpoint_institutions.DetailInstitution",
           "name": "Get an institution's details",
           "path": {
             "pathParameters": [
@@ -39000,7 +39000,7 @@
             }
           ],
           "id": "ListOwners",
-          "originalEndpointId": "Owners.ListOwners",
+          "originalEndpointId": "endpoint_owners.ListOwners",
           "name": "List all owners",
           "path": {
             "pathParameters": [],
@@ -39331,7 +39331,7 @@
             }
           ],
           "id": "RetrieveOwners",
-          "originalEndpointId": "Owners.RetrieveOwners",
+          "originalEndpointId": "endpoint_owners.RetrieveOwners",
           "name": "Retrieve owners for a link",
           "path": {
             "pathParameters": [],
@@ -39571,7 +39571,7 @@
             }
           ],
           "id": "PatchOwners",
-          "originalEndpointId": "Owners.PatchOwners",
+          "originalEndpointId": "endpoint_owners.PatchOwners",
           "name": "Complete an owners request",
           "path": {
             "pathParameters": [],
@@ -39813,7 +39813,7 @@
             }
           ],
           "id": "DetailOwner",
-          "originalEndpointId": "Owners.DetailOwner",
+          "originalEndpointId": "endpoint_owners.DetailOwner",
           "name": "Get an owner's details",
           "path": {
             "pathParameters": [
@@ -39998,7 +39998,7 @@
             }
           ],
           "id": "DestroyOwner",
-          "originalEndpointId": "Owners.DestroyOwner",
+          "originalEndpointId": "endpoint_owners.DestroyOwner",
           "name": "Delete an owner",
           "path": {
             "pathParameters": [
@@ -40116,7 +40116,7 @@
             }
           ],
           "id": "ListInvoices",
-          "originalEndpointId": "Invoices.ListInvoices",
+          "originalEndpointId": "endpoint_invoices.ListInvoices",
           "name": "List all invoices",
           "path": {
             "pathParameters": [],
@@ -41358,7 +41358,7 @@
             }
           ],
           "id": "RetrieveInvoices",
-          "originalEndpointId": "Invoices.RetrieveInvoices",
+          "originalEndpointId": "endpoint_invoices.RetrieveInvoices",
           "name": "Retrieve invoices for a link",
           "path": {
             "pathParameters": [],
@@ -42308,7 +42308,7 @@
             }
           ],
           "id": "PatchInvoices",
-          "originalEndpointId": "Invoices.PatchInvoices",
+          "originalEndpointId": "endpoint_invoices.PatchInvoices",
           "name": "Complete an invoices request",
           "path": {
             "pathParameters": [],
@@ -42720,7 +42720,7 @@
             }
           ],
           "id": "DetailInvoice",
-          "originalEndpointId": "Invoices.DetailInvoice",
+          "originalEndpointId": "endpoint_invoices.DetailInvoice",
           "name": "Get an invoice's details",
           "path": {
             "pathParameters": [
@@ -43557,7 +43557,7 @@
             }
           ],
           "id": "DestroyInvoice",
-          "originalEndpointId": "Invoices.DestroyInvoice",
+          "originalEndpointId": "endpoint_invoices.DestroyInvoice",
           "name": "Delete an invoice",
           "path": {
             "pathParameters": [
@@ -43675,7 +43675,7 @@
             }
           ],
           "id": "ListTaxReturns",
-          "originalEndpointId": "Tax returns.ListTaxReturns",
+          "originalEndpointId": "endpoint_taxReturns.ListTaxReturns",
           "name": "List all tax returns",
           "path": {
             "pathParameters": [],
@@ -44739,7 +44739,7 @@
             }
           ],
           "id": "RetrieveTaxReturns",
-          "originalEndpointId": "Tax returns.RetrieveTaxReturns",
+          "originalEndpointId": "endpoint_taxReturns.RetrieveTaxReturns",
           "name": "Retrieve tax returns for a link",
           "path": {
             "pathParameters": [],
@@ -45641,7 +45641,7 @@
             }
           ],
           "id": "DetailTaxReturn",
-          "originalEndpointId": "Tax returns.DetailTaxReturn",
+          "originalEndpointId": "endpoint_taxReturns.DetailTaxReturn",
           "name": "Get a tax return's details",
           "path": {
             "pathParameters": [
@@ -46430,7 +46430,7 @@
             }
           ],
           "id": "DestroyTaxReturn",
-          "originalEndpointId": "Tax returns.DestroyTaxReturn",
+          "originalEndpointId": "endpoint_taxReturns.DestroyTaxReturn",
           "name": "Delete a tax return",
           "path": {
             "pathParameters": [
@@ -46548,7 +46548,7 @@
             }
           ],
           "id": "ListTaxStatus",
-          "originalEndpointId": "Tax status.ListTaxStatus",
+          "originalEndpointId": "endpoint_taxStatus.ListTaxStatus",
           "name": "List all tax statuses",
           "path": {
             "pathParameters": [],
@@ -47138,7 +47138,7 @@
             }
           ],
           "id": "RetrieveTaxStatus",
-          "originalEndpointId": "Tax status.RetrieveTaxStatus",
+          "originalEndpointId": "endpoint_taxStatus.RetrieveTaxStatus",
           "name": "Retrieve tax statuses for a link",
           "path": {
             "pathParameters": [],
@@ -47632,7 +47632,7 @@
             }
           ],
           "id": "DetailTaxStatus",
-          "originalEndpointId": "Tax status.DetailTaxStatus",
+          "originalEndpointId": "endpoint_taxStatus.DetailTaxStatus",
           "name": "Get a tax status's details",
           "path": {
             "pathParameters": [
@@ -48087,7 +48087,7 @@
             }
           ],
           "id": "DestroyTaxStatus",
-          "originalEndpointId": "Tax status.DestroyTaxStatus",
+          "originalEndpointId": "endpoint_taxStatus.DestroyTaxStatus",
           "name": "Delete a tax status",
           "path": {
             "pathParameters": [
@@ -48205,7 +48205,7 @@
             }
           ],
           "id": "ListTaxComplianceStatus",
-          "originalEndpointId": "Tax compliance status.ListTaxComplianceStatus",
+          "originalEndpointId": "endpoint_taxComplianceStatus.ListTaxComplianceStatus",
           "name": "List all tax compliance statuses",
           "path": {
             "pathParameters": [],
@@ -48495,7 +48495,7 @@
             }
           ],
           "id": "RetrieveTaxComplianceStatus",
-          "originalEndpointId": "Tax compliance status.RetrieveTaxComplianceStatus",
+          "originalEndpointId": "endpoint_taxComplianceStatus.RetrieveTaxComplianceStatus",
           "name": "Retrieve tax compliance statuses for a link",
           "path": {
             "pathParameters": [],
@@ -48694,7 +48694,7 @@
             }
           ],
           "id": "DetailTaxComplianceStatus",
-          "originalEndpointId": "Tax compliance status.DetailTaxComplianceStatus",
+          "originalEndpointId": "endpoint_taxComplianceStatus.DetailTaxComplianceStatus",
           "name": "Get a tax compliance status's details",
           "path": {
             "pathParameters": [
@@ -48861,7 +48861,7 @@
             }
           ],
           "id": "DestroyTaxComplianceStatus",
-          "originalEndpointId": "Tax compliance status.DestroyTaxComplianceStatus",
+          "originalEndpointId": "endpoint_taxComplianceStatus.DestroyTaxComplianceStatus",
           "name": "Delete a tax compliance status",
           "path": {
             "pathParameters": [
@@ -48979,7 +48979,7 @@
             }
           ],
           "id": "ListIncomes",
-          "originalEndpointId": "Incomes.ListIncomes",
+          "originalEndpointId": "endpoint_incomes.ListIncomes",
           "name": "List all incomes",
           "path": {
             "pathParameters": [],
@@ -49270,7 +49270,7 @@
             }
           ],
           "id": "RetrieveIncome",
-          "originalEndpointId": "Incomes.RetrieveIncome",
+          "originalEndpointId": "endpoint_incomes.RetrieveIncome",
           "name": "Retrieve incomes for a link",
           "path": {
             "pathParameters": [],
@@ -49551,7 +49551,7 @@
             }
           ],
           "id": "PatchIncomes",
-          "originalEndpointId": "Incomes.PatchIncomes",
+          "originalEndpointId": "endpoint_incomes.PatchIncomes",
           "name": "Complete an incomes request",
           "path": {
             "pathParameters": [],
@@ -49841,7 +49841,7 @@
             }
           ],
           "id": "DetailIncome",
-          "originalEndpointId": "Incomes.DetailIncome",
+          "originalEndpointId": "endpoint_incomes.DetailIncome",
           "name": "Get an income's details",
           "path": {
             "pathParameters": [
@@ -50081,7 +50081,7 @@
             }
           ],
           "id": "DestroyIncomes",
-          "originalEndpointId": "Incomes.DestroyIncomes",
+          "originalEndpointId": "endpoint_incomes.DestroyIncomes",
           "name": "Delete an income",
           "path": {
             "pathParameters": [
@@ -50199,7 +50199,7 @@
             }
           ],
           "id": "ListRecurringExpenses",
-          "originalEndpointId": "Recurring Expenses.ListRecurringExpenses",
+          "originalEndpointId": "endpoint_recurringExpenses.ListRecurringExpenses",
           "name": "List all recurring expenses",
           "path": {
             "pathParameters": [],
@@ -50655,7 +50655,7 @@
             }
           ],
           "id": "RetrieveRecurringExpenses",
-          "originalEndpointId": "Recurring Expenses.RetrieveRecurringExpenses",
+          "originalEndpointId": "endpoint_recurringExpenses.RetrieveRecurringExpenses",
           "name": "Retrieve recurring expenses for a link",
           "path": {
             "pathParameters": [],
@@ -51081,7 +51081,7 @@
             }
           ],
           "id": "PatchRecurringExpenses",
-          "originalEndpointId": "Recurring Expenses.PatchRecurringExpenses",
+          "originalEndpointId": "endpoint_recurringExpenses.PatchRecurringExpenses",
           "name": "Complete a recurring expenses request",
           "path": {
             "pathParameters": [],
@@ -51509,7 +51509,7 @@
             }
           ],
           "id": "DetailRecurringExpense",
-          "originalEndpointId": "Recurring Expenses.DetailRecurringExpense",
+          "originalEndpointId": "endpoint_recurringExpenses.DetailRecurringExpense",
           "name": "Get a recurring expense's details",
           "path": {
             "pathParameters": [
@@ -51886,7 +51886,7 @@
             }
           ],
           "id": "DestroyRecurringExpense",
-          "originalEndpointId": "Recurring Expenses.DestroyRecurringExpense",
+          "originalEndpointId": "endpoint_recurringExpenses.DestroyRecurringExpense",
           "name": "Delete a recurring expense",
           "path": {
             "pathParameters": [
@@ -52003,7 +52003,7 @@
             }
           ],
           "id": "ListPortfolio",
-          "originalEndpointId": "Investment Portfolios.ListPortfolio",
+          "originalEndpointId": "endpoint_investmentPortfolios.ListPortfolio",
           "name": "List all portfolios",
           "path": {
             "pathParameters": [],
@@ -52343,7 +52343,7 @@
             }
           ],
           "id": "RetrievePortfolio",
-          "originalEndpointId": "Investment Portfolios.RetrievePortfolio",
+          "originalEndpointId": "endpoint_investmentPortfolios.RetrievePortfolio",
           "name": "Retrieve portfolios for a link",
           "path": {
             "pathParameters": [],
@@ -52624,7 +52624,7 @@
             }
           ],
           "id": "PatchPortfolio",
-          "originalEndpointId": "Investment Portfolios.PatchPortfolio",
+          "originalEndpointId": "endpoint_investmentPortfolios.PatchPortfolio",
           "name": "Complete a portfolios request",
           "path": {
             "pathParameters": [],
@@ -52907,7 +52907,7 @@
             }
           ],
           "id": "DetailPortfolio",
-          "originalEndpointId": "Investment Portfolios.DetailPortfolio",
+          "originalEndpointId": "endpoint_investmentPortfolios.DetailPortfolio",
           "name": "Get a portfolio's details",
           "path": {
             "pathParameters": [
@@ -53156,7 +53156,7 @@
             }
           ],
           "id": "DestroyPortfolio",
-          "originalEndpointId": "Investment Portfolios.DestroyPortfolio",
+          "originalEndpointId": "endpoint_investmentPortfolios.DestroyPortfolio",
           "name": "Delete a portfolio",
           "path": {
             "pathParameters": [
@@ -53274,7 +53274,7 @@
             }
           ],
           "id": "ListReceivableTransactions",
-          "originalEndpointId": "Receivable Transactions.ListReceivableTransactions",
+          "originalEndpointId": "endpoint_receivableTransactions.ListReceivableTransactions",
           "name": "List all receivable transactions",
           "path": {
             "pathParameters": [],
@@ -53685,7 +53685,7 @@
             }
           ],
           "id": "RetrieveReceivableTransactions",
-          "originalEndpointId": "Receivable Transactions.RetrieveReceivableTransactions",
+          "originalEndpointId": "endpoint_receivableTransactions.RetrieveReceivableTransactions",
           "name": "Retrieve receivable transactions for a link",
           "path": {
             "pathParameters": [],
@@ -53930,7 +53930,7 @@
             }
           ],
           "id": "DetailReceivableTransaction",
-          "originalEndpointId": "Receivable Transactions.DetailReceivableTransaction",
+          "originalEndpointId": "endpoint_receivableTransactions.DetailReceivableTransaction",
           "name": "Get a receivable transaction's details",
           "path": {
             "pathParameters": [
@@ -54139,7 +54139,7 @@
             }
           ],
           "id": "DestroyReceivableTransaction",
-          "originalEndpointId": "Receivable Transactions.DestroyReceivableTransaction",
+          "originalEndpointId": "endpoint_receivableTransactions.DestroyReceivableTransaction",
           "name": "Delete a receivable transaction",
           "path": {
             "pathParameters": [
@@ -54257,7 +54257,7 @@
             }
           ],
           "id": "ListRiskInsights",
-          "originalEndpointId": "Risk Insights.ListRiskInsights",
+          "originalEndpointId": "endpoint_riskInsights.ListRiskInsights",
           "name": "List all risk insights",
           "path": {
             "pathParameters": [],
@@ -54614,7 +54614,7 @@
             }
           ],
           "id": "RetrieveRiskInsights",
-          "originalEndpointId": "Risk Insights.RetrieveRiskInsights",
+          "originalEndpointId": "endpoint_riskInsights.RetrieveRiskInsights",
           "name": "Retrieve risk insights for a link",
           "path": {
             "pathParameters": [],
@@ -54968,7 +54968,7 @@
             }
           ],
           "id": "PatchRiskInsights",
-          "originalEndpointId": "Risk Insights.PatchRiskInsights",
+          "originalEndpointId": "endpoint_riskInsights.PatchRiskInsights",
           "name": "Complete a risk insights request",
           "path": {
             "pathParameters": [],
@@ -55324,7 +55324,7 @@
             }
           ],
           "id": "DetailRiskInsights",
-          "originalEndpointId": "Risk Insights.DetailRiskInsights",
+          "originalEndpointId": "endpoint_riskInsights.DetailRiskInsights",
           "name": "Get a risk insight's details",
           "path": {
             "pathParameters": [
@@ -55630,7 +55630,7 @@
             }
           ],
           "id": "DestroyRiskInsights",
-          "originalEndpointId": "Risk Insights.DestroyRiskInsights",
+          "originalEndpointId": "endpoint_riskInsights.DestroyRiskInsights",
           "name": "Delete a risk insight",
           "path": {
             "pathParameters": [
@@ -55748,7 +55748,7 @@
             }
           ],
           "id": "ListTaxRetentions",
-          "originalEndpointId": "Tax retentions.ListTaxRetentions",
+          "originalEndpointId": "endpoint_taxRetentions.ListTaxRetentions",
           "name": "List all tax retentions",
           "path": {
             "pathParameters": [],
@@ -56054,7 +56054,7 @@
             }
           ],
           "id": "RetrieveTaxRetentions",
-          "originalEndpointId": "Tax retentions.RetrieveTaxRetentions",
+          "originalEndpointId": "endpoint_taxRetentions.RetrieveTaxRetentions",
           "name": "Retrieve tax retentions for a link",
           "path": {
             "pathParameters": [],
@@ -56308,7 +56308,7 @@
             }
           ],
           "id": "DetailTaxRetentions",
-          "originalEndpointId": "Tax retentions.DetailTaxRetentions",
+          "originalEndpointId": "endpoint_taxRetentions.DetailTaxRetentions",
           "name": "Get a tax retention's details",
           "path": {
             "pathParameters": [
@@ -56517,7 +56517,7 @@
             }
           ],
           "id": "DestroyTaxRetention",
-          "originalEndpointId": "Tax retentions.DestroyTaxRetention",
+          "originalEndpointId": "endpoint_taxRetentions.DestroyTaxRetention",
           "name": "Delete a tax retention",
           "path": {
             "pathParameters": [
@@ -56635,7 +56635,7 @@
             }
           ],
           "id": "ListTaxDeclarations",
-          "originalEndpointId": "Tax declarations.ListTaxDeclarations",
+          "originalEndpointId": "endpoint_taxDeclarations.ListTaxDeclarations",
           "name": "List all tax declarations",
           "path": {
             "pathParameters": [],
@@ -57135,7 +57135,7 @@
             }
           ],
           "id": "RetrieveTaxDeclarations",
-          "originalEndpointId": "Tax declarations.RetrieveTaxDeclarations",
+          "originalEndpointId": "endpoint_taxDeclarations.RetrieveTaxDeclarations",
           "name": "Retrieve tax declarations for a link",
           "path": {
             "pathParameters": [],
@@ -57459,7 +57459,7 @@
             }
           ],
           "id": "DetailTaxDeclaration",
-          "originalEndpointId": "Tax declarations.DetailTaxDeclaration",
+          "originalEndpointId": "endpoint_taxDeclarations.DetailTaxDeclaration",
           "name": "Get a tax declaration's details",
           "path": {
             "pathParameters": [
@@ -57758,7 +57758,7 @@
             }
           ],
           "id": "DestroyTaxDeclaration",
-          "originalEndpointId": "Tax declarations.DestroyTaxDeclaration",
+          "originalEndpointId": "endpoint_taxDeclarations.DestroyTaxDeclaration",
           "name": "Delete a tax declration",
           "path": {
             "pathParameters": [
@@ -57876,7 +57876,7 @@
             }
           ],
           "id": "ListEmploymentRecords",
-          "originalEndpointId": "Employment Records.ListEmploymentRecords",
+          "originalEndpointId": "endpoint_employmentRecords.ListEmploymentRecords",
           "name": "List all employment records",
           "path": {
             "pathParameters": [],
@@ -58148,7 +58148,7 @@
             }
           ],
           "id": "RetrieveEmploymentRecordDetails",
-          "originalEndpointId": "Employment Records.RetrieveEmploymentRecordDetails",
+          "originalEndpointId": "endpoint_employmentRecords.RetrieveEmploymentRecordDetails",
           "name": "Retrieve employment record details",
           "path": {
             "pathParameters": [],
@@ -58470,7 +58470,7 @@
             }
           ],
           "id": "DetailEmploymentRecord",
-          "originalEndpointId": "Employment Records.DetailEmploymentRecord",
+          "originalEndpointId": "endpoint_employmentRecords.DetailEmploymentRecord",
           "name": "Get an employment record's details",
           "path": {
             "pathParameters": [
@@ -58737,7 +58737,7 @@
             }
           ],
           "id": "DestroyEmploymentRecord",
-          "originalEndpointId": "Employment Records.DestroyEmploymentRecord",
+          "originalEndpointId": "endpoint_employmentRecords.DestroyEmploymentRecord",
           "name": "Delete an employment record",
           "path": {
             "pathParameters": [
@@ -58855,7 +58855,7 @@
             }
           ],
           "id": "VerifyIncome",
-          "originalEndpointId": "Income Verification.VerifyIncome",
+          "originalEndpointId": "endpoint_incomeVerification.VerifyIncome",
           "name": "Verify incomes",
           "path": {
             "pathParameters": [],
@@ -59178,7 +59178,7 @@
             }
           ],
           "id": "CategorizeTransactions",
-          "originalEndpointId": "Categorization.CategorizeTransactions",
+          "originalEndpointId": "endpoint_categorization.CategorizeTransactions",
           "name": "Categorize transactions",
           "path": {
             "pathParameters": [],
@@ -59464,7 +59464,7 @@
             }
           ],
           "id": "ListSecretKeys",
-          "originalEndpointId": "Secret Keys.ListSecretKeys",
+          "originalEndpointId": "endpoint_secretKeys.ListSecretKeys",
           "name": "List all secret keys",
           "path": {
             "pathParameters": [],
@@ -59574,7 +59574,7 @@
             }
           ],
           "id": "CreateSecretKeys",
-          "originalEndpointId": "Secret Keys.CreateSecretKeys",
+          "originalEndpointId": "endpoint_secretKeys.CreateSecretKeys",
           "name": "Request API keys",
           "path": {
             "pathParameters": [],
@@ -59703,7 +59703,7 @@
             }
           ],
           "id": "ListPaymentWebhooks",
-          "originalEndpointId": "Payment Webhooks.ListPaymentWebhooks",
+          "originalEndpointId": "endpoint_paymentWebhooks.ListPaymentWebhooks",
           "name": "List all payment webhooks",
           "path": {
             "pathParameters": [],
@@ -59819,7 +59819,7 @@
             }
           ],
           "id": "RegisterPaymentWebhook",
-          "originalEndpointId": "Payment Webhooks.RegisterPaymentWebhook",
+          "originalEndpointId": "endpoint_paymentWebhooks.RegisterPaymentWebhook",
           "name": "Register a new payment webhook",
           "path": {
             "pathParameters": [],
@@ -60000,7 +60000,7 @@
             }
           ],
           "id": "DetailPaymentWebhooks",
-          "originalEndpointId": "Payment Webhooks.DetailPaymentWebhooks",
+          "originalEndpointId": "endpoint_paymentWebhooks.DetailPaymentWebhooks",
           "name": "Get details about a payment webhook",
           "path": {
             "pathParameters": [
@@ -60140,7 +60140,7 @@
             }
           ],
           "id": "DeletePaymentWebhooks",
-          "originalEndpointId": "Payment Webhooks.DeletePaymentWebhooks",
+          "originalEndpointId": "endpoint_paymentWebhooks.DeletePaymentWebhooks",
           "name": "Delete a payment webhook",
           "path": {
             "pathParameters": [
@@ -60258,7 +60258,7 @@
             }
           ],
           "id": "ListPaymentInstitutions",
-          "originalEndpointId": "Payment Institutions.ListPaymentInstitutions",
+          "originalEndpointId": "endpoint_paymentInstitutions.ListPaymentInstitutions",
           "name": "List all payment institutions",
           "path": {
             "pathParameters": [],
@@ -60542,7 +60542,7 @@
             }
           ],
           "id": "DetailPaymentInstitution",
-          "originalEndpointId": "Payment Institutions.DetailPaymentInstitution",
+          "originalEndpointId": "endpoint_paymentInstitutions.DetailPaymentInstitution",
           "name": "Get details about a payment institution",
           "path": {
             "pathParameters": [
@@ -60742,7 +60742,7 @@
             }
           ],
           "id": "ListCustomers",
-          "originalEndpointId": "Customers.ListCustomers",
+          "originalEndpointId": "endpoint_customers.ListCustomers",
           "name": "List all customers",
           "path": {
             "pathParameters": [],
@@ -61179,7 +61179,7 @@
             }
           ],
           "id": "CreateCustomer",
-          "originalEndpointId": "Customers.CreateCustomer",
+          "originalEndpointId": "endpoint_customers.CreateCustomer",
           "name": "Create a new customer",
           "path": {
             "pathParameters": [],
@@ -61471,7 +61471,7 @@
             }
           ],
           "id": "DetailCustomer",
-          "originalEndpointId": "Customers.DetailCustomer",
+          "originalEndpointId": "endpoint_customers.DetailCustomer",
           "name": "Get details about a customer",
           "path": {
             "pathParameters": [
@@ -61709,7 +61709,7 @@
             }
           ],
           "id": "ListBankAccount",
-          "originalEndpointId": "Bank Accounts.ListBankAccount",
+          "originalEndpointId": "endpoint_bankAccounts.ListBankAccount",
           "name": "List all bank accounts",
           "path": {
             "pathParameters": [],
@@ -62165,7 +62165,7 @@
             }
           ],
           "id": "CreateBankAccount",
-          "originalEndpointId": "Bank Accounts.CreateBankAccount",
+          "originalEndpointId": "endpoint_bankAccounts.CreateBankAccount",
           "name": "Create a new bank account",
           "path": {
             "pathParameters": [],
@@ -62553,7 +62553,7 @@
             }
           ],
           "id": "DetailBankAccount",
-          "originalEndpointId": "Bank Accounts.DetailBankAccount",
+          "originalEndpointId": "endpoint_bankAccounts.DetailBankAccount",
           "name": "Get details about a bank account",
           "path": {
             "pathParameters": [
@@ -62823,7 +62823,7 @@
             }
           ],
           "id": "ListPaymentLinks",
-          "originalEndpointId": "Payment Links.ListPaymentLinks",
+          "originalEndpointId": "endpoint_paymentLinks.ListPaymentLinks",
           "name": "List all payment links",
           "path": {
             "pathParameters": [],
@@ -63096,7 +63096,7 @@
             }
           ],
           "id": "CreatePaymentlink",
-          "originalEndpointId": "Payment Links.CreatePaymentlink",
+          "originalEndpointId": "endpoint_paymentLinks.CreatePaymentlink",
           "name": "Create a payment link",
           "path": {
             "pathParameters": [],
@@ -63560,7 +63560,7 @@
             }
           ],
           "id": "DetailCreatePaymentlink",
-          "originalEndpointId": "Payment Links.DetailCreatePaymentlink",
+          "originalEndpointId": "endpoint_paymentLinks.DetailCreatePaymentlink",
           "name": "Get details about a payment link",
           "path": {
             "pathParameters": [
@@ -63979,7 +63979,7 @@
             }
           ],
           "id": "ListPaymentIntents",
-          "originalEndpointId": "Payment Intents.ListPaymentIntents",
+          "originalEndpointId": "endpoint_paymentIntents.ListPaymentIntents",
           "name": "List all payment intents",
           "path": {
             "pathParameters": [],
@@ -64671,7 +64671,7 @@
             }
           ],
           "id": "CreatePaymentIntent",
-          "originalEndpointId": "Payment Intents.CreatePaymentIntent",
+          "originalEndpointId": "endpoint_paymentIntents.CreatePaymentIntent",
           "name": "Create a new payment intent",
           "path": {
             "pathParameters": [],
@@ -65219,7 +65219,7 @@
             }
           ],
           "id": "DetailPaymentIntent",
-          "originalEndpointId": "Payment Intents.DetailPaymentIntent",
+          "originalEndpointId": "endpoint_paymentIntents.DetailPaymentIntent",
           "name": "Get details about a payment intent",
           "path": {
             "pathParameters": [
@@ -65711,7 +65711,7 @@
             }
           ],
           "id": "PatchPaymentIntent",
-          "originalEndpointId": "Payment Intents.PatchPaymentIntent",
+          "originalEndpointId": "endpoint_paymentIntents.PatchPaymentIntent",
           "name": "Complete a payment intent",
           "path": {
             "pathParameters": [
@@ -66235,7 +66235,7 @@
             }
           ],
           "id": "ListPaymentTransactions",
-          "originalEndpointId": "Payment Transactions.ListPaymentTransactions",
+          "originalEndpointId": "endpoint_paymentTransactions.ListPaymentTransactions",
           "name": "List all payment transactions",
           "path": {
             "pathParameters": [],
@@ -66659,7 +66659,7 @@
             }
           ],
           "id": "DetailPaymentTransactions",
-          "originalEndpointId": "Payment Transactions.DetailPaymentTransactions",
+          "originalEndpointId": "endpoint_paymentTransactions.DetailPaymentTransactions",
           "name": "Get details about a payment transaction",
           "path": {
             "pathParameters": [

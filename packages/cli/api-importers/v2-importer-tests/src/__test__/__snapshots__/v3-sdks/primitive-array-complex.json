@@ -160,7 +160,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "getSearchWithArrayUnion",
+          "id": "endpoint_.getSearchWithArrayUnion",
           "method": "GET",
           "name": {
             "originalName": "getSearchWithArrayUnion",
@@ -345,7 +345,7 @@
           }
         },
         {
-          "id": "getSearchWithObjectUnion",
+          "id": "endpoint_.getSearchWithObjectUnion",
           "method": "GET",
           "name": {
             "originalName": "getSearchWithObjectUnion",

@@ -124,7 +124,7 @@
         "auth": false,
         "method": "GET",
         "id": "getExample",
-        "originalEndpointId": "getExample",
+        "originalEndpointId": "endpoint_.getExample",
         "name": "Get Example",
         "path": {
           "pathParameters": [],

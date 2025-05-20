@@ -309,7 +309,7 @@
         "auth": false,
         "method": "POST",
         "id": "createAUser",
-        "originalEndpointId": "createAUser",
+        "originalEndpointId": "endpoint_.createAUser",
         "name": "Create a user",
         "path": {
           "pathParameters": [],
@@ -410,7 +410,7 @@
         "auth": false,
         "method": "PUT",
         "id": "updateAUser",
-        "originalEndpointId": "updateAUser",
+        "originalEndpointId": "endpoint_.updateAUser",
         "name": "Update a user",
         "path": {
           "pathParameters": [],
@@ -511,7 +511,7 @@
         "auth": false,
         "method": "GET",
         "id": "getAUser",
-        "originalEndpointId": "getAUser",
+        "originalEndpointId": "endpoint_.getAUser",
         "name": "Get a user",
         "path": {
           "pathParameters": [

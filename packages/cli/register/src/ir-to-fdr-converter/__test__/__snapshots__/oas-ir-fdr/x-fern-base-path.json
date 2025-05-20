@@ -14,7 +14,7 @@
           }
         ],
         "id": "exampleEndpoint",
-        "originalEndpointId": "exampleEndpoint",
+        "originalEndpointId": "endpoint_.exampleEndpoint",
         "name": "Example endpoint",
         "path": {
           "pathParameters": [],
