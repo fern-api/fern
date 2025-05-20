@@ -12209,7 +12209,7 @@
     }
   },
   "services": {
-    "service_Upload": {
+    "service_upload": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -22759,7 +22759,7 @@
         }
       ]
     },
-    "service_Groups": {
+    "service_groups": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -24526,7 +24526,7 @@
           }
         }
       },
-      "service": "service_Upload",
+      "service": "service_upload",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -24595,7 +24595,7 @@
           }
         }
       },
-      "service": "service_Groups",
+      "service": "service_groups",
       "types": [],
       "errors": [],
       "subpackages": [],

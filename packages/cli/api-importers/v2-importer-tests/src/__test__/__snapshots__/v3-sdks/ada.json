@@ -1,6 +1,6 @@
 {
   "auth": {
-    "requirement": "ANY",
+    "requirement": "ALL",
     "schemes": [
       {
         "token": {
@@ -3272,7 +3272,7 @@
     }
   },
   "services": {
-    "service_End users": {
+    "service_endUsers": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -16250,7 +16250,7 @@
           }
         }
       },
-      "service": "service_End users",
+      "service": "service_endUsers",
       "types": [],
       "errors": [],
       "subpackages": [],

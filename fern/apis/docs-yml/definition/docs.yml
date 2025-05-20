@@ -1071,6 +1071,9 @@ types:
         docs: The relative path to the version's docs.yml file.
       subtitle: optional<string>
       icon: optional<string>
+      image:
+        type: optional<string>
+        docs: The image to display in the product card. This will override the icon field if both are set.
       slug:
         type: optional<string>
         docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.

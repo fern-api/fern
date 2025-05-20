@@ -1,6 +1,6 @@
 {
   "auth": {
-    "requirement": "ANY",
+    "requirement": "ALL",
     "schemes": [
       {
         "token": {
@@ -8904,7 +8904,7 @@
     }
   },
   "services": {
-    "service_Auth": {
+    "service_auth": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -9139,7 +9139,7 @@
         }
       ]
     },
-    "service_Extensions": {
+    "service_extensions": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -18185,7 +18185,7 @@
         }
       ]
     },
-    "service_Profiles": {
+    "service_profiles": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -27809,7 +27809,7 @@
         }
       ]
     },
-    "service_Sessions": {
+    "service_sessions": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -43759,7 +43759,7 @@
         }
       ]
     },
-    "service_Windows": {
+    "service_windows": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -58428,7 +58428,7 @@
           }
         }
       },
-      "service": "service_Auth",
+      "service": "service_auth",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -58497,7 +58497,7 @@
           }
         }
       },
-      "service": "service_Extensions",
+      "service": "service_extensions",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -58566,7 +58566,7 @@
           }
         }
       },
-      "service": "service_Profiles",
+      "service": "service_profiles",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -58635,7 +58635,7 @@
           }
         }
       },
-      "service": "service_Sessions",
+      "service": "service_sessions",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -58704,7 +58704,7 @@
           }
         }
       },
-      "service": "service_Windows",
+      "service": "service_windows",
       "types": [],
       "errors": [],
       "subpackages": [],

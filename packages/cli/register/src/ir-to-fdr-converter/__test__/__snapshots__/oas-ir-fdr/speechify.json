@@ -2397,6 +2397,11 @@
       "subpackage_voices"
     ]
   },
+  "auth": {
+    "type": "header",
+    "headerWireValue": "Authorization",
+    "nameOverride": "Authorization"
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

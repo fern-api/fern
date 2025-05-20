@@ -1,6 +1,6 @@
 {
   "auth": {
-    "requirement": "ANY",
+    "requirement": "ALL",
     "schemes": [
       {
         "token": {
@@ -9410,7 +9410,7 @@
     }
   },
   "services": {
-    "service_AppV1": {
+    "service_appV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -20755,7 +20755,7 @@
         }
       ]
     },
-    "service_AuthV1": {
+    "service_authV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -22468,7 +22468,7 @@
         }
       ]
     },
-    "service_BuildV1": {
+    "service_buildV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -30248,7 +30248,7 @@
         }
       ]
     },
-    "service_DeploymentV1": {
+    "service_deploymentV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -38281,7 +38281,7 @@
         }
       ]
     },
-    "service_DiscoveryV1": {
+    "service_discoveryV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -39115,7 +39115,7 @@
         }
       ]
     },
-    "service_LobbyV1": {
+    "service_lobbyV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -42969,7 +42969,7 @@
         }
       ]
     },
-    "service_LobbyV2": {
+    "service_lobbyV2": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -55539,7 +55539,7 @@
         }
       ]
     },
-    "service_LogV1": {
+    "service_logV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -57382,7 +57382,7 @@
         }
       ]
     },
-    "service_MetricsV1": {
+    "service_metricsV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -58325,7 +58325,7 @@
         }
       ]
     },
-    "service_ProcessesV1": {
+    "service_processesV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -66921,7 +66921,7 @@
         }
       ]
     },
-    "service_RoomV1": {
+    "service_roomV1": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -73781,7 +73781,7 @@
           }
         }
       },
-      "service": "service_AppV1",
+      "service": "service_appV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -73850,7 +73850,7 @@
           }
         }
       },
-      "service": "service_AuthV1",
+      "service": "service_authV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -73919,7 +73919,7 @@
           }
         }
       },
-      "service": "service_BuildV1",
+      "service": "service_buildV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -73988,7 +73988,7 @@
           }
         }
       },
-      "service": "service_DeploymentV1",
+      "service": "service_deploymentV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -74057,7 +74057,7 @@
           }
         }
       },
-      "service": "service_DiscoveryV1",
+      "service": "service_discoveryV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -74126,7 +74126,7 @@
           }
         }
       },
-      "service": "service_LobbyV1",
+      "service": "service_lobbyV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -74195,7 +74195,7 @@
           }
         }
       },
-      "service": "service_LobbyV2",
+      "service": "service_lobbyV2",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -74264,7 +74264,7 @@
           }
         }
       },
-      "service": "service_LogV1",
+      "service": "service_logV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -74333,7 +74333,7 @@
           }
         }
       },
-      "service": "service_MetricsV1",
+      "service": "service_metricsV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -74402,7 +74402,7 @@
           }
         }
       },
-      "service": "service_ProcessesV1",
+      "service": "service_processesV1",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -74471,7 +74471,7 @@
           }
         }
       },
-      "service": "service_RoomV1",
+      "service": "service_roomV1",
       "types": [],
       "errors": [],
       "subpackages": [],

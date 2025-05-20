@@ -175,6 +175,10 @@
       "subpackage_chatCompletions"
     ]
   },
+  "auth": {
+    "type": "bearerAuth",
+    "tokenName": "token"
+  },
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

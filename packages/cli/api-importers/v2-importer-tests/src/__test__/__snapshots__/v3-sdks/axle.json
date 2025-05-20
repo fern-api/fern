@@ -1,6 +1,6 @@
 {
   "auth": {
-    "requirement": "ANY",
+    "requirement": "ALL",
     "schemes": [
       {
         "name": {
@@ -6049,7 +6049,7 @@
     }
   },
   "services": {
-    "service_Ignition": {
+    "service_ignition": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -7235,7 +7235,7 @@
         }
       ]
     },
-    "service_Tokens": {
+    "service_tokens": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -8186,7 +8186,7 @@
         }
       ]
     },
-    "service_Accounts": {
+    "service_accounts": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -9769,7 +9769,7 @@
         }
       ]
     },
-    "service_Policies": {
+    "service_policies": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -18491,7 +18491,7 @@
         }
       ]
     },
-    "service_Carriers": {
+    "service_carriers": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -23257,7 +23257,7 @@
           }
         }
       },
-      "service": "service_Ignition",
+      "service": "service_ignition",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -23326,7 +23326,7 @@
           }
         }
       },
-      "service": "service_Tokens",
+      "service": "service_tokens",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -23395,7 +23395,7 @@
           }
         }
       },
-      "service": "service_Accounts",
+      "service": "service_accounts",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -23464,7 +23464,7 @@
           }
         }
       },
-      "service": "service_Policies",
+      "service": "service_policies",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -23533,7 +23533,7 @@
           }
         }
       },
-      "service": "service_Carriers",
+      "service": "service_carriers",
       "types": [],
       "errors": [],
       "subpackages": [],

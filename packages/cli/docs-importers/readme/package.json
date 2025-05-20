@@ -32,7 +32,7 @@
     "@fern-api/docs-importer-commons": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.136.5-d26998f38",
+    "@fern-fern/fdr-cjs-sdk": "0.136.6-94861d2d9",
     "gray-matter": "^4.0.3",
     "hast-util-to-mdast": "^10.1.0",
     "mdast-util-mdx-jsx": "^3.1.3",
