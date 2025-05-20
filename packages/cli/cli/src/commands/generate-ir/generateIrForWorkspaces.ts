@@ -23,7 +23,8 @@ export async function generateIrForWorkspaces({
     keywords,
     smartCasing,
     readme,
-    directFromOpenapi
+    directFromOpenapi,
+    disableExamples
 }: {
     project: Project;
     irFilepath: AbsoluteFilePath;
@@ -35,6 +36,7 @@ export async function generateIrForWorkspaces({
     smartCasing: boolean;
     readme: generatorsYml.ReadmeSchema | undefined;
     directFromOpenapi: boolean;
+    disableExamples: boolean;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
@@ -47,7 +49,7 @@ export async function generateIrForWorkspaces({
                     generationLanguage,
                     keywords,
                     smartCasing,
-                    disableExamples: false,
+                    disableExamples,
                     audiences,
                     version,
                     readme,
