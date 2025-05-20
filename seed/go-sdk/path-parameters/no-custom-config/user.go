@@ -8,13 +8,20 @@ import (
 	internal "github.com/path-parameters/fern/internal"
 )
 
+type GetUsersRequest struct {
+	TenantId string `json:"-" url:"-"`
+	UserId   string `json:"-" url:"-"`
+}
+
 type SearchUsersRequest struct {
-	Limit *int `json:"-" url:"limit,omitempty"`
+	TenantId string `json:"-" url:"-"`
+	UserId   string `json:"-" url:"-"`
+	Limit    *int   `json:"-" url:"limit,omitempty"`
 }
 
 type User struct {
 	Name string   `json:"name" url:"name"`
-	Tags []string `json:"tags,omitempty" url:"tags,omitempty"`
+	Tags []string `json:"tags" url:"tags"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -67,7 +74,9 @@ func (u *User) String() string {
 }
 
 type UpdateUserRequest struct {
-	Body *User `json:"-" url:"-"`
+	TenantId string `json:"-" url:"-"`
+	UserId   string `json:"-" url:"-"`
+	Body     *User  `json:"-" url:"-"`
 }
 
 func (u *UpdateUserRequest) UnmarshalJSON(data []byte) error {

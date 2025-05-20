@@ -74,9 +74,7 @@ func (c *Client) GetOrganization(
 
 func (c *Client) GetOrganizationUser(
 	ctx context.Context,
-	tenantId string,
-	organizationId string,
-	userId string,
+	request *fern.GetOrganizationUserRequest,
 	opts ...option.RequestOption,
 ) (*fern.User, error) {
 	options := core.NewRequestOptions(opts...)
@@ -87,9 +85,9 @@ func (c *Client) GetOrganizationUser(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v/organizations/%v/users/%v",
-		tenantId,
-		organizationId,
-		userId,
+		request.TenantId,
+		request.OrganizationId,
+		request.UserId,
 	)
 	headers := internal.MergeHeaders(
 		c.header.Clone(),
