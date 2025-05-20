@@ -105,7 +105,7 @@ const api = axios.create({
 		API_KEY: (<p>
 		Your API key is used to authenticate requests to our API. Keep this secure and never expose it in client-side code.
 		<br /><br />
-		You can find your API keys in the <a href="https://dashboard.example.com/settings/api-keys">Dashboard</a>.
+		You can find your API keys in the <a href="https://dashboard.example.com/settings/api-keys">Dashboard</a>
 		<br /><br />
 		<strong>Note:</strong> Keys prefixed with <code>example-key-test-</code> are for testing, while keys with <code>example-key-live-</code> are for production.
 		</p>),
@@ -123,8 +123,8 @@ import axios from "axios";
 
 // Configure API client with authentication
 const api = axios.create({
-baseURL: "{{BASE_URL}}",
-headers: {
+	baseURL: "{{BASE_URL}}",
+	headers: {
 	Authorization: `Bearer {{API_KEY}}`,
 	"Content-Type": "application/json",
 },
