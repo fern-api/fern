@@ -367,7 +367,8 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             if (fromVersion != null) {
                 // If the user specified the --from-version flag, we write the full
                 // JSON object to stdout.
-                cliContext.logger.info(JSON.stringify(result));
+                const { errors, ...rest } = result;
+                cliContext.logger.info(JSON.stringify(rest));
             }
             if (!argv.quiet && result.errors.length > 0) {
                 cliContext.stderr.info(result.errors.join("\n"));
