@@ -12,6 +12,7 @@ import { CliContext } from "../../cli-context/CliContext";
 export interface Result {
     bump: "major" | "minor" | "patch";
     nextVersion?: string;
+    errors: string[];
 }
 
 export async function diff({
@@ -30,9 +31,11 @@ export async function diff({
         from: await readIr({ context, filepath: from, flagName: "from" }),
         to: await readIr({ context, filepath: to, flagName: "to" })
     });
+    const errors = change.errors.map((error) => error.message);
     if (fromVersion == null) {
         return {
-            bump: change.bump
+            bump: change.bump,
+            errors
         };
     }
     const nextVersion = semver.inc(fromVersion, change.bump);
@@ -42,7 +45,8 @@ export async function diff({
     }
     return {
         bump: change.bump,
-        nextVersion
+        nextVersion,
+        errors
     };
 }
 

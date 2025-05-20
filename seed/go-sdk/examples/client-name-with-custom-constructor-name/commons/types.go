@@ -14,14 +14,6 @@ type Data struct {
 	Base64 []byte
 }
 
-func NewDataFromString(value string) *Data {
-	return &Data{Type: "string", String: value}
-}
-
-func NewDataFromBase64(value []byte) *Data {
-	return &Data{Type: "base64", Base64: value}
-}
-
 func (d *Data) GetType() string {
 	if d == nil {
 		return ""
@@ -79,10 +71,7 @@ func (d Data) MarshalJSON() ([]byte, error) {
 	if err := d.validate(); err != nil {
 		return nil, err
 	}
-	switch d.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", d.Type, d)
-	case "string":
+	if d.String != "" {
 		var marshaler = struct {
 			Type   string `json:"type"`
 			String string `json:"value"`
@@ -91,7 +80,8 @@ func (d Data) MarshalJSON() ([]byte, error) {
 			String: d.String,
 		}
 		return json.Marshal(marshaler)
-	case "base64":
+	}
+	if d.Base64 != nil {
 		var marshaler = struct {
 			Type   string `json:"type"`
 			Base64 []byte `json:"value"`
@@ -101,6 +91,7 @@ func (d Data) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", d)
 }
 
 type DataVisitor interface {
@@ -109,14 +100,13 @@ type DataVisitor interface {
 }
 
 func (d *Data) Accept(visitor DataVisitor) error {
-	switch d.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", d.Type, d)
-	case "string":
+	if d.String != "" {
 		return visitor.VisitString(d.String)
-	case "base64":
+	}
+	if d.Base64 != nil {
 		return visitor.VisitBase64(d.Base64)
 	}
+	return fmt.Errorf("type %T does not define a non-empty union type", d)
 }
 
 func (d *Data) validate() error {
@@ -157,14 +147,6 @@ type EventInfo struct {
 	Type     string
 	Metadata *Metadata
 	Tag      Tag
-}
-
-func NewEventInfoFromMetadata(value *Metadata) *EventInfo {
-	return &EventInfo{Type: "metadata", Metadata: value}
-}
-
-func NewEventInfoFromTag(value Tag) *EventInfo {
-	return &EventInfo{Type: "tag", Tag: value}
 }
 
 func (e *EventInfo) GetType() string {
@@ -222,12 +204,10 @@ func (e EventInfo) MarshalJSON() ([]byte, error) {
 	if err := e.validate(); err != nil {
 		return nil, err
 	}
-	switch e.Type {
-	default:
-		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
-	case "metadata":
+	if e.Metadata != nil {
 		return internal.MarshalJSONWithExtraProperty(e.Metadata, "type", "metadata")
-	case "tag":
+	}
+	if e.Tag != "" {
 		var marshaler = struct {
 			Type string `json:"type"`
 			Tag  Tag    `json:"value"`
@@ -237,6 +217,7 @@ func (e EventInfo) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 type EventInfoVisitor interface {
@@ -245,14 +226,13 @@ type EventInfoVisitor interface {
 }
 
 func (e *EventInfo) Accept(visitor EventInfoVisitor) error {
-	switch e.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", e.Type, e)
-	case "metadata":
+	if e.Metadata != nil {
 		return visitor.VisitMetadata(e.Metadata)
-	case "tag":
+	}
+	if e.Tag != "" {
 		return visitor.VisitTag(e.Tag)
 	}
+	return fmt.Errorf("type %T does not define a non-empty union type", e)
 }
 
 func (e *EventInfo) validate() error {

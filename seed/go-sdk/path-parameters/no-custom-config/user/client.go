@@ -33,8 +33,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 
 func (c *Client) GetUser(
 	ctx context.Context,
-	tenantId string,
-	userId string,
+	request *fern.GetUsersRequest,
 	opts ...option.RequestOption,
 ) (*fern.User, error) {
 	options := core.NewRequestOptions(opts...)
@@ -45,8 +44,8 @@ func (c *Client) GetUser(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v/user/%v",
-		tenantId,
-		userId,
+		request.TenantId,
+		request.UserId,
 	)
 	headers := internal.MergeHeaders(
 		c.header.Clone(),
@@ -115,8 +114,6 @@ func (c *Client) CreateUser(
 
 func (c *Client) UpdateUser(
 	ctx context.Context,
-	tenantId string,
-	userId string,
 	request *fern.UpdateUserRequest,
 	opts ...option.RequestOption,
 ) (*fern.User, error) {
@@ -128,8 +125,8 @@ func (c *Client) UpdateUser(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v/user/%v",
-		tenantId,
-		userId,
+		request.TenantId,
+		request.UserId,
 	)
 	headers := internal.MergeHeaders(
 		c.header.Clone(),
@@ -158,8 +155,6 @@ func (c *Client) UpdateUser(
 
 func (c *Client) SearchUsers(
 	ctx context.Context,
-	tenantId string,
-	userId string,
 	request *fern.SearchUsersRequest,
 	opts ...option.RequestOption,
 ) ([]*fern.User, error) {
@@ -171,8 +166,8 @@ func (c *Client) SearchUsers(
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/%v/user/%v/search",
-		tenantId,
-		userId,
+		request.TenantId,
+		request.UserId,
 	)
 	queryParams, err := internal.QueryValues(request)
 	if err != nil {

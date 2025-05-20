@@ -1,3 +1,16 @@
+- version: 1.0.0
+  changelogEntry:
+    - summary: |
+        Major version release to update the generator's default set of configuration options.
+        The following configuration options have been updated:
+          - `alwaysSendRequiredProperties` is now `true` by default.
+          - `inlineFileProperties` is now `true` by default.
+          - `inlinePathParameters` is now `true` by default.
+          - `useReaderForBytesRequest` is now `true` by default.
+          - `union` is now `v1` by default.
+      type: feat
+  createdAt: '2025-05-20'
+  irVersion: 57
 - version: 0.38.0
   changelogEntry:
     - summary: |
