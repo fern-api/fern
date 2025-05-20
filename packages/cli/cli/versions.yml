@@ -1360,7 +1360,7 @@
 - changelogEntry:
     - summary: |
         Update CLI-side markdown parsing to detect more hrefs and src's (where src files are automatically uploaded),
-        enabling the <Download src="./path/to/file.pdf">Download me</Download> pattern to work.
+        enabling the `<Download src="./path/to/file.pdf">Download me</Download>` pattern to work.
       type: fix
     - summary: |
         Update `fern docs broken-links` to handle links within the current directory.
