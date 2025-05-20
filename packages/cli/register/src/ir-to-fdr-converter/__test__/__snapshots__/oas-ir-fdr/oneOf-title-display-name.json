@@ -54,14 +54,16 @@
             "type": {
               "type": "id",
               "value": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems0"
-            }
+            },
+            "displayName": "Field 1"
           },
           {
             "typeName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems1",
             "type": {
               "type": "id",
               "value": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems1"
-            }
+            },
+            "displayName": "Field 2"
           }
         ]
       }

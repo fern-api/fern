@@ -3094,21 +3094,24 @@
             "type": {
               "type": "id",
               "value": "AttachContactToConversationRequestCustomer0"
-            }
+            },
+            "displayName": "Intercom User ID"
           },
           {
             "typeName": "AttachContactToConversationRequestCustomer1",
             "type": {
               "type": "id",
               "value": "AttachContactToConversationRequestCustomer1"
-            }
+            },
+            "displayName": "User ID"
           },
           {
             "typeName": "AttachContactToConversationRequestCustomer2",
             "type": {
               "type": "id",
               "value": "AttachContactToConversationRequestCustomer2"
-            }
+            },
+            "displayName": "Email"
           }
         ]
       }
@@ -5517,21 +5520,24 @@
             "type": {
               "type": "id",
               "value": "contact_reply_intercom_user_id_request"
-            }
+            },
+            "displayName": "Intercom User ID"
           },
           {
             "typeName": "contact_reply_email_request",
             "type": {
               "type": "id",
               "value": "contact_reply_email_request"
-            }
+            },
+            "displayName": "Email"
           },
           {
             "typeName": "contact_reply_user_id_request",
             "type": {
               "type": "id",
               "value": "contact_reply_user_id_request"
-            }
+            },
+            "displayName": "User ID"
           }
         ]
       }
@@ -5662,21 +5668,24 @@
             "type": {
               "type": "id",
               "value": "contact_reply_ticket_intercom_user_id_request"
-            }
+            },
+            "displayName": "Intercom User ID"
           },
           {
             "typeName": "contact_reply_ticket_user_id_request",
             "type": {
               "type": "id",
               "value": "contact_reply_ticket_user_id_request"
-            }
+            },
+            "displayName": "User ID"
           },
           {
             "typeName": "contact_reply_ticket_email_request",
             "type": {
               "type": "id",
               "value": "contact_reply_ticket_email_request"
-            }
+            },
+            "displayName": "Email"
           }
         ]
       }
@@ -7917,21 +7926,24 @@
             "type": {
               "type": "id",
               "value": "CreateContactRequest0"
-            }
+            },
+            "displayName": "Create contact with email"
           },
           {
             "typeName": "CreateContactRequest1",
             "type": {
               "type": "id",
               "value": "CreateContactRequest1"
-            }
+            },
+            "displayName": "Create contact with external_id"
           },
           {
             "typeName": "CreateContactRequest2",
             "type": {
               "type": "id",
               "value": "CreateContactRequest2"
-            }
+            },
+            "displayName": "Create contact with role"
           }
         ]
       }
@@ -8172,21 +8184,24 @@
             "type": {
               "type": "id",
               "value": "CreateDataEventRequest0"
-            }
+            },
+            "displayName": "id required"
           },
           {
             "typeName": "CreateDataEventRequest1",
             "type": {
               "type": "id",
               "value": "CreateDataEventRequest1"
-            }
+            },
+            "displayName": "user_id required"
           },
           {
             "typeName": "CreateDataEventRequest2",
             "type": {
               "type": "id",
               "value": "CreateDataEventRequest2"
-            }
+            },
+            "displayName": "email required"
           }
         ]
       }
@@ -8348,14 +8363,16 @@
             "type": {
               "type": "id",
               "value": "CreateMessageRequest0"
-            }
+            },
+            "displayName": "message_type: `email`."
           },
           {
             "typeName": "CreateMessageRequest1",
             "type": {
               "type": "id",
               "value": "CreateMessageRequest1"
-            }
+            },
+            "displayName": "message_type: `inapp`."
           }
         ]
       }
@@ -8569,14 +8586,16 @@
             "type": {
               "type": "id",
               "value": "contact_reply_ticket_request"
-            }
+            },
+            "displayName": "Contact Reply on ticket"
           },
           {
             "typeName": "admin_reply_ticket_request",
             "type": {
               "type": "id",
               "value": "admin_reply_ticket_request"
-            }
+            },
+            "displayName": "Admin Reply on ticket"
           }
         ]
       }
@@ -8651,21 +8670,24 @@
             "type": {
               "type": "id",
               "value": "CreateTicketRequestContactsItems0"
-            }
+            },
+            "displayName": "ID"
           },
           {
             "typeName": "CreateTicketRequestContactsItems1",
             "type": {
               "type": "id",
               "value": "CreateTicketRequestContactsItems1"
-            }
+            },
+            "displayName": "External ID"
           },
           {
             "typeName": "CreateTicketRequestContactsItems2",
             "type": {
               "type": "id",
               "value": "CreateTicketRequestContactsItems2"
-            }
+            },
+            "displayName": "Email"
           }
         ]
       }
@@ -9090,7 +9112,8 @@
             "type": {
               "type": "id",
               "value": "custom_object_instance"
-            }
+            },
+            "displayName": "Custom Object Instance"
           }
         ]
       }
@@ -9256,21 +9279,24 @@
             "type": {
               "type": "id",
               "value": "CustomerRequest0"
-            }
+            },
+            "displayName": "Intercom User ID"
           },
           {
             "typeName": "CustomerRequest1",
             "type": {
               "type": "id",
               "value": "CustomerRequest1"
-            }
+            },
+            "displayName": "User ID"
           },
           {
             "typeName": "CustomerRequest2",
             "type": {
               "type": "id",
               "value": "CustomerRequest2"
-            }
+            },
+            "displayName": "Email"
           }
         ]
       }
@@ -11938,7 +11964,8 @@
             "type": {
               "type": "id",
               "value": "MultipleFilterSearchRequestValue0"
-            }
+            },
+            "displayName": "multiple filter search request"
           },
           {
             "typeName": "MultipleFilterSearchRequestValue1",
@@ -11946,7 +11973,8 @@
             "type": {
               "type": "id",
               "value": "MultipleFilterSearchRequestValue1"
-            }
+            },
+            "displayName": "single filter search request"
           }
         ]
       }
@@ -12787,14 +12815,16 @@
             "type": {
               "type": "id",
               "value": "news_item"
-            }
+            },
+            "displayName": "News Item"
           },
           {
             "typeName": "newsfeed",
             "type": {
               "type": "id",
               "value": "newsfeed"
-            }
+            },
+            "displayName": "Newsfeed"
           }
         ]
       }
@@ -13118,7 +13148,8 @@
             "type": {
               "type": "id",
               "value": "RedactConversationRequest0"
-            }
+            },
+            "displayName": "Redact Conversation Part Request"
           },
           {
             "typeName": "RedactConversationRequest1",
@@ -13126,7 +13157,8 @@
             "type": {
               "type": "id",
               "value": "RedactConversationRequest1"
-            }
+            },
+            "displayName": "Redact Conversation Source Request"
           }
         ]
       }
@@ -13180,14 +13212,16 @@
             "type": {
               "type": "id",
               "value": "contact_reply_conversation_request"
-            }
+            },
+            "displayName": "Contact Reply"
           },
           {
             "typeName": "admin_reply_conversation_request",
             "type": {
               "type": "id",
               "value": "admin_reply_conversation_request"
-            }
+            },
+            "displayName": "Admin Reply"
           }
         ]
       }
@@ -13202,14 +13236,16 @@
             "type": {
               "type": "id",
               "value": "single_filter_search_request"
-            }
+            },
+            "displayName": "Single Filter Search Request"
           },
           {
             "typeName": "multiple_filter_search_request",
             "type": {
               "type": "id",
               "value": "multiple_filter_search_request"
-            }
+            },
+            "displayName": "Multiple Filter Search Request"
           }
         ]
       }
@@ -14757,7 +14793,8 @@
             "type": {
               "type": "id",
               "value": "file_attribute"
-            }
+            },
+            "displayName": "File"
           }
         ]
       }
@@ -17889,7 +17926,8 @@
             "type": {
               "type": "id",
               "value": "update_contact_request"
-            }
+            },
+            "displayName": "Update Contact Request Payload"
           }
         ]
       }
@@ -17904,7 +17942,8 @@
             "type": {
               "type": "id",
               "value": "create_contact_request"
-            }
+            },
+            "displayName": "Create Contact Request Payload"
           }
         ]
       }
@@ -17919,28 +17958,32 @@
             "type": {
               "type": "id",
               "value": "close_conversation_request"
-            }
+            },
+            "displayName": "Close Conversation Request"
           },
           {
             "typeName": "snooze_conversation_request",
             "type": {
               "type": "id",
               "value": "snooze_conversation_request"
-            }
+            },
+            "displayName": "Snooze Conversation Request"
           },
           {
             "typeName": "open_conversation_request",
             "type": {
               "type": "id",
               "value": "open_conversation_request"
-            }
+            },
+            "displayName": "Open Conversation Request"
           },
           {
             "typeName": "assign_conversation_request",
             "type": {
               "type": "id",
               "value": "assign_conversation_request"
-            }
+            },
+            "displayName": "Assign Conversation Request"
           }
         ]
       }
@@ -18029,21 +18072,24 @@
             "type": {
               "type": "id",
               "value": "EventsGetParametersSchema0"
-            }
+            },
+            "displayName": "user_id query parameter"
           },
           {
             "typeName": "EventsGetParametersSchema1",
             "type": {
               "type": "id",
               "value": "EventsGetParametersSchema1"
-            }
+            },
+            "displayName": "intercom_user_id query parameter"
           },
           {
             "typeName": "EventsGetParametersSchema2",
             "type": {
               "type": "id",
               "value": "EventsGetParametersSchema2"
-            }
+            },
+            "displayName": "email query parameter"
           }
         ]
       }
@@ -18058,28 +18104,32 @@
             "type": {
               "type": "id",
               "value": "create_or_update_tag_request"
-            }
+            },
+            "displayName": "Create or Update Tag Request Payload"
           },
           {
             "typeName": "tag_company_request",
             "type": {
               "type": "id",
               "value": "tag_company_request"
-            }
+            },
+            "displayName": "Tag Company Request Payload"
           },
           {
             "typeName": "untag_company_request",
             "type": {
               "type": "id",
               "value": "untag_company_request"
-            }
+            },
+            "displayName": "Untag Company Request Payload"
           },
           {
             "typeName": "tag_multiple_users_request",
             "type": {
               "type": "id",
               "value": "tag_multiple_users_request"
-            }
+            },
+            "displayName": "Tag Users Request Payload"
           }
         ]
       }
@@ -18094,14 +18144,16 @@
             "type": {
               "type": "id",
               "value": "contact_reply_ticket_request"
-            }
+            },
+            "displayName": "Contact Reply on ticket"
           },
           {
             "typeName": "admin_reply_ticket_request",
             "type": {
               "type": "id",
               "value": "admin_reply_ticket_request"
-            }
+            },
+            "displayName": "Admin Reply on ticket"
           }
         ]
       }

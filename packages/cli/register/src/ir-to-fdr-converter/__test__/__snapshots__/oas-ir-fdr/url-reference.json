@@ -284,7 +284,8 @@
             "type": {
               "type": "id",
               "value": "Mammal0"
-            }
+            },
+            "displayName": "a Pet"
           },
           {
             "typeName": "Mammal1",
@@ -292,7 +293,8 @@
             "type": {
               "type": "id",
               "value": "Mammal1"
-            }
+            },
+            "displayName": "a User"
           }
         ]
       }

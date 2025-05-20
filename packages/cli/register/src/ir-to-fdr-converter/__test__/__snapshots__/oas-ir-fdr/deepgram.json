@@ -3355,7 +3355,8 @@
             "type": {
               "type": "id",
               "value": "V1SpeakPostParametersSchema0"
-            }
+            },
+            "displayName": "linear16"
           },
           {
             "typeName": "V1SpeakPostParametersSchema1",
@@ -3363,7 +3364,8 @@
             "type": {
               "type": "id",
               "value": "V1SpeakPostParametersSchema1"
-            }
+            },
+            "displayName": "mulaw"
           },
           {
             "typeName": "V1SpeakPostParametersSchema2",
@@ -3371,7 +3373,8 @@
             "type": {
               "type": "id",
               "value": "V1SpeakPostParametersSchema2"
-            }
+            },
+            "displayName": "alaw"
           },
           {
             "typeName": "V1SpeakPostParametersSchema3",
@@ -3379,7 +3382,8 @@
             "type": {
               "type": "id",
               "value": "V1SpeakPostParametersSchema3"
-            }
+            },
+            "displayName": "mp3"
           },
           {
             "typeName": "V1SpeakPostParametersSchema4",
@@ -3387,7 +3391,8 @@
             "type": {
               "type": "id",
               "value": "V1SpeakPostParametersSchema4"
-            }
+            },
+            "displayName": "opus"
           }
         ]
       }
@@ -11012,7 +11017,8 @@
             "type": {
               "type": "id",
               "value": "ListenControlMessageResponse0"
-            }
+            },
+            "displayName": "FinalizeResponse"
           },
           {
             "typeName": "ListenControlMessageResponse1",
@@ -11020,7 +11026,8 @@
             "type": {
               "type": "id",
               "value": "ListenControlMessageResponse1"
-            }
+            },
+            "displayName": "MetadataResponse"
           },
           {
             "typeName": "ListenControlMessageResponse2",
@@ -11028,7 +11035,8 @@
             "type": {
               "type": "id",
               "value": "ListenControlMessageResponse2"
-            }
+            },
+            "displayName": "CloseStreamResponse"
           }
         ]
       }

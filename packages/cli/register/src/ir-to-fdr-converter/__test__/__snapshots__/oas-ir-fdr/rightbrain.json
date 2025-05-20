@@ -4026,7 +4026,8 @@
             "type": {
               "type": "id",
               "value": "KratosIdentity"
-            }
+            },
+            "displayName": "KratosIdentity"
           }
         ]
       }
@@ -8100,14 +8101,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8122,14 +8125,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8144,35 +8149,40 @@
             "type": {
               "type": "id",
               "value": "MultipleRolesNotAllowedErrorResponse"
-            }
+            },
+            "displayName": "MultipleRolesNotAllowedErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "InvalidSubjectTypeErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           }
         ]
       }
@@ -8187,14 +8197,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8209,28 +8221,32 @@
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           }
         ]
       }
@@ -8245,14 +8261,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8267,14 +8285,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8289,14 +8309,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8311,14 +8333,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8333,14 +8357,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8355,21 +8381,24 @@
             "type": {
               "type": "id",
               "value": "OrganizationInviteAlreadyExistsErrorResponse"
-            }
+            },
+            "displayName": "OrganizationInviteAlreadyExistsErrorResponse"
           },
           {
             "typeName": "OrganizationMemberAlreadyExistsErrorResponse",
             "type": {
               "type": "id",
               "value": "OrganizationMemberAlreadyExistsErrorResponse"
-            }
+            },
+            "displayName": "OrganizationMemberAlreadyExistsErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           }
         ]
       }
@@ -8384,14 +8413,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8406,14 +8437,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8428,14 +8461,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8450,14 +8485,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8472,14 +8509,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8494,14 +8533,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8516,14 +8557,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8538,14 +8581,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8560,14 +8605,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8582,14 +8629,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8604,14 +8653,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8626,14 +8677,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8665,14 +8718,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8687,14 +8742,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8709,35 +8766,40 @@
             "type": {
               "type": "id",
               "value": "MultipleRolesNotAllowedErrorResponse"
-            }
+            },
+            "displayName": "MultipleRolesNotAllowedErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "InvalidSubjectTypeErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           }
         ]
       }
@@ -8752,14 +8814,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8774,28 +8838,32 @@
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           }
         ]
       }
@@ -8810,14 +8878,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8832,14 +8902,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8854,14 +8926,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8876,14 +8950,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8898,14 +8974,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8920,14 +8998,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8942,14 +9022,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8964,14 +9046,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8986,14 +9070,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9008,14 +9094,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9030,14 +9118,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9069,14 +9159,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9091,14 +9183,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9113,35 +9207,40 @@
             "type": {
               "type": "id",
               "value": "MultipleRolesNotAllowedErrorResponse"
-            }
+            },
+            "displayName": "MultipleRolesNotAllowedErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "InvalidSubjectTypeErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           }
         ]
       }
@@ -9156,14 +9255,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9178,28 +9279,32 @@
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           }
         ]
       }
@@ -9214,14 +9319,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9271,14 +9378,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9293,14 +9402,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9315,14 +9426,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9337,14 +9450,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9359,14 +9474,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9381,14 +9498,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9403,14 +9522,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9425,14 +9546,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9447,14 +9570,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9486,14 +9611,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9508,14 +9635,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9530,35 +9659,40 @@
             "type": {
               "type": "id",
               "value": "MultipleRolesNotAllowedErrorResponse"
-            }
+            },
+            "displayName": "MultipleRolesNotAllowedErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "InvalidSubjectTypeErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           }
         ]
       }
@@ -9573,14 +9707,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9595,28 +9731,32 @@
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           }
         ]
       }
@@ -9631,14 +9771,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9653,14 +9795,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9675,14 +9819,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9697,14 +9843,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9719,14 +9867,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9741,14 +9891,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9763,14 +9915,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9802,14 +9956,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9824,14 +9980,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9846,35 +10004,40 @@
             "type": {
               "type": "id",
               "value": "MultipleRolesNotAllowedErrorResponse"
-            }
+            },
+            "displayName": "MultipleRolesNotAllowedErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "InvalidSubjectTypeErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           }
         ]
       }
@@ -9889,14 +10052,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9911,28 +10076,32 @@
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           }
         ]
       }
@@ -9947,14 +10116,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9969,14 +10140,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9991,14 +10164,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10013,14 +10188,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10035,14 +10212,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10057,14 +10236,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10079,14 +10260,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10101,14 +10284,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10123,14 +10308,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10145,14 +10332,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10167,14 +10356,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10189,14 +10380,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10211,14 +10404,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10233,14 +10428,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10255,14 +10452,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10277,14 +10476,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10299,14 +10500,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10321,14 +10524,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10343,14 +10548,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10365,14 +10572,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10387,14 +10596,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10409,14 +10620,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10431,14 +10644,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10453,14 +10668,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10475,14 +10692,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10497,14 +10716,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10519,14 +10740,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10541,14 +10764,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10563,14 +10788,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10585,14 +10812,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10607,14 +10836,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10629,14 +10860,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10651,14 +10884,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10673,14 +10908,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10695,14 +10932,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10717,14 +10956,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10739,14 +10980,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10761,14 +11004,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10783,14 +11028,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10805,14 +11052,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10827,14 +11076,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10849,14 +11100,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10871,14 +11124,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10893,14 +11148,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10915,14 +11172,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10937,14 +11196,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10959,14 +11220,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10981,14 +11244,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11003,14 +11268,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11025,14 +11292,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11047,14 +11316,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11069,14 +11340,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11091,14 +11364,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11113,14 +11388,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11135,14 +11412,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11157,14 +11436,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11179,14 +11460,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11201,14 +11484,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11223,14 +11508,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11245,14 +11532,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11267,14 +11556,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11298,14 +11589,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11337,14 +11630,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11359,14 +11654,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11381,35 +11678,40 @@
             "type": {
               "type": "id",
               "value": "MultipleRolesNotAllowedErrorResponse"
-            }
+            },
+            "displayName": "MultipleRolesNotAllowedErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "InvalidSubjectTypeErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           }
         ]
       }
@@ -11424,14 +11726,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11446,28 +11750,32 @@
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           }
         ]
       }
@@ -11482,14 +11790,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11504,14 +11814,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11526,14 +11838,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11548,14 +11862,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11570,14 +11886,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11592,14 +11910,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11614,14 +11934,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }

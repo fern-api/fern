@@ -4636,147 +4636,168 @@
             "type": {
               "type": "id",
               "value": "FnCall0"
-            }
+            },
+            "displayName": "&&"
           },
           {
             "typeName": "FnCall1",
             "type": {
               "type": "id",
               "value": "FnCall1"
-            }
+            },
+            "displayName": "||"
           },
           {
             "typeName": "FnCall2",
             "type": {
               "type": "id",
               "value": "FnCall2"
-            }
+            },
+            "displayName": "=="
           },
           {
             "typeName": "FnCall3",
             "type": {
               "type": "id",
               "value": "FnCall3"
-            }
+            },
+            "displayName": "+"
           },
           {
             "typeName": "FnCall4",
             "type": {
               "type": "id",
               "value": "FnCall4"
-            }
+            },
+            "displayName": "-"
           },
           {
             "typeName": "FnCall5",
             "type": {
               "type": "id",
               "value": "FnCall5"
-            }
+            },
+            "displayName": "*"
           },
           {
             "typeName": "FnCall6",
             "type": {
               "type": "id",
               "value": "FnCall6"
-            }
+            },
+            "displayName": "/"
           },
           {
             "typeName": "FnCall7",
             "type": {
               "type": "id",
               "value": "FnCall7"
-            }
+            },
+            "displayName": "//"
           },
           {
             "typeName": "FnCall8",
             "type": {
               "type": "id",
               "value": "FnCall8"
-            }
+            },
+            "displayName": "<"
           },
           {
             "typeName": "FnCall9",
             "type": {
               "type": "id",
               "value": "FnCall9"
-            }
+            },
+            "displayName": "<="
           },
           {
             "typeName": "FnCall10",
             "type": {
               "type": "id",
               "value": "FnCall10"
-            }
+            },
+            "displayName": ">"
           },
           {
             "typeName": "FnCall11",
             "type": {
               "type": "id",
               "value": "FnCall11"
-            }
+            },
+            "displayName": ">="
           },
           {
             "typeName": "FnCall12",
             "type": {
               "type": "id",
               "value": "FnCall12"
-            }
+            },
+            "displayName": "!"
           },
           {
             "typeName": "FnCall13",
             "type": {
               "type": "id",
               "value": "FnCall13"
-            }
+            },
+            "displayName": "is_substring"
           },
           {
             "typeName": "FnCall14",
             "type": {
               "type": "id",
               "value": "FnCall14"
-            }
+            },
+            "displayName": "starts_with"
           },
           {
             "typeName": "FnCall15",
             "type": {
               "type": "id",
               "value": "FnCall15"
-            }
+            },
+            "displayName": "ends_with"
           },
           {
             "typeName": "FnCall16",
             "type": {
               "type": "id",
               "value": "FnCall16"
-            }
+            },
+            "displayName": "to_lower"
           },
           {
             "typeName": "FnCall17",
             "type": {
               "type": "id",
               "value": "FnCall17"
-            }
+            },
+            "displayName": "to_upper"
           },
           {
             "typeName": "FnCall18",
             "type": {
               "type": "id",
               "value": "FnCall18"
-            }
+            },
+            "displayName": "has_label"
           },
           {
             "typeName": "FnCall19",
             "type": {
               "type": "id",
               "value": "FnCall19"
-            }
+            },
+            "displayName": "has_mcc"
           },
           {
             "typeName": "FnCall20",
             "type": {
               "type": "id",
               "value": "FnCall20"
-            }
+            },
+            "displayName": "get property"
           }
         ]
       }
@@ -4791,21 +4812,24 @@
             "type": {
               "type": "id",
               "value": "If"
-            }
+            },
+            "displayName": "if"
           },
           {
             "typeName": "ModifyLabels",
             "type": {
               "type": "id",
               "value": "ModifyLabels"
-            }
+            },
+            "displayName": "modify labels"
           },
           {
             "typeName": "Setter",
             "type": {
               "type": "id",
               "value": "Setter"
-            }
+            },
+            "displayName": "set"
           }
         ]
       }
@@ -4970,42 +4994,48 @@
             "type": {
               "type": "id",
               "value": "ModifyLabels0"
-            }
+            },
+            "displayName": "add_label"
           },
           {
             "typeName": "ModifyLabels1",
             "type": {
               "type": "id",
               "value": "ModifyLabels1"
-            }
+            },
+            "displayName": "remove_label"
           },
           {
             "typeName": "ModifyLabels2",
             "type": {
               "type": "id",
               "value": "ModifyLabels2"
-            }
+            },
+            "displayName": "set_labels"
           },
           {
             "typeName": "ModifyLabels3",
             "type": {
               "type": "id",
               "value": "ModifyLabels3"
-            }
+            },
+            "displayName": "add_mcc"
           },
           {
             "typeName": "ModifyLabels4",
             "type": {
               "type": "id",
               "value": "ModifyLabels4"
-            }
+            },
+            "displayName": "remove_mcc"
           },
           {
             "typeName": "ModifyLabels5",
             "type": {
               "type": "id",
               "value": "ModifyLabels5"
-            }
+            },
+            "displayName": "set_mcc"
           }
         ]
       }
