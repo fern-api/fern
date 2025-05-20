@@ -45,15 +45,6 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
     }
 
     private convertSchemas(): void {
-        const group = this.context.getGroup({
-            groupParts: [],
-            namespace: this.context.namespace
-        });
-
-        const pkg = this.getOrCreatePackage({
-            group
-        });
-
         for (const [id, schema] of Object.entries(this.context.spec.components?.schemas ?? {})) {
             const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
                 context: this.context,
@@ -63,7 +54,7 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
             });
             const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
-                this.addTypeToPackage(id, group);
+                this.addTypeToPackage(id);
                 this.addTypesToIr({
                     ...convertedSchema.inlinedTypes,
                     [id]: convertedSchema.convertedSchema

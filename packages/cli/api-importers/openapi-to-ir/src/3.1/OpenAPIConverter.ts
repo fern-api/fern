@@ -138,11 +138,6 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
     }
 
     private convertSchemas(): void {
-        const group = this.context.getGroup({
-            groupParts: [],
-            namespace: this.context.namespace
-        });
-
         for (const [id, schema] of Object.entries(this.context.spec.components?.schemas ?? {})) {
             const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
                 context: this.context,
@@ -152,7 +147,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             });
             const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
-                this.addTypeToPackage(id, group);
+                this.addTypeToPackage(id);
                 this.addTypesToIr({
                     ...convertedSchema.inlinedTypes,
                     [id]: convertedSchema.convertedSchema

@@ -7,9 +7,9 @@ import { FernExamplesExtension } from "../extensions/x-fern-examples";
 
 export declare namespace AbstractChannelConverter {
     export interface Args<TChannel> extends AsyncAPIConverter.AbstractArgs {
+        websocketGroup: string[] | undefined;
         channel: TChannel;
         channelPath: string;
-        group: string[] | undefined;
     }
 
     export interface Output {
@@ -25,14 +25,20 @@ export abstract class AbstractChannelConverter<TChannel> extends AbstractConvert
 > {
     protected readonly channel: TChannel;
     protected readonly channelPath: string;
-    protected readonly group: string[] | undefined;
     protected inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
+    protected websocketGroup: string[] | undefined;
 
-    constructor({ context, breadcrumbs, channel, channelPath, group }: AbstractChannelConverter.Args<TChannel>) {
+    constructor({
+        context,
+        breadcrumbs,
+        websocketGroup,
+        channel,
+        channelPath
+    }: AbstractChannelConverter.Args<TChannel>) {
         super({ context, breadcrumbs });
+        this.websocketGroup = websocketGroup;
         this.channel = channel;
         this.channelPath = channelPath;
-        this.group = group;
     }
 
     public abstract convert(): AbstractChannelConverter.Output | undefined;

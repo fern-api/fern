@@ -302,29 +302,31 @@ export abstract class AbstractSpecConverter<
         websocketChannel,
         channelPath,
         audiences,
-        group
+        websocketGroup
     }: {
         websocketChannel: FernIr.WebSocketChannel;
         channelPath: string;
         audiences: string[];
-        group?: string[];
+        websocketGroup?: string[];
     }): void {
-        const channelName = group ? group.join(".") : `channel_${camelCase(channelPath)}`;
+        const channelNameOverride = camelCase(websocketGroup?.join("."));
+        const defaultChannelName = camelCase(channelPath);
+        const channelPrefix = this.context.namespace ? `${camelCase(this.context.namespace)}/` : "";
+        const channelName = channelNameOverride
+            ? `channel_${channelPrefix}${channelNameOverride}`
+            : `channel_${channelPrefix}${defaultChannelName}`;
+        const pkg = websocketGroup
+            ? this.getOrCreatePackage({ group: websocketGroup })
+            : this.getOrCreatePackage({ group: [defaultChannelName] });
+
         this.ir.websocketChannels = {
             ...this.ir.websocketChannels,
             [channelName]: websocketChannel
         };
         if (channelName !== "") {
-            const channelPath = channelName.replace("channel_", "");
-            const channelSubpackageName = channelName.replace("channel_", "subpackage_");
-            if (this.ir.subpackages[channelSubpackageName] == null) {
-                this.ir.subpackages[channelSubpackageName] = {
-                    name: this.context.casingsGenerator.generateName(channelPath),
-                    ...this.createPackage({ name: channelPath })
-                };
+            if (pkg.websocket == null) {
+                pkg.websocket = channelName;
             }
-            this.ir.subpackages[channelSubpackageName].websocket = channelName;
-            this.ir.rootPackage.subpackages.push(channelSubpackageName);
         } else {
             this.ir.rootPackage.websocket = "";
         }
@@ -368,7 +370,11 @@ export abstract class AbstractSpecConverter<
         this.ir.rootPackage.types.push(typeId);
     }
 
-    protected addTypeToPackage(typeId: FernIr.TypeId, group?: string[]): void {
+    protected addTypeToPackage(typeId: FernIr.TypeId): void {
+        const group = this.context.getGroup({
+            groupParts: [],
+            namespace: this.context.namespace
+        });
         const groupPackage = this.getOrCreatePackage({ group });
         groupPackage.types.push(typeId);
     }
@@ -460,7 +466,7 @@ export abstract class AbstractSpecConverter<
         if (this.context.namespace != null) {
             groupParts.push(this.context.namespace);
         }
-        groupParts.push(...(group ?? []));
+        groupParts.push(...(group ?? []).map((part) => camelCase(part)));
 
         if (groupParts.length == 0) {
             return this.ir.rootPackage;
@@ -468,9 +474,9 @@ export abstract class AbstractSpecConverter<
 
         let pkg = this.ir.rootPackage;
         for (let i = 0; i < groupParts.length; i++) {
-            const name = camelCase(groupParts[i]);
-            const camelCasedGroupParts = groupParts.slice(0, i + 1).map((part) => camelCase(part));
-            const subpackageId = `subpackage_${camelCasedGroupParts.join("/")}`;
+            const name = groupParts[i] ?? "";
+            const groupPartsSubset = groupParts.slice(0, i + 1);
+            const subpackageId = `subpackage_${groupPartsSubset.join("/")}`;
             if (this.ir.subpackages[subpackageId] == null) {
                 this.ir.subpackages[subpackageId] = {
                     name: this.context.casingsGenerator.generateName(name),
@@ -483,7 +489,6 @@ export abstract class AbstractSpecConverter<
             }
             pkg = curr;
         }
-
         return pkg;
     }
 }
