@@ -165,8 +165,7 @@ export abstract class AbstractSpecConverter<
         //     ...intermediateRepresentationForAudiences,
         // };
 
-        const filteredEndpoints = this.irGraph.getFilteredEndpoints();
-        this.filterIrForAudiences(filteredEndpoints);
+        this.filterIrForAudiences();
 
         return {
             ...ir,
@@ -175,7 +174,21 @@ export abstract class AbstractSpecConverter<
         };
     }
 
-    private filterIrForAudiences(filteredEndpoints: Set<FernIr.EndpointId>): void {
+    private filterIrForAudiences(): void {
+        const filteredServices = this.irGraph.getFilteredServices();
+        const filteredEndpoints = this.irGraph.getFilteredEndpoints();
+        const filteredChannels = this.irGraph.getFilteredChannels();
+        const filteredWebhooks = this.irGraph.getFilteredWebhooks();
+
+        this.ir.websocketChannels = Object.fromEntries(
+            Object.entries(this.ir.websocketChannels ?? {}).filter(([channelId]) => filteredChannels.has(channelId))
+        );
+        this.ir.webhookGroups = Object.fromEntries(
+            Object.entries(this.ir.webhookGroups).filter(([webhookId]) => filteredWebhooks.has(webhookId))
+        );
+        this.ir.services = Object.fromEntries(
+            Object.entries(this.ir.services).filter(([serviceId]) => filteredServices.has(serviceId))
+        );
         for (const service of Object.values(this.ir.services)) {
             const updatedEndpoints: FernIr.HttpEndpoint[] = [];
             for (const endpoint of service.endpoints) {
@@ -479,8 +492,7 @@ export abstract class AbstractSpecConverter<
             const subpackageId = `subpackage_${camelCasedGroupParts.join("/")}`;
             if (this.ir.subpackages[subpackageId] == null) {
                 this.ir.subpackages[subpackageId] = {
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    name: this.context.casingsGenerator.generateName(name!),
+                    name: this.context.casingsGenerator.generateName(name),
                     ...this.createPackage({ name })
                 };
             }

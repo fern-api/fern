@@ -1,3 +1,4 @@
+import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { FernIr, HttpEndpoint, HttpEndpointSource, HttpPath } from "@fern-api/ir-sdk";
@@ -87,13 +88,6 @@ export class OperationConverter extends AbstractOperationConverter {
         const topLevelErrors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration> = {};
         const errors = convertedEndpointErrors.map((convertedError) => convertedError.error);
 
-        const endpointId = [];
-        if (this.context.namespace != null) {
-            endpointId.push(this.context.namespace);
-        }
-        endpointId.push(...(group ?? []));
-        endpointId.push(method);
-
         const path = constructHttpPath(this.path);
         const baseUrl = this.getEndpointBaseUrl();
 
@@ -167,6 +161,10 @@ export class OperationConverter extends AbstractOperationConverter {
             source: HttpEndpointSource.openapi()
         };
 
+        const endpointGroupParts = this.context.namespace != null ? [this.context.namespace] : [];
+        const camelCasedGroup = group?.map((group) => camelCase(group));
+        endpointGroupParts.push(...(camelCasedGroup ?? []));
+
         return {
             audiences:
                 this.context.getAudiences({
@@ -176,14 +174,14 @@ export class OperationConverter extends AbstractOperationConverter {
             group,
             errors: topLevelErrors,
             endpoint: {
-                id: endpointId.join("."),
+                id: `endpoint_${endpointGroupParts.join("/")}.${method}`,
                 ...baseEndpoint,
                 response
             },
             streamEndpoint:
                 streamResponse != null && streamResponse.body != null
                     ? {
-                          id: `${endpointId.join(".")}_stream`,
+                          id: `endpoint_${endpointGroupParts.join("/")}.${method}_stream`,
                           ...baseEndpoint,
                           response: streamResponse
                       }
