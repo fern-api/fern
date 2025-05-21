@@ -140,6 +140,7 @@ export declare namespace SdkGenerator {
         packageJson: Record<string, unknown> | undefined;
         useBigInt: boolean;
         useLegacyExports: boolean;
+        generateWireTests: boolean;
     }
 }
 
@@ -409,7 +410,8 @@ export class SdkGenerator {
             dependencyManager: this.dependencyManager,
             rootDirectory: this.rootDirectory,
             writeUnitTests: this.config.writeUnitTests,
-            includeSerdeLayer: config.includeSerdeLayer
+            includeSerdeLayer: config.includeSerdeLayer,
+            generateWireTests: config.generateWireTests
         });
         this.referenceConfigBuilder = new ReferenceConfigBuilder();
         this.generatorAgent = new TypeScriptGeneratorAgent({
@@ -432,7 +434,8 @@ export class SdkGenerator {
                 : undefined;
 
         this.asIsManager = new AsIsManager({
-            useBigInt: config.useBigInt
+            useBigInt: config.useBigInt,
+            generateWireTests: config.generateWireTests
         });
 
         this.websocketTypeSchemaDeclarationReferencer = new WebsocketTypeSchemaDeclarationReferencer({

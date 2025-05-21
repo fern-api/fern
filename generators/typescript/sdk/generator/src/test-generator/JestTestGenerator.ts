@@ -2,6 +2,7 @@ import {
     DependencyManager,
     DependencyType,
     ExportedFilePath,
+    Reference,
     getExampleEndpointCalls,
     getTextOfTsNode
 } from "@fern-typescript/commons";
@@ -22,21 +23,31 @@ export declare namespace JestTestGenerator {
         rootDirectory: Directory;
         includeSerdeLayer: boolean;
         writeUnitTests: boolean;
+        generateWireTests: boolean;
     }
 }
 
 export class JestTestGenerator {
-    private ir: IR.IntermediateRepresentation;
-    private dependencyManager: DependencyManager;
-    private rootDirectory: Directory;
-    private writeUnitTests: boolean;
-    private includeSerdeLayer: boolean;
+    private readonly ir: IR.IntermediateRepresentation;
+    private readonly dependencyManager: DependencyManager;
+    private readonly rootDirectory: Directory;
+    private readonly writeUnitTests: boolean;
+    private readonly includeSerdeLayer: boolean;
+    private readonly generateWireTests: boolean;
 
-    constructor({ ir, dependencyManager, rootDirectory, includeSerdeLayer, writeUnitTests }: JestTestGenerator.Args) {
+    constructor({
+        ir,
+        dependencyManager,
+        rootDirectory,
+        includeSerdeLayer,
+        writeUnitTests,
+        generateWireTests
+    }: JestTestGenerator.Args) {
         this.ir = ir;
         this.dependencyManager = dependencyManager;
         this.rootDirectory = rootDirectory;
         this.writeUnitTests = writeUnitTests;
+        this.generateWireTests = generateWireTests;
         this.includeSerdeLayer = includeSerdeLayer;
     }
 
@@ -50,42 +61,16 @@ export class JestTestGenerator {
                 testEnvironment: "node",
                 moduleNameMapper: {
                     '(.+)\\.js$': '$1'
+                },${
+                    this.generateWireTests
+                        ? `
+                setupFilesAfterEnv: ["<rootDir>/tests/mock-server/setup.ts"],`
+                        : ""
                 }
             };
             `.toString({ dprintOptions: { indentWidth: 4 } })
-            // globalSetup: "<rootDir>/tests/setup.js",
-            // globalTeardown: "<rootDir>/tests/teardown.js",
         );
         jestConfig.saveSync();
-
-        // const setupFile = this.rootDirectory.createSourceFile(
-        //     "tests/setup.js",
-        //     code`
-        //     const { setup: setupDevServer } = require("jest-dev-server");
-
-        //     const PORT = 56157;
-
-        //     module.exports = async function globalSetup() {
-        //         process.env.TESTS_BASE_URL = \`http://localhost:\${PORT}\`;
-
-        //         globalThis.servers = await setupDevServer({
-        //             command: \`fern mock --port=\${PORT}\`,
-        //             launchTimeout: 10_000,
-        //             port: PORT,
-        //         });
-        //     };`.toString({ dprintOptions: { indentWidth: 4 } })
-        // );
-        // setupFile.saveSync();
-        // const teardownFile = this.rootDirectory.createSourceFile(
-        //     "tests/teardown.js",
-        //     code`
-        //     const { teardown: teardownDevServer } = require("jest-dev-server");
-
-        //     module.exports = async function globalSetup() {
-        //         await teardownDevServer(globalThis.servers);
-        //     };`.toString({ dprintOptions: { indentWidth: 4 } })
-        // );
-        // teardownFile.saveSync();
     }
 
     public getTestFile(serviceId: string, service: IR.HttpService): ExportedFilePath {
@@ -107,7 +92,9 @@ export class JestTestGenerator {
         this.dependencyManager.addDependency("@types/jest", "^29.5.14", { type: DependencyType.DEV });
         this.dependencyManager.addDependency("ts-jest", "^29.1.1", { type: DependencyType.DEV });
         this.dependencyManager.addDependency("jest-environment-jsdom", "^29.7.0", { type: DependencyType.DEV });
-        // this.dependencyManager.addDependency("jest-dev-server", "10.0.0", { type: DependencyType.DEV });
+        if (this.generateWireTests) {
+            this.dependencyManager.addDependency("msw", "^2.8.4", { type: DependencyType.DEV });
+        }
     }
 
     public addExtras(): void {
@@ -119,7 +106,8 @@ export class JestTestGenerator {
         if (this.writeUnitTests) {
             return {
                 test: "jest tests/unit",
-                "wire:test": "npm install -g fern-api && fern test --command 'jest tests/wire'"
+                "wire:test": "yarn test:wire",
+                "test:wire": "jest tests/wire"
             };
         } else {
             return {
@@ -165,12 +153,6 @@ describe("test", () => {
             }`
         );
 
-        const tests = service.endpoints
-            .map((endpoint) => {
-                return this.buildTest(adaptResponse, endpoint, serviceGenerator, context);
-            })
-            .filter(Boolean);
-
         const fallbackTest = code`
             test("constructor", () => {
                 expect(${getTextOfTsNode(
@@ -181,28 +163,12 @@ describe("test", () => {
             });
         `;
 
+        context.importsManager.addImportFromRoot("tests/mock-server/MockServerPool.js", {
+            namedImports: ["mockServerPool"]
+        });
         const importStatement = context.sdkClientClass.getReferenceToClientClass({ isRoot: true });
-        const envValue = code`process.env.TESTS_BASE_URL || "test"`;
-        const generateEnvironment = () => {
-            if (!this.ir.environments) {
-                return envValue;
-            }
-            return this.ir.environments.environments._visit<Code | Record<string, Code>>({
-                singleBaseUrl: (environment) => {
-                    return envValue;
-                },
-                multipleBaseUrls: (environment) => {
-                    return Object.fromEntries(
-                        environment.baseUrls.map((url) => {
-                            return [url.name.camelCase.unsafeName, envValue];
-                        })
-                    );
-                },
-                _other: () => envValue
-            });
-        };
 
-        const options: [string, unknown][] = [["environment", generateEnvironment()]];
+        const options: [string, unknown][] = [];
         this.ir.pathParameters.forEach((pathParameter) => {
             options.push([
                 pathParameter.name.camelCase.unsafeName,
@@ -261,9 +227,13 @@ describe("test", () => {
             options.push([header.name.name.camelCase.unsafeName, code`process.env.TESTS_HEADER || "test"`]);
         });
 
-        return code`
-            const client = new ${getTextOfTsNode(importStatement.getEntityName())}(${Object.fromEntries(options)});
+        const tests = service.endpoints
+            .map((endpoint) => {
+                return this.buildTest(adaptResponse, endpoint, serviceGenerator, context, importStatement, options);
+            })
+            .filter(Boolean);
 
+        return code`
             ${adaptResponse.ifUsed}
 
             describe("${serviceName}", () => {
@@ -276,7 +246,9 @@ describe("test", () => {
         adaptResponse: ReturnType<typeof conditionalOutput>,
         endpoint: IR.HttpEndpoint,
         serviceGenerator: GeneratedSdkClientClass,
-        context: SdkContext
+        context: SdkContext,
+        importStatement: Reference,
+        options: [string, unknown][]
     ): Code | undefined {
         const notSupportedResponse =
             !!endpoint.response &&
@@ -441,15 +413,51 @@ describe("test", () => {
             return visitExampleTypeReference(body);
         };
 
-        const response = getExpectedResponse();
-        const expected = "response";
+        const rawRequestBody = example.request?.jsonExample;
+        const rawResponseBody = getExpectedResponse();
+        const expected = getExpectedResponse();
         // Uncomment if/when we support Sets in responses from the TS-SDK
         // const expected = shouldJsonParseStringify ? code`${adaptResponse}(response)` : "response";
 
+        const generateEnvironment = () => {
+            if (!this.ir.environments) {
+                return code`server.baseUrl`;
+            }
+            return this.ir.environments.environments._visit<Code | Record<string, Code>>({
+                singleBaseUrl: (environment) => {
+                    return code`server.baseUrl`;
+                },
+                multipleBaseUrls: (environment) => {
+                    return Object.fromEntries(
+                        environment.baseUrls.map((url) => {
+                            return [url.name.camelCase.unsafeName, code`server.baseUrl`];
+                        })
+                    );
+                },
+                _other: () => code`server.baseUrl`
+            });
+        };
+        options.push(["environment", generateEnvironment()]);
+
         return code`
             test("${endpoint.name.camelCase.unsafeName}", async () => {
+                const server = mockServerPool.createServer();
+                const client = new ${getTextOfTsNode(importStatement.getEntityName())}(${Object.fromEntries(options)});
+
+                server
+                    .buildHttpHandler()
+                    .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders.map((h) => {
+                        return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+                            `;
+                    })}${example.endpointHeaders.map((h) => {
+                        return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+                            `;
+                    })}${rawRequestBody ? code`.requestJsonBody(${JSON.stringify(rawRequestBody)})` : ""}
+                    ${rawResponseBody ? code`.respondWithJsonBody(${rawResponseBody})` : ""}
+                    .build();
+
                 const response = ${getTextOfTsNode(generatedExample)};
-                expect(${expected}).toEqual(${response});
+                expect(response).toEqual(${expected});
             });
           `;
     }

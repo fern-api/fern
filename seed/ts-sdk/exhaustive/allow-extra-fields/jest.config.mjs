@@ -5,5 +5,5 @@ export default {
     moduleNameMapper: {
         "(.+)\.js$": "$1",
     },
-    setupFilesAfterEnv: ["<rootDir>/tests/wire/setup.ts"],
+    setupFilesAfterEnv: ["<rootDir>/tests/mock-server/setup.ts"],
 };

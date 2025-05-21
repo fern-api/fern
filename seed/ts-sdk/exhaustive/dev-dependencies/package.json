@@ -53,6 +53,7 @@
         "@types/jest": "^29.5.14",
         "ts-jest": "^29.1.1",
         "jest-environment-jsdom": "^29.7.0",
+        "msw": "^2.8.4",
         "@types/node": "^18.19.70",
         "esbuild": "~0.24.2",
         "prettier": "^3.4.2",

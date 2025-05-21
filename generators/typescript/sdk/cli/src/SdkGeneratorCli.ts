@@ -154,7 +154,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 omitUndefined: customConfig.omitUndefined ?? true,
                 useBigInt: customConfig.useBigInt ?? false,
                 enableInlineTypes: customConfig.enableInlineTypes ?? true,
-                useLegacyExports
+                useLegacyExports,
+                generateWireTests: customConfig.generateWireTests ?? false
             }
         });
         const typescriptProject = await sdkGenerator.generate();
