@@ -6368,6 +6368,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "retrieveExample",
               "description": "",
               "path": "/v1/deployments/id",
               "pathParameters": {
@@ -6801,6 +6802,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "listExample",
               "description": "",
               "path": "/v1/documents",
               "pathParameters": {},
@@ -6964,6 +6966,7 @@
           ],
           "examples": [
             {
+              "name": "documentsUploadExample",
               "description": "",
               "path": "/v1/upload-document",
               "pathParameters": {},
@@ -7069,6 +7072,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "retrieveExample",
               "description": "",
               "path": "/v1/model-versions/id",
               "pathParameters": {
@@ -7320,6 +7324,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "modelVersionsModelVersionCompilePromptExample",
               "description": "",
               "path": "/v1/model-versions/id/compile-prompt",
               "pathParameters": {
@@ -7438,6 +7443,7 @@
           ],
           "examples": [
             {
+              "name": "registeredPromptsRegisterPromptExample",
               "description": "",
               "path": "/v1/registered-prompts/register",
               "pathParameters": {},
@@ -7928,6 +7934,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "deleteSandboxScenarioExample",
               "description": "",
               "path": "/v1/sandboxes/id/scenarios/scenario_id",
               "pathParameters": {
@@ -8029,6 +8036,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "testSuitesUpsertTestSuiteTestCaseExample",
               "description": "",
               "path": "/v1/test-suites/id/test-cases",
               "pathParameters": {
@@ -8143,6 +8151,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "deleteTestSuiteTestCaseExample",
               "description": "",
               "path": "/v1/test-suites/id/test-cases/test_case_id",
               "pathParameters": {
@@ -8279,6 +8288,7 @@
         ],
         "examples": [
           {
+            "name": "executePromptStreamExample",
             "description": "",
             "path": "/v1/execute-prompt-stream",
             "pathParameters": {},
@@ -8393,6 +8403,7 @@
         "errorsV2": [],
         "examples": [
           {
+            "name": "executeWorkflowStreamExample",
             "description": "",
             "path": "/v1/execute-workflow-stream",
             "pathParameters": {},
@@ -8587,6 +8598,7 @@
         ],
         "examples": [
           {
+            "name": "generateExample",
             "description": "",
             "path": "/v1/generate",
             "pathParameters": {},
@@ -8795,6 +8807,7 @@
         ],
         "examples": [
           {
+            "name": "generateStreamExample",
             "description": "",
             "path": "/v1/generate-stream",
             "pathParameters": {},
@@ -8990,6 +9003,7 @@
         ],
         "examples": [
           {
+            "name": "searchExample",
             "description": "",
             "path": "/v1/search",
             "pathParameters": {},
@@ -9131,6 +9145,7 @@
         ],
         "examples": [
           {
+            "name": "submitCompletionActualsExample",
             "description": "",
             "path": "/v1/submit-completion-actuals",
             "pathParameters": {},

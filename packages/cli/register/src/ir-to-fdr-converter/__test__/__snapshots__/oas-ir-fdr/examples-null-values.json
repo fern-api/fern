@@ -283,6 +283,7 @@
         "errorsV2": [],
         "examples": [
           {
+            "name": "createAUserExample",
             "description": "",
             "path": "/users",
             "pathParameters": {},

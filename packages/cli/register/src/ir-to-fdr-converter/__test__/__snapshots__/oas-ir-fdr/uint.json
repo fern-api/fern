@@ -122,6 +122,7 @@
         "errorsV2": [],
         "examples": [
           {
+            "name": "postExample",
             "description": "",
             "path": "/post",
             "pathParameters": {},

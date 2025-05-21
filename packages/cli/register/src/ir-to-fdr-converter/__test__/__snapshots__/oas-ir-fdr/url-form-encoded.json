@@ -105,6 +105,7 @@
         "errorsV2": [],
         "examples": [
           {
+            "name": "submitFormDataExample",
             "description": "",
             "path": "/submit",
             "pathParameters": {},

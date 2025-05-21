@@ -199,6 +199,7 @@
         "errorsV2": [],
         "examples": [
           {
+            "name": "treeList",
             "description": "",
             "path": "/trees",
             "pathParameters": {},
@@ -478,6 +479,7 @@
         "errorsV2": [],
         "examples": [
           {
+            "name": "oak",
             "description": "",
             "path": "/trees/treeId",
             "pathParameters": {
@@ -732,6 +734,7 @@
         "errorsV2": [],
         "examples": [
           {
+            "name": "getFernExample",
             "description": "",
             "path": "/ferns/fernId",
             "pathParameters": {
@@ -823,6 +826,7 @@
         "errorsV2": [],
         "examples": [
           {
+            "name": "createGrassExample",
             "description": "",
             "path": "/grasses",
             "pathParameters": {},

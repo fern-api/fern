@@ -8038,6 +8038,7 @@
           ],
           "examples": [
             {
+              "name": "locateExample",
               "description": "",
               "path": "/artifacts.locate",
               "pathParameters": {},
@@ -8198,6 +8199,7 @@
           ],
           "examples": [
             {
+              "name": "artifactsPrepareExample",
               "description": "",
               "path": "/artifacts.prepare",
               "pathParameters": {},
@@ -8387,6 +8389,7 @@
           ],
           "examples": [
             {
+              "name": "authTokensCreateExample",
               "description": "",
               "path": "/auth-tokens.create",
               "pathParameters": {},
@@ -8560,6 +8563,7 @@
           ],
           "examples": [
             {
+              "name": "authTokensDeleteExample",
               "description": "",
               "path": "/auth-tokens.delete",
               "pathParameters": {},
@@ -8723,6 +8727,7 @@
           ],
           "examples": [
             {
+              "name": "getExample",
               "description": "",
               "path": "/auth-tokens.get",
               "pathParameters": {},
@@ -8997,6 +9002,7 @@
           ],
           "examples": [
             {
+              "name": "listExample",
               "description": "",
               "path": "/auth-tokens.list",
               "pathParameters": {},
@@ -9237,6 +9243,7 @@
           ],
           "examples": [
             {
+              "name": "authTokensSelfDeleteExample",
               "description": "",
               "path": "/auth-tokens.self.delete",
               "pathParameters": {},
@@ -9402,6 +9409,7 @@
           ],
           "examples": [
             {
+              "name": "authTokensUpdateExample",
               "description": "",
               "path": "/auth-tokens.update",
               "pathParameters": {},
@@ -9657,6 +9665,7 @@
           ],
           "examples": [
             {
+              "name": "authConnectionDevOrgAuthConnectionsCreateExample",
               "description": "",
               "path": "/dev-orgs.auth-connections.create",
               "pathParameters": {},
@@ -9820,6 +9829,7 @@
           ],
           "examples": [
             {
+              "name": "authConnectionDevOrgAuthConnectionsDeleteExample",
               "description": "",
               "path": "/dev-orgs.auth-connections.delete",
               "pathParameters": {},
@@ -9987,6 +9997,7 @@
           ],
           "examples": [
             {
+              "name": "devOrgAuthConnectionsGetExample",
               "description": "",
               "path": "/dev-orgs.auth-connections.get",
               "pathParameters": {},
@@ -10132,6 +10143,7 @@
           ],
           "examples": [
             {
+              "name": "devOrgAuthConnectionsListExample",
               "description": "",
               "path": "/dev-orgs.auth-connections.list",
               "pathParameters": {},
@@ -10294,6 +10306,7 @@
           ],
           "examples": [
             {
+              "name": "authConnectionDevOrgAuthConnectionsToggleExample",
               "description": "",
               "path": "/dev-orgs.auth-connections.toggle",
               "pathParameters": {},
@@ -10463,6 +10476,7 @@
           ],
           "examples": [
             {
+              "name": "authConnectionDevOrgAuthConnectionsUpdateExample",
               "description": "",
               "path": "/dev-orgs.auth-connections.update",
               "pathParameters": {},
@@ -10705,6 +10719,7 @@
           ],
           "examples": [
             {
+              "name": "listExample",
               "description": "",
               "path": "/dev-users.list",
               "pathParameters": {},
@@ -10942,6 +10957,7 @@
           ],
           "examples": [
             {
+              "name": "selfExample",
               "description": "",
               "path": "/dev-users.self",
               "pathParameters": {},
@@ -11194,6 +11210,7 @@
           ],
           "examples": [
             {
+              "name": "partsCreateExample",
               "description": "",
               "path": "/parts.create",
               "pathParameters": {},
@@ -11490,6 +11507,7 @@
           ],
           "examples": [
             {
+              "name": "partsDeleteExample",
               "description": "",
               "path": "/parts.delete",
               "pathParameters": {},
@@ -11662,6 +11680,7 @@
           ],
           "examples": [
             {
+              "name": "getExample",
               "description": "",
               "path": "/parts.get",
               "pathParameters": {},
@@ -12029,6 +12048,7 @@
           ],
           "examples": [
             {
+              "name": "listExample",
               "description": "",
               "path": "/parts.list",
               "pathParameters": {},
@@ -12322,6 +12342,7 @@
           ],
           "examples": [
             {
+              "name": "partsUpdateExample",
               "description": "",
               "path": "/parts.update",
               "pathParameters": {},
@@ -12615,6 +12636,7 @@
           ],
           "examples": [
             {
+              "name": "revOrgsCreateExample",
               "description": "",
               "path": "/rev-orgs.create",
               "pathParameters": {},
@@ -12859,6 +12881,7 @@
           ],
           "examples": [
             {
+              "name": "revOrgsDeleteExample",
               "description": "",
               "path": "/rev-orgs.delete",
               "pathParameters": {},
@@ -13031,6 +13054,7 @@
           ],
           "examples": [
             {
+              "name": "getExample",
               "description": "",
               "path": "/rev-orgs.get",
               "pathParameters": {},
@@ -13397,6 +13421,7 @@
           ],
           "examples": [
             {
+              "name": "listExample",
               "description": "",
               "path": "/rev-orgs.list",
               "pathParameters": {},
@@ -13640,6 +13665,7 @@
           ],
           "examples": [
             {
+              "name": "revOrgsUpdateExample",
               "description": "",
               "path": "/rev-orgs.update",
               "pathParameters": {},
@@ -13881,6 +13907,7 @@
           ],
           "examples": [
             {
+              "name": "tagsCreateExample",
               "description": "",
               "path": "/tags.create",
               "pathParameters": {},
@@ -14127,6 +14154,7 @@
           ],
           "examples": [
             {
+              "name": "tagsDeleteExample",
               "description": "",
               "path": "/tags.delete",
               "pathParameters": {},
@@ -14299,6 +14327,7 @@
           ],
           "examples": [
             {
+              "name": "getExample",
               "description": "",
               "path": "/tags.get",
               "pathParameters": {},
@@ -14550,6 +14579,7 @@
           ],
           "examples": [
             {
+              "name": "listExample",
               "description": "",
               "path": "/tags.list",
               "pathParameters": {},
@@ -14795,6 +14825,7 @@
           ],
           "examples": [
             {
+              "name": "tagsUpdateExample",
               "description": "",
               "path": "/tags.update",
               "pathParameters": {},
@@ -15038,6 +15069,7 @@
           ],
           "examples": [
             {
+              "name": "timelineEntriesCreateExample",
               "description": "",
               "path": "/timeline-entries.create",
               "pathParameters": {},
@@ -15286,6 +15318,7 @@
           ],
           "examples": [
             {
+              "name": "getExample",
               "description": "",
               "path": "/timeline-entries.get",
               "pathParameters": {},
@@ -15568,6 +15601,7 @@
           ],
           "examples": [
             {
+              "name": "listExample",
               "description": "",
               "path": "/timeline-entries.list",
               "pathParameters": {},
@@ -15810,6 +15844,7 @@
           ],
           "examples": [
             {
+              "name": "timelineEntriesUpdateExample",
               "description": "",
               "path": "/timeline-entries.update",
               "pathParameters": {},
@@ -16057,6 +16092,7 @@
           ],
           "examples": [
             {
+              "name": "webhooksCreateExample",
               "description": "",
               "path": "/webhooks.create",
               "pathParameters": {},
@@ -16305,6 +16341,7 @@
           ],
           "examples": [
             {
+              "name": "webhooksDeleteExample",
               "description": "",
               "path": "/webhooks.delete",
               "pathParameters": {},
@@ -16477,6 +16514,7 @@
           ],
           "examples": [
             {
+              "name": "getExample",
               "description": "",
               "path": "/webhooks.get",
               "pathParameters": {},
@@ -16692,6 +16730,7 @@
           ],
           "examples": [
             {
+              "name": "listExample",
               "description": "",
               "path": "/webhooks.list",
               "pathParameters": {},
@@ -16935,6 +16974,7 @@
           ],
           "examples": [
             {
+              "name": "webhooksUpdateExample",
               "description": "",
               "path": "/webhooks.update",
               "pathParameters": {},
@@ -17180,6 +17220,7 @@
           ],
           "examples": [
             {
+              "name": "worksCreateExample",
               "description": "",
               "path": "/works.create",
               "pathParameters": {},
@@ -17524,6 +17565,7 @@
           ],
           "examples": [
             {
+              "name": "worksDeleteExample",
               "description": "",
               "path": "/works.delete",
               "pathParameters": {},
@@ -17824,6 +17866,7 @@
           ],
           "examples": [
             {
+              "name": "exportExample",
               "description": "",
               "path": "/works.export",
               "pathParameters": {},
@@ -18153,6 +18196,7 @@
           ],
           "examples": [
             {
+              "name": "getExample",
               "description": "",
               "path": "/works.get",
               "pathParameters": {},
@@ -18644,6 +18688,7 @@
           ],
           "examples": [
             {
+              "name": "listExample",
               "description": "",
               "path": "/works.list",
               "pathParameters": {},
@@ -18979,6 +19024,7 @@
           ],
           "examples": [
             {
+              "name": "worksUpdateExample",
               "description": "",
               "path": "/works.update",
               "pathParameters": {},

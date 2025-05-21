@@ -339,6 +339,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "listOrganizationUsersExample",
               "description": "",
               "path": "/organizations/organizationId/users",
               "pathParameters": {
@@ -466,6 +467,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "listUsersExample",
               "description": "",
               "path": "/users",
               "pathParameters": {},
@@ -583,6 +585,7 @@
         "errorsV2": [],
         "examples": [
           {
+            "name": "getAUserExample",
             "description": "",
             "path": "/users/userId",
             "pathParameters": {

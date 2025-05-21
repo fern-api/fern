@@ -29614,6 +29614,7 @@
           ],
           "examples": [
             {
+              "name": "listLinksExample",
               "description": "",
               "path": "/api/links/",
               "pathParameters": {},
@@ -29823,6 +29824,7 @@
           ],
           "examples": [
             {
+              "name": "linksRegisterLinkExample",
               "description": "",
               "path": "/api/links/",
               "pathParameters": {},
@@ -30029,6 +30031,7 @@
           ],
           "examples": [
             {
+              "name": "linksPatchLinksExample",
               "description": "",
               "path": "/api/links/",
               "pathParameters": {},
@@ -30210,6 +30213,7 @@
           ],
           "examples": [
             {
+              "name": "detailLinkExample",
               "description": "",
               "path": "/api/links/id/",
               "pathParameters": {
@@ -30443,6 +30447,7 @@
           ],
           "examples": [
             {
+              "name": "linksUpdateLinkExample",
               "description": "",
               "path": "/api/links/id/",
               "pathParameters": {
@@ -30586,6 +30591,7 @@
           ],
           "examples": [
             {
+              "name": "destroyLinkExample",
               "description": "",
               "path": "/api/links/id/",
               "pathParameters": {
@@ -30792,6 +30798,7 @@
           ],
           "examples": [
             {
+              "name": "linksChangeLinkAccessModeExample",
               "description": "",
               "path": "/api/links/e4bb1afb-4a4f-4dd6-8be0-e615d233185b/",
               "pathParameters": {
@@ -31419,6 +31426,7 @@
           ],
           "examples": [
             {
+              "name": "listAccountsExample",
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
@@ -33824,6 +33832,7 @@
           ],
           "examples": [
             {
+              "name": "destroyAccountExample",
               "description": "",
               "path": "/api/accounts/id/",
               "pathParameters": {
@@ -36886,6 +36895,7 @@
           ],
           "examples": [
             {
+              "name": "destroyTransactionExample",
               "description": "",
               "path": "/api/transactions/id/",
               "pathParameters": {
@@ -37348,6 +37358,7 @@
           ],
           "examples": [
             {
+              "name": "BalancesExamplePaginated",
               "description": "",
               "path": "/api/balances/",
               "pathParameters": {},
@@ -37622,6 +37633,7 @@
           ],
           "examples": [
             {
+              "name": "BalancesExamplePaginated",
               "description": "",
               "path": "/api/balances/",
               "pathParameters": {},
@@ -37899,6 +37911,7 @@
           ],
           "examples": [
             {
+              "name": "BalancesExamplePaginated",
               "description": "",
               "path": "/api/balances/",
               "pathParameters": {},
@@ -38130,6 +38143,7 @@
           ],
           "examples": [
             {
+              "name": "BalancesExamplePaginated",
               "description": "",
               "path": "/api/balances/id/",
               "pathParameters": {
@@ -38310,6 +38324,7 @@
           ],
           "examples": [
             {
+              "name": "destroyBalanceExample",
               "description": "",
               "path": "/api/balances/id/",
               "pathParameters": {
@@ -38600,6 +38615,7 @@
           ],
           "examples": [
             {
+              "name": "listInstitutionsExample",
               "description": "",
               "path": "/api/institutions/",
               "pathParameters": {},
@@ -38848,6 +38864,7 @@
           ],
           "examples": [
             {
+              "name": "detailInstitutionExample",
               "description": "",
               "path": "/api/institutions/id/",
               "pathParameters": {
@@ -39230,6 +39247,7 @@
           ],
           "examples": [
             {
+              "name": "OwnerBankingAccountPaginated",
               "description": "",
               "path": "/api/owners/",
               "pathParameters": {},
@@ -39468,6 +39486,7 @@
           ],
           "examples": [
             {
+              "name": "OwnerBankingAccount",
               "description": "",
               "path": "/api/owners/",
               "pathParameters": {},
@@ -39707,6 +39726,7 @@
           ],
           "examples": [
             {
+              "name": "OwnerBankingAccount",
               "description": "",
               "path": "/api/owners/",
               "pathParameters": {},
@@ -39904,6 +39924,7 @@
           ],
           "examples": [
             {
+              "name": "OwnerBankingAccount",
               "description": "",
               "path": "/api/owners/id/",
               "pathParameters": {
@@ -40050,6 +40071,7 @@
           ],
           "examples": [
             {
+              "name": "destroyOwnerExample",
               "description": "",
               "path": "/api/owners/id/",
               "pathParameters": {
@@ -42441,6 +42463,7 @@
           ],
           "examples": [
             {
+              "name": "invoicesPatchInvoicesExample",
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
@@ -43607,6 +43630,7 @@
           ],
           "examples": [
             {
+              "name": "destroyInvoiceExample",
               "description": "",
               "path": "/api/invoices/id/",
               "pathParameters": {
@@ -46479,6 +46503,7 @@
           ],
           "examples": [
             {
+              "name": "destroyTaxReturnExample",
               "description": "",
               "path": "/api/tax-returns/id/",
               "pathParameters": {
@@ -48135,6 +48160,7 @@
           ],
           "examples": [
             {
+              "name": "destroyTaxStatusExample",
               "description": "",
               "path": "/api/tax-status/id/",
               "pathParameters": {
@@ -48401,6 +48427,7 @@
           ],
           "examples": [
             {
+              "name": "listTaxComplianceStatusExample",
               "description": "",
               "path": "/api/tax-compliance-status/",
               "pathParameters": {},
@@ -48604,6 +48631,7 @@
           ],
           "examples": [
             {
+              "name": "taxComplianceStatusRetrieveTaxComplianceStatusExample",
               "description": "",
               "path": "/api/tax-compliance-status/",
               "pathParameters": {},
@@ -48777,6 +48805,7 @@
           ],
           "examples": [
             {
+              "name": "detailTaxComplianceStatusExample",
               "description": "",
               "path": "/api/tax-compliance-status/id/",
               "pathParameters": {
@@ -48905,6 +48934,7 @@
           ],
           "examples": [
             {
+              "name": "destroyTaxComplianceStatusExample",
               "description": "",
               "path": "/api/tax-compliance-status/id/",
               "pathParameters": {
@@ -49106,6 +49136,7 @@
           ],
           "examples": [
             {
+              "name": "listIncomesExample",
               "description": "",
               "path": "/api/incomes/",
               "pathParameters": {},
@@ -49391,6 +49422,7 @@
           ],
           "examples": [
             {
+              "name": "incomesRetrieveIncomeExample",
               "description": "",
               "path": "/api/incomes/",
               "pathParameters": {},
@@ -49674,6 +49706,7 @@
           ],
           "examples": [
             {
+              "name": "incomesPatchIncomesExample",
               "description": "",
               "path": "/api/incomes/",
               "pathParameters": {},
@@ -49922,6 +49955,7 @@
           ],
           "examples": [
             {
+              "name": "detailIncomeExample",
               "description": "",
               "path": "/api/incomes/id/",
               "pathParameters": {
@@ -50120,6 +50154,7 @@
           ],
           "examples": [
             {
+              "name": "destroyIncomesExample",
               "description": "",
               "path": "/api/incomes/id/",
               "pathParameters": {
@@ -50348,6 +50383,7 @@
           ],
           "examples": [
             {
+              "name": "listRecurringExpensesExample",
               "description": "",
               "path": "/api/recurring-expenses/",
               "pathParameters": {},
@@ -50774,6 +50810,7 @@
           ],
           "examples": [
             {
+              "name": "recurringExpensesRetrieveRecurringExpensesExample",
               "description": "",
               "path": "/api/recurring-expenses/",
               "pathParameters": {},
@@ -51199,6 +51236,7 @@
           ],
           "examples": [
             {
+              "name": "recurringExpensesPatchRecurringExpensesExample",
               "description": "",
               "path": "/api/recurring-expenses/",
               "pathParameters": {},
@@ -51584,6 +51622,7 @@
           ],
           "examples": [
             {
+              "name": "detailRecurringExpenseExample",
               "description": "",
               "path": "/api/recurring-expenses/id/",
               "pathParameters": {
@@ -51919,6 +51958,7 @@
           ],
           "examples": [
             {
+              "name": "destroyRecurringExpenseExample",
               "description": "",
               "path": "/api/recurring-expenses/id/",
               "pathParameters": {
@@ -52153,6 +52193,7 @@
           ],
           "examples": [
             {
+              "name": "listPortfolioExample",
               "description": "",
               "path": "/investments/portfolios/",
               "pathParameters": {},
@@ -52438,6 +52479,7 @@
           ],
           "examples": [
             {
+              "name": "investmentPortfoliosRetrievePortfolioExample",
               "description": "",
               "path": "/investments/portfolios/",
               "pathParameters": {},
@@ -52718,6 +52760,7 @@
           ],
           "examples": [
             {
+              "name": "investmentPortfoliosPatchPortfolioExample",
               "description": "",
               "path": "/investments/portfolios/",
               "pathParameters": {},
@@ -52975,6 +53018,7 @@
           ],
           "examples": [
             {
+              "name": "detailPortfolioExample",
               "description": "",
               "path": "/investments/portfolios/id/",
               "pathParameters": {
@@ -53185,6 +53229,7 @@
           ],
           "examples": [
             {
+              "name": "destroyPortfolioExample",
               "description": "",
               "path": "/investments/portfolios/id/",
               "pathParameters": {
@@ -53530,6 +53575,7 @@
           ],
           "examples": [
             {
+              "name": "listReceivableTransactionsExample",
               "description": "",
               "path": "/receivables/transactions/",
               "pathParameters": {},
@@ -53775,6 +53821,7 @@
           ],
           "examples": [
             {
+              "name": "receivableTransactionsRetrieveReceivableTransactionsExample",
               "description": "",
               "path": "/receivables/transactions/",
               "pathParameters": {},
@@ -53994,6 +54041,7 @@
           ],
           "examples": [
             {
+              "name": "detailReceivableTransactionExample",
               "description": "",
               "path": "/receivables/transactions/id/",
               "pathParameters": {
@@ -54164,6 +54212,7 @@
           ],
           "examples": [
             {
+              "name": "destroyReceivableTransactionExample",
               "description": "",
               "path": "/receivables/transactions/id/",
               "pathParameters": {
@@ -54365,6 +54414,7 @@
           ],
           "examples": [
             {
+              "name": "listRiskInsightsExample",
               "description": "",
               "path": "/api/risk-insights/",
               "pathParameters": {},
@@ -54719,6 +54769,7 @@
           ],
           "examples": [
             {
+              "name": "riskInsightsRetrieveRiskInsightsExample",
               "description": "",
               "path": "/api/risk-insights/",
               "pathParameters": {},
@@ -55072,6 +55123,7 @@
           ],
           "examples": [
             {
+              "name": "riskInsightsPatchRiskInsightsExample",
               "description": "",
               "path": "/api/risk-insights/",
               "pathParameters": {},
@@ -55386,6 +55438,7 @@
           ],
           "examples": [
             {
+              "name": "detailRiskInsightsExample",
               "description": "",
               "path": "/api/risk-insights/id/",
               "pathParameters": {
@@ -55650,6 +55703,7 @@
           ],
           "examples": [
             {
+              "name": "destroyRiskInsightsExample",
               "description": "",
               "path": "/api/risk-insights/id/",
               "pathParameters": {
@@ -55890,6 +55944,7 @@
           ],
           "examples": [
             {
+              "name": "listTaxRetentionsExample",
               "description": "",
               "path": "/api/tax-retentions/",
               "pathParameters": {},
@@ -56138,6 +56193,7 @@
           ],
           "examples": [
             {
+              "name": "taxRetentionsRetrieveTaxRetentionsExample",
               "description": "",
               "path": "/api/tax-retentions/",
               "pathParameters": {},
@@ -56363,6 +56419,7 @@
           ],
           "examples": [
             {
+              "name": "detailTaxRetentionsExample",
               "description": "",
               "path": "/api/tax-retentions/id/",
               "pathParameters": {
@@ -56533,6 +56590,7 @@
           ],
           "examples": [
             {
+              "name": "destroyTaxRetentionExample",
               "description": "",
               "path": "/api/tax-retentions/id/",
               "pathParameters": {
@@ -56877,6 +56935,7 @@
           ],
           "examples": [
             {
+              "name": "listTaxDeclarationsExample",
               "description": "",
               "path": "/api/tax-declarations/",
               "pathParameters": {},
@@ -57215,6 +57274,7 @@
           ],
           "examples": [
             {
+              "name": "taxDeclarationsRetrieveTaxDeclarationsExample",
               "description": "",
               "path": "/api/tax-declarations/",
               "pathParameters": {},
@@ -57510,6 +57570,7 @@
           ],
           "examples": [
             {
+              "name": "detailTaxDeclarationExample",
               "description": "",
               "path": "/api/tax-declarations/id/",
               "pathParameters": {
@@ -57770,6 +57831,7 @@
           ],
           "examples": [
             {
+              "name": "destroyTaxDeclarationExample",
               "description": "",
               "path": "/api/tax-declarations/id/",
               "pathParameters": {
@@ -57918,6 +57980,7 @@
           ],
           "examples": [
             {
+              "name": "listEmploymentRecordsExample",
               "description": "",
               "path": "/api/employment-records/",
               "pathParameters": {},
@@ -58240,6 +58303,7 @@
           ],
           "examples": [
             {
+              "name": "employmentRecordsRetrieveEmploymentRecordDetailsExample",
               "description": "",
               "path": "/api/employment-records/",
               "pathParameters": {},
@@ -58517,6 +58581,7 @@
           ],
           "examples": [
             {
+              "name": "detailEmploymentRecordExample",
               "description": "",
               "path": "/api/employment-records/id/",
               "pathParameters": {
@@ -58745,6 +58810,7 @@
           ],
           "examples": [
             {
+              "name": "destroyEmploymentRecordExample",
               "description": "",
               "path": "/api/employment-records/id/",
               "pathParameters": {
@@ -58901,6 +58967,7 @@
           ],
           "examples": [
             {
+              "name": "EnrichedIncome",
               "description": "",
               "path": "/api/enrich/incomes/",
               "pathParameters": {},
@@ -59220,6 +59287,7 @@
           ],
           "examples": [
             {
+              "name": "CategorizeTransactions",
               "description": "",
               "path": "/api/categorization/",
               "pathParameters": {},
@@ -59444,6 +59512,7 @@
           ],
           "examples": [
             {
+              "name": "listSecretKeysExample",
               "description": "",
               "path": "/payments/secret-keys/",
               "pathParameters": {},
@@ -59572,6 +59641,7 @@
           ],
           "examples": [
             {
+              "name": "createSecretKeysExample",
               "description": "",
               "path": "/payments/secret-keys/",
               "pathParameters": {},
@@ -59681,6 +59751,7 @@
           ],
           "examples": [
             {
+              "name": "listPaymentWebhooksExample",
               "description": "",
               "path": "/payments/webhooks/",
               "pathParameters": {},
@@ -59860,6 +59931,7 @@
           ],
           "examples": [
             {
+              "name": "paymentWebhooksRegisterPaymentWebhookExample",
               "description": "",
               "path": "/payments/webhooks/",
               "pathParameters": {},
@@ -60012,6 +60084,7 @@
           ],
           "examples": [
             {
+              "name": "detailPaymentWebhooksExample",
               "description": "",
               "path": "/payments/webhooks/a3b92311-1888-449f-acaa-49ae28d68fcd/",
               "pathParameters": {
@@ -60140,6 +60213,7 @@
           ],
           "examples": [
             {
+              "name": "deletePaymentWebhooksExample",
               "description": "",
               "path": "/payments/webhooks/id/",
               "pathParameters": {
@@ -60350,6 +60424,7 @@
           ],
           "examples": [
             {
+              "name": "listPaymentInstitutionsExample",
               "description": "",
               "path": "/payments/institutions/",
               "pathParameters": {},
@@ -60551,6 +60626,7 @@
           ],
           "examples": [
             {
+              "name": "detailPaymentInstitutionExample",
               "description": "",
               "path": "/payments/institutions/a3b92311-1888-449f-acaa-49ae28d68fcd/",
               "pathParameters": {
@@ -62938,6 +63014,7 @@
           ],
           "examples": [
             {
+              "name": "listPaymentLinksExample",
               "description": "",
               "path": "/payments/payment-links/",
               "pathParameters": {},
@@ -63128,6 +63205,7 @@
           ],
           "examples": [
             {
+              "name": "paymentLinksCreatePaymentlinkExample",
               "description": "",
               "path": "/payments/payment-links/",
               "pathParameters": {},
@@ -63565,6 +63643,7 @@
           ],
           "examples": [
             {
+              "name": "detailCreatePaymentlinkExample",
               "description": "",
               "path": "/payments/payment-links/YggaKvPbM5aJhksu1BEwDI5FKTcUc5wZqNB-wH7MFGU/",
               "pathParameters": {
@@ -64196,6 +64275,7 @@
           ],
           "examples": [
             {
+              "name": "listPaymentIntentsExample",
               "description": "",
               "path": "/payments/payment-intents/",
               "pathParameters": {},
@@ -64700,6 +64780,7 @@
           ],
           "examples": [
             {
+              "name": "paymentIntentsCreatePaymentIntentExample",
               "description": "",
               "path": "/payments/payment-intents/",
               "pathParameters": {},
@@ -65222,6 +65303,7 @@
           ],
           "examples": [
             {
+              "name": "detailPaymentIntentExample",
               "description": "",
               "path": "/payments/payment-intents/a3b92311-1888-449f-acaa-49ae28d68fcd/",
               "pathParameters": {
@@ -65726,6 +65808,7 @@
           ],
           "examples": [
             {
+              "name": "paymentIntentsPatchPaymentIntentExample",
               "description": "",
               "path": "/payments/payment-intents/a3b92311-1888-449f-acaa-49ae28d68fcd/",
               "pathParameters": {
@@ -66500,6 +66583,7 @@
           ],
           "examples": [
             {
+              "name": "listPaymentTransactionsExample",
               "description": "",
               "path": "/payments/transactions/",
               "pathParameters": {},
@@ -66659,6 +66743,7 @@
           ],
           "examples": [
             {
+              "name": "detailPaymentTransactionsExample",
               "description": "",
               "path": "/payments/transactions/a3b92311-1888-449f-acaa-49ae28d68fcd/",
               "pathParameters": {

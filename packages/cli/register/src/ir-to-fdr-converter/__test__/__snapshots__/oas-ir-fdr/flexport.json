@@ -23015,6 +23015,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/booking_line_items",
               "pathParameters": {},
@@ -23317,6 +23318,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/booking_line_items/42",
               "pathParameters": {
@@ -23704,6 +23706,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/bookings",
               "pathParameters": {},
@@ -24931,6 +24934,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/bookings/42",
               "pathParameters": {
@@ -25682,6 +25686,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/commercial_invoices",
               "pathParameters": {},
@@ -25957,6 +25962,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/commercial_invoices",
               "pathParameters": {},
@@ -26253,6 +26259,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/commercial_invoices",
               "pathParameters": {},
@@ -26525,6 +26532,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/commercial_invoices/id",
               "pathParameters": {
@@ -26832,6 +26840,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/customs_entries",
               "pathParameters": {},
@@ -26971,6 +26980,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/customs_entries/id",
               "pathParameters": {
@@ -27214,6 +27224,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/documents",
               "pathParameters": {},
@@ -27359,6 +27370,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/documents",
               "pathParameters": {},
@@ -27491,6 +27503,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/documents/id",
               "pathParameters": {
@@ -27626,6 +27639,7 @@
           ],
           "examples": [
             {
+              "name": "documentsDownloadExample",
               "description": "",
               "path": "/documents/id/download",
               "pathParameters": {
@@ -27771,6 +27785,7 @@
           ],
           "examples": [
             {
+              "name": "eventsIndexExample",
               "description": "",
               "path": "/events",
               "pathParameters": {},
@@ -29473,6 +29488,7 @@
           ],
           "examples": [
             {
+              "name": "eventsShowExample",
               "description": "",
               "path": "/events/42",
               "pathParameters": {
@@ -31362,6 +31378,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/invoices",
               "pathParameters": {},
@@ -31929,6 +31946,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/invoices/id",
               "pathParameters": {
@@ -32535,6 +32553,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/network/companies",
               "pathParameters": {},
@@ -32735,6 +32754,7 @@
           ],
           "examples": [
             {
+              "name": "response",
               "description": "",
               "path": "/network/companies",
               "pathParameters": {},
@@ -32909,6 +32929,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/network/companies/id",
               "pathParameters": {
@@ -33116,6 +33137,7 @@
           ],
           "examples": [
             {
+              "name": "response",
               "description": "",
               "path": "/network/companies/K67EZV1K8cQ5afQErZwk1Q",
               "pathParameters": {
@@ -33283,6 +33305,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/network/me/companies",
               "pathParameters": {},
@@ -33524,6 +33547,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/network/company_entities",
               "pathParameters": {},
@@ -33684,6 +33708,7 @@
           ],
           "examples": [
             {
+              "name": "response",
               "description": "",
               "path": "/network/company_entities",
               "pathParameters": {},
@@ -33848,6 +33873,7 @@
           ],
           "examples": [
             {
+              "name": "response",
               "description": "",
               "path": "/network/company_entities/id",
               "pathParameters": {
@@ -34015,6 +34041,7 @@
           ],
           "examples": [
             {
+              "name": "response",
               "description": "",
               "path": "/network/company_entities/id",
               "pathParameters": {
@@ -34237,6 +34264,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/network/contacts",
               "pathParameters": {},
@@ -34381,6 +34409,7 @@
           ],
           "examples": [
             {
+              "name": "response",
               "description": "",
               "path": "/network/contacts",
               "pathParameters": {},
@@ -34531,6 +34560,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/network/contacts/id",
               "pathParameters": {
@@ -34682,6 +34712,7 @@
           ],
           "examples": [
             {
+              "name": "response",
               "description": "",
               "path": "/network/contacts/FHLKEFHHoW8nwh9UVOMpw",
               "pathParameters": {
@@ -34914,6 +34945,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/network/locations",
               "pathParameters": {},
@@ -35084,6 +35116,7 @@
           ],
           "examples": [
             {
+              "name": "response",
               "description": "",
               "path": "/network/locations",
               "pathParameters": {},
@@ -35260,6 +35293,7 @@
           ],
           "examples": [
             {
+              "name": "response",
               "description": "",
               "path": "/network/locations/id",
               "pathParameters": {
@@ -35437,6 +35471,7 @@
           ],
           "examples": [
             {
+              "name": "response",
               "description": "",
               "path": "/network/locations/id",
               "pathParameters": {
@@ -35666,6 +35701,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/ocean/shipment_container_legs",
               "pathParameters": {},
@@ -35820,6 +35856,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/ocean/shipment_container_legs/42",
               "pathParameters": {
@@ -36025,6 +36062,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/ocean/shipment_containers",
               "pathParameters": {},
@@ -36256,6 +36294,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/ocean/shipment_containers/id",
               "pathParameters": {
@@ -36521,6 +36560,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/ports",
               "pathParameters": {},
@@ -36789,6 +36829,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/products",
               "pathParameters": {},
@@ -36964,6 +37005,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/products",
               "pathParameters": {},
@@ -37146,6 +37188,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/products/id",
               "pathParameters": {
@@ -37328,6 +37371,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/products/id",
               "pathParameters": {
@@ -37588,6 +37632,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/purchase_order_line_items",
               "pathParameters": {},
@@ -37903,6 +37948,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/purchase_order_line_items/42",
               "pathParameters": {
@@ -38395,6 +38441,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/purchase_orders",
               "pathParameters": {},
@@ -39202,6 +39249,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/purchase_orders/42",
               "pathParameters": {
@@ -39687,6 +39735,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/shipment_legs",
               "pathParameters": {},
@@ -40066,6 +40115,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/shipment_legs/42",
               "pathParameters": {
@@ -40807,6 +40857,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/shipments",
               "pathParameters": {},
@@ -41430,6 +41481,7 @@
           ],
           "examples": [
             {
+              "name": "Success",
               "description": "",
               "path": "/shipments/id",
               "pathParameters": {
@@ -42049,6 +42101,7 @@
           ],
           "examples": [
             {
+              "name": "response",
               "description": "",
               "path": "/shipments/12345",
               "pathParameters": {

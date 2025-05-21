@@ -195,6 +195,7 @@
         "errorsV2": [],
         "examples": [
           {
+            "name": "listExample",
             "description": "",
             "path": "/pets",
             "pathParameters": {},

@@ -1341,6 +1341,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "petUpdateAnExistingPetExample",
               "description": "",
               "path": "/pet",
               "pathParameters": {},
@@ -1507,6 +1508,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "getAnOrderExample",
               "description": "",
               "path": "/order",
               "pathParameters": {},

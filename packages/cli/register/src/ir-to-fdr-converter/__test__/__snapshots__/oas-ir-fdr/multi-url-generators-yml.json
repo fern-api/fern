@@ -175,6 +175,7 @@
         ],
         "examples": [
           {
+            "name": "listUsersExample",
             "description": "",
             "path": "/users",
             "pathParameters": {},
@@ -288,6 +289,7 @@
         ],
         "examples": [
           {
+            "name": "getUserInformationExample",
             "description": "",
             "path": "/users/userId",
             "pathParameters": {
@@ -373,6 +375,7 @@
         ],
         "examples": [
           {
+            "name": "getAuthenticationTokenExample",
             "description": "",
             "path": "/token",
             "pathParameters": {},

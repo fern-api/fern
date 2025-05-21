@@ -79,6 +79,7 @@
         "errorsV2": [],
         "examples": [
           {
+            "name": "getExample",
             "description": "",
             "path": "/simple",
             "pathParameters": {

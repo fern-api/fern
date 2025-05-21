@@ -915,6 +915,7 @@
           ],
           "examples": [
             {
+              "name": "getEndUserByIdExample",
               "description": "",
               "path": "/end-users/v1/end_user_id",
               "pathParameters": {
@@ -1146,6 +1147,7 @@
           ],
           "examples": [
             {
+              "name": "endUsersUpdateEndUserByIdExample",
               "description": "",
               "path": "/end-users/v1/end_user_id",
               "pathParameters": {
@@ -1377,6 +1379,7 @@
           ],
           "examples": [
             {
+              "name": "getEndUsersExample",
               "description": "",
               "path": "/end-users/v1",
               "pathParameters": {},

@@ -1832,6 +1832,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "andRedirectExample",
               "description": "",
               "path": "/auth",
               "pathParameters": {},
@@ -1911,6 +1912,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "getExample",
               "description": "",
               "path": "/extensions",
               "pathParameters": {},
@@ -2037,6 +2039,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "extensionsPostExample",
               "description": "",
               "path": "/extensions",
               "pathParameters": {},
@@ -2157,6 +2160,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "deleteExample",
               "description": "",
               "path": "/extensions",
               "pathParameters": {},
@@ -2274,6 +2278,7 @@
           ],
           "examples": [
             {
+              "name": "getByIdExample",
               "description": "",
               "path": "/extensions/4a61a55c-391b-4f73-957e-ffbd29ac7cba",
               "pathParameters": {
@@ -2424,6 +2429,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "getExample",
               "description": "",
               "path": "/profiles",
               "pathParameters": {},
@@ -2558,6 +2564,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "profilesPostExample",
               "description": "",
               "path": "/profiles",
               "pathParameters": {},
@@ -2698,6 +2705,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "deleteExample",
               "description": "",
               "path": "/profiles",
               "pathParameters": {},
@@ -2818,6 +2826,7 @@
           ],
           "examples": [
             {
+              "name": "getByIdExample",
               "description": "",
               "path": "/profiles/4a61a55c-391b-4f73-957e-ffbd29ac7cba",
               "pathParameters": {
@@ -3038,6 +3047,7 @@
           ],
           "examples": [
             {
+              "name": "listExample",
               "description": "",
               "path": "/sessions",
               "pathParameters": {},
@@ -3230,6 +3240,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "sessionsPostExample",
               "description": "",
               "path": "/sessions",
               "pathParameters": {},
@@ -3439,6 +3450,7 @@
           ],
           "examples": [
             {
+              "name": "getinfoExample",
               "description": "",
               "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
               "pathParameters": {
@@ -3593,6 +3605,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "terminateExample",
               "description": "",
               "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
               "pathParameters": {
@@ -3706,6 +3719,7 @@
           ],
           "examples": [
             {
+              "name": "eventsExample",
               "description": "",
               "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/events",
               "pathParameters": {
@@ -3875,6 +3889,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "getWindowInfoExample",
               "description": "",
               "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/7334da2a-91b0-42c5-6156-76a5eba87430/get-window-info",
               "pathParameters": {
@@ -4037,6 +4052,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "windowsPromptContentExample",
               "description": "",
               "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/0334da2a-91b0-42c5-6156-76a5eba87430/prompt-content",
               "pathParameters": {
@@ -4207,6 +4223,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "scrapeContentExample",
               "description": "",
               "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/0334da2a-91b0-42c5-6156-76a5eba87430/scrape-content",
               "pathParameters": {
@@ -4395,6 +4412,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "windowsSummarizeContentExample",
               "description": "",
               "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/0334da2a-91b0-42c5-6156-76a5eba87430/summarize-content",
               "pathParameters": {

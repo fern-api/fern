@@ -155,6 +155,7 @@
         "errorsV2": [],
         "examples": [
           {
+            "name": "getExampleExample",
             "description": "",
             "path": "/example",
             "pathParameters": {},

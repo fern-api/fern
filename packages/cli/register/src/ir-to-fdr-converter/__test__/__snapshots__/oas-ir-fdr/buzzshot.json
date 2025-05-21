@@ -1795,6 +1795,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "listAccountsExample",
               "description": "",
               "path": "/api/v2/accounts/",
               "pathParameters": {},
@@ -1889,6 +1890,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "retrieveAccountExample",
               "description": "",
               "path": "/api/v2/accounts/id/",
               "pathParameters": {
@@ -2018,6 +2020,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "listGamesExample",
               "description": "",
               "path": "/api/v2/games/",
               "pathParameters": {},
@@ -2223,6 +2226,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "retrieveGameExample",
               "description": "",
               "path": "/api/v2/games/id/",
               "pathParameters": {
@@ -2384,6 +2388,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "listGroupsExample",
               "description": "",
               "path": "/api/v2/groups/",
               "pathParameters": {},
@@ -2627,6 +2632,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "retrieveGroupExample",
               "description": "",
               "path": "/api/v2/groups/id/",
               "pathParameters": {
@@ -2826,6 +2832,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "listPlayersExample",
               "description": "",
               "path": "/api/v2/players/",
               "pathParameters": {},
@@ -2946,6 +2953,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "retrievePlayerExample",
               "description": "",
               "path": "/api/v2/players/id/",
               "pathParameters": {
@@ -3049,6 +3057,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "listLocationsExample",
               "description": "",
               "path": "/api/v2/rooms/",
               "pathParameters": {},
@@ -3143,6 +3152,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "retrieveLocationExample",
               "description": "",
               "path": "/api/v2/rooms/id/",
               "pathParameters": {
@@ -3220,6 +3230,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "listPhotosExample",
               "description": "",
               "path": "/api/v2/photos/",
               "pathParameters": {},
@@ -3334,6 +3345,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "retrievePhotoExample",
               "description": "",
               "path": "/api/v2/photos/photo_id/",
               "pathParameters": {

@@ -49,6 +49,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "getAlphaExample",
               "description": "",
               "path": "/alpha",
               "pathParameters": {},
@@ -120,6 +121,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "getBetaExample",
               "description": "",
               "path": "/beta",
               "pathParameters": {},
@@ -191,6 +193,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "getGammaExample",
               "description": "",
               "path": "/gamma",
               "pathParameters": {},
@@ -262,6 +265,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "getDeltaExample",
               "description": "",
               "path": "/delta",
               "pathParameters": {},
@@ -333,6 +337,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "getMuExample",
               "description": "",
               "path": "/mu",
               "pathParameters": {},
@@ -404,6 +409,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "getOmegaExample",
               "description": "",
               "path": "/omega",
               "pathParameters": {},
@@ -475,6 +481,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "getZetaExample",
               "description": "",
               "path": "/zeta",
               "pathParameters": {},
@@ -546,6 +553,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "getEtaExample",
               "description": "",
               "path": "/eta",
               "pathParameters": {},

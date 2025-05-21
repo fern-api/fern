@@ -149,6 +149,7 @@
         "errorsV2": [],
         "examples": [
           {
+            "name": "postTestOneOfDisplayNameExample",
             "description": "",
             "path": "/test-one-of-display-name",
             "pathParameters": {},

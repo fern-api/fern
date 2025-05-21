@@ -110,6 +110,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "listPetsExample",
               "description": "",
               "path": "/pets",
               "pathParameters": {},
@@ -339,6 +340,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "listPetsExample",
               "description": "",
               "path": "/pets",
               "pathParameters": {},

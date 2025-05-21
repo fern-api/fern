@@ -203,6 +203,7 @@
         "errorsV2": [],
         "examples": [
           {
+            "name": "userExample",
             "description": "",
             "path": "/v1/users",
             "pathParameters": {},
@@ -299,6 +300,7 @@
         "errorsV2": [],
         "examples": [
           {
+            "name": "userV2Example",
             "description": "",
             "path": "/v2/users",
             "pathParameters": {},
@@ -395,6 +397,7 @@
         "errorsV2": [],
         "examples": [
           {
+            "name": "userV3Example",
             "description": "",
             "path": "/v3/users",
             "pathParameters": {},

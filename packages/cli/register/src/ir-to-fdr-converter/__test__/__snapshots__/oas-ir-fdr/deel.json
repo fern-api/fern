@@ -16482,6 +16482,7 @@
           ],
           "examples": [
             {
+              "name": "hrisCreateDirectEmployeeExample",
               "description": "",
               "path": "/hris/direct-employees",
               "pathParameters": {},
@@ -16759,6 +16760,7 @@
           ],
           "examples": [
             {
+              "name": "getEorCountryValidationsExample",
               "description": "",
               "path": "/eor/validations/US",
               "pathParameters": {
@@ -17045,6 +17047,7 @@
           ],
           "examples": [
             {
+              "name": "eorCreateEorContractExample",
               "description": "",
               "path": "/eor",
               "pathParameters": {},
@@ -17336,6 +17339,7 @@
           ],
           "examples": [
             {
+              "name": "contractorsCreateContractTimeBasedExample",
               "description": "",
               "path": "/contracts/time-based",
               "pathParameters": {},
@@ -17763,6 +17767,7 @@
           ],
           "examples": [
             {
+              "name": "contractorsCreateContractTaskBasedExample",
               "description": "",
               "path": "/contracts/task-based",
               "pathParameters": {},
@@ -18186,6 +18191,7 @@
           ],
           "examples": [
             {
+              "name": "contractorsCreateContractMilestoneBasedExample",
               "description": "",
               "path": "/contracts/milestone-based",
               "pathParameters": {},
@@ -18609,6 +18615,7 @@
           ],
           "examples": [
             {
+              "name": "contractorsCreateContractFixedRateExample",
               "description": "",
               "path": "/contracts/fixed-rate",
               "pathParameters": {},
@@ -19037,6 +19044,7 @@
           ],
           "examples": [
             {
+              "name": "contractorsCreateContractExample",
               "description": "",
               "path": "/contracts",
               "pathParameters": {},
@@ -19480,6 +19488,7 @@
           ],
           "examples": [
             {
+              "name": "getContractPreviewExample",
               "description": "",
               "path": "/contracts/37nex2x/preview",
               "pathParameters": {
@@ -19672,6 +19681,7 @@
           ],
           "examples": [
             {
+              "name": "contractorsAmendContractDetailsExample",
               "description": "",
               "path": "/contracts/37nex2x/amendments",
               "pathParameters": {
@@ -19881,6 +19891,7 @@
           ],
           "examples": [
             {
+              "name": "contractorsTerminateContractExample",
               "description": "",
               "path": "/contracts/37nex2x/terminations",
               "pathParameters": {
@@ -20053,6 +20064,7 @@
           ],
           "examples": [
             {
+              "name": "contractorsAddPremiumExample",
               "description": "",
               "path": "/contracts/37nex2x/premium",
               "pathParameters": {
@@ -20293,6 +20305,7 @@
           ],
           "examples": [
             {
+              "name": "removePremiumFromContractExample",
               "description": "",
               "path": "/contracts/37nex2x/premium",
               "pathParameters": {
@@ -20603,6 +20616,7 @@
           ],
           "examples": [
             {
+              "name": "getContractListExample",
               "description": "",
               "path": "/contracts",
               "pathParameters": {},
@@ -20872,6 +20886,7 @@
           ],
           "examples": [
             {
+              "name": "getContractByIdExample",
               "description": "",
               "path": "/contracts/37nex2x",
               "pathParameters": {
@@ -21262,6 +21277,7 @@
           ],
           "examples": [
             {
+              "name": "contractsAttachExternalIdExample",
               "description": "",
               "path": "/contracts/37nex2x",
               "pathParameters": {
@@ -21483,6 +21499,7 @@
           ],
           "examples": [
             {
+              "name": "contractsAddContractDocumentExample",
               "description": "",
               "path": "/contracts/37nex2x/documents",
               "pathParameters": {
@@ -21703,6 +21720,7 @@
           ],
           "examples": [
             {
+              "name": "contractsEditContractDocumentExample",
               "description": "",
               "path": "/contracts/37nex2x/documents",
               "pathParameters": {
@@ -21874,6 +21892,7 @@
           ],
           "examples": [
             {
+              "name": "getAlternateEmailsByContractIdExample",
               "description": "",
               "path": "/contracts/37nex2x/alternate_emails",
               "pathParameters": {
@@ -22076,6 +22095,7 @@
           ],
           "examples": [
             {
+              "name": "contractsSignContractExample",
               "description": "",
               "path": "/contracts/37nex2x/signatures",
               "pathParameters": {
@@ -22248,6 +22268,7 @@
           ],
           "examples": [
             {
+              "name": "archiveContractExample",
               "description": "",
               "path": "/contracts/37nex2x/archive",
               "pathParameters": {
@@ -22448,6 +22469,7 @@
           ],
           "examples": [
             {
+              "name": "contractsInviteToSignContractExample",
               "description": "",
               "path": "/contracts/37nex2x/invitations",
               "pathParameters": {
@@ -22648,6 +22670,7 @@
           ],
           "examples": [
             {
+              "name": "uninviteToSignContractExample",
               "description": "",
               "path": "/contracts/37nex2x/invitations",
               "pathParameters": {
@@ -22843,6 +22866,7 @@
           ],
           "examples": [
             {
+              "name": "calculateFinalPaymentExample",
               "description": "",
               "path": "/contracts/37nex2x/final-payments",
               "pathParameters": {
@@ -23005,6 +23029,7 @@
           ],
           "examples": [
             {
+              "name": "contractsPostContractEstimateExample",
               "description": "",
               "path": "/contracts/estimate",
               "pathParameters": {},
@@ -23205,6 +23230,7 @@
           ],
           "examples": [
             {
+              "name": "getContractTemplatesExample",
               "description": "",
               "path": "/contract-templates",
               "pathParameters": {},
@@ -23404,6 +23430,7 @@
           ],
           "examples": [
             {
+              "name": "getTasksByContractExample",
               "description": "",
               "path": "/contracts/37nex2x/tasks",
               "pathParameters": {
@@ -23624,6 +23651,7 @@
           ],
           "examples": [
             {
+              "name": "tasksCreateContractPgoTakExample",
               "description": "",
               "path": "/contracts/37nex2x/tasks",
               "pathParameters": {
@@ -23841,6 +23869,7 @@
           ],
           "examples": [
             {
+              "name": "tasksCreateTaskManyReviewExample",
               "description": "",
               "path": "/contracts/37nex2x/tasks/many/reviews",
               "pathParameters": {
@@ -24098,6 +24127,7 @@
           ],
           "examples": [
             {
+              "name": "tasksCreateTaskReviewByIdExample",
               "description": "",
               "path": "/contracts/37nex2x/tasks/task_id/reviews",
               "pathParameters": {
@@ -24349,6 +24379,7 @@
           ],
           "examples": [
             {
+              "name": "deleteContractPgoTakExample",
               "description": "",
               "path": "/contracts/37nex2x/tasks/task_id",
               "pathParameters": {
@@ -24631,6 +24662,7 @@
           ],
           "examples": [
             {
+              "name": "getTimesheetsByContractExample",
               "description": "",
               "path": "/contracts/37nex2x/timesheets",
               "pathParameters": {
@@ -24995,6 +25027,7 @@
           ],
           "examples": [
             {
+              "name": "getTimesheetsExample",
               "description": "",
               "path": "/timesheets",
               "pathParameters": {},
@@ -25273,6 +25306,7 @@
           ],
           "examples": [
             {
+              "name": "timesheetsCreateTimesheetExample",
               "description": "",
               "path": "/timesheets",
               "pathParameters": {},
@@ -25489,6 +25523,7 @@
           ],
           "examples": [
             {
+              "name": "getTimesheetByIdExample",
               "description": "",
               "path": "/timesheets/42",
               "pathParameters": {
@@ -25788,6 +25823,7 @@
           ],
           "examples": [
             {
+              "name": "deleteTimesheetByIdExample",
               "description": "",
               "path": "/timesheets/42",
               "pathParameters": {
@@ -25988,6 +26024,7 @@
           ],
           "examples": [
             {
+              "name": "timesheetsUpdateTimesheetByIdExample",
               "description": "",
               "path": "/timesheets/42",
               "pathParameters": {
@@ -26203,6 +26240,7 @@
           ],
           "examples": [
             {
+              "name": "timesheetsCreateTimesheetReviewExample",
               "description": "",
               "path": "/timesheets/42/reviews",
               "pathParameters": {
@@ -26397,6 +26435,7 @@
           ],
           "examples": [
             {
+              "name": "timesheetsCreateTimesheetReviewsExample",
               "description": "",
               "path": "/timesheets/many/reviews",
               "pathParameters": {},
@@ -26609,6 +26648,7 @@
           ],
           "examples": [
             {
+              "name": "getMilestonesByContractExample",
               "description": "",
               "path": "/contracts/37nex2x/milestones",
               "pathParameters": {
@@ -26841,6 +26881,7 @@
           ],
           "examples": [
             {
+              "name": "milestonesCreateMilestoneExample",
               "description": "",
               "path": "/contracts/37nex2x/milestones",
               "pathParameters": {
@@ -27061,6 +27102,7 @@
           ],
           "examples": [
             {
+              "name": "getMilestonesByContractAndIdExample",
               "description": "",
               "path": "/contracts/37nex2x/milestones/milestone_id",
               "pathParameters": {
@@ -27293,6 +27335,7 @@
           ],
           "examples": [
             {
+              "name": "deleteMilestoneByIdExample",
               "description": "",
               "path": "/contracts/37nex2x/milestones/milestone_id",
               "pathParameters": {
@@ -27512,6 +27555,7 @@
           ],
           "examples": [
             {
+              "name": "milestonesCreateMilestoneReviewExample",
               "description": "",
               "path": "/contracts/37nex2x/milestones/milestone_id/reviews",
               "pathParameters": {
@@ -27726,6 +27770,7 @@
           ],
           "examples": [
             {
+              "name": "milestonesCreateMilestoneReviewsExample",
               "description": "",
               "path": "/contracts/37nex2x/milestones/many/reviews",
               "pathParameters": {
@@ -27940,6 +27985,7 @@
           ],
           "examples": [
             {
+              "name": "getOffCyclePaymentsByContractExample",
               "description": "",
               "path": "/contracts/37nex2x/off-cycle-payments",
               "pathParameters": {
@@ -28184,6 +28230,7 @@
           ],
           "examples": [
             {
+              "name": "offCyclePaymentsCreateOffCyclePaymentExample",
               "description": "",
               "path": "/contracts/37nex2x/off-cycle-payments",
               "pathParameters": {
@@ -28402,6 +28449,7 @@
           ],
           "examples": [
             {
+              "name": "getOffCyclePaymentByContractAndIdExample",
               "description": "",
               "path": "/contracts/37nex2x/off-cycle-payments/offcycle_payment_id",
               "pathParameters": {
@@ -28599,6 +28647,7 @@
           ],
           "examples": [
             {
+              "name": "getEorTimeOffsExample",
               "description": "",
               "path": "/contracts/37nex2x/time-offs",
               "pathParameters": {
@@ -29006,6 +29055,7 @@
           ],
           "examples": [
             {
+              "name": "timeOffCreateEorTimeOffsExample",
               "description": "",
               "path": "/contracts/37nex2x/time-offs",
               "pathParameters": {
@@ -29442,6 +29492,7 @@
           ],
           "examples": [
             {
+              "name": "timeOffEditEorTimeOffsExample",
               "description": "",
               "path": "/contracts/37nex2x/time-offs/12345",
               "pathParameters": {
@@ -29864,6 +29915,7 @@
           ],
           "examples": [
             {
+              "name": "deleteEorTimeOffsExample",
               "description": "",
               "path": "/contracts/37nex2x/time-offs/12345",
               "pathParameters": {
@@ -30011,6 +30063,7 @@
           ],
           "examples": [
             {
+              "name": "getEorEntitlementsExample",
               "description": "",
               "path": "/contracts/37nex2x/entitlements",
               "pathParameters": {
@@ -30178,6 +30231,7 @@
           ],
           "examples": [
             {
+              "name": "getEorClientTimeOffsExample",
               "description": "",
               "path": "/time-offs/",
               "pathParameters": {},
@@ -31162,6 +31216,7 @@
           ],
           "examples": [
             {
+              "name": "timeOffReviewTimeoffExample",
               "description": "",
               "path": "/time-offs/12345/review",
               "pathParameters": {
@@ -31482,6 +31537,7 @@
           ],
           "examples": [
             {
+              "name": "getInvoiceAdjustmentsByContractIdExample",
               "description": "",
               "path": "/contracts/37nex2x/invoice-adjustments",
               "pathParameters": {
@@ -31873,6 +31929,7 @@
           ],
           "examples": [
             {
+              "name": "getInvoiceAdjustmentsExample",
               "description": "",
               "path": "/invoice-adjustments",
               "pathParameters": {},
@@ -32152,6 +32209,7 @@
           ],
           "examples": [
             {
+              "name": "invoicesCreateInvoiceAdjustmentExample",
               "description": "",
               "path": "/invoice-adjustments",
               "pathParameters": {},
@@ -32382,6 +32440,7 @@
           ],
           "examples": [
             {
+              "name": "deleteInvoiceAdjustmentByIdExample",
               "description": "",
               "path": "/invoice-adjustments/42",
               "pathParameters": {
@@ -32582,6 +32641,7 @@
           ],
           "examples": [
             {
+              "name": "invoicesUpdateInvoiceAdjustmentByIdExample",
               "description": "",
               "path": "/invoice-adjustments/42",
               "pathParameters": {
@@ -32795,6 +32855,7 @@
           ],
           "examples": [
             {
+              "name": "invoicesCreateInvoiceAdjustmentReviewExample",
               "description": "",
               "path": "/invoice-adjustments/42/reviews",
               "pathParameters": {
@@ -32989,6 +33050,7 @@
           ],
           "examples": [
             {
+              "name": "invoicesCreateInvoiceAdjustmentReviewsExample",
               "description": "",
               "path": "/invoice-adjustments/many/reviews",
               "pathParameters": {},
@@ -33182,6 +33244,7 @@
           ],
           "examples": [
             {
+              "name": "getLegalEntityListExample",
               "description": "",
               "path": "/legal-entities",
               "pathParameters": {},
@@ -33356,6 +33419,7 @@
           ],
           "examples": [
             {
+              "name": "getOrganizationsExample",
               "description": "",
               "path": "/organizations",
               "pathParameters": {},
@@ -33526,6 +33590,7 @@
           ],
           "examples": [
             {
+              "name": "getTeamsExample",
               "description": "",
               "path": "/teams",
               "pathParameters": {},
@@ -33719,6 +33784,7 @@
           ],
           "examples": [
             {
+              "name": "getAgreementsExample",
               "description": "",
               "path": "/agreements",
               "pathParameters": {},
@@ -33933,6 +33999,7 @@
           ],
           "examples": [
             {
+              "name": "getCountriesExample",
               "description": "",
               "path": "/lookups/countries",
               "pathParameters": {},
@@ -34121,6 +34188,7 @@
           ],
           "examples": [
             {
+              "name": "getCurrenciesExample",
               "description": "",
               "path": "/lookups/currencies",
               "pathParameters": {},
@@ -34319,6 +34387,7 @@
           ],
           "examples": [
             {
+              "name": "getJobTitleListExample",
               "description": "",
               "path": "/lookups/job-titles",
               "pathParameters": {},
@@ -34510,6 +34579,7 @@
           ],
           "examples": [
             {
+              "name": "getSeniorityListExample",
               "description": "",
               "path": "/lookups/seniorities",
               "pathParameters": {},
@@ -34682,6 +34752,7 @@
           ],
           "examples": [
             {
+              "name": "getTimeoffTypeListExample",
               "description": "",
               "path": "/lookups/time-off-types",
               "pathParameters": {},
@@ -34858,6 +34929,7 @@
           ],
           "examples": [
             {
+              "name": "attachmentsCreateFileRefExample",
               "description": "",
               "path": "/attachments",
               "pathParameters": {},
@@ -35070,6 +35142,7 @@
           ],
           "examples": [
             {
+              "name": "getInvoiceListExample",
               "description": "",
               "path": "/invoices",
               "pathParameters": {},
@@ -35309,6 +35382,7 @@
           ],
           "examples": [
             {
+              "name": "getInvoiceDownloadLinkExample",
               "description": "",
               "path": "/invoices/42/download",
               "pathParameters": {
@@ -35498,6 +35572,7 @@
           ],
           "examples": [
             {
+              "name": "getBillingInvoiceDownloadLinkExample",
               "description": "",
               "path": "/billing/42/download",
               "pathParameters": {
@@ -35698,6 +35773,7 @@
           ],
           "examples": [
             {
+              "name": "getPaymentListExample",
               "description": "",
               "path": "/payments",
               "pathParameters": {},
@@ -35925,6 +36001,7 @@
           ],
           "examples": [
             {
+              "name": "getPaymentsBreakDownByIdExample",
               "description": "",
               "path": "/payments/payment_id/breakdown",
               "pathParameters": {
@@ -36188,6 +36265,7 @@
           ],
           "examples": [
             {
+              "name": "getPeopleListExample",
               "description": "",
               "path": "/people",
               "pathParameters": {},
@@ -36543,6 +36621,7 @@
           ],
           "examples": [
             {
+              "name": "getPeopleExample",
               "description": "",
               "path": "/people/me",
               "pathParameters": {},
@@ -36743,6 +36822,7 @@
           ],
           "examples": [
             {
+              "name": "getAllWebhooksExample",
               "description": "",
               "path": "/webhooks",
               "pathParameters": {},
@@ -36948,6 +37028,7 @@
           ],
           "examples": [
             {
+              "name": "webhooksCreateWebhookExample",
               "description": "",
               "path": "/webhooks",
               "pathParameters": {},
@@ -37179,6 +37260,7 @@
           ],
           "examples": [
             {
+              "name": "webhookControllerGetByIdExample",
               "description": "",
               "path": "/webhooks/id",
               "pathParameters": {
@@ -37376,6 +37458,7 @@
           ],
           "examples": [
             {
+              "name": "webhookControllerDeleteByIdExample",
               "description": "",
               "path": "/webhooks/id",
               "pathParameters": {
@@ -37560,6 +37643,7 @@
           ],
           "examples": [
             {
+              "name": "webhooksWebhookControllerEditByIdExample",
               "description": "",
               "path": "/webhooks/id",
               "pathParameters": {

@@ -83,6 +83,7 @@
         "errorsV2": [],
         "examples": [
           {
+            "name": "getTreeExample",
             "description": "",
             "path": "/tree",
             "pathParameters": {},

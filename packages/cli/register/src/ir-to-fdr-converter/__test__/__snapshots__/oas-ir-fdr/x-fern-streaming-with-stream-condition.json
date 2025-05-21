@@ -197,6 +197,7 @@
         "errorsV2": [],
         "examples": [
           {
+            "name": "chatExample",
             "description": "",
             "path": "/v2/chats",
             "pathParameters": {},

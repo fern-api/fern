@@ -2903,6 +2903,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "Upload_multipartFileUploadStart_example",
               "description": "",
               "path": "/multipart/start/",
               "pathParameters": {},
@@ -3021,6 +3022,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "multipartFileUploadPartExample",
               "description": "",
               "path": "/<presigned-url-x>",
               "pathParameters": {},
@@ -3111,6 +3113,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "Upload_multipartFileUploadComplete_example",
               "description": "",
               "path": "/multipart/complete/",
               "pathParameters": {},
@@ -3753,6 +3756,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "fileUploadInfoExample",
               "description": "",
               "path": "/info/",
               "pathParameters": {},
@@ -4005,6 +4009,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "Groups_createFilesGroup_example",
               "description": "",
               "path": "/group/",
               "pathParameters": {},
@@ -4132,6 +4137,7 @@
           "errorsV2": [],
           "examples": [
             {
+              "name": "filesGroupInfoExample",
               "description": "",
               "path": "/group/info/",
               "pathParameters": {},
