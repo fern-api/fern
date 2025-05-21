@@ -24,7 +24,6 @@ export const imdbCreateMovie = {
         );
     },
 };
-
 export const imdbGetMovie = {
     register (server: McpServer) {
         return server.tool(

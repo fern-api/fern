@@ -40,6 +40,7 @@ export class ToolsGenerator extends FileGenerator<
         });
     }
 
+    // TODO: properly generate config object for SDK client constructor
     public doGenerate(): TypescriptFile {
         return new TypescriptFile({
             node: ts.codeblock((writer) => {
@@ -50,7 +51,6 @@ export class ToolsGenerator extends FileGenerator<
                         initializer: ts.instantiateClass({
                             class_: this.sdkClientClassReference,
                             arguments_: [
-                                // TODO: properly generate config object
                                 new ObjectLiteralNode({
                                     fields: [
                                         {
@@ -72,18 +72,17 @@ export class ToolsGenerator extends FileGenerator<
                 writer.newLine();
                 for (const service of Object.values(this.context.ir.services)) {
                     for (const endpoint of service.endpoints) {
-                        writer.writeNodeStatement(
-                            new ToolDefinitionNode({
-                                mcpSdkReference: this.mcpSdkReference,
-                                sdkClientClassReference: this.sdkClientClassReference,
-                                sdkClientVariableName: this.sdkClientVariableName,
-                                schemasReference: this.schemasReference,
-                                endpoint,
-                                service,
-                                builder: this.context.project.builder,
-                                zodTypeMapper: this.context.zodTypeMapper
-                            })
-                        );
+                        const toolDefinition = new ToolDefinition({
+                            mcpSdkReference: this.mcpSdkReference,
+                            sdkClientClassReference: this.sdkClientClassReference,
+                            sdkClientVariableName: this.sdkClientVariableName,
+                            schemasReference: this.schemasReference,
+                            endpoint,
+                            service,
+                            builder: this.context.project.builder,
+                            zodTypeMapper: this.context.zodTypeMapper
+                        });
+                        toolDefinition.write(writer);
                         writer.newLine();
                     }
                 }
@@ -107,7 +106,7 @@ export class ToolsGenerator extends FileGenerator<
     }
 }
 
-export declare namespace ToolDefinitionNode {
+export declare namespace ToolDefinition {
     interface Args {
         mcpSdkReference: ts.Reference;
         sdkClientClassReference: ts.Reference;
@@ -120,7 +119,7 @@ export declare namespace ToolDefinitionNode {
     }
 }
 
-export class ToolDefinitionNode extends ts.AstNode {
+export class ToolDefinition {
     private readonly sdkMethodPath: string;
 
     private readonly toolVariableName: string;
@@ -129,8 +128,7 @@ export class ToolDefinitionNode extends ts.AstNode {
 
     private readonly schemaVariableName?: string;
 
-    public constructor(private readonly args: ToolDefinitionNode.Args) {
-        super();
+    public constructor(private readonly args: ToolDefinition.Args) {
         this.sdkMethodPath = this.args.builder.getSdkMethodPath(
             this.args.endpoint.name,
             this.args.service.name.fernFilepath
@@ -196,6 +194,52 @@ export class ToolDefinitionNode extends ts.AstNode {
             }
         };
 
+        const writeBody = (writer: ts.Writer) => {
+            writeExtractParams(writer);
+            writer.writeNodeStatement(
+                ts.variable({
+                    name: "result",
+                    const: true,
+                    initializer: ts.codeblock((writer) => {
+                        writer.write("await ");
+                        writer.writeNode(
+                            new MethodInvocationNode({
+                                on: ts.codeblock(this.args.sdkClientVariableName),
+                                method: this.sdkMethodPath,
+                                arguments_: [
+                                    ...(partsFromPath ?? []).map((part) =>
+                                        ts.codeblock((writer) => {
+                                            writer.write(part.key);
+                                        })
+                                    ),
+                                    ...(hasSchema
+                                        ? [
+                                              ts.codeblock((writer) => {
+                                                  writer.write("request");
+                                              })
+                                          ]
+                                        : [])
+                                ]
+                            })
+                        );
+                    })
+                })
+            );
+            writer.write("return ");
+            writer.writeNodeStatement(
+                new ObjectLiteralNode({
+                    fields: [
+                        {
+                            name: "content",
+                            value: ts.codeblock((writer) => {
+                                writer.write('[{ type: "text", text: JSON.stringify(result) }]');
+                            })
+                        }
+                    ]
+                })
+            );
+        };
+
         writer.writeNode(
             ts.variable({
                 name: this.toolVariableName,
@@ -225,13 +269,7 @@ export class ToolDefinitionNode extends ts.AstNode {
                                                         ...(this.toolDescription
                                                             ? [ts.TypeLiteral.string(this.toolDescription)]
                                                             : []),
-                                                        ...(hasAnyParams
-                                                            ? [
-                                                                  ts.codeblock((writer) => {
-                                                                      writeParams(writer);
-                                                                  })
-                                                              ]
-                                                            : []),
+                                                        ...(hasAnyParams ? [ts.codeblock(writeParams)] : []),
                                                         new FunctionNode({
                                                             async: true,
                                                             parameters: [
@@ -239,64 +277,7 @@ export class ToolDefinitionNode extends ts.AstNode {
                                                                     name: "params"
                                                                 })
                                                             ],
-                                                            body: ts.codeblock((writer) => {
-                                                                writeExtractParams(writer);
-                                                                writer.writeNodeStatement(
-                                                                    ts.variable({
-                                                                        name: "result",
-                                                                        const: true,
-                                                                        initializer: ts.codeblock((writer) => {
-                                                                            writer.write("await ");
-                                                                            writer.writeNode(
-                                                                                new MethodInvocationNode({
-                                                                                    on: ts.codeblock(
-                                                                                        this.args.sdkClientVariableName
-                                                                                    ),
-                                                                                    method: this.sdkMethodPath,
-                                                                                    arguments_: [
-                                                                                        ...(partsFromPath ?? []).map(
-                                                                                            (part) =>
-                                                                                                ts.codeblock(
-                                                                                                    (writer) => {
-                                                                                                        writer.write(
-                                                                                                            part.key
-                                                                                                        );
-                                                                                                    }
-                                                                                                )
-                                                                                        ),
-                                                                                        ...(hasSchema
-                                                                                            ? [
-                                                                                                  ts.codeblock(
-                                                                                                      (writer) => {
-                                                                                                          writer.write(
-                                                                                                              "request"
-                                                                                                          );
-                                                                                                      }
-                                                                                                  )
-                                                                                              ]
-                                                                                            : [])
-                                                                                    ]
-                                                                                })
-                                                                            );
-                                                                        })
-                                                                    })
-                                                                );
-                                                                writer.write("return ");
-                                                                writer.writeNodeStatement(
-                                                                    new ObjectLiteralNode({
-                                                                        fields: [
-                                                                            {
-                                                                                name: "content",
-                                                                                value: ts.codeblock((writer) => {
-                                                                                    writer.write(
-                                                                                        '[{ type: "text", text: JSON.stringify(result) }]'
-                                                                                    );
-                                                                                })
-                                                                            }
-                                                                        ]
-                                                                    })
-                                                                );
-                                                            })
+                                                            body: ts.codeblock(writeBody)
                                                         })
                                                     ]
                                                 })
