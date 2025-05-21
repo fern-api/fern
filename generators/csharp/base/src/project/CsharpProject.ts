@@ -108,7 +108,7 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
             );
         }
 
-        if (this.context.doesIrHaveCustomPagination()) {
+        if (this.context.shouldCreateCustomPagination()) {
             this.coreFiles.push(await this.createCustomPagerAsIsFile());
         }
 
@@ -162,15 +162,16 @@ export class CsharpProject extends AbstractProject<AbstractCsharpGeneratorContex
         await this.createCoreTestDirectory({ absolutePathToTestProjectDirectory });
         await this.createPublicCoreDirectory({ absolutePathToProjectDirectory });
 
-        try {
-            const csharpier = findDotnetToolPath("dotnet-csharpier");
-            await loggingExeca(this.context.logger, csharpier, ["--fast", "--no-msbuild-check", "."], {
+        const csharpier = findDotnetToolPath("csharpier");
+        await loggingExeca(
+            this.context.logger,
+            csharpier,
+            ["format", ".", "--no-msbuild-check", "--skip-validation", "--compilation-errors-as-warnings"],
+            {
                 doNotPipeOutput: true,
                 cwd: absolutePathToSrcDirectory
-            });
-        } catch (error) {
-            this.context.logger.warn("csharpier command failed, continuing without formatting.");
-        }
+            }
+        );
     }
 
     private async createProject({

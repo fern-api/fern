@@ -19,6 +19,7 @@ class Data_Base64(UniversalBaseModel):
 
 """
 from seed.examples.resources.commons.resources import Data_String
-Data_String(value='data')
+
+Data_String(value="data")
 """
 Data = typing.Union[Data_String, Data_Base64]

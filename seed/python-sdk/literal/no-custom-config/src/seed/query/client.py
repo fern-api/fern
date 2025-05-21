@@ -58,8 +58,13 @@ class QueryClient:
         Examples
         --------
         from seed import SeedLiteral
-        client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
-        client.query.send(query='What is the weather today', )
+
+        client = SeedLiteral(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.query.send(
+            query="What is the weather today",
+        )
         """
         _response = self._raw_client.send(
             query=query,
@@ -119,11 +124,21 @@ class AsyncQueryClient:
 
         Examples
         --------
-        from seed import AsyncSeedLiteral
         import asyncio
-        client = AsyncSeedLiteral(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedLiteral
+
+        client = AsyncSeedLiteral(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.query.send(query='What is the weather today', )
+            await client.query.send(
+                query="What is the weather today",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.send(

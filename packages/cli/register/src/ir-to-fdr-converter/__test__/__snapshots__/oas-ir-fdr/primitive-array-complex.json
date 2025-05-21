@@ -1,7 +1,7 @@
 {
   "types": {
-    "SearchWithObjectUnionGetRequestBodySchema": {
-      "name": "SearchWithObjectUnionGetRequestBodySchema",
+    "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema": {
+      "name": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema",
       "shape": {
         "type": "object",
         "extends": [],
@@ -41,7 +41,7 @@
         "auth": false,
         "method": "GET",
         "id": "getSearchWithArrayUnion",
-        "originalEndpointId": "getSearchWithArrayUnion",
+        "originalEndpointId": "endpoint_.getSearchWithArrayUnion",
         "name": "Get Search With Array Union",
         "path": {
           "pathParameters": [],
@@ -95,20 +95,23 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getSearchWithArrayUnionExample",
             "description": "",
             "path": "/search-with-array-union",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": [
+              "foo"
+            ],
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": [
+                "foo"
+              ]
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"
@@ -123,7 +126,7 @@
         "auth": false,
         "method": "GET",
         "id": "getSearchWithObjectUnion",
-        "originalEndpointId": "getSearchWithObjectUnion",
+        "originalEndpointId": "endpoint_.getSearchWithObjectUnion",
         "name": "Get Search With Object Union",
         "path": {
           "pathParameters": [],
@@ -150,7 +153,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "SearchWithObjectUnionGetRequestBodySchema"
+                  "value": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema"
                 }
               }
             }
@@ -172,20 +175,19 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getSearchWithObjectUnionExample",
             "description": "",
             "path": "/search-with-object-union",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": {},
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": {}
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"

@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "8ab990b6",
+            "example_identifier": "189fe9ab",
             "id": {
                 "method": "GET",
                 "path": "/users",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "340b087f",
+            "example_identifier": "f6f3f274",
             "id": {
                 "method": "POST",
                 "path": "/users",

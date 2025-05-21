@@ -1,17 +1,13 @@
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
-import {
-    HttpHeader,
-    PathParameter,
-    QueryParameter,
-    TypeDeclaration,
-    WebSocketMessage,
-    WebSocketMessageBody
-} from "@fern-api/ir-sdk";
+import { HttpHeader, PathParameter, QueryParameter, WebSocketMessage, WebSocketMessageBody } from "@fern-api/ir-sdk";
+import { constructHttpPath } from "@fern-api/ir-utils";
+import { Converters } from "@fern-api/v2-importer-commons";
 
 import { AsyncAPIV3 } from "..";
 import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter";
 import { ParameterConverter } from "../../converters/ParameterConverter";
+import { DisplayNameExtension } from "../../extensions/x-fern-display-name";
 
 export declare namespace ChannelConverter3_0 {
     export interface Args extends AbstractChannelConverter.Args<AsyncAPIV3.ChannelV3> {
@@ -30,25 +26,31 @@ const SERVER_REFERENCE_PREFIX = "#/servers/";
 
 export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.ChannelV3> {
     private readonly operations: Record<string, AsyncAPIV3.Operation>;
-    protected inlinedTypes: Record<string, TypeDeclaration> = {};
+    protected inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
 
-    constructor({ context, breadcrumbs, channel, channelPath, operations, group }: ChannelConverter3_0.Args) {
-        super({ context, breadcrumbs, channel, channelPath, group });
+    constructor({ context, breadcrumbs, websocketGroup, channel, channelPath, operations }: ChannelConverter3_0.Args) {
+        super({ context, breadcrumbs, websocketGroup, channel, channelPath });
         this.operations = operations;
     }
 
-    public async convert(): Promise<AbstractChannelConverter.Output | undefined> {
+    public convert(): AbstractChannelConverter.Output | undefined {
         const pathParameters: PathParameter[] = [];
         const queryParameters: QueryParameter[] = [];
         const headers: HttpHeader[] = [];
 
-        const displayName = this.group ? this.group.join(".") : this.channelPath;
+        const displayNameExtension = new DisplayNameExtension({
+            breadcrumbs: this.breadcrumbs,
+            channel: this.channel,
+            context: this.context
+        });
+        const displayName = displayNameExtension.convert() ?? this.websocketGroup?.join(".") ?? this.channelPath;
 
         if (this.channel.parameters) {
-            await this.convertChannelParameters({
+            this.convertChannelParameters({
                 pathParameters,
                 queryParameters,
-                headers
+                headers,
+                channelPath: this.channelPath
             });
         }
 
@@ -68,7 +70,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
 
         for (const [operationId, operation] of Object.entries(channelOperations)) {
             for (const message of operation.messages) {
-                const resolved = await this.context.convertReferenceToTypeReference(message);
+                const resolved = this.context.convertReferenceToTypeReference({ reference: message });
                 if (resolved.ok) {
                     const messageBody = WebSocketMessageBody.reference({
                         bodyType: resolved.reference,
@@ -79,7 +81,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                         displayName: operationId,
                         origin: operation.action === "send" ? "client" : "server",
                         body: messageBody,
-                        availability: await this.context.getAvailability({
+                        availability: this.context.getAvailability({
                             node: operation,
                             breadcrumbs: this.breadcrumbs
                         }),
@@ -93,23 +95,27 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             this.resolveChannelServersFromReference(this.channel.servers ?? []) ??
             Object.keys(this.context.spec.servers ?? {})[0];
 
-        const pathHead = this.transformToValidPath(this.channel.address ?? this.channelPath);
+        const channelAddress = this.transformToValidPath(this.channel.address ?? this.channelPath);
+        const path = constructHttpPath(channelAddress);
+
+        const audiences =
+            this.context.getAudiences({
+                operation: this.channel,
+                breadcrumbs: this.breadcrumbs
+            }) ?? [];
 
         return {
             channel: {
                 name: this.context.casingsGenerator.generateName(displayName),
                 displayName,
                 baseUrl,
-                path: {
-                    head: pathHead,
-                    parts: []
-                },
+                path,
                 auth: false,
                 headers,
                 queryParameters,
                 pathParameters,
                 messages,
-                availability: await this.context.getAvailability({
+                availability: this.context.getAvailability({
                     node: this.channel,
                     breadcrumbs: this.breadcrumbs
                 }),
@@ -118,33 +124,35 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                 v2Examples: {
                     autogeneratedExamples: {},
                     userSpecifiedExamples: this.convertExamples({
-                        pathHead,
-                        baseUrl
+                        fullPath: channelAddress,
+                        baseUrl,
+                        asyncApiVersion: "v3"
                     })
                 }
             },
+            audiences,
             inlinedTypes: this.inlinedTypes
         };
     }
 
-    private async convertChannelParameters({
+    private convertChannelParameters({
         pathParameters,
         queryParameters,
-        headers
+        headers,
+        channelPath
     }: {
         pathParameters: PathParameter[];
         queryParameters: QueryParameter[];
         headers: HttpHeader[];
-    }): Promise<void> {
+        channelPath: string;
+    }): void {
         for (const parameter of Object.values(this.channel.parameters ?? {})) {
-            let parameterObject: OpenAPIV3.ParameterObject = parameter;
-            if (this.context.isReferenceObject(parameter)) {
-                const resolvedReference = await this.context.resolveReference<OpenAPIV3_1.ParameterObject>(parameter);
-                if (resolvedReference.resolved) {
-                    parameterObject = resolvedReference.value;
-                } else {
-                    continue;
-                }
+            const parameterObject = this.context.resolveMaybeReference<OpenAPIV3_1.ParameterObject>({
+                schemaOrReference: parameter,
+                breadcrumbs: [...this.breadcrumbs, "parameters"]
+            });
+            if (parameterObject == null) {
+                continue;
             }
             const location = this.convertChannelParameterLocation(parameter.location);
             if (location == null) {
@@ -158,9 +166,10 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                     ...parameterObject,
                     name: parameterKey,
                     in: type
-                }
+                },
+                parameterNamePrefix: this.channelPath
             });
-            const convertedParameter = await parameterConverter.convert();
+            const convertedParameter = parameterConverter.convert();
             if (convertedParameter != null) {
                 this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes };
                 switch (convertedParameter.type) {

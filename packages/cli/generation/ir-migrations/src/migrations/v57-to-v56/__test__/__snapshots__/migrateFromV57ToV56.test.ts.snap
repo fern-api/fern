@@ -1458,6 +1458,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
       "userAgent": null,
     },
   },
+  "selfHosted": false,
   "serviceTypeReferenceInfo": {
     "sharedTypes": [],
     "typesReferencedOnlyByService": {
@@ -1492,7 +1493,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "2723deaf",
+                "id": "ed430273",
                 "name": null,
                 "queryParameters": [],
                 "request": {
@@ -1654,6 +1655,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                                 "wireValue": "access_token",
                               },
                               "originalTypeDeclaration": {
+                                "displayName": null,
                                 "fernFilepath": {
                                   "allParts": [
                                     {
@@ -1736,6 +1738,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                         },
                         "type": "named",
                         "typeName": {
+                          "displayName": null,
                           "fernFilepath": {
                             "allParts": [
                               {
@@ -2011,6 +2014,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                 "responseBodyType": {
                   "_type": "named",
                   "default": null,
+                  "displayName": null,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -2299,7 +2303,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                     },
                   },
                 ],
-                "id": "b1c84228",
+                "id": "2e6798",
                 "name": null,
                 "queryParameters": [
                   {
@@ -2433,6 +2437,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                                 "wireValue": "name",
                               },
                               "originalTypeDeclaration": {
+                                "displayName": null,
                                 "fernFilepath": {
                                   "allParts": [
                                     {
@@ -2515,6 +2520,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                         },
                         "type": "named",
                         "typeName": {
+                          "displayName": null,
                           "fernFilepath": {
                             "allParts": [
                               {
@@ -2727,6 +2733,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                                 "wireValue": "name",
                               },
                               "originalTypeDeclaration": {
+                                "displayName": null,
                                 "fernFilepath": {
                                   "allParts": [
                                     {
@@ -2809,6 +2816,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                         },
                         "type": "named",
                         "typeName": {
+                          "displayName": null,
                           "fernFilepath": {
                             "allParts": [
                               {
@@ -3134,6 +3142,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
               "valueType": {
                 "_type": "named",
                 "default": null,
+                "displayName": null,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -3340,6 +3349,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
               "valueType": {
                 "_type": "named",
                 "default": null,
+                "displayName": null,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -3736,6 +3746,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                                 "wireValue": "name",
                               },
                               "originalTypeDeclaration": {
+                                "displayName": null,
                                 "fernFilepath": {
                                   "allParts": [
                                     {
@@ -3818,6 +3829,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                         },
                         "type": "named",
                         "typeName": {
+                          "displayName": null,
                           "fernFilepath": {
                             "allParts": [
                               {
@@ -4030,6 +4042,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                                 "wireValue": "name",
                               },
                               "originalTypeDeclaration": {
+                                "displayName": null,
                                 "fernFilepath": {
                                   "allParts": [
                                     {
@@ -4112,6 +4125,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                         },
                         "type": "named",
                         "typeName": {
+                          "displayName": null,
                           "fernFilepath": {
                             "allParts": [
                               {
@@ -4245,7 +4259,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "b0526825",
+                "id": "4ed1241a",
                 "name": null,
                 "queryParameters": [
                   {
@@ -4329,6 +4343,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                                 "wireValue": "users",
                               },
                               "originalTypeDeclaration": {
+                                "displayName": null,
                                 "fernFilepath": {
                                   "allParts": [
                                     {
@@ -4407,6 +4422,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                                     "itemType": {
                                       "_type": "named",
                                       "default": null,
+                                      "displayName": null,
                                       "fernFilepath": {
                                         "allParts": [
                                           {
@@ -4504,6 +4520,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                                                   "wireValue": "name",
                                                 },
                                                 "originalTypeDeclaration": {
+                                                  "displayName": null,
                                                   "fernFilepath": {
                                                     "allParts": [
                                                       {
@@ -4586,6 +4603,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                                           },
                                           "type": "named",
                                           "typeName": {
+                                            "displayName": null,
                                             "fernFilepath": {
                                               "allParts": [
                                                 {
@@ -4683,6 +4701,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                                                   "wireValue": "name",
                                                 },
                                                 "originalTypeDeclaration": {
+                                                  "displayName": null,
                                                   "fernFilepath": {
                                                     "allParts": [
                                                       {
@@ -4765,6 +4784,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                                           },
                                           "type": "named",
                                           "typeName": {
+                                            "displayName": null,
                                             "fernFilepath": {
                                               "allParts": [
                                                 {
@@ -4843,6 +4863,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                         },
                         "type": "named",
                         "typeName": {
+                          "displayName": null,
                           "fernFilepath": {
                             "allParts": [
                               {
@@ -5037,6 +5058,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                     "list": {
                       "_type": "named",
                       "default": null,
+                      "displayName": null,
                       "fernFilepath": {
                         "allParts": [
                           {
@@ -5168,6 +5190,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                 "responseBodyType": {
                   "_type": "named",
                   "default": null,
+                  "displayName": null,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -5527,6 +5550,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
       },
       "inline": null,
       "name": {
+        "displayName": null,
         "fernFilepath": {
           "allParts": [
             {
@@ -5656,6 +5680,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
       },
       "inline": null,
       "name": {
+        "displayName": null,
         "fernFilepath": {
           "allParts": [
             {
@@ -5766,6 +5791,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                 "list": {
                   "_type": "named",
                   "default": null,
+                  "displayName": null,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -5850,6 +5876,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
       },
       "inline": null,
       "name": {
+        "displayName": null,
         "fernFilepath": {
           "allParts": [
             {

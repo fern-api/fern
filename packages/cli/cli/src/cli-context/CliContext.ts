@@ -39,9 +39,11 @@ export class CliContext {
     private ttyAwareLogger: TtyAwareLogger;
 
     private logLevel: LogLevel = LogLevel.Info;
+    private isLocal: boolean;
 
-    constructor(stream: NodeJS.WriteStream) {
-        this.ttyAwareLogger = new TtyAwareLogger(stream);
+    constructor(stdout: NodeJS.WriteStream, stderr: NodeJS.WriteStream, { isLocal }: { isLocal?: boolean }) {
+        this.ttyAwareLogger = new TtyAwareLogger(stdout, stderr);
+        this.isLocal = isLocal ?? false;
 
         const packageName = this.getPackageName();
         const packageVersion = this.getPackageVersion();
@@ -99,14 +101,14 @@ export class CliContext {
         logErrorMessage({ message, error, logger: this.logger });
     }
 
-    public async exit(): Promise<never> {
-        if (!this._suppressUpgradeMessage) {
+    public async exit({ code }: { code?: number } = {}): Promise<never> {
+        if (!this._suppressUpgradeMessage || !this.isLocal) {
             await this.nudgeUpgradeIfAvailable();
         }
         this.ttyAwareLogger.finish();
         const posthogManager = await getPosthogManager();
         await posthogManager.flush();
-        this.exitProgram();
+        this.exitProgram({ code });
     }
 
     private async nudgeUpgradeIfAvailable() {
@@ -124,7 +126,7 @@ export class CliContext {
                 if (!upgradeMessage.endsWith("\n")) {
                     upgradeMessage += "\n";
                 }
-                this.logger.info(upgradeMessage);
+                this.stderr.info(upgradeMessage);
             }
         } catch {
             // swallow error when failing to check for upgrade
@@ -137,8 +139,8 @@ export class CliContext {
         }
     }
 
-    private exitProgram(): never {
-        process.exit(this.didSucceed ? 0 : 1);
+    private exitProgram({ code }: { code?: number } = {}): never {
+        process.exit(code ?? (this.didSucceed ? 0 : 1));
     }
 
     private longestWorkspaceName: string | undefined;
@@ -202,10 +204,13 @@ export class CliContext {
     }
 
     public async instrumentPostHogEvent(event: PosthogEvent): Promise<void> {
-        (await getPosthogManager()).sendEvent(event);
+        if (!this.isLocal) {
+            (await getPosthogManager()).sendEvent(event);
+        }
     }
 
-    public readonly logger = createLogger(this.log.bind(this));
+    public readonly logger = createLogger((level, ...args) => this.log(level, ...args));
+    public readonly stderr = createLogger((level, ...args) => this.logStderr(level, ...args));
 
     private constructTaskInitForWorkspace(workspace: Workspace): TaskContextImpl.Init {
         const prefixWithoutPadding = wrapWorkspaceNameForPrefix(
@@ -258,10 +263,24 @@ export class CliContext {
         ]);
     }
 
-    private logImmediately(logs: Log[]): void {
+    private logStderr(level: LogLevel, ...parts: string[]) {
+        this.logImmediately(
+            [
+                {
+                    parts,
+                    level,
+                    time: new Date()
+                }
+            ],
+            { stderr: true }
+        );
+    }
+
+    private logImmediately(logs: Log[], { stderr = false }: { stderr?: boolean } = {}): void {
         const filtered = logs.filter((log) => LOG_LEVELS.indexOf(log.level) >= LOG_LEVELS.indexOf(this.logLevel));
         this.ttyAwareLogger.log(filtered, {
-            includeDebugInfo: this.logLevel === LogLevel.Debug
+            includeDebugInfo: this.logLevel === LogLevel.Debug,
+            stderr
         });
     }
 

@@ -44,6 +44,9 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
         await this.generate(context);
+        if (context.isSelfHosted()) {
+            await this.generateGitHub({ context });
+        }
     }
 
     protected async writeForDownload(context: SdkGeneratorContext): Promise<void> {
@@ -165,5 +168,9 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             snippetFilepath,
             JSON.stringify(await FernGeneratorExecSerializers.Snippets.jsonOrThrow(snippets), undefined, 4)
         );
+    }
+
+    private async generateGitHub({ context }: { context: SdkGeneratorContext }): Promise<void> {
+        await context.generatorAgent.pushToGitHub({ context });
     }
 }

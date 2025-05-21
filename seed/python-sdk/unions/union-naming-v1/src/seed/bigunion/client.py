@@ -42,8 +42,13 @@ class BigunionClient:
         Examples
         --------
         from seed import SeedUnions
-        client = SeedUnions(base_url="https://yourhost.com/path/to/api", )
-        client.bigunion.get(id='id', )
+
+        client = SeedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.bigunion.get(
+            id="id",
+        )
         """
         _response = self._raw_client.get(id, request_options=request_options)
         return _response.data
@@ -65,8 +70,15 @@ class BigunionClient:
         --------
         from seed import SeedUnions
         from seed.bigunion import NormalSweetBigUnion
-        client = SeedUnions(base_url="https://yourhost.com/path/to/api", )
-        client.bigunion.update(request=NormalSweetBigUnion(value='value', ), )
+
+        client = SeedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.bigunion.update(
+            request=NormalSweetBigUnion(
+                value="value",
+            ),
+        )
         """
         _response = self._raw_client.update(request=request, request_options=request_options)
         return _response.data
@@ -90,8 +102,20 @@ class BigunionClient:
         --------
         from seed import SeedUnions
         from seed.bigunion import NormalSweetBigUnion
-        client = SeedUnions(base_url="https://yourhost.com/path/to/api", )
-        client.bigunion.update_many(request=[NormalSweetBigUnion(value='value', ), NormalSweetBigUnion(value='value', )], )
+
+        client = SeedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.bigunion.update_many(
+            request=[
+                NormalSweetBigUnion(
+                    value="value",
+                ),
+                NormalSweetBigUnion(
+                    value="value",
+                ),
+            ],
+        )
         """
         _response = self._raw_client.update_many(request=request, request_options=request_options)
         return _response.data
@@ -127,11 +151,21 @@ class AsyncBigunionClient:
 
         Examples
         --------
-        from seed import AsyncSeedUnions
         import asyncio
-        client = AsyncSeedUnions(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedUnions
+
+        client = AsyncSeedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.bigunion.get(id='id', )
+            await client.bigunion.get(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
@@ -152,12 +186,24 @@ class AsyncBigunionClient:
 
         Examples
         --------
+        import asyncio
+
         from seed import AsyncSeedUnions
         from seed.bigunion import NormalSweetBigUnion
-        import asyncio
-        client = AsyncSeedUnions(base_url="https://yourhost.com/path/to/api", )
+
+        client = AsyncSeedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.bigunion.update(request=NormalSweetBigUnion(value='value', ), )
+            await client.bigunion.update(
+                request=NormalSweetBigUnion(
+                    value="value",
+                ),
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.update(request=request, request_options=request_options)
@@ -180,12 +226,29 @@ class AsyncBigunionClient:
 
         Examples
         --------
+        import asyncio
+
         from seed import AsyncSeedUnions
         from seed.bigunion import NormalSweetBigUnion
-        import asyncio
-        client = AsyncSeedUnions(base_url="https://yourhost.com/path/to/api", )
+
+        client = AsyncSeedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.bigunion.update_many(request=[NormalSweetBigUnion(value='value', ), NormalSweetBigUnion(value='value', )], )
+            await client.bigunion.update_many(
+                request=[
+                    NormalSweetBigUnion(
+                        value="value",
+                    ),
+                    NormalSweetBigUnion(
+                        value="value",
+                    ),
+                ],
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.update_many(request=request, request_options=request_options)

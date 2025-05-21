@@ -5,12 +5,12 @@
 /**
  * @example
  *     {
- *         xEndpointHeader: "X-Endpoint-Header"
+ *         "X-Endpoint-Header": "X-Endpoint-Header"
  *     }
  */
 export interface HeaderAuthRequest {
     /**
      * Specifies the endpoint key.
      */
-    xEndpointHeader: string;
+    "X-Endpoint-Header": string;
 }

@@ -15,96 +15,80 @@ from .socket_client import AsyncRealtimeSocketClient, RealtimeSocketClient
 class RawRealtimeClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-
+    
     @contextmanager
-    def connect(
-        self,
-        id: str,
-        *,
-        model: typing.Optional[str] = None,
-        temperature: typing.Optional[int] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[RealtimeSocketClient]:
+    def connect(self, id: str, *, model: typing.Optional[str] = None, temperature: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None) -> typing.Iterator[RealtimeSocketClient]:
         """
         Parameters
         ----------
         id : str
-
+        
         model : typing.Optional[str]
-
+        
         temperature : typing.Optional[int]
-
+        
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-
+        
         Returns
         -------
         RealtimeSocketClient
         """
-        ws_url = +"/realtime/"
+        ws_url =  + "/realtime/"
         query_params = httpx.QueryParams()
         if model is not None:
             query_params = query_params.add("model", model)
         if temperature is not None:
             query_params = query_params.add("temperature", temperature)
-        ws_url = ws_url + f"?{query_params}"
+        ws_url = ws_url + f'?{query_params}'
         headers = self._client_wrapper.get_headers()
         if request_options and "additional_headers" in request_options:
             headers.update(request_options["additional_headers"])
         try:
-            with websockets_sync_client.connect(ws_url, additional_headers=headers) as protocol:
-                yield RealtimeSocketClient(websocket=protocol)
+            with websockets_sync_client.connect(ws_url, additional_headers=headers) as protocol:yield RealtimeSocketClient(websocket = protocol)
         except websockets.exceptions.InvalidStatusCode as exc:
             status_code: int = exc.status_code
             if status_code == 401:
-                raise ApiError(status_code=status_code, body="Websocket initialized with invalid credentials.")
-            raise ApiError(status_code=status_code, body="Unexpected error when initializing websocket connection.")
-
-
+                raise ApiError(status_code=status_code, headers=dict(headers), body="Websocket initialized with invalid credentials.")
+            raise ApiError(status_code=status_code, headers=dict(headers), body="Unexpected error when initializing websocket connection.")
+        
 class AsyncRawRealtimeClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-
+    
     @asynccontextmanager
-    async def connect(
-        self,
-        id: str,
-        *,
-        model: typing.Optional[str] = None,
-        temperature: typing.Optional[int] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[AsyncRealtimeSocketClient]:
+    async def connect(self, id: str, *, model: typing.Optional[str] = None, temperature: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None) -> typing.AsyncIterator[AsyncRealtimeSocketClient]:
         """
         Parameters
         ----------
         id : str
-
+        
         model : typing.Optional[str]
-
+        
         temperature : typing.Optional[int]
-
+        
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-
+        
         Returns
         -------
         AsyncRealtimeSocketClient
         """
-        ws_url = +"/realtime/"
+        ws_url =  + "/realtime/"
         query_params = httpx.QueryParams()
         if model is not None:
             query_params = query_params.add("model", model)
         if temperature is not None:
             query_params = query_params.add("temperature", temperature)
-        ws_url = ws_url + f"?{query_params}"
+        ws_url = ws_url + f'?{query_params}'
         headers = self._client_wrapper.get_headers()
         if request_options and "additional_headers" in request_options:
             headers.update(request_options["additional_headers"])
         try:
-            async with websockets.connect(ws_url, extra_headers=headers) as protocol:
-                yield AsyncRealtimeSocketClient(websocket=protocol)
+            async with websockets.connect(ws_url, extra_headers=headers) as protocol:yield AsyncRealtimeSocketClient(websocket = protocol)
         except websockets.exceptions.InvalidStatusCode as exc:
             status_code: int = exc.status_code
             if status_code == 401:
-                raise ApiError(status_code=status_code, body="Websocket initialized with invalid credentials.")
-            raise ApiError(status_code=status_code, body="Unexpected error when initializing websocket connection.")
+                raise ApiError(status_code=status_code, headers=dict(headers), body="Websocket initialized with invalid credentials.")
+            raise ApiError(status_code=status_code, headers=dict(headers), body="Unexpected error when initializing websocket connection.")
+        

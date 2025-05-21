@@ -1,4 +1,3 @@
-export * from "./fetcher";
-export * from "./runtime";
-export * from "./auth";
-export * as serialization from "./schemas";
+export * from "./fetcher/index.js";
+export * from "./runtime/index.js";
+export * from "./auth/index.js";

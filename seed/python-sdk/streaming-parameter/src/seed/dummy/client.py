@@ -50,8 +50,14 @@ class DummyClient:
         Examples
         --------
         from seed import SeedStreaming
-        client = SeedStreaming(base_url="https://yourhost.com/path/to/api", )
-        response = client.dummy.generate(stream=False, num_events=5, )
+
+        client = SeedStreaming(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.dummy.generate(
+            stream=False,
+            num_events=5,
+        )
         for chunk in response:
             yield chunk
         """
@@ -75,8 +81,14 @@ class DummyClient:
         Examples
         --------
         from seed import SeedStreaming
-        client = SeedStreaming(base_url="https://yourhost.com/path/to/api", )
-        client.dummy.generate(stream=False, num_events=5, )
+
+        client = SeedStreaming(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.dummy.generate(
+            stream=False,
+            num_events=5,
+        )
         """
         ...
 
@@ -109,7 +121,7 @@ class DummyClient:
                     omit=OMIT,
                 ) as _response:
 
-                    def stream() -> HttpResponse[
+                    def _stream() -> HttpResponse[
                         typing.Iterator[typing.Union[typing.Iterator[StreamResponse], RegularResponse]]
                     ]:
                         try:
@@ -135,10 +147,14 @@ class DummyClient:
                             _response.read()
                             _response_json = _response.json()
                         except JSONDecodeError:
-                            raise ApiError(status_code=_response.status_code, body=_response.text)
-                        raise ApiError(status_code=_response.status_code, body=_response_json)
+                            raise ApiError(
+                                status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                            )
+                        raise ApiError(
+                            status_code=_response.status_code, headers=dict(_response.headers), body=_response_json
+                        )
 
-                    yield stream()
+                    yield _stream()
 
             return stream_generator()
         else:
@@ -160,8 +176,8 @@ class DummyClient:
                     )
                 _response_json = _response.json()
             except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
 class AsyncDummyClient:
@@ -196,13 +212,24 @@ class AsyncDummyClient:
 
         Examples
         --------
-        from seed import AsyncSeedStreaming
         import asyncio
-        client = AsyncSeedStreaming(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedStreaming
+
+        client = AsyncSeedStreaming(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            response = await client.dummy.generate(stream=False, num_events=5, )
+            response = await client.dummy.generate(
+                stream=False,
+                num_events=5,
+            )
             async for chunk in response:
                 yield chunk
+
+
         asyncio.run(main())
         """
         ...
@@ -224,11 +251,22 @@ class AsyncDummyClient:
 
         Examples
         --------
-        from seed import AsyncSeedStreaming
         import asyncio
-        client = AsyncSeedStreaming(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedStreaming
+
+        client = AsyncSeedStreaming(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.dummy.generate(stream=False, num_events=5, )
+            await client.dummy.generate(
+                stream=False,
+                num_events=5,
+            )
+
+
         asyncio.run(main())
         """
         ...
@@ -262,7 +300,7 @@ class AsyncDummyClient:
                     omit=OMIT,
                 ) as _response:
 
-                    async def stream() -> AsyncHttpResponse[
+                    async def _stream() -> AsyncHttpResponse[
                         typing.AsyncIterator[typing.Union[typing.AsyncIterator[StreamResponse], RegularResponse]]
                     ]:
                         try:
@@ -288,10 +326,14 @@ class AsyncDummyClient:
                             await _response.aread()
                             _response_json = _response.json()
                         except JSONDecodeError:
-                            raise ApiError(status_code=_response.status_code, body=_response.text)
-                        raise ApiError(status_code=_response.status_code, body=_response_json)
+                            raise ApiError(
+                                status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                            )
+                        raise ApiError(
+                            status_code=_response.status_code, headers=dict(_response.headers), body=_response_json
+                        )
 
-                    yield await stream()
+                    yield await _stream()
 
             return stream_generator()
         else:
@@ -313,5 +355,5 @@ class AsyncDummyClient:
                     )
                 _response_json = _response.json()
             except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

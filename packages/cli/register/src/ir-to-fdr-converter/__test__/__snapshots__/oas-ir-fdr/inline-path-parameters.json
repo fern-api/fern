@@ -24,9 +24,9 @@
         ]
       }
     },
-    "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess": {
+    "OrganizationsOrganizationIdSearchPostRequestBodyContentApplicationJsonSchemaAccess": {
       "description": "Access level",
-      "name": "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess",
+      "name": "OrganizationsOrganizationIdSearchPostRequestBodyContentApplicationJsonSchemaAccess",
       "shape": {
         "type": "enum",
         "values": [
@@ -65,16 +65,16 @@
     }
   },
   "subpackages": {
-    "Organizations": {
-      "subpackageId": "Organizations",
-      "name": "Organizations",
+    "subpackage_organizations": {
+      "subpackageId": "subpackage_organizations",
+      "name": "organizations",
       "endpoints": [
         {
           "auth": false,
           "description": "",
           "method": "POST",
           "id": "Search",
-          "originalEndpointId": "Organizations.Search",
+          "originalEndpointId": "endpoint_organizations.Search",
           "name": "Search an organization",
           "path": {
             "pathParameters": [
@@ -133,7 +133,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess"
+                        "value": "OrganizationsOrganizationIdSearchPostRequestBodyContentApplicationJsonSchemaAccess"
                       }
                     }
                   }
@@ -155,12 +155,12 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "organizationsSearchExample",
               "description": "",
-              "path": "/organizations/",
+              "path": "/organizations/organization_id/search",
               "pathParameters": {
-                "id": "foo",
-                "organization_id": "foo"
+                "id": "id",
+                "organization_id": "organization_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -171,12 +171,9 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "results": [
-                    "foo"
-                  ]
-                }
+                "results": [
+                  "foo"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -206,7 +203,7 @@
         "description": "Returns the user with the provided user ID.",
         "method": "GET",
         "id": "GetUser",
-        "originalEndpointId": "GetUser",
+        "originalEndpointId": "endpoint_.GetUser",
         "name": "Get User",
         "path": {
           "pathParameters": [
@@ -244,11 +241,11 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getUserExample",
             "description": "",
-            "path": "/users/",
+            "path": "/users/user_id",
             "pathParameters": {
-              "user_id": "foo"
+              "user_id": "user_id"
             },
             "queryParameters": {},
             "headers": {},
@@ -264,7 +261,7 @@
         "description": "Returns the user with the provided user ID.",
         "method": "GET",
         "id": "GetOrganizationUser",
-        "originalEndpointId": "GetOrganizationUser",
+        "originalEndpointId": "endpoint_.GetOrganizationUser",
         "name": "Get Organization User",
         "path": {
           "pathParameters": [
@@ -340,12 +337,12 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getOrganizationUserExample",
             "description": "",
-            "path": "/organizations/",
+            "path": "/organizations/organization_id/users/user_id",
             "pathParameters": {
-              "organization_id": "foo",
-              "user_id": "foo"
+              "organization_id": "organization_id",
+              "user_id": "user_id"
             },
             "queryParameters": {
               "limit": 42
@@ -353,12 +350,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "results": [
-                  "foo"
-                ]
-              }
+              "results": [
+                "foo"
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -379,7 +373,7 @@
     "websockets": [],
     "types": [],
     "subpackages": [
-      "Organizations"
+      "subpackage_organizations"
     ]
   },
   "snippetsConfiguration": {},

@@ -21,9 +21,15 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedBasicAuthEnvironmentVariables
-client = SeedBasicAuthEnvironmentVariables(username="YOUR_USERNAME", access_token="YOUR_ACCESS_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.basic_auth.post_with_basic_auth(request={'key': 'value'}
-, )
+
+client = SeedBasicAuthEnvironmentVariables(
+    username="YOUR_USERNAME",
+    access_token="YOUR_ACCESS_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.basic_auth.post_with_basic_auth(
+    request={"key": "value"},
+)
 ```
 
 ## Async Client
@@ -31,13 +37,25 @@ client.basic_auth.post_with_basic_auth(request={'key': 'value'}
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-from seed import AsyncSeedBasicAuthEnvironmentVariables
 import asyncio
-client = AsyncSeedBasicAuthEnvironmentVariables(username="YOUR_USERNAME", access_token="YOUR_ACCESS_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+from seed import AsyncSeedBasicAuthEnvironmentVariables
+
+client = AsyncSeedBasicAuthEnvironmentVariables(
+    username="YOUR_USERNAME",
+    access_token="YOUR_ACCESS_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+
 async def main() -> None:
-    await client.basic_auth.post_with_basic_auth(request={'key': 'value'}
-    , )
-asyncio.run(main())```
+    await client.basic_auth.post_with_basic_auth(
+        request={"key": "value"},
+    )
+
+
+asyncio.run(main())
+```
 
 ## Exception Handling
 
@@ -46,6 +64,7 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
+
 try:
     client.basic_auth.post_with_basic_auth(...)
 except ApiError as e:
@@ -62,7 +81,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 
 ```python
 from seed import SeedBasicAuthEnvironmentVariables
-client = SeedBasicAuthEnvironmentVariables(..., )
+
+client = SeedBasicAuthEnvironmentVariables(
+    ...,
+)
 response = client.basic_auth.with_raw_response.post_with_basic_auth(...)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
@@ -95,7 +117,12 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedBasicAuthEnvironmentVariables
-client = SeedBasicAuthEnvironmentVariables(..., timeout=20.0, )
+
+client = SeedBasicAuthEnvironmentVariables(
+    ...,
+    timeout=20.0,
+)
+
 
 # Override timeout for a specific method
 client.basic_auth.post_with_basic_auth(..., request_options={
@@ -109,9 +136,17 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-from seed import SeedBasicAuthEnvironmentVariables
 import httpx
-client = SeedBasicAuthEnvironmentVariables(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
+from seed import SeedBasicAuthEnvironmentVariables
+
+client = SeedBasicAuthEnvironmentVariables(
+    ...,
+    httpx_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
 
 ## Contributing
 

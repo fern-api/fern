@@ -1,3 +1,3 @@
-export * as d from "./d";
-export * as b from "./b";
-export * as c from "./c";
+export * as d from "./d/index.js";
+export * as b from "./b/index.js";
+export * as c from "./c/index.js";

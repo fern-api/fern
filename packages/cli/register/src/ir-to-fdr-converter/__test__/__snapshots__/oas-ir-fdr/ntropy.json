@@ -110,17 +110,6 @@
         ]
       }
     },
-    "AccountHolderCreateType": {
-      "description": "The type of the account holder. ",
-      "name": "AccountHolderCreateType",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "AccountHolderType"
-        ],
-        "properties": []
-      }
-    },
     "AccountHolderCreate": {
       "name": "AccountHolderCreate",
       "shape": {
@@ -143,7 +132,7 @@
             "key": "type",
             "valueType": {
               "type": "id",
-              "value": "AccountHolderCreateType"
+              "value": "AccountHolderType"
             }
           },
           {
@@ -160,17 +149,6 @@
             }
           }
         ]
-      }
-    },
-    "AccountHolderExternalType": {
-      "description": "The type of the account holder. ",
-      "name": "AccountHolderExternalType",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "AccountHolderType"
-        ],
-        "properties": []
       }
     },
     "AccountHolderExternal": {
@@ -195,7 +173,7 @@
             "key": "type",
             "valueType": {
               "type": "id",
-              "value": "AccountHolderExternalType"
+              "value": "AccountHolderType"
             }
           },
           {
@@ -277,6 +255,15 @@
             "value": "taxes"
           }
         ]
+      }
+    },
+    "ActionModel": {
+      "name": "ActionModel",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
       }
     },
     "Address": {
@@ -361,56 +348,6 @@
               "itemType": {
                 "type": "id",
                 "value": "TransactionInput"
-              }
-            }
-          }
-        ]
-      }
-    },
-    "BankStatementStatus": {
-      "description": "An enumeration.",
-      "name": "BankStatementStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "processing"
-          },
-          {
-            "value": "completed"
-          },
-          {
-            "value": "error"
-          }
-        ]
-      }
-    },
-    "BankStatementFile": {
-      "name": "BankStatementFile",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "description": "The number of pages in the bank statement file.",
-            "key": "no_pages",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "integer"
-              }
-            }
-          },
-          {
-            "description": "The size of the bank statement file in bytes, if available.",
-            "key": "size",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer"
-                }
               }
             }
           }
@@ -653,6 +590,38 @@
         ]
       }
     },
+    "BankStatementFile": {
+      "name": "BankStatementFile",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The number of pages in the bank statement file.",
+            "key": "no_pages",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "description": "The size of the bank statement file in bytes, if available.",
+            "key": "size",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "BankStatementResults": {
       "name": "BankStatementResults",
       "shape": {
@@ -673,26 +642,22 @@
         ]
       }
     },
-    "BankStatementTransactionEntryType": {
-      "description": "The direction of the flow of the money from the perspective of the account holder. `outgoing` to represent money leaving the account, such as purchases or fees, while `incoming` represents money entering the account, such as income or refunds.",
-      "name": "BankStatementTransactionEntryType",
+    "BankStatementStatus": {
+      "description": "An enumeration.",
+      "name": "BankStatementStatus",
       "shape": {
-        "type": "object",
-        "extends": [
-          "EntryType"
-        ],
-        "properties": []
-      }
-    },
-    "BankStatementTransactionCurrency": {
-      "description": "The currency of the transaction in ISO 4217 format",
-      "name": "BankStatementTransactionCurrency",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Currency"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "processing"
+          },
+          {
+            "value": "completed"
+          },
+          {
+            "value": "error"
+          }
+        ]
       }
     },
     "BankStatementTransaction": {
@@ -751,7 +716,7 @@
             "key": "entry_type",
             "valueType": {
               "type": "id",
-              "value": "BankStatementTransactionEntryType"
+              "value": "EntryType"
             }
           },
           {
@@ -759,7 +724,7 @@
             "key": "currency",
             "valueType": {
               "type": "id",
-              "value": "BankStatementTransactionCurrency"
+              "value": "Currency"
             }
           },
           {
@@ -774,24 +739,6 @@
                 }
               }
             }
-          }
-        ]
-      }
-    },
-    "BatchStatus": {
-      "description": "An enumeration.",
-      "name": "BatchStatus",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "processing"
-          },
-          {
-            "value": "completed"
-          },
-          {
-            "value": "error"
           }
         ]
       }
@@ -866,17 +813,6 @@
         ]
       }
     },
-    "BatchResultStatus": {
-      "description": "The current status of the batch job.",
-      "name": "BatchResultStatus",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "BatchStatus"
-        ],
-        "properties": []
-      }
-    },
     "BatchResult": {
       "description": "The `BatchResult` object represents the result of a batch enrichment job, including its status and\nenriched transactions.",
       "name": "BatchResult",
@@ -909,7 +845,7 @@
             "key": "status",
             "valueType": {
               "type": "id",
-              "value": "BatchResultStatus"
+              "value": "BatchStatus"
             }
           },
           {
@@ -918,6 +854,24 @@
               "type": "id",
               "value": "EnrichmentResult"
             }
+          }
+        ]
+      }
+    },
+    "BatchStatus": {
+      "description": "An enumeration.",
+      "name": "BatchStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "processing"
+          },
+          {
+            "value": "completed"
+          },
+          {
+            "value": "error"
           }
         ]
       }
@@ -959,17 +913,6 @@
         ]
       }
     },
-    "CategoriesAccounting": {
-      "description": "The corresponding accounting category. Only available for `business` transactions.",
-      "name": "CategoriesAccounting",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "AccountingCategory"
-        ],
-        "properties": []
-      }
-    },
     "Categories": {
       "name": "Categories",
       "shape": {
@@ -996,7 +939,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "CategoriesAccounting"
+                "value": "AccountingCategory"
               }
             }
           }
@@ -2626,6 +2569,15 @@
         ]
       }
     },
+    "FilterModel": {
+      "name": "FilterModel",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
     "HTTPValidationError": {
       "name": "HTTPValidationError",
       "shape": {
@@ -2743,6 +2695,70 @@
           },
           {
             "value": "payment_processor"
+          }
+        ]
+      }
+    },
+    "Location": {
+      "name": "Location",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "An unstructured string containing the address",
+            "key": "raw_address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "When raw is set, a structured representation of it.",
+            "key": "structured",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "LocationStructured"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "LocationInput": {
+      "description": "Location of where the transaction has taken place. This can greatly improve entity identification, especially\nunder ambiguity.",
+      "name": "LocationInput",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "An unstructured string containing the address",
+            "key": "raw_address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The country where the transaction was made in ISO 3166-2 format",
+            "key": "country",
+            "valueType": {
+              "type": "id",
+              "value": "Country"
+            }
           }
         ]
       }
@@ -2894,81 +2910,6 @@
                   "type": "string"
                 }
               }
-            }
-          }
-        ]
-      }
-    },
-    "Location": {
-      "name": "Location",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "description": "An unstructured string containing the address",
-            "key": "raw_address",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "description": "When raw is set, a structured representation of it.",
-            "key": "structured",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "LocationStructured"
-              }
-            }
-          }
-        ]
-      }
-    },
-    "LocationInputCountry": {
-      "description": "The country where the transaction was made in ISO 3166-2 format",
-      "name": "LocationInputCountry",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Country"
-        ],
-        "properties": []
-      }
-    },
-    "LocationInput": {
-      "description": "Location of where the transaction has taken place. This can greatly improve entity identification, especially\nunder ambiguity.",
-      "name": "LocationInput",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "description": "An unstructured string containing the address",
-            "key": "raw_address",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "description": "The country where the transaction was made in ISO 3166-2 format",
-            "key": "country",
-            "valueType": {
-              "type": "id",
-              "value": "LocationInputCountry"
             }
           }
         ]
@@ -3145,24 +3086,6 @@
         ]
       }
     },
-    "RecurrenceType": {
-      "description": "An enumeration.",
-      "name": "RecurrenceType",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "recurring"
-          },
-          {
-            "value": "subscription"
-          },
-          {
-            "value": "one off"
-          }
-        ]
-      }
-    },
     "Recurrence": {
       "description": "The `Recurrence` object represents the recurrence pattern of a transaction. It provides information about\nwhether a transaction is a one-time event or a part of a recurring series.",
       "name": "Recurrence",
@@ -3179,39 +3102,6 @@
             }
           }
         ]
-      }
-    },
-    "RecurrenceGroupPeriodicity": {
-      "description": "A human-readable description of the transaction frequency",
-      "name": "RecurrenceGroupPeriodicity",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "RecurrencePeriodicity"
-        ],
-        "properties": []
-      }
-    },
-    "RecurrenceGroupCounterparty": {
-      "description": "Counterparty of the transactions",
-      "name": "RecurrenceGroupCounterparty",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Counterparty"
-        ],
-        "properties": []
-      }
-    },
-    "RecurrenceGroupCategories": {
-      "description": "Categories of the transactions in the recurrence group",
-      "name": "RecurrenceGroupCategories",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Categories"
-        ],
-        "properties": []
       }
     },
     "RecurrenceGroup": {
@@ -3287,7 +3177,7 @@
             "key": "periodicity",
             "valueType": {
               "type": "id",
-              "value": "RecurrenceGroupPeriodicity"
+              "value": "RecurrencePeriodicity"
             }
           },
           {
@@ -3295,7 +3185,7 @@
             "key": "counterparty",
             "valueType": {
               "type": "id",
-              "value": "RecurrenceGroupCounterparty"
+              "value": "Counterparty"
             }
           },
           {
@@ -3303,7 +3193,7 @@
             "key": "categories",
             "valueType": {
               "type": "id",
-              "value": "RecurrenceGroupCategories"
+              "value": "Categories"
             }
           },
           {
@@ -3358,23 +3248,20 @@
         ]
       }
     },
-    "ReportStatus": {
+    "RecurrenceType": {
       "description": "An enumeration.",
-      "name": "ReportStatus",
+      "name": "RecurrenceType",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "open"
+            "value": "recurring"
           },
           {
-            "value": "pending"
+            "value": "subscription"
           },
           {
-            "value": "resolved"
-          },
-          {
-            "value": "rejected"
+            "value": "one off"
           }
         ]
       }
@@ -3507,6 +3394,27 @@
         ]
       }
     },
+    "ReportStatus": {
+      "description": "An enumeration.",
+      "name": "ReportStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "open"
+          },
+          {
+            "value": "pending"
+          },
+          {
+            "value": "resolved"
+          },
+          {
+            "value": "rejected"
+          }
+        ]
+      }
+    },
     "StatementInfo": {
       "name": "StatementInfo",
       "shape": {
@@ -3616,28 +3524,6 @@
         ]
       }
     },
-    "TransactionEntryType": {
-      "description": "The direction of the flow of the money from the perspective of the account holder. `outgoing` to represent money leaving the account, such as purchases or fees, while `incoming` represents money entering the account, such as income or refunds.",
-      "name": "TransactionEntryType",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "EntryType"
-        ],
-        "properties": []
-      }
-    },
-    "TransactionCurrency": {
-      "description": "The currency of the transaction in ISO 4217 format",
-      "name": "TransactionCurrency",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Currency"
-        ],
-        "properties": []
-      }
-    },
     "Transaction": {
       "name": "Transaction",
       "shape": {
@@ -3694,7 +3580,7 @@
             "key": "entry_type",
             "valueType": {
               "type": "id",
-              "value": "TransactionEntryType"
+              "value": "EntryType"
             }
           },
           {
@@ -3702,7 +3588,7 @@
             "key": "currency",
             "valueType": {
               "type": "id",
-              "value": "TransactionCurrency"
+              "value": "Currency"
             }
           },
           {
@@ -3823,28 +3709,6 @@
         ]
       }
     },
-    "TransactionInputEntryType": {
-      "description": "The direction of the flow of the money from the perspective of the account holder. `outgoing` to represent money leaving the account, such as purchases or fees, while `incoming` represents money entering the account, such as income or refunds.",
-      "name": "TransactionInputEntryType",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "EntryType"
-        ],
-        "properties": []
-      }
-    },
-    "TransactionInputCurrency": {
-      "description": "The currency of the transaction in ISO 4217 format",
-      "name": "TransactionInputCurrency",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "Currency"
-        ],
-        "properties": []
-      }
-    },
     "TransactionInput": {
       "name": "TransactionInput",
       "shape": {
@@ -3901,7 +3765,7 @@
             "key": "entry_type",
             "valueType": {
               "type": "id",
-              "value": "TransactionInputEntryType"
+              "value": "EntryType"
             }
           },
           {
@@ -3909,7 +3773,7 @@
             "key": "currency",
             "valueType": {
               "type": "id",
-              "value": "TransactionInputCurrency"
+              "value": "Currency"
             }
           },
           {
@@ -3935,47 +3799,25 @@
         ]
       }
     },
-    "ValidationErrorLocItemsOneOfZero": {
-      "name": "ValidationErrorLocItemsOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ValidationErrorLocItemsOneOfOne": {
-      "name": "ValidationErrorLocItemsOneOfOne",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
     "ValidationErrorLocItems": {
       "name": "ValidationErrorLocItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ValidationErrorLocItemsOneOfZero",
             "type": {
-              "type": "id",
-              "value": "ValidationErrorLocItemsOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ValidationErrorLocItemsOneOfOne",
             "type": {
-              "type": "id",
-              "value": "ValidationErrorLocItemsOneOfOne"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           }
         ]
@@ -4296,66 +4138,33 @@
         ]
       }
     },
-    "ExprOneOfZero": {
-      "name": "ExprOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "ExprOneOfOne": {
-      "name": "ExprOneOfOne",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ExprOneOfTwo": {
-      "name": "ExprOneOfTwo",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "double"
-          }
-        }
-      }
-    },
     "Expr": {
       "name": "Expr",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ExprOneOfZero",
             "type": {
-              "type": "id",
-              "value": "ExprOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           },
           {
-            "typeName": "ExprOneOfOne",
             "type": {
-              "type": "id",
-              "value": "ExprOneOfOne"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ExprOneOfTwo",
             "type": {
-              "type": "id",
-              "value": "ExprOneOfTwo"
+              "type": "primitive",
+              "value": {
+                "type": "double"
+              }
             }
           },
           {
@@ -4415,8 +4224,8 @@
         ]
       }
     },
-    "FnCallOneOfZero": {
-      "name": "FnCallOneOfZero",
+    "FnCall0": {
+      "name": "FnCall0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4432,10 +4241,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "&&"
     },
-    "FnCallOneOfOne": {
-      "name": "FnCallOneOfOne",
+    "FnCall1": {
+      "name": "FnCall1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4451,10 +4261,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "||"
     },
-    "FnCallOneOfTwo": {
-      "name": "FnCallOneOfTwo",
+    "FnCall2": {
+      "name": "FnCall2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4470,10 +4281,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "=="
     },
-    "FnCallOneOfThree": {
-      "name": "FnCallOneOfThree",
+    "FnCall3": {
+      "name": "FnCall3",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4489,10 +4301,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "+"
     },
-    "FnCallOneOfFour": {
-      "name": "FnCallOneOfFour",
+    "FnCall4": {
+      "name": "FnCall4",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4508,10 +4321,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "-"
     },
-    "FnCallOneOfFive": {
-      "name": "FnCallOneOfFive",
+    "FnCall5": {
+      "name": "FnCall5",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4527,10 +4341,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "*"
     },
-    "FnCallOneOfSix": {
-      "name": "FnCallOneOfSix",
+    "FnCall6": {
+      "name": "FnCall6",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4546,10 +4361,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "/"
     },
-    "FnCallOneOfSeven": {
-      "name": "FnCallOneOfSeven",
+    "FnCall7": {
+      "name": "FnCall7",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4565,10 +4381,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "//"
     },
-    "FnCallOneOfEight": {
-      "name": "FnCallOneOfEight",
+    "FnCall8": {
+      "name": "FnCall8",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4584,10 +4401,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "<"
     },
-    "FnCallOneOfNine": {
-      "name": "FnCallOneOfNine",
+    "FnCall9": {
+      "name": "FnCall9",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4603,10 +4421,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "<="
     },
-    "FnCallOneOfTen": {
-      "name": "FnCallOneOfTen",
+    "FnCall10": {
+      "name": "FnCall10",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4622,10 +4441,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": ">"
     },
-    "FnCallOneOfEleven": {
-      "name": "FnCallOneOfEleven",
+    "FnCall11": {
+      "name": "FnCall11",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4641,10 +4461,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": ">="
     },
-    "FnCallOneOfTwelve": {
-      "name": "FnCallOneOfTwelve",
+    "FnCall12": {
+      "name": "FnCall12",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4657,10 +4478,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "!"
     },
-    "FnCallOneOfThirteen": {
-      "name": "FnCallOneOfThirteen",
+    "FnCall13": {
+      "name": "FnCall13",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4676,10 +4498,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "is_substring"
     },
-    "FnCallOneOfFourteen": {
-      "name": "FnCallOneOfFourteen",
+    "FnCall14": {
+      "name": "FnCall14",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4695,10 +4518,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "starts_with"
     },
-    "FnCallOneOfFifteen": {
-      "name": "FnCallOneOfFifteen",
+    "FnCall15": {
+      "name": "FnCall15",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4714,10 +4538,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "ends_with"
     },
-    "FnCallOneOfSixteen": {
-      "name": "FnCallOneOfSixteen",
+    "FnCall16": {
+      "name": "FnCall16",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4730,10 +4555,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "to_lower"
     },
-    "FnCallOneOfSeventeen": {
-      "name": "FnCallOneOfSeventeen",
+    "FnCall17": {
+      "name": "FnCall17",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4746,10 +4572,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "to_upper"
     },
-    "FnCallOneOfEighteen": {
-      "name": "FnCallOneOfEighteen",
+    "FnCall18": {
+      "name": "FnCall18",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4762,10 +4589,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "has_label"
     },
-    "FnCallOneOfNineteen": {
-      "name": "FnCallOneOfNineteen",
+    "FnCall19": {
+      "name": "FnCall19",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4778,10 +4606,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "has_mcc"
     },
-    "FnCallOneOfTwenty": {
-      "name": "FnCallOneOfTwenty",
+    "FnCall20": {
+      "name": "FnCall20",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4794,7 +4623,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "get property"
     },
     "FnCall": {
       "name": "FnCall",
@@ -4802,151 +4632,172 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "FnCallOneOfZero",
+            "typeName": "FnCall0",
             "type": {
               "type": "id",
-              "value": "FnCallOneOfZero"
-            }
+              "value": "FnCall0"
+            },
+            "displayName": "&&"
           },
           {
-            "typeName": "FnCallOneOfOne",
+            "typeName": "FnCall1",
             "type": {
               "type": "id",
-              "value": "FnCallOneOfOne"
-            }
+              "value": "FnCall1"
+            },
+            "displayName": "||"
           },
           {
-            "typeName": "FnCallOneOfTwo",
+            "typeName": "FnCall2",
             "type": {
               "type": "id",
-              "value": "FnCallOneOfTwo"
-            }
+              "value": "FnCall2"
+            },
+            "displayName": "=="
           },
           {
-            "typeName": "FnCallOneOfThree",
+            "typeName": "FnCall3",
             "type": {
               "type": "id",
-              "value": "FnCallOneOfThree"
-            }
+              "value": "FnCall3"
+            },
+            "displayName": "+"
           },
           {
-            "typeName": "FnCallOneOfFour",
+            "typeName": "FnCall4",
             "type": {
               "type": "id",
-              "value": "FnCallOneOfFour"
-            }
+              "value": "FnCall4"
+            },
+            "displayName": "-"
           },
           {
-            "typeName": "FnCallOneOfFive",
+            "typeName": "FnCall5",
             "type": {
               "type": "id",
-              "value": "FnCallOneOfFive"
-            }
+              "value": "FnCall5"
+            },
+            "displayName": "*"
           },
           {
-            "typeName": "FnCallOneOfSix",
+            "typeName": "FnCall6",
             "type": {
               "type": "id",
-              "value": "FnCallOneOfSix"
-            }
+              "value": "FnCall6"
+            },
+            "displayName": "/"
           },
           {
-            "typeName": "FnCallOneOfSeven",
+            "typeName": "FnCall7",
             "type": {
               "type": "id",
-              "value": "FnCallOneOfSeven"
-            }
+              "value": "FnCall7"
+            },
+            "displayName": "//"
           },
           {
-            "typeName": "FnCallOneOfEight",
+            "typeName": "FnCall8",
             "type": {
               "type": "id",
-              "value": "FnCallOneOfEight"
-            }
+              "value": "FnCall8"
+            },
+            "displayName": "<"
           },
           {
-            "typeName": "FnCallOneOfNine",
+            "typeName": "FnCall9",
             "type": {
               "type": "id",
-              "value": "FnCallOneOfNine"
-            }
+              "value": "FnCall9"
+            },
+            "displayName": "<="
           },
           {
-            "typeName": "FnCallOneOfTen",
+            "typeName": "FnCall10",
             "type": {
               "type": "id",
-              "value": "FnCallOneOfTen"
-            }
+              "value": "FnCall10"
+            },
+            "displayName": ">"
           },
           {
-            "typeName": "FnCallOneOfEleven",
+            "typeName": "FnCall11",
             "type": {
               "type": "id",
-              "value": "FnCallOneOfEleven"
-            }
+              "value": "FnCall11"
+            },
+            "displayName": ">="
           },
           {
-            "typeName": "FnCallOneOfTwelve",
+            "typeName": "FnCall12",
             "type": {
               "type": "id",
-              "value": "FnCallOneOfTwelve"
-            }
+              "value": "FnCall12"
+            },
+            "displayName": "!"
           },
           {
-            "typeName": "FnCallOneOfThirteen",
+            "typeName": "FnCall13",
             "type": {
               "type": "id",
-              "value": "FnCallOneOfThirteen"
-            }
+              "value": "FnCall13"
+            },
+            "displayName": "is_substring"
           },
           {
-            "typeName": "FnCallOneOfFourteen",
+            "typeName": "FnCall14",
             "type": {
               "type": "id",
-              "value": "FnCallOneOfFourteen"
-            }
+              "value": "FnCall14"
+            },
+            "displayName": "starts_with"
           },
           {
-            "typeName": "FnCallOneOfFifteen",
+            "typeName": "FnCall15",
             "type": {
               "type": "id",
-              "value": "FnCallOneOfFifteen"
-            }
+              "value": "FnCall15"
+            },
+            "displayName": "ends_with"
           },
           {
-            "typeName": "FnCallOneOfSixteen",
+            "typeName": "FnCall16",
             "type": {
               "type": "id",
-              "value": "FnCallOneOfSixteen"
-            }
+              "value": "FnCall16"
+            },
+            "displayName": "to_lower"
           },
           {
-            "typeName": "FnCallOneOfSeventeen",
+            "typeName": "FnCall17",
             "type": {
               "type": "id",
-              "value": "FnCallOneOfSeventeen"
-            }
+              "value": "FnCall17"
+            },
+            "displayName": "to_upper"
           },
           {
-            "typeName": "FnCallOneOfEighteen",
+            "typeName": "FnCall18",
             "type": {
               "type": "id",
-              "value": "FnCallOneOfEighteen"
-            }
+              "value": "FnCall18"
+            },
+            "displayName": "has_label"
           },
           {
-            "typeName": "FnCallOneOfNineteen",
+            "typeName": "FnCall19",
             "type": {
               "type": "id",
-              "value": "FnCallOneOfNineteen"
-            }
+              "value": "FnCall19"
+            },
+            "displayName": "has_mcc"
           },
           {
-            "typeName": "FnCallOneOfTwenty",
+            "typeName": "FnCall20",
             "type": {
               "type": "id",
-              "value": "FnCallOneOfTwenty"
-            }
+              "value": "FnCall20"
+            },
+            "displayName": "get property"
           }
         ]
       }
@@ -4961,21 +4812,24 @@
             "type": {
               "type": "id",
               "value": "If"
-            }
+            },
+            "displayName": "if"
           },
           {
             "typeName": "ModifyLabels",
             "type": {
               "type": "id",
               "value": "ModifyLabels"
-            }
+            },
+            "displayName": "modify labels"
           },
           {
             "typeName": "Setter",
             "type": {
               "type": "id",
               "value": "Setter"
-            }
+            },
+            "displayName": "set"
           }
         ]
       }
@@ -5022,8 +4876,8 @@
         ]
       }
     },
-    "ModifyLabelsOneOfZero": {
-      "name": "ModifyLabelsOneOfZero",
+    "ModifyLabels0": {
+      "name": "ModifyLabels0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5036,10 +4890,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "add_label"
     },
-    "ModifyLabelsOneOfOne": {
-      "name": "ModifyLabelsOneOfOne",
+    "ModifyLabels1": {
+      "name": "ModifyLabels1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5052,10 +4907,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "remove_label"
     },
-    "ModifyLabelsOneOfTwo": {
-      "name": "ModifyLabelsOneOfTwo",
+    "ModifyLabels2": {
+      "name": "ModifyLabels2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5071,10 +4927,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "set_labels"
     },
-    "ModifyLabelsOneOfThree": {
-      "name": "ModifyLabelsOneOfThree",
+    "ModifyLabels3": {
+      "name": "ModifyLabels3",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5087,10 +4944,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "add_mcc"
     },
-    "ModifyLabelsOneOfFour": {
-      "name": "ModifyLabelsOneOfFour",
+    "ModifyLabels4": {
+      "name": "ModifyLabels4",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5103,10 +4961,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "remove_mcc"
     },
-    "ModifyLabelsOneOfFive": {
-      "name": "ModifyLabelsOneOfFive",
+    "ModifyLabels5": {
+      "name": "ModifyLabels5",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5122,7 +4981,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "set_mcc"
     },
     "ModifyLabels": {
       "name": "ModifyLabels",
@@ -5130,46 +4990,52 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ModifyLabelsOneOfZero",
+            "typeName": "ModifyLabels0",
             "type": {
               "type": "id",
-              "value": "ModifyLabelsOneOfZero"
-            }
+              "value": "ModifyLabels0"
+            },
+            "displayName": "add_label"
           },
           {
-            "typeName": "ModifyLabelsOneOfOne",
+            "typeName": "ModifyLabels1",
             "type": {
               "type": "id",
-              "value": "ModifyLabelsOneOfOne"
-            }
+              "value": "ModifyLabels1"
+            },
+            "displayName": "remove_label"
           },
           {
-            "typeName": "ModifyLabelsOneOfTwo",
+            "typeName": "ModifyLabels2",
             "type": {
               "type": "id",
-              "value": "ModifyLabelsOneOfTwo"
-            }
+              "value": "ModifyLabels2"
+            },
+            "displayName": "set_labels"
           },
           {
-            "typeName": "ModifyLabelsOneOfThree",
+            "typeName": "ModifyLabels3",
             "type": {
               "type": "id",
-              "value": "ModifyLabelsOneOfThree"
-            }
+              "value": "ModifyLabels3"
+            },
+            "displayName": "add_mcc"
           },
           {
-            "typeName": "ModifyLabelsOneOfFour",
+            "typeName": "ModifyLabels4",
             "type": {
               "type": "id",
-              "value": "ModifyLabelsOneOfFour"
-            }
+              "value": "ModifyLabels4"
+            },
+            "displayName": "remove_mcc"
           },
           {
-            "typeName": "ModifyLabelsOneOfFive",
+            "typeName": "ModifyLabels5",
             "type": {
               "type": "id",
-              "value": "ModifyLabelsOneOfFive"
-            }
+              "value": "ModifyLabels5"
+            },
+            "displayName": "set_mcc"
           }
         ]
       }
@@ -5238,45 +5104,12 @@
           }
         }
       }
-    },
-    "V3BatchesGetParametersSchema": {
-      "description": "If specified, only return batches with this status",
-      "name": "V3BatchesGetParametersSchema",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "BatchStatus"
-        ],
-        "properties": []
-      }
-    },
-    "V3BankStatementsGetParametersSchema": {
-      "description": "If specified, only return bank statements with this status",
-      "name": "V3BankStatementsGetParametersSchema",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "DocumentStatus"
-        ],
-        "properties": []
-      }
-    },
-    "V3ReportsGetParametersSchema": {
-      "description": "If specified, only return reports with this status",
-      "name": "V3ReportsGetParametersSchema",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "ReportStatus"
-        ],
-        "properties": []
-      }
     }
   },
   "subpackages": {
-    "Transactions": {
-      "subpackageId": "Transactions",
-      "name": "Transactions",
+    "subpackage_transactions": {
+      "subpackageId": "subpackage_transactions",
+      "name": "transactions",
       "endpoints": [
         {
           "auth": true,
@@ -5289,7 +5122,7 @@
             }
           ],
           "id": "get_transaction_v3_transactions__id__get",
-          "originalEndpointId": "Transactions.get_transaction_v3_transactions__id__get",
+          "originalEndpointId": "endpoint_transactions.get_transaction_v3_transactions__id__get",
           "name": "Retrieve a transaction",
           "path": {
             "pathParameters": [
@@ -5335,72 +5168,95 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Transaction with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getTransactionV3TransactionsIdGetExample",
               "description": "",
-              "path": "/v3/transactions/",
+              "path": "/v3/transactions/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "xbx8YP14g565Xk",
-                  "description": "SQ* STARBUCKS NW 43RD",
-                  "date": "2024-03-30",
-                  "amount": 10,
-                  "entry_type": "outgoing",
-                  "currency": "USD",
-                  "entities": {
-                    "counterparty": {
-                      "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
-                      "name": "Starbucks",
-                      "website": "starbucks.com",
-                      "logo": "https://logos.ntropy.com/starbucks.com",
-                      "mccs": [
-                        5814
-                      ],
-                      "type": "organization"
-                    },
-                    "intermediaries": [
-                      {
-                        "id": "916bc837-55ef-3106-88f6-5a8269ca9f2a",
-                        "name": "Square",
-                        "website": "squareup.com",
-                        "logo": "https://logos.ntropy.com/squareup.com",
-                        "mccs": [],
-                        "type": "payment_processor"
-                      }
-                    ]
+                "id": "xbx8YP14g565Xk",
+                "description": "SQ* STARBUCKS NW 43RD",
+                "date": "2024-03-30",
+                "amount": 10,
+                "entry_type": "outgoing",
+                "currency": "USD",
+                "entities": {
+                  "counterparty": {
+                    "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
+                    "name": "Starbucks",
+                    "website": "starbucks.com",
+                    "logo": "https://logos.ntropy.com/starbucks.com",
+                    "mccs": [
+                      5814
+                    ],
+                    "type": "organization"
                   },
-                  "categories": {
-                    "general": "outgoing - coffee shops"
-                  },
-                  "location": {
-                    "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
-                    "structured": {
-                      "street": "Nw 43rd Street 5480",
-                      "city": "Gainesville",
-                      "state": "Florida",
-                      "postcode": "32653",
-                      "country_code": "US",
-                      "country": "United States",
-                      "latitude": 29.704558,
-                      "longitude": -82.389277,
-                      "google_maps_url": "https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277",
-                      "apple_maps_url": "https://maps.apple.com/?q=29.704558,-82.389277"
+                  "intermediaries": [
+                    {
+                      "id": "916bc837-55ef-3106-88f6-5a8269ca9f2a",
+                      "name": "Square",
+                      "website": "squareup.com",
+                      "logo": "https://logos.ntropy.com/squareup.com",
+                      "mccs": [],
+                      "type": "payment_processor"
                     }
-                  },
-                  "created_at": "2024-03-30T00:00:00",
-                  "account_holder_id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
-                  "recurrence": {
-                    "type": "recurring"
+                  ]
+                },
+                "categories": {
+                  "general": "outgoing - coffee shops"
+                },
+                "location": {
+                  "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
+                  "structured": {
+                    "street": "Nw 43rd Street 5480",
+                    "city": "Gainesville",
+                    "state": "Florida",
+                    "postcode": "32653",
+                    "country_code": "US",
+                    "country": "United States",
+                    "latitude": 29.704558,
+                    "longitude": -82.389277,
+                    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277",
+                    "apple_maps_url": "https://maps.apple.com/?q=29.704558,-82.389277"
                   }
+                },
+                "created_at": "2024-03-30T00:00:00",
+                "account_holder_id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
+                "recurrence": {
+                  "type": "recurring"
                 }
               },
               "responseBodyV3": {
@@ -5477,7 +5333,7 @@
             }
           ],
           "id": "delete_transaction_v3_transactions__id__delete",
-          "originalEndpointId": "Transactions.delete_transaction_v3_transactions__id__delete",
+          "originalEndpointId": "endpoint_transactions.delete_transaction_v3_transactions__id__delete",
           "name": "Deletes a transaction",
           "path": {
             "pathParameters": [
@@ -5512,14 +5368,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Transaction with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteTransactionV3TransactionsIdDeleteExample",
               "description": "",
-              "path": "/v3/transactions/",
+              "path": "/v3/transactions/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -5542,7 +5424,7 @@
             }
           ],
           "id": "list_transactions_v3_transactions_get",
-          "originalEndpointId": "Transactions.list_transactions_v3_transactions_get",
+          "originalEndpointId": "endpoint_transactions.list_transactions_v3_transactions_get",
           "name": "List all transactions",
           "path": {
             "pathParameters": [],
@@ -5641,82 +5523,87 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listTransactionsV3TransactionsGetExample",
               "description": "",
               "path": "/v3/transactions",
               "pathParameters": {},
-              "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
-                "cursor": "foo",
-                "limit": 42,
-                "account_holder_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "XjdHaksD",
-                  "data": [
-                    {
-                      "id": "xbx8YP14g565Xk",
-                      "description": "SQ* STARBUCKS NW 43RD",
-                      "date": "2024-03-30",
-                      "amount": 10,
-                      "entry_type": "outgoing",
-                      "currency": "USD",
-                      "entities": {
-                        "counterparty": {
-                          "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
-                          "name": "Starbucks",
-                          "website": "starbucks.com",
-                          "logo": "https://logos.ntropy.com/starbucks.com",
-                          "mccs": [
-                            5814
-                          ],
-                          "type": "organization"
-                        },
-                        "intermediaries": [
-                          {
-                            "id": "916bc837-55ef-3106-88f6-5a8269ca9f2a",
-                            "name": "Square",
-                            "website": "squareup.com",
-                            "logo": "https://logos.ntropy.com/squareup.com",
-                            "mccs": [],
-                            "type": "payment_processor"
-                          }
-                        ]
+                "next_cursor": "XjdHaksD",
+                "data": [
+                  {
+                    "id": "xbx8YP14g565Xk",
+                    "description": "SQ* STARBUCKS NW 43RD",
+                    "date": "2024-03-30",
+                    "amount": 10,
+                    "entry_type": "outgoing",
+                    "currency": "USD",
+                    "entities": {
+                      "counterparty": {
+                        "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
+                        "name": "Starbucks",
+                        "website": "starbucks.com",
+                        "logo": "https://logos.ntropy.com/starbucks.com",
+                        "mccs": [
+                          5814
+                        ],
+                        "type": "organization"
                       },
-                      "categories": {
-                        "general": "outgoing - coffee shops"
-                      },
-                      "location": {
-                        "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
-                        "structured": {
-                          "street": "Nw 43rd Street 5480",
-                          "city": "Gainesville",
-                          "state": "Florida",
-                          "postcode": "32653",
-                          "country_code": "US",
-                          "country": "United States",
-                          "latitude": 29.704558,
-                          "longitude": -82.389277,
-                          "google_maps_url": "https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277",
-                          "apple_maps_url": "https://maps.apple.com/?q=29.704558,-82.389277"
+                      "intermediaries": [
+                        {
+                          "id": "916bc837-55ef-3106-88f6-5a8269ca9f2a",
+                          "name": "Square",
+                          "website": "squareup.com",
+                          "logo": "https://logos.ntropy.com/squareup.com",
+                          "mccs": [],
+                          "type": "payment_processor"
                         }
-                      },
-                      "created_at": "2024-03-30T00:00:00",
-                      "account_holder_id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
-                      "recurrence": {
-                        "type": "recurring"
+                      ]
+                    },
+                    "categories": {
+                      "general": "outgoing - coffee shops"
+                    },
+                    "location": {
+                      "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
+                      "structured": {
+                        "street": "Nw 43rd Street 5480",
+                        "city": "Gainesville",
+                        "state": "Florida",
+                        "postcode": "32653",
+                        "country_code": "US",
+                        "country": "United States",
+                        "latitude": 29.704558,
+                        "longitude": -82.389277,
+                        "google_maps_url": "https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277",
+                        "apple_maps_url": "https://maps.apple.com/?q=29.704558,-82.389277"
                       }
+                    },
+                    "created_at": "2024-03-30T00:00:00",
+                    "account_holder_id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
+                    "recurrence": {
+                      "type": "recurring"
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -5797,7 +5684,7 @@
             }
           ],
           "id": "post_transactions_v3_transactions_post",
-          "originalEndpointId": "Transactions.post_transactions_v3_transactions_post",
+          "originalEndpointId": "endpoint_transactions.post_transactions_v3_transactions_post",
           "name": "Synchronously enrich transactions",
           "path": {
             "pathParameters": [],
@@ -5838,10 +5725,24 @@
             "statusCode": 200,
             "description": "Enriched transactions."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "transactionsPostTransactionsV3TransactionsPostExample",
               "description": "",
               "path": "/v3/transactions",
               "pathParameters": {},
@@ -5878,12 +5779,21 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "transactions": [
-                    {
-                      "entities": {
-                        "counterparty": {
+                "transactions": [
+                  {
+                    "entities": {
+                      "counterparty": {
+                        "id": "foo",
+                        "name": "foo",
+                        "website": "foo",
+                        "logo": "foo",
+                        "mccs": [
+                          42
+                        ],
+                        "type": "person"
+                      },
+                      "intermediaries": [
+                        {
                           "id": "foo",
                           "name": "foo",
                           "website": "foo",
@@ -5891,50 +5801,38 @@
                           "mccs": [
                             42
                           ],
-                          "type": "person"
-                        },
-                        "intermediaries": [
-                          {
-                            "id": "foo",
-                            "name": "foo",
-                            "website": "foo",
-                            "logo": "foo",
-                            "mccs": [
-                              42
-                            ],
-                            "type": "delivery_service"
-                          }
-                        ]
-                      },
-                      "categories": {
-                        "general": "foo",
-                        "accounting": "operational expenses"
-                      },
-                      "location": {
-                        "raw_address": "foo",
-                        "structured": {
-                          "street": "foo",
-                          "city": "foo",
-                          "state": "foo",
-                          "postcode": "foo",
-                          "country_code": "foo",
-                          "country": "foo",
-                          "latitude": 42,
-                          "longitude": 42,
-                          "google_maps_url": "foo",
-                          "apple_maps_url": "foo",
-                          "store_number": "foo"
+                          "type": "delivery_service"
                         }
-                      },
-                      "error": {
-                        "code": "account_holder_not_found",
-                        "message": "foo"
-                      },
-                      "created_at": "foo",
-                      "id": "foo"
-                    }
-                  ]
-                }
+                      ]
+                    },
+                    "categories": {
+                      "general": "foo",
+                      "accounting": "operational expenses"
+                    },
+                    "location": {
+                      "raw_address": "foo",
+                      "structured": {
+                        "street": "foo",
+                        "city": "foo",
+                        "state": "foo",
+                        "postcode": "foo",
+                        "country_code": "foo",
+                        "country": "foo",
+                        "latitude": 42,
+                        "longitude": 42,
+                        "google_maps_url": "foo",
+                        "apple_maps_url": "foo",
+                        "store_number": "foo"
+                      }
+                    },
+                    "error": {
+                      "code": "account_holder_not_found",
+                      "message": "foo"
+                    },
+                    "created_at": "foo",
+                    "id": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6013,7 +5911,7 @@
             }
           ],
           "id": "set_transaction_ah_v3_transactions__id__assign_post",
-          "originalEndpointId": "Transactions.set_transaction_ah_v3_transactions__id__assign_post",
+          "originalEndpointId": "endpoint_transactions.set_transaction_ah_v3_transactions__id__assign_post",
           "name": "Assign a transaction to an account holder",
           "path": {
             "pathParameters": [
@@ -6072,14 +5970,40 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Transaction or account holder with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "transactionsSetTransactionAhV3TransactionsIdAssignPostExample",
               "description": "",
-              "path": "/v3/transactions/",
+              "path": "/v3/transactions/id/assign",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -6094,59 +6018,56 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "xbx8YP14g565Xk",
-                  "description": "SQ* STARBUCKS NW 43RD",
-                  "date": "2024-03-30",
-                  "amount": 10,
-                  "entry_type": "outgoing",
-                  "currency": "USD",
-                  "entities": {
-                    "counterparty": {
-                      "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
-                      "name": "Starbucks",
-                      "website": "starbucks.com",
-                      "logo": "https://logos.ntropy.com/starbucks.com",
-                      "mccs": [
-                        5814
-                      ],
-                      "type": "organization"
-                    },
-                    "intermediaries": [
-                      {
-                        "id": "916bc837-55ef-3106-88f6-5a8269ca9f2a",
-                        "name": "Square",
-                        "website": "squareup.com",
-                        "logo": "https://logos.ntropy.com/squareup.com",
-                        "mccs": [],
-                        "type": "payment_processor"
-                      }
-                    ]
+                "id": "xbx8YP14g565Xk",
+                "description": "SQ* STARBUCKS NW 43RD",
+                "date": "2024-03-30",
+                "amount": 10,
+                "entry_type": "outgoing",
+                "currency": "USD",
+                "entities": {
+                  "counterparty": {
+                    "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
+                    "name": "Starbucks",
+                    "website": "starbucks.com",
+                    "logo": "https://logos.ntropy.com/starbucks.com",
+                    "mccs": [
+                      5814
+                    ],
+                    "type": "organization"
                   },
-                  "categories": {
-                    "general": "outgoing - coffee shops"
-                  },
-                  "location": {
-                    "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
-                    "structured": {
-                      "street": "Nw 43rd Street 5480",
-                      "city": "Gainesville",
-                      "state": "Florida",
-                      "postcode": "32653",
-                      "country_code": "US",
-                      "country": "United States",
-                      "latitude": 29.704558,
-                      "longitude": -82.389277,
-                      "google_maps_url": "https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277",
-                      "apple_maps_url": "https://maps.apple.com/?q=29.704558,-82.389277"
+                  "intermediaries": [
+                    {
+                      "id": "916bc837-55ef-3106-88f6-5a8269ca9f2a",
+                      "name": "Square",
+                      "website": "squareup.com",
+                      "logo": "https://logos.ntropy.com/squareup.com",
+                      "mccs": [],
+                      "type": "payment_processor"
                     }
-                  },
-                  "created_at": "2024-03-30T00:00:00",
-                  "account_holder_id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
-                  "recurrence": {
-                    "type": "recurring"
+                  ]
+                },
+                "categories": {
+                  "general": "outgoing - coffee shops"
+                },
+                "location": {
+                  "raw_address": "Nw 43rd Street 5480, Gainesville, Florida 32653, US",
+                  "structured": {
+                    "street": "Nw 43rd Street 5480",
+                    "city": "Gainesville",
+                    "state": "Florida",
+                    "postcode": "32653",
+                    "country_code": "US",
+                    "country": "United States",
+                    "latitude": 29.704558,
+                    "longitude": -82.389277,
+                    "google_maps_url": "https://www.google.com/maps/search/?api=1&query=29.704558,-82.389277",
+                    "apple_maps_url": "https://maps.apple.com/?q=29.704558,-82.389277"
                   }
+                },
+                "created_at": "2024-03-30T00:00:00",
+                "account_holder_id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
+                "recurrence": {
+                  "type": "recurring"
                 }
               },
               "responseBodyV3": {
@@ -6217,9 +6138,9 @@
       "types": [],
       "subpackages": []
     },
-    "Batches": {
-      "subpackageId": "Batches",
-      "name": "Batches",
+    "subpackage_batches": {
+      "subpackageId": "subpackage_batches",
+      "name": "batches",
       "endpoints": [
         {
           "auth": true,
@@ -6233,7 +6154,7 @@
             }
           ],
           "id": "get_batches_v3_batches_get",
-          "originalEndpointId": "Batches.get_batches_v3_batches_get",
+          "originalEndpointId": "endpoint_batches.get_batches_v3_batches_get",
           "name": "List all batches",
           "path": {
             "pathParameters": [],
@@ -6313,7 +6234,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V3BatchesGetParametersSchema"
+                  "value": "BatchStatus"
                 }
               }
             }
@@ -6330,37 +6251,42 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getBatchesV3BatchesGetExample",
               "description": "",
               "path": "/v3/batches",
               "pathParameters": {},
-              "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
-                "cursor": "foo",
-                "limit": 42,
-                "status": "processing"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "XjdHaksD",
-                  "data": [
-                    {
-                      "id": "203613d2-83c8-4130-8809-d14206eeec20",
-                      "status": "processing",
-                      "created_at": "2024-01-01T00:00:00",
-                      "updated_at": "2024-01-01T00:00:30",
-                      "progress": 0,
-                      "total": 4000
-                    }
-                  ]
-                }
+                "next_cursor": "XjdHaksD",
+                "data": [
+                  {
+                    "id": "203613d2-83c8-4130-8809-d14206eeec20",
+                    "status": "processing",
+                    "created_at": "2024-01-01T00:00:00",
+                    "updated_at": "2024-01-01T00:00:30",
+                    "progress": 0,
+                    "total": 4000
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6396,7 +6322,7 @@
             }
           ],
           "id": "post_batch_v3_batches_post",
-          "originalEndpointId": "Batches.post_batch_v3_batches_post",
+          "originalEndpointId": "endpoint_batches.post_batch_v3_batches_post",
           "name": "Submit a batch of transactions",
           "path": {
             "pathParameters": [],
@@ -6437,10 +6363,24 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "batchesPostBatchV3BatchesPostExample",
               "description": "",
               "path": "/v3/batches",
               "pathParameters": {},
@@ -6477,15 +6417,12 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "203613d2-83c8-4130-8809-d14206eeec20",
-                  "status": "processing",
-                  "created_at": "2024-01-01T00:00:00",
-                  "updated_at": "2024-01-01T00:00:30",
-                  "progress": 0,
-                  "total": 4000
-                }
+                "id": "203613d2-83c8-4130-8809-d14206eeec20",
+                "status": "processing",
+                "created_at": "2024-01-01T00:00:00",
+                "updated_at": "2024-01-01T00:00:30",
+                "progress": 0,
+                "total": 4000
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6515,7 +6452,7 @@
             }
           ],
           "id": "get_single_batch_v3_batches__id__get",
-          "originalEndpointId": "Batches.get_single_batch_v3_batches__id__get",
+          "originalEndpointId": "endpoint_batches.get_single_batch_v3_batches__id__get",
           "name": "Retrieve a batch",
           "path": {
             "pathParameters": [
@@ -6561,28 +6498,51 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Batch with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getSingleBatchV3BatchesIdGetExample",
               "description": "",
-              "path": "/v3/batches/",
+              "path": "/v3/batches/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "203613d2-83c8-4130-8809-d14206eeec20",
-                  "status": "processing",
-                  "created_at": "2024-01-01T00:00:00",
-                  "updated_at": "2024-01-01T00:00:30",
-                  "progress": 0,
-                  "total": 4000
-                }
+                "id": "203613d2-83c8-4130-8809-d14206eeec20",
+                "status": "processing",
+                "created_at": "2024-01-01T00:00:00",
+                "updated_at": "2024-01-01T00:00:30",
+                "progress": 0,
+                "total": 4000
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6613,7 +6573,7 @@
             }
           ],
           "id": "get_batch_results_v3_batches__id__results_get",
-          "originalEndpointId": "Batches.get_batch_results_v3_batches__id__results_get",
+          "originalEndpointId": "endpoint_batches.get_batch_results_v3_batches__id__results_get",
           "name": "Retrieve the results of a batch",
           "path": {
             "pathParameters": [
@@ -6659,29 +6619,64 @@
             "statusCode": 200,
             "description": "Returned batch of transaction enrichment results."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Batch with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getBatchResultsV3BatchesIdResultsGetExample",
               "description": "",
-              "path": "/v3/batches/",
+              "path": "/v3/batches/id/results",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "total": 42,
-                  "status": "processing",
-                  "results": {
-                    "transactions": [
-                      {
-                        "entities": {
-                          "counterparty": {
+                "id": "foo",
+                "total": 42,
+                "status": "processing",
+                "results": {
+                  "transactions": [
+                    {
+                      "entities": {
+                        "counterparty": {
+                          "id": "foo",
+                          "name": "foo",
+                          "website": "foo",
+                          "logo": "foo",
+                          "mccs": [
+                            42
+                          ],
+                          "type": "person"
+                        },
+                        "intermediaries": [
+                          {
                             "id": "foo",
                             "name": "foo",
                             "website": "foo",
@@ -6689,50 +6684,38 @@
                             "mccs": [
                               42
                             ],
-                            "type": "person"
-                          },
-                          "intermediaries": [
-                            {
-                              "id": "foo",
-                              "name": "foo",
-                              "website": "foo",
-                              "logo": "foo",
-                              "mccs": [
-                                42
-                              ],
-                              "type": "delivery_service"
-                            }
-                          ]
-                        },
-                        "categories": {
-                          "general": "foo",
-                          "accounting": "operational expenses"
-                        },
-                        "location": {
-                          "raw_address": "foo",
-                          "structured": {
-                            "street": "foo",
-                            "city": "foo",
-                            "state": "foo",
-                            "postcode": "foo",
-                            "country_code": "foo",
-                            "country": "foo",
-                            "latitude": 42,
-                            "longitude": 42,
-                            "google_maps_url": "foo",
-                            "apple_maps_url": "foo",
-                            "store_number": "foo"
+                            "type": "delivery_service"
                           }
-                        },
-                        "error": {
-                          "code": "account_holder_not_found",
-                          "message": "foo"
-                        },
-                        "created_at": "foo",
-                        "id": "foo"
-                      }
-                    ]
-                  }
+                        ]
+                      },
+                      "categories": {
+                        "general": "foo",
+                        "accounting": "operational expenses"
+                      },
+                      "location": {
+                        "raw_address": "foo",
+                        "structured": {
+                          "street": "foo",
+                          "city": "foo",
+                          "state": "foo",
+                          "postcode": "foo",
+                          "country_code": "foo",
+                          "country": "foo",
+                          "latitude": 42,
+                          "longitude": 42,
+                          "google_maps_url": "foo",
+                          "apple_maps_url": "foo",
+                          "store_number": "foo"
+                        }
+                      },
+                      "error": {
+                        "code": "account_holder_not_found",
+                        "message": "foo"
+                      },
+                      "created_at": "foo",
+                      "id": "foo"
+                    }
+                  ]
                 }
               },
               "responseBodyV3": {
@@ -6811,9 +6794,9 @@
       "types": [],
       "subpackages": []
     },
-    "Bank statements": {
-      "subpackageId": "Bank statements",
-      "name": "Bank statements",
+    "subpackage_bankStatements": {
+      "subpackageId": "subpackage_bankStatements",
+      "name": "bankStatements",
       "endpoints": [
         {
           "auth": true,
@@ -6827,7 +6810,7 @@
             }
           ],
           "id": "get_bank_statements_v3_bank_statements_get",
-          "originalEndpointId": "Bank statements.get_bank_statements_v3_bank_statements_get",
+          "originalEndpointId": "endpoint_bankStatements.get_bank_statements_v3_bank_statements_get",
           "name": "List all bank statements",
           "path": {
             "pathParameters": [],
@@ -6907,7 +6890,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V3BankStatementsGetParametersSchema"
+                  "value": "DocumentStatus"
                 }
               }
             }
@@ -6924,39 +6907,44 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getBankStatementsV3BankStatementsGetExample",
               "description": "",
               "path": "/v3/bank_statements",
               "pathParameters": {},
-              "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
-                "cursor": "foo",
-                "limit": 42,
-                "status": "queued"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "XjdHaksD",
-                  "data": [
-                    {
-                      "id": "7f8dceac-2848-472d-b5c3-55cdbaf35a9b",
-                      "name": "2014-01-01_2014-02-01_statement.pdf",
-                      "status": "processing",
-                      "created_at": "2024-01-01T00:00:00",
-                      "file": {
-                        "no_pages": 1,
-                        "size": 4096
-                      }
+                "next_cursor": "XjdHaksD",
+                "data": [
+                  {
+                    "id": "7f8dceac-2848-472d-b5c3-55cdbaf35a9b",
+                    "name": "2014-01-01_2014-02-01_statement.pdf",
+                    "status": "processing",
+                    "created_at": "2024-01-01T00:00:00",
+                    "file": {
+                      "no_pages": 1,
+                      "size": 4096
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6994,7 +6982,7 @@
             }
           ],
           "id": "post_bank_statement_v3_bank_statements_post",
-          "originalEndpointId": "Bank statements.post_bank_statement_v3_bank_statements_post",
+          "originalEndpointId": "endpoint_bankStatements.post_bank_statement_v3_bank_statements_post",
           "name": "Submit a bank statement PDF",
           "path": {
             "pathParameters": [],
@@ -7011,6 +6999,26 @@
           },
           "queryParameters": [],
           "headers": [],
+          "request": {
+            "type": {
+              "type": "fileUpload",
+              "value": {
+                "name": "Bank statements_post_bank_statement_v3_bank_statements_post_Request",
+                "properties": [
+                  {
+                    "type": "file",
+                    "value": {
+                      "type": "file",
+                      "key": "file",
+                      "isOptional": false,
+                      "contentType": "multipart/form-data"
+                    }
+                  }
+                ]
+              },
+              "contentType": "multipart/form-data"
+            }
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -7022,27 +7030,50 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "bankStatementsPostBankStatementV3BankStatementsPostExample",
               "description": "",
               "path": "/v3/bank_statements",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "file": "foo"
+              },
+              "requestBodyV3": {
+                "type": "form",
+                "value": {
+                  "file": {
+                    "type": "filename",
+                    "value": "foo"
+                  }
+                }
+              },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "7f8dceac-2848-472d-b5c3-55cdbaf35a9b",
-                  "name": "2014-01-01_2014-02-01_statement.pdf",
-                  "status": "processing",
-                  "created_at": "2024-01-01T00:00:00",
-                  "file": {
-                    "no_pages": 1,
-                    "size": 4096
-                  }
+                "id": "7f8dceac-2848-472d-b5c3-55cdbaf35a9b",
+                "name": "2014-01-01_2014-02-01_statement.pdf",
+                "status": "processing",
+                "created_at": "2024-01-01T00:00:00",
+                "file": {
+                  "no_pages": 1,
+                  "size": 4096
                 }
               },
               "responseBodyV3": {
@@ -7075,7 +7106,7 @@
             }
           ],
           "id": "get_bank_statement_v3_bank_statements__id__get",
-          "originalEndpointId": "Bank statements.get_bank_statement_v3_bank_statements__id__get",
+          "originalEndpointId": "endpoint_bankStatements.get_bank_statement_v3_bank_statements__id__get",
           "name": "Retrieve a bank statement",
           "path": {
             "pathParameters": [
@@ -7121,29 +7152,52 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Bank statement with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getBankStatementV3BankStatementsIdGetExample",
               "description": "",
-              "path": "/v3/bank_statements/",
+              "path": "/v3/bank_statements/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "7f8dceac-2848-472d-b5c3-55cdbaf35a9b",
-                  "name": "2014-01-01_2014-02-01_statement.pdf",
-                  "status": "processing",
-                  "created_at": "2024-01-01T00:00:00",
-                  "file": {
-                    "no_pages": 1,
-                    "size": 4096
-                  }
+                "id": "7f8dceac-2848-472d-b5c3-55cdbaf35a9b",
+                "name": "2014-01-01_2014-02-01_statement.pdf",
+                "status": "processing",
+                "created_at": "2024-01-01T00:00:00",
+                "file": {
+                  "no_pages": 1,
+                  "size": 4096
                 }
               },
               "responseBodyV3": {
@@ -7176,7 +7230,7 @@
             }
           ],
           "id": "delete_bank_statement_v3_bank_statements__id__delete",
-          "originalEndpointId": "Bank statements.delete_bank_statement_v3_bank_statements__id__delete",
+          "originalEndpointId": "endpoint_bankStatements.delete_bank_statement_v3_bank_statements__id__delete",
           "name": "Deletes a bank statement",
           "path": {
             "pathParameters": [
@@ -7211,14 +7265,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Bank statement with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteBankStatementV3BankStatementsIdDeleteExample",
               "description": "",
-              "path": "/v3/bank_statements/",
+              "path": "/v3/bank_statements/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -7241,7 +7321,7 @@
             }
           ],
           "id": "get_bank_statement_statement_info_v3_bank_statements__id__overview_post",
-          "originalEndpointId": "Bank statements.get_bank_statement_statement_info_v3_bank_statements__id__overview_post",
+          "originalEndpointId": "endpoint_bankStatements.get_bank_statement_statement_info_v3_bank_statements__id__overview_post",
           "name": "Quickly extract account holder, institution and first account",
           "path": {
             "pathParameters": [
@@ -7287,45 +7367,68 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Bank statement with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getBankStatementStatementInfoV3BankStatementsIdOverviewPostExample",
               "description": "",
-              "path": "/v3/bank_statements/",
+              "path": "/v3/bank_statements/id/overview",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "institution": "Well's Fargo",
-                  "start_date": "2024-01-01",
-                  "end_date": "2024-02-01",
-                  "account_holder": {
-                    "type": "consumer",
-                    "name": "John Doe",
-                    "address": {
-                      "street": "601 Rosebud Avenue",
-                      "postcode": "77901",
-                      "city": "Victoria",
-                      "state": "Texas",
-                      "country": "United States"
-                    }
-                  },
-                  "accounts": [
-                    {
-                      "type": "checking",
-                      "number": "83721",
-                      "opening_balance": 1000,
-                      "closing_balance": 1500,
-                      "iso_currency_code": "USD"
-                    }
-                  ]
-                }
+                "institution": "Well's Fargo",
+                "start_date": "2024-01-01",
+                "end_date": "2024-02-01",
+                "account_holder": {
+                  "type": "consumer",
+                  "name": "John Doe",
+                  "address": {
+                    "street": "601 Rosebud Avenue",
+                    "postcode": "77901",
+                    "city": "Victoria",
+                    "state": "Texas",
+                    "country": "United States"
+                  }
+                },
+                "accounts": [
+                  {
+                    "type": "checking",
+                    "number": "83721",
+                    "opening_balance": 1000,
+                    "closing_balance": 1500,
+                    "iso_currency_code": "USD"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7373,7 +7476,7 @@
             }
           ],
           "id": "get_bank_statement_result_v3_bank_statements__id__results_get",
-          "originalEndpointId": "Bank statements.get_bank_statement_result_v3_bank_statements__id__results_get",
+          "originalEndpointId": "endpoint_bankStatements.get_bank_statement_result_v3_bank_statements__id__results_get",
           "name": "Retrieve the extraction results",
           "path": {
             "pathParameters": [
@@ -7419,45 +7522,68 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Bank statement with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getBankStatementResultV3BankStatementsIdResultsGetExample",
               "description": "",
-              "path": "/v3/bank_statements/",
+              "path": "/v3/bank_statements/id/results",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "accounts": [
-                    {
-                      "number": "foo",
-                      "opening_balance": 42,
-                      "closing_balance": 42,
-                      "start_date": "foo",
-                      "end_date": "foo",
-                      "is_balance_reconciled": true,
-                      "total_incoming": 42,
-                      "total_outgoing": 42,
-                      "transactions": [
-                        {
-                          "id": "foo",
-                          "description": "foo",
-                          "date": "foo",
-                          "amount": 42,
-                          "entry_type": "incoming",
-                          "currency": "EUR",
-                          "running_balance": 42
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "accounts": [
+                  {
+                    "number": "foo",
+                    "opening_balance": 42,
+                    "closing_balance": 42,
+                    "start_date": "foo",
+                    "end_date": "foo",
+                    "is_balance_reconciled": true,
+                    "total_incoming": 42,
+                    "total_outgoing": 42,
+                    "transactions": [
+                      {
+                        "id": "foo",
+                        "description": "foo",
+                        "date": "foo",
+                        "amount": 42,
+                        "entry_type": "incoming",
+                        "currency": "EUR",
+                        "running_balance": 42
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7499,9 +7625,9 @@
       "types": [],
       "subpackages": []
     },
-    "Account Holders": {
-      "subpackageId": "Account Holders",
-      "name": "Account Holders",
+    "subpackage_accountHolders": {
+      "subpackageId": "subpackage_accountHolders",
+      "name": "accountHolders",
       "endpoints": [
         {
           "auth": true,
@@ -7514,7 +7640,7 @@
             }
           ],
           "id": "get_account_holder_v3_account_holders__id__get",
-          "originalEndpointId": "Account Holders.get_account_holder_v3_account_holders__id__get",
+          "originalEndpointId": "endpoint_accountHolders.get_account_holder_v3_account_holders__id__get",
           "name": "Retrieve an account holder.",
           "path": {
             "pathParameters": [
@@ -7560,26 +7686,49 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Account holder with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getAccountHolderV3AccountHoldersIdGetExample",
               "description": "",
-              "path": "/v3/account_holders/",
+              "path": "/v3/account_holders/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
-                  "type": "consumer",
-                  "name": "John Doe",
-                  "created_at": "2024-03-30T00:00:00"
-                }
+                "id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
+                "type": "consumer",
+                "name": "John Doe",
+                "created_at": "2024-03-30T00:00:00"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7608,7 +7757,7 @@
             }
           ],
           "id": "delete_account_holder_v3_account_holders__id__delete",
-          "originalEndpointId": "Account Holders.delete_account_holder_v3_account_holders__id__delete",
+          "originalEndpointId": "endpoint_accountHolders.delete_account_holder_v3_account_holders__id__delete",
           "name": "Deletes an account holder and their transactions",
           "path": {
             "pathParameters": [
@@ -7643,14 +7792,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Account holder with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteAccountHolderV3AccountHoldersIdDeleteExample",
               "description": "",
-              "path": "/v3/account_holders/",
+              "path": "/v3/account_holders/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -7672,7 +7847,7 @@
             }
           ],
           "id": "get_account_holders_v3_account_holders_get",
-          "originalEndpointId": "Account Holders.get_account_holders_v3_account_holders_get",
+          "originalEndpointId": "endpoint_accountHolders.get_account_holders_v3_account_holders_get",
           "name": "List all account holders.",
           "path": {
             "pathParameters": [],
@@ -7758,34 +7933,40 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getAccountHoldersV3AccountHoldersGetExample",
               "description": "",
               "path": "/v3/account_holders",
               "pathParameters": {},
-              "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
-                "cursor": "foo",
-                "limit": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "XjdHaksD",
-                  "data": [
-                    {
-                      "id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
-                      "type": "consumer",
-                      "name": "John Doe",
-                      "created_at": "2024-03-30T00:00:00"
-                    }
-                  ]
-                }
+                "next_cursor": "XjdHaksD",
+                "data": [
+                  {
+                    "id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
+                    "type": "consumer",
+                    "name": "John Doe",
+                    "created_at": "2024-03-30T00:00:00"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7818,7 +7999,7 @@
             }
           ],
           "id": "create_account_holder_v3_account_holders_post",
-          "originalEndpointId": "Account Holders.create_account_holder_v3_account_holders_post",
+          "originalEndpointId": "endpoint_accountHolders.create_account_holder_v3_account_holders_post",
           "name": "Create an account holder.",
           "path": {
             "pathParameters": [],
@@ -7859,10 +8040,36 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Account holder with the provided id already exists.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "accountHoldersCreateAccountHolderV3AccountHoldersPostExample",
               "description": "",
               "path": "/v3/account_holders",
               "pathParameters": {},
@@ -7881,13 +8088,10 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
-                  "type": "consumer",
-                  "name": "John Doe",
-                  "created_at": "2024-03-30T00:00:00"
-                }
+                "id": "35b927b6-6fda-40aa-93b8-95b47c2b2cad",
+                "type": "consumer",
+                "name": "John Doe",
+                "created_at": "2024-03-30T00:00:00"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7910,9 +8114,9 @@
       "types": [],
       "subpackages": []
     },
-    "Recurrence": {
-      "subpackageId": "Recurrence",
-      "name": "Recurrence",
+    "subpackage_recurrence": {
+      "subpackageId": "subpackage_recurrence",
+      "name": "recurrence",
       "endpoints": [
         {
           "auth": true,
@@ -7926,7 +8130,7 @@
             }
           ],
           "id": "get_account_holder_recurring_payments_v3_account_holders__id__recurring_groups_post",
-          "originalEndpointId": "Recurrence.get_account_holder_recurring_payments_v3_account_holders__id__recurring_groups_post",
+          "originalEndpointId": "endpoint_recurrence.get_account_holder_recurring_payments_v3_account_holders__id__recurring_groups_post",
           "name": "Find recurring groups in a transaction history",
           "path": {
             "pathParameters": [
@@ -7975,49 +8179,72 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Account holder with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getAccountHolderRecurringPaymentsV3AccountHoldersIdRecurringGroupsPostExample",
               "description": "",
-              "path": "/v3/account_holders/",
+              "path": "/v3/account_holders/id/recurring_groups",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
+              "responseBody": [
+                {
+                  "id": "foo",
+                  "start_date": "foo",
+                  "end_date": "foo",
+                  "total_amount": 42,
+                  "average_amount": 42,
+                  "periodicity_in_days": 42,
+                  "periodicity": "daily",
+                  "counterparty": {
                     "id": "foo",
-                    "start_date": "foo",
-                    "end_date": "foo",
-                    "total_amount": 42,
-                    "average_amount": 42,
-                    "periodicity_in_days": 42,
-                    "periodicity": "daily",
-                    "counterparty": {
-                      "id": "foo",
-                      "name": "foo",
-                      "website": "foo",
-                      "logo": "foo",
-                      "mccs": [
-                        42
-                      ],
-                      "type": "person"
-                    },
-                    "categories": {
-                      "general": "foo",
-                      "accounting": "operational expenses"
-                    },
-                    "transaction_ids": [
-                      "foo"
-                    ]
-                  }
-                ]
-              },
+                    "name": "foo",
+                    "website": "foo",
+                    "logo": "foo",
+                    "mccs": [
+                      42
+                    ],
+                    "type": "person"
+                  },
+                  "categories": {
+                    "general": "foo",
+                    "accounting": "operational expenses"
+                  },
+                  "transaction_ids": [
+                    "foo"
+                  ]
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -8061,9 +8288,9 @@
       "types": [],
       "subpackages": []
     },
-    "Webhooks": {
-      "subpackageId": "Webhooks",
-      "name": "Webhooks",
+    "subpackage_webhooks": {
+      "subpackageId": "subpackage_webhooks",
+      "name": "webhooks",
       "endpoints": [
         {
           "auth": true,
@@ -8077,7 +8304,7 @@
             }
           ],
           "id": "get_webhooks_v3_webhooks_get",
-          "originalEndpointId": "Webhooks.get_webhooks_v3_webhooks_get",
+          "originalEndpointId": "endpoint_webhooks.get_webhooks_v3_webhooks_get",
           "name": "List all webhooks",
           "path": {
             "pathParameters": [],
@@ -8105,10 +8332,24 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getWebhooksV3WebhooksGetExample",
               "description": "",
               "path": "/v3/webhooks",
               "pathParameters": {},
@@ -8116,23 +8357,20 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "XjdHaksD",
-                  "data": [
-                    {
-                      "url": "https://example.com:5689",
-                      "events": [
-                        "batches.completed",
-                        "batches.error"
-                      ],
-                      "token": "hunter2",
-                      "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
-                      "created_at": "2024-10-03T02:53:30.167953",
-                      "enabled": true
-                    }
-                  ]
-                }
+                "next_cursor": "XjdHaksD",
+                "data": [
+                  {
+                    "url": "https://example.com:5689",
+                    "events": [
+                      "batches.completed",
+                      "batches.error"
+                    ],
+                    "token": "hunter2",
+                    "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
+                    "created_at": "2024-10-03T02:53:30.167953",
+                    "enabled": true
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -8171,7 +8409,7 @@
             }
           ],
           "id": "post_webhook_v3_webhooks_post",
-          "originalEndpointId": "Webhooks.post_webhook_v3_webhooks_post",
+          "originalEndpointId": "endpoint_webhooks.post_webhook_v3_webhooks_post",
           "name": "Create a webhook",
           "path": {
             "pathParameters": [],
@@ -8212,10 +8450,24 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "webhooksPostWebhookV3WebhooksPostExample",
               "description": "",
               "path": "/v3/webhooks",
               "pathParameters": {},
@@ -8238,18 +8490,15 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "url": "https://example.com:5689",
-                  "events": [
-                    "batches.completed",
-                    "batches.error"
-                  ],
-                  "token": "hunter2",
-                  "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
-                  "created_at": "2024-10-03T02:53:30.167953",
-                  "enabled": true
-                }
+                "url": "https://example.com:5689",
+                "events": [
+                  "batches.completed",
+                  "batches.error"
+                ],
+                "token": "hunter2",
+                "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
+                "created_at": "2024-10-03T02:53:30.167953",
+                "enabled": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -8283,7 +8532,7 @@
             }
           ],
           "id": "get_webhook_v3_webhooks__id__get",
-          "originalEndpointId": "Webhooks.get_webhook_v3_webhooks__id__get",
+          "originalEndpointId": "endpoint_webhooks.get_webhook_v3_webhooks__id__get",
           "name": "Retrieve a webhook",
           "path": {
             "pathParameters": [
@@ -8329,31 +8578,42 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getWebhookV3WebhooksIdGetExample",
               "description": "",
-              "path": "/v3/webhooks/",
+              "path": "/v3/webhooks/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "url": "https://example.com:5689",
-                  "events": [
-                    "batches.completed",
-                    "batches.error"
-                  ],
-                  "token": "hunter2",
-                  "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
-                  "created_at": "2024-10-03T02:53:30.167953",
-                  "enabled": true
-                }
+                "url": "https://example.com:5689",
+                "events": [
+                  "batches.completed",
+                  "batches.error"
+                ],
+                "token": "hunter2",
+                "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
+                "created_at": "2024-10-03T02:53:30.167953",
+                "enabled": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -8387,7 +8647,7 @@
             }
           ],
           "id": "delete_webhook_v3_webhooks__id__delete",
-          "originalEndpointId": "Webhooks.delete_webhook_v3_webhooks__id__delete",
+          "originalEndpointId": "endpoint_webhooks.delete_webhook_v3_webhooks__id__delete",
           "name": "Delete a webhook",
           "path": {
             "pathParameters": [
@@ -8422,14 +8682,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Webhook with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteWebhookV3WebhooksIdDeleteExample",
               "description": "",
-              "path": "/v3/webhooks/",
+              "path": "/v3/webhooks/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -8452,7 +8738,7 @@
             }
           ],
           "id": "patch_webhook_v3_webhooks__id__patch",
-          "originalEndpointId": "Webhooks.patch_webhook_v3_webhooks__id__patch",
+          "originalEndpointId": "endpoint_webhooks.patch_webhook_v3_webhooks__id__patch",
           "name": "Update a webhook",
           "path": {
             "pathParameters": [
@@ -8511,14 +8797,28 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "webhooksPatchWebhookV3WebhooksIdPatchExample",
               "description": "",
-              "path": "/v3/webhooks/",
+              "path": "/v3/webhooks/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -8529,18 +8829,15 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "url": "https://example.com:5689",
-                  "events": [
-                    "batches.completed",
-                    "batches.error"
-                  ],
-                  "token": "hunter2",
-                  "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
-                  "created_at": "2024-10-03T02:53:30.167953",
-                  "enabled": true
-                }
+                "url": "https://example.com:5689",
+                "events": [
+                  "batches.completed",
+                  "batches.error"
+                ],
+                "token": "hunter2",
+                "id": "e94a150d-40af-4e96-8aa7-2948a6b4d8d3",
+                "created_at": "2024-10-03T02:53:30.167953",
+                "enabled": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -8568,9 +8865,9 @@
       "types": [],
       "subpackages": []
     },
-    "Personalization": {
-      "subpackageId": "Personalization",
-      "name": "Personalization",
+    "subpackage_personalization": {
+      "subpackageId": "subpackage_personalization",
+      "name": "personalization",
       "endpoints": [
         {
           "auth": true,
@@ -8584,7 +8881,7 @@
             }
           ],
           "id": "filter_get_v3_rules_get",
-          "originalEndpointId": "Personalization.filter_get_v3_rules_get",
+          "originalEndpointId": "endpoint_personalization.filter_get_v3_rules_get",
           "name": "Get the current personalization ruleset.",
           "path": {
             "pathParameters": [],
@@ -8612,50 +8909,61 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "filterGetV3RulesGetExample",
               "description": "",
               "path": "/v3/rules",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "if": {
-                      "&&": [
-                        {
-                          "&&": [
-                            null
-                          ]
-                        }
-                      ]
-                    },
-                    "then": [
+              "responseBody": [
+                {
+                  "if": {
+                    "&&": [
                       {
-                        "if": {
-                          "&&": [
-                            {}
-                          ]
-                        }
-                      }
-                    ],
-                    "else": [
-                      {
-                        "if": {
-                          "&&": [
-                            {}
-                          ]
-                        }
+                        "&&": [
+                          null
+                        ]
                       }
                     ]
-                  }
-                ]
-              },
+                  },
+                  "then": [
+                    {
+                      "if": {
+                        "&&": [
+                          {}
+                        ]
+                      }
+                    }
+                  ],
+                  "else": [
+                    {
+                      "if": {
+                        "&&": [
+                          {}
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -8708,7 +9016,7 @@
             }
           ],
           "id": "filter_post_v3_rules_post",
-          "originalEndpointId": "Personalization.filter_post_v3_rules_post",
+          "originalEndpointId": "endpoint_personalization.filter_post_v3_rules_post",
           "name": "Set the personalization ruleset.",
           "path": {
             "pathParameters": [],
@@ -8738,10 +9046,58 @@
               }
             }
           },
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Provided ruleset has invalid structure",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 413,
+              "description": "Ruleset was larger than 50KiB",
+              "name": "ContentTooLargeError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "personalizationFilterPostV3RulesPostExample",
               "description": "",
               "path": "/v3/rules",
               "pathParameters": {},
@@ -8831,7 +9187,7 @@
             }
           ],
           "id": "filter_append_v3_rules_append_post",
-          "originalEndpointId": "Personalization.filter_append_v3_rules_append_post",
+          "originalEndpointId": "endpoint_personalization.filter_append_v3_rules_append_post",
           "name": "Append a rule.",
           "path": {
             "pathParameters": [],
@@ -8861,10 +9217,58 @@
               }
             }
           },
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Provided rule has invalid structure",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 413,
+              "description": "Ruleset after append was larger than 50KiB",
+              "name": "ContentTooLargeError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "personalizationFilterAppendV3RulesAppendPostExample",
               "description": "",
               "path": "/v3/rules/append",
               "pathParameters": {},
@@ -8914,7 +9318,7 @@
             }
           ],
           "id": "filter_delete_v3_rules__index__delete",
-          "originalEndpointId": "Personalization.filter_delete_v3_rules__index__delete",
+          "originalEndpointId": "endpoint_personalization.filter_delete_v3_rules__index__delete",
           "name": "Delete a rule.",
           "path": {
             "pathParameters": [
@@ -8949,12 +9353,48 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Provided index does not exist in ruleset",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "filterDeleteV3RulesIndexDeleteExample",
               "description": "",
-              "path": "/v3/rules/",
+              "path": "/v3/rules/42",
               "pathParameters": {
                 "index": 42
               },
@@ -8979,7 +9419,7 @@
             }
           ],
           "id": "filter_patch_v3_rules__index__patch",
-          "originalEndpointId": "Personalization.filter_patch_v3_rules__index__patch",
+          "originalEndpointId": "endpoint_personalization.filter_patch_v3_rules__index__patch",
           "name": "Modify an existing rule.",
           "path": {
             "pathParameters": [
@@ -9027,12 +9467,48 @@
               }
             }
           },
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Provided index does not exist in ruleset",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "personalizationFilterPatchV3RulesIndexPatchExample",
               "description": "",
-              "path": "/v3/rules/",
+              "path": "/v3/rules/42",
               "pathParameters": {
                 "index": 42
               },
@@ -9076,9 +9552,9 @@
       "types": [],
       "subpackages": []
     },
-    "Reports": {
-      "subpackageId": "Reports",
-      "name": "Reports",
+    "subpackage_reports": {
+      "subpackageId": "subpackage_reports",
+      "name": "reports",
       "endpoints": [
         {
           "auth": true,
@@ -9092,7 +9568,7 @@
             }
           ],
           "id": "get_reports_v3_reports_get",
-          "originalEndpointId": "Reports.get_reports_v3_reports_get",
+          "originalEndpointId": "endpoint_reports.get_reports_v3_reports_get",
           "name": "List all reports",
           "path": {
             "pathParameters": [],
@@ -9172,7 +9648,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ReportsGetParametersSchema"
+                  "value": "ReportStatus"
                 }
               }
             }
@@ -9189,40 +9665,45 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getReportsV3ReportsGetExample",
               "description": "",
               "path": "/v3/reports",
               "pathParameters": {},
-              "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
-                "cursor": "foo",
-                "limit": 42,
-                "status": "open"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next_cursor": "foo",
-                  "data": [
-                    {
-                      "transaction_id": "foo",
-                      "description": "foo",
-                      "fields": [
-                        "foo"
-                      ],
-                      "id": "foo",
-                      "created_at": "foo",
-                      "status": "open",
-                      "rejection_reason": "foo"
-                    }
-                  ]
-                }
+                "next_cursor": "foo",
+                "data": [
+                  {
+                    "transaction_id": "foo",
+                    "description": "foo",
+                    "fields": [
+                      "foo"
+                    ],
+                    "id": "foo",
+                    "created_at": "foo",
+                    "status": "open",
+                    "rejection_reason": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -9261,7 +9742,7 @@
             }
           ],
           "id": "post_report_v3_reports_post",
-          "originalEndpointId": "Reports.post_report_v3_reports_post",
+          "originalEndpointId": "endpoint_reports.post_report_v3_reports_post",
           "name": "Create a report",
           "path": {
             "pathParameters": [],
@@ -9302,10 +9783,24 @@
             "statusCode": 200,
             "description": "The newly created report"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "reportsPostReportV3ReportsPostExample",
               "description": "",
               "path": "/v3/reports",
               "pathParameters": {},
@@ -9330,17 +9825,14 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "transaction_id": "xbx8YP14g565Xk",
-                  "description": "lorem ipsum",
-                  "fields": [
-                    ".entities.counterparty"
-                  ],
-                  "id": "a652285d-de1b-4a6f-b6ce-45efa9be7952",
-                  "created_at": "2024-10-03T02:53:30.167953+00:00",
-                  "status": "open"
-                }
+                "transaction_id": "xbx8YP14g565Xk",
+                "description": "lorem ipsum",
+                "fields": [
+                  ".entities.counterparty"
+                ],
+                "id": "a652285d-de1b-4a6f-b6ce-45efa9be7952",
+                "created_at": "2024-10-03T02:53:30.167953+00:00",
+                "status": "open"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -9373,7 +9865,7 @@
             }
           ],
           "id": "get_report_v3_reports__id__get",
-          "originalEndpointId": "Reports.get_report_v3_reports__id__get",
+          "originalEndpointId": "endpoint_reports.get_report_v3_reports__id__get",
           "name": "Retrieve a report",
           "path": {
             "pathParameters": [
@@ -9419,30 +9911,53 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Report with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getReportV3ReportsIdGetExample",
               "description": "",
-              "path": "/v3/reports/",
+              "path": "/v3/reports/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "transaction_id": "xbx8YP14g565Xk",
-                  "description": "lorem ipsum",
-                  "fields": [
-                    ".entities.counterparty"
-                  ],
-                  "id": "a652285d-de1b-4a6f-b6ce-45efa9be7952",
-                  "created_at": "2024-10-03T02:53:30.167953+00:00",
-                  "status": "open"
-                }
+                "transaction_id": "xbx8YP14g565Xk",
+                "description": "lorem ipsum",
+                "fields": [
+                  ".entities.counterparty"
+                ],
+                "id": "a652285d-de1b-4a6f-b6ce-45efa9be7952",
+                "created_at": "2024-10-03T02:53:30.167953+00:00",
+                "status": "open"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -9475,7 +9990,7 @@
             }
           ],
           "id": "delete_report_v3_reports__id__delete",
-          "originalEndpointId": "Reports.delete_report_v3_reports__id__delete",
+          "originalEndpointId": "endpoint_reports.delete_report_v3_reports__id__delete",
           "name": "Delete a report",
           "path": {
             "pathParameters": [
@@ -9510,14 +10025,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Report with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteReportV3ReportsIdDeleteExample",
               "description": "",
-              "path": "/v3/reports/",
+              "path": "/v3/reports/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -9534,9 +10075,9 @@
       "types": [],
       "subpackages": []
     },
-    "Categories": {
-      "subpackageId": "Categories",
-      "name": "Categories",
+    "subpackage_categories": {
+      "subpackageId": "subpackage_categories",
+      "name": "categories",
       "endpoints": [
         {
           "auth": true,
@@ -9550,7 +10091,7 @@
             }
           ],
           "id": "get_category_set_v3_categories__account_holder_type__get",
-          "originalEndpointId": "Categories.get_category_set_v3_categories__account_holder_type__get",
+          "originalEndpointId": "endpoint_categories.get_category_set_v3_categories__account_holder_type__get",
           "name": "Retrieve category set",
           "path": {
             "pathParameters": [
@@ -9594,12 +10135,26 @@
             "statusCode": 200,
             "description": "Category set for the selected type of account holder"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getCategorySetV3CategoriesAccountHolderTypeGetExample",
               "description": "",
-              "path": "/v3/categories/",
+              "path": "/v3/categories/consumer",
               "pathParameters": {
                 "account_holder_type": "consumer"
               },
@@ -9607,36 +10162,33 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "incoming": [
-                    "transfer from investment app",
-                    "transfer from stock broker",
-                    "transfer from crypto broker",
-                    "chargeback",
-                    "freelance income",
-                    "rideshare or delivery income",
-                    "paycheck",
-                    "benefits",
-                    "interest earned",
-                    "stock dividend"
-                  ],
-                  "outgoing": [
-                    "digital content and streaming",
-                    "vending machine",
-                    "reversal",
-                    "transfer to investment app",
-                    "transfer to stock broker",
-                    "transfer to crypto broker",
-                    "adjustment",
-                    "intra account transfer",
-                    "inter account transfer",
-                    "peer to peer transfer",
-                    "funeral service",
-                    "ATM withdrawal",
-                    "teller withdrawal"
-                  ]
-                }
+                "incoming": [
+                  "transfer from investment app",
+                  "transfer from stock broker",
+                  "transfer from crypto broker",
+                  "chargeback",
+                  "freelance income",
+                  "rideshare or delivery income",
+                  "paycheck",
+                  "benefits",
+                  "interest earned",
+                  "stock dividend"
+                ],
+                "outgoing": [
+                  "digital content and streaming",
+                  "vending machine",
+                  "reversal",
+                  "transfer to investment app",
+                  "transfer to stock broker",
+                  "transfer to crypto broker",
+                  "adjustment",
+                  "intra account transfer",
+                  "inter account transfer",
+                  "peer to peer transfer",
+                  "funeral service",
+                  "ATM withdrawal",
+                  "teller withdrawal"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -9688,7 +10240,7 @@
             }
           ],
           "id": "custom_categories_post_v3_categories__account_holder_type__post",
-          "originalEndpointId": "Categories.custom_categories_post_v3_categories__account_holder_type__post",
+          "originalEndpointId": "endpoint_categories.custom_categories_post_v3_categories__account_holder_type__post",
           "name": "Set a custom set of categories",
           "path": {
             "pathParameters": [
@@ -9745,12 +10297,26 @@
             "statusCode": 200,
             "description": "Custom categories successfully set."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "categoriesCustomCategoriesPostV3CategoriesAccountHolderTypePostExample",
               "description": "",
-              "path": "/v3/categories/",
+              "path": "/v3/categories/consumer",
               "pathParameters": {
                 "account_holder_type": "consumer"
               },
@@ -9787,20 +10353,17 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "incoming": [
-                    "salary",
-                    "investment income",
-                    "other income"
-                  ],
-                  "outgoing": [
-                    "rent",
-                    "utilities",
-                    "groceries",
-                    "entertainment"
-                  ]
-                }
+                "incoming": [
+                  "salary",
+                  "investment income",
+                  "other income"
+                ],
+                "outgoing": [
+                  "rent",
+                  "utilities",
+                  "groceries",
+                  "entertainment"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -9836,7 +10399,7 @@
             }
           ],
           "id": "delete_custom_category_set_v3_categories__account_holder_type__reset_post",
-          "originalEndpointId": "Categories.delete_custom_category_set_v3_categories__account_holder_type__reset_post",
+          "originalEndpointId": "endpoint_categories.delete_custom_category_set_v3_categories__account_holder_type__reset_post",
           "name": "Reset category set to original values",
           "path": {
             "pathParameters": [
@@ -9880,12 +10443,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteCustomCategorySetV3CategoriesAccountHolderTypeResetPostExample",
               "description": "",
-              "path": "/v3/categories/",
+              "path": "/v3/categories/consumer/reset",
               "pathParameters": {
                 "account_holder_type": "consumer"
               },
@@ -9893,36 +10470,33 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "incoming": [
-                    "transfer from investment app",
-                    "transfer from stock broker",
-                    "transfer from crypto broker",
-                    "chargeback",
-                    "freelance income",
-                    "rideshare or delivery income",
-                    "paycheck",
-                    "benefits",
-                    "interest earned",
-                    "stock dividend"
-                  ],
-                  "outgoing": [
-                    "digital content and streaming",
-                    "vending machine",
-                    "reversal",
-                    "transfer to investment app",
-                    "transfer to stock broker",
-                    "transfer to crypto broker",
-                    "adjustment",
-                    "intra account transfer",
-                    "inter account transfer",
-                    "peer to peer transfer",
-                    "funeral service",
-                    "ATM withdrawal",
-                    "teller withdrawal"
-                  ]
-                }
+                "incoming": [
+                  "transfer from investment app",
+                  "transfer from stock broker",
+                  "transfer from crypto broker",
+                  "chargeback",
+                  "freelance income",
+                  "rideshare or delivery income",
+                  "paycheck",
+                  "benefits",
+                  "interest earned",
+                  "stock dividend"
+                ],
+                "outgoing": [
+                  "digital content and streaming",
+                  "vending machine",
+                  "reversal",
+                  "transfer to investment app",
+                  "transfer to stock broker",
+                  "transfer to crypto broker",
+                  "adjustment",
+                  "intra account transfer",
+                  "inter account transfer",
+                  "peer to peer transfer",
+                  "funeral service",
+                  "ATM withdrawal",
+                  "teller withdrawal"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -9968,9 +10542,9 @@
       "types": [],
       "subpackages": []
     },
-    "Entities": {
-      "subpackageId": "Entities",
-      "name": "Entities",
+    "subpackage_entities": {
+      "subpackageId": "subpackage_entities",
+      "name": "entities",
       "endpoints": [
         {
           "auth": true,
@@ -9984,7 +10558,7 @@
             }
           ],
           "id": "search_entity_v3_entities_lookup_get",
-          "originalEndpointId": "Entities.search_entity_v3_entities_lookup_get",
+          "originalEndpointId": "endpoint_entities.search_entity_v3_entities_lookup_get",
           "name": "Searches for an entity",
           "path": {
             "pathParameters": [],
@@ -10052,31 +10626,62 @@
             "statusCode": 200,
             "description": "Entity"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 423,
+              "description": "Not enough credits.",
+              "name": "LockedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "searchEntityV3EntitiesLookupGetExample",
               "description": "",
               "path": "/v3/entities/lookup",
               "pathParameters": {},
-              "queryParameters": {
-                "name": "foo",
-                "website": "foo",
-                "location": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
-                  "name": "Starbucks",
-                  "website": "starbucks.com",
-                  "logo": "https://logos.ntropy.com/starbucks.com",
-                  "mccs": [
-                    5814
-                  ]
-                }
+                "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
+                "name": "Starbucks",
+                "website": "starbucks.com",
+                "logo": "https://logos.ntropy.com/starbucks.com",
+                "mccs": [
+                  5814
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -10108,7 +10713,7 @@
             }
           ],
           "id": "get_entity_by_id_v3_entities__id__get",
-          "originalEndpointId": "Entities.get_entity_by_id_v3_entities__id__get",
+          "originalEndpointId": "endpoint_entities.get_entity_by_id_v3_entities__id__get",
           "name": "Retrieve an entity",
           "path": {
             "pathParameters": [
@@ -10155,29 +10760,64 @@
             "statusCode": 200,
             "description": "Entity"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Entity does not exist for ID",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getEntityByIdV3EntitiesIdGetExample",
               "description": "",
-              "path": "/v3/entities/",
+              "path": "/v3/entities/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
-                  "name": "Starbucks",
-                  "website": "starbucks.com",
-                  "logo": "https://logos.ntropy.com/starbucks.com",
-                  "mccs": [
-                    5814
-                  ]
-                }
+                "id": "d4bc3c80-ec1a-3da2-836e-2a4ca4758be5",
+                "name": "Starbucks",
+                "website": "starbucks.com",
+                "logo": "https://logos.ntropy.com/starbucks.com",
+                "mccs": [
+                  5814
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -10216,6 +10856,7 @@
       "AccountHolderType",
       "AccountType",
       "AccountingCategory",
+      "ActionModel",
       "Address",
       "AsyncEnrichmentInput",
       "BankStatement",
@@ -10245,6 +10886,7 @@
       "Entities",
       "Entity",
       "EntryType",
+      "FilterModel",
       "HTTPValidationError",
       "Intermediary",
       "IntermediaryType",
@@ -10286,16 +10928,16 @@
       "personalization"
     ],
     "subpackages": [
-      "Transactions",
-      "Batches",
-      "Bank statements",
-      "Account Holders",
-      "Recurrence",
-      "Webhooks",
-      "Personalization",
-      "Reports",
-      "Categories",
-      "Entities"
+      "subpackage_transactions",
+      "subpackage_batches",
+      "subpackage_bankStatements",
+      "subpackage_accountHolders",
+      "subpackage_recurrence",
+      "subpackage_webhooks",
+      "subpackage_personalization",
+      "subpackage_reports",
+      "subpackage_categories",
+      "subpackage_entities"
     ]
   },
   "auth": {

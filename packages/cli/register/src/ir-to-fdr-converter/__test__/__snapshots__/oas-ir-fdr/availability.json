@@ -98,7 +98,7 @@
         "auth": false,
         "method": "GET",
         "id": "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam",
-        "originalEndpointId": "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam",
+        "originalEndpointId": "endpoint_.getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam",
         "name": "Get Collection Id Active Id Deprecated Ref Id X Fern Availability Path Param",
         "path": {
           "pathParameters": [
@@ -301,33 +301,20 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamExample",
             "description": "",
-            "path": "/collection/",
+            "path": "/collection/id/active_id/deprecated_ref_id/x-fern-availability_path_param",
             "pathParameters": {
-              "id": "foo",
-              "active_id": "foo",
-              "deprecated_ref_id": "foo",
-              "x-fern-availability_path_param": "foo"
+              "id": "id",
+              "active_id": "active_id",
+              "deprecated_ref_id": "deprecated_ref_id",
+              "x-fern-availability_path_param": "x-fern-availability_path_param"
             },
-            "queryParameters": {
-              "deprecated_lang": "foo",
-              "active_lang": "foo",
-              "deprecated_ref_lang": "foo",
-              "x-fern-availability_query_param": "foo"
-            },
-            "headers": {
-              "X-Deprecated-Header": "foo",
-              "X-Active-Header": "foo",
-              "X-Deprecated-Ref-Header": "foo",
-              "x-fern-availability_header": "foo"
-            },
+            "queryParameters": {},
+            "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "fine_setting": true
-              }
+              "fine_setting": true
             },
             "responseBodyV3": {
               "type": "json",
@@ -345,7 +332,7 @@
         "auth": false,
         "method": "POST",
         "id": "postSuccessRef",
-        "originalEndpointId": "postSuccessRef",
+        "originalEndpointId": "endpoint_.postSuccessRef",
         "name": "Post Success Ref",
         "path": {
           "pathParameters": [],
@@ -389,7 +376,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "postSuccessRefExample",
             "description": "",
             "path": "/success-ref",
             "pathParameters": {},
@@ -402,10 +389,7 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "not_deprecated_setting": true
-              }
+              "not_deprecated_setting": true
             },
             "responseBodyV3": {
               "type": "json",
@@ -423,7 +407,7 @@
         "auth": false,
         "method": "POST",
         "id": "postSuccessInlinePropertyDeprecation",
-        "originalEndpointId": "postSuccessInlinePropertyDeprecation",
+        "originalEndpointId": "endpoint_.postSuccessInlinePropertyDeprecation",
         "name": "Post Success Inline Property Deprecation",
         "path": {
           "pathParameters": [],
@@ -491,7 +475,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "postSuccessInlinePropertyDeprecationExample",
             "description": "",
             "path": "/success-inline-property-deprecation",
             "pathParameters": {},
@@ -504,10 +488,7 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "not_deprecated_setting": true
-              }
+              "not_deprecated_setting": true
             },
             "responseBodyV3": {
               "type": "json",
@@ -526,7 +507,7 @@
         "auth": false,
         "method": "POST",
         "id": "postSuccessInlineObjectDeprecation",
-        "originalEndpointId": "postSuccessInlineObjectDeprecation",
+        "originalEndpointId": "endpoint_.postSuccessInlineObjectDeprecation",
         "name": "Post Success Inline Object Deprecation",
         "path": {
           "pathParameters": [],
@@ -581,7 +562,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "postSuccessInlineObjectDeprecationExample",
             "description": "",
             "path": "/success-inline-object-deprecation",
             "pathParameters": {},
@@ -594,10 +575,7 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "not_deprecated_setting": true
-              }
+              "not_deprecated_setting": true
             },
             "responseBodyV3": {
               "type": "json",
@@ -615,7 +593,7 @@
         "auth": false,
         "method": "POST",
         "id": "postSuccessInlineBetaBody",
-        "originalEndpointId": "postSuccessInlineBetaBody",
+        "originalEndpointId": "endpoint_.postSuccessInlineBetaBody",
         "name": "Post Success Inline Beta Body",
         "path": {
           "pathParameters": [],
@@ -670,7 +648,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "postSuccessInlineBetaBodyExample",
             "description": "",
             "path": "/success-inline-beta-body",
             "pathParameters": {},
@@ -683,10 +661,7 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "not_deprecated_setting": true
-              }
+              "not_deprecated_setting": true
             },
             "responseBodyV3": {
               "type": "json",

@@ -34,7 +34,11 @@ class SeedSingleUrlEnvironmentNoDefault:
     --------
     from seed import SeedSingleUrlEnvironmentNoDefault
     from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
-    client = SeedSingleUrlEnvironmentNoDefault(token="YOUR_TOKEN", environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION, )
+
+    client = SeedSingleUrlEnvironmentNoDefault(
+        token="YOUR_TOKEN",
+        environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
+    )
     """
 
     def __init__(
@@ -89,7 +93,11 @@ class AsyncSeedSingleUrlEnvironmentNoDefault:
     --------
     from seed import AsyncSeedSingleUrlEnvironmentNoDefault
     from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
-    client = AsyncSeedSingleUrlEnvironmentNoDefault(token="YOUR_TOKEN", environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION, )
+
+    client = AsyncSeedSingleUrlEnvironmentNoDefault(
+        token="YOUR_TOKEN",
+        environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
+    )
     """
 
     def __init__(

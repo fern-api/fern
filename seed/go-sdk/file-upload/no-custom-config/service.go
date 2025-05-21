@@ -6,7 +6,12 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/file-upload/fern/internal"
+	io "io"
 )
+
+type JustFileRequest struct {
+	File io.Reader `json:"-" url:"-"`
+}
 
 type JustFileWithQueryParamsRequest struct {
 	MaybeString           *string   `json:"-" url:"maybeString,omitempty"`
@@ -14,13 +19,19 @@ type JustFileWithQueryParamsRequest struct {
 	MaybeInteger          *int      `json:"-" url:"maybeInteger,omitempty"`
 	ListOfStrings         []string  `json:"-" url:"listOfStrings"`
 	OptionalListOfStrings []*string `json:"-" url:"optionalListOfStrings,omitempty"`
+	File                  io.Reader `json:"-" url:"-"`
 }
 
 type OptionalArgsRequest struct {
-	Request interface{} `json:"request,omitempty" url:"-"`
+	ImageFile io.Reader   `json:"-" url:"-"`
+	Request   interface{} `json:"request,omitempty" url:"-"`
 }
 
 type MyRequest struct {
+	File                  io.Reader               `json:"-" url:"-"`
+	FileList              []io.Reader             `json:"-" url:"-"`
+	MaybeFile             io.Reader               `json:"-" url:"-"`
+	MaybeFileList         []io.Reader             `json:"-" url:"-"`
 	MaybeString           *string                 `json:"maybe_string,omitempty" url:"-"`
 	Integer               int                     `json:"integer" url:"-"`
 	MaybeInteger          *int                    `json:"maybe_integer,omitempty" url:"-"`
@@ -163,12 +174,17 @@ func (o ObjectType) Ptr() *ObjectType {
 }
 
 type WithContentTypeRequest struct {
+	File   io.Reader `json:"-" url:"-"`
 	Foo    string    `json:"foo" url:"-"`
 	Bar    *MyObject `json:"bar,omitempty" url:"-"`
 	FooBar *MyObject `json:"foo_bar,omitempty" url:"-"`
 }
 
 type MyOtherRequest struct {
+	File                       io.Reader               `json:"-" url:"-"`
+	FileList                   []io.Reader             `json:"-" url:"-"`
+	MaybeFile                  io.Reader               `json:"-" url:"-"`
+	MaybeFileList              []io.Reader             `json:"-" url:"-"`
 	MaybeString                *string                 `json:"maybe_string,omitempty" url:"-"`
 	Integer                    int                     `json:"integer" url:"-"`
 	MaybeInteger               *int                    `json:"maybe_integer,omitempty" url:"-"`
@@ -184,6 +200,7 @@ type MyOtherRequest struct {
 }
 
 type WithFormEncodingRequest struct {
-	Foo string    `json:"foo" url:"-"`
-	Bar *MyObject `json:"bar,omitempty" url:"-"`
+	File io.Reader `json:"-" url:"-"`
+	Foo  string    `json:"foo" url:"-"`
+	Bar  *MyObject `json:"bar,omitempty" url:"-"`
 }

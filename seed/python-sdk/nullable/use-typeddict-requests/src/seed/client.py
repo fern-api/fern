@@ -28,7 +28,10 @@ class SeedNullable:
     Examples
     --------
     from seed import SeedNullable
-    client = SeedNullable(base_url="https://yourhost.com/path/to/api", )
+
+    client = SeedNullable(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
@@ -75,7 +78,10 @@ class AsyncSeedNullable:
     Examples
     --------
     from seed import AsyncSeedNullable
-    client = AsyncSeedNullable(base_url="https://yourhost.com/path/to/api", )
+
+    client = AsyncSeedNullable(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(

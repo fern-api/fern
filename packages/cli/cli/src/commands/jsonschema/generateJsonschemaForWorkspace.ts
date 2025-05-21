@@ -5,8 +5,9 @@ import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, RelativeFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
-import { IdGenerator, convertToFernFilepath, generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { convertToFernFilepath, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { convertIRtoJsonSchema } from "@fern-api/ir-to-jsonschema";
+import { IdGenerator } from "@fern-api/ir-utils";
 import { Project } from "@fern-api/project-loader";
 
 import { CliContext } from "../../cli-context/CliContext";
@@ -59,7 +60,8 @@ export async function generateJsonschemaForWorkspaces({
                         relativeFilepath: RelativeFilePath.of(`${splitTypeLocator.slice(0, -1).join("/")}.yml`),
                         casingsGenerator
                     }),
-                    name: casingsGenerator.generateName(typeName)
+                    name: casingsGenerator.generateName(typeName),
+                    displayName: undefined
                 });
 
                 const jsonSchema = convertIRtoJsonSchema({

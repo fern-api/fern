@@ -41,7 +41,11 @@ class V2Client:
         Examples
         --------
         from seed import SeedTrace
-        client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
         client.v_2.test()
         """
         _response = self._raw_client.test(request_options=request_options)
@@ -79,11 +83,20 @@ class AsyncV2Client:
 
         Examples
         --------
-        from seed import AsyncSeedTrace
         import asyncio
-        client = AsyncSeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+
+        from seed import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
             await client.v_2.test()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.test(request_options=request_options)

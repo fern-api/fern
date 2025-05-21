@@ -1,3 +1,3 @@
-export * as events from "./events";
-export * from "./events/types";
-export * from "./events/client/requests";
+export * as events from "./events/index.js";
+export * from "./events/types/index.js";
+export * from "./events/client/requests/index.js";

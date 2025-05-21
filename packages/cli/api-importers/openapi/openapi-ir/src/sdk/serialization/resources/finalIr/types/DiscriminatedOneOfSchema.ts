@@ -5,9 +5,10 @@
 import * as serializers from "../../../index";
 import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
-import { WithDescription } from "../../commons/types/WithDescription";
-import { WithName } from "../../commons/types/WithName";
 import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
+import { WithNamespace } from "../../commons/types/WithNamespace";
+import { WithName } from "../../commons/types/WithName";
+import { WithDescription } from "../../commons/types/WithDescription";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithEncoding } from "../../commons/types/WithEncoding";
 import { WithSource } from "../../commons/types/WithSource";
@@ -26,9 +27,10 @@ export const DiscriminatedOneOfSchema: core.serialization.ObjectSchema<
             core.serialization.lazy(() => serializers.Schema),
         ),
     })
-    .extend(WithDescription)
-    .extend(WithName)
     .extend(WithSdkGroupName)
+    .extend(WithNamespace)
+    .extend(WithName)
+    .extend(WithDescription)
     .extend(WithAvailability)
     .extend(WithEncoding)
     .extend(WithSource)
@@ -37,9 +39,10 @@ export const DiscriminatedOneOfSchema: core.serialization.ObjectSchema<
 
 export declare namespace DiscriminatedOneOfSchema {
     export interface Raw
-        extends WithDescription.Raw,
+        extends WithSdkGroupName.Raw,
+            WithNamespace.Raw,
             WithName.Raw,
-            WithSdkGroupName.Raw,
+            WithDescription.Raw,
             WithAvailability.Raw,
             WithEncoding.Raw,
             WithSource.Raw,

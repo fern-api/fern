@@ -91,7 +91,7 @@
         "description": "This endpoint should be in `auth/user.yml`",
         "method": "GET",
         "id": "getAuthUser",
-        "originalEndpointId": "getAuthUser",
+        "originalEndpointId": "endpoint_.getAuthUser",
         "name": "Get Auth User",
         "path": {
           "pathParameters": [],
@@ -122,7 +122,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getAuthUserExample",
             "description": "",
             "path": "/auth/user",
             "pathParameters": {},
@@ -130,15 +130,12 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "associatedPersons": [
-                  {
-                    "id": "foo"
-                  }
-                ]
-              }
+              "id": "foo",
+              "associatedPersons": [
+                {
+                  "id": "foo"
+                }
+              ]
             },
             "responseBodyV3": {
               "type": "json",

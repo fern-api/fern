@@ -91,7 +91,7 @@
         "auth": false,
         "method": "GET",
         "id": "getExample",
-        "originalEndpointId": "getExample",
+        "originalEndpointId": "endpoint_.getExample",
         "name": "Get Example",
         "path": {
           "pathParameters": [],
@@ -122,17 +122,14 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getExampleExample",
             "description": "",
             "path": "/example",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "ACTIVE"
-            },
+            "responseBody": "ACTIVE",
             "responseBodyV3": {
               "type": "json",
               "value": "ACTIVE"

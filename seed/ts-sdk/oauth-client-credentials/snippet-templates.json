@@ -91,7 +91,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "clientId: $FERN_INPUT",
+                                        "templateString": "client_id: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -107,7 +107,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "clientSecret: $FERN_INPUT",
+                                        "templateString": "client_secret: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -239,7 +239,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "clientId: $FERN_INPUT",
+                                        "templateString": "client_id: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -255,7 +255,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "clientSecret: $FERN_INPUT",
+                                        "templateString": "client_secret: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -271,7 +271,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "refreshToken: $FERN_INPUT",
+                                        "templateString": "refresh_token: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {

@@ -9,9 +9,6 @@ from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern
 from fern_python.generators.sdk.client_generator.endpoint_function_generator import (
     EndpointFunctionGenerator,
 )
-from fern_python.generators.sdk.client_generator.websocket_connect_response_code_writer import (
-    WebsocketConnectResponseCodeWriter,
-)
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.generators.sdk.environment_generators.multiple_base_urls_environment_generator import (
     get_base_url,
@@ -281,28 +278,97 @@ class WebsocketConnectMethodGenerator:
             headers_expr = self._extend_headers_with_websocket_headers(websocket=websocket)
             if websocket.headers and headers_expr is not None:
                 writer.write_node(headers_expr)
-            writer.write_line(
-                f"if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} and "
-                + f'"additional_headers" in {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}:'
-            )
-            with writer.indent():
-                writer.write_line(
-                    f'headers.update({EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}["additional_headers"])'
+
+            writer.write_node(
+                AST.ConditionalTree(
+                    [
+                        AST.IfConditionLeaf(
+                            condition=AST.Expression(
+                                (
+                                    f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} and "
+                                    f'"additional_headers" in {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}'
+                                )
+                            ),
+                            code=[
+                                AST.Expression(
+                                    f'headers.update({EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}["additional_headers"])'
+                                )
+                            ],
+                        )
+                    ],
+                    else_code=None,
                 )
-            writer.write_line("try:")
-            with writer.indent():
-                if is_async:
-                    writer.write_node(Websockets.async_connect(url=self.WS_URL_VARIABLE, headers="headers"))
-                    writer.write_line(
-                        f"yield {self._context.get_async_socket_client_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)}({WebsocketConnectMethodGenerator.SOCKET_CONSTRUCTOR_PARAMETER_NAME} = protocol)"
-                    )
-                else:
-                    writer.write_node(Websockets.sync_connect(url=self.WS_URL_VARIABLE, headers="headers"))
-                    writer.write_line(
-                        f"yield {self._context.get_socket_client_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)}({WebsocketConnectMethodGenerator.SOCKET_CONSTRUCTOR_PARAMETER_NAME} = protocol)"
-                    )
-            response_code_writer = WebsocketConnectResponseCodeWriter(context=self._context)
-            response_code_writer.write(writer)
+            )
+
+            if is_async:
+                body = [
+                    Websockets.async_connect(url=self.WS_URL_VARIABLE, headers="headers"),
+                    AST.YieldStatement(
+                        value=AST.Expression(
+                            f"{self._context.get_async_socket_client_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)}"
+                            f"({WebsocketConnectMethodGenerator.SOCKET_CONSTRUCTOR_PARAMETER_NAME} = protocol)"
+                        )
+                    ),
+                ]
+            else:
+                body = [
+                    Websockets.sync_connect(url=self.WS_URL_VARIABLE, headers="headers"),
+                    AST.YieldStatement(
+                        value=AST.Expression(
+                            f"{self._context.get_socket_client_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)}"
+                            f"({WebsocketConnectMethodGenerator.SOCKET_CONSTRUCTOR_PARAMETER_NAME} = protocol)"
+                        )
+                    ),
+                ]
+
+            writer.write_node(
+                AST.TryStatement(
+                    body=body,
+                    handlers=[
+                        AST.ExceptHandler(
+                            exception_type="websockets.exceptions.InvalidStatusCode",
+                            name="exc",
+                            body=[
+                                AST.VariableDeclaration(
+                                    name="status_code",
+                                    type_hint=AST.TypeHint.int_(),
+                                    initializer=AST.Expression("exc.status_code"),
+                                ),
+                                AST.ConditionalTree(
+                                    conditions=[
+                                        AST.IfConditionLeaf(
+                                            condition=AST.Expression("status_code == 401"),
+                                            code=[
+                                                AST.RaiseStatement(
+                                                    exception=self._context.core_utilities.instantiate_api_error(
+                                                        headers=AST.Expression("headers"),
+                                                        body=AST.Expression(
+                                                            '"Websocket initialized with invalid credentials."'
+                                                        ),
+                                                        status_code=AST.Expression("status_code"),
+                                                    )
+                                                )
+                                            ],
+                                        )
+                                    ],
+                                    else_code=None,
+                                ),
+                                AST.RaiseStatement(
+                                    exception=self._context.core_utilities.instantiate_api_error(
+                                        headers=AST.Expression("headers"),
+                                        body=AST.Expression(
+                                            '"Unexpected error when initializing websocket connection."'
+                                        ),
+                                        status_code=AST.Expression("status_code"),
+                                    )
+                                ),
+                            ],
+                        )
+                    ],
+                )
+            )
+
+            writer.write_line("")
 
         return AST.CodeWriter(write)
 

@@ -4,13 +4,12 @@
 
 import * as FernIr from "../../../index";
 
-export interface InlinedRequestBody extends FernIr.WithDocs, FernIr.WithV2Examples {
+export interface InlinedRequestBody extends FernIr.WithDocs, FernIr.WithV2Examples, FernIr.WithContentType {
     name: FernIr.Name;
     extends: FernIr.DeclaredTypeName[];
     properties: FernIr.InlinedRequestBodyProperty[];
     /** A list of properties that all the parents of this request have. */
     extendedProperties: FernIr.ObjectProperty[] | undefined;
-    contentType: string | undefined;
     /** Whether to allow extra properties on the request. */
     extraProperties: boolean;
 }

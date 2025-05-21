@@ -16,7 +16,7 @@
                     "from seed import SeedUnions"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedUnions(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -55,7 +55,7 @@
                         "from seed import AsyncSeedUnions"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedUnions(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -106,7 +106,7 @@
                     "from seed import SeedUnions"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedUnions(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -898,7 +898,7 @@
                         "from seed import AsyncSeedUnions"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedUnions(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -1702,7 +1702,7 @@
                     "from seed import SeedUnions"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedUnions(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -2505,7 +2505,7 @@
                         "from seed import AsyncSeedUnions"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedUnions(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -3320,7 +3320,7 @@
                     "from seed import SeedUnions"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedUnions(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -3359,7 +3359,7 @@
                         "from seed import AsyncSeedUnions"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedUnions(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -3410,7 +3410,7 @@
                     "from seed import SeedUnions"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedUnions(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -3500,7 +3500,7 @@
                         "from seed import AsyncSeedUnions"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedUnions(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

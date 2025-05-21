@@ -91,6 +91,9 @@ class RawContentTypeClient:
                 "map": map_,
                 "bigint": bigint,
             },
+            headers={
+                "content-type": "application/json-patch+json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -99,8 +102,8 @@ class RawContentTypeClient:
                 return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def post_json_patch_content_with_charset_type(
         self,
@@ -175,6 +178,9 @@ class RawContentTypeClient:
                 "map": map_,
                 "bigint": bigint,
             },
+            headers={
+                "content-type": "application/json-patch+json; charset=utf-8",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -183,8 +189,8 @@ class RawContentTypeClient:
                 return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
 class AsyncRawContentTypeClient:
@@ -264,6 +270,9 @@ class AsyncRawContentTypeClient:
                 "map": map_,
                 "bigint": bigint,
             },
+            headers={
+                "content-type": "application/json-patch+json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -272,8 +281,8 @@ class AsyncRawContentTypeClient:
                 return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def post_json_patch_content_with_charset_type(
         self,
@@ -348,6 +357,9 @@ class AsyncRawContentTypeClient:
                 "map": map_,
                 "bigint": bigint,
             },
+            headers={
+                "content-type": "application/json-patch+json; charset=utf-8",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -356,5 +368,5 @@ class AsyncRawContentTypeClient:
                 return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

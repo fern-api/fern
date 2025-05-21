@@ -19,6 +19,7 @@ export function convertLiteral({
     value,
     description,
     availability,
+    namespace,
     groupName
 }: {
     nameOverride: string | undefined;
@@ -28,6 +29,7 @@ export function convertLiteral({
     wrapAsNullable: boolean;
     description: string | undefined;
     availability: Availability | undefined;
+    namespace: string | undefined;
     groupName: SdkGroupName | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
@@ -42,10 +44,12 @@ export function convertLiteral({
                 value: createLiteralSchemaValue(value),
                 description,
                 availability,
+                namespace,
                 groupName
             }),
             description,
             availability,
+            namespace,
             groupName,
             inline: undefined
         });
@@ -57,6 +61,7 @@ export function convertLiteral({
         value: createLiteralSchemaValue(value),
         description,
         availability,
+        namespace,
         groupName
     });
 }

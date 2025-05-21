@@ -115,6 +115,7 @@ function getQueryParameterTypeReference({
                         value: resolvedSchema.value,
                         description: schema.description ?? resolvedSchema.description,
                         availability: schema.availability,
+                        namespace: undefined,
                         groupName: undefined,
                         inline: undefined
                     }),
@@ -194,6 +195,7 @@ function getQueryParameterTypeReference({
                                 value: secondSchema,
                                 description: schema.description,
                                 availability: schema.availability,
+                                namespace: undefined,
                                 groupName: undefined,
                                 inline: undefined
                             }),
@@ -219,6 +221,7 @@ function getQueryParameterTypeReference({
                                 value: firstSchema,
                                 description: schema.description,
                                 availability: schema.availability,
+                                namespace: undefined,
                                 groupName: undefined,
                                 inline: undefined
                             }),
@@ -271,6 +274,7 @@ function getQueryParameterTypeReference({
                             value: resolvedSchema.value,
                             description: schema.description ?? resolvedSchema.description,
                             availability: schema.availability,
+                            namespace: undefined,
                             groupName: undefined,
                             inline: schema.inline
                         }),
@@ -306,6 +310,7 @@ function getQueryParameterTypeReference({
                         value: schema.value.value,
                         description: schema.description,
                         availability: schema.availability,
+                        namespace: undefined,
                         groupName: undefined,
                         inline: schema.inline
                     }),
@@ -384,6 +389,7 @@ function getQueryParameterTypeReference({
                                 value: secondSchema,
                                 description: schema.description,
                                 availability: schema.availability,
+                                namespace: undefined,
                                 groupName: undefined,
                                 inline: schema.inline
                             }),
@@ -409,6 +415,7 @@ function getQueryParameterTypeReference({
                                 value: firstSchema,
                                 description: schema.description,
                                 availability: schema.availability,
+                                namespace: undefined,
                                 groupName: undefined,
                                 inline: schema.inline
                             }),
@@ -432,6 +439,7 @@ function getQueryParameterTypeReference({
                         value: oneOfSchema,
                         description: undefined,
                         availability: schema.availability,
+                        namespace: undefined,
                         groupName: undefined,
                         inline: schema.inline
                     }),
@@ -478,6 +486,7 @@ function getQueryParameterTypeReference({
                     value: schema.value,
                     description: schema.description,
                     availability: schema.availability,
+                    namespace: undefined,
                     groupName: undefined,
                     inline: schema.inline
                 }),

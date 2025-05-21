@@ -11,7 +11,10 @@ class NormalSweet(UniversalBaseModel):
     Examples
     --------
     from seed.bigunion import NormalSweet
-    NormalSweet(value='example1', )
+
+    NormalSweet(
+        value="example1",
+    )
     """
 
     value: str

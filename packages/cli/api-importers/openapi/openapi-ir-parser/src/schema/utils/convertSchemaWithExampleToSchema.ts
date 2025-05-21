@@ -21,6 +21,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
                 title: schema.title,
+                namespace: schema.namespace,
                 groupName: schema.groupName,
                 additionalProperties: schema.additionalProperties,
                 availability: schema.availability,
@@ -35,6 +36,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
                 title: schema.title,
+                namespace: schema.namespace,
                 groupName: schema.groupName,
                 inline: schema.inline
             });
@@ -47,6 +49,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 title: schema.title,
                 values: schema.values,
                 default: schema.default,
+                namespace: schema.namespace,
                 groupName: schema.groupName,
                 source: schema.source,
                 inline: schema.inline
@@ -59,6 +62,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
                 title: schema.title,
+                namespace: schema.namespace,
                 groupName: schema.groupName
             });
         case "nullable":
@@ -69,6 +73,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 description: schema.description,
                 availability: schema.availability,
                 value: convertSchemaWithExampleToSchema(schema.value),
+                namespace: schema.namespace,
                 groupName: schema.groupName,
                 inline: schema.inline
             });
@@ -80,6 +85,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 description: schema.description,
                 availability: schema.availability,
                 value: convertSchemaWithExampleToSchema(schema.value),
+                namespace: schema.namespace,
                 groupName: schema.groupName,
                 inline: schema.inline
             });
@@ -91,6 +97,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
                 title: schema.title,
+                namespace: schema.namespace,
                 groupName: schema.groupName
             });
         case "map":
@@ -104,12 +111,14 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                     generatedName: schema.key.generatedName,
                     title: schema.key.title,
                     nameOverride: schema.key.nameOverride,
+                    namespace: schema.namespace,
                     groupName: schema.groupName
                 }),
                 value: convertSchemaWithExampleToSchema(schema.value),
                 generatedName: schema.generatedName,
                 title: schema.title,
                 nameOverride: schema.nameOverride,
+                namespace: schema.namespace,
                 groupName: schema.groupName,
                 encoding: schema.encoding,
                 inline: schema.inline
@@ -122,6 +131,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 nameOverride: schema.nameOverride,
                 title: schema.title,
                 schema: schema.schema,
+                namespace: schema.namespace,
                 groupName: schema.groupName,
                 source: schema.source
             });
@@ -152,6 +162,7 @@ export function convertSchemaWithExampleToOptionalSchema(schema: SchemaWithExamp
                 description: schema.description,
                 availability: schema.availability,
                 value: convertSchemaWithExampleToSchema(schema),
+                namespace: schema.namespace,
                 groupName: schema.groupName,
                 inline: undefined
             });
@@ -163,6 +174,7 @@ export function convertSchemaWithExampleToOptionalSchema(schema: SchemaWithExamp
                 description: schema.description,
                 availability: schema.availability,
                 value: convertSchemaWithExampleToSchema(schema.value),
+                namespace: schema.namespace,
                 groupName: schema.groupName,
                 inline: schema.inline
             });
@@ -175,6 +187,7 @@ export function convertSchemaWithExampleToOptionalSchema(schema: SchemaWithExamp
                 description: oneOfSchema.description,
                 availability: oneOfSchema.availability,
                 value: Schema.oneOf(convertToOneOf(schema.value)),
+                namespace: oneOfSchema.namespace,
                 groupName: oneOfSchema.groupName,
                 inline: oneOfSchema.inline
             });
@@ -205,6 +218,7 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
                         return [discriminantValue, convertSchemaWithExampleToSchema(schemaWithExample)];
                     })
                 ),
+                namespace: oneOfSchema.namespace,
                 groupName: oneOfSchema.groupName,
                 encoding: oneOfSchema.encoding,
                 source: oneOfSchema.source,
@@ -218,6 +232,7 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
                 title: oneOfSchema.title,
                 nameOverride: oneOfSchema.nameOverride,
                 schemas: oneOfSchema.schemas.map((oneOfSchema) => convertSchemaWithExampleToSchema(oneOfSchema)),
+                namespace: oneOfSchema.namespace,
                 groupName: oneOfSchema.groupName,
                 encoding: oneOfSchema.encoding,
                 source: oneOfSchema.source,

@@ -5,9 +5,9 @@
 /**
  * @example
  *     {
- *         numEvents: 5
+ *         num_events: 5
  *     }
  */
 export interface Generateequest {
-    numEvents: number;
+    num_events: number;
 }

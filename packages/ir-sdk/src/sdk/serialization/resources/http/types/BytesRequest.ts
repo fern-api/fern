@@ -7,19 +7,19 @@ import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { WithDocs } from "../../commons/types/WithDocs";
 import { WithV2Examples } from "../../examples/types/WithV2Examples";
+import { WithContentType } from "../../commons/types/WithContentType";
 
 export const BytesRequest: core.serialization.ObjectSchema<serializers.BytesRequest.Raw, FernIr.BytesRequest> =
     core.serialization
         .objectWithoutOptionalProperties({
             isOptional: core.serialization.boolean(),
-            contentType: core.serialization.string().optional(),
         })
         .extend(WithDocs)
-        .extend(WithV2Examples);
+        .extend(WithV2Examples)
+        .extend(WithContentType);
 
 export declare namespace BytesRequest {
-    export interface Raw extends WithDocs.Raw, WithV2Examples.Raw {
+    export interface Raw extends WithDocs.Raw, WithV2Examples.Raw, WithContentType.Raw {
         isOptional: boolean;
-        contentType?: string | null;
     }
 }

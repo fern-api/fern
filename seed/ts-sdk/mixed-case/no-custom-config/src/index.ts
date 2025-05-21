@@ -1,4 +1,3 @@
-export * as SeedMixedCase from "./api";
-export { SeedMixedCaseClient } from "./Client";
-export { SeedMixedCaseError, SeedMixedCaseTimeoutError } from "./errors";
-export * as serialization from "./serialization";
+export * as SeedMixedCase from "./api/index.js";
+export { SeedMixedCaseClient } from "./Client.js";
+export { SeedMixedCaseError, SeedMixedCaseTimeoutError } from "./errors/index.js";

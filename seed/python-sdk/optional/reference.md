@@ -14,9 +14,13 @@
 
 ```python
 from seed import SeedObjectsWithImports
-client = SeedObjectsWithImports(base_url="https://yourhost.com/path/to/api", )
-client.optional.send_optional_body(request={'string': {'key': 'value'}
-}, )
+
+client = SeedObjectsWithImports(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.optional.send_optional_body(
+    request={"string": {"key": "value"}},
+)
 
 ```
 </dd>

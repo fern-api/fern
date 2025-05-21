@@ -25,8 +25,8 @@ public final class UnionWithLiteral {
         return value.visit(visitor);
     }
 
-    public static UnionWithLiteral fern(String value) {
-        return new UnionWithLiteral(new FernValue(value));
+    public static UnionWithLiteral fern() {
+        return new UnionWithLiteral(new FernValue("fern"));
     }
 
     public boolean isFern() {

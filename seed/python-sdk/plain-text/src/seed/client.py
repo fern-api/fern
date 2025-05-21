@@ -28,7 +28,10 @@ class SeedPlainText:
     Examples
     --------
     from seed import SeedPlainText
-    client = SeedPlainText(base_url="https://yourhost.com/path/to/api", )
+
+    client = SeedPlainText(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
@@ -75,7 +78,10 @@ class AsyncSeedPlainText:
     Examples
     --------
     from seed import AsyncSeedPlainText
-    client = AsyncSeedPlainText(base_url="https://yourhost.com/path/to/api", )
+
+    client = AsyncSeedPlainText(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(

@@ -42,8 +42,13 @@ class MetadataClient:
         Examples
         --------
         from seed import SeedMixedFileDirectory
-        client = SeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )
-        client.user.events.metadata.get_metadata(id='id', )
+
+        client = SeedMixedFileDirectory(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.user.events.metadata.get_metadata(
+            id="id",
+        )
         """
         _response = self._raw_client.get_metadata(id=id, request_options=request_options)
         return _response.data
@@ -81,11 +86,21 @@ class AsyncMetadataClient:
 
         Examples
         --------
-        from seed import AsyncSeedMixedFileDirectory
         import asyncio
-        client = AsyncSeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedMixedFileDirectory
+
+        client = AsyncSeedMixedFileDirectory(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.user.events.metadata.get_metadata(id='id', )
+            await client.user.events.metadata.get_metadata(
+                id="id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_metadata(id=id, request_options=request_options)

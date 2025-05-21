@@ -1522,6 +1522,16 @@
               "type": "null"
             }
           ]
+        },
+        "type-dates-as-strings": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -2408,6 +2418,22 @@
         }
       ]
     },
+    "group.GithubSelfhostedSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri",
+        "token"
+      ],
+      "additionalProperties": false
+    },
     "license.GithubLicenseType": {
       "type": "string",
       "enum": [
@@ -2604,6 +2630,9 @@
     },
     "group.GithubConfigurationSchema": {
       "anyOf": [
+        {
+          "$ref": "#/definitions/group.GithubSelfhostedSchema"
+        },
         {
           "$ref": "#/definitions/group.GithubCommitAndReleaseSchema"
         },

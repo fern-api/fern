@@ -132,7 +132,7 @@
         "auth": false,
         "method": "GET",
         "id": "listTrees",
-        "originalEndpointId": "listTrees",
+        "originalEndpointId": "endpoint_.listTrees",
         "name": "List all trees",
         "path": {
           "pathParameters": [],
@@ -166,29 +166,26 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "listTreesExample",
             "description": "",
             "path": "/trees",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": [
-                {
-                  "species": "Ferntacular",
-                  "height": 25.4,
-                  "age": 50,
-                  "location": {
-                    "latitude": 42,
-                    "longitude": 42
-                  },
-                  "id": "foo",
-                  "plantedDate": "foo"
-                }
-              ]
-            },
+            "responseBody": [
+              {
+                "species": "Ferntacular",
+                "height": 25.4,
+                "age": 50,
+                "location": {
+                  "latitude": 42,
+                  "longitude": 42
+                },
+                "id": "foo",
+                "plantedDate": "foo"
+              }
+            ],
             "responseBodyV3": {
               "type": "json",
               "value": [
@@ -215,7 +212,7 @@
         "auth": false,
         "method": "POST",
         "id": "createTree",
-        "originalEndpointId": "createTree",
+        "originalEndpointId": "endpoint_.createTree",
         "name": "Create a new tree",
         "path": {
           "pathParameters": [],
@@ -259,7 +256,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "createTreeExample",
             "description": "",
             "path": "/trees",
             "pathParameters": {},
@@ -288,12 +285,9 @@
             },
             "responseStatusCode": 201,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "species": "Ferntacular",
-                "height": 25.4,
-                "id": "foo"
-              }
+              "species": "Ferntacular",
+              "height": 25.4,
+              "id": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -313,7 +307,7 @@
         "auth": false,
         "method": "GET",
         "id": "getTree",
-        "originalEndpointId": "getTree",
+        "originalEndpointId": "endpoint_.getTree",
         "name": "Get a tree by ID",
         "path": {
           "pathParameters": [
@@ -363,22 +357,19 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getTreeExample",
             "description": "",
-            "path": "/trees/",
+            "path": "/trees/treeId",
             "pathParameters": {
-              "treeId": "foo"
+              "treeId": "treeId"
             },
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "species": "Ferntacular",
-                "height": 25.4,
-                "id": "foo"
-              }
+              "species": "Ferntacular",
+              "height": 25.4,
+              "id": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -398,7 +389,7 @@
         "auth": false,
         "method": "POST",
         "id": "createFern",
-        "originalEndpointId": "createFern",
+        "originalEndpointId": "endpoint_.createFern",
         "name": "Create a new fern",
         "path": {
           "pathParameters": [],
@@ -467,7 +458,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "createFernExample",
             "description": "",
             "path": "/ferns",
             "pathParameters": {},
@@ -485,10 +476,7 @@
               }
             },
             "responseStatusCode": 201,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"
@@ -503,7 +491,7 @@
         "auth": false,
         "method": "GET",
         "id": "getFern",
-        "originalEndpointId": "getFern",
+        "originalEndpointId": "endpoint_.getFern",
         "name": "Get a fern by ID",
         "path": {
           "pathParameters": [
@@ -553,21 +541,18 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getFern_example",
             "description": "",
-            "path": "/ferns/",
+            "path": "/ferns/fernId",
             "pathParameters": {
-              "fernId": "foo"
+              "fernId": "fernId"
             },
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "color": "blue",
-                "name": "BlueFern"
-              }
+              "color": "blue",
+              "name": "BlueFern"
             },
             "responseBodyV3": {
               "type": "json",
@@ -586,7 +571,7 @@
         "auth": false,
         "method": "POST",
         "id": "createGrass",
-        "originalEndpointId": "createGrass",
+        "originalEndpointId": "endpoint_.createGrass",
         "name": "Create a new grass",
         "path": {
           "pathParameters": [],
@@ -654,7 +639,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "createGrassExample",
             "description": "",
             "path": "/grasses",
             "pathParameters": {},

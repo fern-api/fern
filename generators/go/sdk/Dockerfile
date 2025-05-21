@@ -7,7 +7,7 @@ RUN git config --global user.name "fern" && git config --global user.email "hey@
 COPY generators/go-v2/sdk/dist/cli.cjs /dist/cli.cjs
 
 # Stage 2: Final Go image
-FROM golang:1.22.7-alpine3.19
+FROM golang:1.23.8-alpine3.20
 
 WORKDIR /workspace
 
@@ -36,5 +36,7 @@ RUN chmod +x /bin/go-v2
 RUN CGO_ENABLED=0 go build -ldflags "-s -w" -trimpath -buildvcs=false -o /fern-go-sdk ./cmd/fern-go-sdk
 
 RUN test -f /bin/go-v2 || echo "go-v2 CLI not found or not executable"
+
+RUN npm install -f -g @fern-api/generator-cli
 
 ENTRYPOINT ["/fern-go-sdk"]

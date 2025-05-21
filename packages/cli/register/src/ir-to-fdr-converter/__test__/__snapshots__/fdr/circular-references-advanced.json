@@ -47,109 +47,190 @@
         "properties": []
       }
     },
-    "type_ast:FirstUnion": {
-      "name": "FirstUnion",
+    "type_ast:Animal": {
+      "name": "Animal",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "FirstUnionFirstElement",
+            "typeName": "Cat",
             "type": {
               "type": "id",
-              "value": "type_ast:FirstUnionFirstElement"
+              "value": "type_ast:Cat"
             }
           },
           {
-            "typeName": "FirstUnionSecondElement",
+            "typeName": "Dog",
             "type": {
               "type": "id",
-              "value": "type_ast:FirstUnionSecondElement"
+              "value": "type_ast:Dog"
             }
           }
         ]
       }
     },
-    "type_ast:SecondUnion": {
-      "name": "SecondUnion",
+    "type_ast:Fruit": {
+      "name": "Fruit",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SecondUnionFirstElement",
+            "typeName": "Acai",
             "type": {
               "type": "id",
-              "value": "type_ast:SecondUnionFirstElement"
+              "value": "type_ast:Acai"
             }
           },
           {
-            "typeName": "SecondUnionSecondElement",
+            "typeName": "Fig",
             "type": {
               "type": "id",
-              "value": "type_ast:SecondUnionSecondElement"
+              "value": "type_ast:Fig"
             }
           }
         ]
       }
     },
-    "type_ast:FirstUnionFirstElement": {
-      "name": "FirstUnionFirstElement",
+    "type_ast:Node": {
+      "name": "Node",
       "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
+        "type": "undiscriminatedUnion",
+        "variants": [
           {
-            "key": "child",
-            "valueType": {
+            "typeName": "BranchNode",
+            "type": {
               "type": "id",
-              "value": "type_ast:SecondUnion"
+              "value": "type_ast:BranchNode"
+            }
+          },
+          {
+            "typeName": "LeafNode",
+            "type": {
+              "type": "id",
+              "value": "type_ast:LeafNode"
             }
           }
         ]
       }
     },
-    "type_ast:FirstUnionSecondElement": {
-      "name": "FirstUnionSecondElement",
+    "type_ast:Cat": {
+      "name": "Cat",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
           {
-            "key": "child",
+            "key": "fruit",
             "valueType": {
               "type": "id",
-              "value": "type_ast:SecondUnion"
+              "value": "type_ast:Fruit"
             }
           }
         ]
       }
     },
-    "type_ast:SecondUnionFirstElement": {
-      "name": "SecondUnionFirstElement",
+    "type_ast:Dog": {
+      "name": "Dog",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
           {
-            "key": "child",
+            "key": "fruit",
             "valueType": {
               "type": "id",
-              "value": "type_ast:FirstUnion"
+              "value": "type_ast:Fruit"
             }
           }
         ]
       }
     },
-    "type_ast:SecondUnionSecondElement": {
-      "name": "SecondUnionSecondElement",
+    "type_ast:Acai": {
+      "name": "Acai",
+      "shape": {
+        "type": "object",
+        "extends": [
+          "type_ast:Berry"
+        ],
+        "properties": []
+      }
+    },
+    "type_ast:Fig": {
+      "name": "Fig",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
           {
-            "key": "child",
+            "key": "animal",
             "valueType": {
               "type": "id",
-              "value": "type_ast:FirstUnion"
+              "value": "type_ast:Animal"
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:Berry": {
+      "name": "Berry",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "animal",
+            "valueType": {
+              "type": "id",
+              "value": "type_ast:Animal"
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:BranchNode": {
+      "name": "BranchNode",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "children",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "type_ast:Node"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:LeafNode": {
+      "name": "LeafNode",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "type_ast:NodesWrapper": {
+      "name": "NodesWrapper",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "nodes",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_ast:Node"
+                }
+              }
             }
           }
         ]
@@ -326,12 +407,17 @@
       "webhooks": [],
       "websockets": [],
       "types": [
-        "type_ast:FirstUnion",
-        "type_ast:SecondUnion",
-        "type_ast:FirstUnionFirstElement",
-        "type_ast:FirstUnionSecondElement",
-        "type_ast:SecondUnionFirstElement",
-        "type_ast:SecondUnionSecondElement",
+        "type_ast:Animal",
+        "type_ast:Fruit",
+        "type_ast:Node",
+        "type_ast:Cat",
+        "type_ast:Dog",
+        "type_ast:Acai",
+        "type_ast:Fig",
+        "type_ast:Berry",
+        "type_ast:BranchNode",
+        "type_ast:LeafNode",
+        "type_ast:NodesWrapper",
         "type_ast:ContainerValue",
         "type_ast:PrimitiveValue",
         "type_ast:ObjectValue",

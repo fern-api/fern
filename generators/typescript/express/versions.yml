@@ -1,4 +1,11 @@
 - changelogEntry:
+  - summary: | 
+      Remove extraneous `next` in the generated service.
+    type: fix
+  irVersion: 55
+  version: 0.18.0-rc0
+
+- changelogEntry:
   - summary: Upgrade to IRv55.
     type: internal
   irVersion: 55

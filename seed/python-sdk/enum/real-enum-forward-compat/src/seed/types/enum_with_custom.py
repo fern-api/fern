@@ -11,6 +11,7 @@ class EnumWithCustom(str, enum.Enum):
     Examples
     --------
     from seed import EnumWithCustom
+
     EnumWithCustom.SAFE
     """
 

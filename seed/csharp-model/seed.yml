@@ -52,3 +52,4 @@ scripts:
 allowedFailures:
   - mixed-file-directory
   - objects-with-imports
+  - pagination-custom

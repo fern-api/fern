@@ -15,11 +15,10 @@ import {
     Transport,
     TypeReference
 } from "@fern-api/ir-sdk";
-import { constructHttpPath } from "@fern-api/ir-utils";
+import { IdGenerator, constructHttpPath } from "@fern-api/ir-utils";
 import { SourceResolver } from "@fern-api/source-resolver";
 
 import { FernFileContext } from "../../FernFileContext";
-import { IdGenerator } from "../../IdGenerator";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { PropertyResolver } from "../../resolvers/PropertyResolver";

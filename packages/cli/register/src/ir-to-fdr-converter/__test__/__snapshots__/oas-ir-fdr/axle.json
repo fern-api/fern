@@ -933,17 +933,17 @@
         ]
       }
     },
-    "IgnitionPostRequestBodySchemaMetadata": {
+    "IgnitionPostRequestBodyContentApplicationJsonSchemaMetadata": {
       "description": "Optional object to store ephermeral information about the session, such as `reservationTime`. Will be returned in webhook events.",
-      "name": "IgnitionPostRequestBodySchemaMetadata",
+      "name": "IgnitionPostRequestBodyContentApplicationJsonSchemaMetadata",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "IgnitionPostResponsesSchemaData": {
-      "name": "IgnitionPostResponsesSchemaData",
+    "IgnitionPostResponsesContentApplicationJsonSchemaData": {
+      "name": "IgnitionPostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -989,14 +989,14 @@
             "key": "data",
             "valueType": {
               "type": "id",
-              "value": "IgnitionPostResponsesSchemaData"
+              "value": "IgnitionPostResponsesContentApplicationJsonSchemaData"
             }
           }
         ]
       }
     },
-    "TokenExchangePostResponsesSchemaData": {
-      "name": "TokenExchangePostResponsesSchemaData",
+    "TokenExchangePostResponsesContentApplicationJsonSchemaData": {
+      "name": "TokenExchangePostResponsesContentApplicationJsonSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1052,7 +1052,7 @@
             "key": "data",
             "valueType": {
               "type": "id",
-              "value": "TokenExchangePostResponsesSchemaData"
+              "value": "TokenExchangePostResponsesContentApplicationJsonSchemaData"
             }
           }
         ]
@@ -1179,9 +1179,9 @@
     }
   },
   "subpackages": {
-    "Ignition": {
-      "subpackageId": "Ignition",
-      "name": "Ignition",
+    "subpackage_ignition": {
+      "subpackageId": "subpackage_ignition",
+      "name": "ignition",
       "endpoints": [
         {
           "auth": false,
@@ -1199,7 +1199,7 @@
             }
           ],
           "id": "StartIgnition",
-          "originalEndpointId": "Ignition.StartIgnition",
+          "originalEndpointId": "endpoint_ignition.StartIgnition",
           "name": "Start Ignition",
           "path": {
             "pathParameters": [],
@@ -1288,7 +1288,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "IgnitionPostRequestBodySchemaMetadata"
+                        "value": "IgnitionPostRequestBodyContentApplicationJsonSchemaMetadata"
                       }
                     }
                   }
@@ -1311,14 +1311,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "Ignition_StartIgnition_example",
               "description": "",
               "path": "/ignition",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "x-client-id": "foo",
-                "x-client-secret": "foo"
+                "x-client-id": "x-client-id",
+                "x-client-secret": "x-client-secret"
               },
               "requestBody": {
                 "redirectUri": "https://example.com/redirect",
@@ -1333,13 +1333,10 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "success": true,
-                  "data": {
-                    "ignitionUri": "https://ignition.dev.axle.insure/?token=ur7EPeAa0km4wRlDrPJ4Z",
-                    "ignitionToken": "ur7EPeAa0km4wRlDrPJ4Z"
-                  }
+                "success": true,
+                "data": {
+                  "ignitionUri": "https://ignition.dev.axle.insure/?token=ur7EPeAa0km4wRlDrPJ4Z",
+                  "ignitionToken": "ur7EPeAa0km4wRlDrPJ4Z"
                 }
               },
               "responseBodyV3": {
@@ -1364,9 +1361,9 @@
       "types": [],
       "subpackages": []
     },
-    "Tokens": {
-      "subpackageId": "Tokens",
-      "name": "Tokens",
+    "subpackage_tokens": {
+      "subpackageId": "subpackage_tokens",
+      "name": "tokens",
       "endpoints": [
         {
           "auth": false,
@@ -1384,7 +1381,7 @@
             }
           ],
           "id": "ExchangeToken",
-          "originalEndpointId": "Tokens.ExchangeToken",
+          "originalEndpointId": "endpoint_tokens.ExchangeToken",
           "name": "Exchange Token",
           "path": {
             "pathParameters": [],
@@ -1459,14 +1456,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "tokensExchangeTokenExample",
               "description": "",
               "path": "/token/exchange",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "x-client-id": "foo",
-                "x-client-secret": "foo"
+                "x-client-id": "x-client-id",
+                "x-client-secret": "x-client-secret"
               },
               "requestBody": {
                 "authCode": "foo"
@@ -1479,16 +1476,13 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "success": true,
-                  "data": {
-                    "accessToken": "foo",
-                    "account": "foo",
-                    "policies": [
-                      "foo"
-                    ]
-                  }
+                "success": true,
+                "data": {
+                  "accessToken": "foo",
+                  "account": "foo",
+                  "policies": [
+                    "foo"
+                  ]
                 }
               },
               "responseBodyV3": {
@@ -1516,9 +1510,9 @@
       "types": [],
       "subpackages": []
     },
-    "Accounts": {
-      "subpackageId": "Accounts",
-      "name": "Accounts",
+    "subpackage_accounts": {
+      "subpackageId": "subpackage_accounts",
+      "name": "accounts",
       "endpoints": [
         {
           "auth": false,
@@ -1536,7 +1530,7 @@
             }
           ],
           "id": "GetAccount",
-          "originalEndpointId": "Accounts.GetAccount",
+          "originalEndpointId": "endpoint_accounts.GetAccount",
           "name": "Get Account",
           "path": {
             "pathParameters": [
@@ -1620,38 +1614,33 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getAccountExample",
               "description": "",
-              "path": "/accounts/",
+              "path": "/accounts/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
-              "queryParameters": {
-                "expand": true
-              },
+              "queryParameters": {},
               "headers": {
-                "x-client-id": "foo",
-                "x-client-secret": "foo"
+                "x-client-id": "x-client-id",
+                "x-client-secret": "x-client-secret"
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "success": true,
-                  "data": {
-                    "id": "foo",
-                    "carrier": "foo",
-                    "firstName": "foo",
-                    "lastName": "foo",
-                    "phone": "foo",
-                    "email": "foo",
-                    "policies": [
-                      "foo"
-                    ],
-                    "createdAt": "foo",
-                    "modifiedAt": "foo",
-                    "refreshedAt": "foo"
-                  }
+                "success": true,
+                "data": {
+                  "id": "foo",
+                  "carrier": "foo",
+                  "firstName": "foo",
+                  "lastName": "foo",
+                  "phone": "foo",
+                  "email": "foo",
+                  "policies": [
+                    "foo"
+                  ],
+                  "createdAt": "foo",
+                  "modifiedAt": "foo",
+                  "refreshedAt": "foo"
                 }
               },
               "responseBodyV3": {
@@ -1686,9 +1675,9 @@
       "types": [],
       "subpackages": []
     },
-    "Policies": {
-      "subpackageId": "Policies",
-      "name": "Policies",
+    "subpackage_policies": {
+      "subpackageId": "subpackage_policies",
+      "name": "policies",
       "endpoints": [
         {
           "auth": false,
@@ -1706,7 +1695,7 @@
             }
           ],
           "id": "GetPolicy",
-          "originalEndpointId": "Policies.GetPolicy",
+          "originalEndpointId": "endpoint_policies.GetPolicy",
           "name": "Get Policy",
           "path": {
             "pathParameters": [
@@ -1790,96 +1779,91 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getPolicyExample",
               "description": "",
-              "path": "/policies/",
+              "path": "/policies/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
-              "queryParameters": {
-                "expand": true
-              },
+              "queryParameters": {},
               "headers": {
-                "x-client-id": "foo",
-                "x-client-secret": "foo"
+                "x-client-id": "x-client-id",
+                "x-client-secret": "x-client-secret"
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "success": true,
-                  "data": {
-                    "id": "foo",
-                    "account": "foo",
-                    "type": "auto",
-                    "carrier": "foo",
-                    "policyNumber": "foo",
-                    "isActive": true,
-                    "effectiveDate": "foo",
-                    "expirationDate": "foo",
-                    "address": {
-                      "addressLine1": "foo",
-                      "country": "foo",
-                      "addressLine2": "foo",
-                      "state": "foo",
-                      "city": "foo",
-                      "postalCode": "foo"
-                    },
-                    "coverages": [
-                      {
-                        "property": "foo",
-                        "code": "BI",
-                        "label": "foo",
-                        "limitPerPerson": 42,
-                        "limitPerAccident": 42,
-                        "deductible": 42
+                "success": true,
+                "data": {
+                  "id": "foo",
+                  "account": "foo",
+                  "type": "auto",
+                  "carrier": "foo",
+                  "policyNumber": "foo",
+                  "isActive": true,
+                  "effectiveDate": "foo",
+                  "expirationDate": "foo",
+                  "address": {
+                    "addressLine1": "foo",
+                    "country": "foo",
+                    "addressLine2": "foo",
+                    "state": "foo",
+                    "city": "foo",
+                    "postalCode": "foo"
+                  },
+                  "coverages": [
+                    {
+                      "property": "foo",
+                      "code": "BI",
+                      "label": "foo",
+                      "limitPerPerson": 42,
+                      "limitPerAccident": 42,
+                      "deductible": 42
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "id": "foo",
+                      "type": "vehicle",
+                      "data": {
+                        "bodyStyle": "foo",
+                        "vin": "foo",
+                        "model": "foo",
+                        "year": "foo",
+                        "make": "foo"
                       }
-                    ],
-                    "properties": [
-                      {
-                        "id": "foo",
-                        "type": "vehicle",
-                        "data": {
-                          "bodyStyle": "foo",
-                          "vin": "foo",
-                          "model": "foo",
-                          "year": "foo",
-                          "make": "foo"
-                        }
+                    }
+                  ],
+                  "insureds": [
+                    {
+                      "property": "foo",
+                      "firstName": "foo",
+                      "lastName": "foo",
+                      "dateOfBirthYear": "foo",
+                      "licenseNo": "foo",
+                      "licenseState": "foo",
+                      "licenseStatus": "foo",
+                      "dateOfBirth": "foo",
+                      "type": "foo"
+                    }
+                  ],
+                  "thirdParties": [
+                    {
+                      "property": "foo",
+                      "type": "interest",
+                      "name": "foo",
+                      "address": {
+                        "addressLine1": "foo",
+                        "country": "foo",
+                        "addressLine2": "foo",
+                        "state": "foo",
+                        "city": "foo",
+                        "postalCode": "foo"
                       }
-                    ],
-                    "insureds": [
-                      {
-                        "property": "foo",
-                        "firstName": "foo",
-                        "lastName": "foo",
-                        "dateOfBirthYear": "foo",
-                        "licenseNo": "foo",
-                        "licenseState": "foo",
-                        "licenseStatus": "foo",
-                        "dateOfBirth": "foo",
-                        "type": "foo"
-                      }
-                    ],
-                    "thirdParties": [
-                      {
-                        "property": "foo",
-                        "type": "lienholder",
-                        "name": "foo",
-                        "address": {
-                          "addressLine1": "foo",
-                          "country": "foo",
-                          "addressLine2": "foo",
-                          "state": "foo",
-                          "city": "foo",
-                          "postalCode": "foo"
-                        }
-                      }
-                    ],
-                    "createdAt": "foo",
-                    "modifiedAt": "foo",
-                    "refreshedAt": "foo"
-                  }
+                    }
+                  ],
+                  "createdAt": "foo",
+                  "modifiedAt": "foo",
+                  "refreshedAt": "foo"
                 }
               },
               "responseBodyV3": {
@@ -1942,7 +1926,7 @@
                     "thirdParties": [
                       {
                         "property": "foo",
-                        "type": "lienholder",
+                        "type": "interest",
                         "name": "foo",
                         "address": {
                           "addressLine1": "foo",
@@ -1972,9 +1956,9 @@
       "types": [],
       "subpackages": []
     },
-    "Carriers": {
-      "subpackageId": "Carriers",
-      "name": "Carriers",
+    "subpackage_carriers": {
+      "subpackageId": "subpackage_carriers",
+      "name": "carriers",
       "endpoints": [
         {
           "auth": false,
@@ -1992,7 +1976,7 @@
             }
           ],
           "id": "GetCarrier",
-          "originalEndpointId": "Carriers.GetCarrier",
+          "originalEndpointId": "endpoint_carriers.GetCarrier",
           "name": "Get Carrier",
           "path": {
             "pathParameters": [
@@ -2062,38 +2046,35 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getCarrierExample",
               "description": "",
-              "path": "/carriers/",
+              "path": "/carriers/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {
-                "x-client-id": "foo",
-                "x-client-secret": "foo"
+                "x-client-id": "x-client-id",
+                "x-client-secret": "x-client-secret"
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "success": true,
-                  "data": {
-                    "id": "foo",
-                    "name": "foo",
-                    "domain": "foo",
-                    "address": {
-                      "addressLine1": "foo",
-                      "country": "foo",
-                      "addressLine2": "foo",
-                      "state": "foo",
-                      "city": "foo",
-                      "postalCode": "foo"
-                    },
-                    "phone": "foo",
-                    "logoUrl": "foo",
-                    "modifiedAt": "foo"
-                  }
+                "success": true,
+                "data": {
+                  "id": "foo",
+                  "name": "foo",
+                  "domain": "foo",
+                  "address": {
+                    "addressLine1": "foo",
+                    "country": "foo",
+                    "addressLine2": "foo",
+                    "state": "foo",
+                    "city": "foo",
+                    "postalCode": "foo"
+                  },
+                  "phone": "foo",
+                  "logoUrl": "foo",
+                  "modifiedAt": "foo"
                 }
               },
               "responseBodyV3": {
@@ -2140,7 +2121,7 @@
             }
           ],
           "id": "GetCarriers",
-          "originalEndpointId": "Carriers.GetCarriers",
+          "originalEndpointId": "endpoint_carriers.GetCarriers",
           "name": "Get Carriers",
           "path": {
             "pathParameters": [],
@@ -2192,39 +2173,36 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getCarriersExample",
               "description": "",
               "path": "/carriers",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "x-client-id": "foo",
-                "x-client-secret": "foo"
+                "x-client-id": "x-client-id",
+                "x-client-secret": "x-client-secret"
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "success": true,
-                  "data": [
-                    {
-                      "id": "foo",
-                      "name": "foo",
-                      "domain": "foo",
-                      "address": {
-                        "addressLine1": "foo",
-                        "country": "foo",
-                        "addressLine2": "foo",
-                        "state": "foo",
-                        "city": "foo",
-                        "postalCode": "foo"
-                      },
-                      "phone": "foo",
-                      "logoUrl": "foo",
-                      "modifiedAt": "foo"
-                    }
-                  ]
-                }
+                "success": true,
+                "data": [
+                  {
+                    "id": "foo",
+                    "name": "foo",
+                    "domain": "foo",
+                    "address": {
+                      "addressLine1": "foo",
+                      "country": "foo",
+                      "addressLine2": "foo",
+                      "state": "foo",
+                      "city": "foo",
+                      "postalCode": "foo"
+                    },
+                    "phone": "foo",
+                    "logoUrl": "foo",
+                    "modifiedAt": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2282,11 +2260,11 @@
       "Error"
     ],
     "subpackages": [
-      "Ignition",
-      "Tokens",
-      "Accounts",
-      "Policies",
-      "Carriers"
+      "subpackage_ignition",
+      "subpackage_tokens",
+      "subpackage_accounts",
+      "subpackage_policies",
+      "subpackage_carriers"
     ]
   },
   "auth": {

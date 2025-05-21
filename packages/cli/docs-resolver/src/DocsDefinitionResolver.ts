@@ -180,17 +180,24 @@ export class DocsDefinitionResolver {
 
         // preprocess markdown files to extract image paths
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
-            const { filepaths, markdown: newMarkdown } = parseImagePaths(markdown, {
-                absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
-                absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
-            });
+            try {
+                const { filepaths, markdown: newMarkdown } = parseImagePaths(markdown, {
+                    absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
+                    absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
+                });
 
-            // store the updated markdown in pages
-            this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = newMarkdown;
+                // store the updated markdown in pages
+                this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = newMarkdown;
 
-            // store the image filepaths to upload
-            for (const filepath of filepaths) {
-                filesToUploadSet.add(filepath);
+                // store the image filepaths to upload
+                for (const filepath of filepaths) {
+                    filesToUploadSet.add(filepath);
+                }
+            } catch (error) {
+                this.taskContext.logger.error(
+                    `Failed to parse ${relativePath}: ${error instanceof Error ? error.message : String(error)}`
+                );
+                throw error;
             }
         }
 
@@ -526,7 +533,13 @@ export class DocsDefinitionResolver {
                     navigationConfig: tabbed,
                     parentSlug: slug
                 }),
-            versioned: (versioned) => this.toVersionedNode(versioned, slug)
+            versioned: (versioned) => this.toVersionedNode(versioned, slug),
+            productgroup: (productGroup) =>
+                this.toProductGroupNode({
+                    landingPageConfig: this.parsedDocsConfig.landingPage,
+                    productGroup,
+                    parentSlug: slug
+                })
         });
     }
 
@@ -589,6 +602,83 @@ export class DocsDefinitionResolver {
             children: await Promise.all(
                 versioned.versions.map((item, idx) => this.toVersionNode(item, parentSlug, idx === 0))
             )
+        };
+    }
+
+    private async toProductGroupNode({
+        productGroup,
+        landingPageConfig,
+        parentSlug
+    }: {
+        productGroup: docsYml.ProductGroupDocsNavigation;
+        landingPageConfig: docsYml.DocsNavigationItem.Page | undefined;
+        parentSlug: FernNavigation.V1.SlugGenerator;
+    }): Promise<FernNavigation.V1.ProductGroupNode> {
+        const id = this.#idgen.get("productgroup");
+        const landingPage: FernNavigation.V1.LandingPageNode | undefined =
+            landingPageConfig != null ? this.toLandingPageNode(landingPageConfig, parentSlug) : undefined;
+        return {
+            id,
+            type: "productgroup",
+            landingPage,
+            children: await Promise.all(productGroup.products.map((product) => this.toProductNode(product, parentSlug)))
+        };
+    }
+
+    private async toProductNode(
+        product: docsYml.ProductInfo,
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): Promise<FernNavigation.V1.ProductNode> {
+        const slug = parentSlug.setProductSlug(product.slug ?? kebabCase(product.product));
+        let child: FernNavigation.V1.ProductChild;
+        switch (product.navigation.type) {
+            case "tabbed":
+                child = {
+                    type: "unversioned",
+                    id: this.#idgen.get(product.product),
+                    landingPage: undefined,
+                    child: await this.convertTabbedNavigation(
+                        this.#idgen.get(product.product),
+                        product.navigation.items,
+                        slug
+                    )
+                };
+                break;
+            case "untabbed":
+                child = {
+                    type: "unversioned",
+                    id: this.#idgen.get(product.product),
+                    landingPage: undefined,
+                    child: await this.toSidebarRootNode(
+                        this.#idgen.get(product.product),
+                        product.navigation.items,
+                        slug
+                    )
+                };
+                break;
+            case "versioned":
+                child = await this.toVersionedNode(product.navigation, slug);
+                break;
+            default:
+                assertNever(product.navigation);
+        }
+        return {
+            type: "product",
+            id: this.#idgen.get(product.product),
+            productId: FernNavigation.V1.ProductId(product.product),
+            title: product.product,
+            subtitle: product.subtitle ?? "",
+            slug: slug.get(),
+            child,
+            default: false,
+            hidden: undefined,
+            authed: undefined,
+            icon: product.icon,
+            image: product.image != null ? this.getFileId(product.image) : undefined,
+            pointsTo: undefined,
+            viewers: undefined,
+            orphaned: undefined,
+            featureFlags: undefined
         };
     }
 
@@ -757,7 +847,11 @@ export class DocsDefinitionResolver {
         let workspace: FernWorkspace | undefined = undefined;
         if (this.parsedDocsConfig.experimental?.openapiParserV3) {
             const workspace = this.getOpenApiWorkspaceForApiSection(item);
-            ir = await workspace.getIntermediateRepresentation({ context: this.taskContext });
+            ir = await workspace.getIntermediateRepresentation({
+                context: this.taskContext,
+                audiences: item.audiences,
+                enableUniqueErrorsPerEndpoint: true
+            });
         } else {
             workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
                 { context: this.taskContext },

@@ -7,7 +7,7 @@
         "auth": false,
         "method": "POST",
         "id": "send",
-        "originalEndpointId": "send",
+        "originalEndpointId": "endpoint_.send",
         "name": "Send",
         "path": {
           "pathParameters": [],
@@ -64,7 +64,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "sendExample",
             "description": "",
             "path": "/send",
             "pathParameters": {},
@@ -76,10 +76,7 @@
               "value": {}
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"

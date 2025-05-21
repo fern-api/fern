@@ -15,10 +15,10 @@ export function convertArray({
     availability,
     wrapAsNullable,
     context,
+    namespace,
     groupName,
     example,
-    source,
-    namespace
+    source
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -29,10 +29,10 @@ export function convertArray({
     availability: Availability | undefined;
     wrapAsNullable: boolean;
     context: SchemaParserContext;
+    namespace: string | undefined;
     groupName: SdkGroupName | undefined;
     example: unknown[] | undefined;
     source: Source;
-    namespace: string | undefined;
 }): SchemaWithExample {
     const itemSchema =
         item == null
@@ -43,6 +43,7 @@ export function convertArray({
                   description: undefined,
                   availability: undefined,
                   example: undefined,
+                  namespace,
                   groupName
               })
             : convertSchema(item, false, context, [...breadcrumbs, "Item"], source, namespace);
@@ -50,6 +51,7 @@ export function convertArray({
         nameOverride,
         generatedName,
         title,
+        namespace,
         groupName,
         itemSchema,
         wrapAsNullable,
@@ -67,6 +69,7 @@ export function wrapArray({
     wrapAsNullable,
     description,
     availability,
+    namespace,
     groupName,
     example
 }: {
@@ -77,6 +80,7 @@ export function wrapArray({
     wrapAsNullable: boolean;
     description: string | undefined;
     availability: Availability | undefined;
+    namespace: string | undefined;
     groupName: SdkGroupName | undefined;
     example: unknown[] | undefined;
 }): SchemaWithExample {
@@ -92,12 +96,14 @@ export function wrapArray({
                 value: itemSchema,
                 description,
                 availability,
+                namespace,
                 groupName,
                 example,
                 inline: undefined
             }),
             description,
             availability,
+            namespace,
             groupName,
             inline: undefined
         });
@@ -109,6 +115,7 @@ export function wrapArray({
         value: itemSchema,
         description,
         availability,
+        namespace,
         groupName,
         example,
         inline: undefined

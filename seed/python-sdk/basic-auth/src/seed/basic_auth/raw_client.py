@@ -50,18 +50,19 @@ class RawBasicAuthClient:
                 return HttpResponse(response=_response, data=_data)
             if _response.status_code == 401:
                 raise UnauthorizedRequest(
-                    typing.cast(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
                         UnauthorizedRequestErrorBody,
                         parse_obj_as(
                             type_=UnauthorizedRequestErrorBody,  # type: ignore
                             object_=_response.json(),
                         ),
-                    )
+                    ),
                 )
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def post_with_basic_auth(
         self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
@@ -99,20 +100,21 @@ class RawBasicAuthClient:
                 return HttpResponse(response=_response, data=_data)
             if _response.status_code == 401:
                 raise UnauthorizedRequest(
-                    typing.cast(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
                         UnauthorizedRequestErrorBody,
                         parse_obj_as(
                             type_=UnauthorizedRequestErrorBody,  # type: ignore
                             object_=_response.json(),
                         ),
-                    )
+                    ),
                 )
             if _response.status_code == 400:
-                raise BadRequest()
+                raise BadRequest(headers=dict(_response.headers))
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
 class AsyncRawBasicAuthClient:
@@ -151,18 +153,19 @@ class AsyncRawBasicAuthClient:
                 return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 401:
                 raise UnauthorizedRequest(
-                    typing.cast(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
                         UnauthorizedRequestErrorBody,
                         parse_obj_as(
                             type_=UnauthorizedRequestErrorBody,  # type: ignore
                             object_=_response.json(),
                         ),
-                    )
+                    ),
                 )
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def post_with_basic_auth(
         self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
@@ -200,17 +203,18 @@ class AsyncRawBasicAuthClient:
                 return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 401:
                 raise UnauthorizedRequest(
-                    typing.cast(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
                         UnauthorizedRequestErrorBody,
                         parse_obj_as(
                             type_=UnauthorizedRequestErrorBody,  # type: ignore
                             object_=_response.json(),
                         ),
-                    )
+                    ),
                 )
             if _response.status_code == 400:
-                raise BadRequest()
+                raise BadRequest(headers=dict(_response.headers))
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

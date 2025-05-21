@@ -133,6 +133,7 @@ types:
     extends: 
       - commons.WithDocs
       - examples.WithV2Examples
+      - commons.WithContentType
     properties:
       name: commons.Name
       extends: list<types.DeclaredTypeName>
@@ -140,7 +141,6 @@ types:
       extendedProperties:
         type: optional<list<types.ObjectProperty>>
         docs: A list of properties that all the parents of this request have.
-      contentType: optional<string>
       extra-properties:
         docs: Whether to allow extra properties on the request.
         type: boolean
@@ -156,6 +156,7 @@ types:
     extends: 
       - commons.WithDocs
       - examples.WithV2Examples
+      - commons.WithContentType
     properties:
       name: commons.Name
       properties: list<FileUploadRequestProperty>
@@ -164,9 +165,9 @@ types:
     extends: 
       - commons.WithDocs
       - examples.WithV2Examples
+      - commons.WithContentType
     properties:
       isOptional: boolean
-      contentType: optional<string>
 
   FileUploadRequestProperty:
     union:
@@ -174,9 +175,10 @@ types:
       bodyProperty: FileUploadBodyProperty
 
   FileUploadBodyProperty:
-    extends: InlinedRequestBodyProperty
+    extends: 
+      - InlinedRequestBodyProperty
+      - commons.WithContentType
     properties:
-      contentType: optional<string>
       style: optional<FileUploadBodyPropertyEncoding>
 
   FileUploadBodyPropertyEncoding:
@@ -205,10 +207,12 @@ types:
       contentType: optional<string>
 
   HttpRequestBodyReference:
-    extends: commons.WithDocs
+    extends: 
+      - commons.WithDocs
+      - commons.WithContentType
+      - examples.WithV2Examples
     properties:
       requestBodyType: types.TypeReference
-      contentType: optional<string>
 
   SdkRequestBodyType:
     union:

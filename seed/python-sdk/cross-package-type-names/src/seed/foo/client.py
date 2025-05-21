@@ -54,8 +54,15 @@ class FooClient:
         Examples
         --------
         from seed import SeedCrossPackageTypeNames
-        client = SeedCrossPackageTypeNames(base_url="https://yourhost.com/path/to/api", )
-        client.foo.find(optional_string='optionalString', public_property='publicProperty', private_property=1, )
+
+        client = SeedCrossPackageTypeNames(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.foo.find(
+            optional_string="optionalString",
+            public_property="publicProperty",
+            private_property=1,
+        )
         """
         _response = self._raw_client.find(
             optional_string=optional_string,
@@ -107,11 +114,23 @@ class AsyncFooClient:
 
         Examples
         --------
-        from seed import AsyncSeedCrossPackageTypeNames
         import asyncio
-        client = AsyncSeedCrossPackageTypeNames(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedCrossPackageTypeNames
+
+        client = AsyncSeedCrossPackageTypeNames(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.foo.find(optional_string='optionalString', public_property='publicProperty', private_property=1, )
+            await client.foo.find(
+                optional_string="optionalString",
+                public_property="publicProperty",
+                private_property=1,
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.find(

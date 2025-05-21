@@ -13,7 +13,7 @@ export function convertApiAuth({
     propertyResolver,
     endpointResolver
 }: {
-    rawApiFileSchema: RawSchemas.RootApiFileSchema;
+    rawApiFileSchema: RawSchemas.WithAuthSchema;
     file: FernFileContext;
     propertyResolver: PropertyResolver;
     endpointResolver: EndpointResolver;

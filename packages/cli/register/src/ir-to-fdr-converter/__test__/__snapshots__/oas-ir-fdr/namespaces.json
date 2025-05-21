@@ -430,22 +430,22 @@
     }
   },
   "subpackages": {
-    "petsV1": {
-      "subpackageId": "petsV1",
+    "subpackage_petsV1": {
+      "subpackageId": "subpackage_petsV1",
       "name": "petsV1",
       "endpoints": [],
       "webhooks": [],
       "websockets": [],
       "types": [],
       "subpackages": [
-        "petsV1.petsV1",
-        "petsV1.pet",
-        "petsV1.store",
-        "petsV1.user"
+        "subpackage_petsV1/petsV1",
+        "subpackage_petsV1/pet",
+        "subpackage_petsV1/store",
+        "subpackage_petsV1/user"
       ]
     },
-    "petsV1.petsV1": {
-      "subpackageId": "petsV1.petsV1",
+    "subpackage_petsV1/petsV1": {
+      "subpackageId": "subpackage_petsV1/petsV1",
       "name": "petsV1",
       "endpoints": [],
       "webhooks": [],
@@ -460,8 +460,8 @@
       ],
       "subpackages": []
     },
-    "petsV1.pet": {
-      "subpackageId": "petsV1.pet",
+    "subpackage_petsV1/pet": {
+      "subpackageId": "subpackage_petsV1/pet",
       "name": "pet",
       "endpoints": [
         {
@@ -476,7 +476,7 @@
             }
           ],
           "id": "addPet",
-          "originalEndpointId": "petsV1.pet.addPet",
+          "originalEndpointId": "endpoint_petsV1/pet.addPet",
           "name": "Add a new pet to the store.",
           "path": {
             "pathParameters": [],
@@ -519,10 +519,35 @@
             "statusCode": 200,
             "description": "Successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid input",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation exception",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "petAddPetExample",
               "description": "",
               "path": "/pet",
               "pathParameters": {},
@@ -545,25 +570,22 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "name": "doggie",
-                  "category": {
-                    "id": 1,
-                    "name": "Dogs"
-                  },
-                  "photoUrls": [
-                    "foo"
-                  ],
-                  "tags": [
-                    {
-                      "id": 42,
-                      "name": "foo"
-                    }
-                  ],
-                  "status": "available"
-                }
+                "id": 10,
+                "name": "doggie",
+                "category": {
+                  "id": 1,
+                  "name": "Dogs"
+                },
+                "photoUrls": [
+                  "foo"
+                ],
+                "tags": [
+                  {
+                    "id": 42,
+                    "name": "foo"
+                  }
+                ],
+                "status": "available"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -604,7 +626,7 @@
             }
           ],
           "id": "updatePet",
-          "originalEndpointId": "petsV1.pet.updatePet",
+          "originalEndpointId": "endpoint_petsV1/pet.updatePet",
           "name": "Update an existing pet.",
           "path": {
             "pathParameters": [],
@@ -647,10 +669,47 @@
             "statusCode": 200,
             "description": "Successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid ID supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Pet not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation exception",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "petUpdatePetExample",
               "description": "",
               "path": "/pet",
               "pathParameters": {},
@@ -673,25 +732,22 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "name": "doggie",
-                  "category": {
-                    "id": 1,
-                    "name": "Dogs"
-                  },
-                  "photoUrls": [
-                    "foo"
-                  ],
-                  "tags": [
-                    {
-                      "id": 42,
-                      "name": "foo"
-                    }
-                  ],
-                  "status": "available"
-                }
+                "id": 10,
+                "name": "doggie",
+                "category": {
+                  "id": 1,
+                  "name": "Dogs"
+                },
+                "photoUrls": [
+                  "foo"
+                ],
+                "tags": [
+                  {
+                    "id": 42,
+                    "name": "foo"
+                  }
+                ],
+                "status": "available"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -732,7 +788,7 @@
             }
           ],
           "id": "findPetsByStatus",
-          "originalEndpointId": "petsV1.pet.findPetsByStatus",
+          "originalEndpointId": "endpoint_petsV1/pet.findPetsByStatus",
           "name": "Finds Pets by status.",
           "path": {
             "pathParameters": [],
@@ -775,41 +831,49 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid status value",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "findPetsByStatusExample",
               "description": "",
               "path": "/pet/findByStatus",
               "pathParameters": {},
-              "queryParameters": {
-                "status": "available"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "id": 10,
-                    "name": "doggie",
-                    "category": {
-                      "id": 1,
-                      "name": "Dogs"
-                    },
-                    "photoUrls": [
-                      "foo"
-                    ],
-                    "tags": [
-                      {
-                        "id": 42,
-                        "name": "foo"
-                      }
-                    ],
-                    "status": "available"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
+                  "photoUrls": [
+                    "foo"
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -851,7 +915,7 @@
             }
           ],
           "id": "findPetsByTags",
-          "originalEndpointId": "petsV1.pet.findPetsByTags",
+          "originalEndpointId": "endpoint_petsV1/pet.findPetsByTags",
           "name": "Finds Pets by tags.",
           "path": {
             "pathParameters": [],
@@ -899,43 +963,49 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid tag value",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "findPetsByTagsExample",
               "description": "",
               "path": "/pet/findByTags",
               "pathParameters": {},
-              "queryParameters": {
-                "tags": [
-                  "foo"
-                ]
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "id": 10,
-                    "name": "doggie",
-                    "category": {
-                      "id": 1,
-                      "name": "Dogs"
-                    },
-                    "photoUrls": [
-                      "foo"
-                    ],
-                    "tags": [
-                      {
-                        "id": 42,
-                        "name": "foo"
-                      }
-                    ],
-                    "status": "available"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
+                  "photoUrls": [
+                    "foo"
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -977,7 +1047,7 @@
             }
           ],
           "id": "getPetById",
-          "originalEndpointId": "petsV1.pet.getPetById",
+          "originalEndpointId": "endpoint_petsV1/pet.getPetById",
           "name": "Find pet by ID.",
           "path": {
             "pathParameters": [
@@ -1024,12 +1094,37 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid ID supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Pet not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getPetByIdExample",
               "description": "",
-              "path": "/pet/",
+              "path": "/pet/42",
               "pathParameters": {
                 "petId": 42
               },
@@ -1037,25 +1132,22 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "name": "doggie",
-                  "category": {
-                    "id": 1,
-                    "name": "Dogs"
-                  },
-                  "photoUrls": [
-                    "foo"
-                  ],
-                  "tags": [
-                    {
-                      "id": 42,
-                      "name": "foo"
-                    }
-                  ],
-                  "status": "available"
-                }
+                "id": 10,
+                "name": "doggie",
+                "category": {
+                  "id": 1,
+                  "name": "Dogs"
+                },
+                "photoUrls": [
+                  "foo"
+                ],
+                "tags": [
+                  {
+                    "id": 42,
+                    "name": "foo"
+                  }
+                ],
+                "status": "available"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -1096,7 +1188,7 @@
             }
           ],
           "id": "updatePetWithForm",
-          "originalEndpointId": "petsV1.pet.updatePetWithForm",
+          "originalEndpointId": "endpoint_petsV1/pet.updatePetWithForm",
           "name": "Updates a pet in the store with form data.",
           "path": {
             "pathParameters": [
@@ -1170,41 +1262,48 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid input",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "updatePetWithFormExample",
               "description": "",
-              "path": "/pet/",
+              "path": "/pet/42",
               "pathParameters": {
                 "petId": 42
               },
-              "queryParameters": {
-                "name": "foo",
-                "status": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "name": "doggie",
-                  "category": {
-                    "id": 1,
-                    "name": "Dogs"
-                  },
-                  "photoUrls": [
-                    "foo"
-                  ],
-                  "tags": [
-                    {
-                      "id": 42,
-                      "name": "foo"
-                    }
-                  ],
-                  "status": "available"
-                }
+                "id": 10,
+                "name": "doggie",
+                "category": {
+                  "id": 1,
+                  "name": "Dogs"
+                },
+                "photoUrls": [
+                  "foo"
+                ],
+                "tags": [
+                  {
+                    "id": 42,
+                    "name": "foo"
+                  }
+                ],
+                "status": "available"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -1245,7 +1344,7 @@
             }
           ],
           "id": "deletePet",
-          "originalEndpointId": "petsV1.pet.deletePet",
+          "originalEndpointId": "endpoint_petsV1/pet.deletePet",
           "name": "Deletes a pet.",
           "path": {
             "pathParameters": [
@@ -1295,19 +1394,30 @@
               }
             }
           ],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid pet value",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deletePetExample",
               "description": "",
-              "path": "/pet/",
+              "path": "/pet/42",
               "pathParameters": {
                 "petId": 42
               },
               "queryParameters": {},
-              "headers": {
-                "api_key": "foo"
-              },
+              "headers": {},
               "responseStatusCode": 200
             }
           ],
@@ -1327,7 +1437,7 @@
             }
           ],
           "id": "uploadFile",
-          "originalEndpointId": "petsV1.pet.uploadFile",
+          "originalEndpointId": "endpoint_petsV1/pet.uploadFile",
           "name": "Uploads an image.",
           "path": {
             "pathParameters": [
@@ -1377,6 +1487,13 @@
             }
           ],
           "headers": [],
+          "request": {
+            "type": {
+              "type": "bytes",
+              "isOptional": false,
+              "contentType": "application/octet-stream"
+            }
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -1388,27 +1505,47 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "No file uploaded",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Pet not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "uploadFileExample",
               "description": "",
-              "path": "/pet/",
+              "path": "/pet/42/uploadImage",
               "pathParameters": {
                 "petId": 42
               },
-              "queryParameters": {
-                "additionalMetadata": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "code": 42,
-                  "type": "foo",
-                  "message": "foo"
-                }
+                "code": 42,
+                "type": "foo",
+                "message": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -1430,8 +1567,8 @@
       "types": [],
       "subpackages": []
     },
-    "petsV1.store": {
-      "subpackageId": "petsV1.store",
+    "subpackage_petsV1/store": {
+      "subpackageId": "subpackage_petsV1/store",
       "name": "store",
       "endpoints": [
         {
@@ -1446,7 +1583,7 @@
             }
           ],
           "id": "getInventory",
-          "originalEndpointId": "petsV1.store.getInventory",
+          "originalEndpointId": "endpoint_petsV1/store.getInventory",
           "name": "Returns pet inventories by status.",
           "path": {
             "pathParameters": [],
@@ -1488,17 +1625,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getInventoryExample",
               "description": "",
               "path": "/store/inventory",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
                 "value": {}
@@ -1521,7 +1655,7 @@
             }
           ],
           "id": "placeOrder",
-          "originalEndpointId": "petsV1.store.placeOrder",
+          "originalEndpointId": "endpoint_petsV1/store.placeOrder",
           "name": "Place an order for a pet.",
           "path": {
             "pathParameters": [],
@@ -1562,10 +1696,35 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid input",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation exception",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "storePlaceOrderExample",
               "description": "",
               "path": "/store/order",
               "pathParameters": {},
@@ -1578,15 +1737,12 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "petId": 198772,
-                  "quantity": 7,
-                  "shipDate": "foo",
-                  "status": "placed",
-                  "complete": true
-                }
+                "id": 10,
+                "petId": 198772,
+                "quantity": 7,
+                "shipDate": "foo",
+                "status": "placed",
+                "complete": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -1617,7 +1773,7 @@
             }
           ],
           "id": "getOrderById",
-          "originalEndpointId": "petsV1.store.getOrderById",
+          "originalEndpointId": "endpoint_petsV1/store.getOrderById",
           "name": "Find purchase order by ID.",
           "path": {
             "pathParameters": [
@@ -1664,12 +1820,37 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid ID supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Order not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getOrderByIdExample",
               "description": "",
-              "path": "/store/order/",
+              "path": "/store/order/42",
               "pathParameters": {
                 "orderId": 42
               },
@@ -1677,15 +1858,12 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "petId": 198772,
-                  "quantity": 7,
-                  "shipDate": "foo",
-                  "status": "placed",
-                  "complete": true
-                }
+                "id": 10,
+                "petId": 198772,
+                "quantity": 7,
+                "shipDate": "foo",
+                "status": "placed",
+                "complete": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -1716,7 +1894,7 @@
             }
           ],
           "id": "deleteOrder",
-          "originalEndpointId": "petsV1.store.deleteOrder",
+          "originalEndpointId": "endpoint_petsV1/store.deleteOrder",
           "name": "Delete purchase order by identifier.",
           "path": {
             "pathParameters": [
@@ -1752,12 +1930,37 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid ID supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Order not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteOrderExample",
               "description": "",
-              "path": "/store/order/",
+              "path": "/store/order/42",
               "pathParameters": {
                 "orderId": 42
               },
@@ -1776,8 +1979,8 @@
       "types": [],
       "subpackages": []
     },
-    "petsV1.user": {
-      "subpackageId": "petsV1.user",
+    "subpackage_petsV1/user": {
+      "subpackageId": "subpackage_petsV1/user",
       "name": "user",
       "endpoints": [
         {
@@ -1792,7 +1995,7 @@
             }
           ],
           "id": "createUser",
-          "originalEndpointId": "petsV1.user.createUser",
+          "originalEndpointId": "endpoint_petsV1/user.createUser",
           "name": "Create user.",
           "path": {
             "pathParameters": [],
@@ -1838,7 +2041,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userCreateUserExample",
               "description": "",
               "path": "/user",
               "pathParameters": {},
@@ -1851,17 +2054,14 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "username": "theUser",
-                  "firstName": "John",
-                  "lastName": "James",
-                  "email": "john@email.com",
-                  "password": "12345",
-                  "phone": "12345",
-                  "userStatus": 1
-                }
+                "id": 10,
+                "username": "theUser",
+                "firstName": "John",
+                "lastName": "James",
+                "email": "john@email.com",
+                "password": "12345",
+                "phone": "12345",
+                "userStatus": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -1894,7 +2094,7 @@
             }
           ],
           "id": "createUsersWithListInput",
-          "originalEndpointId": "petsV1.user.createUsersWithListInput",
+          "originalEndpointId": "endpoint_petsV1/user.createUsersWithListInput",
           "name": "Creates list of users with given input array.",
           "path": {
             "pathParameters": [],
@@ -1941,28 +2141,31 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userCreateUsersWithListInputExample",
               "description": "",
               "path": "/user/createWithList",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": [
+                {}
+              ],
               "requestBodyV3": {
-                "type": "json"
+                "type": "json",
+                "value": [
+                  {}
+                ]
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "username": "theUser",
-                  "firstName": "John",
-                  "lastName": "James",
-                  "email": "john@email.com",
-                  "password": "12345",
-                  "phone": "12345",
-                  "userStatus": 1
-                }
+                "id": 10,
+                "username": "theUser",
+                "firstName": "John",
+                "lastName": "James",
+                "email": "john@email.com",
+                "password": "12345",
+                "phone": "12345",
+                "userStatus": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -1995,7 +2198,7 @@
             }
           ],
           "id": "loginUser",
-          "originalEndpointId": "petsV1.user.loginUser",
+          "originalEndpointId": "endpoint_petsV1/user.loginUser",
           "name": "Logs user into the system.",
           "path": {
             "pathParameters": [],
@@ -2052,23 +2255,30 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid username/password supplied",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "loginUserExample",
               "description": "",
               "path": "/user/login",
               "pathParameters": {},
-              "queryParameters": {
-                "username": "foo",
-                "password": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -2091,7 +2301,7 @@
             }
           ],
           "id": "logoutUser",
-          "originalEndpointId": "petsV1.user.logoutUser",
+          "originalEndpointId": "endpoint_petsV1/user.logoutUser",
           "name": "Logs out current logged in user session.",
           "path": {
             "pathParameters": [],
@@ -2111,7 +2321,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "logoutUserExample",
               "description": "",
               "path": "/user/logout",
               "pathParameters": {},
@@ -2136,7 +2346,7 @@
             }
           ],
           "id": "getUserByName",
-          "originalEndpointId": "petsV1.user.getUserByName",
+          "originalEndpointId": "endpoint_petsV1/user.getUserByName",
           "name": "Get user by user name.",
           "path": {
             "pathParameters": [
@@ -2183,30 +2393,52 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid username supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "User not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getUserByNameExample",
               "description": "",
-              "path": "/user/",
+              "path": "/user/username",
               "pathParameters": {
-                "username": "foo"
+                "username": "username"
               },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "username": "theUser",
-                  "firstName": "John",
-                  "lastName": "James",
-                  "email": "john@email.com",
-                  "password": "12345",
-                  "phone": "12345",
-                  "userStatus": 1
-                }
+                "id": 10,
+                "username": "theUser",
+                "firstName": "John",
+                "lastName": "James",
+                "email": "john@email.com",
+                "password": "12345",
+                "phone": "12345",
+                "userStatus": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2239,7 +2471,7 @@
             }
           ],
           "id": "updateUser",
-          "originalEndpointId": "petsV1.user.updateUser",
+          "originalEndpointId": "endpoint_petsV1/user.updateUser",
           "name": "Update user resource.",
           "path": {
             "pathParameters": [
@@ -2290,14 +2522,39 @@
             },
             "description": "Update an existent user in the store"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "bad request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "user not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "userUpdateUserExample",
               "description": "",
-              "path": "/user/",
+              "path": "/user/username",
               "pathParameters": {
-                "username": "foo"
+                "username": "username"
               },
               "queryParameters": {},
               "headers": {},
@@ -2325,7 +2582,7 @@
             }
           ],
           "id": "deleteUser",
-          "originalEndpointId": "petsV1.user.deleteUser",
+          "originalEndpointId": "endpoint_petsV1/user.deleteUser",
           "name": "Delete user resource.",
           "path": {
             "pathParameters": [
@@ -2361,14 +2618,39 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid username supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "User not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteUserExample",
               "description": "",
-              "path": "/user/",
+              "path": "/user/username",
               "pathParameters": {
-                "username": "foo"
+                "username": "username"
               },
               "queryParameters": {},
               "headers": {},
@@ -2385,22 +2667,22 @@
       "types": [],
       "subpackages": []
     },
-    "petsV2": {
-      "subpackageId": "petsV2",
+    "subpackage_petsV2": {
+      "subpackageId": "subpackage_petsV2",
       "name": "petsV2",
       "endpoints": [],
       "webhooks": [],
       "websockets": [],
       "types": [],
       "subpackages": [
-        "petsV2.petsV2",
-        "petsV2.pet",
-        "petsV2.store",
-        "petsV2.user"
+        "subpackage_petsV2/petsV2",
+        "subpackage_petsV2/pet",
+        "subpackage_petsV2/store",
+        "subpackage_petsV2/user"
       ]
     },
-    "petsV2.petsV2": {
-      "subpackageId": "petsV2.petsV2",
+    "subpackage_petsV2/petsV2": {
+      "subpackageId": "subpackage_petsV2/petsV2",
       "name": "petsV2",
       "endpoints": [],
       "webhooks": [],
@@ -2415,8 +2697,8 @@
       ],
       "subpackages": []
     },
-    "petsV2.pet": {
-      "subpackageId": "petsV2.pet",
+    "subpackage_petsV2/pet": {
+      "subpackageId": "subpackage_petsV2/pet",
       "name": "pet",
       "endpoints": [
         {
@@ -2431,7 +2713,7 @@
             }
           ],
           "id": "addPet",
-          "originalEndpointId": "petsV2.pet.addPet",
+          "originalEndpointId": "endpoint_petsV2/pet.addPet",
           "name": "Add a new pet to the store.",
           "path": {
             "pathParameters": [],
@@ -2474,10 +2756,35 @@
             "statusCode": 200,
             "description": "Successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid input",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation exception",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "petAddPetExample",
               "description": "",
               "path": "/pet",
               "pathParameters": {},
@@ -2500,25 +2807,22 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "name": "doggie",
-                  "category": {
-                    "id": 1,
-                    "name": "Dogs"
-                  },
-                  "photoUrls": [
-                    "foo"
-                  ],
-                  "tags": [
-                    {
-                      "id": 42,
-                      "name": "foo"
-                    }
-                  ],
-                  "status": "available"
-                }
+                "id": 10,
+                "name": "doggie",
+                "category": {
+                  "id": 1,
+                  "name": "Dogs"
+                },
+                "photoUrls": [
+                  "foo"
+                ],
+                "tags": [
+                  {
+                    "id": 42,
+                    "name": "foo"
+                  }
+                ],
+                "status": "available"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2559,7 +2863,7 @@
             }
           ],
           "id": "updatePet",
-          "originalEndpointId": "petsV2.pet.updatePet",
+          "originalEndpointId": "endpoint_petsV2/pet.updatePet",
           "name": "Update an existing pet.",
           "path": {
             "pathParameters": [],
@@ -2602,10 +2906,47 @@
             "statusCode": 200,
             "description": "Successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid ID supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Pet not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation exception",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "petUpdatePetExample",
               "description": "",
               "path": "/pet",
               "pathParameters": {},
@@ -2628,25 +2969,22 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "name": "doggie",
-                  "category": {
-                    "id": 1,
-                    "name": "Dogs"
-                  },
-                  "photoUrls": [
-                    "foo"
-                  ],
-                  "tags": [
-                    {
-                      "id": 42,
-                      "name": "foo"
-                    }
-                  ],
-                  "status": "available"
-                }
+                "id": 10,
+                "name": "doggie",
+                "category": {
+                  "id": 1,
+                  "name": "Dogs"
+                },
+                "photoUrls": [
+                  "foo"
+                ],
+                "tags": [
+                  {
+                    "id": 42,
+                    "name": "foo"
+                  }
+                ],
+                "status": "available"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2687,7 +3025,7 @@
             }
           ],
           "id": "findPetsByStatus",
-          "originalEndpointId": "petsV2.pet.findPetsByStatus",
+          "originalEndpointId": "endpoint_petsV2/pet.findPetsByStatus",
           "name": "Finds Pets by status.",
           "path": {
             "pathParameters": [],
@@ -2730,41 +3068,49 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid status value",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "findPetsByStatusExample",
               "description": "",
               "path": "/pet/findByStatus",
               "pathParameters": {},
-              "queryParameters": {
-                "status": "available"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "id": 10,
-                    "name": "doggie",
-                    "category": {
-                      "id": 1,
-                      "name": "Dogs"
-                    },
-                    "photoUrls": [
-                      "foo"
-                    ],
-                    "tags": [
-                      {
-                        "id": 42,
-                        "name": "foo"
-                      }
-                    ],
-                    "status": "available"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
+                  "photoUrls": [
+                    "foo"
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -2806,7 +3152,7 @@
             }
           ],
           "id": "findPetsByTags",
-          "originalEndpointId": "petsV2.pet.findPetsByTags",
+          "originalEndpointId": "endpoint_petsV2/pet.findPetsByTags",
           "name": "Finds Pets by tags.",
           "path": {
             "pathParameters": [],
@@ -2854,43 +3200,49 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid tag value",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "findPetsByTagsExample",
               "description": "",
               "path": "/pet/findByTags",
               "pathParameters": {},
-              "queryParameters": {
-                "tags": [
-                  "foo"
-                ]
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "id": 10,
-                    "name": "doggie",
-                    "category": {
-                      "id": 1,
-                      "name": "Dogs"
-                    },
-                    "photoUrls": [
-                      "foo"
-                    ],
-                    "tags": [
-                      {
-                        "id": 42,
-                        "name": "foo"
-                      }
-                    ],
-                    "status": "available"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "id": 10,
+                  "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
+                  "photoUrls": [
+                    "foo"
+                  ],
+                  "tags": [
+                    {
+                      "id": 42,
+                      "name": "foo"
+                    }
+                  ],
+                  "status": "available"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -2932,7 +3284,7 @@
             }
           ],
           "id": "getPetById",
-          "originalEndpointId": "petsV2.pet.getPetById",
+          "originalEndpointId": "endpoint_petsV2/pet.getPetById",
           "name": "Find pet by ID.",
           "path": {
             "pathParameters": [
@@ -2979,12 +3331,37 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid ID supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Pet not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getPetByIdExample",
               "description": "",
-              "path": "/pet/",
+              "path": "/pet/42",
               "pathParameters": {
                 "petId": 42
               },
@@ -2992,25 +3369,22 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "name": "doggie",
-                  "category": {
-                    "id": 1,
-                    "name": "Dogs"
-                  },
-                  "photoUrls": [
-                    "foo"
-                  ],
-                  "tags": [
-                    {
-                      "id": 42,
-                      "name": "foo"
-                    }
-                  ],
-                  "status": "available"
-                }
+                "id": 10,
+                "name": "doggie",
+                "category": {
+                  "id": 1,
+                  "name": "Dogs"
+                },
+                "photoUrls": [
+                  "foo"
+                ],
+                "tags": [
+                  {
+                    "id": 42,
+                    "name": "foo"
+                  }
+                ],
+                "status": "available"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3051,7 +3425,7 @@
             }
           ],
           "id": "updatePetWithForm",
-          "originalEndpointId": "petsV2.pet.updatePetWithForm",
+          "originalEndpointId": "endpoint_petsV2/pet.updatePetWithForm",
           "name": "Updates a pet in the store with form data.",
           "path": {
             "pathParameters": [
@@ -3125,41 +3499,48 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid input",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "updatePetWithFormExample",
               "description": "",
-              "path": "/pet/",
+              "path": "/pet/42",
               "pathParameters": {
                 "petId": 42
               },
-              "queryParameters": {
-                "name": "foo",
-                "status": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "name": "doggie",
-                  "category": {
-                    "id": 1,
-                    "name": "Dogs"
-                  },
-                  "photoUrls": [
-                    "foo"
-                  ],
-                  "tags": [
-                    {
-                      "id": 42,
-                      "name": "foo"
-                    }
-                  ],
-                  "status": "available"
-                }
+                "id": 10,
+                "name": "doggie",
+                "category": {
+                  "id": 1,
+                  "name": "Dogs"
+                },
+                "photoUrls": [
+                  "foo"
+                ],
+                "tags": [
+                  {
+                    "id": 42,
+                    "name": "foo"
+                  }
+                ],
+                "status": "available"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3200,7 +3581,7 @@
             }
           ],
           "id": "deletePet",
-          "originalEndpointId": "petsV2.pet.deletePet",
+          "originalEndpointId": "endpoint_petsV2/pet.deletePet",
           "name": "Deletes a pet.",
           "path": {
             "pathParameters": [
@@ -3250,19 +3631,30 @@
               }
             }
           ],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid pet value",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deletePetExample",
               "description": "",
-              "path": "/pet/",
+              "path": "/pet/42",
               "pathParameters": {
                 "petId": 42
               },
               "queryParameters": {},
-              "headers": {
-                "api_key": "foo"
-              },
+              "headers": {},
               "responseStatusCode": 200
             }
           ],
@@ -3282,7 +3674,7 @@
             }
           ],
           "id": "uploadFile",
-          "originalEndpointId": "petsV2.pet.uploadFile",
+          "originalEndpointId": "endpoint_petsV2/pet.uploadFile",
           "name": "Uploads an image.",
           "path": {
             "pathParameters": [
@@ -3332,6 +3724,13 @@
             }
           ],
           "headers": [],
+          "request": {
+            "type": {
+              "type": "bytes",
+              "isOptional": false,
+              "contentType": "application/octet-stream"
+            }
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -3343,27 +3742,47 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "No file uploaded",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Pet not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "uploadFileExample",
               "description": "",
-              "path": "/pet/",
+              "path": "/pet/42/uploadImage",
               "pathParameters": {
                 "petId": 42
               },
-              "queryParameters": {
-                "additionalMetadata": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "code": 42,
-                  "type": "foo",
-                  "message": "foo"
-                }
+                "code": 42,
+                "type": "foo",
+                "message": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3385,8 +3804,8 @@
       "types": [],
       "subpackages": []
     },
-    "petsV2.store": {
-      "subpackageId": "petsV2.store",
+    "subpackage_petsV2/store": {
+      "subpackageId": "subpackage_petsV2/store",
       "name": "store",
       "endpoints": [
         {
@@ -3401,7 +3820,7 @@
             }
           ],
           "id": "getInventory",
-          "originalEndpointId": "petsV2.store.getInventory",
+          "originalEndpointId": "endpoint_petsV2/store.getInventory",
           "name": "Returns pet inventories by status.",
           "path": {
             "pathParameters": [],
@@ -3443,17 +3862,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getInventoryExample",
               "description": "",
               "path": "/store/inventory",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
                 "value": {}
@@ -3476,7 +3892,7 @@
             }
           ],
           "id": "placeOrder",
-          "originalEndpointId": "petsV2.store.placeOrder",
+          "originalEndpointId": "endpoint_petsV2/store.placeOrder",
           "name": "Place an order for a pet.",
           "path": {
             "pathParameters": [],
@@ -3517,10 +3933,35 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid input",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation exception",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "storePlaceOrderExample",
               "description": "",
               "path": "/store/order",
               "pathParameters": {},
@@ -3533,15 +3974,12 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "petId": 198772,
-                  "quantity": 7,
-                  "shipDate": "foo",
-                  "status": "placed",
-                  "complete": true
-                }
+                "id": 10,
+                "petId": 198772,
+                "quantity": 7,
+                "shipDate": "foo",
+                "status": "placed",
+                "complete": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3572,7 +4010,7 @@
             }
           ],
           "id": "getOrderById",
-          "originalEndpointId": "petsV2.store.getOrderById",
+          "originalEndpointId": "endpoint_petsV2/store.getOrderById",
           "name": "Find purchase order by ID.",
           "path": {
             "pathParameters": [
@@ -3619,12 +4057,37 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid ID supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Order not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getOrderByIdExample",
               "description": "",
-              "path": "/store/order/",
+              "path": "/store/order/42",
               "pathParameters": {
                 "orderId": 42
               },
@@ -3632,15 +4095,12 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "petId": 198772,
-                  "quantity": 7,
-                  "shipDate": "foo",
-                  "status": "placed",
-                  "complete": true
-                }
+                "id": 10,
+                "petId": 198772,
+                "quantity": 7,
+                "shipDate": "foo",
+                "status": "placed",
+                "complete": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3671,7 +4131,7 @@
             }
           ],
           "id": "deleteOrder",
-          "originalEndpointId": "petsV2.store.deleteOrder",
+          "originalEndpointId": "endpoint_petsV2/store.deleteOrder",
           "name": "Delete purchase order by identifier.",
           "path": {
             "pathParameters": [
@@ -3707,12 +4167,37 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid ID supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Order not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteOrderExample",
               "description": "",
-              "path": "/store/order/",
+              "path": "/store/order/42",
               "pathParameters": {
                 "orderId": 42
               },
@@ -3731,8 +4216,8 @@
       "types": [],
       "subpackages": []
     },
-    "petsV2.user": {
-      "subpackageId": "petsV2.user",
+    "subpackage_petsV2/user": {
+      "subpackageId": "subpackage_petsV2/user",
       "name": "user",
       "endpoints": [
         {
@@ -3747,7 +4232,7 @@
             }
           ],
           "id": "createUser",
-          "originalEndpointId": "petsV2.user.createUser",
+          "originalEndpointId": "endpoint_petsV2/user.createUser",
           "name": "Create user.",
           "path": {
             "pathParameters": [],
@@ -3793,7 +4278,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userCreateUserExample",
               "description": "",
               "path": "/user",
               "pathParameters": {},
@@ -3806,17 +4291,14 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "username": "theUser",
-                  "firstName": "John",
-                  "lastName": "James",
-                  "email": "john@email.com",
-                  "password": "12345",
-                  "phone": "12345",
-                  "userStatus": 1
-                }
+                "id": 10,
+                "username": "theUser",
+                "firstName": "John",
+                "lastName": "James",
+                "email": "john@email.com",
+                "password": "12345",
+                "phone": "12345",
+                "userStatus": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3849,7 +4331,7 @@
             }
           ],
           "id": "createUsersWithListInput",
-          "originalEndpointId": "petsV2.user.createUsersWithListInput",
+          "originalEndpointId": "endpoint_petsV2/user.createUsersWithListInput",
           "name": "Creates list of users with given input array.",
           "path": {
             "pathParameters": [],
@@ -3896,28 +4378,31 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userCreateUsersWithListInputExample",
               "description": "",
               "path": "/user/createWithList",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": [
+                {}
+              ],
               "requestBodyV3": {
-                "type": "json"
+                "type": "json",
+                "value": [
+                  {}
+                ]
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "username": "theUser",
-                  "firstName": "John",
-                  "lastName": "James",
-                  "email": "john@email.com",
-                  "password": "12345",
-                  "phone": "12345",
-                  "userStatus": 1
-                }
+                "id": 10,
+                "username": "theUser",
+                "firstName": "John",
+                "lastName": "James",
+                "email": "john@email.com",
+                "password": "12345",
+                "phone": "12345",
+                "userStatus": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3950,7 +4435,7 @@
             }
           ],
           "id": "loginUser",
-          "originalEndpointId": "petsV2.user.loginUser",
+          "originalEndpointId": "endpoint_petsV2/user.loginUser",
           "name": "Logs user into the system.",
           "path": {
             "pathParameters": [],
@@ -4007,23 +4492,30 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid username/password supplied",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "loginUserExample",
               "description": "",
               "path": "/user/login",
               "pathParameters": {},
-              "queryParameters": {
-                "username": "foo",
-                "password": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -4046,7 +4538,7 @@
             }
           ],
           "id": "logoutUser",
-          "originalEndpointId": "petsV2.user.logoutUser",
+          "originalEndpointId": "endpoint_petsV2/user.logoutUser",
           "name": "Logs out current logged in user session.",
           "path": {
             "pathParameters": [],
@@ -4066,7 +4558,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "logoutUserExample",
               "description": "",
               "path": "/user/logout",
               "pathParameters": {},
@@ -4091,7 +4583,7 @@
             }
           ],
           "id": "getUserByName",
-          "originalEndpointId": "petsV2.user.getUserByName",
+          "originalEndpointId": "endpoint_petsV2/user.getUserByName",
           "name": "Get user by user name.",
           "path": {
             "pathParameters": [
@@ -4138,30 +4630,52 @@
             "statusCode": 200,
             "description": "successful operation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid username supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "User not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getUserByNameExample",
               "description": "",
-              "path": "/user/",
+              "path": "/user/username",
               "pathParameters": {
-                "username": "foo"
+                "username": "username"
               },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 10,
-                  "username": "theUser",
-                  "firstName": "John",
-                  "lastName": "James",
-                  "email": "john@email.com",
-                  "password": "12345",
-                  "phone": "12345",
-                  "userStatus": 1
-                }
+                "id": 10,
+                "username": "theUser",
+                "firstName": "John",
+                "lastName": "James",
+                "email": "john@email.com",
+                "password": "12345",
+                "phone": "12345",
+                "userStatus": 1
               },
               "responseBodyV3": {
                 "type": "json",
@@ -4194,7 +4708,7 @@
             }
           ],
           "id": "updateUser",
-          "originalEndpointId": "petsV2.user.updateUser",
+          "originalEndpointId": "endpoint_petsV2/user.updateUser",
           "name": "Update user resource.",
           "path": {
             "pathParameters": [
@@ -4245,14 +4759,39 @@
             },
             "description": "Update an existent user in the store"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "bad request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "user not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "userUpdateUserExample",
               "description": "",
-              "path": "/user/",
+              "path": "/user/username",
               "pathParameters": {
-                "username": "foo"
+                "username": "username"
               },
               "queryParameters": {},
               "headers": {},
@@ -4280,7 +4819,7 @@
             }
           ],
           "id": "deleteUser",
-          "originalEndpointId": "petsV2.user.deleteUser",
+          "originalEndpointId": "endpoint_petsV2/user.deleteUser",
           "name": "Delete user resource.",
           "path": {
             "pathParameters": [
@@ -4316,14 +4855,39 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Invalid username supplied",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "User not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteUserExample",
               "description": "",
-              "path": "/user/",
+              "path": "/user/username",
               "pathParameters": {
-                "username": "foo"
+                "username": "username"
               },
               "queryParameters": {},
               "headers": {},
@@ -4347,9 +4911,13 @@
     "websockets": [],
     "types": [],
     "subpackages": [
-      "petsV1",
-      "petsV2"
+      "subpackage_petsV1",
+      "subpackage_petsV2"
     ]
+  },
+  "auth": {
+    "type": "bearerAuth",
+    "tokenName": "token"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

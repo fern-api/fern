@@ -1,4 +1,4 @@
-import { PackageId, getTextOfTsNode } from "@fern-typescript/commons";
+import { PackageId, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedWebsocketSocketClass, SdkContext } from "@fern-typescript/contexts";
 import { camelCase } from "lodash-es";
 import {
@@ -66,13 +66,13 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             isExported: true,
             properties: [
                 {
-                    name: GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME,
+                    name: getPropertyKey(GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME),
                     type: getTextOfTsNode(context.coreUtilities.websocket.ReconnectingWebSocket._getReferenceToType()),
                     isReadonly: true,
                     scope: Scope.Public
                 },
                 {
-                    name: GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME,
+                    name: getPropertyKey(GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_NAME),
                     type: `${this.serviceClassName}.${GeneratedWebsocketSocketClassImpl.EVENT_HANDLERS_PROPERTY_TYPE}`,
                     isReadonly: true,
                     scope: Scope.Protected,
@@ -151,7 +151,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             isExported: true,
             properties: [
                 {
-                    name: GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME,
+                    name: getPropertyKey(GeneratedWebsocketSocketClassImpl.SOCKET_PROPERTY_NAME),
                     type: getTextOfTsNode(context.coreUtilities.websocket.ReconnectingWebSocket._getReferenceToType())
                 }
             ]

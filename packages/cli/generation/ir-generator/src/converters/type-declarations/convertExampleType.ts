@@ -19,9 +19,9 @@ import {
     ExampleTypeShape,
     PrimitiveTypeV1
 } from "@fern-api/ir-sdk";
+import { IdGenerator } from "@fern-api/ir-utils";
 
 import { FernFileContext } from "../../FernFileContext";
-import { IdGenerator } from "../../IdGenerator";
 import { validateTypeReferenceExample } from "../../examples/validateTypeReferenceExample";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
@@ -352,7 +352,8 @@ export function convertTypeReferenceExample({
                 const typeName: DeclaredTypeName = {
                     typeId: parsedReferenceToNamedType.typeId,
                     fernFilepath: parsedReferenceToNamedType.fernFilepath,
-                    name: parsedReferenceToNamedType.name
+                    name: parsedReferenceToNamedType.name,
+                    displayName: parsedReferenceToNamedType.displayName
                 };
                 return ExampleTypeReferenceShape.named({
                     typeName,
@@ -737,7 +738,8 @@ function convertSingleUnionType({
             const typeName: DeclaredTypeName = {
                 typeId: parsedSingleUnionTypeProperties.typeId,
                 fernFilepath: parsedSingleUnionTypeProperties.fernFilepath,
-                name: parsedSingleUnionTypeProperties.name
+                name: parsedSingleUnionTypeProperties.name,
+                displayName: parsedSingleUnionTypeProperties.displayName
             };
             return {
                 wireDiscriminantValue,

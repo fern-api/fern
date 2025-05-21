@@ -69,7 +69,8 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         this.generatorAgent = new CsharpGeneratorAgent({
             logger: this.logger,
             config: this.config,
-            readmeConfigBuilder: new ReadmeConfigBuilder()
+            readmeConfigBuilder: new ReadmeConfigBuilder(),
+            ir: this.ir
         });
         this.snippetGenerator = new EndpointSnippetsGenerator({ context: this });
     }
@@ -681,6 +682,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return httpEndpoint;
     }
 
+    public isSelfHosted(): boolean {
+        return this.ir.selfHosted ?? false;
+    }
+
     public getNameForField(name: NameAndWireValue): string {
         return name.name.pascalCase.safeName;
     }
@@ -691,6 +696,17 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     private getGrpcClientServiceName(protobufService: ProtobufService): string {
         return protobufService.name.originalName;
+    }
+
+    #doesIrHaveCustomPagination: boolean | undefined;
+
+    public shouldCreateCustomPagination(): boolean {
+        if (this.#doesIrHaveCustomPagination === undefined) {
+            this.#doesIrHaveCustomPagination = Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) => endpoint.pagination?.type === "custom")
+            );
+        }
+        return this.#doesIrHaveCustomPagination;
     }
 
     override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {

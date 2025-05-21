@@ -367,7 +367,8 @@ export class SdkGenerator {
         this.environmentsGenerator = new EnvironmentsGenerator();
         this.oauthTokenProviderGenerator = new OAuthTokenProviderGenerator({
             intermediateRepresentation,
-            neverThrowErrors: this.config.neverThrowErrors
+            neverThrowErrors: this.config.neverThrowErrors,
+            includeSerdeLayer: this.config.includeSerdeLayer
         });
         this.sdkClientClassGenerator = new SdkClientClassGenerator({
             intermediateRepresentation,
@@ -416,7 +417,8 @@ export class SdkGenerator {
             config: this.rawConfig,
             readmeConfigBuilder: new ReadmeConfigBuilder({
                 endpointSnippets: this.endpointSnippets
-            })
+            }),
+            ir: intermediateRepresentation
         });
 
         this.FdrClient =

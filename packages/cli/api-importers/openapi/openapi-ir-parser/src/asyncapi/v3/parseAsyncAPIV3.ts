@@ -228,6 +228,7 @@ export function parseAsyncAPIV3({
                         availability: undefined,
                         generatedName: "",
                         title: parameterName,
+                        namespace: undefined,
                         groupName: undefined,
                         nameOverride: undefined,
                         inline: undefined

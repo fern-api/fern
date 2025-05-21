@@ -12,6 +12,7 @@ import { RoleId } from "./RoleId";
 import { TabId } from "./TabId";
 import { TabConfig } from "./TabConfig";
 import { VersionConfig } from "./VersionConfig";
+import { ProductConfig } from "./ProductConfig";
 import { PageConfiguration } from "./PageConfiguration";
 import { NavigationConfig } from "./NavigationConfig";
 import { NavbarLink } from "./NavbarLink";
@@ -41,6 +42,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     roles: core.serialization.list(RoleId).optional(),
     tabs: core.serialization.record(TabId, TabConfig).optional(),
     versions: core.serialization.list(VersionConfig).optional(),
+    products: core.serialization.list(ProductConfig).optional(),
     landingPage: core.serialization.property("landing-page", PageConfiguration.optional()),
     navigation: NavigationConfig.optional(),
     navbarLinks: core.serialization.property("navbar-links", core.serialization.list(NavbarLink).optional()),
@@ -48,6 +50,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     experimental: ExperimentalConfig.optional(),
     defaultLanguage: core.serialization.property("default-language", ProgrammingLanguage.optional()),
     aiChat: core.serialization.property("ai-chat", AiChatConfig.optional()),
+    aiSearch: core.serialization.property("ai-search", AiChatConfig.optional()),
     metadata: MetadataConfig.optional(),
     redirects: core.serialization.list(RedirectConfig).optional(),
     logo: LogoConfiguration.optional(),
@@ -70,6 +73,7 @@ export declare namespace DocsConfiguration {
         roles?: RoleId.Raw[] | null;
         tabs?: Record<TabId.Raw, TabConfig.Raw> | null;
         versions?: VersionConfig.Raw[] | null;
+        products?: ProductConfig.Raw[] | null;
         "landing-page"?: PageConfiguration.Raw | null;
         navigation?: NavigationConfig.Raw | null;
         "navbar-links"?: NavbarLink.Raw[] | null;
@@ -77,6 +81,7 @@ export declare namespace DocsConfiguration {
         experimental?: ExperimentalConfig.Raw | null;
         "default-language"?: ProgrammingLanguage.Raw | null;
         "ai-chat"?: AiChatConfig.Raw | null;
+        "ai-search"?: AiChatConfig.Raw | null;
         metadata?: MetadataConfig.Raw | null;
         redirects?: RedirectConfig.Raw[] | null;
         logo?: LogoConfiguration.Raw | null;

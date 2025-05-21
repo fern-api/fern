@@ -122,7 +122,7 @@
         "auth": false,
         "method": "GET",
         "id": "search",
-        "originalEndpointId": "search",
+        "originalEndpointId": "endpoint_.search",
         "name": "Search",
         "path": {
           "pathParameters": [],
@@ -203,27 +203,17 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "searchExample",
             "description": "",
             "path": "/search",
             "pathParameters": {},
-            "queryParameters": {
-              "filter": {},
-              "sort": "asc",
-              "limit": 42,
-              "tags": [
-                "foo"
-              ]
-            },
+            "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "results": [
-                  "foo"
-                ]
-              }
+              "results": [
+                "foo"
+              ]
             },
             "responseBodyV3": {
               "type": "json",

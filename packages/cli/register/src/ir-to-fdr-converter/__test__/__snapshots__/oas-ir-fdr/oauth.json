@@ -1,8 +1,8 @@
 {
   "types": {
-    "OauthTokenPostRequestBodySchemaGrantType": {
+    "OauthTokenPostRequestBodyContentApplicationJsonSchemaGrantType": {
       "description": "The type of grant to request",
-      "name": "OauthTokenPostRequestBodySchemaGrantType",
+      "name": "OauthTokenPostRequestBodyContentApplicationJsonSchemaGrantType",
       "shape": {
         "type": "enum",
         "values": [
@@ -78,8 +78,8 @@
     }
   },
   "subpackages": {
-    "auth": {
-      "subpackageId": "auth",
+    "subpackage_auth": {
+      "subpackageId": "subpackage_auth",
       "name": "auth",
       "endpoints": [
         {
@@ -94,7 +94,7 @@
             }
           ],
           "id": "get-token",
-          "originalEndpointId": "auth.get-token",
+          "originalEndpointId": "endpoint_auth.get-token",
           "name": "Request an access token",
           "path": {
             "pathParameters": [],
@@ -124,7 +124,7 @@
                     "key": "grant_type",
                     "valueType": {
                       "type": "id",
-                      "value": "OauthTokenPostRequestBodySchemaGrantType"
+                      "value": "OauthTokenPostRequestBodyContentApplicationJsonSchemaGrantType"
                     }
                   },
                   {
@@ -201,10 +201,35 @@
             "statusCode": 200,
             "description": "Successful token response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "authGetTokenExample",
               "description": "",
               "path": "/oauth/token",
               "pathParameters": {},
@@ -225,13 +250,10 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "access_token": "foo",
-                  "token_type": "Bearer",
-                  "expires_in": 42,
-                  "refresh_token": "foo"
-                }
+                "access_token": "foo",
+                "token_type": "Bearer",
+                "expires_in": 42,
+                "refresh_token": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -261,7 +283,7 @@
     "websockets": [],
     "types": [],
     "subpackages": [
-      "auth"
+      "subpackage_auth"
     ]
   },
   "auth": {

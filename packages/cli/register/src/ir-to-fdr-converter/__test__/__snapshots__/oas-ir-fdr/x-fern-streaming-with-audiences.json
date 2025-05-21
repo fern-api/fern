@@ -72,15 +72,15 @@
     }
   },
   "subpackages": {
-    "user": {
-      "subpackageId": "user",
+    "subpackage_user": {
+      "subpackageId": "subpackage_user",
       "name": "user",
       "endpoints": [
         {
           "auth": false,
           "method": "POST",
           "id": "get",
-          "originalEndpointId": "user.get",
+          "originalEndpointId": "endpoint_user.get",
           "name": "Get",
           "path": {
             "pathParameters": [
@@ -141,11 +141,14 @@
           },
           "response": {
             "type": {
-              "type": "reference",
-              "value": {
-                "type": "primitive",
+              "type": "stream",
+              "shape": {
+                "type": "reference",
                 "value": {
-                  "type": "string"
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -155,11 +158,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userGetExample",
               "description": "",
-              "path": "/user/",
+              "path": "/user/userId",
               "pathParameters": {
-                "userId": "foo"
+                "userId": "userId"
               },
               "queryParameters": {},
               "headers": {},
@@ -169,13 +172,17 @@
                 "value": {}
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": [
+                "foo"
+              ],
               "responseBodyV3": {
-                "type": "json",
-                "value": "foo"
+                "type": "stream",
+                "value": [
+                  {
+                    "type": "json",
+                    "value": "foo"
+                  }
+                ]
               }
             }
           ],
@@ -199,7 +206,7 @@
       "StreamUser"
     ],
     "subpackages": [
-      "user"
+      "subpackage_user"
     ]
   },
   "snippetsConfiguration": {},

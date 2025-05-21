@@ -12,6 +12,7 @@ import (
 	"github.com/fern-api/fern-go/internal/coordinator"
 	"github.com/fern-api/fern-go/internal/generator"
 	"github.com/fern-api/fern-go/internal/goexec"
+	"github.com/fern-api/fern-go/internal/gospec"
 	"github.com/fern-api/fern-go/internal/writer"
 	generatorexec "github.com/fern-api/generator-exec-go"
 	"go.uber.org/multierr"
@@ -58,6 +59,7 @@ type Config struct {
 	AlwaysSendRequiredProperties bool
 	InlinePathParameters         bool
 	InlineFileProperties         bool
+	UseReaderForBytesRequest     bool
 	Organization                 string
 	CoordinatorURL               string
 	CoordinatorTaskID            string
@@ -205,12 +207,13 @@ func newConfig(configFilename string) (*Config, error) {
 
 	return &Config{
 		DryRun:                       config.DryRun,
-		InlinePathParameters:         customConfig.InlinePathParameters,
-		InlineFileProperties:         customConfig.InlineFileProperties,
-		IncludeLegacyClientOptions:   customConfig.IncludeLegacyClientOptions,
-		EnableExplicitNull:           customConfig.EnableExplicitNull,
+		InlinePathParameters:         *customConfig.InlinePathParameters,
+		InlineFileProperties:         *customConfig.InlineFileProperties,
+		IncludeLegacyClientOptions:   *customConfig.IncludeLegacyClientOptions,
+		EnableExplicitNull:           *customConfig.EnableExplicitNull,
+		UseReaderForBytesRequest:     *customConfig.UseReaderForBytesRequest,
 		Organization:                 config.Organization,
-		AlwaysSendRequiredProperties: customConfig.AlwaysSendRequiredProperties,
+		AlwaysSendRequiredProperties: *customConfig.AlwaysSendRequiredProperties,
 		Whitelabel:                   config.Whitelabel,
 		CoordinatorURL:               coordinatorURL,
 		CoordinatorTaskID:            coordinatorTaskID,
@@ -264,11 +267,12 @@ func readConfig(configFilename string) (*generatorexec.GeneratorConfig, error) {
 }
 
 type customConfig struct {
-	EnableExplicitNull           bool          `json:"enableExplicitNull,omitempty"`
-	InlinePathParameters         bool          `json:"inlinePathParameters,omitempty"`
-	InlineFileProperties         bool          `json:"inlineFileProperties,omitempty"`
-	IncludeLegacyClientOptions   bool          `json:"includeLegacyClientOptions,omitempty"`
-	AlwaysSendRequiredProperties bool          `json:"alwaysSendRequiredProperties,omitempty"`
+	EnableExplicitNull           *bool         `json:"enableExplicitNull,omitempty"`
+	InlinePathParameters         *bool         `json:"inlinePathParameters,omitempty"`
+	InlineFileProperties         *bool         `json:"inlineFileProperties,omitempty"`
+	IncludeLegacyClientOptions   *bool         `json:"includeLegacyClientOptions,omitempty"`
+	AlwaysSendRequiredProperties *bool         `json:"alwaysSendRequiredProperties,omitempty"`
+	UseReaderForBytesRequest     *bool         `json:"useReaderForBytesRequest,omitempty"`
 	ClientName                   string        `json:"clientName,omitempty"`
 	ClientConstructorName        string        `json:"clientConstructorName,omitempty"`
 	ImportPath                   string        `json:"importPath,omitempty"`
@@ -287,7 +291,7 @@ type moduleConfig struct {
 
 func customConfigFromConfig(c *generatorexec.GeneratorConfig) (*customConfig, error) {
 	if c.CustomConfig == nil {
-		return &customConfig{}, nil
+		return applyCustomConfigDefaultsForV1(&customConfig{}), nil
 	}
 	configBytes, err := json.Marshal(c.CustomConfig)
 	if err != nil {
@@ -302,7 +306,8 @@ func customConfigFromConfig(c *generatorexec.GeneratorConfig) (*customConfig, er
 	if err := decoder.Decode(config); err != nil {
 		return nil, fmt.Errorf("failed to read custom configuration: %v", err)
 	}
-	return config, nil
+
+	return applyCustomConfigDefaultsForV1(config), nil
 }
 
 func moduleConfigFromCustomConfig(customConfig *customConfig, outputMode writer.OutputMode) (*generator.ModuleConfig, error) {
@@ -355,6 +360,33 @@ func outputVersionFromGeneratorConfig(c *generatorexec.GeneratorConfig) string {
 		return visitor.value
 	}
 	return ""
+}
+
+// applyCustomConfigDefaultsForV1 applies the default values for the custom
+// configuration fields for v1.X.X.
+func applyCustomConfigDefaultsForV1(customConfig *customConfig) *customConfig {
+	if customConfig.AlwaysSendRequiredProperties == nil {
+		customConfig.AlwaysSendRequiredProperties = gospec.Ptr(true)
+	}
+	if customConfig.EnableExplicitNull == nil {
+		customConfig.EnableExplicitNull = gospec.Ptr(false)
+	}
+	if customConfig.InlineFileProperties == nil {
+		customConfig.InlineFileProperties = gospec.Ptr(true)
+	}
+	if customConfig.IncludeLegacyClientOptions == nil {
+		customConfig.IncludeLegacyClientOptions = gospec.Ptr(false)
+	}
+	if customConfig.InlinePathParameters == nil {
+		customConfig.InlinePathParameters = gospec.Ptr(true)
+	}
+	if customConfig.UseReaderForBytesRequest == nil {
+		customConfig.UseReaderForBytesRequest = gospec.Ptr(true)
+	}
+	if customConfig.UnionVersion == "" {
+		customConfig.UnionVersion = "v1"
+	}
+	return customConfig
 }
 
 type outputModeVersionVisitor struct {

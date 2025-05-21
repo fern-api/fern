@@ -26,11 +26,11 @@ export function convertAdditionalProperties({
     availability,
     wrapAsNullable,
     context,
+    namespace,
     groupName,
     example,
     encoding,
-    source,
-    namespace
+    source
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -41,11 +41,11 @@ export function convertAdditionalProperties({
     availability: Availability | undefined;
     wrapAsNullable: boolean;
     context: SchemaParserContext;
+    namespace: string | undefined;
     groupName: SdkGroupName | undefined;
     example: unknown | undefined;
     encoding: Encoding | undefined;
     source: Source;
-    namespace: string | undefined;
 }): SchemaWithExample {
     if (additionalProperties === undefined) {
         additionalProperties = context.options.additionalPropertiesDefaultsTo;
@@ -73,6 +73,7 @@ export function convertAdditionalProperties({
                     maxLength: undefined,
                     example: undefined
                 }),
+                namespace: undefined,
                 groupName: undefined
             },
             valueSchema: SchemaWithExample.unknown({
@@ -82,8 +83,10 @@ export function convertAdditionalProperties({
                 description: undefined,
                 availability: undefined,
                 example: undefined,
+                namespace: undefined,
                 groupName: undefined
             }),
+            namespace,
             groupName,
             example,
             encoding
@@ -110,6 +113,7 @@ export function convertAdditionalProperties({
                 maxLength: undefined,
                 example: undefined
             }),
+            namespace: undefined,
             groupName: undefined
         },
         // Whether a type is inline is usually determined later by checking if a declaration is nested within another declaration,
@@ -128,6 +132,7 @@ export function convertAdditionalProperties({
                 undefined
             )
         ),
+        namespace,
         groupName,
         example,
         encoding
@@ -171,6 +176,7 @@ export function wrapMap({
     wrapAsNullable,
     description,
     availability,
+    namespace,
     groupName,
     example,
     encoding
@@ -183,6 +189,7 @@ export function wrapMap({
     wrapAsNullable: boolean;
     description: string | undefined;
     availability: Availability | undefined;
+    namespace: string | undefined;
     groupName: SdkGroupName | undefined;
     example: unknown | undefined;
     encoding: Encoding | undefined;
@@ -200,6 +207,7 @@ export function wrapMap({
                 availability: keySchema.availability,
                 key: keySchema,
                 value: valueSchema,
+                namespace,
                 groupName,
                 encoding,
                 example,
@@ -207,6 +215,7 @@ export function wrapMap({
             }),
             description,
             availability,
+            namespace,
             groupName,
             inline: undefined
         });
@@ -219,6 +228,7 @@ export function wrapMap({
         availability,
         key: keySchema,
         value: valueSchema,
+        namespace,
         groupName,
         encoding,
         example,

@@ -1,7 +1,7 @@
 {
   "types": {
-    "ObjectWithArrayOfObjectsGetRequestBodySchemaItems": {
-      "name": "ObjectWithArrayOfObjectsGetRequestBodySchemaItems",
+    "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems": {
+      "name": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -33,8 +33,8 @@
         ]
       }
     },
-    "ImplicitObjectWithArrayOfObjectsGetRequestBodySchemaItems": {
-      "name": "ImplicitObjectWithArrayOfObjectsGetRequestBodySchemaItems",
+    "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems": {
+      "name": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -74,7 +74,7 @@
         "auth": false,
         "method": "GET",
         "id": "getObjectWithArrayOfObjects",
-        "originalEndpointId": "getObjectWithArrayOfObjects",
+        "originalEndpointId": "endpoint_.getObjectWithArrayOfObjects",
         "name": "Get Object With Array Of Objects",
         "path": {
           "pathParameters": [],
@@ -109,7 +109,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ObjectWithArrayOfObjectsGetRequestBodySchemaItems"
+                    "value": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
                   }
                 }
               }
@@ -132,20 +132,19 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getObjectWithArrayOfObjectsExample",
             "description": "",
             "path": "/object-with-array-of-objects",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": {},
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": {}
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"
@@ -160,7 +159,7 @@
         "auth": false,
         "method": "GET",
         "id": "getImplicitObjectWithArrayOfObjects",
-        "originalEndpointId": "getImplicitObjectWithArrayOfObjects",
+        "originalEndpointId": "endpoint_.getImplicitObjectWithArrayOfObjects",
         "name": "Get Implicit Object With Array Of Objects",
         "path": {
           "pathParameters": [],
@@ -195,7 +194,7 @@
                   "type": "list",
                   "itemType": {
                     "type": "id",
-                    "value": "ImplicitObjectWithArrayOfObjectsGetRequestBodySchemaItems"
+                    "value": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
                   }
                 }
               }
@@ -218,20 +217,19 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getImplicitObjectWithArrayOfObjectsExample",
             "description": "",
             "path": "/implicit-object-with-array-of-objects",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": null,
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": null
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"

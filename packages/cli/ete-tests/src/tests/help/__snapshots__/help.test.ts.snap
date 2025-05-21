@@ -4,6 +4,7 @@ exports[`help > no arguments 1`] = `
 "fern-dev
 
 Commands:
+  fern-dev diff                         Diff two versions of an API
   fern-dev init                         Initialize a Fern API
   fern-dev token                        Generate a Fern Token
   fern-dev add <generator>              Add a code generator to generators.yml

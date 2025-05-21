@@ -1,8 +1,8 @@
 {
   "types": {},
   "subpackages": {
-    "alpha": {
-      "subpackageId": "alpha",
+    "subpackage_alpha": {
+      "subpackageId": "subpackage_alpha",
       "name": "alpha",
       "endpoints": [
         {
@@ -12,11 +12,11 @@
           "environments": [
             {
               "id": "prod",
-              "baseUrl": "https://alpha.spscommerce.com"
+              "baseUrl": "https://alpha.testapi.com"
             }
           ],
           "id": "getAlpha",
-          "originalEndpointId": "alpha.getAlpha",
+          "originalEndpointId": "endpoint_alpha.getAlpha",
           "name": "Get Alpha",
           "path": {
             "pathParameters": [],
@@ -49,17 +49,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getAlphaExample",
               "description": "",
               "path": "/alpha",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -76,8 +73,8 @@
       "types": [],
       "subpackages": []
     },
-    "beta": {
-      "subpackageId": "beta",
+    "subpackage_beta": {
+      "subpackageId": "subpackage_beta",
       "name": "beta",
       "endpoints": [
         {
@@ -87,11 +84,11 @@
           "environments": [
             {
               "id": "prod",
-              "baseUrl": "https://beta.spscommerce.com"
+              "baseUrl": "https://beta.testapi.com"
             }
           ],
           "id": "getBeta",
-          "originalEndpointId": "beta.getBeta",
+          "originalEndpointId": "endpoint_beta.getBeta",
           "name": "Get Beta",
           "path": {
             "pathParameters": [],
@@ -124,17 +121,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getBetaExample",
               "description": "",
               "path": "/beta",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -151,8 +145,8 @@
       "types": [],
       "subpackages": []
     },
-    "gamma": {
-      "subpackageId": "gamma",
+    "subpackage_gamma": {
+      "subpackageId": "subpackage_gamma",
       "name": "gamma",
       "endpoints": [
         {
@@ -162,11 +156,11 @@
           "environments": [
             {
               "id": "prod",
-              "baseUrl": "https://gamma.spscommerce.com"
+              "baseUrl": "https://gamma.testapi.com"
             }
           ],
           "id": "getGamma",
-          "originalEndpointId": "gamma.getGamma",
+          "originalEndpointId": "endpoint_gamma.getGamma",
           "name": "Get Gamma",
           "path": {
             "pathParameters": [],
@@ -199,17 +193,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getGammaExample",
               "description": "",
               "path": "/gamma",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -226,8 +217,8 @@
       "types": [],
       "subpackages": []
     },
-    "delta": {
-      "subpackageId": "delta",
+    "subpackage_delta": {
+      "subpackageId": "subpackage_delta",
       "name": "delta",
       "endpoints": [
         {
@@ -237,11 +228,11 @@
           "environments": [
             {
               "id": "prod",
-              "baseUrl": "https://delta.spscommerce.com"
+              "baseUrl": "https://delta.testapi.com"
             }
           ],
           "id": "getDelta",
-          "originalEndpointId": "delta.getDelta",
+          "originalEndpointId": "endpoint_delta.getDelta",
           "name": "Get Delta",
           "path": {
             "pathParameters": [],
@@ -274,17 +265,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getDeltaExample",
               "description": "",
               "path": "/delta",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -301,8 +289,8 @@
       "types": [],
       "subpackages": []
     },
-    "mu": {
-      "subpackageId": "mu",
+    "subpackage_mu": {
+      "subpackageId": "subpackage_mu",
       "name": "mu",
       "endpoints": [
         {
@@ -312,11 +300,11 @@
           "environments": [
             {
               "id": "prod",
-              "baseUrl": "https://mu.spscommerce.com"
+              "baseUrl": "https://mu.testapi.com"
             }
           ],
           "id": "getMu",
-          "originalEndpointId": "mu.getMu",
+          "originalEndpointId": "endpoint_mu.getMu",
           "name": "Get Mu",
           "path": {
             "pathParameters": [],
@@ -349,17 +337,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getMuExample",
               "description": "",
               "path": "/mu",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -376,8 +361,8 @@
       "types": [],
       "subpackages": []
     },
-    "omega": {
-      "subpackageId": "omega",
+    "subpackage_omega": {
+      "subpackageId": "subpackage_omega",
       "name": "omega",
       "endpoints": [
         {
@@ -387,11 +372,11 @@
           "environments": [
             {
               "id": "prod",
-              "baseUrl": "https://omega.spscommerce.com"
+              "baseUrl": "https://omega.testapi.com"
             }
           ],
           "id": "getOmega",
-          "originalEndpointId": "omega.getOmega",
+          "originalEndpointId": "endpoint_omega.getOmega",
           "name": "Get Omega",
           "path": {
             "pathParameters": [],
@@ -424,17 +409,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getOmegaExample",
               "description": "",
               "path": "/omega",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -451,8 +433,8 @@
       "types": [],
       "subpackages": []
     },
-    "zeta": {
-      "subpackageId": "zeta",
+    "subpackage_zeta": {
+      "subpackageId": "subpackage_zeta",
       "name": "zeta",
       "endpoints": [
         {
@@ -462,11 +444,11 @@
           "environments": [
             {
               "id": "prod",
-              "baseUrl": "https://zeta.spscommerce.com"
+              "baseUrl": "https://zeta.testapi.com"
             }
           ],
           "id": "getZeta",
-          "originalEndpointId": "zeta.getZeta",
+          "originalEndpointId": "endpoint_zeta.getZeta",
           "name": "Get Zeta",
           "path": {
             "pathParameters": [],
@@ -499,17 +481,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getZetaExample",
               "description": "",
               "path": "/zeta",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -526,8 +505,8 @@
       "types": [],
       "subpackages": []
     },
-    "eta": {
-      "subpackageId": "eta",
+    "subpackage_eta": {
+      "subpackageId": "subpackage_eta",
       "name": "eta",
       "endpoints": [
         {
@@ -537,11 +516,11 @@
           "environments": [
             {
               "id": "prod",
-              "baseUrl": "https://eta.spscommerce.com"
+              "baseUrl": "https://eta.testapi.com"
             }
           ],
           "id": "getEta",
-          "originalEndpointId": "eta.getEta",
+          "originalEndpointId": "endpoint_eta.getEta",
           "name": "Get Eta",
           "path": {
             "pathParameters": [],
@@ -574,17 +553,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getEtaExample",
               "description": "",
               "path": "/eta",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -608,14 +584,14 @@
     "websockets": [],
     "types": [],
     "subpackages": [
-      "alpha",
-      "beta",
-      "gamma",
-      "delta",
-      "mu",
-      "omega",
-      "zeta",
-      "eta"
+      "subpackage_alpha",
+      "subpackage_beta",
+      "subpackage_gamma",
+      "subpackage_delta",
+      "subpackage_mu",
+      "subpackage_omega",
+      "subpackage_zeta",
+      "subpackage_eta"
     ]
   },
   "snippetsConfiguration": {},

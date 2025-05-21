@@ -16,7 +16,7 @@
                     "from seed import SeedFileDownload"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedFileDownload(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedFileDownload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -38,7 +38,7 @@
                         "from seed import AsyncSeedFileDownload"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedFileDownload(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedFileDownload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

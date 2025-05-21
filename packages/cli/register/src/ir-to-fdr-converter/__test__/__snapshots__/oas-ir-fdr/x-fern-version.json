@@ -74,15 +74,15 @@
     }
   },
   "subpackages": {
-    "chatCompletions": {
-      "subpackageId": "chatCompletions",
+    "subpackage_chatCompletions": {
+      "subpackageId": "subpackage_chatCompletions",
       "name": "chatCompletions",
       "endpoints": [
         {
           "auth": false,
           "method": "POST",
           "id": "create",
-          "originalEndpointId": "chatCompletions.create",
+          "originalEndpointId": "endpoint_chatCompletions.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -128,7 +128,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "chatCompletionsCreateExample",
               "description": "",
               "path": "/completions/chat",
               "pathParameters": {},
@@ -144,10 +144,7 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -175,8 +172,12 @@
       "CompletionChunk"
     ],
     "subpackages": [
-      "chatCompletions"
+      "subpackage_chatCompletions"
     ]
+  },
+  "auth": {
+    "type": "bearerAuth",
+    "tokenName": "token"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

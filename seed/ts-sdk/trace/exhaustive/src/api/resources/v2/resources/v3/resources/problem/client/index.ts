@@ -1,4 +1,4 @@
-export * as getLightweightProblems from "./getLightweightProblems";
-export * as getProblems from "./getProblems";
-export * as getLatestProblem from "./getLatestProblem";
-export * as getProblemVersion from "./getProblemVersion";
+export * as getLightweightProblems from "./getLightweightProblems.js";
+export * as getProblems from "./getProblems.js";
+export * as getLatestProblem from "./getLatestProblem.js";
+export * as getProblemVersion from "./getProblemVersion.js";

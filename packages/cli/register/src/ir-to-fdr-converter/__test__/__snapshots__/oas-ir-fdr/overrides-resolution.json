@@ -324,7 +324,7 @@
         "auth": false,
         "method": "POST",
         "id": "createAUser",
-        "originalEndpointId": "createAUser",
+        "originalEndpointId": "endpoint_.createAUser",
         "name": "Create a user",
         "path": {
           "pathParameters": [],
@@ -368,7 +368,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "createAUserExample",
             "description": "",
             "path": "/users",
             "pathParameters": {},
@@ -381,22 +381,19 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "name": "foo",
-                "email": "foo",
-                "createdAt": "foo",
-                "settings": {
-                  "theme": "foo",
-                  "notifications": true,
-                  "lastModified": "foo"
-                },
-                "stats": {
-                  "totalLogins": 42,
-                  "lastLoginTime": "foo",
-                  "accountStatus": "active"
-                }
+              "id": "foo",
+              "name": "foo",
+              "email": "foo",
+              "createdAt": "foo",
+              "settings": {
+                "theme": "foo",
+                "notifications": true,
+                "lastModified": "foo"
+              },
+              "stats": {
+                "totalLogins": 42,
+                "lastLoginTime": "foo",
+                "accountStatus": "active"
               }
             },
             "responseBodyV3": {
@@ -428,7 +425,7 @@
         "auth": false,
         "method": "PUT",
         "id": "updateAUser",
-        "originalEndpointId": "updateAUser",
+        "originalEndpointId": "endpoint_.updateAUser",
         "name": "Update a user",
         "path": {
           "pathParameters": [],
@@ -472,7 +469,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "updateAUserExample",
             "description": "",
             "path": "/users",
             "pathParameters": {},
@@ -485,22 +482,19 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "name": "foo",
-                "email": "foo",
-                "createdAt": "foo",
-                "settings": {
-                  "theme": "foo",
-                  "notifications": true,
-                  "lastModified": "foo"
-                },
-                "stats": {
-                  "totalLogins": 42,
-                  "lastLoginTime": "foo",
-                  "accountStatus": "active"
-                }
+              "id": "foo",
+              "name": "foo",
+              "email": "foo",
+              "createdAt": "foo",
+              "settings": {
+                "theme": "foo",
+                "notifications": true,
+                "lastModified": "foo"
+              },
+              "stats": {
+                "totalLogins": 42,
+                "lastLoginTime": "foo",
+                "accountStatus": "active"
               }
             },
             "responseBodyV3": {

@@ -90,6 +90,11 @@ class SDKCustomConfig(pydantic.BaseModel):
     # removed in the future.
     use_typeddict_requests_for_file_upload: bool = False
 
+    use_inheritance_for_extended_models: bool = True
+    """
+    Whether to generate Pydantic models that implement inheritance when a model utilizes the Fern `extends` keyword.
+    """
+
     pyproject_toml: Optional[str] = None
 
     # The chunk size to use (if any) when processing a response bytes stream within `iter_bytes` or `aiter_bytes`
@@ -111,3 +116,8 @@ class SDKCustomConfig(pydantic.BaseModel):
         obj.pydantic_config.use_typeddict_requests = use_typeddict_requests
 
         return obj
+
+    @pydantic.model_validator(mode="after")
+    def propagate_use_inheritance_for_extended_models(self) -> "SDKCustomConfig":
+        self.pydantic_config.use_inheritance_for_extended_models = self.use_inheritance_for_extended_models
+        return self

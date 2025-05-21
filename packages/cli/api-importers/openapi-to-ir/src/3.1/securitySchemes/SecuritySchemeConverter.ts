@@ -1,13 +1,12 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AuthScheme, ContainerType, PrimitiveTypeV2, TypeReference } from "@fern-api/ir-sdk";
+import { AuthScheme } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v2-importer-commons";
 
-import { OpenAPIConverter } from "../OpenAPIConverter";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 
 export declare namespace SecuritySchemeConverter {
-    export interface Args extends OpenAPIConverter.Args {
+    export interface Args extends AbstractConverter.Args<OpenAPIConverterContext3_1> {
         securityScheme: OpenAPIV3_1.SecuritySchemeObject;
     }
 }
@@ -48,14 +47,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                             name: this.context.casingsGenerator.generateName(this.securityScheme.name),
                             wireValue: this.securityScheme.name
                         },
-                        valueType: TypeReference.container(
-                            ContainerType.optional(
-                                TypeReference.primitive({
-                                    v1: "STRING",
-                                    v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
-                                })
-                            )
-                        ),
+                        valueType: AbstractConverter.OPTIONAL_STRING,
                         prefix: undefined,
                         headerEnvVar: undefined,
                         docs: this.securityScheme.description
@@ -64,7 +56,7 @@ export class SecuritySchemeConverter extends AbstractConverter<OpenAPIConverterC
                 break;
             }
             case "oauth2": {
-                // Treat OAuth as bearer auth for now
+                // TODO: Correctly implement OAuth.
                 return AuthScheme.bearer({
                     token: this.context.casingsGenerator.generateName("token"),
                     tokenEnvVar: undefined,

@@ -80,14 +80,16 @@
             "type": {
               "type": "id",
               "value": "RequestOne"
-            }
+            },
+            "displayName": "A simple request title"
           },
           {
             "typeName": "RequestTwo",
             "type": {
               "type": "id",
               "value": "RequestTwo"
-            }
+            },
+            "displayName": "A simple response title"
           }
         ]
       }
@@ -100,7 +102,7 @@
         "auth": false,
         "method": "GET",
         "id": "Get",
-        "originalEndpointId": "Get",
+        "originalEndpointId": "endpoint_.Get",
         "name": "Get",
         "path": {
           "pathParameters": [],
@@ -148,7 +150,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getExample",
             "description": "",
             "path": "/test",
             "pathParameters": {},
@@ -160,10 +162,7 @@
               "value": {}
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"
@@ -178,7 +177,7 @@
         "auth": false,
         "method": "POST",
         "id": "Post",
-        "originalEndpointId": "Post",
+        "originalEndpointId": "endpoint_.Post",
         "name": "Post",
         "path": {
           "pathParameters": [],
@@ -226,7 +225,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "postExample",
             "description": "",
             "path": "/test",
             "pathParameters": {},
@@ -238,10 +237,7 @@
               "value": {}
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"

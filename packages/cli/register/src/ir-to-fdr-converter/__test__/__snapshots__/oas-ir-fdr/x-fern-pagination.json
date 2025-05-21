@@ -120,7 +120,7 @@
         "description": "",
         "method": "GET",
         "id": "list",
-        "originalEndpointId": "list",
+        "originalEndpointId": "endpoint_.list",
         "name": "List",
         "path": {
           "pathParameters": [],
@@ -164,30 +164,25 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "listExample",
             "description": "",
             "path": "/list",
             "pathParameters": {},
-            "queryParameters": {
-              "pageNumber": 42
-            },
+            "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "meta": {
-                  "hasMore": true
-                },
-                "users": [
-                  {
-                    "id": "foo",
-                    "name": "foo",
-                    "email": "foo",
-                    "age": 42
-                  }
-                ]
-              }
+              "meta": {
+                "hasMore": true
+              },
+              "users": [
+                {
+                  "id": "foo",
+                  "name": "foo",
+                  "email": "foo",
+                  "age": 42
+                }
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -216,7 +211,7 @@
         "description": "",
         "method": "GET",
         "id": "list",
-        "originalEndpointId": "list",
+        "originalEndpointId": "endpoint_.list",
         "name": "List",
         "path": {
           "pathParameters": [],
@@ -272,31 +267,25 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "listExample",
             "description": "",
             "path": "/list-with-step",
             "pathParameters": {},
-            "queryParameters": {
-              "pageNumber": 42,
-              "limit": 42
-            },
+            "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "meta": {
-                  "hasMore": true
-                },
-                "users": [
-                  {
-                    "id": "foo",
-                    "name": "foo",
-                    "email": "foo",
-                    "age": 42
-                  }
-                ]
-              }
+              "meta": {
+                "hasMore": true
+              },
+              "users": [
+                {
+                  "id": "foo",
+                  "name": "foo",
+                  "email": "foo",
+                  "age": 42
+                }
+              ]
             },
             "responseBodyV3": {
               "type": "json",

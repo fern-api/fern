@@ -8,7 +8,7 @@ export class CsharpFormatter extends AbstractFormatter {
 
     constructor() {
         super();
-        this.csharpier = findDotnetToolPath("dotnet-csharpier");
+        this.csharpier = findDotnetToolPath("csharpier");
     }
 
     private appendSemicolon(content: string): string {
@@ -18,18 +18,22 @@ export class CsharpFormatter extends AbstractFormatter {
     public async format(content: string): Promise<string> {
         content = this.appendSemicolon(content);
 
-        const { stdout } = await execa(this.csharpier, ["--fast", "--no-msbuild-check"], {
-            input: content,
-            encoding: "utf-8",
-            stripFinalNewline: false
-        });
+        const { stdout } = await execa(
+            this.csharpier,
+            ["format", "--no-msbuild-check", "--skip-validation", "--compilation-errors-as-warnings"],
+            {
+                input: content,
+                encoding: "utf-8",
+                stripFinalNewline: false
+            }
+        );
         return stdout;
     }
 
     public override async formatMultiple(contents: string[]): Promise<string[]> {
         const content = contents.map((c, index) => `Dummy${index}.cs\u0003${this.appendSemicolon(c)}\u0003`).join();
 
-        const { stdout } = await execa(this.csharpier, ["--fast", "--no-msbuild-check", "--pipe-multiple-files"], {
+        const { stdout } = await execa(this.csharpier, ["pipe-files"], {
             input: content,
             encoding: "utf-8",
             stripFinalNewline: false
@@ -40,11 +44,15 @@ export class CsharpFormatter extends AbstractFormatter {
     public formatSync(content: string): string {
         content = this.appendSemicolon(content);
 
-        const { stdout } = execa.sync(this.csharpier, ["--fast", "--no-msbuild-check"], {
-            input: content,
-            encoding: "utf-8",
-            stripFinalNewline: false
-        });
+        const { stdout } = execa.sync(
+            this.csharpier,
+            ["format", "--no-msbuild-check", "--skip-validation", "--compilation-errors-as-warnings"],
+            {
+                input: content,
+                encoding: "utf-8",
+                stripFinalNewline: false
+            }
+        );
         return stdout;
     }
 }

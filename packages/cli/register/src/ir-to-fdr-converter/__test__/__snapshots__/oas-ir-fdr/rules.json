@@ -92,8 +92,8 @@
         ]
       }
     },
-    "ExampleGetResponsesSchemaOneOfOne": {
-      "name": "ExampleGetResponsesSchemaOneOfOne",
+    "DefaultAndValidationRulesResponse2001": {
+      "name": "DefaultAndValidationRulesResponse2001",
       "shape": {
         "type": "object",
         "extends": [],
@@ -126,10 +126,10 @@
             }
           },
           {
-            "typeName": "ExampleGetResponsesSchemaOneOfOne",
+            "typeName": "DefaultAndValidationRulesResponse2001",
             "type": {
               "type": "id",
-              "value": "ExampleGetResponsesSchemaOneOfOne"
+              "value": "DefaultAndValidationRulesResponse2001"
             }
           }
         ]
@@ -143,7 +143,7 @@
         "auth": false,
         "method": "GET",
         "id": "defaultAndValidationRules",
-        "originalEndpointId": "defaultAndValidationRules",
+        "originalEndpointId": "endpoint_.defaultAndValidationRules",
         "name": "Default and validation rules",
         "path": {
           "pathParameters": [],
@@ -174,7 +174,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "defaultAndValidationRulesExample",
             "description": "",
             "path": "/example",
             "pathParameters": {},
@@ -182,21 +182,18 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 42,
-                "age": 42,
-                "name": "foo",
-                "value": 42
-              }
+              "id": 50,
+              "age": 50,
+              "name": "type",
+              "value": 1.1
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "id": 42,
-                "age": 42,
-                "name": "foo",
-                "value": 42
+                "id": 50,
+                "age": 50,
+                "name": "type",
+                "value": 1.1
               }
             }
           }

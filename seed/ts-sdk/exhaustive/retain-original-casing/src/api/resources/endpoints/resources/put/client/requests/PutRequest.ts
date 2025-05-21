@@ -4,6 +4,10 @@
 
 /**
  * @example
- *     {}
+ *     {
+ *         id: "id"
+ *     }
  */
-export interface PutRequest {}
+export interface PutRequest {
+    id: string;
+}

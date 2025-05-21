@@ -79,6 +79,12 @@
             }
           },
           {
+            "key": "data",
+            "valueType": {
+              "type": "unknown"
+            }
+          },
+          {
             "key": "errors",
             "valueType": {
               "type": "optional",
@@ -89,6 +95,12 @@
                   "value": "Issue"
                 }
               }
+            }
+          },
+          {
+            "key": "meta",
+            "valueType": {
+              "type": "unknown"
             }
           },
           {
@@ -359,15 +371,6 @@
         ]
       }
     },
-    "IssueDetails": {
-      "description": "Any associated details",
-      "name": "IssueDetails",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "Issue": {
       "name": "Issue",
       "shape": {
@@ -398,8 +401,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "IssueDetails"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             }
@@ -1757,9 +1768,9 @@
     }
   },
   "subpackages": {
-    "Auth": {
-      "subpackageId": "Auth",
-      "name": "Auth",
+    "subpackage_auth": {
+      "subpackageId": "subpackage_auth",
+      "name": "auth",
       "endpoints": [
         {
           "auth": false,
@@ -1773,7 +1784,7 @@
             }
           ],
           "id": "andRedirect",
-          "originalEndpointId": "Auth.andRedirect",
+          "originalEndpointId": "endpoint_auth.andRedirect",
           "name": "Auth and redirect sessions",
           "path": {
             "pathParameters": [],
@@ -1821,15 +1832,12 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "andRedirectExample",
               "description": "",
               "path": "/auth",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "x-session-id": "foo",
-                "x-call-type": "foo"
-              },
+              "headers": {},
               "responseStatusCode": 200
             }
           ],
@@ -1843,9 +1851,9 @@
       "types": [],
       "subpackages": []
     },
-    "Extensions": {
-      "subpackageId": "Extensions",
-      "name": "Extensions",
+    "subpackage_extensions": {
+      "subpackageId": "subpackage_extensions",
+      "name": "extensions",
       "endpoints": [
         {
           "auth": false,
@@ -1859,7 +1867,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "Extensions.get",
+          "originalEndpointId": "endpoint_extensions.get",
           "name": "Get extensions",
           "path": {
             "pathParameters": [],
@@ -1904,7 +1912,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
               "path": "/extensions",
               "pathParameters": {},
@@ -1914,34 +1922,31 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": [
-                    {
-                      "date_created": "foo",
-                      "id": "73df0106-1781-4b03-a288-e749e1a43481",
-                      "name": "Special Widget",
-                      "upload_uri": "foo"
-                    }
-                  ],
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ],
-                  "meta": {
-                    "requestId": "foo"
-                  },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                "data": [
+                  {
+                    "date_created": "foo",
+                    "id": "73df0106-1781-4b03-a288-e749e1a43481",
+                    "name": "Special Widget",
+                    "upload_uri": "foo"
+                  }
+                ],
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "requestId": "foo"
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -1990,7 +1995,7 @@
             }
           ],
           "id": "post",
-          "originalEndpointId": "Extensions.post",
+          "originalEndpointId": "endpoint_extensions.post",
           "name": "Create an extension",
           "path": {
             "pathParameters": [],
@@ -2034,7 +2039,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "extensionsPostExample",
               "description": "",
               "path": "/extensions",
               "pathParameters": {},
@@ -2051,32 +2056,29 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "date_created": "foo",
-                    "id": "73df0106-1781-4b03-a288-e749e1a43481",
-                    "name": "Special Widget",
-                    "upload_uri": "foo"
-                  },
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ],
-                  "meta": {
-                    "requestId": "foo"
-                  },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                "data": {
+                  "date_created": "foo",
+                  "id": "73df0106-1781-4b03-a288-e749e1a43481",
+                  "name": "Special Widget",
+                  "upload_uri": "foo"
+                },
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "requestId": "foo"
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2124,7 +2126,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "Extensions.delete",
+          "originalEndpointId": "endpoint_extensions.delete",
           "name": "Delete extensions matching name query",
           "path": {
             "pathParameters": [],
@@ -2158,7 +2160,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "deleteExample",
               "description": "",
               "path": "/extensions",
               "pathParameters": {},
@@ -2185,7 +2187,7 @@
             }
           ],
           "id": "getById",
-          "originalEndpointId": "Extensions.getById",
+          "originalEndpointId": "endpoint_extensions.getById",
           "name": "Get an extension",
           "path": {
             "pathParameters": [
@@ -2233,12 +2235,52 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal Server Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getByIdExample",
               "description": "",
-              "path": "/extensions/",
+              "path": "/extensions/4a61a55c-391b-4f73-957e-ffbd29ac7cba",
               "pathParameters": {
                 "id": "4a61a55c-391b-4f73-957e-ffbd29ac7cba"
               },
@@ -2246,32 +2288,29 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "date_created": "foo",
-                    "id": "73df0106-1781-4b03-a288-e749e1a43481",
-                    "name": "Special Widget",
-                    "upload_uri": "foo"
-                  },
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ],
-                  "meta": {
-                    "requestId": "foo"
-                  },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                "data": {
+                  "date_created": "foo",
+                  "id": "73df0106-1781-4b03-a288-e749e1a43481",
+                  "name": "Special Widget",
+                  "upload_uri": "foo"
+                },
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "requestId": "foo"
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2313,9 +2352,9 @@
       "types": [],
       "subpackages": []
     },
-    "Profiles": {
-      "subpackageId": "Profiles",
-      "name": "Profiles",
+    "subpackage_profiles": {
+      "subpackageId": "subpackage_profiles",
+      "name": "profiles",
       "endpoints": [
         {
           "auth": false,
@@ -2329,7 +2368,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "Profiles.get",
+          "originalEndpointId": "endpoint_profiles.get",
           "name": "Get profiles",
           "path": {
             "pathParameters": [],
@@ -2390,7 +2429,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
               "path": "/profiles",
               "pathParameters": {},
@@ -2404,36 +2443,33 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": [
-                    {
-                      "name": "Acme corp login",
-                      "status": "foo",
-                      "tags": [
-                        "foo"
-                      ],
-                      "upload_uri": "foo"
-                    }
-                  ],
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ],
-                  "meta": {
-                    "requestId": "foo"
-                  },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                "data": [
+                  {
+                    "name": "Acme corp login",
+                    "status": "foo",
+                    "tags": [
+                      "foo"
+                    ],
+                    "upload_uri": "foo"
+                  }
+                ],
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "requestId": "foo"
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2484,7 +2520,7 @@
             }
           ],
           "id": "post",
-          "originalEndpointId": "Profiles.post",
+          "originalEndpointId": "endpoint_profiles.post",
           "name": "Create a profile",
           "path": {
             "pathParameters": [],
@@ -2528,7 +2564,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "profilesPostExample",
               "description": "",
               "path": "/profiles",
               "pathParameters": {},
@@ -2545,34 +2581,31 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "name": "Acme corp login",
-                    "status": "foo",
-                    "tags": [
-                      "foo"
-                    ],
-                    "upload_uri": "foo"
-                  },
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
+                "data": {
+                  "name": "Acme corp login",
+                  "status": "foo",
+                  "tags": [
+                    "foo"
                   ],
-                  "meta": {
-                    "requestId": "foo"
-                  },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                  "upload_uri": "foo"
+                },
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "requestId": "foo"
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2622,7 +2655,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "Profiles.delete",
+          "originalEndpointId": "endpoint_profiles.delete",
           "name": "Delete profiles matching query",
           "path": {
             "pathParameters": [],
@@ -2672,7 +2705,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "deleteExample",
               "description": "",
               "path": "/profiles",
               "pathParameters": {},
@@ -2703,7 +2736,7 @@
             }
           ],
           "id": "getById",
-          "originalEndpointId": "Profiles.getById",
+          "originalEndpointId": "endpoint_profiles.getById",
           "name": "Get a profile",
           "path": {
             "pathParameters": [
@@ -2750,12 +2783,52 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal Server Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getByIdExample",
               "description": "",
-              "path": "/profiles/",
+              "path": "/profiles/4a61a55c-391b-4f73-957e-ffbd29ac7cba",
               "pathParameters": {
                 "id": "4a61a55c-391b-4f73-957e-ffbd29ac7cba"
               },
@@ -2763,34 +2836,31 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "name": "Acme corp login",
-                    "status": "foo",
-                    "tags": [
-                      "foo"
-                    ],
-                    "upload_uri": "foo"
-                  },
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
+                "data": {
+                  "name": "Acme corp login",
+                  "status": "foo",
+                  "tags": [
+                    "foo"
                   ],
-                  "meta": {
-                    "requestId": "foo"
-                  },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                  "upload_uri": "foo"
+                },
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "requestId": "foo"
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2834,9 +2904,9 @@
       "types": [],
       "subpackages": []
     },
-    "Sessions": {
-      "subpackageId": "Sessions",
-      "name": "Sessions",
+    "subpackage_sessions": {
+      "subpackageId": "subpackage_sessions",
+      "name": "sessions",
       "endpoints": [
         {
           "auth": false,
@@ -2850,7 +2920,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "Sessions.list",
+          "originalEndpointId": "endpoint_sessions.list",
           "name": "Get a list of sessions",
           "path": {
             "pathParameters": [],
@@ -2934,10 +3004,50 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal Server Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/sessions",
               "pathParameters": {},
@@ -2953,64 +3063,61 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "pagination": {
-                      "currentLimit": 42,
-                      "currentPage": 42,
-                      "finalCount": 42,
-                      "hasMore": true,
-                      "initialCount": 42,
-                      "nextOffset": 42,
-                      "numberOfPages": 42,
-                      "totalItems": 42
-                    },
-                    "sessions": [
-                      {
-                        "cdp_url": "foo",
-                        "cdp_ws_url": "foo",
-                        "chromedriver_url": "foo",
-                        "configuration": {
-                          "persist_profile": true,
-                          "persist_profile_name": "default",
-                          "persist_profile_tags": [
-                            "foo"
-                          ],
-                          "profile_id": "linkedin",
-                          "timeoutMinutes": 10
-                        },
-                        "current_usage": 42,
-                        "date_created": "foo",
-                        "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                        "last_activity": "foo",
-                        "live_view": {
-                          "airtop_browser_url": "foo",
-                          "token": "foo"
-                        },
-                        "status": "active",
-                        "url": "foo"
-                      }
-                    ]
+                "data": {
+                  "pagination": {
+                    "currentLimit": 42,
+                    "currentPage": 42,
+                    "finalCount": 42,
+                    "hasMore": true,
+                    "initialCount": 42,
+                    "nextOffset": 42,
+                    "numberOfPages": 42,
+                    "totalItems": 42
                   },
-                  "errors": [
+                  "sessions": [
                     {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ],
-                  "meta": {
-                    "requestId": "foo"
-                  },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
+                      "cdp_url": "foo",
+                      "cdp_ws_url": "foo",
+                      "chromedriver_url": "foo",
+                      "configuration": {
+                        "persist_profile": true,
+                        "persist_profile_name": "default",
+                        "persist_profile_tags": [
+                          "foo"
+                        ],
+                        "profile_id": "linkedin",
+                        "timeoutMinutes": 10
+                      },
+                      "current_usage": 42,
+                      "date_created": "foo",
+                      "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+                      "last_activity": "foo",
+                      "live_view": {
+                        "airtop_browser_url": "foo",
+                        "token": "foo"
+                      },
+                      "status": "active",
+                      "url": "foo"
                     }
                   ]
-                }
+                },
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "requestId": "foo"
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3089,7 +3196,7 @@
             }
           ],
           "id": "post",
-          "originalEndpointId": "Sessions.post",
+          "originalEndpointId": "endpoint_sessions.post",
           "name": "Create a session",
           "path": {
             "pathParameters": [],
@@ -3133,7 +3240,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "sessionsPostExample",
               "description": "",
               "path": "/sessions",
               "pathParameters": {},
@@ -3146,50 +3253,47 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "cdp_url": "foo",
-                    "cdp_ws_url": "foo",
-                    "chromedriver_url": "foo",
-                    "configuration": {
-                      "persist_profile": true,
-                      "persist_profile_name": "default",
-                      "persist_profile_tags": [
-                        "foo"
-                      ],
-                      "profile_id": "linkedin",
-                      "timeoutMinutes": 10
-                    },
-                    "current_usage": 42,
-                    "date_created": "foo",
-                    "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                    "last_activity": "foo",
-                    "live_view": {
-                      "airtop_browser_url": "foo",
-                      "token": "foo"
-                    },
-                    "status": "active",
-                    "url": "foo"
+                "data": {
+                  "cdp_url": "foo",
+                  "cdp_ws_url": "foo",
+                  "chromedriver_url": "foo",
+                  "configuration": {
+                    "persist_profile": true,
+                    "persist_profile_name": "default",
+                    "persist_profile_tags": [
+                      "foo"
+                    ],
+                    "profile_id": "linkedin",
+                    "timeoutMinutes": 10
                   },
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ],
-                  "meta": {
-                    "requestId": "foo"
+                  "current_usage": 42,
+                  "date_created": "foo",
+                  "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+                  "last_activity": "foo",
+                  "live_view": {
+                    "airtop_browser_url": "foo",
+                    "token": "foo"
                   },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                  "status": "active",
+                  "url": "foo"
+                },
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "requestId": "foo"
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3255,7 +3359,7 @@
             }
           ],
           "id": "getinfo",
-          "originalEndpointId": "Sessions.getinfo",
+          "originalEndpointId": "endpoint_sessions.getinfo",
           "name": "Get info for a session",
           "path": {
             "pathParameters": [
@@ -3303,12 +3407,52 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal Server Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getinfoExample",
               "description": "",
-              "path": "/sessions/",
+              "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
               "pathParameters": {
                 "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b"
               },
@@ -3316,50 +3460,47 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "cdp_url": "foo",
-                    "cdp_ws_url": "foo",
-                    "chromedriver_url": "foo",
-                    "configuration": {
-                      "persist_profile": true,
-                      "persist_profile_name": "default",
-                      "persist_profile_tags": [
-                        "foo"
-                      ],
-                      "profile_id": "linkedin",
-                      "timeoutMinutes": 10
-                    },
-                    "current_usage": 42,
-                    "date_created": "foo",
-                    "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                    "last_activity": "foo",
-                    "live_view": {
-                      "airtop_browser_url": "foo",
-                      "token": "foo"
-                    },
-                    "status": "active",
-                    "url": "foo"
+                "data": {
+                  "cdp_url": "foo",
+                  "cdp_ws_url": "foo",
+                  "chromedriver_url": "foo",
+                  "configuration": {
+                    "persist_profile": true,
+                    "persist_profile_name": "default",
+                    "persist_profile_tags": [
+                      "foo"
+                    ],
+                    "profile_id": "linkedin",
+                    "timeoutMinutes": 10
                   },
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ],
-                  "meta": {
-                    "requestId": "foo"
+                  "current_usage": 42,
+                  "date_created": "foo",
+                  "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+                  "last_activity": "foo",
+                  "live_view": {
+                    "airtop_browser_url": "foo",
+                    "token": "foo"
                   },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                  "status": "active",
+                  "url": "foo"
+                },
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "requestId": "foo"
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3425,7 +3566,7 @@
             }
           ],
           "id": "terminate",
-          "originalEndpointId": "Sessions.terminate",
+          "originalEndpointId": "endpoint_sessions.terminate",
           "name": "Ends a session",
           "path": {
             "pathParameters": [
@@ -3464,9 +3605,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "terminateExample",
               "description": "",
-              "path": "/sessions/",
+              "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
               "pathParameters": {
                 "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b"
               },
@@ -3491,7 +3632,7 @@
             }
           ],
           "id": "events",
-          "originalEndpointId": "Sessions.events",
+          "originalEndpointId": "endpoint_sessions.events",
           "name": "Get a session event stream",
           "path": {
             "pathParameters": [
@@ -3527,18 +3668,91 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "response": {
+            "statusCode": 200,
+            "type": {
+              "type": "object",
+              "extends": [],
+              "properties": []
+            }
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal Server Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "eventsExample",
               "description": "",
-              "path": "/sessions/",
+              "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/events",
               "pathParameters": {
                 "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b"
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "data": {
+                  "event": "foo",
+                  "eventTimeMillis": 42,
+                  "id": "foo",
+                  "status": "awaiting_capacity"
+                },
+                "event": "foo",
+                "id": 42,
+                "retry": 42
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "data": {
+                    "event": "foo",
+                    "eventTimeMillis": 42,
+                    "id": "foo",
+                    "status": "awaiting_capacity"
+                  },
+                  "event": "foo",
+                  "id": 42,
+                  "retry": 42
+                }
+              }
             }
           ],
           "protocol": {
@@ -3551,9 +3765,9 @@
       "types": [],
       "subpackages": []
     },
-    "Windows": {
-      "subpackageId": "Windows",
-      "name": "Windows",
+    "subpackage_windows": {
+      "subpackageId": "subpackage_windows",
+      "name": "windows",
       "endpoints": [
         {
           "auth": false,
@@ -3566,7 +3780,7 @@
             }
           ],
           "id": "get-window-info",
-          "originalEndpointId": "Windows.get-window-info",
+          "originalEndpointId": "endpoint_windows.get-window-info",
           "name": "Get information about a browser window in a session",
           "path": {
             "pathParameters": [
@@ -3675,46 +3889,41 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getWindowInfoExample",
               "description": "",
-              "path": "/sessions/",
+              "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/7334da2a-91b0-42c5-6156-76a5eba87430/get-window-info",
               "pathParameters": {
                 "sessionId": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
                 "windowId": "7334da2a-91b0-42c5-6156-76a5eba87430"
               },
               "queryParameters": {
-                "includeNavigationBar": true,
-                "disableResize": true,
                 "Screen resolution": "1920x1080"
               },
               "headers": {},
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "liveViewUrl": "foo",
-                    "token": "foo",
-                    "windowId": "foo"
-                  },
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ],
-                  "meta": {
-                    "requestId": "foo"
-                  },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                "data": {
+                  "liveViewUrl": "foo",
+                  "token": "foo",
+                  "windowId": "foo"
+                },
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "requestId": "foo"
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3760,7 +3969,7 @@
             }
           ],
           "id": "prompt-content",
-          "originalEndpointId": "Windows.prompt-content",
+          "originalEndpointId": "endpoint_windows.prompt-content",
           "name": "Submit a prompt about the content in a specific browser window.",
           "path": {
             "pathParameters": [
@@ -3843,9 +4052,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "windowsPromptContentExample",
               "description": "",
-              "path": "/sessions/",
+              "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/0334da2a-91b0-42c5-6156-76a5eba87430/prompt-content",
               "pathParameters": {
                 "sessionId": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
                 "windowId": "0334da2a-91b0-42c5-6156-76a5eba87430"
@@ -3863,38 +4072,35 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "modelResponse": "foo"
+                "data": {
+                  "modelResponse": "foo"
+                },
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "clientProvided": {
+                    "clientRequestId": "foo",
+                    "timeThresholdMs": 42
                   },
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ],
-                  "meta": {
-                    "clientProvided": {
-                      "clientRequestId": "foo",
-                      "timeThresholdMs": 42
-                    },
-                    "requestId": "foo",
-                    "status": "success",
-                    "usage": {
-                      "credits": 42,
-                      "id": "foo"
-                    }
-                  },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                  "requestId": "foo",
+                  "status": "success",
+                  "usage": {
+                    "credits": 42,
+                    "id": "foo"
+                  }
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3947,7 +4153,7 @@
             }
           ],
           "id": "scrape-content",
-          "originalEndpointId": "Windows.scrape-content",
+          "originalEndpointId": "endpoint_windows.scrape-content",
           "name": "Scrape a window",
           "path": {
             "pathParameters": [
@@ -4017,9 +4223,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "scrapeContentExample",
               "description": "",
-              "path": "/sessions/",
+              "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/0334da2a-91b0-42c5-6156-76a5eba87430/scrape-content",
               "pathParameters": {
                 "sessionId": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
                 "windowId": "0334da2a-91b0-42c5-6156-76a5eba87430"
@@ -4028,45 +4234,42 @@
               "headers": {},
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "modelResponse": {
-                      "scrapedContent": {
-                        "contentType": "foo",
-                        "text": "foo"
-                      },
-                      "selectedText": "foo",
-                      "title": "foo"
-                    }
-                  },
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ],
-                  "meta": {
-                    "clientProvided": {
-                      "clientRequestId": "foo",
-                      "timeThresholdMs": 42
+                "data": {
+                  "modelResponse": {
+                    "scrapedContent": {
+                      "contentType": "foo",
+                      "text": "foo"
                     },
-                    "requestId": "foo",
-                    "status": "success",
-                    "usage": {
-                      "credits": 42,
-                      "id": "foo"
-                    }
+                    "selectedText": "foo",
+                    "title": "foo"
+                  }
+                },
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "clientProvided": {
+                    "clientRequestId": "foo",
+                    "timeThresholdMs": 42
                   },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                  "requestId": "foo",
+                  "status": "success",
+                  "usage": {
+                    "credits": 42,
+                    "id": "foo"
+                  }
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -4126,7 +4329,7 @@
             }
           ],
           "id": "summarize-content",
-          "originalEndpointId": "Windows.summarize-content",
+          "originalEndpointId": "endpoint_windows.summarize-content",
           "name": "Get a summary of content in a browser window",
           "path": {
             "pathParameters": [
@@ -4209,9 +4412,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "windowsSummarizeContentExample",
               "description": "",
-              "path": "/sessions/",
+              "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/0334da2a-91b0-42c5-6156-76a5eba87430/summarize-content",
               "pathParameters": {
                 "sessionId": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
                 "windowId": "0334da2a-91b0-42c5-6156-76a5eba87430"
@@ -4225,38 +4428,35 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "modelResponse": "foo"
+                "data": {
+                  "modelResponse": "foo"
+                },
+                "errors": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ],
+                "meta": {
+                  "clientProvided": {
+                    "clientRequestId": "foo",
+                    "timeThresholdMs": 42
                   },
-                  "errors": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ],
-                  "meta": {
-                    "clientProvided": {
-                      "clientRequestId": "foo",
-                      "timeThresholdMs": 42
-                    },
-                    "requestId": "foo",
-                    "status": "success",
-                    "usage": {
-                      "credits": 42,
-                      "id": "foo"
-                    }
-                  },
-                  "warnings": [
-                    {
-                      "code": "foo",
-                      "details": {},
-                      "message": "foo"
-                    }
-                  ]
-                }
+                  "requestId": "foo",
+                  "status": "success",
+                  "usage": {
+                    "credits": 42,
+                    "id": "foo"
+                  }
+                },
+                "warnings": [
+                  {
+                    "code": "foo",
+                    "details": {},
+                    "message": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -4347,11 +4547,11 @@
       "WindowEnvelopeDefaultMetaWrapper"
     ],
     "subpackages": [
-      "Auth",
-      "Extensions",
-      "Profiles",
-      "Sessions",
-      "Windows"
+      "subpackage_auth",
+      "subpackage_extensions",
+      "subpackage_profiles",
+      "subpackage_sessions",
+      "subpackage_windows"
     ]
   },
   "auth": {

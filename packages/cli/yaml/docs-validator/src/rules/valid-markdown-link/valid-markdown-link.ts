@@ -14,7 +14,7 @@ import { SourceResolverImpl } from "../../../../../cli-source-resolver/src/Sourc
 import { Rule, RuleViolation } from "../../Rule";
 import { checkIfPathnameExists } from "./check-if-pathname-exists";
 import { PathnameToCheck, collectPathnamesToCheck } from "./collect-pathnames";
-import { getInstanceUrls, toBaseUrl } from "./url-utils";
+import { getInstanceUrls, removeLeadingSlash, toBaseUrl } from "./url-utils";
 
 const NOOP_CONTEXT = createMockTaskContext({ logger: createLogger(noop) });
 
@@ -72,6 +72,15 @@ export const ValidMarkdownLinks: Rule = {
             slugs.push(slug);
             absoluteFilePathsToSlugs.set(absoluteFilePath, slugs);
         });
+
+        const specialDocPages = ["/llms-full.txt", "/llms.txt"];
+
+        for (const specialPage of specialDocPages) {
+            const pageWithBasePath = baseUrl.basePath
+                ? `${removeLeadingSlash(baseUrl.basePath)}${specialPage}`
+                : removeLeadingSlash(specialPage);
+            visitableSlugs.add(pageWithBasePath);
+        }
 
         return {
             markdownPage: async ({ content, absoluteFilepath }) => {

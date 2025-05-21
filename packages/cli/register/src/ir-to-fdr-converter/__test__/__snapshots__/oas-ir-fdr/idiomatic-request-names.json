@@ -81,7 +81,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "name",
@@ -118,7 +119,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "settings",
@@ -184,7 +186,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -222,7 +225,8 @@
                   "type": "integer"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "lastLoginTime",
@@ -235,7 +239,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "accountStatus",
@@ -252,15 +257,15 @@
     }
   },
   "subpackages": {
-    "OrganizationUsers": {
-      "subpackageId": "OrganizationUsers",
-      "name": "OrganizationUsers",
+    "subpackage_organizationUsers": {
+      "subpackageId": "subpackage_organizationUsers",
+      "name": "organizationUsers",
       "endpoints": [
         {
           "auth": false,
           "method": "GET",
           "id": "listOrganizationUsers",
-          "originalEndpointId": "OrganizationUsers.listOrganizationUsers",
+          "originalEndpointId": "endpoint_organizationUsers.listOrganizationUsers",
           "name": "List organization users",
           "path": {
             "pathParameters": [
@@ -334,40 +339,34 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listOrganizationUsersExample",
               "description": "",
-              "path": "/organizations/",
+              "path": "/organizations/organizationId/users",
               "pathParameters": {
-                "organizationId": "foo"
+                "organizationId": "organizationId"
               },
-              "queryParameters": {
-                "page": 42,
-                "pageSize": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "users": [
-                    {
-                      "id": "foo",
-                      "name": "foo",
-                      "email": "foo",
-                      "createdAt": "foo",
-                      "settings": {
-                        "theme": "foo",
-                        "notifications": true,
-                        "lastModified": "foo"
-                      },
-                      "stats": {
-                        "totalLogins": 42,
-                        "lastLoginTime": "foo",
-                        "accountStatus": "active"
-                      }
+                "users": [
+                  {
+                    "id": "foo",
+                    "name": "foo",
+                    "email": "foo",
+                    "createdAt": "foo",
+                    "settings": {
+                      "theme": "foo",
+                      "notifications": true,
+                      "lastModified": "foo"
+                    },
+                    "stats": {
+                      "totalLogins": 42,
+                      "lastLoginTime": "foo",
+                      "accountStatus": "active"
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -404,15 +403,15 @@
       "types": [],
       "subpackages": []
     },
-    "Users": {
-      "subpackageId": "Users",
-      "name": "Users",
+    "subpackage_users": {
+      "subpackageId": "subpackage_users",
+      "name": "users",
       "endpoints": [
         {
           "auth": false,
           "method": "GET",
           "id": "listUsers",
-          "originalEndpointId": "Users.listUsers",
+          "originalEndpointId": "endpoint_users.listUsers",
           "name": "List users",
           "path": {
             "pathParameters": [],
@@ -468,38 +467,32 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listUsersExample",
               "description": "",
               "path": "/users",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 42,
-                "pageSize": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "users": [
-                    {
-                      "id": "foo",
-                      "name": "foo",
-                      "email": "foo",
-                      "createdAt": "foo",
-                      "settings": {
-                        "theme": "foo",
-                        "notifications": true,
-                        "lastModified": "foo"
-                      },
-                      "stats": {
-                        "totalLogins": 42,
-                        "lastLoginTime": "foo",
-                        "accountStatus": "active"
-                      }
+                "users": [
+                  {
+                    "id": "foo",
+                    "name": "foo",
+                    "email": "foo",
+                    "createdAt": "foo",
+                    "settings": {
+                      "theme": "foo",
+                      "notifications": true,
+                      "lastModified": "foo"
+                    },
+                    "stats": {
+                      "totalLogins": 42,
+                      "lastLoginTime": "foo",
+                      "accountStatus": "active"
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -543,7 +536,7 @@
         "auth": false,
         "method": "GET",
         "id": "getAUser",
-        "originalEndpointId": "getAUser",
+        "originalEndpointId": "endpoint_.getAUser",
         "name": "Get a user",
         "path": {
           "pathParameters": [
@@ -592,32 +585,29 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getAUserExample",
             "description": "",
-            "path": "/users/",
+            "path": "/users/userId",
             "pathParameters": {
-              "userId": "foo"
+              "userId": "userId"
             },
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "name": "foo",
-                "email": "foo",
-                "createdAt": "foo",
-                "settings": {
-                  "theme": "foo",
-                  "notifications": true,
-                  "lastModified": "foo"
-                },
-                "stats": {
-                  "totalLogins": 42,
-                  "lastLoginTime": "foo",
-                  "accountStatus": "active"
-                }
+              "id": "foo",
+              "name": "foo",
+              "email": "foo",
+              "createdAt": "foo",
+              "settings": {
+                "theme": "foo",
+                "notifications": true,
+                "lastModified": "foo"
+              },
+              "stats": {
+                "totalLogins": 42,
+                "lastLoginTime": "foo",
+                "accountStatus": "active"
               }
             },
             "responseBodyV3": {
@@ -656,8 +646,8 @@
       "UserStats"
     ],
     "subpackages": [
-      "OrganizationUsers",
-      "Users"
+      "subpackage_organizationUsers",
+      "subpackage_users"
     ]
   },
   "snippetsConfiguration": {},

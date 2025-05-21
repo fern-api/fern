@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_user.createUser"
             },
             "snippet": {
-                "sync_client": "from seed import SeedExtraProperties\nclient = SeedExtraProperties(base_url=\"https://yourhost.com/path/to/api\", )\nclient.user.create_user(name='name', )\n",
-                "async_client": "from seed import AsyncSeedExtraProperties\nimport asyncio\nclient = AsyncSeedExtraProperties(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.user.create_user(name='name', )\nasyncio.run(main())",
+                "sync_client": "from seed import SeedExtraProperties\n\nclient = SeedExtraProperties(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.create_user(\n    name=\"name\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExtraProperties\n\nclient = AsyncSeedExtraProperties(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.create_user(\n        name=\"name\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

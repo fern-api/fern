@@ -57,7 +57,7 @@
         "auth": false,
         "method": "GET",
         "id": "getExample",
-        "originalEndpointId": "getExample",
+        "originalEndpointId": "endpoint_.getExample",
         "name": "Get Example",
         "path": {
           "pathParameters": [],
@@ -88,7 +88,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getExampleExample",
             "description": "",
             "path": "/example",
             "pathParameters": {},
@@ -96,11 +96,8 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 42,
-                "name": "foo"
-              }
+              "id": 42,
+              "name": "foo"
             },
             "responseBodyV3": {
               "type": "json",

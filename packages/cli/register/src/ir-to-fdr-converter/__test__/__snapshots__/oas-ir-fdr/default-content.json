@@ -23,8 +23,8 @@
     }
   },
   "subpackages": {
-    "generativelanguage": {
-      "subpackageId": "generativelanguage",
+    "subpackage_generativelanguage": {
+      "subpackageId": "subpackage_generativelanguage",
       "name": "generativelanguage",
       "endpoints": [
         {
@@ -38,7 +38,7 @@
             }
           ],
           "id": "GenerateContent",
-          "originalEndpointId": "generativelanguage.GenerateContent",
+          "originalEndpointId": "endpoint_generativelanguage.GenerateContent",
           "name": "Generate Content",
           "path": {
             "pathParameters": [
@@ -68,11 +68,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "generateContentExample",
               "description": "",
               "path": "/generateContent",
               "pathParameters": {
-                "model": "foo"
+                "model": "model"
               },
               "queryParameters": {},
               "headers": {},
@@ -98,7 +98,7 @@
       "GenerateContentResponse"
     ],
     "subpackages": [
-      "generativelanguage"
+      "subpackage_generativelanguage"
     ]
   },
   "snippetsConfiguration": {},

@@ -2390,9 +2390,18 @@
         ]
       }
     },
-    "FromUrlPostRequestBodySchemaCheckUrlDuplicates": {
+    "Upload_multipartFileUploadPart_Request": {
+      "description": "Part of the uploaded file.\n\nDon't include `https://upload.uploadcare.com/` in this request:\n\n```\ncurl -X PUT \"<presigned-url-x>\" -H \"Content-Type: application/octet-stream\" --data <data-part>\n```\n",
+      "name": "Upload_multipartFileUploadPart_Request",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "FromUrlPostRequestBodyContentMultipartFormDataSchemaCheckUrlDuplicates": {
       "description": "If set to \"1\", enables the `source_url` duplicates prevention.\nSpecifically, if the `source_url` had already been fetched and uploaded previously,\nthis request will return information about the already uploaded file.\n",
-      "name": "FromUrlPostRequestBodySchemaCheckUrlDuplicates",
+      "name": "FromUrlPostRequestBodyContentMultipartFormDataSchemaCheckUrlDuplicates",
       "shape": {
         "type": "enum",
         "default": "0",
@@ -2406,9 +2415,9 @@
         ]
       }
     },
-    "FromUrlPostRequestBodySchemaSaveUrlDuplicates": {
+    "FromUrlPostRequestBodyContentMultipartFormDataSchemaSaveUrlDuplicates": {
       "description": "Determines if the requested `source_url` should be kept in the history of\nfetched/uploaded URLs. If the value is not defined explicitly, it is set\nto the value of the `check_URL_duplicates` parameter.\n",
-      "name": "FromUrlPostRequestBodySchemaSaveUrlDuplicates",
+      "name": "FromUrlPostRequestBodyContentMultipartFormDataSchemaSaveUrlDuplicates",
       "shape": {
         "type": "enum",
         "values": [
@@ -2488,9 +2497,9 @@
     }
   },
   "subpackages": {
-    "Upload": {
-      "subpackageId": "Upload",
-      "name": "Upload",
+    "subpackage_upload": {
+      "subpackageId": "subpackage_upload",
+      "name": "upload",
       "endpoints": [
         {
           "auth": false,
@@ -2504,7 +2513,7 @@
             }
           ],
           "id": "baseUpload",
-          "originalEndpointId": "Upload.baseUpload",
+          "originalEndpointId": "endpoint_upload.baseUpload",
           "name": "Direct uploads",
           "path": {
             "pathParameters": [],
@@ -2600,7 +2609,8 @@
                     "exploded": false
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "response": {
@@ -2617,21 +2627,98 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "one-file",
               "description": "",
               "path": "/base/",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "UPLOADCARE_PUB_KEY": "YOUR_PUBLIC_KEY",
+                "UPLOADCARE_STORE": "auto",
+                "{filename}": [
+                  "foo"
+                ]
+              },
               "requestBodyV3": {
                 "type": "form",
-                "value": {}
+                "value": {
+                  "UPLOADCARE_PUB_KEY": {
+                    "type": "json",
+                    "value": "YOUR_PUBLIC_KEY"
+                  },
+                  "UPLOADCARE_STORE": {
+                    "type": "json",
+                    "value": "auto"
+                  },
+                  "{filename}": {
+                    "type": "filenames",
+                    "value": [
+                      "foo"
+                    ]
+                  },
+                  "metadata[{key}]": {
+                    "type": "json"
+                  },
+                  "signature": {
+                    "type": "json"
+                  },
+                  "expire": {
+                    "type": "json"
+                  }
+                }
               },
               "responseStatusCode": 200,
-              "responseBody": {
+              "responseBody": {},
+              "responseBodyV3": {
                 "type": "json",
                 "value": {}
+              }
+            },
+            {
+              "name": "two-files",
+              "description": "",
+              "path": "/base/",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "UPLOADCARE_PUB_KEY": "YOUR_PUBLIC_KEY",
+                "UPLOADCARE_STORE": "auto",
+                "{filename}": [
+                  "foo"
+                ]
               },
+              "requestBodyV3": {
+                "type": "form",
+                "value": {
+                  "UPLOADCARE_PUB_KEY": {
+                    "type": "json",
+                    "value": "YOUR_PUBLIC_KEY"
+                  },
+                  "UPLOADCARE_STORE": {
+                    "type": "json",
+                    "value": "auto"
+                  },
+                  "{filename}": {
+                    "type": "filenames",
+                    "value": [
+                      "foo"
+                    ]
+                  },
+                  "metadata[{key}]": {
+                    "type": "json"
+                  },
+                  "signature": {
+                    "type": "json"
+                  },
+                  "expire": {
+                    "type": "json"
+                  }
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
                 "value": {}
@@ -2654,7 +2741,7 @@
             }
           ],
           "id": "multipartFileUploadStart",
-          "originalEndpointId": "Upload.multipartFileUploadStart",
+          "originalEndpointId": "endpoint_upload.multipartFileUploadStart",
           "name": "Start multipart upload",
           "path": {
             "pathParameters": [],
@@ -2798,7 +2885,8 @@
                     "exploded": false
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "response": {
@@ -2815,29 +2903,66 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "Upload_multipartFileUploadStart_example",
               "description": "",
               "path": "/multipart/start/",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "UPLOADCARE_PUB_KEY": "YOUR_PUBLIC_KEY",
+                "UPLOADCARE_STORE": "auto",
+                "filename": "myfile.mp4",
+                "size": 27796904,
+                "content_type": "video/mp4"
+              },
               "requestBodyV3": {
                 "type": "form",
-                "value": {}
+                "value": {
+                  "UPLOADCARE_PUB_KEY": {
+                    "type": "json",
+                    "value": "YOUR_PUBLIC_KEY"
+                  },
+                  "UPLOADCARE_STORE": {
+                    "type": "json",
+                    "value": "auto"
+                  },
+                  "filename": {
+                    "type": "json",
+                    "value": "myfile.mp4"
+                  },
+                  "size": {
+                    "type": "json",
+                    "value": 27796904
+                  },
+                  "part_size": {
+                    "type": "json"
+                  },
+                  "content_type": {
+                    "type": "json",
+                    "value": "video/mp4"
+                  },
+                  "metadata[{key}]": {
+                    "type": "json"
+                  },
+                  "signature": {
+                    "type": "json"
+                  },
+                  "expire": {
+                    "type": "json"
+                  }
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "uuid": "67947755-1584-4e3f-902b-d4e2bf76a841",
-                  "parts": [
-                    "<presigned-url-1>",
-                    "<presigned-url-2>",
-                    "<presigned-url-3>",
-                    "<presigned-url-4>",
-                    "<presigned-url-5>"
-                  ]
-                }
+                "uuid": "67947755-1584-4e3f-902b-d4e2bf76a841",
+                "parts": [
+                  "<presigned-url-1>",
+                  "<presigned-url-2>",
+                  "<presigned-url-3>",
+                  "<presigned-url-4>",
+                  "<presigned-url-5>"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2870,7 +2995,7 @@
             }
           ],
           "id": "multipartFileUploadPart",
-          "originalEndpointId": "Upload.multipartFileUploadPart",
+          "originalEndpointId": "endpoint_upload.multipartFileUploadPart",
           "name": "Upload individual file parts",
           "path": {
             "pathParameters": [],
@@ -2887,10 +3012,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "request": {
+            "type": {
+              "type": "bytes",
+              "isOptional": false,
+              "contentType": "application/octet-stream"
+            }
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "multipartFileUploadPartExample",
               "description": "",
               "path": "/<presigned-url-x>",
               "pathParameters": {},
@@ -2915,7 +3047,7 @@
             }
           ],
           "id": "multipartFileUploadComplete",
-          "originalEndpointId": "Upload.multipartFileUploadComplete",
+          "originalEndpointId": "endpoint_upload.multipartFileUploadComplete",
           "name": "Complete multipart upload",
           "path": {
             "pathParameters": [],
@@ -2963,7 +3095,8 @@
                     "exploded": false
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "response": {
@@ -2980,29 +3113,64 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "Upload_multipartFileUploadComplete_example",
               "description": "",
               "path": "/multipart/complete/",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "UPLOADCARE_PUB_KEY": "YOUR_PUBLIC_KEY",
+                "uuid": "67947755-1584-4e3f-902b-d4e2bf76a841"
+              },
               "requestBodyV3": {
                 "type": "form",
-                "value": {}
+                "value": {
+                  "UPLOADCARE_PUB_KEY": {
+                    "type": "json",
+                    "value": "YOUR_PUBLIC_KEY"
+                  },
+                  "uuid": {
+                    "type": "json",
+                    "value": "67947755-1584-4e3f-902b-d4e2bf76a841"
+                  }
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "uuid": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
-                  "file_id": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
-                  "size": 2667636,
-                  "total": 2667636,
-                  "done": 2667636,
-                  "original_filename": "IMG-0412_123.JPG",
-                  "filename": "IMG0412_123.JPG",
-                  "mime_type": "image/jpeg",
-                  "image_info": {
+                "uuid": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
+                "file_id": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
+                "size": 2667636,
+                "total": 2667636,
+                "done": 2667636,
+                "original_filename": "IMG-0412_123.JPG",
+                "filename": "IMG0412_123.JPG",
+                "mime_type": "image/jpeg",
+                "image_info": {
+                  "color_mode": "RGB",
+                  "orientation": 6,
+                  "format": "JPEG",
+                  "sequence": false,
+                  "height": 4032,
+                  "width": 3024,
+                  "geo_location": {
+                    "latitude": 55.62013611111111,
+                    "longitude": 37.66299166666666
+                  },
+                  "datetime_original": "foo",
+                  "dpi": [
+                    72,
+                    72
+                  ]
+                },
+                "video_info": null,
+                "content_info": {
+                  "mime": {
+                    "mime": "image/jpeg",
+                    "type": "image",
+                    "subtype": "jpeg"
+                  },
+                  "image": {
                     "color_mode": "RGB",
                     "orientation": 6,
                     "format": "JPEG",
@@ -3018,40 +3186,15 @@
                       72,
                       72
                     ]
-                  },
-                  "video_info": null,
-                  "content_info": {
-                    "mime": {
-                      "mime": "image/jpeg",
-                      "type": "image",
-                      "subtype": "jpeg"
-                    },
-                    "image": {
-                      "color_mode": "RGB",
-                      "orientation": 6,
-                      "format": "JPEG",
-                      "sequence": false,
-                      "height": 4032,
-                      "width": 3024,
-                      "geo_location": {
-                        "latitude": 55.62013611111111,
-                        "longitude": 37.66299166666666
-                      },
-                      "datetime_original": "foo",
-                      "dpi": [
-                        72,
-                        72
-                      ]
-                    }
-                  },
-                  "metadata": {
-                    "subsystem": "uploader",
-                    "pet": "cat"
-                  },
-                  "is_image": true,
-                  "is_stored": true,
-                  "is_ready": true
-                }
+                  }
+                },
+                "metadata": {
+                  "subsystem": "uploader",
+                  "pet": "cat"
+                },
+                "is_image": true,
+                "is_stored": true,
+                "is_ready": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3133,7 +3276,7 @@
             }
           ],
           "id": "fromURLUpload",
-          "originalEndpointId": "Upload.fromURLUpload",
+          "originalEndpointId": "endpoint_upload.fromURLUpload",
           "name": "Upload files from URLs",
           "path": {
             "pathParameters": [],
@@ -3216,7 +3359,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "FromUrlPostRequestBodySchemaCheckUrlDuplicates"
+                        "value": "FromUrlPostRequestBodyContentMultipartFormDataSchemaCheckUrlDuplicates"
                       }
                     },
                     "contentType": "multipart/form-data",
@@ -3230,7 +3373,7 @@
                       "type": "optional",
                       "itemType": {
                         "type": "id",
-                        "value": "FromUrlPostRequestBodySchemaSaveUrlDuplicates"
+                        "value": "FromUrlPostRequestBodyContentMultipartFormDataSchemaSaveUrlDuplicates"
                       }
                     },
                     "contentType": "multipart/form-data",
@@ -3277,7 +3420,8 @@
                     "exploded": false
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "response": {
@@ -3294,7 +3438,54 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "Upload_fromURLUpload_example",
+              "description": "",
+              "path": "/from_url/",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "pub_key": "YOUR_PUBLIC_KEY",
+                "source_url": "https://source.unsplash.com/featured"
+              },
+              "requestBodyV3": {
+                "type": "form",
+                "value": {
+                  "pub_key": {
+                    "type": "json",
+                    "value": "YOUR_PUBLIC_KEY"
+                  },
+                  "source_url": {
+                    "type": "json",
+                    "value": "https://source.unsplash.com/featured"
+                  },
+                  "store": {
+                    "type": "json"
+                  },
+                  "filename": {
+                    "type": "json"
+                  },
+                  "check_URL_duplicates": {
+                    "type": "json"
+                  },
+                  "save_URL_duplicates": {
+                    "type": "json"
+                  },
+                  "metadata[{key}]": {
+                    "type": "json"
+                  },
+                  "signature": {
+                    "type": "json"
+                  },
+                  "expire": {
+                    "type": "json"
+                  }
+                }
+              },
+              "responseStatusCode": 200
+            },
+            {
+              "name": "type-token",
               "description": "",
               "path": "/from_url/",
               "pathParameters": {},
@@ -3306,17 +3497,36 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "type": "token",
-                  "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
-                }
+                "type": "token",
+                "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "type": "token",
                   "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
+                }
+              }
+            },
+            {
+              "name": "type-file-info",
+              "description": "",
+              "path": "/from_url/",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "form",
+                "value": {}
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "token"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "token"
                 }
               }
             }
@@ -3337,7 +3547,7 @@
             }
           ],
           "id": "fromURLUploadStatus",
-          "originalEndpointId": "Upload.fromURLUploadStatus",
+          "originalEndpointId": "endpoint_upload.fromURLUploadStatus",
           "name": "Check the status of a task to fetch/upload a file from a URL",
           "path": {
             "pathParameters": [],
@@ -3380,7 +3590,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "status-waiting",
               "description": "",
               "path": "/from_url/status/",
               "pathParameters": {},
@@ -3390,10 +3600,87 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
+                "status": "waiting"
+              },
+              "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "status": "waiting"
                 }
+              }
+            },
+            {
+              "name": "status-progress",
+              "description": "",
+              "path": "/from_url/status/",
+              "pathParameters": {},
+              "queryParameters": {
+                "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "status": "waiting"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "status": "waiting"
+                }
+              }
+            },
+            {
+              "name": "status-success",
+              "description": "",
+              "path": "/from_url/status/",
+              "pathParameters": {},
+              "queryParameters": {
+                "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "status": "waiting"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "status": "waiting"
+                }
+              }
+            },
+            {
+              "name": "status-error",
+              "description": "",
+              "path": "/from_url/status/",
+              "pathParameters": {},
+              "queryParameters": {
+                "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "status": "waiting"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "status": "waiting"
+                }
+              }
+            },
+            {
+              "name": "status-unknown",
+              "description": "",
+              "path": "/from_url/status/",
+              "pathParameters": {},
+              "queryParameters": {
+                "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "status": "waiting"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3419,7 +3706,7 @@
             }
           ],
           "id": "fileUploadInfo",
-          "originalEndpointId": "Upload.fileUploadInfo",
+          "originalEndpointId": "endpoint_upload.fileUploadInfo",
           "name": "Get information about an uploaded file",
           "path": {
             "pathParameters": [],
@@ -3469,7 +3756,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "fileUploadInfoExample",
               "description": "",
               "path": "/info/",
               "pathParameters": {},
@@ -3480,17 +3767,39 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "uuid": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
-                  "file_id": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
-                  "size": 2667636,
-                  "total": 2667636,
-                  "done": 2667636,
-                  "original_filename": "IMG-0412_123.JPG",
-                  "filename": "IMG0412_123.JPG",
-                  "mime_type": "image/jpeg",
-                  "image_info": {
+                "uuid": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
+                "file_id": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
+                "size": 2667636,
+                "total": 2667636,
+                "done": 2667636,
+                "original_filename": "IMG-0412_123.JPG",
+                "filename": "IMG0412_123.JPG",
+                "mime_type": "image/jpeg",
+                "image_info": {
+                  "color_mode": "RGB",
+                  "orientation": 6,
+                  "format": "JPEG",
+                  "sequence": false,
+                  "height": 4032,
+                  "width": 3024,
+                  "geo_location": {
+                    "latitude": 55.62013611111111,
+                    "longitude": 37.66299166666666
+                  },
+                  "datetime_original": "foo",
+                  "dpi": [
+                    72,
+                    72
+                  ]
+                },
+                "video_info": null,
+                "content_info": {
+                  "mime": {
+                    "mime": "image/jpeg",
+                    "type": "image",
+                    "subtype": "jpeg"
+                  },
+                  "image": {
                     "color_mode": "RGB",
                     "orientation": 6,
                     "format": "JPEG",
@@ -3506,40 +3815,15 @@
                       72,
                       72
                     ]
-                  },
-                  "video_info": null,
-                  "content_info": {
-                    "mime": {
-                      "mime": "image/jpeg",
-                      "type": "image",
-                      "subtype": "jpeg"
-                    },
-                    "image": {
-                      "color_mode": "RGB",
-                      "orientation": 6,
-                      "format": "JPEG",
-                      "sequence": false,
-                      "height": 4032,
-                      "width": 3024,
-                      "geo_location": {
-                        "latitude": 55.62013611111111,
-                        "longitude": 37.66299166666666
-                      },
-                      "datetime_original": "foo",
-                      "dpi": [
-                        72,
-                        72
-                      ]
-                    }
-                  },
-                  "metadata": {
-                    "subsystem": "uploader",
-                    "pet": "cat"
-                  },
-                  "is_image": true,
-                  "is_stored": true,
-                  "is_ready": true
-                }
+                  }
+                },
+                "metadata": {
+                  "subsystem": "uploader",
+                  "pet": "cat"
+                },
+                "is_image": true,
+                "is_stored": true,
+                "is_ready": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3615,9 +3899,9 @@
       "types": [],
       "subpackages": []
     },
-    "Groups": {
-      "subpackageId": "Groups",
-      "name": "Groups",
+    "subpackage_groups": {
+      "subpackageId": "subpackage_groups",
+      "name": "groups",
       "endpoints": [
         {
           "auth": false,
@@ -3631,7 +3915,7 @@
             }
           ],
           "id": "createFilesGroup",
-          "originalEndpointId": "Groups.createFilesGroup",
+          "originalEndpointId": "endpoint_groups.createFilesGroup",
           "name": "Create a file group",
           "path": {
             "pathParameters": [],
@@ -3707,7 +3991,8 @@
                     "exploded": false
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "response": {
@@ -3724,30 +4009,52 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "Groups_createFilesGroup_example",
               "description": "",
               "path": "/group/",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "pub_key": "YOUR_PUBLIC_KEY",
+                "files[]": [
+                  "d6d34fa9-addd-472c-868d-2e5c105f9fcd",
+                  "b1026315-8116-4632-8364-607e64fca723/-/resize/x800/"
+                ]
+              },
               "requestBodyV3": {
                 "type": "form",
-                "value": {}
+                "value": {
+                  "pub_key": {
+                    "type": "json",
+                    "value": "YOUR_PUBLIC_KEY"
+                  },
+                  "files[]": {
+                    "type": "json",
+                    "value": [
+                      "d6d34fa9-addd-472c-868d-2e5c105f9fcd",
+                      "b1026315-8116-4632-8364-607e64fca723/-/resize/x800/"
+                    ]
+                  },
+                  "signature": {
+                    "type": "json"
+                  },
+                  "expire": {
+                    "type": "json"
+                  }
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "0d712319-b970-4602-850c-bae1ced521a6~1",
-                  "datetime_created": "2018-09-12T10:03:38.686710Z",
-                  "datetime_stored": null,
-                  "files_count": 1,
-                  "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
-                  "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
-                  "files": [
-                    "foo"
-                  ]
-                }
+                "id": "0d712319-b970-4602-850c-bae1ced521a6~1",
+                "datetime_created": "2018-09-12T10:03:38.686710Z",
+                "datetime_stored": null,
+                "files_count": 1,
+                "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
+                "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
+                "files": [
+                  "foo"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3781,7 +4088,7 @@
             }
           ],
           "id": "filesGroupInfo",
-          "originalEndpointId": "Groups.filesGroupInfo",
+          "originalEndpointId": "endpoint_groups.filesGroupInfo",
           "name": "Get information about a file group",
           "path": {
             "pathParameters": [],
@@ -3830,7 +4137,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "filesGroupInfoExample",
               "description": "",
               "path": "/group/info/",
               "pathParameters": {},
@@ -3841,18 +4148,15 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "0d712319-b970-4602-850c-bae1ced521a6~1",
-                  "datetime_created": "2018-09-12T10:03:38.686710Z",
-                  "datetime_stored": null,
-                  "files_count": 1,
-                  "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
-                  "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
-                  "files": [
-                    "foo"
-                  ]
-                }
+                "id": "0d712319-b970-4602-850c-bae1ced521a6~1",
+                "datetime_created": "2018-09-12T10:03:38.686710Z",
+                "datetime_stored": null,
+                "files_count": 1,
+                "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
+                "url": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
+                "files": [
+                  "foo"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3969,8 +4273,8 @@
       "metadata"
     ],
     "subpackages": [
-      "Upload",
-      "Groups"
+      "subpackage_upload",
+      "subpackage_groups"
     ]
   },
   "snippetsConfiguration": {},

@@ -17,7 +17,7 @@
 ```typescript
 await client.service.patch({
     application: "application",
-    requireAuth: true,
+    require_auth: true,
 });
 ```
 

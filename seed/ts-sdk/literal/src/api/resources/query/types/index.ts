@@ -1,2 +1,2 @@
-export * from "./AliasToPrompt";
-export * from "./AliasToStream";
+export * from "./AliasToPrompt.js";
+export * from "./AliasToStream.js";

@@ -65,6 +65,15 @@
     },
     {
       "path": "../docker-utils"
+    },
+    {
+      "path": "../../../auth"
+    },
+    {
+      "path": "../../../../../packages/core"
+    },
+    {
+      "path": "../../../configuration-loader"
     }
   ]
 }

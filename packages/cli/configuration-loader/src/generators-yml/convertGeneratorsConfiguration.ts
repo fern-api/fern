@@ -27,7 +27,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     filter: undefined,
     exampleGeneration: undefined,
     defaultFormParameterEncoding: undefined,
-    additionalPropertiesDefaultsTo: undefined
+    additionalPropertiesDefaultsTo: undefined,
+    typeDatesAsStrings: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -103,7 +104,8 @@ function parseOpenApiDefinitionSettingsSchema(
         defaultFormParameterEncoding: settings?.["default-form-parameter-encoding"],
         useBytesForBinaryResponse: settings?.["use-bytes-for-binary-response"],
         respectForwardCompatibleEnums: settings?.["respect-forward-compatible-enums"],
-        additionalPropertiesDefaultsTo: settings?.["additional-properties-defaults-to"]
+        additionalPropertiesDefaultsTo: settings?.["additional-properties-defaults-to"],
+        typeDatesAsStrings: settings?.["type-dates-as-strings"]
     };
 }
 
@@ -593,7 +595,7 @@ async function convertOutputMode({
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
 }): Promise<FernFiddle.OutputMode> {
     const downloadSnippets = generator.snippets != null && generator.snippets.path !== "";
-    if (generator.github != null) {
+    if (generator.github != null && !isGithubSelfhosted(generator.github)) {
         const indexOfFirstSlash = generator.github.repository.indexOf("/");
         const owner = generator.github.repository.slice(0, indexOfFirstSlash);
         const repo = generator.github.repository.slice(indexOfFirstSlash + 1);
@@ -887,6 +889,8 @@ function getGithubLicenseSchema(
         return generator["publish-metadata"].license;
     } else if (generator.metadata?.license != null) {
         return generator.metadata.license;
+    } else if (isGithubSelfhosted(generator.github)) {
+        return undefined;
     }
     return generator.github?.license;
 }
@@ -960,4 +964,16 @@ function warnForDeprecatedConfiguration(context: TaskContext, config: generators
         context.logger.warn("Warnings for generators.yml:");
         context.logger.warn("\t" + warnings.join("\n\t"));
     }
+}
+
+/**
+ * Type guard to check if a GitHub configuration is a self-hosted configuration
+ */
+export function isGithubSelfhosted(
+    github: generatorsYml.GithubConfigurationSchema | undefined
+): github is generatorsYml.GithubSelfhostedSchema {
+    if (github == null) {
+        return false;
+    }
+    return "uri" in github && "token" in github;
 }

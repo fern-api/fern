@@ -5,7 +5,9 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FPython)
 [![pypi](https://img.shields.io/pypi/v/fern_examples)](https://pypi.python.org/pypi/fern_examples)
 
-The Seed Python library provides convenient access to the Seed API from Python.
+This is a test introduction
+split across multiple lines.
+
 
 ## Documentation
 
@@ -28,11 +30,25 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedExamples
 from seed.environment import SeedExamplesEnvironment
-client = SeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
-client.service.create_movie(id='movie-c06a4ad7', prequel='movie-cv9b914f', title='The Boy and the Heron', from_='Hayao Miyazaki', rating=8.0, tag='tag-wf9as23d', metadata={'actors': ['Christian Bale', 'Florence Pugh', 'Willem Dafoe']
-, 'releaseDate': '2023-12-08'
-, 'ratings': {'rottenTomatoes': 97, 'imdb': 7.6}
-}, revenue=1000000, )
+
+client = SeedExamples(
+    token="YOUR_TOKEN",
+    environment=SeedExamplesEnvironment.PRODUCTION,
+)
+client.service.create_movie(
+    id="movie-c06a4ad7",
+    prequel="movie-cv9b914f",
+    title="The Boy and the Heron",
+    from_="Hayao Miyazaki",
+    rating=8.0,
+    tag="tag-wf9as23d",
+    metadata={
+        "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+        "releaseDate": "2023-12-08",
+        "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
+    },
+    revenue=1000000,
+)
 ```
 
 ## Async Client
@@ -40,25 +56,57 @@ client.service.create_movie(id='movie-c06a4ad7', prequel='movie-cv9b914f', title
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed import AsyncSeedExamples
 from seed.environment import SeedExamplesEnvironment
-import asyncio
-client = AsyncSeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
+
+client = AsyncSeedExamples(
+    token="YOUR_TOKEN",
+    environment=SeedExamplesEnvironment.PRODUCTION,
+)
+
+
 async def main() -> None:
-    await client.service.get_movie(movie_id='movie-c06a4ad7', )
-asyncio.run(main())```
+    await client.service.get_movie(
+        movie_id="movie-c06a4ad7",
+    )
+
+
+asyncio.run(main())
+```
 
 ```python
+import asyncio
+
 from seed import AsyncSeedExamples
 from seed.environment import SeedExamplesEnvironment
-import asyncio
-client = AsyncSeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
+
+client = AsyncSeedExamples(
+    token="YOUR_TOKEN",
+    environment=SeedExamplesEnvironment.PRODUCTION,
+)
+
+
 async def main() -> None:
-    await client.service.create_movie(id='movie-c06a4ad7', prequel='movie-cv9b914f', title='The Boy and the Heron', from_='Hayao Miyazaki', rating=8.0, tag='tag-wf9as23d', metadata={'actors': ['Christian Bale', 'Florence Pugh', 'Willem Dafoe']
-    , 'releaseDate': '2023-12-08'
-    , 'ratings': {'rottenTomatoes': 97, 'imdb': 7.6}
-    }, revenue=1000000, )
-asyncio.run(main())```
+    await client.service.create_movie(
+        id="movie-c06a4ad7",
+        prequel="movie-cv9b914f",
+        title="The Boy and the Heron",
+        from_="Hayao Miyazaki",
+        rating=8.0,
+        tag="tag-wf9as23d",
+        metadata={
+            "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+            "releaseDate": "2023-12-08",
+            "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
+        },
+        revenue=1000000,
+    )
+
+
+asyncio.run(main())
+```
 
 ## Exception Handling
 
@@ -67,6 +115,7 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
+
 try:
     client.service.create_movie(...)
 except ApiError as e:
@@ -83,7 +132,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 
 ```python
 from seed import SeedExamples
-client = SeedExamples(..., )
+
+client = SeedExamples(
+    ...,
+)
 response = client.service.with_raw_response.create_movie(...)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
@@ -116,7 +168,12 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedExamples
-client = SeedExamples(..., timeout=20.0, )
+
+client = SeedExamples(
+    ...,
+    timeout=20.0,
+)
+
 
 # Override timeout for a specific method
 client.service.create_movie(..., request_options={
@@ -130,9 +187,17 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-from seed import SeedExamples
 import httpx
-client = SeedExamples(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
+from seed import SeedExamples
+
+client = SeedExamples(
+    ...,
+    httpx_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
 
 ## Contributing
 

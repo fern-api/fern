@@ -1,1 +1,1 @@
-export * from "./UnauthorizedRequestErrorBody";
+export * from "./UnauthorizedRequestErrorBody.js";

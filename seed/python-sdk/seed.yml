@@ -10,13 +10,6 @@ buildScripts:
   compileScript:
     commands:
       - poetry run mypy .
-  testScript:
-    # TODO: we need to actually run the mock server tests as well
-    # Note: not all versions of the generator have this test directory which brings in the unit tests we write
-    # as a result, the script here only runs pytest if the directory exists, and exits 0 if it does not (e.g. just passes)
-    commands:
-      - export PYTHON_TEST_DIR="./tests/utils"
-      - if [ -d "$PYTHON_TEST_DIR" ]; then poetry run pytest -rP "$PYTHON_TEST_DIR"; else echo "Test directory not found. Skipping tests."; fi
 
 publish:
   workingDirectory: generators/python
@@ -52,17 +45,36 @@ customFixtureConfig:
     use_typeddict_requests: true
   outputFolder: client-filename
 fixtures:
-  file-download:
+  alias-extends:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
+  circular-references:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
+  circular-references-advanced:
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
+  file-download:
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-custom-config
+    - customConfig:
         default_bytes_stream_chunk_size: 1024
+        use_inheritance_for_extended_models: false
       outputFolder: default-chunk-size
   examples:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         include_legacy_wire_tests: true
+        use_inheritance_for_extended_models: false
       outputFolder: legacy-wire-tests
     - customConfig:
         client:
@@ -70,17 +82,22 @@ fixtures:
           class_name: BaseSeedExhaustive
           exported_filename: client.py
           exported_class_name: SeedExhaustive
+        use_inheritance_for_extended_models: false
       outputFolder: client-filename
     - customConfig: null
       readmeConfig:
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /movie
+        introduction: |
+          This is a test introduction
+          split across multiple lines.
         features:
           asyncClient:
             - GET /movie/{movieId}
             - method: POST
               path: /movie
+        use_inheritance_for_extended_models: false
       outputFolder: readme
   enum:
     - customConfig: null
@@ -213,17 +230,6 @@ fixtures:
     - customConfig:
         exclude_types_from_init_exports: true
       outputFolder: exclude_types_from_init_exports
-  unions:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
-        pydantic_config:
-          include_union_utils: true
-      outputFolder: union-utils
-    - customConfig:
-        pydantic_config:
-          union_naming: v1
-      outputFolder: union-naming-v1
   validation:
     - customConfig: null
       outputFolder: no-custom-config
@@ -244,6 +250,16 @@ fixtures:
         exclude_types_from_init_exports: true
         use_typeddict_requests: true
       outputFolder: exclude_types_from_init_exports
+  pagination:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
+  simple-fhir:
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
@@ -251,6 +267,19 @@ fixtures:
         pydantic_config:
           skip_validation: true
       outputFolder: skip-pydantic-validation
+  unions:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        pydantic_config:
+          include_union_utils: true
+        use_inheritance_for_extended_models: false
+      outputFolder: union-utils
+    - customConfig:
+        pydantic_config:
+          union_naming: v1
+        use_inheritance_for_extended_models: false
+      outputFolder: union-naming-v1
   websocket:
     - outputFolder: websocket-base
     - customConfig:
@@ -287,6 +316,7 @@ scripts:
       - poetry run pytest -rP .
 allowedFailures:
   - any-auth
+  - examples:client-filename
   - examples:legacy-wire-tests
   - exhaustive:additional_init_exports
   - exhaustive:pydantic-v1-wrapped

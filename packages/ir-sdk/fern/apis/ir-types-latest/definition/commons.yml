@@ -23,6 +23,7 @@ types:
       pascalCase: SafeAndUnsafeString
       snakeCase: SafeAndUnsafeString
       screamingSnakeCase: SafeAndUnsafeString
+  DisplayName: string
   NameAndWireValue:
     properties:
       wireValue: string
@@ -50,6 +51,10 @@ types:
   WithJsonExample:
     properties:
       jsonExample: unknown
+  
+  WithContentType: 
+    properties: 
+      contentType: optional<string>
 
   # ids
 

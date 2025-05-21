@@ -21,8 +21,15 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedPathParameters
-client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )
-client.user.create_user(tenant_id='tenant_id', name='name', tags=['tags', 'tags'], )
+
+client = SeedPathParameters(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.user.create_user(
+    tenant_id="tenant_id",
+    name="name",
+    tags=["tags", "tags"],
+)
 ```
 
 ## Async Client
@@ -30,12 +37,25 @@ client.user.create_user(tenant_id='tenant_id', name='name', tags=['tags', 'tags'
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-from seed import AsyncSeedPathParameters
 import asyncio
-client = AsyncSeedPathParameters(base_url="https://yourhost.com/path/to/api", )
+
+from seed import AsyncSeedPathParameters
+
+client = AsyncSeedPathParameters(
+    base_url="https://yourhost.com/path/to/api",
+)
+
+
 async def main() -> None:
-    await client.user.create_user(tenant_id='tenant_id', name='name', tags=['tags', 'tags'], )
-asyncio.run(main())```
+    await client.user.create_user(
+        tenant_id="tenant_id",
+        name="name",
+        tags=["tags", "tags"],
+    )
+
+
+asyncio.run(main())
+```
 
 ## Exception Handling
 
@@ -44,6 +64,7 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
+
 try:
     client.user.create_user(...)
 except ApiError as e:
@@ -60,7 +81,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 
 ```python
 from seed import SeedPathParameters
-client = SeedPathParameters(..., )
+
+client = SeedPathParameters(
+    ...,
+)
 response = client.user.with_raw_response.create_user(...)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
@@ -93,7 +117,12 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedPathParameters
-client = SeedPathParameters(..., timeout=20.0, )
+
+client = SeedPathParameters(
+    ...,
+    timeout=20.0,
+)
+
 
 # Override timeout for a specific method
 client.user.create_user(..., request_options={
@@ -107,9 +136,17 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-from seed import SeedPathParameters
 import httpx
-client = SeedPathParameters(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
+from seed import SeedPathParameters
+
+client = SeedPathParameters(
+    ...,
+    httpx_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
 
 ## Contributing
 

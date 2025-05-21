@@ -83,7 +83,7 @@ class RawDummyClient:
                     omit=OMIT,
                 ) as _response:
 
-                    def stream() -> HttpResponse[
+                    def _stream() -> HttpResponse[
                         typing.Iterator[typing.Union[typing.Iterator[StreamResponse], RegularResponse]]
                     ]:
                         try:
@@ -109,10 +109,14 @@ class RawDummyClient:
                             _response.read()
                             _response_json = _response.json()
                         except JSONDecodeError:
-                            raise ApiError(status_code=_response.status_code, body=_response.text)
-                        raise ApiError(status_code=_response.status_code, body=_response_json)
+                            raise ApiError(
+                                status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                            )
+                        raise ApiError(
+                            status_code=_response.status_code, headers=dict(_response.headers), body=_response_json
+                        )
 
-                    yield stream()
+                    yield _stream()
 
             return stream_generator()
         else:
@@ -135,8 +139,8 @@ class RawDummyClient:
                     return HttpResponse(response=_response, data=_data)
                 _response_json = _response.json()
             except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
 class AsyncRawDummyClient:
@@ -206,7 +210,7 @@ class AsyncRawDummyClient:
                     omit=OMIT,
                 ) as _response:
 
-                    async def stream() -> AsyncHttpResponse[
+                    async def _stream() -> AsyncHttpResponse[
                         typing.AsyncIterator[typing.Union[typing.AsyncIterator[StreamResponse], RegularResponse]]
                     ]:
                         try:
@@ -232,10 +236,14 @@ class AsyncRawDummyClient:
                             await _response.aread()
                             _response_json = _response.json()
                         except JSONDecodeError:
-                            raise ApiError(status_code=_response.status_code, body=_response.text)
-                        raise ApiError(status_code=_response.status_code, body=_response_json)
+                            raise ApiError(
+                                status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                            )
+                        raise ApiError(
+                            status_code=_response.status_code, headers=dict(_response.headers), body=_response_json
+                        )
 
-                    yield await stream()
+                    yield await _stream()
 
             return stream_generator()
         else:
@@ -258,5 +266,5 @@ class AsyncRawDummyClient:
                     return AsyncHttpResponse(response=_response, data=_data)
                 _response_json = _response.json()
             except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

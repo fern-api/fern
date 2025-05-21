@@ -19,44 +19,8 @@
         }
       }
     },
-    "MetadataValueOneOfZero": {
-      "name": "MetadataValueOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "double"
-          }
-        }
-      }
-    },
-    "MetadataValueOneOfOne": {
-      "name": "MetadataValueOneOfOne",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "MetadataValueOneOfTwo": {
-      "name": "MetadataValueOneOfTwo",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "MetadataValueOneOfThree": {
-      "name": "MetadataValueOneOfThree",
+    "MetadataValue3": {
+      "name": "MetadataValue3",
       "shape": {
         "type": "alias",
         "value": {
@@ -73,31 +37,34 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "MetadataValueOneOfZero",
             "type": {
-              "type": "id",
-              "value": "MetadataValueOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "double"
+              }
             }
           },
           {
-            "typeName": "MetadataValueOneOfOne",
             "type": {
-              "type": "id",
-              "value": "MetadataValueOneOfOne"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "MetadataValueOneOfTwo",
             "type": {
-              "type": "id",
-              "value": "MetadataValueOneOfTwo"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           },
           {
-            "typeName": "MetadataValueOneOfThree",
+            "typeName": "MetadataValue3",
             "type": {
               "type": "id",
-              "value": "MetadataValueOneOfThree"
+              "value": "MetadataValue3"
             }
           }
         ]

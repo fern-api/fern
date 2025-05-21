@@ -2,6 +2,7 @@ import { writeFile } from "fs/promises";
 import tmp, { DirectoryResult } from "tmp-promise";
 
 import { Audiences, generatorsYml } from "@fern-api/configuration";
+import { ContainerRunner } from "@fern-api/core-utils";
 import { runDocker } from "@fern-api/docker-utils";
 import { AbsoluteFilePath, streamObjectToFile, waitUntilPathExists } from "@fern-api/fs-utils";
 import { ApiDefinitionSource, IntermediateRepresentation, SourceConfig } from "@fern-api/ir-sdk";
@@ -47,7 +48,9 @@ export async function writeFilesToDiskAndRunGenerator({
     writeUnitTests,
     generateOauthClients,
     generatePaginatedClients,
-    includeOptionalRequestPropertyExamples
+    includeOptionalRequestPropertyExamples,
+    ir,
+    runner
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -66,6 +69,8 @@ export async function writeFilesToDiskAndRunGenerator({
     generateOauthClients: boolean;
     generatePaginatedClients: boolean;
     includeOptionalRequestPropertyExamples?: boolean;
+    ir?: IntermediateRepresentation;
+    runner?: ContainerRunner;
 }): Promise<GeneratorRunResponse> {
     const { latest, migrated } = await getIntermediateRepresentation({
         workspace,
@@ -76,7 +81,8 @@ export async function writeFilesToDiskAndRunGenerator({
         packageName: generatorsYml.getPackageName({ generatorInvocation }),
         version: outputVersionOverride,
         sourceConfig: getSourceConfig(workspace),
-        includeOptionalRequestPropertyExamples
+        includeOptionalRequestPropertyExamples,
+        ir
     });
     const absolutePathToIr = await writeIrToFile({
         workspaceTempDir,
@@ -115,41 +121,47 @@ export async function writeFilesToDiskAndRunGenerator({
         context.logger.debug("Will write snippet-templates.json to: " + absolutePathToTmpSnippetTemplatesJSON);
     }
 
-    const { generatorConfig } = await runGenerator({
-        absolutePathToOutput: absolutePathToTmpOutputDirectory,
-        absolutePathToSnippet: absolutePathToTmpSnippetJSON,
-        absolutePathToSnippetTemplates: absolutePathToTmpSnippetTemplatesJSON,
-        absolutePathToIr,
-        absolutePathToWriteConfigJson,
-        workspaceName: workspace.definition.rootApiFile.contents.name,
-        organization,
-        outputVersion: outputVersionOverride,
-        keepDocker,
-        generatorInvocation,
-        context,
-        writeUnitTests,
-        generateOauthClients,
-        generatePaginatedClients,
-        sources: workspace.getSources()
-    });
+    try {
+        const { generatorConfig } = await runGenerator({
+            absolutePathToOutput: absolutePathToTmpOutputDirectory,
+            absolutePathToSnippet: absolutePathToTmpSnippetJSON,
+            absolutePathToSnippetTemplates: absolutePathToTmpSnippetTemplatesJSON,
+            absolutePathToIr,
+            absolutePathToWriteConfigJson,
+            workspaceName: workspace.definition.rootApiFile.contents.name,
+            organization,
+            outputVersion: outputVersionOverride,
+            keepDocker,
+            generatorInvocation,
+            context,
+            writeUnitTests,
+            generateOauthClients,
+            generatePaginatedClients,
+            sources: workspace.getSources(),
+            runner
+        });
 
-    const taskHandler = new LocalTaskHandler({
-        context,
-        absolutePathToLocalOutput,
-        absolutePathToTmpOutputDirectory,
-        absolutePathToLocalSnippetJSON,
-        absolutePathToLocalSnippetTemplateJSON,
-        absolutePathToTmpSnippetJSON,
-        absolutePathToTmpSnippetTemplatesJSON
-    });
-    await taskHandler.copyGeneratedFiles();
-
-    return {
-        absolutePathToIr,
-        absolutePathToConfigJson: absolutePathToWriteConfigJson,
-        ir: latest,
-        generatorConfig
-    };
+        return {
+            absolutePathToIr,
+            absolutePathToConfigJson: absolutePathToWriteConfigJson,
+            ir: latest,
+            generatorConfig
+        };
+        /* eslint-disable-next-line no-useless-catch */
+    } catch (e) {
+        throw e;
+    } finally {
+        const taskHandler = new LocalTaskHandler({
+            context,
+            absolutePathToLocalOutput,
+            absolutePathToTmpOutputDirectory,
+            absolutePathToLocalSnippetJSON,
+            absolutePathToLocalSnippetTemplateJSON,
+            absolutePathToTmpSnippetJSON,
+            absolutePathToTmpSnippetTemplatesJSON
+        });
+        await taskHandler.copyGeneratedFiles();
+    }
 }
 
 async function writeIrToFile({
@@ -189,6 +201,8 @@ export declare namespace runGenerator {
         generateOauthClients: boolean;
         generatePaginatedClients: boolean;
         sources: IdentifiableSource[];
+
+        runner?: ContainerRunner;
     }
 
     export interface Return {
@@ -211,7 +225,8 @@ export async function runGenerator({
     writeUnitTests,
     generateOauthClients,
     generatePaginatedClients,
-    sources
+    sources,
+    runner
 }: runGenerator.Args): Promise<runGenerator.Return> {
     const { name, version, config: customConfig } = generatorInvocation;
     const imageName = `${name}:${version}`;
@@ -256,7 +271,8 @@ export async function runGenerator({
         imageName,
         args: [DOCKER_GENERATOR_CONFIG_PATH],
         binds,
-        removeAfterCompletion: !keepDocker
+        removeAfterCompletion: !keepDocker,
+        runner
     });
 
     return {

@@ -180,6 +180,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "_type": "named",
         "_visit": [Function],
         "default": undefined,
+        "displayName": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -380,6 +381,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "_type": "named",
         "_visit": [Function],
         "default": undefined,
+        "displayName": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -619,6 +621,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "_type": "named",
         "_visit": [Function],
         "default": undefined,
+        "displayName": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -858,6 +861,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "_type": "named",
         "_visit": [Function],
         "default": undefined,
+        "displayName": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -1097,6 +1101,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "_type": "named",
         "_visit": [Function],
         "default": undefined,
+        "displayName": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -1336,6 +1341,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "_type": "named",
         "_visit": [Function],
         "default": undefined,
+        "displayName": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -1575,6 +1581,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         "_type": "named",
         "_visit": [Function],
         "default": undefined,
+        "displayName": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -1812,6 +1819,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -1864,6 +1872,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -1923,6 +1932,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   "_type": "named",
                   "_visit": [Function],
                   "default": undefined,
+                  "displayName": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -2031,6 +2041,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -2043,6 +2054,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   "_type": "named",
                   "_visit": [Function],
                   "default": undefined,
+                  "displayName": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -2185,6 +2197,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     "_type": "named",
                     "_visit": [Function],
                     "default": undefined,
+                    "displayName": undefined,
                     "fernFilepath": {
                       "allParts": [
                         {
@@ -2293,6 +2306,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -2355,6 +2369,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -2407,6 +2422,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -2466,6 +2482,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   "_type": "named",
                   "_visit": [Function],
                   "default": undefined,
+                  "displayName": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -2574,6 +2591,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -2586,6 +2604,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   "_type": "named",
                   "_visit": [Function],
                   "default": undefined,
+                  "displayName": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -2728,6 +2747,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     "_type": "named",
                     "_visit": [Function],
                     "default": undefined,
+                    "displayName": undefined,
                     "fernFilepath": {
                       "allParts": [
                         {
@@ -2836,6 +2856,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -2902,6 +2923,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -2962,6 +2984,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -3025,6 +3048,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   "_type": "named",
                   "_visit": [Function],
                   "default": undefined,
+                  "displayName": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -3133,6 +3157,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -3149,6 +3174,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   "_type": "named",
                   "_visit": [Function],
                   "default": undefined,
+                  "displayName": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -3295,6 +3321,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     "_type": "named",
                     "_visit": [Function],
                     "default": undefined,
+                    "displayName": undefined,
                     "fernFilepath": {
                       "allParts": [
                         {
@@ -3403,6 +3430,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -3557,6 +3585,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -3663,6 +3692,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "typeId": "type_types/enum:WeatherReport",
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -3671,6 +3701,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -3807,6 +3838,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "_type": "named",
                 "_visit": [Function],
                 "default": undefined,
+                "displayName": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -3913,6 +3945,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "typeId": "type_types/enum:WeatherReport",
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -4202,6 +4235,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -4308,6 +4342,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "typeId": "type_types/object:ObjectWithRequiredField",
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -4316,6 +4351,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -4452,6 +4488,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "_type": "named",
                 "_visit": [Function],
                 "default": undefined,
+                "displayName": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -4558,6 +4595,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "typeId": "type_types/object:ObjectWithRequiredField",
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -4691,6 +4729,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -4797,6 +4836,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "typeId": "type_types/object:ObjectWithRequiredField",
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -4805,6 +4845,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -4941,6 +4982,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "_type": "named",
                 "_visit": [Function],
                 "default": undefined,
+                "displayName": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -5047,6 +5089,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "typeId": "type_types/object:ObjectWithRequiredField",
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -5180,6 +5223,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -5286,6 +5330,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "typeId": "type_types/object:ObjectWithOptionalField",
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -5294,6 +5339,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -5430,6 +5476,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "_type": "named",
                 "_visit": [Function],
                 "default": undefined,
+                "displayName": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -5536,6 +5583,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "typeId": "type_types/object:ObjectWithOptionalField",
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -5825,6 +5873,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -5931,6 +5980,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "typeId": "type_types/object:ObjectWithOptionalField",
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -5939,6 +5989,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -6075,6 +6126,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "_type": "named",
                 "_visit": [Function],
                 "default": undefined,
+                "displayName": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -6181,6 +6233,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "typeId": "type_types/object:ObjectWithOptionalField",
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -6236,6 +6289,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -6342,6 +6396,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "typeId": "type_types/object:ObjectWithRequiredField",
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -6350,6 +6405,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -6486,6 +6542,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "_type": "named",
                 "_visit": [Function],
                 "default": undefined,
+                "displayName": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -6592,6 +6649,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "typeId": "type_types/object:ObjectWithRequiredField",
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -6647,6 +6705,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -6753,6 +6812,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "typeId": "type_types/object:NestedObjectWithOptionalField",
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -6761,6 +6821,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -6897,6 +6958,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "_type": "named",
                 "_visit": [Function],
                 "default": undefined,
+                "displayName": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -7003,6 +7065,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "typeId": "type_types/object:NestedObjectWithOptionalField",
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -7058,6 +7121,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -7164,6 +7228,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "typeId": "type_types/object:NestedObjectWithRequiredField",
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -7172,6 +7237,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -7308,6 +7374,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "_type": "named",
                 "_visit": [Function],
                 "default": undefined,
+                "displayName": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -7414,6 +7481,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "typeId": "type_types/object:NestedObjectWithRequiredField",
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -8389,6 +8457,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "primitive": "STRING",
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -8429,6 +8498,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "primitive": "STRING",
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -8584,6 +8654,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "primitive": "STRING",
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -8624,6 +8695,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "primitive": "STRING",
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -8680,6 +8752,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "primitive": "INTEGER",
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -8720,6 +8793,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "primitive": "INTEGER",
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -8776,6 +8850,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "primitive": "LONG",
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -8816,6 +8891,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "primitive": "LONG",
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -8872,6 +8948,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "primitive": "DOUBLE",
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -8912,6 +8989,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "primitive": "DOUBLE",
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -8968,6 +9046,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "primitive": "BOOLEAN",
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -9008,6 +9087,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "primitive": "BOOLEAN",
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -9064,6 +9144,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "primitive": "DATE_TIME",
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -9104,6 +9185,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "primitive": "DATE_TIME",
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -9160,6 +9242,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "primitive": "DATE",
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -9200,6 +9283,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "primitive": "DATE",
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -9256,6 +9340,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "primitive": "UUID",
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -9296,6 +9381,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "primitive": "UUID",
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -9352,6 +9438,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "primitive": "BASE_64",
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -9392,6 +9479,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "primitive": "BASE_64",
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -9546,6 +9634,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -9652,6 +9741,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "typeId": "type_types/union:Animal",
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -9660,6 +9750,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -9796,6 +9887,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "_type": "named",
                 "_visit": [Function],
                 "default": undefined,
+                "displayName": undefined,
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -9902,6 +9994,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "typeId": "type_types/union:Animal",
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -10245,6 +10338,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   "_type": "named",
                   "_visit": [Function],
                   "default": undefined,
+                  "displayName": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -10362,6 +10456,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -10717,6 +10812,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "unknown",
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": {
             "_visit": [Function],
@@ -10756,6 +10852,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "_type": "unknown",
               },
               "type": "justRequestBody",
+              "v2Examples": undefined,
             },
           },
         },
@@ -10871,6 +10968,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -11133,6 +11231,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "primitive": "STRING",
             },
             "type": "reference",
+            "v2Examples": undefined,
           },
           "response": undefined,
           "sdkRequest": {
@@ -12972,6 +13071,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "docs": undefined,
       "examples": [],
       "name": {
+        "displayName": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -13094,6 +13194,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "docs": undefined,
       "examples": [],
       "name": {
+        "displayName": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -13331,6 +13432,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "docs": undefined,
       "examples": [],
       "name": {
+        "displayName": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -13632,6 +13734,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   "_type": "named",
                   "_visit": [Function],
                   "default": undefined,
+                  "displayName": undefined,
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -13752,6 +13855,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "docs": undefined,
       "examples": [],
       "name": {
+        "displayName": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -14043,6 +14147,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "named",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -14161,6 +14266,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "docs": undefined,
       "examples": [],
       "name": {
+        "displayName": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -14834,6 +14940,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "docs": undefined,
       "examples": [],
       "name": {
+        "displayName": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -14995,6 +15102,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "docs": undefined,
       "examples": [],
       "name": {
+        "displayName": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -15367,6 +15475,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "samePropertiesAsObject",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -15504,6 +15613,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               "_type": "samePropertiesAsObject",
               "_visit": [Function],
               "default": undefined,
+              "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
                   {
@@ -15622,6 +15732,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "docs": undefined,
       "examples": [],
       "name": {
+        "displayName": undefined,
         "fernFilepath": {
           "allParts": [
             {
@@ -15821,6 +15932,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
       "docs": undefined,
       "examples": [],
       "name": {
+        "displayName": undefined,
         "fernFilepath": {
           "allParts": [
             {

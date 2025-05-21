@@ -60,6 +60,15 @@ export function collectFilesFromDocsConfig(parsedDocsConfig: docsYml.ParsedDocsC
         });
     }
 
+    /* product image files */
+    if (parsedDocsConfig.navigation.type === "productgroup") {
+        parsedDocsConfig.navigation.products.forEach((product) => {
+            if (product.image != null) {
+                filepaths.add(product.image);
+            }
+        });
+    }
+
     /* javascript files */
     if (parsedDocsConfig.js != null) {
         parsedDocsConfig.js.files.forEach((file) => {

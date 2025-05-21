@@ -27,8 +27,8 @@ public class NopTest : BaseMockServerTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () => await Client.Service.NopAsync("id-a2ijs82", "id-219xca8")
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.Service.NopAsync("id-a2ijs82", "id-219xca8")
         );
     }
 }

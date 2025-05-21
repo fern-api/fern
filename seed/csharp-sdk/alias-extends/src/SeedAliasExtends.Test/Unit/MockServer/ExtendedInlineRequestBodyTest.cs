@@ -26,11 +26,8 @@ public class ExtendedInlineRequestBodyTest : BaseMockServerTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () =>
-                await Client.ExtendedInlineRequestBodyAsync(
-                    new InlinedChildRequest { Child = "child" }
-                )
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.ExtendedInlineRequestBodyAsync(new InlinedChildRequest { Child = "child" })
         );
     }
 }

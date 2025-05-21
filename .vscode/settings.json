@@ -43,6 +43,8 @@
   "python.analysis.typeCheckingMode": "basic",
   "dotnet.automaticallyCreateSolutionInWorkspace": false,
   "dotnet.testWindow.disableAutoDiscovery": true,
+  "dotnet.defaultSolution": "disable",
+  "dotnet.projects.enableAutomaticRestore": false,
   "cSpell.import": [
     "cspell.json"
   ]

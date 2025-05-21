@@ -26,49 +26,4 @@ export const ErrorCode = {
     BadGateway: "BAD_GATEWAY",
     ServiceUnavailable: "SERVICE_UNAVAILABLE",
     Unknown: "Unknown",
-    _visit: <R>(value: ErrorCode, visitor: ErrorCode.Visitor<R>) => {
-        switch (value) {
-            case ErrorCode.InternalServerError:
-                return visitor.internalServerError();
-            case ErrorCode.Unauthorized:
-                return visitor.unauthorized();
-            case ErrorCode.Forbidden:
-                return visitor.forbidden();
-            case ErrorCode.BadRequest:
-                return visitor.badRequest();
-            case ErrorCode.Conflict:
-                return visitor.conflict();
-            case ErrorCode.Gone:
-                return visitor.gone();
-            case ErrorCode.UnprocessableEntity:
-                return visitor.unprocessableEntity();
-            case ErrorCode.NotImplemented:
-                return visitor.notImplemented();
-            case ErrorCode.BadGateway:
-                return visitor.badGateway();
-            case ErrorCode.ServiceUnavailable:
-                return visitor.serviceUnavailable();
-            case ErrorCode.Unknown:
-                return visitor.unknown();
-            default:
-                return visitor._other();
-        }
-    },
 } as const;
-
-export namespace ErrorCode {
-    export interface Visitor<R> {
-        internalServerError: () => R;
-        unauthorized: () => R;
-        forbidden: () => R;
-        badRequest: () => R;
-        conflict: () => R;
-        gone: () => R;
-        unprocessableEntity: () => R;
-        notImplemented: () => R;
-        badGateway: () => R;
-        serviceUnavailable: () => R;
-        unknown: () => R;
-        _other: () => R;
-    }
-}

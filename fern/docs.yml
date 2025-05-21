@@ -31,10 +31,15 @@ tabs:
     display-name: SDKs
     icon: fa-brands fa-codepen
     slug: sdks
+  ai-search: 
+    display-name: AI Search
+    icon: fa-regular fa-magnifying-glass
+    slug: ai-search
   cli-api:
     display-name: CLI & API Reference
     icon: fa-regular fa-code
     skip-slug: true
+
 
 css: ./assets/styles.css
 
@@ -211,6 +216,9 @@ navigation:
           - section: Changelogs
             slug: changelog
             contents:
+              - changelog: ./pages/changelogs/ts-sdk
+                title: TypeScript
+                slug: ts            
               - changelog: ./pages/changelogs/python-sdk
                 title: Python
                 slug: python
@@ -228,7 +236,7 @@ navigation:
                 slug: php
               - changelog: ./pages/changelogs/ruby-sdk
                 title: Ruby
-                slug: ruby
+                slug: ruby                
       - section: Capabilities
         contents:
           - page: Strongly Typed
@@ -356,6 +364,7 @@ navigation:
             path: ./pages/docs/getting-started/publishing-your-docs.mdx
             icon: fa-regular fa-cloud-arrow-up
           - changelog: ./pages/changelogs/docs
+            icon: fa-regular fa-clock-rotate-left
 
 
       - section: Building and Customizing Your Docs
@@ -474,6 +483,10 @@ navigation:
                 path: ./pages/docs/components/tabs.mdx
                 icon: fa-regular fa-window-restore
                 slug: tabs
+              - page: Tooltips
+                path: ./pages/docs/components/tooltips.mdx
+                icon: fa-regular fa-circle-info
+                slug: tooltips
           - page: Custom React Components
             icon: fa-brands fa-react
             path: ./pages/docs/writing-content/custom-react-components.mdx
@@ -585,7 +598,7 @@ navigation:
           - page: View Markdown
             icon: fa-brands fa-markdown
             path: ./pages/docs/developer-tools/view-markdown.mdx
-
+        
       - section: Alternatives
         hidden: true
         contents:
@@ -595,6 +608,28 @@ navigation:
           - page: Mintlify
             slug: mintlify
             path: ./pages/docs/comparison/mintlify.mdx
+
+  - tab: ai-search
+    layout:
+    - section: Getting Started
+      skip-slug: true
+      contents:
+        - page: Overview
+          icon: fa-regular fa-book-open
+          path: ./pages/ai-search/getting-started/overview.mdx
+        - page: AI Search Customer Showcase
+          icon: fa-regular fa-star
+          slug: customer-showcase
+          path: ./pages/ai-search/getting-started/customer-showcase.mdx
+    - section: Features 
+      skip-slug: true
+      contents:
+        - page: Custom Prompting
+          icon: fa-regular fa-gear
+          path: ./pages/ai-search/features/custom-prompting.mdx
+        - page: Citations
+          icon: fa-regular fa-quote-right
+          path: ./pages/ai-search/features/citations.mdx
 
   - tab: cli-api
     layout:
@@ -613,6 +648,9 @@ navigation:
         api-name: public-api
         icon: fa-regular fa-pro
         paginated: true
+        snippets:
+          python: fern-api
+          typescript: '@fern-api/node-sdk'
         audiences:
           - external
         layout:
@@ -756,5 +794,12 @@ redirects:
   - source: /learn/sdks/capabilities/merging-multiple-apis
     destination: /learn/sdks/capabilities/merging-apis
     permanent: true
-    
-
+  - source: /learn/ai-search/getting-started/:slug*
+    destination: /learn/ai-search/:slug*
+    permanent: true    
+  - source: /learn/ai-search/features/:slug*
+    destination: /learn/ai-search/:slug*
+    permanent: true   
+  - source: /learn/ai-search/ai-search-customer-showcase
+    destination: /learn/ai-search/customer-showcase
+    permanent: true

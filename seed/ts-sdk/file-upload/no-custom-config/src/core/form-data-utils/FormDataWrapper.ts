@@ -1,4 +1,4 @@
-import { RUNTIME } from "../runtime";
+import { RUNTIME } from "../runtime/index.js";
 
 export type MaybePromise<T> = Promise<T> | T;
 

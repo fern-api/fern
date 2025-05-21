@@ -139,7 +139,7 @@ export class LocalTestRunner extends TestRunner {
         });
         if (result.exitCode !== 0) {
             taskContext.logger.info(`Failed to generate files for ${this.generator.workspaceName}.`);
-        } else {
+        } else if (!ir.latest.selfHosted) {
             const localTaskHandler: LocalTaskHandler = new LocalTaskHandler({
                 context: taskContext,
                 absolutePathToLocalOutput: outputDir,

@@ -101,6 +101,7 @@ export function convertParameters({
                         }),
                         description: undefined,
                         availability,
+                        namespace: undefined,
                         groupName: undefined
                     })
                   : SchemaWithExample.optional({
@@ -124,10 +125,12 @@ export function convertParameters({
                             }),
                             description: undefined,
                             availability: undefined,
+                            namespace: undefined,
                             groupName: undefined
                         }),
                         description: undefined,
                         availability,
+                        namespace: undefined,
                         groupName: undefined,
                         inline: undefined
                     });
@@ -148,6 +151,7 @@ export function convertParameters({
                     value: LiteralSchemaValue.string(defaultValue),
                     description: undefined,
                     availability,
+                    namespace: undefined,
                     groupName: undefined
                 });
             }

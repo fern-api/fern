@@ -109,8 +109,8 @@ public class QueryStringConverterTests
     [Test]
     public void ToQueryStringCollection_OnArray_ThrowsException()
     {
-        var exception = Assert.Throws<Exception>(
-            () => QueryStringConverter.ToForm(Array.Empty<object>())
+        var exception = Assert.Throws<Exception>(() =>
+            QueryStringConverter.ToForm(Array.Empty<object>())
         );
         Assert.That(
             exception.Message,

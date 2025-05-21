@@ -6,7 +6,7 @@ import {
 } from "@fern-api/ir-sdk";
 import { HttpHeader, PathParameter, QueryParameter, TypeDeclaration, TypeId } from "@fern-api/ir-sdk";
 
-import { isOptional } from "../utils/isTypeReferenceOptional";
+import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
 
@@ -60,7 +60,7 @@ export function generateHeaderExamples(
         // If it's optional and skipOptionalRequestProperties=true, skip
         if (
             options.skipOptionalRequestProperties &&
-            isOptional({
+            isTypeReferenceOptional({
                 typeDeclarations: options.typeDeclarations,
                 typeReference: h.valueType
             })
@@ -101,7 +101,7 @@ export function generateQueryParameterExamples(
         // skip if optional & skipping optional
         if (
             options.skipOptionalRequestProperties &&
-            isOptional({
+            isTypeReferenceOptional({
                 typeDeclarations: options.typeDeclarations,
                 typeReference: q.valueType
             })

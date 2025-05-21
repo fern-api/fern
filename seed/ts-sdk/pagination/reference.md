@@ -17,8 +17,8 @@
 ```typescript
 const response = await client.complex.search({
     pagination: {
-        perPage: 1,
-        startingAfter: "starting_after",
+        per_page: 1,
+        starting_after: "starting_after",
     },
     query: {
         field: "field",
@@ -33,8 +33,8 @@ for await (const item of response) {
 // Or you can manually iterate page-by-page
 const page = await client.complex.search({
     pagination: {
-        perPage: 1,
-        startingAfter: "starting_after",
+        per_page: 1,
+        starting_after: "starting_after",
     },
     query: {
         field: "field",
@@ -96,9 +96,9 @@ while (page.hasNextPage()) {
 ```typescript
 const response = await client.users.listWithCursorPagination({
     page: 1,
-    perPage: 1,
+    per_page: 1,
     order: "asc",
-    startingAfter: "starting_after",
+    starting_after: "starting_after",
 });
 for await (const item of response) {
     console.log(item);
@@ -107,9 +107,9 @@ for await (const item of response) {
 // Or you can manually iterate page-by-page
 const page = await client.users.listWithCursorPagination({
     page: 1,
-    perPage: 1,
+    per_page: 1,
     order: "asc",
-    startingAfter: "starting_after",
+    starting_after: "starting_after",
 });
 while (page.hasNextPage()) {
     page = page.getNextPage();
@@ -289,9 +289,9 @@ while (page.hasNextPage()) {
 ```typescript
 const response = await client.users.listWithOffsetPagination({
     page: 1,
-    perPage: 1,
+    per_page: 1,
     order: "asc",
-    startingAfter: "starting_after",
+    starting_after: "starting_after",
 });
 for await (const item of response) {
     console.log(item);
@@ -300,9 +300,9 @@ for await (const item of response) {
 // Or you can manually iterate page-by-page
 const page = await client.users.listWithOffsetPagination({
     page: 1,
-    perPage: 1,
+    per_page: 1,
     order: "asc",
-    startingAfter: "starting_after",
+    starting_after: "starting_after",
 });
 while (page.hasNextPage()) {
     page = page.getNextPage();
@@ -356,9 +356,9 @@ while (page.hasNextPage()) {
 ```typescript
 const response = await client.users.listWithDoubleOffsetPagination({
     page: 1.1,
-    perPage: 1.1,
+    per_page: 1.1,
     order: "asc",
-    startingAfter: "starting_after",
+    starting_after: "starting_after",
 });
 for await (const item of response) {
     console.log(item);
@@ -367,9 +367,9 @@ for await (const item of response) {
 // Or you can manually iterate page-by-page
 const page = await client.users.listWithDoubleOffsetPagination({
     page: 1.1,
-    perPage: 1.1,
+    per_page: 1.1,
     order: "asc",
-    startingAfter: "starting_after",
+    starting_after: "starting_after",
 });
 while (page.hasNextPage()) {
     page = page.getNextPage();
@@ -739,7 +739,7 @@ while (page.hasNextPage()) {
 
 ```typescript
 const response = await client.users.listUsernames({
-    startingAfter: "starting_after",
+    starting_after: "starting_after",
 });
 for await (const item of response) {
     console.log(item);
@@ -747,7 +747,7 @@ for await (const item of response) {
 
 // Or you can manually iterate page-by-page
 const page = await client.users.listUsernames({
-    startingAfter: "starting_after",
+    starting_after: "starting_after",
 });
 while (page.hasNextPage()) {
     page = page.getNextPage();

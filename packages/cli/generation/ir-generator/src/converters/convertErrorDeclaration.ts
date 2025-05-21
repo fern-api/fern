@@ -58,6 +58,8 @@ export function convertErrorDeclaration({
         docs: typeof errorDeclaration !== "string" ? errorDeclaration.docs : undefined,
         statusCode: errorDeclaration["status-code"],
         type: errorDeclaration.type != null ? file.parseTypeReference(errorDeclaration.type) : undefined,
-        examples
+        examples,
+        v2Examples: undefined,
+        displayName: undefined
     };
 }

@@ -1,3 +1,4 @@
+import { camelCase } from "lodash-es";
 import urlJoin from "url-join";
 
 import { FdrAPI } from "@fern-api/fdr-sdk";
@@ -13,8 +14,8 @@ export class ApiDefinitionHolderLatest {
 
     constructor(api: FdrAPI.api.latest.ApiDefinition) {
         for (const [subpackageId, subpackage] of Object.entries(api.subpackages)) {
-            this.#subpackagesByLocator[subpackageId] = subpackage;
-            this.#subpackagesByLocator[`subpackage_${subpackageId}`] = subpackage;
+            this.#subpackagesByLocator[camelCase(subpackageId).toLowerCase()] = subpackage;
+            this.#subpackagesByLocator[`subpackage_${camelCase(subpackageId).toLowerCase()}`] = subpackage;
         }
 
         for (const [endpointId, endpoint] of Object.entries(api.endpoints)) {

@@ -1,7 +1,9 @@
 ```python
 
 
-client = SeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )        
+client = SeedMixedFileDirectory(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.organization.create(
 	name="name"
 )
@@ -12,7 +14,9 @@ client.organization.create(
 ```python
 
 
-client = SeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )        
+client = SeedMixedFileDirectory(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.user.list(
 	limit=1
 )
@@ -23,7 +27,9 @@ client.user.list(
 ```python
 
 
-client = SeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )        
+client = SeedMixedFileDirectory(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.user.events.list_events(
 	limit=1
 )
@@ -34,7 +40,9 @@ client.user.events.list_events(
 ```python
 
 
-client = SeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )        
+client = SeedMixedFileDirectory(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.user.events.metadata.get_metadata(
 	id="id"
 )

@@ -22,8 +22,8 @@
         ]
       }
     },
-    "UsersGetResponsesSchemaItems": {
-      "name": "UsersGetResponsesSchemaItems",
+    "UsersGetResponsesContentApplicationJsonSchemaItems": {
+      "name": "UsersGetResponsesContentApplicationJsonSchemaItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -52,7 +52,7 @@
         "auth": false,
         "method": "GET",
         "id": "getUser",
-        "originalEndpointId": "getUser",
+        "originalEndpointId": "endpoint_.getUser",
         "name": "Get User",
         "path": {
           "pathParameters": [],
@@ -83,7 +83,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getUserExample",
             "description": "",
             "path": "/user",
             "pathParameters": {},
@@ -91,10 +91,7 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo"
-              }
+              "id": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -112,7 +109,7 @@
         "auth": false,
         "method": "GET",
         "id": "getUsers",
-        "originalEndpointId": "getUsers",
+        "originalEndpointId": "endpoint_.getUsers",
         "name": "Get Users",
         "path": {
           "pathParameters": [],
@@ -136,7 +133,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "UsersGetResponsesSchemaItems"
+                "value": "UsersGetResponsesContentApplicationJsonSchemaItems"
               }
             }
           },
@@ -146,21 +143,18 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getUsersExample",
             "description": "",
             "path": "/users",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": [
-                {
-                  "id": "foo"
-                }
-              ]
-            },
+            "responseBody": [
+              {
+                "id": "foo"
+              }
+            ],
             "responseBodyV3": {
               "type": "json",
               "value": [

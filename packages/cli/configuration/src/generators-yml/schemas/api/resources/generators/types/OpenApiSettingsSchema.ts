@@ -27,4 +27,10 @@ export interface OpenApiSettingsSchema extends FernDefinition.BaseApiSettingsSch
     "example-generation"?: FernDefinition.OpenApiExampleGenerationSchema;
     /** Configure what `additionalProperties` should default to when not explicitly defined on a schema. Defaults to `false`. */
     "additional-properties-defaults-to"?: boolean;
+    /**
+     * If true, convert strings with format date to strings.
+     * If false, convert strings with format date to dates.
+     * Defaults to true.
+     */
+    "type-dates-as-strings"?: boolean;
 }

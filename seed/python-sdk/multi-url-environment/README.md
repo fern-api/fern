@@ -21,8 +21,13 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedMultiUrlEnvironment
-client = SeedMultiUrlEnvironment(token="YOUR_TOKEN", )
-client.ec_2.boot_instance(size='size', )
+
+client = SeedMultiUrlEnvironment(
+    token="YOUR_TOKEN",
+)
+client.ec_2.boot_instance(
+    size="size",
+)
 ```
 
 ## Async Client
@@ -30,12 +35,23 @@ client.ec_2.boot_instance(size='size', )
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-from seed import AsyncSeedMultiUrlEnvironment
 import asyncio
-client = AsyncSeedMultiUrlEnvironment(token="YOUR_TOKEN", )
+
+from seed import AsyncSeedMultiUrlEnvironment
+
+client = AsyncSeedMultiUrlEnvironment(
+    token="YOUR_TOKEN",
+)
+
+
 async def main() -> None:
-    await client.ec_2.boot_instance(size='size', )
-asyncio.run(main())```
+    await client.ec_2.boot_instance(
+        size="size",
+    )
+
+
+asyncio.run(main())
+```
 
 ## Exception Handling
 
@@ -44,6 +60,7 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
+
 try:
     client.ec_2.boot_instance(...)
 except ApiError as e:
@@ -60,7 +77,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 
 ```python
 from seed import SeedMultiUrlEnvironment
-client = SeedMultiUrlEnvironment(..., )
+
+client = SeedMultiUrlEnvironment(
+    ...,
+)
 response = client.ec_2.with_raw_response.boot_instance(...)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
@@ -93,7 +113,12 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedMultiUrlEnvironment
-client = SeedMultiUrlEnvironment(..., timeout=20.0, )
+
+client = SeedMultiUrlEnvironment(
+    ...,
+    timeout=20.0,
+)
+
 
 # Override timeout for a specific method
 client.ec_2.boot_instance(..., request_options={
@@ -107,9 +132,17 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-from seed import SeedMultiUrlEnvironment
 import httpx
-client = SeedMultiUrlEnvironment(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
+from seed import SeedMultiUrlEnvironment
+
+client = SeedMultiUrlEnvironment(
+    ...,
+    httpx_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
 
 ## Contributing
 

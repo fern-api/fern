@@ -59,7 +59,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "name",
@@ -95,7 +96,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "WRITE_ONLY"
           },
           {
             "key": "createdAt",
@@ -108,7 +110,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "settings",
@@ -212,7 +215,8 @@
                   "type": "integer"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "lastLoginTime",
@@ -225,7 +229,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "accountStatus",
@@ -235,7 +240,8 @@
                 "type": "id",
                 "value": "UserStatsAccountStatus"
               }
-            }
+            },
+            "propertyAccess": "WRITE_ONLY"
           }
         ]
       }
@@ -248,7 +254,7 @@
         "auth": false,
         "method": "POST",
         "id": "createAUser",
-        "originalEndpointId": "createAUser",
+        "originalEndpointId": "endpoint_.createAUser",
         "name": "Create a user",
         "path": {
           "pathParameters": [],
@@ -292,7 +298,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "createAUserExample",
             "description": "",
             "path": "/users",
             "pathParameters": {},
@@ -305,23 +311,17 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "name": "foo",
-                "email": "foo",
-                "password": "foo",
-                "createdAt": "foo",
-                "settings": {
-                  "theme": "foo",
-                  "notifications": true,
-                  "lastModified": "foo"
-                },
-                "stats": {
-                  "totalLogins": 42,
-                  "lastLoginTime": "foo",
-                  "accountStatus": "active"
-                }
+              "id": "foo",
+              "name": "foo",
+              "email": "foo",
+              "createdAt": "foo",
+              "settings": {
+                "theme": "foo",
+                "notifications": true
+              },
+              "stats": {
+                "totalLogins": 42,
+                "lastLoginTime": "foo"
               }
             },
             "responseBodyV3": {
@@ -330,17 +330,14 @@
                 "id": "foo",
                 "name": "foo",
                 "email": "foo",
-                "password": "foo",
                 "createdAt": "foo",
                 "settings": {
                   "theme": "foo",
-                  "notifications": true,
-                  "lastModified": "foo"
+                  "notifications": true
                 },
                 "stats": {
                   "totalLogins": 42,
-                  "lastLoginTime": "foo",
-                  "accountStatus": "active"
+                  "lastLoginTime": "foo"
                 }
               }
             }
@@ -354,7 +351,7 @@
         "auth": false,
         "method": "GET",
         "id": "getAUser",
-        "originalEndpointId": "getAUser",
+        "originalEndpointId": "endpoint_.getAUser",
         "name": "Get a user",
         "path": {
           "pathParameters": [
@@ -403,33 +400,27 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getAUserExample",
             "description": "",
-            "path": "/users/",
+            "path": "/users/userId",
             "pathParameters": {
-              "userId": "foo"
+              "userId": "userId"
             },
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo",
-                "name": "foo",
-                "email": "foo",
-                "password": "foo",
-                "createdAt": "foo",
-                "settings": {
-                  "theme": "foo",
-                  "notifications": true,
-                  "lastModified": "foo"
-                },
-                "stats": {
-                  "totalLogins": 42,
-                  "lastLoginTime": "foo",
-                  "accountStatus": "active"
-                }
+              "id": "foo",
+              "name": "foo",
+              "email": "foo",
+              "createdAt": "foo",
+              "settings": {
+                "theme": "foo",
+                "notifications": true
+              },
+              "stats": {
+                "totalLogins": 42,
+                "lastLoginTime": "foo"
               }
             },
             "responseBodyV3": {
@@ -438,17 +429,14 @@
                 "id": "foo",
                 "name": "foo",
                 "email": "foo",
-                "password": "foo",
                 "createdAt": "foo",
                 "settings": {
                   "theme": "foo",
-                  "notifications": true,
-                  "lastModified": "foo"
+                  "notifications": true
                 },
                 "stats": {
                   "totalLogins": 42,
-                  "lastLoginTime": "foo",
-                  "accountStatus": "active"
+                  "lastLoginTime": "foo"
                 }
               }
             }

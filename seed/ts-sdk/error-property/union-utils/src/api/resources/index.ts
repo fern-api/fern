@@ -1,4 +1,4 @@
-export * as errors from "./errors";
-export * from "./errors/types";
-export * from "./errors/errors";
-export * as propertyBasedError from "./propertyBasedError";
+export * as errors from "./errors/index.js";
+export * from "./errors/types/index.js";
+export * from "./errors/errors/index.js";
+export * as propertyBasedError from "./propertyBasedError/index.js";

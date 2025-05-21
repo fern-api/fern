@@ -144,7 +144,7 @@
         "auth": false,
         "method": "POST",
         "id": "user",
-        "originalEndpointId": "user",
+        "originalEndpointId": "endpoint_.user",
         "name": "User",
         "path": {
           "pathParameters": [],
@@ -188,10 +188,13 @@
         },
         "response": {
           "type": {
-            "type": "reference",
-            "value": {
-              "type": "id",
-              "value": "User"
+            "type": "stream",
+            "shape": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "User"
+              }
             }
           },
           "statusCode": 200,
@@ -200,7 +203,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "userExample",
             "description": "",
             "path": "/v1/users",
             "pathParameters": {},
@@ -212,17 +215,21 @@
               "value": {}
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": {
+            "responseBody": [
+              {
                 "id": "foo"
               }
-            },
+            ],
             "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "id": "foo"
-              }
+              "type": "stream",
+              "value": [
+                {
+                  "type": "json",
+                  "value": {
+                    "id": "foo"
+                  }
+                }
+              ]
             }
           }
         ],
@@ -234,7 +241,7 @@
         "auth": false,
         "method": "POST",
         "id": "user_v2",
-        "originalEndpointId": "user_v2",
+        "originalEndpointId": "endpoint_.user_v2",
         "name": "User V 2",
         "path": {
           "pathParameters": [],
@@ -278,10 +285,13 @@
         },
         "response": {
           "type": {
-            "type": "reference",
-            "value": {
-              "type": "id",
-              "value": "User"
+            "type": "stream",
+            "shape": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "User"
+              }
             }
           },
           "statusCode": 200,
@@ -290,7 +300,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "userV2Example",
             "description": "",
             "path": "/v2/users",
             "pathParameters": {},
@@ -302,17 +312,21 @@
               "value": {}
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": {
+            "responseBody": [
+              {
                 "id": "foo"
               }
-            },
+            ],
             "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "id": "foo"
-              }
+              "type": "stream",
+              "value": [
+                {
+                  "type": "json",
+                  "value": {
+                    "id": "foo"
+                  }
+                }
+              ]
             }
           }
         ],
@@ -324,7 +338,7 @@
         "auth": false,
         "method": "POST",
         "id": "user_v3",
-        "originalEndpointId": "user_v3",
+        "originalEndpointId": "endpoint_.user_v3",
         "name": "User V 3",
         "path": {
           "pathParameters": [],
@@ -368,10 +382,13 @@
         },
         "response": {
           "type": {
-            "type": "reference",
-            "value": {
-              "type": "id",
-              "value": "User"
+            "type": "stream",
+            "shape": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "User"
+              }
             }
           },
           "statusCode": 200,
@@ -380,7 +397,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "userV3Example",
             "description": "",
             "path": "/v3/users",
             "pathParameters": {},
@@ -392,17 +409,21 @@
               "value": {}
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": {
+            "responseBody": [
+              {
                 "id": "foo"
               }
-            },
+            ],
             "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "id": "foo"
-              }
+              "type": "stream",
+              "value": [
+                {
+                  "type": "json",
+                  "value": {
+                    "id": "foo"
+                  }
+                }
+              ]
             }
           }
         ],

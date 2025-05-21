@@ -1,8 +1,8 @@
 {
   "types": {
-    "TestPostRequestBodySchemaMetadata": {
+    "TestPostRequestBodyContentMultipartFormDataSchemaMetadata": {
       "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
-      "name": "TestPostRequestBodySchemaMetadata",
+      "name": "TestPostRequestBodyContentMultipartFormDataSchemaMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -12,9 +12,9 @@
         }
       }
     },
-    "ExamplePostRequestBodySchemaMetadata": {
+    "ExamplePostRequestBodyContentApplicationJsonSchemaMetadata": {
       "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
-      "name": "ExamplePostRequestBodySchemaMetadata",
+      "name": "ExamplePostRequestBodyContentApplicationJsonSchemaMetadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -33,7 +33,7 @@
         "description": "Test multipart request with different content types.\n",
         "method": "POST",
         "id": "testUpload",
-        "originalEndpointId": "testUpload",
+        "originalEndpointId": "endpoint_.testUpload",
         "name": "Test upload",
         "path": {
           "pathParameters": [
@@ -74,11 +74,23 @@
                     "type": "optional",
                     "itemType": {
                       "type": "id",
-                      "value": "TestPostRequestBodySchemaMetadata"
+                      "value": "TestPostRequestBodyContentMultipartFormDataSchemaMetadata"
                     }
                   },
                   "contentType": "multipart/form-data",
                   "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
+                  "exploded": false
+                },
+                {
+                  "type": "bodyProperty",
+                  "key": "chunking_strategy",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "unknown"
+                    }
+                  },
+                  "contentType": "multipart/form-data",
                   "exploded": false
                 },
                 {
@@ -109,6 +121,7 @@
                 }
               ]
             },
+            "contentType": "multipart/form-data",
             "description": "Test request body\n"
           },
           "description": "Test request body\n"
@@ -129,23 +142,37 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "testUploadExample",
             "description": "",
             "path": "/test",
             "pathParameters": {
-              "corpus_key": "foo"
+              "corpus_key": "corpus_key"
             },
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "file": "foo"
+            },
             "requestBodyV3": {
               "type": "form",
-              "value": {}
+              "value": {
+                "metadata": {
+                  "type": "json"
+                },
+                "chunking_strategy": {
+                  "type": "json"
+                },
+                "filename": {
+                  "type": "json"
+                },
+                "file": {
+                  "type": "filename",
+                  "value": "foo"
+                }
+              }
             },
             "responseStatusCode": 201,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"
@@ -161,7 +188,7 @@
         "description": "Test request with dual content types.\n",
         "method": "POST",
         "id": "testWithDualContentTypeRequestTypes",
-        "originalEndpointId": "testWithDualContentTypeRequestTypes",
+        "originalEndpointId": "endpoint_.testWithDualContentTypeRequestTypes",
         "name": "Test with dual Content-Type request types",
         "path": {
           "pathParameters": [
@@ -204,7 +231,7 @@
                     "type": "optional",
                     "itemType": {
                       "type": "id",
-                      "value": "ExamplePostRequestBodySchemaMetadata"
+                      "value": "ExamplePostRequestBodyContentApplicationJsonSchemaMetadata"
                     }
                   }
                 }
@@ -229,11 +256,11 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "testWithDualContentTypeRequestTypesExample",
             "description": "",
             "path": "/example",
             "pathParameters": {
-              "corpus_key": "foo"
+              "corpus_key": "corpus_key"
             },
             "queryParameters": {},
             "headers": {},
@@ -243,10 +270,7 @@
               "value": {}
             },
             "responseStatusCode": 201,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"

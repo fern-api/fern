@@ -14,7 +14,7 @@
           }
         ],
         "id": "exampleEndpoint",
-        "originalEndpointId": "exampleEndpoint",
+        "originalEndpointId": "endpoint_.exampleEndpoint",
         "name": "Example endpoint",
         "path": {
           "pathParameters": [],
@@ -34,7 +34,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "exampleEndpointExample",
             "description": "",
             "path": "/example",
             "pathParameters": {},

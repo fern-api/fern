@@ -26,6 +26,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         filter: OpenApiFilterSchema.optional(),
         "example-generation": OpenApiExampleGenerationSchema.optional(),
         "additional-properties-defaults-to": core.serialization.boolean().optional(),
+        "type-dates-as-strings": core.serialization.boolean().optional(),
     })
     .extend(BaseApiSettingsSchema);
 
@@ -42,5 +43,6 @@ export declare namespace OpenApiSettingsSchema {
         filter?: OpenApiFilterSchema.Raw | null;
         "example-generation"?: OpenApiExampleGenerationSchema.Raw | null;
         "additional-properties-defaults-to"?: boolean | null;
+        "type-dates-as-strings"?: boolean | null;
     }
 }

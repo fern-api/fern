@@ -1,4 +1,4 @@
-import { writeFile } from "fs/promises";
+import { readdir, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
@@ -11,10 +11,12 @@ export class GeneratorAgentClient {
     private logger: Logger;
     private skipInstall: boolean;
     private cli: LoggingExecutable | undefined;
+    private selfHosted: boolean;
 
-    constructor({ logger, skipInstall }: { logger: Logger; skipInstall?: boolean }) {
+    constructor({ logger, skipInstall, selfHosted }: { logger: Logger; skipInstall?: boolean; selfHosted?: boolean }) {
         this.logger = logger;
         this.skipInstall = skipInstall ?? false;
+        this.selfHosted = selfHosted ?? false;
     }
 
     public async generateReadme<ReadmeConfig>({ readmeConfig }: { readmeConfig: ReadmeConfig }): Promise<string> {
@@ -23,6 +25,17 @@ export class GeneratorAgentClient {
         });
         const args = ["generate", "readme", "--config", readmeConfigFilepath];
         const cli = await this.getOrInstall();
+        const content = await cli(args);
+        return content.stdout;
+    }
+
+    public async pushToGitHub<GitHubConfig>({ githubConfig }: { githubConfig: GitHubConfig }): Promise<string> {
+        const githubConfigFilepath = await this.writeConfig({
+            config: githubConfig
+        });
+        const args = ["github", "push", "--config", githubConfigFilepath];
+        const cli = await this.getOrInstall();
+
         const content = await cli(args);
         return content.stdout;
     }
@@ -67,7 +80,14 @@ export class GeneratorAgentClient {
             logger: this.logger
         });
         this.logger.debug(`Installing ${GENERATOR_AGENT_NPM_PACKAGE} ...`);
-        await npm(["install", "-f", "-g", GENERATOR_AGENT_NPM_PACKAGE]);
+        try {
+            await npm(["install", "-f", "-g", GENERATOR_AGENT_NPM_PACKAGE]);
+        } catch (error) {
+            this.logger.debug(
+                `Failed to install ${GENERATOR_AGENT_NPM_PACKAGE}, falling back to already installed version: ${error}`
+            );
+            // Continue execution as the package might already be installed
+        }
 
         const cli = createLoggingExecutable("generator-cli", {
             cwd: process.cwd(),

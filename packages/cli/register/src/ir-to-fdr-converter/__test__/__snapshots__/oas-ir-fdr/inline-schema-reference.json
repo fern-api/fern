@@ -66,8 +66,8 @@
         ]
       }
     },
-    "ExampleGetResponsesSchemaOneOfThree": {
-      "name": "ExampleGetResponsesSchemaOneOfThree",
+    "GetExampleResponse2003": {
+      "name": "GetExampleResponse2003",
       "shape": {
         "type": "object",
         "extends": [],
@@ -107,10 +107,10 @@
             }
           },
           {
-            "typeName": "ExampleGetResponsesSchemaOneOfThree",
+            "typeName": "GetExampleResponse2003",
             "type": {
               "type": "id",
-              "value": "ExampleGetResponsesSchemaOneOfThree"
+              "value": "GetExampleResponse2003"
             }
           }
         ]
@@ -124,7 +124,7 @@
         "auth": false,
         "method": "GET",
         "id": "getExample",
-        "originalEndpointId": "getExample",
+        "originalEndpointId": "endpoint_.getExample",
         "name": "Get Example",
         "path": {
           "pathParameters": [],
@@ -155,7 +155,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getExampleExample",
             "description": "",
             "path": "/example",
             "pathParameters": {},
@@ -163,10 +163,7 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "message": "foo"
-              }
+              "message": "foo"
             },
             "responseBodyV3": {
               "type": "json",

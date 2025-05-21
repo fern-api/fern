@@ -5,9 +5,9 @@
 /**
  * @example
  *     {
- *         numEvents: 1
+ *         num_events: 1
  *     }
  */
 export interface GenerateStreamRequest {
-    numEvents: number;
+    num_events: number;
 }

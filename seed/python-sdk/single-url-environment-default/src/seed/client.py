@@ -20,6 +20,8 @@ class SeedSingleUrlEnvironmentDefault:
     environment : SeedSingleUrlEnvironmentDefaultEnvironment
         The environment to use for requests from the client. from .environment import SeedSingleUrlEnvironmentDefaultEnvironment
 
+
+
         Defaults to SeedSingleUrlEnvironmentDefaultEnvironment.PRODUCTION
 
 
@@ -37,7 +39,10 @@ class SeedSingleUrlEnvironmentDefault:
     Examples
     --------
     from seed import SeedSingleUrlEnvironmentDefault
-    client = SeedSingleUrlEnvironmentDefault(token="YOUR_TOKEN", )
+
+    client = SeedSingleUrlEnvironmentDefault(
+        token="YOUR_TOKEN",
+    )
     """
 
     def __init__(
@@ -78,6 +83,8 @@ class AsyncSeedSingleUrlEnvironmentDefault:
     environment : SeedSingleUrlEnvironmentDefaultEnvironment
         The environment to use for requests from the client. from .environment import SeedSingleUrlEnvironmentDefaultEnvironment
 
+
+
         Defaults to SeedSingleUrlEnvironmentDefaultEnvironment.PRODUCTION
 
 
@@ -95,7 +102,10 @@ class AsyncSeedSingleUrlEnvironmentDefault:
     Examples
     --------
     from seed import AsyncSeedSingleUrlEnvironmentDefault
-    client = AsyncSeedSingleUrlEnvironmentDefault(token="YOUR_TOKEN", )
+
+    client = AsyncSeedSingleUrlEnvironmentDefault(
+        token="YOUR_TOKEN",
+    )
     """
 
     def __init__(
