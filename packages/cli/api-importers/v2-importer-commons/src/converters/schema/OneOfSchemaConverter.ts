@@ -184,13 +184,15 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 if (this.context.isReferenceObjectWithTitle(subSchema)) {
                     maybeTypeReference = this.context.convertReferenceToTypeReference({
                         reference: subSchema,
-                        displayNameOverride: ["TITLE", subSchema.title]
+                        displayNameOverride: subSchema.title,
+                        displayNameOverrideType: "TITLE"
                     });
                 } else if (this.getDiscriminatorKeyForRef(subSchema) != null) {
                     const mappingEntry = this.getDiscriminatorKeyForRef(subSchema);
                     maybeTypeReference = this.context.convertReferenceToTypeReference({
                         reference: subSchema,
-                        displayNameOverride: ["DISCRIMINATOR_KEY", mappingEntry]
+                        displayNameOverride: mappingEntry,
+                        displayNameOverrideType: "DISCRIMINATOR_KEY"
                     });
                 } else {
                     maybeTypeReference = this.context.convertReferenceToTypeReference({ reference: subSchema });
@@ -393,7 +395,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
         if (!this.context.isObjectSchemaType(subSchema)) {
             this.context.errorCollector.collect({
-                message: "Received additional object properties for oneOf/anyOf that are not objects}",
+                message: "Received additional object properties for oneOf/anyOf that are not objects",
                 path: this.breadcrumbs
             });
         }
