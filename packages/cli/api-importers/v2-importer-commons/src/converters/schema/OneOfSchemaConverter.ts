@@ -376,7 +376,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
         if (!this.context.isObjectSchemaType(subSchema)) {
             this.context.errorCollector.collect({
-                message: `Received additional object properties for oneOf/anyOf that are not objects: ${JSON.stringify(subSchema)}`,
+                message: "Received additional object properties for oneOf/anyOf that are not objects}",
                 path: this.breadcrumbs
             });
         }
