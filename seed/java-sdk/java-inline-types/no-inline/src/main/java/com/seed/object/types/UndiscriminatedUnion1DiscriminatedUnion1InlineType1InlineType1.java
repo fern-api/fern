@@ -79,12 +79,18 @@ public final class UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType
     }
 
     public interface FooStage {
+        /**
+         * lorem ipsum
+         */
         RefStage foo(@NotNull String foo);
 
         Builder from(UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1 other);
     }
 
     public interface RefStage {
+        /**
+         * lorem ipsum
+         */
         _FinalStage ref(@NotNull ReferenceType ref);
     }
 
@@ -111,7 +117,7 @@ public final class UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType
         }
 
         /**
-         * <p>lorem ipsum</p>
+         * lorem ipsum<p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -122,7 +128,7 @@ public final class UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType
         }
 
         /**
-         * <p>lorem ipsum</p>
+         * lorem ipsum<p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
