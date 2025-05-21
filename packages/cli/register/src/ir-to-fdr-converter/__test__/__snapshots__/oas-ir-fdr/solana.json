@@ -7653,8 +7653,11 @@
                   "description": "Optional configuration object for additional settings.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getAccountInfo_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getAccountInfo_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -7747,8 +7750,11 @@
                   "description": "Optional configuration object containing additional settings.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getBalance_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getBalance_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -7843,8 +7849,11 @@
                   "description": "Optional configuration object containing additional settings.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getBlock_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getBlock_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -8013,8 +8022,11 @@
                   "description": "Optional configuration object containing additional request parameters.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getBlockHeight_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getBlockHeight_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -8099,8 +8111,11 @@
                   "description": "Optional configuration object containing additional settings.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getBlockProduction_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getBlockProduction_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -8193,9 +8208,12 @@
                   "description": "The ending slot.",
                   "key": "end_slot",
                   "valueType": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "integer"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "integer"
+                      }
                     }
                   }
                 },
@@ -8203,8 +8221,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getBlocks_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getBlocks_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -8316,8 +8337,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getBlocksWithLimit_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getBlocksWithLimit_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -8563,8 +8587,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getEpochInfo_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getEpochInfo_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -8716,8 +8743,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getFeeForMessage_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getFeeForMessage_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -9111,8 +9141,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getInflationGovernor_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getInflationGovernor_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -9347,8 +9380,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getLargestAccounts_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getLargestAccounts_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -9438,8 +9474,11 @@
                   "description": "A configuration object with optional fields for specifying commitment and minimum context slot.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getLatestBlockhash_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getLatestBlockhash_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -9656,8 +9695,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getMinimumBalanceForRentExemption_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getMinimumBalanceForRentExemption_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -9755,8 +9797,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getMultipleAccounts_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getMultipleAccounts_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -9856,8 +9901,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getProgramAccounts_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getProgramAccounts_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -9947,9 +9995,12 @@
                   "description": "The number of samples to return.",
                   "key": "limit",
                   "valueType": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "integer"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "integer"
+                      }
                     }
                   }
                 }
@@ -10040,11 +10091,14 @@
                   "description": "An array of up to 128 account addresses. If provided, the response will reflect a fee to land a transaction locking all of the provided accounts as writable.",
                   "key": "Account addresses",
                   "valueType": {
-                    "type": "list",
+                    "type": "optional",
                     "itemType": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
+                      "type": "list",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -10146,8 +10200,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getSignaturesForAddress_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getSignaturesForAddress_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -10250,8 +10307,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getSignatureStatuses_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getSignatureStatuses_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -10341,8 +10401,11 @@
                   "description": "Optional configuration object containing additional settings.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getSlot_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getSlot_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -10427,8 +10490,11 @@
                   "description": "Optional configuration object containing additional settings.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getSlotLeader_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getSlotLeader_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -10618,8 +10684,11 @@
                   "description": "Optional configuration object containing additional settings.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getSupply_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getSupply_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -10712,8 +10781,11 @@
                   "description": "Optional configuration object containing additional settings.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getTokenAccountBalance_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getTokenAccountBalance_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -10806,16 +10878,22 @@
                   "description": "A filter object containing either the Mint Pubkey or the Token program Pubkey.",
                   "key": "Token filter",
                   "valueType": {
-                    "type": "id",
-                    "value": "getTokenAccountsByOwner_Param_Token filter"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getTokenAccountsByOwner_Param_Token filter"
+                    }
                   }
                 },
                 {
                   "description": "Optional configuration object containing additional settings.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getTokenAccountsByOwner_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getTokenAccountsByOwner_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -10915,8 +10993,11 @@
                   "description": "Optional configuration object containing additional settings.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getTokenSupply_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getTokenSupply_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -11009,8 +11090,11 @@
                   "description": "Optional configuration object containing additional settings.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getTransaction_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getTransaction_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -11154,8 +11238,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "getVoteAccounts_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "getVoteAccounts_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -11248,8 +11335,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "isBlockhashValid_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "isBlockhashValid_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -11417,8 +11507,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "requestAirdrop_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "requestAirdrop_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -11513,8 +11606,11 @@
                   "description": "Optional configuration object.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "sendTransaction_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "sendTransaction_Param_Configuration"
+                    }
                   }
                 }
               ]
@@ -11609,8 +11705,11 @@
                   "description": "Optional configuration object containing additional options.",
                   "key": "Configuration",
                   "valueType": {
-                    "type": "id",
-                    "value": "simulateTransaction_Param_Configuration"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "simulateTransaction_Param_Configuration"
+                    }
                   }
                 }
               ]

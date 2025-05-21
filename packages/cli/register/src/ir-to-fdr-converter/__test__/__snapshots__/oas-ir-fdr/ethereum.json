@@ -2373,10 +2373,13 @@
                   "description": "data to hash using the Keccak-256 algorithm",
                   "key": "data",
                   "valueType": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "regex": "^0x[a-fA-F\\d]+$"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "regex": "^0x[a-fA-F\\d]+$"
+                      }
                     }
                   }
                 }
@@ -3037,8 +3040,11 @@
                   "description": "A BlockNumber at which to request the balance",
                   "key": "blockNumber",
                   "valueType": {
-                    "type": "id",
-                    "value": "BlockNumber"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "BlockNumber"
+                    }
                   }
                 }
               ]
@@ -3413,8 +3419,11 @@
                   "description": "A BlockNumber of which the code existed",
                   "key": "blockNumber",
                   "valueType": {
-                    "type": "id",
-                    "value": "BlockNumber"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "BlockNumber"
+                    }
                   }
                 }
               ]
