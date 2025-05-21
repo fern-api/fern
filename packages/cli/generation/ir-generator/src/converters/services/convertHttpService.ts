@@ -331,6 +331,8 @@ function convertHttpMethod(method: Exclude<RawSchemas.HttpEndpointSchema["method
             return HttpMethod.Patch;
         case "DELETE":
             return HttpMethod.Delete;
+        case "HEAD":
+            return HttpMethod.Head;
         default:
             assertNever(method);
     }

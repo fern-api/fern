@@ -124,6 +124,7 @@ types:
       - PUT
       - PATCH
       - DELETE
+      - HEAD
 
   V2EnvironmentValues:
     discriminated: false

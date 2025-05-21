@@ -8,11 +8,15 @@ export const NoGetRequestBodyRule: Rule = {
         return {
             definitionFile: {
                 httpEndpoint: ({ endpoint }) => {
-                    if (endpoint.method === "GET" && getRequestBody(endpoint) != null) {
+                    const method = endpoint.method;
+                    if (
+                        (method === "GET" || method === "HEAD") &&
+                        getRequestBody(endpoint) != null
+                    ) {
                         return [
                             {
                                 severity: "fatal",
-                                message: "Endpoint is a GET, so it cannot have a request body."
+                                message: `Endpoint is a ${method}, so it cannot have a request body.`
                             }
                         ];
                     }

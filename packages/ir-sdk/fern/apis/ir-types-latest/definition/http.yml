@@ -90,6 +90,7 @@ types:
       - PUT
       - PATCH
       - DELETE
+      - HEAD
 
   HttpHeader:
     extends: commons.Declaration

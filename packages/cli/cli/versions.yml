@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Add support for `HEAD` HTTP methods and validate that they define no response body.
+      type: feat
+  irVersion: 57
+  createdAt: "2025-05-21"
+  version: 0.63.0
+
+- changelogEntry:
+    - summary: |
         Improve naming for discriminated unions based on title/discriminator key.
       type: fix
   irVersion: 57

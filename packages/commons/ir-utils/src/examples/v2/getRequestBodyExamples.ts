@@ -5,7 +5,6 @@ import {
     TypeDeclaration,
     TypeId,
     V2HttpEndpointRequest,
-    V2SchemaExample
 } from "@fern-api/ir-sdk";
 
 import { getParameterExamples } from "./getParameterExamples";

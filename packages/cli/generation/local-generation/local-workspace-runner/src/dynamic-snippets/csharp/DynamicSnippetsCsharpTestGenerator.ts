@@ -51,8 +51,12 @@ export class DynamicSnippetsCsharpTestGenerator {
         const absolutePathToOutputDir = await this.initializeProject(outputDir);
         for (const [idx, request] of requests.entries()) {
             try {
+                const convertedRequest = convertDynamicEndpointSnippetRequest(request);
+                if (convertedRequest == null) {
+                    continue;
+                }
                 const response = await this.dynamicSnippetsGenerator.generate(
-                    convertDynamicEndpointSnippetRequest(request),
+                    convertedRequest,
                     {
                         config: {
                             fullStyleClassName: `Example${idx}`

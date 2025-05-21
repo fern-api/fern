@@ -41,7 +41,7 @@ it("breaking", { timeout: 10_000 }, async () => {
     }
 });
 
-it("non-breaking", async () => {
+it("non-breaking", { timeout: 10_000 }, async () => {
     const nonBreakingChangesDir = path.join(CHANGES_DIR, "non-breaking");
     const nonBreakingChangeDirs = await readdir(nonBreakingChangesDir, { withFileTypes: true });
     for (const dir of nonBreakingChangeDirs) {
