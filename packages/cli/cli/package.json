@@ -111,7 +111,7 @@
     "tar": "^6.2.1",
     "tmp-promise": "^3.0.3",
     "tsup": "^8.3.5",
-    "undici": "^6.21.1",
+    "undici": "^6.21.2",
     "validate-npm-package-name": "^5.0.1",
     "yaml": "^2.4.5",
     "yargs": "^17.4.1",
