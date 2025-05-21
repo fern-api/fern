@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Correctly merge services when parsing multiple specs; standardize namespaced service naming.
+      type: fix
+  irVersion: 57
+  createdAt: "2025-05-20"
+  version: 0.62.2
+
+- changelogEntry:
+    - summary: |
         No changes.
       type: internal
   irVersion: 57

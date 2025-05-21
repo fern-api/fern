@@ -10,6 +10,72 @@
         "environments": [
           {
             "id": "Prod",
+            "baseUrl": "http://prod.api.com"
+          },
+          {
+            "id": "Dev",
+            "baseUrl": "http://dev.api.com"
+          }
+        ],
+        "id": "list",
+        "originalEndpointId": "endpoint_.list",
+        "name": "List",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/pets"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "statusCode": 200,
+          "description": "A response"
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "listExample",
+            "description": "",
+            "path": "/pets",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": "foo",
+            "responseBodyV3": {
+              "type": "json",
+              "value": "foo"
+            }
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      },
+      {
+        "auth": false,
+        "method": "GET",
+        "defaultEnvironment": "Prod",
+        "environments": [
+          {
+            "id": "Prod",
             "baseUrl": "http://prod2.api.com"
           },
           {
