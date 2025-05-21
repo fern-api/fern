@@ -17,7 +17,7 @@ async function run() {
         }
     );
     registerTools(server);
-    custom.registerTools(server);
+    custom.register(server);
 
     const transport = new StdioServerTransport();
     await server.connect(transport);
