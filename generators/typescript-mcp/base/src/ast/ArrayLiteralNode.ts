@@ -12,7 +12,7 @@ export class ArrayLiteralNode extends ts.AstNode {
         super();
     }
 
-    public write(writer: ts.Writer) {
+    public write(writer: ts.Writer): void {
         writer.write("[");
         writer.newLine();
         writer.indent();

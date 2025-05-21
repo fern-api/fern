@@ -15,7 +15,7 @@ export class ReExportAsNamedNode extends ts.AstNode {
         super();
     }
 
-    public write(writer: ts.Writer) {
+    public write(writer: ts.Writer): void {
         writer.writeNode(
             new ExportNode({
                 initializer: ts.codeblock((writer) => {

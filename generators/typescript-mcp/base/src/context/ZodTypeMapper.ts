@@ -18,7 +18,7 @@ export class ZodTypeMapper {
     }
 
     // TODO: finish implementing this
-    public convert({ reference }: ZodTypeMapper.Args) {
+    public convert({ reference }: ZodTypeMapper.Args): string {
         return reference._visit({
             container: (value) => "any",
             named: (value) => "any",
@@ -29,7 +29,7 @@ export class ZodTypeMapper {
     }
 
     // TODO: finish implementing this
-    public convertSdkRequest(sdkRequest?: SdkRequest) {
+    public convertSdkRequest(sdkRequest?: SdkRequest): string {
         return sdkRequest?.shape._visit({
             justRequestBody: (value) =>
                 value._visit({
@@ -53,7 +53,7 @@ export class ZodTypeMapper {
     }
 
     // TODO: finish implementing this
-    public convertPrimitiveTypeV1(primitiveTypeV1: PrimitiveTypeV1) {
+    public convertPrimitiveTypeV1(primitiveTypeV1: PrimitiveTypeV1): string {
         return PrimitiveTypeV1._visit(primitiveTypeV1, {
             integer: () => "number",
             long: () => "number",
@@ -73,7 +73,7 @@ export class ZodTypeMapper {
     }
 
     // TODO: finish implementing this
-    public convertSingleUnionType(singleUnionType: SingleUnionType) {
+    public convertSingleUnionType(singleUnionType: SingleUnionType): string {
         return singleUnionType.shape._visit({
             samePropertiesAsObject: (value) => "any",
             singleProperty: (value) => "any",

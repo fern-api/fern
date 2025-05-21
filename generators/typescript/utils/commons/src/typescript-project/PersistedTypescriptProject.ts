@@ -1,7 +1,6 @@
 import decompress from "decompress";
 import { cp, readdir, rm } from "fs/promises";
 import tmp from "tmp-promise";
-import { Project } from "ts-morph";
 import urlJoin from "url-join";
 
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
@@ -174,7 +173,12 @@ export class PersistedTypescriptProject {
         });
 
         // zip decompressed pack into destination
-        await this.zipDirectoryContents(directoryOfDecompressedPack, { logger, destinationPath, zipFilename, unzipOutput });
+        await this.zipDirectoryContents(directoryOfDecompressedPack, {
+            logger,
+            destinationPath,
+            zipFilename,
+            unzipOutput
+        });
     }
 
     public async copySrcTo({
@@ -189,7 +193,12 @@ export class PersistedTypescriptProject {
         logger: Logger;
     }): Promise<void> {
         await this.format(logger);
-        await this.zipDirectoryContents(join(this.directory, this.srcDirectory), { logger, destinationPath, zipFilename, unzipOutput });
+        await this.zipDirectoryContents(join(this.directory, this.srcDirectory), {
+            logger,
+            destinationPath,
+            zipFilename,
+            unzipOutput
+        });
     }
 
     public async copyDistTo({
@@ -204,12 +213,22 @@ export class PersistedTypescriptProject {
         logger: Logger;
     }): Promise<void> {
         await this.build(logger);
-        await this.zipDirectoryContents(join(this.directory, this.distDirectory), { logger, destinationPath, zipFilename, unzipOutput });
+        await this.zipDirectoryContents(join(this.directory, this.distDirectory), {
+            logger,
+            destinationPath,
+            zipFilename,
+            unzipOutput
+        });
     }
 
     private async zipDirectoryContents(
         directoryToZip: AbsoluteFilePath,
-        { destinationPath, zipFilename, logger, unzipOutput }: { destinationPath: AbsoluteFilePath; zipFilename: string; logger: Logger; unzipOutput?: boolean }
+        {
+            destinationPath,
+            zipFilename,
+            logger,
+            unzipOutput
+        }: { destinationPath: AbsoluteFilePath; zipFilename: string; logger: Logger; unzipOutput?: boolean }
     ) {
         const zip = createLoggingExecutable("zip", {
             cwd: directoryToZip,
@@ -224,18 +243,12 @@ export class PersistedTypescriptProject {
         await cp(tmpZipLocation, destinationZip);
 
         if (unzipOutput) {
-            try {
-                // Unzip the file in the destination directory
-                await decompress(destinationZip, destinationPath, {
-                    strip: 0
-                });
-                // Clean up (remove) the zip file only after successful decompression
-                await rm(destinationZip);
-            } catch (error) {
-                // Log the error but don't delete the zip file if decompression fails
-                console.error('Failed to decompress file:', error);
-                throw error; // Re-throw to allow caller to handle the error
-            }
+            // Unzip the file in the destination directory
+            await decompress(destinationZip, destinationPath, {
+                strip: 0
+            });
+            // Clean up (remove) the zip file after successful decompression
+            await rm(destinationZip);
         }
     }
 

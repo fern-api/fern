@@ -74,7 +74,7 @@ export class ServerGeneratorCLI extends AbstractTypescriptMcpGeneratorCli<
         context.project.addToolsFile(tools.generate());
     }
 
-    private async generateReadme(context: ServerGeneratorContext) {
+    private generateReadme(context: ServerGeneratorContext) {
         const readme = new ReadmeGenerator(context);
         context.project.addSrcFile(readme.generate());
     }

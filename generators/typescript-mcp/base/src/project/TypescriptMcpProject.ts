@@ -135,8 +135,6 @@ export class TypescriptMcpProject extends AbstractProject<
 }
 
 class TypescriptMcpProjectFilepaths {
-    constructor() {}
-
     public getSrcDirectory(): RelativeFilePath {
         return RelativeFilePath.of(SRC_DIRECTORY_NAME);
     }

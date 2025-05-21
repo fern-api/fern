@@ -13,7 +13,7 @@ export class ExportNode extends ts.AstNode {
         super();
     }
 
-    public write(writer: ts.Writer) {
+    public write(writer: ts.Writer): void {
         if (this.args.default) {
             writer.write("export default ");
         } else {

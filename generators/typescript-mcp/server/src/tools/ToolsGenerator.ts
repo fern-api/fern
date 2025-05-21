@@ -144,11 +144,11 @@ export class ToolDefinition {
         this.schemaVariableName = this.args.zodTypeMapper.convertSdkRequest(this.args.endpoint.sdkRequest);
     }
 
-    write(writer: ts.Writer) {
+    write(writer: ts.Writer): void {
         const hasSchema = !!this.schemaVariableName;
         const writeSchema = (writer: ts.Writer) => {
             writer.writeNode(this.args.schemasReference);
-            writer.write(this.schemaVariableName!);
+            hasSchema && writer.write(this.schemaVariableName);
         };
 
         const partsFromPath = this.getPartsFromPath();
