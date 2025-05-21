@@ -4068,16 +4068,14 @@
             "type": {
               "type": "id",
               "value": "ToolResponseMessage"
-            },
-            "displayName": "ToolResponseMessage"
+            }
           },
           {
             "typeName": "ToolErrorMessage",
             "type": {
               "type": "id",
               "value": "ToolErrorMessage"
-            },
-            "displayName": "ToolErrorMessage"
+            }
           }
         ]
       }

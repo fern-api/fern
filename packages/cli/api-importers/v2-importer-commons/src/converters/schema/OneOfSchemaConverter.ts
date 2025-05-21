@@ -55,6 +55,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         ) {
             return this.convertAsDiscriminatedUnion();
         }
+
         return this.convertAsUndiscriminatedUnion();
     }
 
@@ -178,7 +179,25 @@ export class OneOfSchemaConverter extends AbstractConverter<
             ...(this.schema.anyOf ?? []).entries()
         ]) {
             if (this.context.isReferenceObject(subSchema)) {
-                const maybeTypeReference = this.context.convertReferenceToTypeReference({ reference: subSchema });
+                let maybeTypeReference;
+
+                if (this.context.isReferenceObjectWithTitle(subSchema)) {
+                    maybeTypeReference = this.context.convertReferenceToTypeReference({
+                        reference: subSchema,
+                        displayNameOverride: subSchema.title,
+                        displayNameOverrideType: "TITLE"
+                    });
+                } else if (this.getDiscriminatorKeyForRef(subSchema) != null) {
+                    const mappingEntry = this.getDiscriminatorKeyForRef(subSchema);
+                    maybeTypeReference = this.context.convertReferenceToTypeReference({
+                        reference: subSchema,
+                        displayNameOverride: mappingEntry,
+                        displayNameOverrideType: "DISCRIMINATOR_KEY"
+                    });
+                } else {
+                    maybeTypeReference = this.context.convertReferenceToTypeReference({ reference: subSchema });
+                }
+
                 if (maybeTypeReference.ok) {
                     unionTypes.push({
                         type: maybeTypeReference.reference,
@@ -264,7 +283,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
         if (withoutNull.length === 0) {
             this.context.errorCollector.collect({
-                message: `Received ${schemaType} schema with no valid non-null types: ${JSON.stringify(this.schema)}`,
+                message: `Received ${schemaType} schema with no valid non-null types`,
                 path: this.breadcrumbs
             });
             return undefined;
@@ -376,10 +395,14 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
         if (!this.context.isObjectSchemaType(subSchema)) {
             this.context.errorCollector.collect({
-                message: `Received additional object properties for oneOf/anyOf that are not objects: ${JSON.stringify(subSchema)}`,
+                message: "Received additional object properties for oneOf/anyOf that are not objects",
                 path: this.breadcrumbs
             });
         }
         return undefined;
+    }
+
+    private getDiscriminatorKeyForRef(subSchema: OpenAPIV3_1.ReferenceObject): string | undefined {
+        return Object.entries(this.schema.discriminator?.mapping ?? {}).find(([_, ref]) => ref === subSchema.$ref)?.[0];
     }
 }

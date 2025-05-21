@@ -1140,7 +1140,6 @@
                       },
                       "typeId": "ValidationError",
                       "inline": false,
-                      "displayName": "ValidationError",
                       "type": "named"
                     },
                     "type": "list"
@@ -2696,7 +2695,6 @@
               },
               "typeId": "Agent",
               "inline": false,
-              "displayName": "Agent",
               "type": "named"
             },
             "v2Examples": {
@@ -4296,7 +4294,6 @@
               },
               "typeId": "PredictAgent",
               "inline": false,
-              "displayName": "PredictAgent",
               "type": "named"
             },
             "v2Examples": {
@@ -4813,7 +4810,6 @@
               },
               "typeId": "SignIn",
               "inline": false,
-              "displayName": "SignIn",
               "type": "named"
             },
             "v2Examples": {
@@ -5167,7 +5163,6 @@
               },
               "typeId": "SignUp",
               "inline": false,
-              "displayName": "SignUp",
               "type": "named"
             },
             "v2Examples": {
@@ -6279,7 +6274,6 @@
               },
               "typeId": "ApiToken",
               "inline": false,
-              "displayName": "ApiToken",
               "type": "named"
             },
             "v2Examples": {
@@ -7274,7 +7268,6 @@
               },
               "typeId": "Document",
               "inline": false,
-              "displayName": "Document",
               "type": "named"
             },
             "v2Examples": {
@@ -8707,7 +8700,6 @@
               },
               "typeId": "Prompt",
               "inline": false,
-              "displayName": "Prompt",
               "type": "named"
             },
             "v2Examples": {
@@ -10181,7 +10173,6 @@
               },
               "typeId": "Tool",
               "inline": false,
-              "displayName": "Tool",
               "type": "named"
             },
             "v2Examples": {
@@ -11349,7 +11340,6 @@
         },
         "typeId": "HTTPValidationError",
         "inline": false,
-        "displayName": "HTTPValidationError",
         "type": "named"
       },
       "statusCode": 422,

@@ -16236,7 +16236,6 @@
                         }
                       },
                       "typeId": "Context",
-                      "displayName": "Context",
                       "inline": false,
                       "type": "named"
                     },
@@ -16310,7 +16309,6 @@
                         }
                       },
                       "typeId": "AudioConfiguration",
-                      "displayName": "AudioConfiguration",
                       "inline": false,
                       "type": "named"
                     },
@@ -16441,7 +16439,6 @@
                             }
                           },
                           "typeId": "Tool",
-                          "displayName": "Tool",
                           "inline": false,
                           "type": "named"
                         },
@@ -16525,7 +16522,6 @@
                             }
                           },
                           "typeId": "BuiltinToolConfig",
-                          "displayName": "BuiltinToolConfig",
                           "inline": false,
                           "type": "named"
                         },
@@ -17395,7 +17391,6 @@
                         }
                       },
                       "typeId": "ToolType",
-                      "displayName": "ToolType",
                       "inline": false,
                       "type": "named"
                     },
@@ -17616,7 +17611,6 @@
                         }
                       },
                       "typeId": "ToolType",
-                      "displayName": "ToolType",
                       "inline": false,
                       "type": "named"
                     },
@@ -17876,7 +17870,6 @@
                         }
                       },
                       "typeId": "ErrorLevel",
-                      "displayName": "ErrorLevel",
                       "inline": false,
                       "type": "named"
                     },
@@ -18572,7 +18565,6 @@
                 }
               },
               "typeId": "ChatMessage",
-              "displayName": "ChatMessage",
               "inline": false,
               "type": "named"
             },
@@ -18630,7 +18622,6 @@
                 }
               },
               "typeId": "Inference",
-              "displayName": "Inference",
               "inline": false,
               "type": "named"
             },
@@ -19699,7 +19690,6 @@
                 }
               },
               "typeId": "ChatMessage",
-              "displayName": "ChatMessage",
               "inline": false,
               "type": "named"
             },
@@ -19757,7 +19747,6 @@
                 }
               },
               "typeId": "Inference",
-              "displayName": "Inference",
               "inline": false,
               "type": "named"
             },
@@ -19815,7 +19804,6 @@
                 }
               },
               "typeId": "MillisecondInterval",
-              "displayName": "MillisecondInterval",
               "inline": false,
               "type": "named"
             },
@@ -20288,7 +20276,6 @@
                 }
               },
               "typeId": "ToolType",
-              "displayName": "ToolType",
               "inline": false,
               "type": "named"
             },
@@ -20439,7 +20426,6 @@
                 }
               },
               "typeId": "Encoding",
-              "displayName": "Encoding",
               "inline": false,
               "type": "named"
             },
@@ -20720,7 +20706,6 @@
                 }
               },
               "typeId": "BuiltInTool",
-              "displayName": "BuiltInTool",
               "inline": false,
               "type": "named"
             },
@@ -20880,7 +20865,6 @@
                     }
                   },
                   "typeId": "ContextType",
-                  "displayName": "ContextType",
                   "inline": false,
                   "type": "named"
                 },
@@ -21325,7 +21309,6 @@
                 }
               },
               "typeId": "ToolType",
-              "displayName": "ToolType",
               "inline": false,
               "type": "named"
             },
@@ -21690,7 +21673,6 @@
                 }
               },
               "typeId": "ToolResponseMessage",
-              "displayName": "ToolResponseMessage",
               "inline": false,
               "type": "named"
             }
@@ -21721,7 +21703,6 @@
                 }
               },
               "typeId": "ToolErrorMessage",
-              "displayName": "ToolErrorMessage",
               "inline": false,
               "type": "named"
             }
@@ -21821,7 +21802,6 @@
                 }
               },
               "typeId": "Role",
-              "displayName": "Role",
               "inline": false,
               "type": "named"
             },
@@ -21936,7 +21916,6 @@
                         }
                       },
                       "typeId": "ToolCallMessage",
-                      "displayName": "ToolCallMessage",
                       "inline": false,
                       "type": "named"
                     },
@@ -24149,7 +24128,6 @@
                     }
                   },
                   "typeId": "ProsodyInference",
-                  "displayName": "ProsodyInference",
                   "inline": false,
                   "type": "named"
                 },
@@ -24494,7 +24472,6 @@
                 }
               },
               "typeId": "EmotionScores",
-              "displayName": "EmotionScores",
               "inline": false,
               "type": "named"
             },

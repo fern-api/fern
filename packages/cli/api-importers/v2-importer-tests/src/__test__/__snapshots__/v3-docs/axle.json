@@ -1030,7 +1030,6 @@
               },
               "typeId": "Address",
               "inline": false,
-              "displayName": "Address",
               "type": "named"
             },
             "v2Examples": {
@@ -1089,7 +1088,6 @@
                   },
                   "typeId": "Coverage",
                   "inline": false,
-                  "displayName": "Coverage",
                   "type": "named"
                 },
                 "type": "list"
@@ -1160,7 +1158,6 @@
                   },
                   "typeId": "Property",
                   "inline": false,
-                  "displayName": "Property",
                   "type": "named"
                 },
                 "type": "list"
@@ -1237,7 +1234,6 @@
                   },
                   "typeId": "Insured",
                   "inline": false,
-                  "displayName": "Insured",
                   "type": "named"
                 },
                 "type": "list"
@@ -1308,7 +1304,6 @@
                   },
                   "typeId": "ThirdParty",
                   "inline": false,
-                  "displayName": "Third Party",
                   "type": "named"
                 },
                 "type": "list"
@@ -2029,7 +2024,6 @@
               },
               "typeId": "Address",
               "inline": false,
-              "displayName": "Address",
               "type": "named"
             },
             "v2Examples": {
@@ -2998,7 +2992,6 @@
               },
               "typeId": "Vehicle",
               "inline": false,
-              "displayName": "Vehicle",
               "type": "named"
             },
             "v2Examples": {
@@ -4109,7 +4102,6 @@
                   },
                   "typeId": "Address",
                   "inline": false,
-                  "displayName": "Address",
                   "type": "named"
                 },
                 "type": "optional"
@@ -4565,7 +4557,6 @@
                   },
                   "typeId": "Success",
                   "inline": false,
-                  "displayName": "Success",
                   "type": "named"
                 },
                 "type": "optional"
@@ -4896,7 +4887,6 @@
               },
               "typeId": "Success",
               "inline": false,
-              "displayName": "Success",
               "type": "named"
             },
             "v2Examples": {
@@ -5243,7 +5233,6 @@
               },
               "typeId": "Success",
               "inline": false,
-              "displayName": "Success",
               "type": "named"
             },
             "v2Examples": {
@@ -5422,7 +5411,6 @@
                   },
                   "typeId": "Success",
                   "inline": false,
-                  "displayName": "Success",
                   "type": "named"
                 },
                 "type": "optional"
@@ -5485,7 +5473,6 @@
                   },
                   "typeId": "Account",
                   "inline": false,
-                  "displayName": "Account",
                   "type": "named"
                 },
                 "type": "optional"
@@ -5594,7 +5581,6 @@
                   },
                   "typeId": "Success",
                   "inline": false,
-                  "displayName": "Success",
                   "type": "named"
                 },
                 "type": "optional"
@@ -5657,7 +5643,6 @@
                   },
                   "typeId": "Policy",
                   "inline": false,
-                  "displayName": "Policy",
                   "type": "named"
                 },
                 "type": "optional"
@@ -5766,7 +5751,6 @@
                   },
                   "typeId": "Success",
                   "inline": false,
-                  "displayName": "Success",
                   "type": "named"
                 },
                 "type": "optional"
@@ -5829,7 +5813,6 @@
                   },
                   "typeId": "Carrier",
                   "inline": false,
-                  "displayName": "Carrier",
                   "type": "named"
                 },
                 "type": "optional"
@@ -5938,7 +5921,6 @@
                   },
                   "typeId": "Success",
                   "inline": false,
-                  "displayName": "Success",
                   "type": "named"
                 },
                 "type": "optional"
@@ -6003,7 +5985,6 @@
                       },
                       "typeId": "Carrier",
                       "inline": false,
-                      "displayName": "Carrier",
                       "type": "named"
                     },
                     "type": "list"
@@ -6386,7 +6367,6 @@
                       },
                       "typeId": "User",
                       "inline": false,
-                      "displayName": "User",
                       "type": "named"
                     },
                     "type": "optional"
@@ -6483,7 +6463,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "26600df8",
+                "id": "de43d437",
                 "url": "/ignition",
                 "endpointHeaders": [
                   {
@@ -6703,7 +6683,6 @@
                               },
                               "typeId": "User",
                               "inline": false,
-                              "displayName": "User",
                               "type": "named"
                             },
                             "type": "optional"
@@ -8451,7 +8430,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "b626b3c0",
+                "id": "5eee3358",
                 "url": "/accounts/id",
                 "endpointHeaders": [
                   {
@@ -8714,7 +8693,6 @@
                                       },
                                       "typeId": "Success",
                                       "inline": false,
-                                      "displayName": "Success",
                                       "type": "named"
                                     },
                                     "type": "optional"
@@ -9561,7 +9539,6 @@
                                       },
                                       "typeId": "Account",
                                       "inline": false,
-                                      "displayName": "Account",
                                       "type": "named"
                                     },
                                     "type": "optional"
@@ -10034,7 +10011,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "9398eabb",
+                "id": "a1b2f026",
                 "url": "/policies/id",
                 "endpointHeaders": [
                   {
@@ -10397,7 +10374,6 @@
                                       },
                                       "typeId": "Success",
                                       "inline": false,
-                                      "displayName": "Success",
                                       "type": "named"
                                     },
                                     "type": "optional"
@@ -12971,7 +12947,6 @@
                                                       },
                                                       "typeId": "Coverage",
                                                       "inline": false,
-                                                      "displayName": "Coverage",
                                                       "type": "named"
                                                     },
                                                     "type": "list"
@@ -14360,7 +14335,6 @@
                                                       },
                                                       "typeId": "Property",
                                                       "inline": false,
-                                                      "displayName": "Property",
                                                       "type": "named"
                                                     },
                                                     "type": "list"
@@ -15949,7 +15923,6 @@
                                                       },
                                                       "typeId": "Insured",
                                                       "inline": false,
-                                                      "displayName": "Insured",
                                                       "type": "named"
                                                     },
                                                     "type": "list"
@@ -16922,7 +16895,6 @@
                                                                         },
                                                                         "typeId": "Address",
                                                                         "inline": false,
-                                                                        "displayName": "Address",
                                                                         "type": "named"
                                                                       },
                                                                       "type": "optional"
@@ -17846,7 +17818,6 @@
                                                                         },
                                                                         "typeId": "Address",
                                                                         "inline": false,
-                                                                        "displayName": "Address",
                                                                         "type": "named"
                                                                       },
                                                                       "type": "optional"
@@ -17914,7 +17885,6 @@
                                                       },
                                                       "typeId": "ThirdParty",
                                                       "inline": false,
-                                                      "displayName": "Third Party",
                                                       "type": "named"
                                                     },
                                                     "type": "list"
@@ -18167,7 +18137,6 @@
                                       },
                                       "typeId": "Policy",
                                       "inline": false,
-                                      "displayName": "Policy",
                                       "type": "named"
                                     },
                                     "type": "optional"
@@ -18708,7 +18677,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "5a576fa7",
+                "id": "6201cd64",
                 "url": "/carriers/id",
                 "endpointHeaders": [
                   {
@@ -18972,7 +18941,6 @@
                                       },
                                       "typeId": "Success",
                                       "inline": false,
-                                      "displayName": "Success",
                                       "type": "named"
                                     },
                                     "type": "optional"
@@ -20098,7 +20066,6 @@
                                       },
                                       "typeId": "Carrier",
                                       "inline": false,
-                                      "displayName": "Carrier",
                                       "type": "named"
                                     },
                                     "type": "optional"
@@ -20429,7 +20396,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "20c3ebe0",
+                "id": "43149163",
                 "url": "/carriers",
                 "endpointHeaders": [
                   {
@@ -20677,7 +20644,6 @@
                                       },
                                       "typeId": "Success",
                                       "inline": false,
-                                      "displayName": "Success",
                                       "type": "named"
                                     },
                                     "type": "optional"
@@ -22883,7 +22849,6 @@
                                             },
                                             "typeId": "Carrier",
                                             "inline": false,
-                                            "displayName": "Carrier",
                                             "type": "named"
                                           },
                                           "type": "list"
@@ -22919,7 +22884,6 @@
                                           },
                                           "typeId": "Carrier",
                                           "inline": false,
-                                          "displayName": "Carrier",
                                           "type": "named"
                                         },
                                         "type": "list"

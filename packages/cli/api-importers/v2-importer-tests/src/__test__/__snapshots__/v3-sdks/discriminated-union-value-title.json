@@ -452,7 +452,6 @@
               },
               "typeId": "Request",
               "inline": false,
-              "displayName": "A simple request title",
               "type": "named"
             },
             "v2Examples": {
@@ -806,7 +805,6 @@
                   },
                   "typeId": "Response",
                   "inline": false,
-                  "displayName": "A simple response title",
                   "type": "named"
                 },
                 "docs": "A simple API response.",

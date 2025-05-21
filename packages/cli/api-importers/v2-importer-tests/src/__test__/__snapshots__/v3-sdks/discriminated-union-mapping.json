@@ -462,7 +462,6 @@
               },
               "typeId": "RequestOne",
               "inline": false,
-              "displayName": "A simple request title",
               "type": "named"
             },
             "v2Examples": {
