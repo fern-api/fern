@@ -47,6 +47,7 @@ export async function convertMarkdown({
         relativeFilepathFromRoot,
         sidebarTitle: data.sidebarTitle ?? data.title ?? "Introduction",
         frontmatter: {
+            "max-toc-depth": undefined,
             title: data.title,
             subtitle: data.description,
             layout: data.mode != null ? "reference" : undefined,
