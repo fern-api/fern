@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Generates docs for method types.
+      type: fix
+  createdAt: '2025-05-21'
+  irVersion: 57
+  version: 2.36.4
+- changelogEntry:
+    - summary: |
         Updates the generator to always commit changes, even if there are none, in self-hosted mode. This 
         allows users to make sure that the generator actually ran and attempted to make a commit.
       type: fix
