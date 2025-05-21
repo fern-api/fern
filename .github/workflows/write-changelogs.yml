@@ -3,6 +3,8 @@ name: Write Changelogs
 on:
   pull_request:
     paths:
+      # Source code
+      - "packages/seed/src/commands/generate/**/*"
       # Changelogs
       - "packages/cli/cli/versions.yml"
       - "generators/csharp/model/versions.yml"

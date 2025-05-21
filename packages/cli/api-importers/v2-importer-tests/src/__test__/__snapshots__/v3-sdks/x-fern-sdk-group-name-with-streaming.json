@@ -337,7 +337,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "user.get",
+          "id": "endpoint_user.get",
           "method": "POST",
           "name": {
             "originalName": "get",

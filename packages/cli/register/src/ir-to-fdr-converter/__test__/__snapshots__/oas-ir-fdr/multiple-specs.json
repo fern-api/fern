@@ -38,7 +38,7 @@
         "auth": false,
         "method": "POST",
         "id": "upload-with-content-type",
-        "originalEndpointId": "upload-with-content-type",
+        "originalEndpointId": "endpoint_.upload-with-content-type",
         "name": "Upload a file with a content type",
         "path": {
           "pathParameters": [],

@@ -205,7 +205,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "upload-with-content-type",
+          "id": "endpoint_.upload-with-content-type",
           "displayName": "Upload a file with a content type",
           "method": "POST",
           "name": {

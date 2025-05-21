@@ -7,7 +7,7 @@
         "auth": false,
         "method": "GET",
         "id": "get_user",
-        "originalEndpointId": "get_user",
+        "originalEndpointId": "endpoint_.get_user",
         "name": "Get User",
         "path": {
           "pathParameters": [

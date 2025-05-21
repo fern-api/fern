@@ -1,4 +1,5 @@
 import { mkdir, readdir, rm } from "fs/promises";
+import moment from "moment";
 
 import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
@@ -64,14 +65,14 @@ export async function generateGeneratorChangelog({
     }
 
     // Here we'll collect the changelogs so they're keyed by date, the map is essentially Release Date -> Version -> Changelog string
-    const writtenVersions = new Map<Date, Map<string, string>>();
+    const writtenVersions = new Map<string, Map<string, string>>();
     const generatorId = generator.workspaceName;
     await parseGeneratorReleasesFile({
         generatorId,
         changelogPath: absolutePathToChangelogLocation,
         context,
         action: async (release) => {
-            let createdAt = release.createdAt;
+            let createdAt: string | undefined | Date = release.createdAt;
             if (release.isYanked != null) {
                 context.logger.error(
                     `Release ${release.version} for generator ${generatorId} has been yanked, skipping this release.`
@@ -89,19 +90,19 @@ export async function generateGeneratorChangelog({
                         `Release ${release.version} for generator ${generatorId} does not have a createdAt value, and could not retrieve one from FDR, defaulting to today...`
                     );
                     // This will typically happen if you've added a new release to the versions file and haven't yet registered it with FDR yet
-                    createdAt = new Date().toISOString();
+                    createdAt = new Date();
                 } else {
                     createdAt = releaseRequest.body.createdAt;
                 }
             }
+            createdAt = moment(createdAt).format("YYYY-MM-DD");
 
-            const releaseDate = new Date(createdAt);
-            if (!writtenVersions.has(releaseDate)) {
-                writtenVersions.set(releaseDate, new Map());
+            if (!writtenVersions.has(createdAt)) {
+                writtenVersions.set(createdAt, new Map());
             }
 
             writtenVersions
-                .get(releaseDate)!
+                .get(createdAt)!
                 .set(release.version, writeChangelogEntries(release.version, release.changelogEntry));
         }
     });

@@ -265,7 +265,7 @@
           "auth": false,
           "method": "GET",
           "id": "listOrganizationUsers",
-          "originalEndpointId": "OrganizationUsers.listOrganizationUsers",
+          "originalEndpointId": "endpoint_organizationUsers.listOrganizationUsers",
           "name": "List organization users",
           "path": {
             "pathParameters": [
@@ -411,7 +411,7 @@
           "auth": false,
           "method": "GET",
           "id": "listUsers",
-          "originalEndpointId": "Users.listUsers",
+          "originalEndpointId": "endpoint_users.listUsers",
           "name": "List users",
           "path": {
             "pathParameters": [],
@@ -536,7 +536,7 @@
         "auth": false,
         "method": "GET",
         "id": "getAUser",
-        "originalEndpointId": "getAUser",
+        "originalEndpointId": "endpoint_.getAUser",
         "name": "Get a user",
         "path": {
           "pathParameters": [

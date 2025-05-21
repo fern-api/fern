@@ -314,7 +314,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "GetUser",
+          "id": "endpoint_.GetUser",
           "method": "GET",
           "name": {
             "originalName": "GetUser",
@@ -518,7 +518,7 @@
           }
         },
         {
-          "id": "GetOrganizationUser",
+          "id": "endpoint_.GetOrganizationUser",
           "method": "GET",
           "name": {
             "originalName": "GetOrganizationUser",
@@ -1203,7 +1203,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Organizations.Search",
+          "id": "endpoint_organizations.Search",
           "displayName": "Search an organization",
           "method": "POST",
           "name": {

@@ -5722,7 +5722,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "pet.updateAnExistingPet",
+          "id": "endpoint_pet.updateAnExistingPet",
           "displayName": "Update an existing pet",
           "method": "PUT",
           "name": {
@@ -7995,7 +7995,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "order.getAnOrder",
+          "id": "endpoint_order.getAnOrder",
           "displayName": "Get an order",
           "method": "GET",
           "name": {

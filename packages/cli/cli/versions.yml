@@ -1,5 +1,45 @@
 - changelogEntry:
     - summary: |
+        No changes.
+      type: internal
+  irVersion: 57
+  createdAt: "2025-05-20"
+  version: 0.62.1
+
+- changelogEntry:
+    - summary: |
+        Add `--quiet` (-q) flag to `fern diff` command to suppress output written to stderr.
+      type: feat
+    - summary: |
+        Add `--disable-examples` flag to `fern ir` command to disable automatic example generation.
+      type: feat
+    - summary: |
+        Fix an issue where the `fern diff` command mistakenly reported breaking changes
+        for API types that defined multiple errors with the same status code.
+      type: fix
+    - summary: |
+        Fix an issue where the `fern diff` command mistakenly reported breaking changes
+        for APIs that contain literal type references.
+      type: fix
+  irVersion: 57
+  version: 0.62.0
+
+- changelogEntry:
+    - summary: |
+        Standardize package, service, and endpoint naming in the v3 parser.
+      type: fix
+  irVersion: 57
+  version: 0.61.24
+
+- changelogEntry:
+    - summary: |
+        Remove warning for unrecognized PHP SDK generator name.
+      type: fix
+  irVersion: 57
+  version: 0.61.23
+
+- changelogEntry:
+    - summary: |
         Fix an issue where multiple auth schemes would not be converted during IR -> FDR conversion.
       type: fix
   irVersion: 57
@@ -1320,7 +1360,7 @@
 - changelogEntry:
     - summary: |
         Update CLI-side markdown parsing to detect more hrefs and src's (where src files are automatically uploaded),
-        enabling the <Download src="./path/to/file.pdf">Download me</Download> pattern to work.
+        enabling the `<Download src="./path/to/file.pdf">Download me</Download>` pattern to work.
       type: fix
     - summary: |
         Update `fern docs broken-links` to handle links within the current directory.

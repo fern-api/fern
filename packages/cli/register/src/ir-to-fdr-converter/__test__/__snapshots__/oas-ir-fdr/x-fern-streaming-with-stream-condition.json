@@ -121,7 +121,7 @@
           }
         ],
         "id": "chat",
-        "originalEndpointId": "chat",
+        "originalEndpointId": "endpoint_.chat",
         "name": "Start a chat",
         "path": {
           "pathParameters": [],

@@ -33,7 +33,7 @@
         "description": "Test multipart request with different content types.\n",
         "method": "POST",
         "id": "testUpload",
-        "originalEndpointId": "testUpload",
+        "originalEndpointId": "endpoint_.testUpload",
         "name": "Test upload",
         "path": {
           "pathParameters": [
@@ -188,7 +188,7 @@
         "description": "Test request with dual content types.\n",
         "method": "POST",
         "id": "testWithDualContentTypeRequestTypes",
-        "originalEndpointId": "testWithDualContentTypeRequestTypes",
+        "originalEndpointId": "endpoint_.testWithDualContentTypeRequestTypes",
         "name": "Test with dual Content-Type request types",
         "path": {
           "pathParameters": [

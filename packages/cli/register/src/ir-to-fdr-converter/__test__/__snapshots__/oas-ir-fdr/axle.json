@@ -1199,7 +1199,7 @@
             }
           ],
           "id": "StartIgnition",
-          "originalEndpointId": "Ignition.StartIgnition",
+          "originalEndpointId": "endpoint_ignition.StartIgnition",
           "name": "Start Ignition",
           "path": {
             "pathParameters": [],
@@ -1381,7 +1381,7 @@
             }
           ],
           "id": "ExchangeToken",
-          "originalEndpointId": "Tokens.ExchangeToken",
+          "originalEndpointId": "endpoint_tokens.ExchangeToken",
           "name": "Exchange Token",
           "path": {
             "pathParameters": [],
@@ -1530,7 +1530,7 @@
             }
           ],
           "id": "GetAccount",
-          "originalEndpointId": "Accounts.GetAccount",
+          "originalEndpointId": "endpoint_accounts.GetAccount",
           "name": "Get Account",
           "path": {
             "pathParameters": [
@@ -1695,7 +1695,7 @@
             }
           ],
           "id": "GetPolicy",
-          "originalEndpointId": "Policies.GetPolicy",
+          "originalEndpointId": "endpoint_policies.GetPolicy",
           "name": "Get Policy",
           "path": {
             "pathParameters": [
@@ -1976,7 +1976,7 @@
             }
           ],
           "id": "GetCarrier",
-          "originalEndpointId": "Carriers.GetCarrier",
+          "originalEndpointId": "endpoint_carriers.GetCarrier",
           "name": "Get Carrier",
           "path": {
             "pathParameters": [
@@ -2121,7 +2121,7 @@
             }
           ],
           "id": "GetCarriers",
-          "originalEndpointId": "Carriers.GetCarriers",
+          "originalEndpointId": "endpoint_carriers.GetCarriers",
           "name": "Get Carriers",
           "path": {
             "pathParameters": [],

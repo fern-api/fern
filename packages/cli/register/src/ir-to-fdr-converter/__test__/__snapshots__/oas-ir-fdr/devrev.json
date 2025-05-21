@@ -7904,7 +7904,7 @@
             }
           ],
           "id": "locate",
-          "originalEndpointId": "artifacts.locate",
+          "originalEndpointId": "endpoint_artifacts.locate",
           "name": "Locate",
           "path": {
             "pathParameters": [],
@@ -8076,7 +8076,7 @@
             }
           ],
           "id": "prepare",
-          "originalEndpointId": "artifacts.prepare",
+          "originalEndpointId": "endpoint_artifacts.prepare",
           "name": "Prepare",
           "path": {
             "pathParameters": [],
@@ -8266,7 +8266,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "auth-tokens.create",
+          "originalEndpointId": "endpoint_authTokens.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -8438,7 +8438,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "auth-tokens.delete",
+          "originalEndpointId": "endpoint_authTokens.delete",
           "name": "Delete",
           "path": {
             "pathParameters": [],
@@ -8593,7 +8593,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "auth-tokens.get",
+          "originalEndpointId": "endpoint_authTokens.get",
           "name": "Get",
           "path": {
             "pathParameters": [],
@@ -8841,7 +8841,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "auth-tokens.list",
+          "originalEndpointId": "endpoint_authTokens.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -9118,7 +9118,7 @@
             }
           ],
           "id": "selfDelete",
-          "originalEndpointId": "auth-tokens.selfDelete",
+          "originalEndpointId": "endpoint_authTokens.selfDelete",
           "name": "Self Delete",
           "path": {
             "pathParameters": [],
@@ -9273,7 +9273,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "auth-tokens.update",
+          "originalEndpointId": "endpoint_authTokens.update",
           "name": "Update",
           "path": {
             "pathParameters": [],
@@ -9542,7 +9542,7 @@
             }
           ],
           "id": "dev-org-auth-connections-create",
-          "originalEndpointId": "auth-connection.dev-org-auth-connections-create",
+          "originalEndpointId": "endpoint_authConnection.dev-org-auth-connections-create",
           "name": "Dev Org Auth Connections Create",
           "path": {
             "pathParameters": [],
@@ -9704,7 +9704,7 @@
             }
           ],
           "id": "dev-org-auth-connections-delete",
-          "originalEndpointId": "auth-connection.dev-org-auth-connections-delete",
+          "originalEndpointId": "endpoint_authConnection.dev-org-auth-connections-delete",
           "name": "Dev Org Auth Connections Delete",
           "path": {
             "pathParameters": [],
@@ -9863,7 +9863,7 @@
             }
           ],
           "id": "dev-org-auth-connections-get",
-          "originalEndpointId": "auth-connection.dev-org-auth-connections-get",
+          "originalEndpointId": "endpoint_authConnection.dev-org-auth-connections-get",
           "name": "Dev Org Auth Connections Get",
           "path": {
             "pathParameters": [],
@@ -10033,7 +10033,7 @@
             }
           ],
           "id": "dev-org-auth-connections-list",
-          "originalEndpointId": "auth-connection.dev-org-auth-connections-list",
+          "originalEndpointId": "endpoint_authConnection.dev-org-auth-connections-list",
           "name": "Dev Org Auth Connections List",
           "path": {
             "pathParameters": [],
@@ -10181,7 +10181,7 @@
             }
           ],
           "id": "dev-org-auth-connections-toggle",
-          "originalEndpointId": "auth-connection.dev-org-auth-connections-toggle",
+          "originalEndpointId": "endpoint_authConnection.dev-org-auth-connections-toggle",
           "name": "Dev Org Auth Connections Toggle",
           "path": {
             "pathParameters": [],
@@ -10340,7 +10340,7 @@
             }
           ],
           "id": "dev-org-auth-connections-update",
-          "originalEndpointId": "auth-connection.dev-org-auth-connections-update",
+          "originalEndpointId": "endpoint_authConnection.dev-org-auth-connections-update",
           "name": "Dev Org Auth Connections Update",
           "path": {
             "pathParameters": [],
@@ -10525,7 +10525,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "dev-users.list",
+          "originalEndpointId": "endpoint_devUsers.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -10847,7 +10847,7 @@
             }
           ],
           "id": "self",
-          "originalEndpointId": "dev-users.self",
+          "originalEndpointId": "endpoint_devUsers.self",
           "name": "Self",
           "path": {
             "pathParameters": [],
@@ -11087,7 +11087,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "parts.create",
+          "originalEndpointId": "endpoint_parts.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -11371,7 +11371,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "parts.delete",
+          "originalEndpointId": "endpoint_parts.delete",
           "name": "Delete",
           "path": {
             "pathParameters": [],
@@ -11546,7 +11546,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "parts.get",
+          "originalEndpointId": "endpoint_parts.get",
           "name": "Get",
           "path": {
             "pathParameters": [],
@@ -11838,7 +11838,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "parts.list",
+          "originalEndpointId": "endpoint_parts.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -12206,7 +12206,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "parts.update",
+          "originalEndpointId": "endpoint_parts.update",
           "name": "Update",
           "path": {
             "pathParameters": [],
@@ -12513,7 +12513,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "rev-orgs.create",
+          "originalEndpointId": "endpoint_revOrgs.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -12745,7 +12745,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "rev-orgs.delete",
+          "originalEndpointId": "endpoint_revOrgs.delete",
           "name": "Delete",
           "path": {
             "pathParameters": [],
@@ -12920,7 +12920,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "rev-orgs.get",
+          "originalEndpointId": "endpoint_revOrgs.get",
           "name": "Get",
           "path": {
             "pathParameters": [],
@@ -13156,7 +13156,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "rev-orgs.list",
+          "originalEndpointId": "endpoint_revOrgs.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -13529,7 +13529,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "rev-orgs.update",
+          "originalEndpointId": "endpoint_revOrgs.update",
           "name": "Update",
           "path": {
             "pathParameters": [],
@@ -13784,7 +13784,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "tags.create",
+          "originalEndpointId": "endpoint_tags.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -14018,7 +14018,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "tags.delete",
+          "originalEndpointId": "endpoint_tags.delete",
           "name": "Delete",
           "path": {
             "pathParameters": [],
@@ -14193,7 +14193,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "tags.get",
+          "originalEndpointId": "endpoint_tags.get",
           "name": "Get",
           "path": {
             "pathParameters": [],
@@ -14431,7 +14431,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "tags.list",
+          "originalEndpointId": "endpoint_tags.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -14689,7 +14689,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "tags.update",
+          "originalEndpointId": "endpoint_tags.update",
           "name": "Update",
           "path": {
             "pathParameters": [],
@@ -14946,7 +14946,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "timeline-entries.create",
+          "originalEndpointId": "endpoint_timelineEntries.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -15184,7 +15184,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "timeline-entries.get",
+          "originalEndpointId": "endpoint_timelineEntries.get",
           "name": "Get",
           "path": {
             "pathParameters": [],
@@ -15430,7 +15430,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "timeline-entries.list",
+          "originalEndpointId": "endpoint_timelineEntries.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -15721,7 +15721,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "timeline-entries.update",
+          "originalEndpointId": "endpoint_timelineEntries.update",
           "name": "Update",
           "path": {
             "pathParameters": [],
@@ -15969,7 +15969,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "webhooks.create",
+          "originalEndpointId": "endpoint_webhooks.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -16205,7 +16205,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "webhooks.delete",
+          "originalEndpointId": "endpoint_webhooks.delete",
           "name": "Delete",
           "path": {
             "pathParameters": [],
@@ -16380,7 +16380,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "webhooks.get",
+          "originalEndpointId": "endpoint_webhooks.get",
           "name": "Get",
           "path": {
             "pathParameters": [],
@@ -16620,7 +16620,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "webhooks.list",
+          "originalEndpointId": "endpoint_webhooks.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -16838,7 +16838,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "webhooks.update",
+          "originalEndpointId": "endpoint_webhooks.update",
           "name": "Update",
           "path": {
             "pathParameters": [],
@@ -17097,7 +17097,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "works.create",
+          "originalEndpointId": "endpoint_works.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -17429,7 +17429,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "works.delete",
+          "originalEndpointId": "endpoint_works.delete",
           "name": "Delete",
           "path": {
             "pathParameters": [],
@@ -17604,7 +17604,7 @@
             }
           ],
           "id": "export",
-          "originalEndpointId": "works.export",
+          "originalEndpointId": "endpoint_works.export",
           "name": "Export",
           "path": {
             "pathParameters": [],
@@ -18062,7 +18062,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "works.get",
+          "originalEndpointId": "endpoint_works.get",
           "name": "Get",
           "path": {
             "pathParameters": [],
@@ -18402,7 +18402,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "works.list",
+          "originalEndpointId": "endpoint_works.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -18888,7 +18888,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "works.update",
+          "originalEndpointId": "endpoint_works.update",
           "name": "Update",
           "path": {
             "pathParameters": [],

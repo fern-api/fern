@@ -302,8 +302,24 @@ export class IrGraph {
         }
     }
 
+    public getFilteredSubpackages(): Set<string> {
+        return this.subpackagesNeededForAudience;
+    }
+
+    public getFilteredServices(): Set<ServiceId> {
+        return this.servicesNeededForAudience;
+    }
+
     public getFilteredEndpoints(): Set<EndpointId> {
         return this.endpointsNeededForAudience;
+    }
+
+    public getFilteredChannels(): Set<WebSocketChannelId> {
+        return this.channelsNeededForAudience;
+    }
+
+    public getFilteredWebhooks(): Set<WebhookId> {
+        return this.webhooksNeededForAudience;
     }
 
     public addWebhook(filepath: FernFilepath, webhook: Webhook, rawWebhook?: RawSchemas.WebhookSchema): void {

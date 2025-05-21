@@ -74,7 +74,7 @@
         "auth": false,
         "method": "GET",
         "id": "getObjectWithArrayOfObjects",
-        "originalEndpointId": "getObjectWithArrayOfObjects",
+        "originalEndpointId": "endpoint_.getObjectWithArrayOfObjects",
         "name": "Get Object With Array Of Objects",
         "path": {
           "pathParameters": [],
@@ -159,7 +159,7 @@
         "auth": false,
         "method": "GET",
         "id": "getImplicitObjectWithArrayOfObjects",
-        "originalEndpointId": "getImplicitObjectWithArrayOfObjects",
+        "originalEndpointId": "endpoint_.getImplicitObjectWithArrayOfObjects",
         "name": "Get Implicit Object With Array Of Objects",
         "path": {
           "pathParameters": [],

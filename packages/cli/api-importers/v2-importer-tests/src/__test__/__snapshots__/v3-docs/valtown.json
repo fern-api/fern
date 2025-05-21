@@ -15760,7 +15760,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "search.vals",
+          "id": "endpoint_search.vals",
           "method": "GET",
           "name": {
             "originalName": "vals",
@@ -19330,7 +19330,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "alias.username",
+          "id": "endpoint_alias.username",
           "method": "GET",
           "name": {
             "originalName": "username",
@@ -20172,7 +20172,7 @@
           }
         },
         {
-          "id": "alias.val",
+          "id": "endpoint_alias.val",
           "method": "GET",
           "name": {
             "originalName": "val",
@@ -22122,7 +22122,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "me.get",
+          "id": "endpoint_me.get",
           "method": "GET",
           "name": {
             "originalName": "get",
@@ -23050,7 +23050,7 @@
           }
         },
         {
-          "id": "me.likes",
+          "id": "endpoint_me.likes",
           "method": "GET",
           "name": {
             "originalName": "likes",
@@ -26480,7 +26480,7 @@
           }
         },
         {
-          "id": "me.comments",
+          "id": "endpoint_me.comments",
           "method": "GET",
           "name": {
             "originalName": "comments",
@@ -29879,7 +29879,7 @@
           }
         },
         {
-          "id": "me.references",
+          "id": "endpoint_me.references",
           "method": "GET",
           "name": {
             "originalName": "references",
@@ -32642,7 +32642,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "blobs.list",
+          "id": "endpoint_blobs.list",
           "method": "GET",
           "name": {
             "originalName": "list",
@@ -33421,7 +33421,7 @@
           }
         },
         {
-          "id": "blobs.get",
+          "id": "endpoint_blobs.get",
           "method": "GET",
           "name": {
             "originalName": "get",
@@ -33597,7 +33597,7 @@
           }
         },
         {
-          "id": "blobs.store",
+          "id": "endpoint_blobs.store",
           "method": "POST",
           "name": {
             "originalName": "store",
@@ -33848,7 +33848,7 @@
           }
         },
         {
-          "id": "blobs.delete",
+          "id": "endpoint_blobs.delete",
           "method": "DELETE",
           "name": {
             "originalName": "delete",
@@ -34117,7 +34117,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "users.get",
+          "id": "endpoint_users.get",
           "method": "GET",
           "name": {
             "originalName": "get",
@@ -34959,7 +34959,7 @@
           }
         },
         {
-          "id": "users.vals",
+          "id": "endpoint_users.vals",
           "method": "GET",
           "name": {
             "originalName": "vals",
@@ -38570,7 +38570,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "sqlite.execute",
+          "id": "endpoint_sqlite.execute",
           "method": "POST",
           "name": {
             "originalName": "execute",
@@ -39631,7 +39631,7 @@
           }
         },
         {
-          "id": "sqlite.batch",
+          "id": "endpoint_sqlite.batch",
           "method": "POST",
           "name": {
             "originalName": "batch",
@@ -41711,7 +41711,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "vals.evalPost",
+          "id": "endpoint_vals.evalPost",
           "method": "POST",
           "name": {
             "originalName": "evalPost",
@@ -42210,7 +42210,7 @@
           }
         },
         {
-          "id": "vals.evalGet",
+          "id": "endpoint_vals.evalGet",
           "method": "GET",
           "name": {
             "originalName": "evalGet",
@@ -42641,7 +42641,7 @@
           }
         },
         {
-          "id": "vals.runGet",
+          "id": "endpoint_vals.runGet",
           "method": "GET",
           "name": {
             "originalName": "runGet",
@@ -42905,7 +42905,7 @@
           }
         },
         {
-          "id": "vals.runPost",
+          "id": "endpoint_vals.runPost",
           "method": "POST",
           "name": {
             "originalName": "runPost",
@@ -43258,7 +43258,7 @@
           }
         },
         {
-          "id": "vals.create",
+          "id": "endpoint_vals.create",
           "method": "POST",
           "name": {
             "originalName": "create",
@@ -45481,7 +45481,7 @@
           }
         },
         {
-          "id": "vals.put",
+          "id": "endpoint_vals.put",
           "method": "PUT",
           "name": {
             "originalName": "put",
@@ -45774,7 +45774,7 @@
           }
         },
         {
-          "id": "vals.get",
+          "id": "endpoint_vals.get",
           "method": "GET",
           "name": {
             "originalName": "get",
@@ -47553,7 +47553,7 @@
           }
         },
         {
-          "id": "vals.update",
+          "id": "endpoint_vals.update",
           "method": "PUT",
           "name": {
             "originalName": "update",
@@ -48272,7 +48272,7 @@
           }
         },
         {
-          "id": "vals.delete",
+          "id": "endpoint_vals.delete",
           "method": "DELETE",
           "name": {
             "originalName": "delete",
@@ -48514,7 +48514,7 @@
           }
         },
         {
-          "id": "vals.list",
+          "id": "endpoint_vals.list",
           "method": "GET",
           "name": {
             "originalName": "list",
@@ -49896,7 +49896,7 @@
           }
         },
         {
-          "id": "vals.createVersion",
+          "id": "endpoint_vals.createVersion",
           "method": "POST",
           "name": {
             "originalName": "createVersion",
@@ -52249,7 +52249,7 @@
           }
         },
         {
-          "id": "vals.getVersion",
+          "id": "endpoint_vals.getVersion",
           "method": "GET",
           "name": {
             "originalName": "getVersion",
@@ -54320,7 +54320,7 @@
           }
         },
         {
-          "id": "vals.deleteVersion",
+          "id": "endpoint_vals.deleteVersion",
           "method": "DELETE",
           "name": {
             "originalName": "deleteVersion",
@@ -54684,7 +54684,7 @@
           }
         },
         {
-          "id": "vals.cancel",
+          "id": "endpoint_vals.cancel",
           "method": "POST",
           "name": {
             "originalName": "cancel",
@@ -55258,7 +55258,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "emails.send",
+          "id": "endpoint_emails.send",
           "method": "POST",
           "name": {
             "originalName": "send",

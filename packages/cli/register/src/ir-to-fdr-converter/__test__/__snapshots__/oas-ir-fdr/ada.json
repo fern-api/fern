@@ -812,7 +812,7 @@
             }
           ],
           "id": "getEndUserById",
-          "originalEndpointId": "End users.getEndUserById",
+          "originalEndpointId": "endpoint_endUsers.getEndUserById",
           "name": "Get an end user by ID",
           "path": {
             "pathParameters": [
@@ -1005,7 +1005,7 @@
             }
           ],
           "id": "updateEndUserById",
-          "originalEndpointId": "End users.updateEndUserById",
+          "originalEndpointId": "endpoint_endUsers.updateEndUserById",
           "name": "Update an end user by ID",
           "path": {
             "pathParameters": [
@@ -1266,7 +1266,7 @@
             }
           ],
           "id": "getEndUsers",
-          "originalEndpointId": "End users.getEndUsers",
+          "originalEndpointId": "endpoint_endUsers.getEndUsers",
           "name": "Get multiple end users by ID",
           "path": {
             "pathParameters": [],

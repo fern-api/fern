@@ -410,7 +410,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam",
+          "id": "endpoint_.getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam",
           "method": "GET",
           "name": {
             "originalName": "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam",
@@ -1637,7 +1637,7 @@
           }
         },
         {
-          "id": "postSuccessRef",
+          "id": "endpoint_.postSuccessRef",
           "method": "POST",
           "name": {
             "originalName": "postSuccessRef",
@@ -2098,7 +2098,7 @@
           }
         },
         {
-          "id": "postSuccessInlinePropertyDeprecation",
+          "id": "endpoint_.postSuccessInlinePropertyDeprecation",
           "method": "POST",
           "name": {
             "originalName": "postSuccessInlinePropertyDeprecation",
@@ -2564,7 +2564,7 @@
           }
         },
         {
-          "id": "postSuccessInlineObjectDeprecation",
+          "id": "endpoint_.postSuccessInlineObjectDeprecation",
           "method": "POST",
           "name": {
             "originalName": "postSuccessInlineObjectDeprecation",
@@ -2944,7 +2944,7 @@
           }
         },
         {
-          "id": "postSuccessInlineBetaBody",
+          "id": "endpoint_.postSuccessInlineBetaBody",
           "method": "POST",
           "name": {
             "originalName": "postSuccessInlineBetaBody",

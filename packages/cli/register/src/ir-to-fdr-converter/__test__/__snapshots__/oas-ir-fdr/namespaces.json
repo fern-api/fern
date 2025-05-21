@@ -476,7 +476,7 @@
             }
           ],
           "id": "addPet",
-          "originalEndpointId": "petsV1.pet.addPet",
+          "originalEndpointId": "endpoint_petsV1/pet.addPet",
           "name": "Add a new pet to the store.",
           "path": {
             "pathParameters": [],
@@ -626,7 +626,7 @@
             }
           ],
           "id": "updatePet",
-          "originalEndpointId": "petsV1.pet.updatePet",
+          "originalEndpointId": "endpoint_petsV1/pet.updatePet",
           "name": "Update an existing pet.",
           "path": {
             "pathParameters": [],
@@ -788,7 +788,7 @@
             }
           ],
           "id": "findPetsByStatus",
-          "originalEndpointId": "petsV1.pet.findPetsByStatus",
+          "originalEndpointId": "endpoint_petsV1/pet.findPetsByStatus",
           "name": "Finds Pets by status.",
           "path": {
             "pathParameters": [],
@@ -915,7 +915,7 @@
             }
           ],
           "id": "findPetsByTags",
-          "originalEndpointId": "petsV1.pet.findPetsByTags",
+          "originalEndpointId": "endpoint_petsV1/pet.findPetsByTags",
           "name": "Finds Pets by tags.",
           "path": {
             "pathParameters": [],
@@ -1047,7 +1047,7 @@
             }
           ],
           "id": "getPetById",
-          "originalEndpointId": "petsV1.pet.getPetById",
+          "originalEndpointId": "endpoint_petsV1/pet.getPetById",
           "name": "Find pet by ID.",
           "path": {
             "pathParameters": [
@@ -1188,7 +1188,7 @@
             }
           ],
           "id": "updatePetWithForm",
-          "originalEndpointId": "petsV1.pet.updatePetWithForm",
+          "originalEndpointId": "endpoint_petsV1/pet.updatePetWithForm",
           "name": "Updates a pet in the store with form data.",
           "path": {
             "pathParameters": [
@@ -1344,7 +1344,7 @@
             }
           ],
           "id": "deletePet",
-          "originalEndpointId": "petsV1.pet.deletePet",
+          "originalEndpointId": "endpoint_petsV1/pet.deletePet",
           "name": "Deletes a pet.",
           "path": {
             "pathParameters": [
@@ -1437,7 +1437,7 @@
             }
           ],
           "id": "uploadFile",
-          "originalEndpointId": "petsV1.pet.uploadFile",
+          "originalEndpointId": "endpoint_petsV1/pet.uploadFile",
           "name": "Uploads an image.",
           "path": {
             "pathParameters": [
@@ -1583,7 +1583,7 @@
             }
           ],
           "id": "getInventory",
-          "originalEndpointId": "petsV1.store.getInventory",
+          "originalEndpointId": "endpoint_petsV1/store.getInventory",
           "name": "Returns pet inventories by status.",
           "path": {
             "pathParameters": [],
@@ -1655,7 +1655,7 @@
             }
           ],
           "id": "placeOrder",
-          "originalEndpointId": "petsV1.store.placeOrder",
+          "originalEndpointId": "endpoint_petsV1/store.placeOrder",
           "name": "Place an order for a pet.",
           "path": {
             "pathParameters": [],
@@ -1773,7 +1773,7 @@
             }
           ],
           "id": "getOrderById",
-          "originalEndpointId": "petsV1.store.getOrderById",
+          "originalEndpointId": "endpoint_petsV1/store.getOrderById",
           "name": "Find purchase order by ID.",
           "path": {
             "pathParameters": [
@@ -1894,7 +1894,7 @@
             }
           ],
           "id": "deleteOrder",
-          "originalEndpointId": "petsV1.store.deleteOrder",
+          "originalEndpointId": "endpoint_petsV1/store.deleteOrder",
           "name": "Delete purchase order by identifier.",
           "path": {
             "pathParameters": [
@@ -1995,7 +1995,7 @@
             }
           ],
           "id": "createUser",
-          "originalEndpointId": "petsV1.user.createUser",
+          "originalEndpointId": "endpoint_petsV1/user.createUser",
           "name": "Create user.",
           "path": {
             "pathParameters": [],
@@ -2094,7 +2094,7 @@
             }
           ],
           "id": "createUsersWithListInput",
-          "originalEndpointId": "petsV1.user.createUsersWithListInput",
+          "originalEndpointId": "endpoint_petsV1/user.createUsersWithListInput",
           "name": "Creates list of users with given input array.",
           "path": {
             "pathParameters": [],
@@ -2198,7 +2198,7 @@
             }
           ],
           "id": "loginUser",
-          "originalEndpointId": "petsV1.user.loginUser",
+          "originalEndpointId": "endpoint_petsV1/user.loginUser",
           "name": "Logs user into the system.",
           "path": {
             "pathParameters": [],
@@ -2301,7 +2301,7 @@
             }
           ],
           "id": "logoutUser",
-          "originalEndpointId": "petsV1.user.logoutUser",
+          "originalEndpointId": "endpoint_petsV1/user.logoutUser",
           "name": "Logs out current logged in user session.",
           "path": {
             "pathParameters": [],
@@ -2346,7 +2346,7 @@
             }
           ],
           "id": "getUserByName",
-          "originalEndpointId": "petsV1.user.getUserByName",
+          "originalEndpointId": "endpoint_petsV1/user.getUserByName",
           "name": "Get user by user name.",
           "path": {
             "pathParameters": [
@@ -2471,7 +2471,7 @@
             }
           ],
           "id": "updateUser",
-          "originalEndpointId": "petsV1.user.updateUser",
+          "originalEndpointId": "endpoint_petsV1/user.updateUser",
           "name": "Update user resource.",
           "path": {
             "pathParameters": [
@@ -2582,7 +2582,7 @@
             }
           ],
           "id": "deleteUser",
-          "originalEndpointId": "petsV1.user.deleteUser",
+          "originalEndpointId": "endpoint_petsV1/user.deleteUser",
           "name": "Delete user resource.",
           "path": {
             "pathParameters": [
@@ -2713,7 +2713,7 @@
             }
           ],
           "id": "addPet",
-          "originalEndpointId": "petsV2.pet.addPet",
+          "originalEndpointId": "endpoint_petsV2/pet.addPet",
           "name": "Add a new pet to the store.",
           "path": {
             "pathParameters": [],
@@ -2863,7 +2863,7 @@
             }
           ],
           "id": "updatePet",
-          "originalEndpointId": "petsV2.pet.updatePet",
+          "originalEndpointId": "endpoint_petsV2/pet.updatePet",
           "name": "Update an existing pet.",
           "path": {
             "pathParameters": [],
@@ -3025,7 +3025,7 @@
             }
           ],
           "id": "findPetsByStatus",
-          "originalEndpointId": "petsV2.pet.findPetsByStatus",
+          "originalEndpointId": "endpoint_petsV2/pet.findPetsByStatus",
           "name": "Finds Pets by status.",
           "path": {
             "pathParameters": [],
@@ -3152,7 +3152,7 @@
             }
           ],
           "id": "findPetsByTags",
-          "originalEndpointId": "petsV2.pet.findPetsByTags",
+          "originalEndpointId": "endpoint_petsV2/pet.findPetsByTags",
           "name": "Finds Pets by tags.",
           "path": {
             "pathParameters": [],
@@ -3284,7 +3284,7 @@
             }
           ],
           "id": "getPetById",
-          "originalEndpointId": "petsV2.pet.getPetById",
+          "originalEndpointId": "endpoint_petsV2/pet.getPetById",
           "name": "Find pet by ID.",
           "path": {
             "pathParameters": [
@@ -3425,7 +3425,7 @@
             }
           ],
           "id": "updatePetWithForm",
-          "originalEndpointId": "petsV2.pet.updatePetWithForm",
+          "originalEndpointId": "endpoint_petsV2/pet.updatePetWithForm",
           "name": "Updates a pet in the store with form data.",
           "path": {
             "pathParameters": [
@@ -3581,7 +3581,7 @@
             }
           ],
           "id": "deletePet",
-          "originalEndpointId": "petsV2.pet.deletePet",
+          "originalEndpointId": "endpoint_petsV2/pet.deletePet",
           "name": "Deletes a pet.",
           "path": {
             "pathParameters": [
@@ -3674,7 +3674,7 @@
             }
           ],
           "id": "uploadFile",
-          "originalEndpointId": "petsV2.pet.uploadFile",
+          "originalEndpointId": "endpoint_petsV2/pet.uploadFile",
           "name": "Uploads an image.",
           "path": {
             "pathParameters": [
@@ -3820,7 +3820,7 @@
             }
           ],
           "id": "getInventory",
-          "originalEndpointId": "petsV2.store.getInventory",
+          "originalEndpointId": "endpoint_petsV2/store.getInventory",
           "name": "Returns pet inventories by status.",
           "path": {
             "pathParameters": [],
@@ -3892,7 +3892,7 @@
             }
           ],
           "id": "placeOrder",
-          "originalEndpointId": "petsV2.store.placeOrder",
+          "originalEndpointId": "endpoint_petsV2/store.placeOrder",
           "name": "Place an order for a pet.",
           "path": {
             "pathParameters": [],
@@ -4010,7 +4010,7 @@
             }
           ],
           "id": "getOrderById",
-          "originalEndpointId": "petsV2.store.getOrderById",
+          "originalEndpointId": "endpoint_petsV2/store.getOrderById",
           "name": "Find purchase order by ID.",
           "path": {
             "pathParameters": [
@@ -4131,7 +4131,7 @@
             }
           ],
           "id": "deleteOrder",
-          "originalEndpointId": "petsV2.store.deleteOrder",
+          "originalEndpointId": "endpoint_petsV2/store.deleteOrder",
           "name": "Delete purchase order by identifier.",
           "path": {
             "pathParameters": [
@@ -4232,7 +4232,7 @@
             }
           ],
           "id": "createUser",
-          "originalEndpointId": "petsV2.user.createUser",
+          "originalEndpointId": "endpoint_petsV2/user.createUser",
           "name": "Create user.",
           "path": {
             "pathParameters": [],
@@ -4331,7 +4331,7 @@
             }
           ],
           "id": "createUsersWithListInput",
-          "originalEndpointId": "petsV2.user.createUsersWithListInput",
+          "originalEndpointId": "endpoint_petsV2/user.createUsersWithListInput",
           "name": "Creates list of users with given input array.",
           "path": {
             "pathParameters": [],
@@ -4435,7 +4435,7 @@
             }
           ],
           "id": "loginUser",
-          "originalEndpointId": "petsV2.user.loginUser",
+          "originalEndpointId": "endpoint_petsV2/user.loginUser",
           "name": "Logs user into the system.",
           "path": {
             "pathParameters": [],
@@ -4538,7 +4538,7 @@
             }
           ],
           "id": "logoutUser",
-          "originalEndpointId": "petsV2.user.logoutUser",
+          "originalEndpointId": "endpoint_petsV2/user.logoutUser",
           "name": "Logs out current logged in user session.",
           "path": {
             "pathParameters": [],
@@ -4583,7 +4583,7 @@
             }
           ],
           "id": "getUserByName",
-          "originalEndpointId": "petsV2.user.getUserByName",
+          "originalEndpointId": "endpoint_petsV2/user.getUserByName",
           "name": "Get user by user name.",
           "path": {
             "pathParameters": [
@@ -4708,7 +4708,7 @@
             }
           ],
           "id": "updateUser",
-          "originalEndpointId": "petsV2.user.updateUser",
+          "originalEndpointId": "endpoint_petsV2/user.updateUser",
           "name": "Update user resource.",
           "path": {
             "pathParameters": [
@@ -4819,7 +4819,7 @@
             }
           ],
           "id": "deleteUser",
-          "originalEndpointId": "petsV2.user.deleteUser",
+          "originalEndpointId": "endpoint_petsV2/user.deleteUser",
           "name": "Delete user resource.",
           "path": {
             "pathParameters": [

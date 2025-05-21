@@ -50,7 +50,7 @@
         "auth": false,
         "method": "PATCH",
         "id": "patchSettings",
-        "originalEndpointId": "patchSettings",
+        "originalEndpointId": "endpoint_.patchSettings",
         "name": "Patch Settings",
         "path": {
           "pathParameters": [],

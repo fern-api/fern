@@ -483,6 +483,10 @@ navigation:
                 path: ./pages/docs/components/tabs.mdx
                 icon: fa-regular fa-window-restore
                 slug: tabs
+              - page: Tooltips
+                path: ./pages/docs/components/tooltips.mdx
+                icon: fa-regular fa-circle-info
+                slug: tooltips
           - page: Custom React Components
             icon: fa-brands fa-react
             path: ./pages/docs/writing-content/custom-react-components.mdx

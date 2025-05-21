@@ -98,7 +98,7 @@
         "auth": false,
         "method": "GET",
         "id": "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam",
-        "originalEndpointId": "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam",
+        "originalEndpointId": "endpoint_.getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam",
         "name": "Get Collection Id Active Id Deprecated Ref Id X Fern Availability Path Param",
         "path": {
           "pathParameters": [
@@ -332,7 +332,7 @@
         "auth": false,
         "method": "POST",
         "id": "postSuccessRef",
-        "originalEndpointId": "postSuccessRef",
+        "originalEndpointId": "endpoint_.postSuccessRef",
         "name": "Post Success Ref",
         "path": {
           "pathParameters": [],
@@ -407,7 +407,7 @@
         "auth": false,
         "method": "POST",
         "id": "postSuccessInlinePropertyDeprecation",
-        "originalEndpointId": "postSuccessInlinePropertyDeprecation",
+        "originalEndpointId": "endpoint_.postSuccessInlinePropertyDeprecation",
         "name": "Post Success Inline Property Deprecation",
         "path": {
           "pathParameters": [],
@@ -507,7 +507,7 @@
         "auth": false,
         "method": "POST",
         "id": "postSuccessInlineObjectDeprecation",
-        "originalEndpointId": "postSuccessInlineObjectDeprecation",
+        "originalEndpointId": "endpoint_.postSuccessInlineObjectDeprecation",
         "name": "Post Success Inline Object Deprecation",
         "path": {
           "pathParameters": [],
@@ -593,7 +593,7 @@
         "auth": false,
         "method": "POST",
         "id": "postSuccessInlineBetaBody",
-        "originalEndpointId": "postSuccessInlineBetaBody",
+        "originalEndpointId": "endpoint_.postSuccessInlineBetaBody",
         "name": "Post Success Inline Beta Body",
         "path": {
           "pathParameters": [],

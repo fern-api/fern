@@ -1088,7 +1088,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "createAUser",
+          "id": "endpoint_.createAUser",
           "displayName": "Create a user",
           "method": "POST",
           "name": {
