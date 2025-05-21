@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Improve naming for discriminated unions based on title/discriminator key.
+      type: fix
+  irVersion: 57
+  createdAt: "2025-05-21"
+  version: 0.62.4
+
+- changelogEntry:
+    - summary: |
         Support optional parameters in OpenRPC imports by properly handling the `required` field in parameter definitions.
       type: fix
   irVersion: 57
