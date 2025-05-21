@@ -332,10 +332,15 @@ public final class BuilderGenerator {
         if (isNotNullableType(enrichedObjectProperty.enrichedObjectProperty.poetTypeName()) && builderNotNullChecks) {
             parameterSpecBuilder.addAnnotation(ClassName.get("org.jetbrains.annotations", "NotNull"));
         }
-        return MethodSpec.methodBuilder(enrichedObjectProperty.fieldSpec.name)
+        MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(enrichedObjectProperty.fieldSpec.name)
                 .addModifiers(Modifier.PUBLIC)
-                .returns(returnClass)
-                .addParameter(parameterSpecBuilder.build());
+                .returns(returnClass);
+        if (enrichedObjectProperty.enrichedObjectProperty.docs().isPresent()) {
+            methodBuilder.addJavadoc(
+                    enrichedObjectProperty.enrichedObjectProperty.docs().get());
+        }
+        methodBuilder.addParameter(parameterSpecBuilder.build());
+        return methodBuilder;
     }
 
     private MethodSpec.Builder getFromSetter() {
@@ -425,6 +430,10 @@ public final class BuilderGenerator {
                 .returns(returnClass);
         if (isOverridden) {
             setter.addAnnotation(ClassName.get("", "java.lang.Override"));
+        }
+        if (enrichedProperty.enrichedObjectProperty.docs().isPresent()) {
+            setter.addJavadoc(JavaDocUtils.render(
+                    enrichedProperty.enrichedObjectProperty.docs().get()));
         }
         return setter;
     }
