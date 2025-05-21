@@ -5,6 +5,7 @@ export {
     AbstractTypescriptMcpGeneratorContext,
     type FileLocation
 } from "./context/AbstractTypescriptMcpGeneratorContext";
+export { ZodTypeMapper } from "./context/ZodTypeMapper";
 export { TypescriptFile } from "./project/TypescriptFile";
 export { TypescriptMcpProject } from "./project/TypescriptMcpProject";
 export { FileGenerator } from "./FileGenerator";

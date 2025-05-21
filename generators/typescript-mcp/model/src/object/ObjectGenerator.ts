@@ -1,6 +1,6 @@
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
-import { ExportNode, FileGenerator, TypescriptFile } from "@fern-api/typescript-mcp-base";
+import { ExportNode, FileGenerator, TypescriptFile, ZodTypeMapper } from "@fern-api/typescript-mcp-base";
 
 import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
@@ -33,7 +33,8 @@ export class ObjectGenerator extends FileGenerator<
                     new ExportNode({
                         initializer: new ZodObjectNode({
                             zodReference: this.context.project.builder.zodReference,
-                            objectDeclaration: this.objectDeclaration
+                            objectDeclaration: this.objectDeclaration,
+                            zodTypeMapper: this.context.zodTypeMapper
                         }),
                         default: true
                     })
@@ -62,6 +63,7 @@ export declare namespace ZodObjectNode {
     interface Args {
         zodReference: ts.Reference;
         objectDeclaration: ObjectTypeDeclaration;
+        zodTypeMapper: ZodTypeMapper;
     }
 }
 
@@ -80,7 +82,8 @@ export class ZodObjectNode extends ts.AstNode {
             writer.writeNode(
                 new ZodAliasNode({
                     zodReference: this.args.zodReference,
-                    typeReference: property.valueType
+                    typeReference: property.valueType,
+                    zodTypeMapper: this.args.zodTypeMapper
                 })
             );
             writer.write(",");

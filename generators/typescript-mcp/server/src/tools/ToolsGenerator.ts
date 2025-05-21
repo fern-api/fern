@@ -6,13 +6,13 @@ import {
     FunctionParameterNode,
     MethodInvocationNode,
     ObjectLiteralNode,
-    TypescriptFile
+    TypescriptFile,
+    ZodTypeMapper
 } from "@fern-api/typescript-mcp-base";
 
-import { FernFilepath, HttpEndpoint, HttpService, Name } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
 
 import { ServerGeneratorContext } from "../ServerGeneratorContext";
-import { sdkRequestMapper } from "../ast";
 
 export class ToolsGenerator extends FileGenerator<
     TypescriptFile,
@@ -80,7 +80,8 @@ export class ToolsGenerator extends FileGenerator<
                                 schemasReference: this.schemasReference,
                                 endpoint,
                                 service,
-                                builder: this.context.project.builder
+                                builder: this.context.project.builder,
+                                zodTypeMapper: this.context.zodTypeMapper
                             })
                         );
                         writer.newLine();
@@ -115,6 +116,7 @@ export declare namespace ToolDefinitionNode {
         endpoint: HttpEndpoint;
         service: HttpService;
         builder: ServerGeneratorContext["project"]["builder"];
+        zodTypeMapper: ZodTypeMapper;
     }
 }
 
@@ -126,8 +128,6 @@ export class ToolDefinitionNode extends ts.AstNode {
     private readonly toolDescription?: string;
 
     private readonly schemaVariableName?: string;
-    private readonly schemaName?: Name;
-    private readonly schemaFilepath?: FernFilepath;
 
     public constructor(private readonly args: ToolDefinitionNode.Args) {
         super();
@@ -143,11 +143,7 @@ export class ToolDefinitionNode extends ts.AstNode {
         this.toolName = this.args.builder.getToolName(this.args.endpoint.name, this.args.service.name.fernFilepath);
         this.toolDescription = this.args.endpoint.docs;
 
-        const { name: schemaName, fernFilepath: schemaFilepath } =
-            sdkRequestMapper(this.args.endpoint.sdkRequest) ?? {};
-        this.schemaVariableName = schemaName && this.args.builder.getSchemaVariableName(schemaName, schemaFilepath);
-        this.schemaName = schemaName;
-        this.schemaFilepath = schemaFilepath;
+        this.schemaVariableName = this.args.zodTypeMapper.convertSdkRequest(this.args.endpoint.sdkRequest);
     }
 
     write(writer: ts.Writer) {

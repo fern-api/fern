@@ -1,11 +1,10 @@
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
-import { ExportNode, FileGenerator, TypescriptFile } from "@fern-api/typescript-mcp-base";
+import { ExportNode, FileGenerator, TypescriptFile, ZodTypeMapper } from "@fern-api/typescript-mcp-base";
 
 import { TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { singleUnionTypeMapper } from "../ast";
 
 export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCustomConfigSchema, ModelGeneratorContext> {
     private readonly schemaVariableName: string;
@@ -29,7 +28,8 @@ export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCust
                     new ExportNode({
                         initializer: new ZodUnionNode({
                             zodReference: this.context.project.builder.zodReference,
-                            unionDeclaration: this.unionDeclaration
+                            unionDeclaration: this.unionDeclaration,
+                            zodTypeMapper: this.context.zodTypeMapper
                         }),
                         default: true
                     })
@@ -58,6 +58,7 @@ export declare namespace ZodUnionNode {
     interface Args {
         zodReference: ts.Reference;
         unionDeclaration: UnionTypeDeclaration;
+        zodTypeMapper: ZodTypeMapper;
     }
 }
 
@@ -73,7 +74,7 @@ export class ZodUnionNode extends ts.AstNode {
         writer.newLine();
         writer.indent();
         for (const type of this.args.unionDeclaration.types) {
-            writer.write(`"${singleUnionTypeMapper(type)}",`);
+            writer.write(`"${this.args.zodTypeMapper.convertSingleUnionType(type)}",`);
             writer.newLine();
         }
         writer.dedent();

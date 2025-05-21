@@ -5,6 +5,7 @@ import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { TypescriptMcpProject } from "../project/TypescriptMcpProject";
+import { ZodTypeMapper } from "./ZodTypeMapper";
 
 export interface FileLocation {
     importPath: string;
@@ -15,6 +16,7 @@ export abstract class AbstractTypescriptMcpGeneratorContext<
     CustomConfig extends TypescriptCustomConfigSchema
 > extends AbstractGeneratorContext {
     public readonly project: TypescriptMcpProject;
+    public readonly zodTypeMapper: ZodTypeMapper;
     public publishConfig?: FernGeneratorExec.NpmGithubPublishInfo;
 
     public constructor(
@@ -27,6 +29,7 @@ export abstract class AbstractTypescriptMcpGeneratorContext<
         this.project = new TypescriptMcpProject({
             context: this
         });
+        this.zodTypeMapper = new ZodTypeMapper(this);
         config.output.mode._visit<void>({
             github: (github) => {
                 if (github.publishInfo?.type === "npm") {
