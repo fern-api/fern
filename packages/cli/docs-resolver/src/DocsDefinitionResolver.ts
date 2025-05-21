@@ -129,13 +129,13 @@ export class DocsDefinitionResolver {
                     apiSection: async ({ workspace }) => {
                         const fernWorkspace = await workspace.toFernWorkspace(
                             { context: this.taskContext },
-                            
+
                             {
                                 enableUniqueErrorsPerEndpoint: true,
                                 detectGlobalHeaders: false,
                                 preserveSchemaIds: true,
                                 objectQueryParameters: true,
-                                respectReadonlySchemas: true,
+                                respectReadonlySchemas: true
                             }
                         );
                         fernWorkspace.changelog?.files.forEach((file) => {
@@ -860,7 +860,7 @@ export class DocsDefinitionResolver {
                     enableUniqueErrorsPerEndpoint: true,
                     detectGlobalHeaders: false,
                     objectQueryParameters: true,
-                    preserveSchemaIds: true,
+                    preserveSchemaIds: true
                 }
             );
             ir = generateIntermediateRepresentation({
