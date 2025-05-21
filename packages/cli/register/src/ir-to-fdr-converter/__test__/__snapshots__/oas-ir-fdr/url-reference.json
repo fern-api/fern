@@ -88,7 +88,7 @@
     },
     "Mammal0": {
       "description": "A pet for sale in the pet store",
-      "name": "a Pet",
+      "name": "Mammal0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -162,11 +162,12 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "a Pet"
     },
     "Mammal1": {
       "description": "A User who is purchasing from the pet store",
-      "name": "a User",
+      "name": "Mammal1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -269,7 +270,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "a User"
     },
     "Mammal": {
       "name": "Mammal",
@@ -282,7 +284,8 @@
             "type": {
               "type": "id",
               "value": "Mammal0"
-            }
+            },
+            "displayName": "a Pet"
           },
           {
             "typeName": "Mammal1",
@@ -290,7 +293,8 @@
             "type": {
               "type": "id",
               "value": "Mammal1"
-            }
+            },
+            "displayName": "a User"
           }
         ]
       }
@@ -1225,7 +1229,7 @@
             }
           ],
           "id": "updateAnExistingPet",
-          "originalEndpointId": "pet.updateAnExistingPet",
+          "originalEndpointId": "endpoint_pet.updateAnExistingPet",
           "name": "Update an existing pet",
           "path": {
             "pathParameters": [],
@@ -1394,30 +1398,27 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 0,
-                  "category": {
-                    "id": 6,
+                "id": 0,
+                "category": {
+                  "id": 6,
+                  "name": "name"
+                },
+                "name": "doggie",
+                "photoUrls": [
+                  "photoUrls",
+                  "photoUrls"
+                ],
+                "tags": [
+                  {
+                    "id": 1,
                     "name": "name"
                   },
-                  "name": "doggie",
-                  "photoUrls": [
-                    "photoUrls",
-                    "photoUrls"
-                  ],
-                  "tags": [
-                    {
-                      "id": 1,
-                      "name": "name"
-                    },
-                    {
-                      "id": 1,
-                      "name": "name"
-                    }
-                  ],
-                  "status": "available"
-                }
+                  {
+                    "id": 1,
+                    "name": "name"
+                  }
+                ],
+                "status": "available"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -1476,7 +1477,7 @@
             }
           ],
           "id": "getAnOrder",
-          "originalEndpointId": "order.getAnOrder",
+          "originalEndpointId": "endpoint_order.getAnOrder",
           "name": "Get an order",
           "path": {
             "pathParameters": [],
@@ -1515,15 +1516,12 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 0,
-                  "petId": 6,
-                  "quantity": 1,
-                  "shipDate": "foo",
-                  "status": "placed",
-                  "complete": false
-                }
+                "id": 0,
+                "petId": 6,
+                "quantity": 1,
+                "shipDate": "foo",
+                "status": "placed",
+                "complete": false
               },
               "responseBodyV3": {
                 "type": "json",
@@ -1569,7 +1567,7 @@
             }
           ],
           "id": "petowners",
-          "name": "/petowners",
+          "name": "Petowners",
           "path": {
             "pathParameters": [],
             "parts": [

@@ -246,7 +246,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "list",
+          "id": "endpoint_.list",
           "method": "GET",
           "name": {
             "originalName": "list",
@@ -642,7 +642,7 @@
           }
         },
         {
-          "id": "postTrees",
+          "id": "endpoint_.postTrees",
           "method": "POST",
           "name": {
             "originalName": "postTrees",

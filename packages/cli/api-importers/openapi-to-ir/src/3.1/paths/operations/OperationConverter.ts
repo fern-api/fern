@@ -1,6 +1,7 @@
+import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { FernIr, HttpEndpoint, HttpEndpointSource } from "@fern-api/ir-sdk";
+import { FernIr, HttpEndpoint, HttpEndpointSource, HttpPath } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
 import { AbstractConverter, ServersConverter } from "@fern-api/v2-importer-commons";
 
@@ -87,18 +88,11 @@ export class OperationConverter extends AbstractOperationConverter {
         const topLevelErrors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration> = {};
         const errors = convertedEndpointErrors.map((convertedError) => convertedError.error);
 
-        const endpointId = [];
-        if (this.context.namespace != null) {
-            endpointId.push(this.context.namespace);
-        }
-        endpointId.push(...(group ?? []));
-        endpointId.push(method);
-
         const path = constructHttpPath(this.path);
         const baseUrl = this.getEndpointBaseUrl();
 
         const fernExamples = this.convertExamples({
-            pathHead: path.head,
+            httpPath: path,
             httpMethod,
             baseUrl
         });
@@ -167,6 +161,10 @@ export class OperationConverter extends AbstractOperationConverter {
             source: HttpEndpointSource.openapi()
         };
 
+        const endpointGroupParts = this.context.namespace != null ? [this.context.namespace] : [];
+        const camelCasedGroup = group?.map((group) => camelCase(group));
+        endpointGroupParts.push(...(camelCasedGroup ?? []));
+
         return {
             audiences:
                 this.context.getAudiences({
@@ -176,14 +174,14 @@ export class OperationConverter extends AbstractOperationConverter {
             group,
             errors: topLevelErrors,
             endpoint: {
-                id: endpointId.join("."),
+                id: `endpoint_${endpointGroupParts.join("/")}.${method}`,
                 ...baseEndpoint,
                 response
             },
             streamEndpoint:
                 streamResponse != null && streamResponse.body != null
                     ? {
-                          id: `${endpointId.join(".")}_stream`,
+                          id: `endpoint_${endpointGroupParts.join("/")}.${method}_stream`,
                           ...baseEndpoint,
                           response: streamResponse
                       }
@@ -246,11 +244,11 @@ export class OperationConverter extends AbstractOperationConverter {
     }
 
     private convertExamples({
-        pathHead,
+        httpPath,
         httpMethod,
         baseUrl
     }: {
-        pathHead: string;
+        httpPath: HttpPath;
         httpMethod: FernIr.HttpMethod;
         baseUrl: string | undefined;
     }): Record<string, FernIr.V2HttpEndpointExample> {
@@ -272,7 +270,7 @@ export class OperationConverter extends AbstractOperationConverter {
                             docs: undefined,
                             endpoint: {
                                 method: httpMethod,
-                                path: pathHead
+                                path: this.buildExamplePath(httpPath, example["path-parameters"] ?? {})
                             },
                             baseUrl: undefined,
                             environment: baseUrl,
@@ -314,6 +312,18 @@ export class OperationConverter extends AbstractOperationConverter {
             server: serverToUse,
             context: this.context
         });
+    }
+
+    private buildExamplePath(httpPath: HttpPath, pathParameters: Record<string, unknown>): string {
+        return (
+            httpPath.head +
+            httpPath.parts
+                .map((part) => {
+                    const pathParamValue = pathParameters[part.pathParameter] ?? part.pathParameter;
+                    return `${pathParamValue}${part.tail}`;
+                })
+                .join("")
+        );
     }
 
     private filterOutTopLevelServers(servers: OpenAPIV3_1.ServerObject[]): OpenAPIV3_1.ServerObject[] {

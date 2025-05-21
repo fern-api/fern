@@ -60,7 +60,8 @@ export async function generateJsonschemaForWorkspaces({
                         relativeFilepath: RelativeFilePath.of(`${splitTypeLocator.slice(0, -1).join("/")}.yml`),
                         casingsGenerator
                     }),
-                    name: casingsGenerator.generateName(typeName)
+                    name: casingsGenerator.generateName(typeName),
+                    displayName: undefined
                 });
 
                 const jsonSchema = convertIRtoJsonSchema({

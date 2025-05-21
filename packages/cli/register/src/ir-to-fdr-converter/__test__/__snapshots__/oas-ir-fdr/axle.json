@@ -1199,7 +1199,7 @@
             }
           ],
           "id": "StartIgnition",
-          "originalEndpointId": "Ignition.StartIgnition",
+          "originalEndpointId": "endpoint_ignition.StartIgnition",
           "name": "Start Ignition",
           "path": {
             "pathParameters": [],
@@ -1333,13 +1333,10 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "success": true,
-                  "data": {
-                    "ignitionUri": "https://ignition.dev.axle.insure/?token=ur7EPeAa0km4wRlDrPJ4Z",
-                    "ignitionToken": "ur7EPeAa0km4wRlDrPJ4Z"
-                  }
+                "success": true,
+                "data": {
+                  "ignitionUri": "https://ignition.dev.axle.insure/?token=ur7EPeAa0km4wRlDrPJ4Z",
+                  "ignitionToken": "ur7EPeAa0km4wRlDrPJ4Z"
                 }
               },
               "responseBodyV3": {
@@ -1384,7 +1381,7 @@
             }
           ],
           "id": "ExchangeToken",
-          "originalEndpointId": "Tokens.ExchangeToken",
+          "originalEndpointId": "endpoint_tokens.ExchangeToken",
           "name": "Exchange Token",
           "path": {
             "pathParameters": [],
@@ -1479,16 +1476,13 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "success": true,
-                  "data": {
-                    "accessToken": "foo",
-                    "account": "foo",
-                    "policies": [
-                      "foo"
-                    ]
-                  }
+                "success": true,
+                "data": {
+                  "accessToken": "foo",
+                  "account": "foo",
+                  "policies": [
+                    "foo"
+                  ]
                 }
               },
               "responseBodyV3": {
@@ -1536,7 +1530,7 @@
             }
           ],
           "id": "GetAccount",
-          "originalEndpointId": "Accounts.GetAccount",
+          "originalEndpointId": "endpoint_accounts.GetAccount",
           "name": "Get Account",
           "path": {
             "pathParameters": [
@@ -1633,23 +1627,20 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "success": true,
-                  "data": {
-                    "id": "foo",
-                    "carrier": "foo",
-                    "firstName": "foo",
-                    "lastName": "foo",
-                    "phone": "foo",
-                    "email": "foo",
-                    "policies": [
-                      "foo"
-                    ],
-                    "createdAt": "foo",
-                    "modifiedAt": "foo",
-                    "refreshedAt": "foo"
-                  }
+                "success": true,
+                "data": {
+                  "id": "foo",
+                  "carrier": "foo",
+                  "firstName": "foo",
+                  "lastName": "foo",
+                  "phone": "foo",
+                  "email": "foo",
+                  "policies": [
+                    "foo"
+                  ],
+                  "createdAt": "foo",
+                  "modifiedAt": "foo",
+                  "refreshedAt": "foo"
                 }
               },
               "responseBodyV3": {
@@ -1704,7 +1695,7 @@
             }
           ],
           "id": "GetPolicy",
-          "originalEndpointId": "Policies.GetPolicy",
+          "originalEndpointId": "endpoint_policies.GetPolicy",
           "name": "Get Policy",
           "path": {
             "pathParameters": [
@@ -1801,81 +1792,78 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "success": true,
-                  "data": {
-                    "id": "foo",
-                    "account": "foo",
-                    "type": "auto",
-                    "carrier": "foo",
-                    "policyNumber": "foo",
-                    "isActive": true,
-                    "effectiveDate": "foo",
-                    "expirationDate": "foo",
-                    "address": {
-                      "addressLine1": "foo",
-                      "country": "foo",
-                      "addressLine2": "foo",
-                      "state": "foo",
-                      "city": "foo",
-                      "postalCode": "foo"
-                    },
-                    "coverages": [
-                      {
-                        "property": "foo",
-                        "code": "BI",
-                        "label": "foo",
-                        "limitPerPerson": 42,
-                        "limitPerAccident": 42,
-                        "deductible": 42
+                "success": true,
+                "data": {
+                  "id": "foo",
+                  "account": "foo",
+                  "type": "auto",
+                  "carrier": "foo",
+                  "policyNumber": "foo",
+                  "isActive": true,
+                  "effectiveDate": "foo",
+                  "expirationDate": "foo",
+                  "address": {
+                    "addressLine1": "foo",
+                    "country": "foo",
+                    "addressLine2": "foo",
+                    "state": "foo",
+                    "city": "foo",
+                    "postalCode": "foo"
+                  },
+                  "coverages": [
+                    {
+                      "property": "foo",
+                      "code": "BI",
+                      "label": "foo",
+                      "limitPerPerson": 42,
+                      "limitPerAccident": 42,
+                      "deductible": 42
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "id": "foo",
+                      "type": "vehicle",
+                      "data": {
+                        "bodyStyle": "foo",
+                        "vin": "foo",
+                        "model": "foo",
+                        "year": "foo",
+                        "make": "foo"
                       }
-                    ],
-                    "properties": [
-                      {
-                        "id": "foo",
-                        "type": "vehicle",
-                        "data": {
-                          "bodyStyle": "foo",
-                          "vin": "foo",
-                          "model": "foo",
-                          "year": "foo",
-                          "make": "foo"
-                        }
+                    }
+                  ],
+                  "insureds": [
+                    {
+                      "property": "foo",
+                      "firstName": "foo",
+                      "lastName": "foo",
+                      "dateOfBirthYear": "foo",
+                      "licenseNo": "foo",
+                      "licenseState": "foo",
+                      "licenseStatus": "foo",
+                      "dateOfBirth": "foo",
+                      "type": "foo"
+                    }
+                  ],
+                  "thirdParties": [
+                    {
+                      "property": "foo",
+                      "type": "interest",
+                      "name": "foo",
+                      "address": {
+                        "addressLine1": "foo",
+                        "country": "foo",
+                        "addressLine2": "foo",
+                        "state": "foo",
+                        "city": "foo",
+                        "postalCode": "foo"
                       }
-                    ],
-                    "insureds": [
-                      {
-                        "property": "foo",
-                        "firstName": "foo",
-                        "lastName": "foo",
-                        "dateOfBirthYear": "foo",
-                        "licenseNo": "foo",
-                        "licenseState": "foo",
-                        "licenseStatus": "foo",
-                        "dateOfBirth": "foo",
-                        "type": "foo"
-                      }
-                    ],
-                    "thirdParties": [
-                      {
-                        "property": "foo",
-                        "type": "interest",
-                        "name": "foo",
-                        "address": {
-                          "addressLine1": "foo",
-                          "country": "foo",
-                          "addressLine2": "foo",
-                          "state": "foo",
-                          "city": "foo",
-                          "postalCode": "foo"
-                        }
-                      }
-                    ],
-                    "createdAt": "foo",
-                    "modifiedAt": "foo",
-                    "refreshedAt": "foo"
-                  }
+                    }
+                  ],
+                  "createdAt": "foo",
+                  "modifiedAt": "foo",
+                  "refreshedAt": "foo"
                 }
               },
               "responseBodyV3": {
@@ -1988,7 +1976,7 @@
             }
           ],
           "id": "GetCarrier",
-          "originalEndpointId": "Carriers.GetCarrier",
+          "originalEndpointId": "endpoint_carriers.GetCarrier",
           "name": "Get Carrier",
           "path": {
             "pathParameters": [
@@ -2071,25 +2059,22 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "success": true,
-                  "data": {
-                    "id": "foo",
-                    "name": "foo",
-                    "domain": "foo",
-                    "address": {
-                      "addressLine1": "foo",
-                      "country": "foo",
-                      "addressLine2": "foo",
-                      "state": "foo",
-                      "city": "foo",
-                      "postalCode": "foo"
-                    },
-                    "phone": "foo",
-                    "logoUrl": "foo",
-                    "modifiedAt": "foo"
-                  }
+                "success": true,
+                "data": {
+                  "id": "foo",
+                  "name": "foo",
+                  "domain": "foo",
+                  "address": {
+                    "addressLine1": "foo",
+                    "country": "foo",
+                    "addressLine2": "foo",
+                    "state": "foo",
+                    "city": "foo",
+                    "postalCode": "foo"
+                  },
+                  "phone": "foo",
+                  "logoUrl": "foo",
+                  "modifiedAt": "foo"
                 }
               },
               "responseBodyV3": {
@@ -2136,7 +2121,7 @@
             }
           ],
           "id": "GetCarriers",
-          "originalEndpointId": "Carriers.GetCarriers",
+          "originalEndpointId": "endpoint_carriers.GetCarriers",
           "name": "Get Carriers",
           "path": {
             "pathParameters": [],
@@ -2199,28 +2184,25 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "success": true,
-                  "data": [
-                    {
-                      "id": "foo",
-                      "name": "foo",
-                      "domain": "foo",
-                      "address": {
-                        "addressLine1": "foo",
-                        "country": "foo",
-                        "addressLine2": "foo",
-                        "state": "foo",
-                        "city": "foo",
-                        "postalCode": "foo"
-                      },
-                      "phone": "foo",
-                      "logoUrl": "foo",
-                      "modifiedAt": "foo"
-                    }
-                  ]
-                }
+                "success": true,
+                "data": [
+                  {
+                    "id": "foo",
+                    "name": "foo",
+                    "domain": "foo",
+                    "address": {
+                      "addressLine1": "foo",
+                      "country": "foo",
+                      "addressLine2": "foo",
+                      "state": "foo",
+                      "city": "foo",
+                      "postalCode": "foo"
+                    },
+                    "phone": "foo",
+                    "logoUrl": "foo",
+                    "modifiedAt": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",

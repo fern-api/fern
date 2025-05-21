@@ -124,7 +124,7 @@
         "auth": false,
         "method": "GET",
         "id": "getExample",
-        "originalEndpointId": "getExample",
+        "originalEndpointId": "endpoint_.getExample",
         "name": "Get Example",
         "path": {
           "pathParameters": [],
@@ -163,10 +163,7 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "message": "foo"
-              }
+              "message": "foo"
             },
             "responseBodyV3": {
               "type": "json",

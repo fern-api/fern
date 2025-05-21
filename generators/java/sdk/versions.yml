@@ -1,5 +1,21 @@
 - changelogEntry:
     - summary: |
+        Updates the generator to always commit changes, even if there are none, in self-hosted mode. This 
+        allows users to make sure that the generator actually ran and attempted to make a commit.
+      type: fix
+  createdAt: '2025-05-20'
+  irVersion: 57
+  version: 2.36.3
+- changelogEntry:
+    - summary: |
+        Fix the generated README.md for the `maxRetries` configuration option, which is now
+        shown on the client constructor.
+      type: fix
+  createdAt: '2025-05-15'
+  irVersion: 57
+  version: 2.36.2
+- changelogEntry:
+    - summary: |
         Add support for the custom introduction setting in the generated README.md.
       type: fix
   createdAt: '2025-05-13'

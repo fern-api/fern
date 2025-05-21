@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "bb6f04fc",
+            "example_identifier": "44be7f2e",
             "id": {
                 "method": "POST",
                 "path": "/inlined",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "50729478",
+            "example_identifier": "867f0a89",
             "id": {
                 "method": "POST",
                 "path": "/path/{operand}/{operandOrColor}",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "example_identifier": "c913f281",
+            "example_identifier": "28f3663f",
             "id": {
                 "method": "POST",
                 "path": "/query",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "7351f0cd",
+            "example_identifier": "c382d647",
             "id": {
                 "method": "POST",
                 "path": "/query-list",

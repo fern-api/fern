@@ -77,7 +77,7 @@
             }
           ],
           "id": "listPets",
-          "originalEndpointId": "alpha.listPets",
+          "originalEndpointId": "endpoint_alpha.listPets",
           "name": "List Pets",
           "path": {
             "pathParameters": [],
@@ -117,10 +117,7 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -310,7 +307,7 @@
             }
           ],
           "id": "listPets",
-          "originalEndpointId": "beta.listPets",
+          "originalEndpointId": "endpoint_beta.listPets",
           "name": "List Pets",
           "path": {
             "pathParameters": [],
@@ -350,10 +347,7 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"

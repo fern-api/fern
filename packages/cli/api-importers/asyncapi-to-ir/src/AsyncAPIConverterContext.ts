@@ -63,6 +63,7 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
                 fernFilepath: this.createFernFilepath(),
                 name: this.casingsGenerator.generateName(typeId),
                 typeId,
+                displayName: resolvedReference.value.title ?? undefined,
                 default: undefined,
                 inline: false
             })

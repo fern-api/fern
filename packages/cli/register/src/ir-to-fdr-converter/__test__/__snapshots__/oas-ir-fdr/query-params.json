@@ -122,7 +122,7 @@
         "auth": false,
         "method": "GET",
         "id": "search",
-        "originalEndpointId": "search",
+        "originalEndpointId": "endpoint_.search",
         "name": "Search",
         "path": {
           "pathParameters": [],
@@ -211,12 +211,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "results": [
-                  "foo"
-                ]
-              }
+              "results": [
+                "foo"
+              ]
             },
             "responseBodyV3": {
               "type": "json",

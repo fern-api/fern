@@ -41,7 +41,7 @@
         "auth": false,
         "method": "GET",
         "id": "getSearchWithArrayUnion",
-        "originalEndpointId": "getSearchWithArrayUnion",
+        "originalEndpointId": "endpoint_.getSearchWithArrayUnion",
         "name": "Get Search With Array Union",
         "path": {
           "pathParameters": [],
@@ -111,10 +111,7 @@
               ]
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"
@@ -129,7 +126,7 @@
         "auth": false,
         "method": "GET",
         "id": "getSearchWithObjectUnion",
-        "originalEndpointId": "getSearchWithObjectUnion",
+        "originalEndpointId": "endpoint_.getSearchWithObjectUnion",
         "name": "Get Search With Object Union",
         "path": {
           "pathParameters": [],
@@ -190,10 +187,7 @@
               "value": {}
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"

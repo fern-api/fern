@@ -121,7 +121,7 @@
           }
         ],
         "id": "chat",
-        "originalEndpointId": "chat",
+        "originalEndpointId": "endpoint_.chat",
         "name": "Start a chat",
         "path": {
           "pathParameters": [],
@@ -213,16 +213,13 @@
               }
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "stream",
-              "value": [
-                {
-                  "chat_id": "foo",
-                  "turn_id": "foo",
-                  "answer": "foo"
-                }
-              ]
-            },
+            "responseBody": [
+              {
+                "chat_id": "foo",
+                "turn_id": "foo",
+                "answer": "foo"
+              }
+            ],
             "responseBodyV3": {
               "type": "stream",
               "value": [

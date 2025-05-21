@@ -18,6 +18,7 @@ import {
     InlinedRequestBody,
     IntermediateRepresentation,
     JsonResponse,
+    Literal,
     Name,
     NameAndWireValue,
     ObjectProperty,
@@ -157,7 +158,7 @@ export class IntermediateRepresentationChangeDetector {
         to: Record<string, ErrorDeclaration>;
     }): void {
         for (const [_, fromError] of Object.entries(from)) {
-            const toError = Object.values(to).find((error) => error.statusCode === fromError.statusCode);
+            const toError = Object.values(to).find((error) => error.name.errorId === fromError.name.errorId);
             if (!toError) {
                 this.errors.add(
                     `Error "${fromError.name.errorId}" with status code "${fromError.statusCode}" was removed.`
@@ -1020,7 +1021,10 @@ export class IntermediateRepresentationChangeDetector {
                 break;
             case "literal":
                 if (to.type === "literal") {
-                    return from.literal === to.literal;
+                    return this.areLiteralsCompatible({
+                        from: from.literal,
+                        to: to.literal
+                    });
                 }
                 break;
             default:
@@ -1076,6 +1080,24 @@ export class IntermediateRepresentationChangeDetector {
                 to: to.name
             }) && from.wireValue === to.wireValue
         );
+    }
+
+    private areLiteralsCompatible({ from, to }: { from: Literal; to: Literal }): boolean {
+        switch (from.type) {
+            case "boolean":
+                if (to.type === "boolean") {
+                    return from.boolean === to.boolean;
+                }
+                break;
+            case "string":
+                if (to.type === "string") {
+                    return from.string === to.string;
+                }
+                break;
+            default:
+                assertNever(from);
+        }
+        return false;
     }
 
     private areFernFilepathsCompatible({ from, to }: { from: FernFilepath; to: FernFilepath }): boolean {

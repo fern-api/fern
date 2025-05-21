@@ -1827,7 +1827,7 @@
     },
     "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatement1": {
       "description": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
-      "name": "ParameterizedQuery",
+      "name": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatement1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1851,7 +1851,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "ParameterizedQuery"
     },
     "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatement": {
       "name": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatement",
@@ -1873,7 +1874,8 @@
             "type": {
               "type": "id",
               "value": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatement1"
-            }
+            },
+            "displayName": "ParameterizedQuery"
           }
         ]
       }
@@ -2007,7 +2009,7 @@
     },
     "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItems1": {
       "description": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
-      "name": "ParameterizedQuery",
+      "name": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItems1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2031,7 +2033,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "ParameterizedQuery"
     },
     "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItems": {
       "name": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItems",
@@ -2053,7 +2056,8 @@
             "type": {
               "type": "id",
               "value": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItems1"
-            }
+            },
+            "displayName": "ParameterizedQuery"
           }
         ]
       }
@@ -2288,7 +2292,7 @@
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaFrom1": {
       "description": "An email address and name",
-      "name": "EmailNameAndAddress",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaFrom1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2315,7 +2319,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "EmailNameAndAddress"
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaFrom": {
       "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaFrom",
@@ -2336,14 +2341,15 @@
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaFrom1"
-            }
+            },
+            "displayName": "EmailNameAndAddress"
           }
         ]
       }
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaTo01": {
       "description": "An email address and name",
-      "name": "EmailNameAndAddress",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo01",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2370,10 +2376,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "EmailNameAndAddress"
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaTo0": {
-      "name": "EmailData",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo0",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -2391,14 +2398,16 @@
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo01"
-            }
+            },
+            "displayName": "EmailNameAndAddress"
           }
         ]
-      }
+      },
+      "displayName": "EmailData"
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaToOneOf1Items1": {
       "description": "An email address and name",
-      "name": "EmailNameAndAddress",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaToOneOf1Items1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2425,7 +2434,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "EmailNameAndAddress"
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaToOneOf1Items": {
       "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaToOneOf1Items",
@@ -2446,13 +2456,14 @@
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaToOneOf1Items1"
-            }
+            },
+            "displayName": "EmailNameAndAddress"
           }
         ]
       }
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaTo1": {
-      "name": "EmailDataList",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo1",
       "shape": {
         "type": "alias",
         "value": {
@@ -2462,7 +2473,8 @@
             "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaToOneOf1Items"
           }
         }
-      }
+      },
+      "displayName": "EmailDataList"
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaTo": {
       "description": "A single email or list of emails for one of the address fields",
@@ -2475,21 +2487,23 @@
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo0"
-            }
+            },
+            "displayName": "EmailData"
           },
           {
             "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo1",
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo1"
-            }
+            },
+            "displayName": "EmailDataList"
           }
         ]
       }
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaCc01": {
       "description": "An email address and name",
-      "name": "EmailNameAndAddress",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc01",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2516,10 +2530,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "EmailNameAndAddress"
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaCc0": {
-      "name": "EmailData",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc0",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -2537,14 +2552,16 @@
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc01"
-            }
+            },
+            "displayName": "EmailNameAndAddress"
           }
         ]
-      }
+      },
+      "displayName": "EmailData"
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaCcOneOf1Items1": {
       "description": "An email address and name",
-      "name": "EmailNameAndAddress",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaCcOneOf1Items1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2571,7 +2588,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "EmailNameAndAddress"
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaCcOneOf1Items": {
       "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaCcOneOf1Items",
@@ -2592,13 +2610,14 @@
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaCcOneOf1Items1"
-            }
+            },
+            "displayName": "EmailNameAndAddress"
           }
         ]
       }
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaCc1": {
-      "name": "EmailDataList",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc1",
       "shape": {
         "type": "alias",
         "value": {
@@ -2608,7 +2627,8 @@
             "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaCcOneOf1Items"
           }
         }
-      }
+      },
+      "displayName": "EmailDataList"
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaCc": {
       "description": "A single email or list of emails for one of the address fields",
@@ -2621,21 +2641,23 @@
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc0"
-            }
+            },
+            "displayName": "EmailData"
           },
           {
             "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc1",
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc1"
-            }
+            },
+            "displayName": "EmailDataList"
           }
         ]
       }
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc01": {
       "description": "An email address and name",
-      "name": "EmailNameAndAddress",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc01",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2662,10 +2684,11 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "EmailNameAndAddress"
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc0": {
-      "name": "EmailData",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc0",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -2683,14 +2706,16 @@
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc01"
-            }
+            },
+            "displayName": "EmailNameAndAddress"
           }
         ]
-      }
+      },
+      "displayName": "EmailData"
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaBccOneOf1Items1": {
       "description": "An email address and name",
-      "name": "EmailNameAndAddress",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaBccOneOf1Items1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2717,7 +2742,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "EmailNameAndAddress"
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaBccOneOf1Items": {
       "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaBccOneOf1Items",
@@ -2738,13 +2764,14 @@
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaBccOneOf1Items1"
-            }
+            },
+            "displayName": "EmailNameAndAddress"
           }
         ]
       }
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc1": {
-      "name": "EmailDataList",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc1",
       "shape": {
         "type": "alias",
         "value": {
@@ -2754,7 +2781,8 @@
             "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaBccOneOf1Items"
           }
         }
-      }
+      },
+      "displayName": "EmailDataList"
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc": {
       "description": "A single email or list of emails for one of the address fields",
@@ -2767,14 +2795,16 @@
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc0"
-            }
+            },
+            "displayName": "EmailData"
           },
           {
             "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc1",
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc1"
-            }
+            },
+            "displayName": "EmailDataList"
           }
         ]
       }
@@ -2844,7 +2874,7 @@
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList0": {
       "description": "An email address and name",
-      "name": "EmailNameAndAddress",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2871,7 +2901,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "EmailNameAndAddress"
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToListOneOf1Items": {
       "description": "An email address and name",
@@ -2905,7 +2936,7 @@
       }
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList1": {
-      "name": "EmailList",
+      "name": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList1",
       "shape": {
         "type": "alias",
         "value": {
@@ -2915,7 +2946,8 @@
             "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToListOneOf1Items"
           }
         }
-      }
+      },
+      "displayName": "EmailList"
     },
     "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList": {
       "description": "A reply-to list of email addresses",
@@ -2929,14 +2961,16 @@
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList0"
-            }
+            },
+            "displayName": "EmailNameAndAddress"
           },
           {
             "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList1",
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList1"
-            }
+            },
+            "displayName": "EmailList"
           }
         ]
       }
@@ -3194,7 +3228,7 @@
             }
           ],
           "id": "vals",
-          "originalEndpointId": "search.vals",
+          "originalEndpointId": "endpoint_search.vals",
           "name": "Vals",
           "path": {
             "pathParameters": [],
@@ -3275,35 +3309,32 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": [
-                    {
-                      "name": "foo",
+                "data": [
+                  {
+                    "name": "foo",
+                    "id": "foo",
+                    "version": 42,
+                    "code": "foo",
+                    "public": true,
+                    "createdAt": "foo",
+                    "privacy": "public",
+                    "type": "interval",
+                    "url": "foo",
+                    "links": {
+                      "self": "foo",
+                      "versions": "foo",
+                      "module": "foo"
+                    },
+                    "author": {
                       "id": "foo",
-                      "version": 42,
-                      "code": "foo",
-                      "public": true,
-                      "createdAt": "foo",
-                      "privacy": "public",
-                      "type": "interval",
-                      "url": "foo",
-                      "links": {
-                        "self": "foo",
-                        "versions": "foo",
-                        "module": "foo"
-                      },
-                      "author": {
-                        "id": "foo",
-                        "username": "foo"
-                      }
+                      "username": "foo"
                     }
-                  ],
-                  "links": {
-                    "self": "foo",
-                    "prev": "foo",
-                    "next": "foo"
                   }
+                ],
+                "links": {
+                  "self": "foo",
+                  "prev": "foo",
+                  "next": "foo"
                 }
               },
               "responseBodyV3": {
@@ -3366,7 +3397,7 @@
             }
           ],
           "id": "username",
-          "originalEndpointId": "alias.username",
+          "originalEndpointId": "endpoint_alias.username",
           "name": "Username",
           "path": {
             "pathParameters": [
@@ -3426,16 +3457,13 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "00000000-0000-0000-0000-000000000000",
-                  "bio": "Hello world",
-                  "username": "tmcw",
-                  "profileImageUrl": null,
-                  "url": "https://val.town/u/tmcw",
-                  "links": {
-                    "self": "foo"
-                  }
+                "id": "00000000-0000-0000-0000-000000000000",
+                "bio": "Hello world",
+                "username": "tmcw",
+                "profileImageUrl": null,
+                "url": "https://val.town/u/tmcw",
+                "links": {
+                  "self": "foo"
                 }
               },
               "responseBodyV3": {
@@ -3469,7 +3497,7 @@
             }
           ],
           "id": "val",
-          "originalEndpointId": "alias.val",
+          "originalEndpointId": "endpoint_alias.val",
           "name": "Val",
           "path": {
             "pathParameters": [
@@ -3548,30 +3576,27 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
+                "name": "foo",
+                "id": "foo",
+                "version": 42,
+                "code": "foo",
+                "public": true,
+                "createdAt": "foo",
+                "privacy": "public",
+                "type": "interval",
+                "url": "foo",
+                "links": {
+                  "self": "foo",
+                  "versions": "foo",
+                  "module": "foo"
+                },
+                "author": {
                   "id": "foo",
-                  "version": 42,
-                  "code": "foo",
-                  "public": true,
-                  "createdAt": "foo",
-                  "privacy": "public",
-                  "type": "interval",
-                  "url": "foo",
-                  "links": {
-                    "self": "foo",
-                    "versions": "foo",
-                    "module": "foo"
-                  },
-                  "author": {
-                    "id": "foo",
-                    "username": "foo"
-                  },
-                  "likeCount": 42,
-                  "referenceCount": 42,
-                  "readme": "foo"
-                }
+                  "username": "foo"
+                },
+                "likeCount": 42,
+                "referenceCount": 42,
+                "readme": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3627,7 +3652,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "me.get",
+          "originalEndpointId": "endpoint_me.get",
           "name": "Get",
           "path": {
             "pathParameters": [],
@@ -3666,19 +3691,16 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "00000000-0000-0000-0000-000000000000",
-                  "bio": "Hello world",
-                  "username": "tmcw",
-                  "profileImageUrl": null,
-                  "url": "foo",
-                  "links": {
-                    "self": "foo"
-                  },
-                  "tier": "pro",
-                  "email": "example@example.com"
-                }
+                "id": "00000000-0000-0000-0000-000000000000",
+                "bio": "Hello world",
+                "username": "tmcw",
+                "profileImageUrl": null,
+                "url": "foo",
+                "links": {
+                  "self": "foo"
+                },
+                "tier": "pro",
+                "email": "example@example.com"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3713,7 +3735,7 @@
             }
           ],
           "id": "likes",
-          "originalEndpointId": "me.likes",
+          "originalEndpointId": "endpoint_me.likes",
           "name": "Likes",
           "path": {
             "pathParameters": [],
@@ -3781,35 +3803,32 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": [
-                    {
-                      "name": "foo",
+                "data": [
+                  {
+                    "name": "foo",
+                    "id": "foo",
+                    "version": 42,
+                    "code": "foo",
+                    "public": true,
+                    "createdAt": "foo",
+                    "privacy": "public",
+                    "type": "interval",
+                    "url": "foo",
+                    "links": {
+                      "self": "foo",
+                      "versions": "foo",
+                      "module": "foo"
+                    },
+                    "author": {
                       "id": "foo",
-                      "version": 42,
-                      "code": "foo",
-                      "public": true,
-                      "createdAt": "foo",
-                      "privacy": "public",
-                      "type": "interval",
-                      "url": "foo",
-                      "links": {
-                        "self": "foo",
-                        "versions": "foo",
-                        "module": "foo"
-                      },
-                      "author": {
-                        "id": "foo",
-                        "username": "foo"
-                      }
+                      "username": "foo"
                     }
-                  ],
-                  "links": {
-                    "self": "foo",
-                    "prev": "foo",
-                    "next": "foo"
                   }
+                ],
+                "links": {
+                  "self": "foo",
+                  "prev": "foo",
+                  "next": "foo"
                 }
               },
               "responseBodyV3": {
@@ -3862,7 +3881,7 @@
             }
           ],
           "id": "comments",
-          "originalEndpointId": "me.comments",
+          "originalEndpointId": "endpoint_me.comments",
           "name": "Comments",
           "path": {
             "pathParameters": [],
@@ -3967,34 +3986,31 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": [
-                    {
-                      "comment": "foo",
+                "data": [
+                  {
+                    "comment": "foo",
+                    "id": "foo",
+                    "createdAt": "foo",
+                    "author": {
                       "id": "foo",
-                      "createdAt": "foo",
+                      "username": "foo"
+                    },
+                    "val": {
+                      "name": "foo",
+                      "id": "foo",
+                      "version": 42,
+                      "privacy": "public",
                       "author": {
                         "id": "foo",
                         "username": "foo"
-                      },
-                      "val": {
-                        "name": "foo",
-                        "id": "foo",
-                        "version": 42,
-                        "privacy": "public",
-                        "author": {
-                          "id": "foo",
-                          "username": "foo"
-                        }
                       }
                     }
-                  ],
-                  "links": {
-                    "self": "foo",
-                    "prev": "foo",
-                    "next": "foo"
                   }
+                ],
+                "links": {
+                  "self": "foo",
+                  "prev": "foo",
+                  "next": "foo"
                 }
               },
               "responseBodyV3": {
@@ -4046,7 +4062,7 @@
             }
           ],
           "id": "references",
-          "originalEndpointId": "me.references",
+          "originalEndpointId": "endpoint_me.references",
           "name": "References",
           "path": {
             "pathParameters": [],
@@ -4142,30 +4158,27 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": [
-                    {
-                      "reference": {
-                        "id": "foo",
-                        "username": "foo",
-                        "author_id": "foo",
-                        "name": "foo"
-                      },
-                      "dependsOn": {
-                        "id": "foo",
-                        "username": "foo",
-                        "author_id": "foo",
-                        "name": "foo"
-                      },
-                      "referencedAt": "foo"
-                    }
-                  ],
-                  "links": {
-                    "self": "foo",
-                    "prev": "foo",
-                    "next": "foo"
+                "data": [
+                  {
+                    "reference": {
+                      "id": "foo",
+                      "username": "foo",
+                      "author_id": "foo",
+                      "name": "foo"
+                    },
+                    "dependsOn": {
+                      "id": "foo",
+                      "username": "foo",
+                      "author_id": "foo",
+                      "name": "foo"
+                    },
+                    "referencedAt": "foo"
                   }
+                ],
+                "links": {
+                  "self": "foo",
+                  "prev": "foo",
+                  "next": "foo"
                 }
               },
               "responseBodyV3": {
@@ -4223,7 +4236,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "blobs.list",
+          "originalEndpointId": "endpoint_blobs.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -4278,16 +4291,13 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "key": "hello_world",
-                    "size": 20,
-                    "lastModified": "2024-06-24T20:00:59.702Z"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "key": "hello_world",
+                  "size": 20,
+                  "lastModified": "2024-06-24T20:00:59.702Z"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -4316,7 +4326,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "blobs.get",
+          "originalEndpointId": "endpoint_blobs.get",
           "name": "Get",
           "path": {
             "pathParameters": [
@@ -4391,7 +4401,7 @@
             }
           ],
           "id": "store",
-          "originalEndpointId": "blobs.store",
+          "originalEndpointId": "endpoint_blobs.store",
           "name": "Store",
           "path": {
             "pathParameters": [
@@ -4482,7 +4492,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "blobs.delete",
+          "originalEndpointId": "endpoint_blobs.delete",
           "name": "Delete",
           "path": {
             "pathParameters": [
@@ -4560,7 +4570,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "users.get",
+          "originalEndpointId": "endpoint_users.get",
           "name": "Get",
           "path": {
             "pathParameters": [
@@ -4620,16 +4630,13 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "00000000-0000-0000-0000-000000000000",
-                  "bio": "Hello world",
-                  "username": "tmcw",
-                  "profileImageUrl": null,
-                  "url": "https://val.town/u/tmcw",
-                  "links": {
-                    "self": "foo"
-                  }
+                "id": "00000000-0000-0000-0000-000000000000",
+                "bio": "Hello world",
+                "username": "tmcw",
+                "profileImageUrl": null,
+                "url": "https://val.town/u/tmcw",
+                "links": {
+                  "self": "foo"
                 }
               },
               "responseBodyV3": {
@@ -4663,7 +4670,7 @@
             }
           ],
           "id": "vals",
-          "originalEndpointId": "users.vals",
+          "originalEndpointId": "endpoint_users.vals",
           "name": "Vals",
           "path": {
             "pathParameters": [
@@ -4752,35 +4759,32 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": [
-                    {
-                      "name": "foo",
+                "data": [
+                  {
+                    "name": "foo",
+                    "id": "foo",
+                    "version": 42,
+                    "code": "foo",
+                    "public": true,
+                    "createdAt": "foo",
+                    "privacy": "public",
+                    "type": "interval",
+                    "url": "foo",
+                    "links": {
+                      "self": "foo",
+                      "versions": "foo",
+                      "module": "foo"
+                    },
+                    "author": {
                       "id": "foo",
-                      "version": 42,
-                      "code": "foo",
-                      "public": true,
-                      "createdAt": "foo",
-                      "privacy": "public",
-                      "type": "interval",
-                      "url": "foo",
-                      "links": {
-                        "self": "foo",
-                        "versions": "foo",
-                        "module": "foo"
-                      },
-                      "author": {
-                        "id": "foo",
-                        "username": "foo"
-                      }
+                      "username": "foo"
                     }
-                  ],
-                  "links": {
-                    "self": "foo",
-                    "prev": "foo",
-                    "next": "foo"
                   }
+                ],
+                "links": {
+                  "self": "foo",
+                  "prev": "foo",
+                  "next": "foo"
                 }
               },
               "responseBodyV3": {
@@ -4843,7 +4847,7 @@
             }
           ],
           "id": "execute",
-          "originalEndpointId": "sqlite.execute",
+          "originalEndpointId": "endpoint_sqlite.execute",
           "name": "Execute",
           "path": {
             "pathParameters": [],
@@ -4911,22 +4915,19 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "columns": [
-                    "foo"
-                  ],
-                  "columnTypes": [
-                    "foo"
-                  ],
-                  "rows": [
-                    [
-                      null
-                    ]
-                  ],
-                  "rowsAffected": 42,
-                  "lastInsertRowid": "foo"
-                }
+                "columns": [
+                  "foo"
+                ],
+                "columnTypes": [
+                  "foo"
+                ],
+                "rows": [
+                  [
+                    null
+                  ]
+                ],
+                "rowsAffected": 42,
+                "lastInsertRowid": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -4975,22 +4976,19 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "columns": [
-                    "foo"
-                  ],
-                  "columnTypes": [
-                    "foo"
-                  ],
-                  "rows": [
-                    [
-                      null
-                    ]
-                  ],
-                  "rowsAffected": 42,
-                  "lastInsertRowid": "foo"
-                }
+                "columns": [
+                  "foo"
+                ],
+                "columnTypes": [
+                  "foo"
+                ],
+                "rows": [
+                  [
+                    null
+                  ]
+                ],
+                "rowsAffected": 42,
+                "lastInsertRowid": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -5028,7 +5026,7 @@
             }
           ],
           "id": "batch",
-          "originalEndpointId": "sqlite.batch",
+          "originalEndpointId": "endpoint_sqlite.batch",
           "name": "Batch",
           "path": {
             "pathParameters": [],
@@ -5117,25 +5115,22 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "columns": [
-                      "id"
-                    ],
-                    "columnTypes": [
-                      "number"
-                    ],
-                    "rows": [
-                      [
-                        null
-                      ]
-                    ],
-                    "rowsAffected": 0
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "columns": [
+                    "id"
+                  ],
+                  "columnTypes": [
+                    "number"
+                  ],
+                  "rows": [
+                    [
+                      null
+                    ]
+                  ],
+                  "rowsAffected": 0
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -5183,7 +5178,7 @@
             }
           ],
           "id": "evalPost",
-          "originalEndpointId": "vals.evalPost",
+          "originalEndpointId": "endpoint_vals.evalPost",
           "name": "Eval Post",
           "path": {
             "pathParameters": [],
@@ -5283,10 +5278,7 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
                 "value": {}
@@ -5315,10 +5307,7 @@
                 }
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
                 "value": {}
@@ -5341,7 +5330,7 @@
             }
           ],
           "id": "evalGet",
-          "originalEndpointId": "vals.evalGet",
+          "originalEndpointId": "endpoint_vals.evalGet",
           "name": "Eval Get",
           "path": {
             "pathParameters": [
@@ -5431,10 +5420,7 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              },
+              "responseBody": {},
               "responseBodyV3": {
                 "type": "json",
                 "value": {}
@@ -5458,7 +5444,7 @@
             }
           ],
           "id": "runGet",
-          "originalEndpointId": "vals.runGet",
+          "originalEndpointId": "endpoint_vals.runGet",
           "name": "Run Get",
           "path": {
             "pathParameters": [
@@ -5540,7 +5526,7 @@
             }
           ],
           "id": "runPost",
-          "originalEndpointId": "vals.runPost",
+          "originalEndpointId": "endpoint_vals.runPost",
           "name": "Run Post",
           "path": {
             "pathParameters": [
@@ -5645,7 +5631,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "vals.create",
+          "originalEndpointId": "endpoint_vals.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -5777,30 +5763,27 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
+                "name": "foo",
+                "id": "foo",
+                "version": 42,
+                "code": "foo",
+                "public": true,
+                "createdAt": "foo",
+                "privacy": "public",
+                "type": "interval",
+                "url": "foo",
+                "links": {
+                  "self": "foo",
+                  "versions": "foo",
+                  "module": "foo"
+                },
+                "author": {
                   "id": "foo",
-                  "version": 42,
-                  "code": "foo",
-                  "public": true,
-                  "createdAt": "foo",
-                  "privacy": "public",
-                  "type": "interval",
-                  "url": "foo",
-                  "links": {
-                    "self": "foo",
-                    "versions": "foo",
-                    "module": "foo"
-                  },
-                  "author": {
-                    "id": "foo",
-                    "username": "foo"
-                  },
-                  "likeCount": 42,
-                  "referenceCount": 42,
-                  "readme": "foo"
-                }
+                  "username": "foo"
+                },
+                "likeCount": 42,
+                "referenceCount": 42,
+                "readme": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -5846,7 +5829,7 @@
             }
           ],
           "id": "put",
-          "originalEndpointId": "vals.put",
+          "originalEndpointId": "endpoint_vals.put",
           "name": "Put",
           "path": {
             "pathParameters": [],
@@ -5939,7 +5922,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "vals.get",
+          "originalEndpointId": "endpoint_vals.get",
           "name": "Get",
           "path": {
             "pathParameters": [
@@ -6000,30 +5983,27 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
+                "name": "foo",
+                "id": "foo",
+                "version": 42,
+                "code": "foo",
+                "public": true,
+                "createdAt": "foo",
+                "privacy": "public",
+                "type": "interval",
+                "url": "foo",
+                "links": {
+                  "self": "foo",
+                  "versions": "foo",
+                  "module": "foo"
+                },
+                "author": {
                   "id": "foo",
-                  "version": 42,
-                  "code": "foo",
-                  "public": true,
-                  "createdAt": "foo",
-                  "privacy": "public",
-                  "type": "interval",
-                  "url": "foo",
-                  "links": {
-                    "self": "foo",
-                    "versions": "foo",
-                    "module": "foo"
-                  },
-                  "author": {
-                    "id": "foo",
-                    "username": "foo"
-                  },
-                  "likeCount": 42,
-                  "referenceCount": 42,
-                  "readme": "foo"
-                }
+                  "username": "foo"
+                },
+                "likeCount": 42,
+                "referenceCount": 42,
+                "readme": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6069,7 +6049,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "vals.update",
+          "originalEndpointId": "endpoint_vals.update",
           "name": "Update",
           "path": {
             "pathParameters": [
@@ -6231,7 +6211,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "vals.delete",
+          "originalEndpointId": "endpoint_vals.delete",
           "name": "Delete",
           "path": {
             "pathParameters": [
@@ -6311,7 +6291,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "vals.list",
+          "originalEndpointId": "endpoint_vals.list",
           "name": "List",
           "path": {
             "pathParameters": [
@@ -6401,20 +6381,17 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "data": [
-                    {
-                      "val_id": "foo",
-                      "version": 42,
-                      "createdAt": "foo"
-                    }
-                  ],
-                  "links": {
-                    "self": "foo",
-                    "prev": "foo",
-                    "next": "foo"
+                "data": [
+                  {
+                    "val_id": "foo",
+                    "version": 42,
+                    "createdAt": "foo"
                   }
+                ],
+                "links": {
+                  "self": "foo",
+                  "prev": "foo",
+                  "next": "foo"
                 }
               },
               "responseBodyV3": {
@@ -6452,7 +6429,7 @@
             }
           ],
           "id": "createVersion",
-          "originalEndpointId": "vals.createVersion",
+          "originalEndpointId": "endpoint_vals.createVersion",
           "name": "Create Version",
           "path": {
             "pathParameters": [
@@ -6606,30 +6583,27 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
+                "name": "foo",
+                "id": "foo",
+                "version": 42,
+                "code": "foo",
+                "public": true,
+                "createdAt": "foo",
+                "privacy": "public",
+                "type": "interval",
+                "url": "foo",
+                "links": {
+                  "self": "foo",
+                  "versions": "foo",
+                  "module": "foo"
+                },
+                "author": {
                   "id": "foo",
-                  "version": 42,
-                  "code": "foo",
-                  "public": true,
-                  "createdAt": "foo",
-                  "privacy": "public",
-                  "type": "interval",
-                  "url": "foo",
-                  "links": {
-                    "self": "foo",
-                    "versions": "foo",
-                    "module": "foo"
-                  },
-                  "author": {
-                    "id": "foo",
-                    "username": "foo"
-                  },
-                  "likeCount": 42,
-                  "referenceCount": 42,
-                  "readme": "foo"
-                }
+                  "username": "foo"
+                },
+                "likeCount": 42,
+                "referenceCount": 42,
+                "readme": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6675,7 +6649,7 @@
             }
           ],
           "id": "getVersion",
-          "originalEndpointId": "vals.getVersion",
+          "originalEndpointId": "endpoint_vals.getVersion",
           "name": "Get Version",
           "path": {
             "pathParameters": [
@@ -6785,30 +6759,27 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "foo",
+                "name": "foo",
+                "id": "foo",
+                "version": 42,
+                "code": "foo",
+                "public": true,
+                "createdAt": "foo",
+                "privacy": "public",
+                "type": "interval",
+                "url": "foo",
+                "links": {
+                  "self": "foo",
+                  "versions": "foo",
+                  "module": "foo"
+                },
+                "author": {
                   "id": "foo",
-                  "version": 42,
-                  "code": "foo",
-                  "public": true,
-                  "createdAt": "foo",
-                  "privacy": "public",
-                  "type": "interval",
-                  "url": "foo",
-                  "links": {
-                    "self": "foo",
-                    "versions": "foo",
-                    "module": "foo"
-                  },
-                  "author": {
-                    "id": "foo",
-                    "username": "foo"
-                  },
-                  "likeCount": 42,
-                  "referenceCount": 42,
-                  "readme": "foo"
-                }
+                  "username": "foo"
+                },
+                "likeCount": 42,
+                "referenceCount": 42,
+                "readme": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -6854,7 +6825,7 @@
             }
           ],
           "id": "deleteVersion",
-          "originalEndpointId": "vals.deleteVersion",
+          "originalEndpointId": "endpoint_vals.deleteVersion",
           "name": "Delete Version",
           "path": {
             "pathParameters": [
@@ -6954,7 +6925,7 @@
             }
           ],
           "id": "cancel",
-          "originalEndpointId": "vals.cancel",
+          "originalEndpointId": "endpoint_vals.cancel",
           "name": "Cancel",
           "path": {
             "pathParameters": [
@@ -7051,10 +7022,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "found": true
-                }
+                "found": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -7090,7 +7058,7 @@
             }
           ],
           "id": "send",
-          "originalEndpointId": "emails.send",
+          "originalEndpointId": "endpoint_emails.send",
           "name": "Send",
           "path": {
             "pathParameters": [],
@@ -7276,10 +7244,7 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "message": "foo"
-                }
+                "message": "foo"
               },
               "responseBodyV3": {
                 "type": "json",

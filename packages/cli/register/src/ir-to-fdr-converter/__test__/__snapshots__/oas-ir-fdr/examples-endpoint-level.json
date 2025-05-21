@@ -165,7 +165,7 @@
         "auth": false,
         "method": "GET",
         "id": "listTrees",
-        "originalEndpointId": "listTrees",
+        "originalEndpointId": "endpoint_.listTrees",
         "name": "List all trees",
         "path": {
           "pathParameters": [],
@@ -206,31 +206,28 @@
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": [
-                {
-                  "species": "Quercus alba",
-                  "height": 25.4,
-                  "location": {
-                    "latitude": 40.7128,
-                    "longitude": -74.006
-                  },
-                  "id": "123e4567-e89b-12d3-a456-426614174000",
-                  "plantedDate": "2020-01-01T00:00:00Z"
+            "responseBody": [
+              {
+                "species": "Quercus alba",
+                "height": 25.4,
+                "location": {
+                  "latitude": 40.7128,
+                  "longitude": -74.006
                 },
-                {
-                  "species": "Acer saccharum",
-                  "height": 18.3,
-                  "location": {
-                    "latitude": 42.3601,
-                    "longitude": -71.0589
-                  },
-                  "id": "987fcdeb-51a2-43d7-9012-345678901234",
-                  "plantedDate": "2018-03-15T00:00:00Z"
-                }
-              ]
-            },
+                "id": "123e4567-e89b-12d3-a456-426614174000",
+                "plantedDate": "2020-01-01T00:00:00Z"
+              },
+              {
+                "species": "Acer saccharum",
+                "height": 18.3,
+                "location": {
+                  "latitude": 42.3601,
+                  "longitude": -71.0589
+                },
+                "id": "987fcdeb-51a2-43d7-9012-345678901234",
+                "plantedDate": "2018-03-15T00:00:00Z"
+              }
+            ],
             "responseBodyV3": {
               "type": "json",
               "value": [
@@ -266,7 +263,7 @@
         "auth": false,
         "method": "POST",
         "id": "createTree",
-        "originalEndpointId": "createTree",
+        "originalEndpointId": "endpoint_.createTree",
         "name": "Create a new tree",
         "path": {
           "pathParameters": [],
@@ -337,17 +334,14 @@
             },
             "responseStatusCode": 201,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "species": "Quercus alba",
-                "height": 25.4,
-                "location": {
-                  "latitude": 40.7128,
-                  "longitude": -74.006
-                },
-                "id": "123e4567-e89b-12d3-a456-426614174000",
-                "plantedDate": "2020-01-01T00:00:00Z"
-              }
+              "species": "Quercus alba",
+              "height": 25.4,
+              "location": {
+                "latitude": 40.7128,
+                "longitude": -74.006
+              },
+              "id": "123e4567-e89b-12d3-a456-426614174000",
+              "plantedDate": "2020-01-01T00:00:00Z"
             },
             "responseBodyV3": {
               "type": "json",
@@ -391,17 +385,14 @@
             },
             "responseStatusCode": 201,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "species": "Acer saccharum",
-                "height": 18.3,
-                "location": {
-                  "latitude": 42.3601,
-                  "longitude": -71.0589
-                },
-                "id": "987fcdeb-51a2-43d7-9012-345678901234",
-                "plantedDate": "2018-03-15T00:00:00Z"
-              }
+              "species": "Acer saccharum",
+              "height": 18.3,
+              "location": {
+                "latitude": 42.3601,
+                "longitude": -71.0589
+              },
+              "id": "987fcdeb-51a2-43d7-9012-345678901234",
+              "plantedDate": "2018-03-15T00:00:00Z"
             },
             "responseBodyV3": {
               "type": "json",
@@ -426,7 +417,7 @@
         "auth": false,
         "method": "GET",
         "id": "getTree",
-        "originalEndpointId": "getTree",
+        "originalEndpointId": "endpoint_.getTree",
         "name": "Get a tree by ID",
         "path": {
           "pathParameters": [
@@ -486,17 +477,14 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "species": "Quercus alba",
-                "height": 25.4,
-                "location": {
-                  "latitude": 40.7128,
-                  "longitude": -74.006
-                },
-                "id": "123e4567-e89b-12d3-a456-426614174000",
-                "plantedDate": "2020-01-01T00:00:00Z"
-              }
+              "species": "Quercus alba",
+              "height": 25.4,
+              "location": {
+                "latitude": 40.7128,
+                "longitude": -74.006
+              },
+              "id": "123e4567-e89b-12d3-a456-426614174000",
+              "plantedDate": "2020-01-01T00:00:00Z"
             },
             "responseBodyV3": {
               "type": "json",
@@ -521,7 +509,7 @@
         "auth": false,
         "method": "POST",
         "id": "createFern",
-        "originalEndpointId": "createFern",
+        "originalEndpointId": "endpoint_.createFern",
         "name": "Create a new fern",
         "path": {
           "pathParameters": [],
@@ -639,11 +627,8 @@
             },
             "responseStatusCode": 201,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "message": "RedFern created",
-                "code": 42
-              }
+              "message": "RedFern created",
+              "code": 42
             },
             "responseBodyV3": {
               "type": "json",
@@ -665,11 +650,8 @@
             },
             "responseStatusCode": 201,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "message": "GreenFern created",
-                "code": 84
-              }
+              "message": "GreenFern created",
+              "code": 84
             },
             "responseBodyV3": {
               "type": "json",
@@ -688,7 +670,7 @@
         "auth": false,
         "method": "GET",
         "id": "getFern",
-        "originalEndpointId": "getFern",
+        "originalEndpointId": "endpoint_.getFern",
         "name": "Get a fern by ID",
         "path": {
           "pathParameters": [
@@ -747,10 +729,7 @@
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": {}
-            },
+            "responseBody": {},
             "responseBodyV3": {
               "type": "json",
               "value": {}
@@ -765,7 +744,7 @@
         "auth": false,
         "method": "POST",
         "id": "createGrass",
-        "originalEndpointId": "createGrass",
+        "originalEndpointId": "endpoint_.createGrass",
         "name": "Create a new grass",
         "path": {
           "pathParameters": [],

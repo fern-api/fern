@@ -41,7 +41,7 @@
         "auth": false,
         "method": "POST",
         "id": "submitFormData",
-        "originalEndpointId": "submitFormData",
+        "originalEndpointId": "endpoint_.submitFormData",
         "name": "Submit form data",
         "path": {
           "pathParameters": [],
@@ -124,11 +124,8 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "status": "success",
-                "message": "Data received successfully."
-              }
+              "status": "success",
+              "message": "Data received successfully."
             },
             "responseBodyV3": {
               "type": "json",

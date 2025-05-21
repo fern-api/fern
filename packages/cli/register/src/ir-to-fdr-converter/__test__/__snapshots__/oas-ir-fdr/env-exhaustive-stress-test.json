@@ -16,7 +16,7 @@
             }
           ],
           "id": "getAlpha",
-          "originalEndpointId": "alpha.getAlpha",
+          "originalEndpointId": "endpoint_alpha.getAlpha",
           "name": "Get Alpha",
           "path": {
             "pathParameters": [],
@@ -56,10 +56,7 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -91,7 +88,7 @@
             }
           ],
           "id": "getBeta",
-          "originalEndpointId": "beta.getBeta",
+          "originalEndpointId": "endpoint_beta.getBeta",
           "name": "Get Beta",
           "path": {
             "pathParameters": [],
@@ -131,10 +128,7 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -166,7 +160,7 @@
             }
           ],
           "id": "getGamma",
-          "originalEndpointId": "gamma.getGamma",
+          "originalEndpointId": "endpoint_gamma.getGamma",
           "name": "Get Gamma",
           "path": {
             "pathParameters": [],
@@ -206,10 +200,7 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -241,7 +232,7 @@
             }
           ],
           "id": "getDelta",
-          "originalEndpointId": "delta.getDelta",
+          "originalEndpointId": "endpoint_delta.getDelta",
           "name": "Get Delta",
           "path": {
             "pathParameters": [],
@@ -281,10 +272,7 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -316,7 +304,7 @@
             }
           ],
           "id": "getMu",
-          "originalEndpointId": "mu.getMu",
+          "originalEndpointId": "endpoint_mu.getMu",
           "name": "Get Mu",
           "path": {
             "pathParameters": [],
@@ -356,10 +344,7 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -391,7 +376,7 @@
             }
           ],
           "id": "getOmega",
-          "originalEndpointId": "omega.getOmega",
+          "originalEndpointId": "endpoint_omega.getOmega",
           "name": "Get Omega",
           "path": {
             "pathParameters": [],
@@ -431,10 +416,7 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -466,7 +448,7 @@
             }
           ],
           "id": "getZeta",
-          "originalEndpointId": "zeta.getZeta",
+          "originalEndpointId": "endpoint_zeta.getZeta",
           "name": "Get Zeta",
           "path": {
             "pathParameters": [],
@@ -506,10 +488,7 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"
@@ -541,7 +520,7 @@
             }
           ],
           "id": "getEta",
-          "originalEndpointId": "eta.getEta",
+          "originalEndpointId": "endpoint_eta.getEta",
           "name": "Get Eta",
           "path": {
             "pathParameters": [],
@@ -581,10 +560,7 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": "foo"
-              },
+              "responseBody": "foo",
               "responseBodyV3": {
                 "type": "json",
                 "value": "foo"

@@ -144,7 +144,7 @@
         "auth": false,
         "method": "POST",
         "id": "user",
-        "originalEndpointId": "user",
+        "originalEndpointId": "endpoint_.user",
         "name": "User",
         "path": {
           "pathParameters": [],
@@ -215,14 +215,11 @@
               "value": {}
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "stream",
-              "value": [
-                {
-                  "id": "foo"
-                }
-              ]
-            },
+            "responseBody": [
+              {
+                "id": "foo"
+              }
+            ],
             "responseBodyV3": {
               "type": "stream",
               "value": [
@@ -244,7 +241,7 @@
         "auth": false,
         "method": "POST",
         "id": "user_v2",
-        "originalEndpointId": "user_v2",
+        "originalEndpointId": "endpoint_.user_v2",
         "name": "User V 2",
         "path": {
           "pathParameters": [],
@@ -315,14 +312,11 @@
               "value": {}
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "stream",
-              "value": [
-                {
-                  "id": "foo"
-                }
-              ]
-            },
+            "responseBody": [
+              {
+                "id": "foo"
+              }
+            ],
             "responseBodyV3": {
               "type": "stream",
               "value": [
@@ -344,7 +338,7 @@
         "auth": false,
         "method": "POST",
         "id": "user_v3",
-        "originalEndpointId": "user_v3",
+        "originalEndpointId": "endpoint_.user_v3",
         "name": "User V 3",
         "path": {
           "pathParameters": [],
@@ -415,14 +409,11 @@
               "value": {}
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "stream",
-              "value": [
-                {
-                  "id": "foo"
-                }
-              ]
-            },
+            "responseBody": [
+              {
+                "id": "foo"
+              }
+            ],
             "responseBodyV3": {
               "type": "stream",
               "value": [

@@ -46,6 +46,7 @@ export class OpenRPCConverterContext3_1 extends AbstractConverterContext<Openrpc
                 },
                 name: this.casingsGenerator.generateName(typeId),
                 typeId,
+                displayName: resolvedReference.value.title ?? undefined,
                 default: undefined,
                 inline: false
             })

@@ -216,6 +216,9 @@ navigation:
           - section: Changelogs
             slug: changelog
             contents:
+              - changelog: ./pages/changelogs/ts-sdk
+                title: TypeScript
+                slug: ts            
               - changelog: ./pages/changelogs/python-sdk
                 title: Python
                 slug: python
@@ -233,7 +236,7 @@ navigation:
                 slug: php
               - changelog: ./pages/changelogs/ruby-sdk
                 title: Ruby
-                slug: ruby
+                slug: ruby                
       - section: Capabilities
         contents:
           - page: Strongly Typed
@@ -480,6 +483,10 @@ navigation:
                 path: ./pages/docs/components/tabs.mdx
                 icon: fa-regular fa-window-restore
                 slug: tabs
+              - page: Tooltips
+                path: ./pages/docs/components/tooltips.mdx
+                icon: fa-regular fa-circle-info
+                slug: tooltips
           - page: Custom React Components
             icon: fa-brands fa-react
             path: ./pages/docs/writing-content/custom-react-components.mdx
@@ -641,6 +648,9 @@ navigation:
         api-name: public-api
         icon: fa-regular fa-pro
         paginated: true
+        snippets:
+          python: fern-api
+          typescript: '@fern-api/node-sdk'
         audiences:
           - external
         layout:

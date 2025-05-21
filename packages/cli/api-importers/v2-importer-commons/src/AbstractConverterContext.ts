@@ -582,7 +582,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return schemaMatch[1];
     }
 
-    public createNamedTypeReference(id: string): TypeReference {
+    public createNamedTypeReference(id: string, displayName?: string | undefined): TypeReference {
         return TypeReference.named({
             fernFilepath: {
                 allParts: [],
@@ -591,6 +591,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
             },
             name: this.casingsGenerator.generateName(id),
             typeId: id,
+            displayName,
             default: undefined,
             inline: false
         });
@@ -608,7 +609,8 @@ export abstract class AbstractConverterContext<Spec extends object> {
                 packagePath: [],
                 file: undefined
             },
-            name: this.casingsGenerator.generateName(typeId)
+            name: this.casingsGenerator.generateName(typeId),
+            displayName: typeReference.displayName
         };
     }
 
@@ -646,6 +648,10 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
     public isExternalReference($ref: string): boolean {
         return $ref.startsWith("http://") || $ref.startsWith("https://");
+    }
+
+    public isExampleWithSummary(example: unknown): example is { summary: string } {
+        return typeof example === "object" && example != null && "summary" in example;
     }
 
     public isExampleWithValue(example: unknown): example is { value: unknown } {

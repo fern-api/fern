@@ -1750,7 +1750,7 @@
           "description": "",
           "method": "GET",
           "id": "listAccounts",
-          "originalEndpointId": "api.listAccounts",
+          "originalEndpointId": "endpoint_api.listAccounts",
           "name": "List Accounts",
           "path": {
             "pathParameters": [],
@@ -1803,19 +1803,16 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "count": 123,
-                  "next": "http://api.example.org/accounts/?page=4",
-                  "previous": "http://api.example.org/accounts/?page=2",
-                  "results": [
-                    {
-                      "id": 42,
-                      "name": "foo",
-                      "hidden": true
-                    }
-                  ]
-                }
+                "count": 123,
+                "next": "http://api.example.org/accounts/?page=4",
+                "previous": "http://api.example.org/accounts/?page=2",
+                "results": [
+                  {
+                    "id": 42,
+                    "name": "foo",
+                    "hidden": true
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -1843,7 +1840,7 @@
           "description": "",
           "method": "GET",
           "id": "retrieveAccount",
-          "originalEndpointId": "api.retrieveAccount",
+          "originalEndpointId": "endpoint_api.retrieveAccount",
           "name": "Retrieve Account",
           "path": {
             "pathParameters": [
@@ -1903,12 +1900,9 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 42,
-                  "name": "foo",
-                  "hidden": true
-                }
+                "id": 42,
+                "name": "foo",
+                "hidden": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -1929,7 +1923,7 @@
           "description": "",
           "method": "GET",
           "id": "listGames",
-          "originalEndpointId": "api.listGames",
+          "originalEndpointId": "endpoint_api.listGames",
           "name": "List Games",
           "path": {
             "pathParameters": [],
@@ -2034,48 +2028,45 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "count": 123,
-                  "next": "http://api.example.org/accounts/?page=4",
-                  "previous": "http://api.example.org/accounts/?page=2",
-                  "results": [
-                    {
-                      "id": 42,
-                      "added_at": "foo",
-                      "updated_at": "foo",
-                      "name": "foo",
-                      "date": "foo",
-                      "time": "foo",
-                      "start_at": "foo",
-                      "group": "foo",
-                      "room": "foo",
-                      "photos": [
-                        {
-                          "added_at": "foo",
-                          "photo": "foo",
-                          "processed_image": "foo",
-                          "ready": "foo"
-                        }
-                      ],
-                      "extra_fields": [
-                        {
-                          "key": "foo",
-                          "label": "foo",
-                          "value": {},
-                          "present": true
-                        }
-                      ],
-                      "complete": {
-                        "completed_at": "foo",
-                        "did_win": true,
-                        "hints": 42,
-                        "score": 42,
-                        "completion_time": 42
+                "count": 123,
+                "next": "http://api.example.org/accounts/?page=4",
+                "previous": "http://api.example.org/accounts/?page=2",
+                "results": [
+                  {
+                    "id": 42,
+                    "added_at": "foo",
+                    "updated_at": "foo",
+                    "name": "foo",
+                    "date": "foo",
+                    "time": "foo",
+                    "start_at": "foo",
+                    "group": "foo",
+                    "room": "foo",
+                    "photos": [
+                      {
+                        "added_at": "foo",
+                        "photo": "foo",
+                        "processed_image": "foo",
+                        "ready": "foo"
                       }
+                    ],
+                    "extra_fields": [
+                      {
+                        "key": "foo",
+                        "label": "foo",
+                        "value": {},
+                        "present": true
+                      }
+                    ],
+                    "complete": {
+                      "completed_at": "foo",
+                      "did_win": true,
+                      "hints": 42,
+                      "score": 42,
+                      "completion_time": 42
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2132,7 +2123,7 @@
           "description": "",
           "method": "GET",
           "id": "retrieveGame",
-          "originalEndpointId": "api.retrieveGame",
+          "originalEndpointId": "endpoint_api.retrieveGame",
           "name": "Retrieve Game",
           "path": {
             "pathParameters": [
@@ -2245,40 +2236,37 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 42,
-                  "added_at": "foo",
-                  "updated_at": "foo",
-                  "name": "foo",
-                  "date": "foo",
-                  "time": "foo",
-                  "start_at": "foo",
-                  "group": "foo",
-                  "room": "foo",
-                  "photos": [
-                    {
-                      "added_at": "foo",
-                      "photo": "foo",
-                      "processed_image": "foo",
-                      "ready": "foo"
-                    }
-                  ],
-                  "extra_fields": [
-                    {
-                      "key": "foo",
-                      "label": "foo",
-                      "value": {},
-                      "present": true
-                    }
-                  ],
-                  "complete": {
-                    "completed_at": "foo",
-                    "did_win": true,
-                    "hints": 42,
-                    "score": 42,
-                    "completion_time": 42
+                "id": 42,
+                "added_at": "foo",
+                "updated_at": "foo",
+                "name": "foo",
+                "date": "foo",
+                "time": "foo",
+                "start_at": "foo",
+                "group": "foo",
+                "room": "foo",
+                "photos": [
+                  {
+                    "added_at": "foo",
+                    "photo": "foo",
+                    "processed_image": "foo",
+                    "ready": "foo"
                   }
+                ],
+                "extra_fields": [
+                  {
+                    "key": "foo",
+                    "label": "foo",
+                    "value": {},
+                    "present": true
+                  }
+                ],
+                "complete": {
+                  "completed_at": "foo",
+                  "did_win": true,
+                  "hints": 42,
+                  "score": 42,
+                  "completion_time": 42
                 }
               },
               "responseBodyV3": {
@@ -2329,7 +2317,7 @@
           "description": "",
           "method": "GET",
           "id": "listGroups",
-          "originalEndpointId": "api.listGroups",
+          "originalEndpointId": "endpoint_api.listGroups",
           "name": "List Groups",
           "path": {
             "pathParameters": [],
@@ -2408,80 +2396,77 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "count": 123,
-                  "next": "http://api.example.org/accounts/?page=4",
-                  "previous": "http://api.example.org/accounts/?page=2",
-                  "results": [
-                    {
-                      "id": 42,
-                      "added_at": "foo",
-                      "updated_at": "foo",
-                      "is_event": true,
-                      "name": "foo",
-                      "date": "foo",
-                      "time": "foo",
-                      "start_at": "foo",
-                      "games": [
-                        {
-                          "id": 42,
-                          "added_at": "foo",
-                          "updated_at": "foo",
-                          "name": "foo",
-                          "date": "foo",
-                          "time": "foo",
-                          "start_at": "foo",
-                          "room": "foo",
-                          "extra_fields": [
-                            {
-                              "key": "foo",
-                              "label": "foo",
-                              "value": {},
-                              "present": true
-                            }
-                          ],
-                          "complete": {
-                            "completed_at": "foo",
-                            "did_win": true,
-                            "hints": 42,
-                            "score": 42,
-                            "completion_time": 42
+                "count": 123,
+                "next": "http://api.example.org/accounts/?page=4",
+                "previous": "http://api.example.org/accounts/?page=2",
+                "results": [
+                  {
+                    "id": 42,
+                    "added_at": "foo",
+                    "updated_at": "foo",
+                    "is_event": true,
+                    "name": "foo",
+                    "date": "foo",
+                    "time": "foo",
+                    "start_at": "foo",
+                    "games": [
+                      {
+                        "id": 42,
+                        "added_at": "foo",
+                        "updated_at": "foo",
+                        "name": "foo",
+                        "date": "foo",
+                        "time": "foo",
+                        "start_at": "foo",
+                        "room": "foo",
+                        "extra_fields": [
+                          {
+                            "key": "foo",
+                            "label": "foo",
+                            "value": {},
+                            "present": true
                           }
+                        ],
+                        "complete": {
+                          "completed_at": "foo",
+                          "did_win": true,
+                          "hints": 42,
+                          "score": 42,
+                          "completion_time": 42
                         }
-                      ],
-                      "players": [
-                        {
-                          "added_at": "foo",
-                          "updated_at": "foo",
-                          "player": "foo",
-                          "first_name": "foo",
-                          "last_name": "foo",
-                          "email": "foo",
-                          "phone": "foo",
-                          "extra_fields": [
-                            {
-                              "key": "foo",
-                              "label": "foo",
-                              "value": {},
-                              "present": true
-                            }
-                          ],
-                          "signature": "foo"
-                        }
-                      ],
-                      "photos": [
-                        {
-                          "added_at": "foo",
-                          "game": "foo",
-                          "photo": "foo",
-                          "processed_image": "foo",
-                          "ready": "foo"
-                        }
-                      ]
-                    }
-                  ]
-                }
+                      }
+                    ],
+                    "players": [
+                      {
+                        "added_at": "foo",
+                        "updated_at": "foo",
+                        "player": "foo",
+                        "first_name": "foo",
+                        "last_name": "foo",
+                        "email": "foo",
+                        "phone": "foo",
+                        "extra_fields": [
+                          {
+                            "key": "foo",
+                            "label": "foo",
+                            "value": {},
+                            "present": true
+                          }
+                        ],
+                        "signature": "foo"
+                      }
+                    ],
+                    "photos": [
+                      {
+                        "added_at": "foo",
+                        "game": "foo",
+                        "photo": "foo",
+                        "processed_image": "foo",
+                        "ready": "foo"
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2570,7 +2555,7 @@
           "description": "",
           "method": "GET",
           "id": "retrieveGroup",
-          "originalEndpointId": "api.retrieveGroup",
+          "originalEndpointId": "endpoint_api.retrieveGroup",
           "name": "Retrieve Group",
           "path": {
             "pathParameters": [
@@ -2657,73 +2642,70 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 42,
-                  "added_at": "foo",
-                  "updated_at": "foo",
-                  "is_event": true,
-                  "name": "foo",
-                  "date": "foo",
-                  "time": "foo",
-                  "start_at": "foo",
-                  "games": [
-                    {
-                      "id": 42,
-                      "added_at": "foo",
-                      "updated_at": "foo",
-                      "name": "foo",
-                      "date": "foo",
-                      "time": "foo",
-                      "start_at": "foo",
-                      "room": "foo",
-                      "extra_fields": [
-                        {
-                          "key": "foo",
-                          "label": "foo",
-                          "value": {},
-                          "present": true
-                        }
-                      ],
-                      "complete": {
-                        "completed_at": "foo",
-                        "did_win": true,
-                        "hints": 42,
-                        "score": 42,
-                        "completion_time": 42
+                "id": 42,
+                "added_at": "foo",
+                "updated_at": "foo",
+                "is_event": true,
+                "name": "foo",
+                "date": "foo",
+                "time": "foo",
+                "start_at": "foo",
+                "games": [
+                  {
+                    "id": 42,
+                    "added_at": "foo",
+                    "updated_at": "foo",
+                    "name": "foo",
+                    "date": "foo",
+                    "time": "foo",
+                    "start_at": "foo",
+                    "room": "foo",
+                    "extra_fields": [
+                      {
+                        "key": "foo",
+                        "label": "foo",
+                        "value": {},
+                        "present": true
                       }
+                    ],
+                    "complete": {
+                      "completed_at": "foo",
+                      "did_win": true,
+                      "hints": 42,
+                      "score": 42,
+                      "completion_time": 42
                     }
-                  ],
-                  "players": [
-                    {
-                      "added_at": "foo",
-                      "updated_at": "foo",
-                      "player": "foo",
-                      "first_name": "foo",
-                      "last_name": "foo",
-                      "email": "foo",
-                      "phone": "foo",
-                      "extra_fields": [
-                        {
-                          "key": "foo",
-                          "label": "foo",
-                          "value": {},
-                          "present": true
-                        }
-                      ],
-                      "signature": "foo"
-                    }
-                  ],
-                  "photos": [
-                    {
-                      "added_at": "foo",
-                      "game": "foo",
-                      "photo": "foo",
-                      "processed_image": "foo",
-                      "ready": "foo"
-                    }
-                  ]
-                }
+                  }
+                ],
+                "players": [
+                  {
+                    "added_at": "foo",
+                    "updated_at": "foo",
+                    "player": "foo",
+                    "first_name": "foo",
+                    "last_name": "foo",
+                    "email": "foo",
+                    "phone": "foo",
+                    "extra_fields": [
+                      {
+                        "key": "foo",
+                        "label": "foo",
+                        "value": {},
+                        "present": true
+                      }
+                    ],
+                    "signature": "foo"
+                  }
+                ],
+                "photos": [
+                  {
+                    "added_at": "foo",
+                    "game": "foo",
+                    "photo": "foo",
+                    "processed_image": "foo",
+                    "ready": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2805,7 +2787,7 @@
           "description": "",
           "method": "GET",
           "id": "listPlayers",
-          "originalEndpointId": "api.listPlayers",
+          "originalEndpointId": "endpoint_api.listPlayers",
           "name": "List Players",
           "path": {
             "pathParameters": [],
@@ -2858,32 +2840,29 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "count": 123,
-                  "next": "http://api.example.org/accounts/?page=4",
-                  "previous": "http://api.example.org/accounts/?page=2",
-                  "results": [
-                    {
-                      "id": 42,
-                      "added_at": "foo",
-                      "updated_at": "foo",
-                      "first_name": "foo",
-                      "last_name": "foo",
-                      "email": "foo",
-                      "phone": "foo",
-                      "extra_fields": [
-                        {
-                          "key": "foo",
-                          "label": "foo",
-                          "value": {},
-                          "present": true
-                        }
-                      ],
-                      "marketing_email_allowed": true
-                    }
-                  ]
-                }
+                "count": 123,
+                "next": "http://api.example.org/accounts/?page=4",
+                "previous": "http://api.example.org/accounts/?page=2",
+                "results": [
+                  {
+                    "id": 42,
+                    "added_at": "foo",
+                    "updated_at": "foo",
+                    "first_name": "foo",
+                    "last_name": "foo",
+                    "email": "foo",
+                    "phone": "foo",
+                    "extra_fields": [
+                      {
+                        "key": "foo",
+                        "label": "foo",
+                        "value": {},
+                        "present": true
+                      }
+                    ],
+                    "marketing_email_allowed": true
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -2924,7 +2903,7 @@
           "description": "",
           "method": "GET",
           "id": "retrievePlayer",
-          "originalEndpointId": "api.retrievePlayer",
+          "originalEndpointId": "endpoint_api.retrievePlayer",
           "name": "Retrieve Player",
           "path": {
             "pathParameters": [
@@ -2984,25 +2963,22 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 42,
-                  "added_at": "foo",
-                  "updated_at": "foo",
-                  "first_name": "foo",
-                  "last_name": "foo",
-                  "email": "foo",
-                  "phone": "foo",
-                  "extra_fields": [
-                    {
-                      "key": "foo",
-                      "label": "foo",
-                      "value": {},
-                      "present": true
-                    }
-                  ],
-                  "marketing_email_allowed": true
-                }
+                "id": 42,
+                "added_at": "foo",
+                "updated_at": "foo",
+                "first_name": "foo",
+                "last_name": "foo",
+                "email": "foo",
+                "phone": "foo",
+                "extra_fields": [
+                  {
+                    "key": "foo",
+                    "label": "foo",
+                    "value": {},
+                    "present": true
+                  }
+                ],
+                "marketing_email_allowed": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3036,7 +3012,7 @@
           "description": "",
           "method": "GET",
           "id": "listLocations",
-          "originalEndpointId": "api.listLocations",
+          "originalEndpointId": "endpoint_api.listLocations",
           "name": "List Locations",
           "path": {
             "pathParameters": [],
@@ -3089,19 +3065,16 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "count": 123,
-                  "next": "http://api.example.org/accounts/?page=4",
-                  "previous": "http://api.example.org/accounts/?page=2",
-                  "results": [
-                    {
-                      "id": 42,
-                      "name": "foo",
-                      "hidden": true
-                    }
-                  ]
-                }
+                "count": 123,
+                "next": "http://api.example.org/accounts/?page=4",
+                "previous": "http://api.example.org/accounts/?page=2",
+                "results": [
+                  {
+                    "id": 42,
+                    "name": "foo",
+                    "hidden": true
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3129,7 +3102,7 @@
           "description": "",
           "method": "GET",
           "id": "retrieveLocation",
-          "originalEndpointId": "api.retrieveLocation",
+          "originalEndpointId": "endpoint_api.retrieveLocation",
           "name": "Retrieve Location",
           "path": {
             "pathParameters": [
@@ -3189,12 +3162,9 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": 42,
-                  "name": "foo",
-                  "hidden": true
-                }
+                "id": 42,
+                "name": "foo",
+                "hidden": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3215,7 +3185,7 @@
           "description": "",
           "method": "GET",
           "id": "listPhotos",
-          "originalEndpointId": "api.listPhotos",
+          "originalEndpointId": "endpoint_api.listPhotos",
           "name": "List Photos",
           "path": {
             "pathParameters": [],
@@ -3268,29 +3238,26 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "count": 123,
-                  "next": "http://api.example.org/accounts/?page=4",
-                  "previous": "http://api.example.org/accounts/?page=2",
-                  "results": [
-                    {
-                      "id": "foo",
-                      "added_at": "foo",
-                      "original_image": "foo",
-                      "processed": [
-                        {
-                          "added_at": "foo",
-                          "game": "foo",
-                          "group": "foo",
-                          "photo": "foo",
-                          "processed_image": "foo",
-                          "ready": "foo"
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "count": 123,
+                "next": "http://api.example.org/accounts/?page=4",
+                "previous": "http://api.example.org/accounts/?page=2",
+                "results": [
+                  {
+                    "id": "foo",
+                    "added_at": "foo",
+                    "original_image": "foo",
+                    "processed": [
+                      {
+                        "added_at": "foo",
+                        "game": "foo",
+                        "group": "foo",
+                        "photo": "foo",
+                        "processed_image": "foo",
+                        "ready": "foo"
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -3328,7 +3295,7 @@
           "description": "",
           "method": "GET",
           "id": "retrievePhoto",
-          "originalEndpointId": "api.retrievePhoto",
+          "originalEndpointId": "endpoint_api.retrievePhoto",
           "name": "Retrieve Photo",
           "path": {
             "pathParameters": [
@@ -3388,22 +3355,19 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "foo",
-                  "added_at": "foo",
-                  "original_image": "foo",
-                  "processed": [
-                    {
-                      "added_at": "foo",
-                      "game": "foo",
-                      "group": "foo",
-                      "photo": "foo",
-                      "processed_image": "foo",
-                      "ready": "foo"
-                    }
-                  ]
-                }
+                "id": "foo",
+                "added_at": "foo",
+                "original_image": "foo",
+                "processed": [
+                  {
+                    "added_at": "foo",
+                    "game": "foo",
+                    "group": "foo",
+                    "photo": "foo",
+                    "processed_image": "foo",
+                    "ready": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",

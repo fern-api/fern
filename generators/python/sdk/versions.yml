@@ -1,4 +1,12 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.20.3
+  changelogEntry:
+    - summary: |
+        Fix handling of optional and unknown response types by not throwing errors when the response is empty.
+      type: fix
+  createdAt: '2025-05-20'
+  irVersion: 57
+
 - version: 4.20.2
   changelogEntry:
     - summary: |

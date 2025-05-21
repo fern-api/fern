@@ -107,7 +107,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                     docs: undefined,
                     discriminantValue: nameAndWireValue,
                     availability: convertedSchema.availability,
-                    displayName: undefined,
+                    displayName: discriminant,
                     shape: SingleUnionTypeProperties.samePropertiesAsObject({
                         typeId,
                         name: this.context.casingsGenerator.generateName(typeId),
@@ -115,7 +115,8 @@ export class OneOfSchemaConverter extends AbstractConverter<
                             allParts: [],
                             packagePath: [],
                             file: undefined
-                        }
+                        },
+                        displayName: discriminant
                     })
                 });
                 inlinedTypes = {
@@ -194,10 +195,11 @@ export class OneOfSchemaConverter extends AbstractConverter<
             const extendedSubSchema = this.extendSubSchema(subSchema);
 
             const schemaId = this.context.convertBreadcrumbsToName([`${this.id}_${index}`]);
+            const displayName = subSchema.title;
             const schemaConverter = new SchemaConverter({
                 context: this.context,
                 id: schemaId,
-                nameOverride: subSchema.title,
+                nameOverride: displayName,
                 breadcrumbs: [...this.breadcrumbs, `oneOf[${index}]`],
                 schema: extendedSubSchema ?? subSchema
             });
@@ -211,7 +213,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                     });
                 } else {
                     unionTypes.push({
-                        type: this.context.createNamedTypeReference(schemaId),
+                        type: this.context.createNamedTypeReference(schemaId, displayName),
                         docs: subSchema.description
                     });
                     inlinedTypes = {

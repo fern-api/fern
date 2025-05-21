@@ -10175,7 +10175,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "account-details.retrieve",
+          "originalEndpointId": "endpoint_accountDetails.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [],
@@ -10227,19 +10227,16 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "0496d4c2-42e6-4072-80b3-7b69bfdc76fd",
-                  "integration": "BambooHR",
-                  "integration_slug": "bamboohr",
-                  "category": "hris",
-                  "end_user_origin_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "end_user_organization_name": "Waystar Royco",
-                  "end_user_email_address": "kendall.roy@waystar-royco.com",
-                  "status": "COMPLETE",
-                  "webhook_listener_url": "https://api.merge.dev/api/integrations/webhook-listener/7fc3mee0UW8ecV4",
-                  "is_duplicate": true
-                }
+                "id": "0496d4c2-42e6-4072-80b3-7b69bfdc76fd",
+                "integration": "BambooHR",
+                "integration_slug": "bamboohr",
+                "category": "hris",
+                "end_user_origin_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "end_user_organization_name": "Waystar Royco",
+                "end_user_email_address": "kendall.roy@waystar-royco.com",
+                "status": "COMPLETE",
+                "webhook_listener_url": "https://api.merge.dev/api/integrations/webhook-listener/7fc3mee0UW8ecV4",
+                "is_duplicate": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -10288,7 +10285,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "account-token.retrieve",
+          "originalEndpointId": "endpoint_accountToken.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -10347,21 +10344,18 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "account_token": "T9klMDQrcHdm9jrtHuOS2Nf06BIHwMNjpPXPMB",
-                  "integration": {
-                    "name": "foo",
-                    "categories": [
-                      "hris"
-                    ],
-                    "image": "foo",
-                    "square_image": "foo",
-                    "color": "foo",
-                    "slug": "foo",
-                    "is_in_beta": true,
-                    "api_endpoints_to_documentation_urls": {}
-                  }
+                "account_token": "T9klMDQrcHdm9jrtHuOS2Nf06BIHwMNjpPXPMB",
+                "integration": {
+                  "name": "foo",
+                  "categories": [
+                    "hris"
+                  ],
+                  "image": "foo",
+                  "square_image": "foo",
+                  "color": "foo",
+                  "slug": "foo",
+                  "is_in_beta": true,
+                  "api_endpoints_to_documentation_urls": {}
                 }
               },
               "responseBodyV3": {
@@ -10414,7 +10408,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "available-actions.retrieve",
+          "originalEndpointId": "endpoint_availableActions.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [],
@@ -10466,36 +10460,33 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "integration": {
-                    "name": "foo",
-                    "categories": [
-                      "hris"
+                "integration": {
+                  "name": "foo",
+                  "categories": [
+                    "hris"
+                  ],
+                  "image": "foo",
+                  "square_image": "foo",
+                  "color": "foo",
+                  "slug": "foo",
+                  "is_in_beta": true,
+                  "api_endpoints_to_documentation_urls": {}
+                },
+                "passthrough_available": true,
+                "available_model_operations": [
+                  {
+                    "model_name": "Candidate",
+                    "available_operations": [
+                      "foo"
                     ],
-                    "image": "foo",
-                    "square_image": "foo",
-                    "color": "foo",
-                    "slug": "foo",
-                    "is_in_beta": true,
-                    "api_endpoints_to_documentation_urls": {}
-                  },
-                  "passthrough_available": true,
-                  "available_model_operations": [
-                    {
-                      "model_name": "Candidate",
-                      "available_operations": [
-                        "foo"
-                      ],
-                      "required_post_parameters": [
-                        "foo"
-                      ],
-                      "supported_fields": [
-                        "foo"
-                      ]
-                    }
-                  ]
-                }
+                    "required_post_parameters": [
+                      "foo"
+                    ],
+                    "supported_fields": [
+                      "foo"
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -10561,7 +10552,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "bank-info.list",
+          "originalEndpointId": "endpoint_bankInfo.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -10822,32 +10813,29 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                  "results": [
-                    {
-                      "id": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
-                      "remote_id": "123234",
-                      "employee": "a3617eb4-dfe3-426f-921e-a65fc1661e10",
-                      "account_number": "439291590",
-                      "routing_number": "089690059",
-                      "bank_name": "Chase",
-                      "account_type": "SAVINGS",
-                      "remote_created_at": "2021-12-06T10:11:26Z",
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                "results": [
+                  {
+                    "id": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
+                    "remote_id": "123234",
+                    "employee": "a3617eb4-dfe3-426f-921e-a65fc1661e10",
+                    "account_number": "439291590",
+                    "routing_number": "089690059",
+                    "bank_name": "Chase",
+                    "account_type": "SAVINGS",
+                    "remote_created_at": "2021-12-06T10:11:26Z",
+                    "remote_was_deleted": true,
+                    "modified_at": "2021-10-16T00:00:00Z",
+                    "field_mappings": {},
+                    "remote_data": [
+                      {
+                        "path": "foo",
+                        "data": {}
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -10899,7 +10887,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "bank-info.retrieve",
+          "originalEndpointId": "endpoint_bankInfo.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -11023,26 +11011,23 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
-                  "remote_id": "123234",
-                  "employee": "a3617eb4-dfe3-426f-921e-a65fc1661e10",
-                  "account_number": "439291590",
-                  "routing_number": "089690059",
-                  "bank_name": "Chase",
-                  "account_type": "SAVINGS",
-                  "remote_created_at": "2021-12-06T10:11:26Z",
-                  "remote_was_deleted": true,
-                  "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
-                  "remote_data": [
-                    {
-                      "path": "foo",
-                      "data": {}
-                    }
-                  ]
-                }
+                "id": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
+                "remote_id": "123234",
+                "employee": "a3617eb4-dfe3-426f-921e-a65fc1661e10",
+                "account_number": "439291590",
+                "routing_number": "089690059",
+                "bank_name": "Chase",
+                "account_type": "SAVINGS",
+                "remote_created_at": "2021-12-06T10:11:26Z",
+                "remote_was_deleted": true,
+                "modified_at": "2021-10-16T00:00:00Z",
+                "field_mappings": {},
+                "remote_data": [
+                  {
+                    "path": "foo",
+                    "data": {}
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -11098,7 +11083,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "benefits.list",
+          "originalEndpointId": "endpoint_benefits.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -11300,33 +11285,30 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                  "results": [
-                    {
-                      "id": "3fe5ae7a-f1ba-4529-b7af-84e86dc6d232",
-                      "remote_id": "19202938",
-                      "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                      "provider_name": "Blue Shield of California",
-                      "benefit_plan_type": "foo",
-                      "employee_contribution": 23.65,
-                      "company_contribution": 150,
-                      "start_date": "2020-11-15 00:59:25.309761+00:00",
-                      "end_date": "2021-10-15 00:23:25.309761+00:00",
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                "results": [
+                  {
+                    "id": "3fe5ae7a-f1ba-4529-b7af-84e86dc6d232",
+                    "remote_id": "19202938",
+                    "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                    "provider_name": "Blue Shield of California",
+                    "benefit_plan_type": "foo",
+                    "employee_contribution": 23.65,
+                    "company_contribution": 150,
+                    "start_date": "2020-11-15 00:59:25.309761+00:00",
+                    "end_date": "2021-10-15 00:23:25.309761+00:00",
+                    "remote_was_deleted": true,
+                    "modified_at": "2021-10-16T00:00:00Z",
+                    "field_mappings": {},
+                    "remote_data": [
+                      {
+                        "path": "foo",
+                        "data": {}
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -11379,7 +11361,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "benefits.retrieve",
+          "originalEndpointId": "endpoint_benefits.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -11479,27 +11461,24 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "3fe5ae7a-f1ba-4529-b7af-84e86dc6d232",
-                  "remote_id": "19202938",
-                  "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                  "provider_name": "Blue Shield of California",
-                  "benefit_plan_type": "foo",
-                  "employee_contribution": 23.65,
-                  "company_contribution": 150,
-                  "start_date": "2020-11-15 00:59:25.309761+00:00",
-                  "end_date": "2021-10-15 00:23:25.309761+00:00",
-                  "remote_was_deleted": true,
-                  "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
-                  "remote_data": [
-                    {
-                      "path": "foo",
-                      "data": {}
-                    }
-                  ]
-                }
+                "id": "3fe5ae7a-f1ba-4529-b7af-84e86dc6d232",
+                "remote_id": "19202938",
+                "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                "provider_name": "Blue Shield of California",
+                "benefit_plan_type": "foo",
+                "employee_contribution": 23.65,
+                "company_contribution": 150,
+                "start_date": "2020-11-15 00:59:25.309761+00:00",
+                "end_date": "2021-10-15 00:23:25.309761+00:00",
+                "remote_was_deleted": true,
+                "modified_at": "2021-10-16T00:00:00Z",
+                "field_mappings": {},
+                "remote_data": [
+                  {
+                    "path": "foo",
+                    "data": {}
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -11556,7 +11535,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "companies.list",
+          "originalEndpointId": "endpoint_companies.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -11732,31 +11711,28 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                  "results": [
-                    {
-                      "id": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
-                      "remote_id": "19202938",
-                      "legal_name": "Waystar Royco, Inc.",
-                      "display_name": "Waystar Royco",
-                      "eins": [
-                        "foo"
-                      ],
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                "results": [
+                  {
+                    "id": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
+                    "remote_id": "19202938",
+                    "legal_name": "Waystar Royco, Inc.",
+                    "display_name": "Waystar Royco",
+                    "eins": [
+                      "foo"
+                    ],
+                    "remote_was_deleted": true,
+                    "modified_at": "2021-10-16T00:00:00Z",
+                    "field_mappings": {},
+                    "remote_data": [
+                      {
+                        "path": "foo",
+                        "data": {}
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -11807,7 +11783,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "companies.retrieve",
+          "originalEndpointId": "endpoint_companies.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -11894,25 +11870,22 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
-                  "remote_id": "19202938",
-                  "legal_name": "Waystar Royco, Inc.",
-                  "display_name": "Waystar Royco",
-                  "eins": [
-                    "foo"
-                  ],
-                  "remote_was_deleted": true,
-                  "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
-                  "remote_data": [
-                    {
-                      "path": "foo",
-                      "data": {}
-                    }
-                  ]
-                }
+                "id": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
+                "remote_id": "19202938",
+                "legal_name": "Waystar Royco, Inc.",
+                "display_name": "Waystar Royco",
+                "eins": [
+                  "foo"
+                ],
+                "remote_was_deleted": true,
+                "modified_at": "2021-10-16T00:00:00Z",
+                "field_mappings": {},
+                "remote_data": [
+                  {
+                    "path": "foo",
+                    "data": {}
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -11967,7 +11940,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "delete-account.create",
+          "originalEndpointId": "endpoint_deleteAccount.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -12039,7 +12012,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "employee-payroll-runs.list",
+          "originalEndpointId": "endpoint_employeePayrollRuns.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -12311,89 +12284,86 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                  "results": [
-                    {
-                      "id": "fb8c55b6-1cb8-4b4c-9fb6-17924231619d",
-                      "remote_id": "19202938",
-                      "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                      "payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                      "gross_pay": 1342.67,
-                      "net_pay": 865.78,
-                      "start_date": "2020-11-08T00:00:00Z",
-                      "end_date": "2020-11-09T00:00:00Z",
-                      "check_date": "2020-11-10T00:00:00Z",
-                      "earnings": [
-                        {
-                          "id": "babbced6-3a81-4775-8da2-490dc6385259",
-                          "remote_id": "52802",
-                          "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                          "amount": 1002.34,
-                          "type": "SALARY",
-                          "remote_was_deleted": true,
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "field_mappings": {},
-                          "remote_data": [
-                            {
-                              "path": "foo",
-                              "data": {}
-                            }
-                          ]
-                        }
-                      ],
-                      "deductions": [
-                        {
-                          "id": "5fd439fc-1b64-4755-b275-64918936c365",
-                          "remote_id": "93478612",
-                          "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                          "name": "Social Security",
-                          "employee_deduction": 34.54,
-                          "company_deduction": 78.78,
-                          "remote_was_deleted": true,
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "field_mappings": {},
-                          "remote_data": [
-                            {
-                              "path": "foo",
-                              "data": {}
-                            }
-                          ]
-                        }
-                      ],
-                      "taxes": [
-                        {
-                          "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
-                          "remote_id": "26806834",
-                          "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                          "name": "California State Income Tax",
-                          "amount": 100.25,
-                          "employer_tax": "False",
-                          "remote_was_deleted": true,
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "field_mappings": {},
-                          "remote_data": [
-                            {
-                              "path": "foo",
-                              "data": {}
-                            }
-                          ]
-                        }
-                      ],
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                "results": [
+                  {
+                    "id": "fb8c55b6-1cb8-4b4c-9fb6-17924231619d",
+                    "remote_id": "19202938",
+                    "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                    "payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                    "gross_pay": 1342.67,
+                    "net_pay": 865.78,
+                    "start_date": "2020-11-08T00:00:00Z",
+                    "end_date": "2020-11-09T00:00:00Z",
+                    "check_date": "2020-11-10T00:00:00Z",
+                    "earnings": [
+                      {
+                        "id": "babbced6-3a81-4775-8da2-490dc6385259",
+                        "remote_id": "52802",
+                        "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                        "amount": 1002.34,
+                        "type": "SALARY",
+                        "remote_was_deleted": true,
+                        "modified_at": "2021-10-16T00:00:00Z",
+                        "field_mappings": {},
+                        "remote_data": [
+                          {
+                            "path": "foo",
+                            "data": {}
+                          }
+                        ]
+                      }
+                    ],
+                    "deductions": [
+                      {
+                        "id": "5fd439fc-1b64-4755-b275-64918936c365",
+                        "remote_id": "93478612",
+                        "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                        "name": "Social Security",
+                        "employee_deduction": 34.54,
+                        "company_deduction": 78.78,
+                        "remote_was_deleted": true,
+                        "modified_at": "2021-10-16T00:00:00Z",
+                        "field_mappings": {},
+                        "remote_data": [
+                          {
+                            "path": "foo",
+                            "data": {}
+                          }
+                        ]
+                      }
+                    ],
+                    "taxes": [
+                      {
+                        "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
+                        "remote_id": "26806834",
+                        "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                        "name": "California State Income Tax",
+                        "amount": 100.25,
+                        "employer_tax": "False",
+                        "remote_was_deleted": true,
+                        "modified_at": "2021-10-16T00:00:00Z",
+                        "field_mappings": {},
+                        "remote_data": [
+                          {
+                            "path": "foo",
+                            "data": {}
+                          }
+                        ]
+                      }
+                    ],
+                    "remote_was_deleted": true,
+                    "modified_at": "2021-10-16T00:00:00Z",
+                    "field_mappings": {},
+                    "remote_data": [
+                      {
+                        "path": "foo",
+                        "data": {}
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -12502,7 +12472,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "employee-payroll-runs.retrieve",
+          "originalEndpointId": "endpoint_employeePayrollRuns.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -12602,83 +12572,80 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "fb8c55b6-1cb8-4b4c-9fb6-17924231619d",
-                  "remote_id": "19202938",
-                  "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                  "payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                  "gross_pay": 1342.67,
-                  "net_pay": 865.78,
-                  "start_date": "2020-11-08T00:00:00Z",
-                  "end_date": "2020-11-09T00:00:00Z",
-                  "check_date": "2020-11-10T00:00:00Z",
-                  "earnings": [
-                    {
-                      "id": "babbced6-3a81-4775-8da2-490dc6385259",
-                      "remote_id": "52802",
-                      "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                      "amount": 1002.34,
-                      "type": "SALARY",
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
-                    }
-                  ],
-                  "deductions": [
-                    {
-                      "id": "5fd439fc-1b64-4755-b275-64918936c365",
-                      "remote_id": "93478612",
-                      "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                      "name": "Social Security",
-                      "employee_deduction": 34.54,
-                      "company_deduction": 78.78,
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
-                    }
-                  ],
-                  "taxes": [
-                    {
-                      "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
-                      "remote_id": "26806834",
-                      "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                      "name": "California State Income Tax",
-                      "amount": 100.25,
-                      "employer_tax": "False",
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
-                    }
-                  ],
-                  "remote_was_deleted": true,
-                  "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
-                  "remote_data": [
-                    {
-                      "path": "foo",
-                      "data": {}
-                    }
-                  ]
-                }
+                "id": "fb8c55b6-1cb8-4b4c-9fb6-17924231619d",
+                "remote_id": "19202938",
+                "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                "payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                "gross_pay": 1342.67,
+                "net_pay": 865.78,
+                "start_date": "2020-11-08T00:00:00Z",
+                "end_date": "2020-11-09T00:00:00Z",
+                "check_date": "2020-11-10T00:00:00Z",
+                "earnings": [
+                  {
+                    "id": "babbced6-3a81-4775-8da2-490dc6385259",
+                    "remote_id": "52802",
+                    "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                    "amount": 1002.34,
+                    "type": "SALARY",
+                    "remote_was_deleted": true,
+                    "modified_at": "2021-10-16T00:00:00Z",
+                    "field_mappings": {},
+                    "remote_data": [
+                      {
+                        "path": "foo",
+                        "data": {}
+                      }
+                    ]
+                  }
+                ],
+                "deductions": [
+                  {
+                    "id": "5fd439fc-1b64-4755-b275-64918936c365",
+                    "remote_id": "93478612",
+                    "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                    "name": "Social Security",
+                    "employee_deduction": 34.54,
+                    "company_deduction": 78.78,
+                    "remote_was_deleted": true,
+                    "modified_at": "2021-10-16T00:00:00Z",
+                    "field_mappings": {},
+                    "remote_data": [
+                      {
+                        "path": "foo",
+                        "data": {}
+                      }
+                    ]
+                  }
+                ],
+                "taxes": [
+                  {
+                    "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
+                    "remote_id": "26806834",
+                    "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                    "name": "California State Income Tax",
+                    "amount": 100.25,
+                    "employer_tax": "False",
+                    "remote_was_deleted": true,
+                    "modified_at": "2021-10-16T00:00:00Z",
+                    "field_mappings": {},
+                    "remote_data": [
+                      {
+                        "path": "foo",
+                        "data": {}
+                      }
+                    ]
+                  }
+                ],
+                "remote_was_deleted": true,
+                "modified_at": "2021-10-16T00:00:00Z",
+                "field_mappings": {},
+                "remote_data": [
+                  {
+                    "path": "foo",
+                    "data": {}
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -12791,7 +12758,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "employees.list",
+          "originalEndpointId": "endpoint_employees.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -13233,58 +13200,55 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                  "results": [
-                    {
-                      "id": "0958cbc6-6040-430a-848e-aafacbadf4ae",
-                      "remote_id": "19202938",
-                      "employee_number": "2",
-                      "company": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
-                      "first_name": "Greg",
-                      "last_name": "Hirsch",
-                      "display_full_name": "Cousin Greg Hirsch",
-                      "username": "cousingreg",
-                      "groups": [
-                        "foo"
-                      ],
-                      "work_email": "greg@merge.dev",
-                      "personal_email": "greg@gmail.com",
-                      "mobile_phone_number": "+1234567890",
-                      "employments": [
-                        "foo"
-                      ],
-                      "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                      "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                      "manager": "0048ea5b-911e-4dff-9364-92070dea62ff",
-                      "team": "249c9faa-3045-4a31-953b-8f22d3613301",
-                      "pay_group": "ad1264e2-39be-4787-b749-f1aade9e3405",
-                      "ssn": "1234567890",
-                      "gender": "MALE",
-                      "ethnicity": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
-                      "marital_status": "SINGLE",
-                      "date_of_birth": "1990-11-10T00:00:00Z",
-                      "hire_date": "2020-10-10T00:00:00Z",
-                      "start_date": "2020-10-11T00:00:00Z",
-                      "remote_created_at": "2020-10-11T00:00:00Z",
-                      "employment_status": "ACTIVE",
-                      "termination_date": "2021-10-12T00:00:00Z",
-                      "avatar": "http://alturl.com/h2h8m",
-                      "custom_fields": {},
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                "results": [
+                  {
+                    "id": "0958cbc6-6040-430a-848e-aafacbadf4ae",
+                    "remote_id": "19202938",
+                    "employee_number": "2",
+                    "company": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
+                    "first_name": "Greg",
+                    "last_name": "Hirsch",
+                    "display_full_name": "Cousin Greg Hirsch",
+                    "username": "cousingreg",
+                    "groups": [
+                      "foo"
+                    ],
+                    "work_email": "greg@merge.dev",
+                    "personal_email": "greg@gmail.com",
+                    "mobile_phone_number": "+1234567890",
+                    "employments": [
+                      "foo"
+                    ],
+                    "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                    "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                    "manager": "0048ea5b-911e-4dff-9364-92070dea62ff",
+                    "team": "249c9faa-3045-4a31-953b-8f22d3613301",
+                    "pay_group": "ad1264e2-39be-4787-b749-f1aade9e3405",
+                    "ssn": "1234567890",
+                    "gender": "MALE",
+                    "ethnicity": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                    "marital_status": "SINGLE",
+                    "date_of_birth": "1990-11-10T00:00:00Z",
+                    "hire_date": "2020-10-10T00:00:00Z",
+                    "start_date": "2020-10-11T00:00:00Z",
+                    "remote_created_at": "2020-10-11T00:00:00Z",
+                    "employment_status": "ACTIVE",
+                    "termination_date": "2021-10-12T00:00:00Z",
+                    "avatar": "http://alturl.com/h2h8m",
+                    "custom_fields": {},
+                    "remote_was_deleted": true,
+                    "modified_at": "2021-10-16T00:00:00Z",
+                    "field_mappings": {},
+                    "remote_data": [
+                      {
+                        "path": "foo",
+                        "data": {}
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -13362,7 +13326,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "employees.create",
+          "originalEndpointId": "endpoint_employees.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -13463,85 +13427,82 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "model": {
-                    "id": "0958cbc6-6040-430a-848e-aafacbadf4ae",
-                    "remote_id": "19202938",
-                    "employee_number": "2",
-                    "company": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
-                    "first_name": "Greg",
-                    "last_name": "Hirsch",
-                    "display_full_name": "Cousin Greg Hirsch",
-                    "username": "cousingreg",
-                    "groups": [
-                      "foo"
-                    ],
-                    "work_email": "greg@merge.dev",
-                    "personal_email": "greg@gmail.com",
-                    "mobile_phone_number": "+1234567890",
-                    "employments": [
-                      "foo"
-                    ],
-                    "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                    "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                    "manager": "0048ea5b-911e-4dff-9364-92070dea62ff",
-                    "team": "249c9faa-3045-4a31-953b-8f22d3613301",
-                    "pay_group": "ad1264e2-39be-4787-b749-f1aade9e3405",
-                    "ssn": "1234567890",
-                    "gender": "MALE",
-                    "ethnicity": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
-                    "marital_status": "SINGLE",
-                    "date_of_birth": "1990-11-10T00:00:00Z",
-                    "hire_date": "2020-10-10T00:00:00Z",
-                    "start_date": "2020-10-11T00:00:00Z",
-                    "remote_created_at": "2020-10-11T00:00:00Z",
-                    "employment_status": "ACTIVE",
-                    "termination_date": "2021-10-12T00:00:00Z",
-                    "avatar": "http://alturl.com/h2h8m",
-                    "custom_fields": {},
-                    "remote_was_deleted": true,
-                    "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
-                    "remote_data": [
-                      {
-                        "path": "foo",
-                        "data": {}
-                      }
-                    ]
-                  },
-                  "warnings": [
-                    {
-                      "source": {
-                        "pointer": "foo"
-                      },
-                      "title": "Unrecognized Field",
-                      "detail": "An unrecognized field, age, was passed in with request data.",
-                      "problem_type": "UNRECOGNIZED_FIELD"
-                    }
+                "model": {
+                  "id": "0958cbc6-6040-430a-848e-aafacbadf4ae",
+                  "remote_id": "19202938",
+                  "employee_number": "2",
+                  "company": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
+                  "first_name": "Greg",
+                  "last_name": "Hirsch",
+                  "display_full_name": "Cousin Greg Hirsch",
+                  "username": "cousingreg",
+                  "groups": [
+                    "foo"
                   ],
-                  "errors": [
-                    {
-                      "source": {
-                        "pointer": "foo"
-                      },
-                      "title": "Missing Required Field",
-                      "detail": "custom_fields is a required field on model.",
-                      "problem_type": "MISSING_REQUIRED_FIELD"
-                    }
+                  "work_email": "greg@merge.dev",
+                  "personal_email": "greg@gmail.com",
+                  "mobile_phone_number": "+1234567890",
+                  "employments": [
+                    "foo"
                   ],
-                  "logs": [
+                  "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                  "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                  "manager": "0048ea5b-911e-4dff-9364-92070dea62ff",
+                  "team": "249c9faa-3045-4a31-953b-8f22d3613301",
+                  "pay_group": "ad1264e2-39be-4787-b749-f1aade9e3405",
+                  "ssn": "1234567890",
+                  "gender": "MALE",
+                  "ethnicity": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                  "marital_status": "SINGLE",
+                  "date_of_birth": "1990-11-10T00:00:00Z",
+                  "hire_date": "2020-10-10T00:00:00Z",
+                  "start_date": "2020-10-11T00:00:00Z",
+                  "remote_created_at": "2020-10-11T00:00:00Z",
+                  "employment_status": "ACTIVE",
+                  "termination_date": "2021-10-12T00:00:00Z",
+                  "avatar": "http://alturl.com/h2h8m",
+                  "custom_fields": {},
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
                     {
-                      "log_id": "99433219-8017-4acd-bb3c-ceb23d663832",
-                      "dashboard_view": "https://app.merge.dev/logs/99433219-8017-4acd-bb3c-ceb23d663832",
-                      "log_summary": {
-                        "url": "https://harvest.greenhouse.io/v1/candidates/",
-                        "method": "POST",
-                        "status_code": 200
-                      }
+                      "path": "foo",
+                      "data": {}
                     }
                   ]
-                }
+                },
+                "warnings": [
+                  {
+                    "source": {
+                      "pointer": "foo"
+                    },
+                    "title": "Unrecognized Field",
+                    "detail": "An unrecognized field, age, was passed in with request data.",
+                    "problem_type": "UNRECOGNIZED_FIELD"
+                  }
+                ],
+                "errors": [
+                  {
+                    "source": {
+                      "pointer": "foo"
+                    },
+                    "title": "Missing Required Field",
+                    "detail": "custom_fields is a required field on model.",
+                    "problem_type": "MISSING_REQUIRED_FIELD"
+                  }
+                ],
+                "logs": [
+                  {
+                    "log_id": "99433219-8017-4acd-bb3c-ceb23d663832",
+                    "dashboard_view": "https://app.merge.dev/logs/99433219-8017-4acd-bb3c-ceb23d663832",
+                    "log_summary": {
+                      "url": "https://harvest.greenhouse.io/v1/candidates/",
+                      "method": "POST",
+                      "status_code": 200
+                    }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -13646,7 +13607,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "employees.retrieve",
+          "originalEndpointId": "endpoint_employees.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -13783,52 +13744,49 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "0958cbc6-6040-430a-848e-aafacbadf4ae",
-                  "remote_id": "19202938",
-                  "employee_number": "2",
-                  "company": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
-                  "first_name": "Greg",
-                  "last_name": "Hirsch",
-                  "display_full_name": "Cousin Greg Hirsch",
-                  "username": "cousingreg",
-                  "groups": [
-                    "foo"
-                  ],
-                  "work_email": "greg@merge.dev",
-                  "personal_email": "greg@gmail.com",
-                  "mobile_phone_number": "+1234567890",
-                  "employments": [
-                    "foo"
-                  ],
-                  "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                  "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                  "manager": "0048ea5b-911e-4dff-9364-92070dea62ff",
-                  "team": "249c9faa-3045-4a31-953b-8f22d3613301",
-                  "pay_group": "ad1264e2-39be-4787-b749-f1aade9e3405",
-                  "ssn": "1234567890",
-                  "gender": "MALE",
-                  "ethnicity": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
-                  "marital_status": "SINGLE",
-                  "date_of_birth": "1990-11-10T00:00:00Z",
-                  "hire_date": "2020-10-10T00:00:00Z",
-                  "start_date": "2020-10-11T00:00:00Z",
-                  "remote_created_at": "2020-10-11T00:00:00Z",
-                  "employment_status": "ACTIVE",
-                  "termination_date": "2021-10-12T00:00:00Z",
-                  "avatar": "http://alturl.com/h2h8m",
-                  "custom_fields": {},
-                  "remote_was_deleted": true,
-                  "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
-                  "remote_data": [
-                    {
-                      "path": "foo",
-                      "data": {}
-                    }
-                  ]
-                }
+                "id": "0958cbc6-6040-430a-848e-aafacbadf4ae",
+                "remote_id": "19202938",
+                "employee_number": "2",
+                "company": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
+                "first_name": "Greg",
+                "last_name": "Hirsch",
+                "display_full_name": "Cousin Greg Hirsch",
+                "username": "cousingreg",
+                "groups": [
+                  "foo"
+                ],
+                "work_email": "greg@merge.dev",
+                "personal_email": "greg@gmail.com",
+                "mobile_phone_number": "+1234567890",
+                "employments": [
+                  "foo"
+                ],
+                "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                "manager": "0048ea5b-911e-4dff-9364-92070dea62ff",
+                "team": "249c9faa-3045-4a31-953b-8f22d3613301",
+                "pay_group": "ad1264e2-39be-4787-b749-f1aade9e3405",
+                "ssn": "1234567890",
+                "gender": "MALE",
+                "ethnicity": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                "marital_status": "SINGLE",
+                "date_of_birth": "1990-11-10T00:00:00Z",
+                "hire_date": "2020-10-10T00:00:00Z",
+                "start_date": "2020-10-11T00:00:00Z",
+                "remote_created_at": "2020-10-11T00:00:00Z",
+                "employment_status": "ACTIVE",
+                "termination_date": "2021-10-12T00:00:00Z",
+                "avatar": "http://alturl.com/h2h8m",
+                "custom_fields": {},
+                "remote_was_deleted": true,
+                "modified_at": "2021-10-16T00:00:00Z",
+                "field_mappings": {},
+                "remote_data": [
+                  {
+                    "path": "foo",
+                    "data": {}
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -13900,7 +13858,7 @@
             }
           ],
           "id": "ignoreCreate",
-          "originalEndpointId": "employees.ignoreCreate",
+          "originalEndpointId": "endpoint_employees.ignoreCreate",
           "name": "Ignore Create",
           "path": {
             "pathParameters": [
@@ -14005,7 +13963,7 @@
             }
           ],
           "id": "metaPostRetrieve",
-          "originalEndpointId": "employees.metaPostRetrieve",
+          "originalEndpointId": "endpoint_employees.metaPostRetrieve",
           "name": "Meta Post Retrieve",
           "path": {
             "pathParameters": [],
@@ -14057,17 +14015,14 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "request_schema": {},
-                  "remote_field_classes": {},
-                  "status": {
-                    "linked_account_status": "foo",
-                    "can_make_request": true
-                  },
-                  "has_conditional_params": true,
-                  "has_required_linked_account_params": true
-                }
+                "request_schema": {},
+                "remote_field_classes": {},
+                "status": {
+                  "linked_account_status": "foo",
+                  "can_make_request": true
+                },
+                "has_conditional_params": true,
+                "has_required_linked_account_params": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -14114,7 +14069,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "employments.list",
+          "originalEndpointId": "endpoint_employments.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -14351,36 +14306,33 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                  "results": [
-                    {
-                      "id": "65d8ffd0-211b-4ba4-b85a-fbe2ce220982",
-                      "remote_id": "19202938",
-                      "employee": "0958cbc6-6040-430a-848e-aafacbadf4ae",
-                      "job_title": "Executive Assistant to Tom Wambsgans",
-                      "pay_rate": "50000.00",
-                      "pay_period": "HOUR",
-                      "pay_frequency": "WEEKLY",
-                      "pay_currency": "XUA",
-                      "pay_group": "d4e4837f-9900-484c-ac40-528365bb08ef",
-                      "flsa_status": "EXEMPT",
-                      "effective_date": "2023-10-06T18:42:34Z",
-                      "employment_type": "FULL_TIME",
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                "results": [
+                  {
+                    "id": "65d8ffd0-211b-4ba4-b85a-fbe2ce220982",
+                    "remote_id": "19202938",
+                    "employee": "0958cbc6-6040-430a-848e-aafacbadf4ae",
+                    "job_title": "Executive Assistant to Tom Wambsgans",
+                    "pay_rate": "50000.00",
+                    "pay_period": "HOUR",
+                    "pay_frequency": "WEEKLY",
+                    "pay_currency": "XUA",
+                    "pay_group": "d4e4837f-9900-484c-ac40-528365bb08ef",
+                    "flsa_status": "EXEMPT",
+                    "effective_date": "2023-10-06T18:42:34Z",
+                    "employment_type": "FULL_TIME",
+                    "remote_was_deleted": true,
+                    "modified_at": "2021-10-16T00:00:00Z",
+                    "field_mappings": {},
+                    "remote_data": [
+                      {
+                        "path": "foo",
+                        "data": {}
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -14436,7 +14388,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "employments.retrieve",
+          "originalEndpointId": "endpoint_employments.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -14560,30 +14512,27 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "65d8ffd0-211b-4ba4-b85a-fbe2ce220982",
-                  "remote_id": "19202938",
-                  "employee": "0958cbc6-6040-430a-848e-aafacbadf4ae",
-                  "job_title": "Executive Assistant to Tom Wambsgans",
-                  "pay_rate": "50000.00",
-                  "pay_period": "HOUR",
-                  "pay_frequency": "WEEKLY",
-                  "pay_currency": "XUA",
-                  "pay_group": "d4e4837f-9900-484c-ac40-528365bb08ef",
-                  "flsa_status": "EXEMPT",
-                  "effective_date": "2023-10-06T18:42:34Z",
-                  "employment_type": "FULL_TIME",
-                  "remote_was_deleted": true,
-                  "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
-                  "remote_data": [
-                    {
-                      "path": "foo",
-                      "data": {}
-                    }
-                  ]
-                }
+                "id": "65d8ffd0-211b-4ba4-b85a-fbe2ce220982",
+                "remote_id": "19202938",
+                "employee": "0958cbc6-6040-430a-848e-aafacbadf4ae",
+                "job_title": "Executive Assistant to Tom Wambsgans",
+                "pay_rate": "50000.00",
+                "pay_period": "HOUR",
+                "pay_frequency": "WEEKLY",
+                "pay_currency": "XUA",
+                "pay_group": "d4e4837f-9900-484c-ac40-528365bb08ef",
+                "flsa_status": "EXEMPT",
+                "effective_date": "2023-10-06T18:42:34Z",
+                "employment_type": "FULL_TIME",
+                "remote_was_deleted": true,
+                "modified_at": "2021-10-16T00:00:00Z",
+                "field_mappings": {},
+                "remote_data": [
+                  {
+                    "path": "foo",
+                    "data": {}
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -14643,7 +14592,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "generate-key.create",
+          "originalEndpointId": "endpoint_generateKey.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -14704,11 +14653,8 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "Remote Deployment Key 1",
-                  "key": "hXY57W0g0WkdRHjCaPvwijK63fwfN-o_Wh7f30SLTq_uPCOLo-WFcA"
-                }
+                "name": "Remote Deployment Key 1",
+                "key": "hXY57W0g0WkdRHjCaPvwijK63fwfN-o_Wh7f30SLTq_uPCOLo-WFcA"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -14749,7 +14695,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "groups.list",
+          "originalEndpointId": "endpoint_groups.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -14962,29 +14908,26 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                  "results": [
-                    {
-                      "id": "134e0111-0f67-44f6-98f0-597000290bb3",
-                      "remote_id": "800293",
-                      "parent_group": "2ef51b11-2c4e-4b02-8d1d-50592d9e96ef",
-                      "name": "COST_CENTER_US",
-                      "type": "TEAM",
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                "results": [
+                  {
+                    "id": "134e0111-0f67-44f6-98f0-597000290bb3",
+                    "remote_id": "800293",
+                    "parent_group": "2ef51b11-2c4e-4b02-8d1d-50592d9e96ef",
+                    "name": "COST_CENTER_US",
+                    "type": "TEAM",
+                    "remote_was_deleted": true,
+                    "modified_at": "2021-10-16T00:00:00Z",
+                    "field_mappings": {},
+                    "remote_data": [
+                      {
+                        "path": "foo",
+                        "data": {}
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15033,7 +14976,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "groups.retrieve",
+          "originalEndpointId": "endpoint_groups.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -15145,23 +15088,20 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "134e0111-0f67-44f6-98f0-597000290bb3",
-                  "remote_id": "800293",
-                  "parent_group": "2ef51b11-2c4e-4b02-8d1d-50592d9e96ef",
-                  "name": "COST_CENTER_US",
-                  "type": "TEAM",
-                  "remote_was_deleted": true,
-                  "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
-                  "remote_data": [
-                    {
-                      "path": "foo",
-                      "data": {}
-                    }
-                  ]
-                }
+                "id": "134e0111-0f67-44f6-98f0-597000290bb3",
+                "remote_id": "800293",
+                "parent_group": "2ef51b11-2c4e-4b02-8d1d-50592d9e96ef",
+                "name": "COST_CENTER_US",
+                "type": "TEAM",
+                "remote_was_deleted": true,
+                "modified_at": "2021-10-16T00:00:00Z",
+                "field_mappings": {},
+                "remote_data": [
+                  {
+                    "path": "foo",
+                    "data": {}
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15214,7 +15154,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "issues.list",
+          "originalEndpointId": "endpoint_issues.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -15424,25 +15364,22 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                  "results": [
-                    {
-                      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "status": "ONGOING",
-                      "error_description": "string",
-                      "end_user": {},
-                      "first_incident_time": "2022-12-05T16:19:15.161Z",
-                      "last_incident_time": "2022-12-05T16:19:15.161Z",
-                      "is_muted": true,
-                      "error_details": [
-                        "foo"
-                      ]
-                    }
-                  ]
-                }
+                "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                "results": [
+                  {
+                    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "status": "ONGOING",
+                    "error_description": "string",
+                    "end_user": {},
+                    "first_incident_time": "2022-12-05T16:19:15.161Z",
+                    "last_incident_time": "2022-12-05T16:19:15.161Z",
+                    "is_muted": true,
+                    "error_details": [
+                      "foo"
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15487,7 +15424,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "issues.retrieve",
+          "originalEndpointId": "endpoint_issues.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -15547,19 +15484,16 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "status": "ONGOING",
-                  "error_description": "string",
-                  "end_user": {},
-                  "first_incident_time": "2022-12-05T16:19:15.161Z",
-                  "last_incident_time": "2022-12-05T16:19:15.161Z",
-                  "is_muted": true,
-                  "error_details": [
-                    "foo"
-                  ]
-                }
+                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "status": "ONGOING",
+                "error_description": "string",
+                "end_user": {},
+                "first_incident_time": "2022-12-05T16:19:15.161Z",
+                "last_incident_time": "2022-12-05T16:19:15.161Z",
+                "is_muted": true,
+                "error_details": [
+                  "foo"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15608,7 +15542,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "link-token.create",
+          "originalEndpointId": "endpoint_linkToken.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -15679,12 +15613,9 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "link_token": "necdP7FtdASl1fQwm62be2_dM4wBG8_GactqoUV0",
-                  "integration_name": "Lever",
-                  "magic_link_url": "https://link.merge.dev/asdfjkl12345jsndfgi2i83n"
-                }
+                "link_token": "necdP7FtdASl1fQwm62be2_dM4wBG8_GactqoUV0",
+                "integration_name": "Lever",
+                "magic_link_url": "https://link.merge.dev/asdfjkl12345jsndfgi2i83n"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15726,7 +15657,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "linked-accounts.list",
+          "originalEndpointId": "endpoint_linkedAccounts.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -15935,49 +15866,46 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                  "results": [
-                    {
-                      "id": "e59b1821-f85c-4e28-a6b3-1804156f3563",
-                      "category": "hris",
-                      "status": "COMPLETE",
-                      "status_detail": "foo",
-                      "end_user_origin_id": "3ac95cde-6c7f-4eef-afec-be710b42308d",
-                      "end_user_organization_name": "Foo Bar, LLC",
-                      "end_user_email_address": "hradmin@foobar.dev",
-                      "webhook_listener_url": "https://api.merge.dev/api/integrations/webhook-listener/7fc3mee0UW8ecV4",
-                      "is_duplicate": true,
-                      "integration": {
-                        "name": "foo",
-                        "categories": [
-                          "hris"
-                        ],
-                        "image": "foo",
-                        "square_image": "foo",
-                        "color": "foo",
-                        "slug": "foo",
-                        "passthrough_available": true,
-                        "available_model_operations": [
-                          {
-                            "model_name": "Candidate",
-                            "available_operations": [
-                              "foo"
-                            ],
-                            "required_post_parameters": [
-                              "foo"
-                            ],
-                            "supported_fields": [
-                              "foo"
-                            ]
-                          }
-                        ]
-                      }
+                "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                "results": [
+                  {
+                    "id": "e59b1821-f85c-4e28-a6b3-1804156f3563",
+                    "category": "hris",
+                    "status": "COMPLETE",
+                    "status_detail": "foo",
+                    "end_user_origin_id": "3ac95cde-6c7f-4eef-afec-be710b42308d",
+                    "end_user_organization_name": "Foo Bar, LLC",
+                    "end_user_email_address": "hradmin@foobar.dev",
+                    "webhook_listener_url": "https://api.merge.dev/api/integrations/webhook-listener/7fc3mee0UW8ecV4",
+                    "is_duplicate": true,
+                    "integration": {
+                      "name": "foo",
+                      "categories": [
+                        "hris"
+                      ],
+                      "image": "foo",
+                      "square_image": "foo",
+                      "color": "foo",
+                      "slug": "foo",
+                      "passthrough_available": true,
+                      "available_model_operations": [
+                        {
+                          "model_name": "Candidate",
+                          "available_operations": [
+                            "foo"
+                          ],
+                          "required_post_parameters": [
+                            "foo"
+                          ],
+                          "supported_fields": [
+                            "foo"
+                          ]
+                        }
+                      ]
                     }
-                  ]
-                }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16056,7 +15984,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "locations.list",
+          "originalEndpointId": "endpoint_locations.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -16256,35 +16184,32 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                  "results": [
-                    {
-                      "id": "f5e6a151-f44e-449a-afb1-8fd781905958",
-                      "remote_id": "93018402",
-                      "name": "NYC Office",
-                      "phone_number": "+1111111111",
-                      "street_1": "2920 Broadway",
-                      "street_2": "2nd Floor",
-                      "city": "New York ",
-                      "state": "NY",
-                      "zip_code": "10027",
-                      "country": "AF",
-                      "location_type": "HOME",
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                "results": [
+                  {
+                    "id": "f5e6a151-f44e-449a-afb1-8fd781905958",
+                    "remote_id": "93018402",
+                    "name": "NYC Office",
+                    "phone_number": "+1111111111",
+                    "street_1": "2920 Broadway",
+                    "street_2": "2nd Floor",
+                    "city": "New York ",
+                    "state": "NY",
+                    "zip_code": "10027",
+                    "country": "AF",
+                    "location_type": "HOME",
+                    "remote_was_deleted": true,
+                    "modified_at": "2021-10-16T00:00:00Z",
+                    "field_mappings": {},
+                    "remote_data": [
+                      {
+                        "path": "foo",
+                        "data": {}
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16339,7 +16264,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "locations.retrieve",
+          "originalEndpointId": "endpoint_locations.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -16451,29 +16376,26 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "f5e6a151-f44e-449a-afb1-8fd781905958",
-                  "remote_id": "93018402",
-                  "name": "NYC Office",
-                  "phone_number": "+1111111111",
-                  "street_1": "2920 Broadway",
-                  "street_2": "2nd Floor",
-                  "city": "New York ",
-                  "state": "NY",
-                  "zip_code": "10027",
-                  "country": "AF",
-                  "location_type": "HOME",
-                  "remote_was_deleted": true,
-                  "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
-                  "remote_data": [
-                    {
-                      "path": "foo",
-                      "data": {}
-                    }
-                  ]
-                }
+                "id": "f5e6a151-f44e-449a-afb1-8fd781905958",
+                "remote_id": "93018402",
+                "name": "NYC Office",
+                "phone_number": "+1111111111",
+                "street_1": "2920 Broadway",
+                "street_2": "2nd Floor",
+                "city": "New York ",
+                "state": "NY",
+                "zip_code": "10027",
+                "country": "AF",
+                "location_type": "HOME",
+                "remote_was_deleted": true,
+                "modified_at": "2021-10-16T00:00:00Z",
+                "field_mappings": {},
+                "remote_data": [
+                  {
+                    "path": "foo",
+                    "data": {}
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16532,7 +16454,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "passthrough.create",
+          "originalEndpointId": "endpoint_passthrough.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -16608,16 +16530,13 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "method": "GET",
-                  "path": "/scooters",
-                  "status": 200,
-                  "response": null,
-                  "response_headers": {},
-                  "response_type": "JSON",
-                  "headers": {}
-                }
+                "method": "GET",
+                "path": "/scooters",
+                "status": 200,
+                "response": null,
+                "response_headers": {},
+                "response_type": "JSON",
+                "headers": {}
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16663,7 +16582,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "pay-groups.list",
+          "originalEndpointId": "endpoint_payGroups.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -16839,27 +16758,24 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                  "results": [
-                    {
-                      "id": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
-                      "remote_id": "800293",
-                      "pay_group_name": "contractor",
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                "results": [
+                  {
+                    "id": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
+                    "remote_id": "800293",
+                    "pay_group_name": "contractor",
+                    "remote_was_deleted": true,
+                    "modified_at": "2021-10-16T00:00:00Z",
+                    "field_mappings": {},
+                    "remote_data": [
+                      {
+                        "path": "foo",
+                        "data": {}
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16906,7 +16822,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "pay-groups.retrieve",
+          "originalEndpointId": "endpoint_payGroups.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -16993,21 +16909,18 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
-                  "remote_id": "800293",
-                  "pay_group_name": "contractor",
-                  "remote_was_deleted": true,
-                  "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
-                  "remote_data": [
-                    {
-                      "path": "foo",
-                      "data": {}
-                    }
-                  ]
-                }
+                "id": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
+                "remote_id": "800293",
+                "pay_group_name": "contractor",
+                "remote_was_deleted": true,
+                "modified_at": "2021-10-16T00:00:00Z",
+                "field_mappings": {},
+                "remote_data": [
+                  {
+                    "path": "foo",
+                    "data": {}
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17058,7 +16971,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "payroll-runs.list",
+          "originalEndpointId": "endpoint_payrollRuns.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -17325,31 +17238,28 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                  "results": [
-                    {
-                      "id": "37336947-b3d4-4a4c-a310-ab6ab510e079",
-                      "remote_id": "19202938",
-                      "run_state": "PAID",
-                      "run_type": "REGULAR",
-                      "start_date": "2020-11-08T00:00:00Z",
-                      "end_date": "2020-11-15T00:00:00Z",
-                      "check_date": "2020-11-15T00:00:00Z",
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                "results": [
+                  {
+                    "id": "37336947-b3d4-4a4c-a310-ab6ab510e079",
+                    "remote_id": "19202938",
+                    "run_state": "PAID",
+                    "run_type": "REGULAR",
+                    "start_date": "2020-11-08T00:00:00Z",
+                    "end_date": "2020-11-15T00:00:00Z",
+                    "check_date": "2020-11-15T00:00:00Z",
+                    "remote_was_deleted": true,
+                    "modified_at": "2021-10-16T00:00:00Z",
+                    "field_mappings": {},
+                    "remote_data": [
+                      {
+                        "path": "foo",
+                        "data": {}
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17400,7 +17310,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "payroll-runs.retrieve",
+          "originalEndpointId": "endpoint_payrollRuns.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -17512,25 +17422,22 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "37336947-b3d4-4a4c-a310-ab6ab510e079",
-                  "remote_id": "19202938",
-                  "run_state": "PAID",
-                  "run_type": "REGULAR",
-                  "start_date": "2020-11-08T00:00:00Z",
-                  "end_date": "2020-11-15T00:00:00Z",
-                  "check_date": "2020-11-15T00:00:00Z",
-                  "remote_was_deleted": true,
-                  "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
-                  "remote_data": [
-                    {
-                      "path": "foo",
-                      "data": {}
-                    }
-                  ]
-                }
+                "id": "37336947-b3d4-4a4c-a310-ab6ab510e079",
+                "remote_id": "19202938",
+                "run_state": "PAID",
+                "run_type": "REGULAR",
+                "start_date": "2020-11-08T00:00:00Z",
+                "end_date": "2020-11-15T00:00:00Z",
+                "check_date": "2020-11-15T00:00:00Z",
+                "remote_was_deleted": true,
+                "modified_at": "2021-10-16T00:00:00Z",
+                "field_mappings": {},
+                "remote_data": [
+                  {
+                    "path": "foo",
+                    "data": {}
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17585,7 +17492,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "regenerate-key.create",
+          "originalEndpointId": "endpoint_regenerateKey.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -17646,11 +17553,8 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "name": "Remote Deployment Key 1",
-                  "key": "hXY57W0g0WkdRHjCaPvwijK63fwfN-o_Wh7f30SLTq_uPCOLo-WFcA"
-                }
+                "name": "Remote Deployment Key 1",
+                "key": "hXY57W0g0WkdRHjCaPvwijK63fwfN-o_Wh7f30SLTq_uPCOLo-WFcA"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -17691,7 +17595,7 @@
             }
           ],
           "id": "configurationsList",
-          "originalEndpointId": "selective-sync.configurationsList",
+          "originalEndpointId": "endpoint_selectiveSync.configurationsList",
           "name": "Configurations List",
           "path": {
             "pathParameters": [],
@@ -17736,7 +17640,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "StartDateConditionExample",
+              "name": "Employees that started on or after January 1st, 2022",
               "description": "",
               "path": "/selective-sync/configurations",
               "pathParameters": {},
@@ -17745,23 +17649,20 @@
                 "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "linked_account_conditions": [
-                      {
-                        "condition_schema_id": "123e4567-e89b-12d3-a456-426655440000",
-                        "common_model": "hris.Employee",
-                        "native_name": "Started At",
-                        "operator": "GREATER_THAN_OR_EQUAL",
-                        "value": null,
-                        "field_name": "start_date"
-                      }
-                    ]
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "linked_account_conditions": [
+                    {
+                      "condition_schema_id": "123e4567-e89b-12d3-a456-426655440000",
+                      "common_model": "hris.Employee",
+                      "native_name": "Started At",
+                      "operator": "GREATER_THAN_OR_EQUAL",
+                      "value": null,
+                      "field_name": "start_date"
+                    }
+                  ]
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -17801,7 +17702,7 @@
             }
           ],
           "id": "configurationsUpdate",
-          "originalEndpointId": "selective-sync.configurationsUpdate",
+          "originalEndpointId": "endpoint_selectiveSync.configurationsUpdate",
           "name": "Configurations Update",
           "path": {
             "pathParameters": [],
@@ -17859,7 +17760,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "StartDateConditionRequestExample",
+              "name": "Employees that started on or after January 1st, 2022",
               "description": "",
               "path": "/selective-sync/configurations",
               "pathParameters": {},
@@ -17896,38 +17797,21 @@
                   ]
                 }
               },
-              "responseStatusCode": 200
-            },
-            {
-              "name": "StartDateConditionExample",
-              "description": "",
-              "path": "/selective-sync/configurations",
-              "pathParameters": {},
-              "queryParameters": {},
-              "headers": {
-                "X-Account-Token": "X-Account-Token"
-              },
-              "requestBodyV3": {
-                "type": "json"
-              },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "linked_account_conditions": [
-                      {
-                        "condition_schema_id": "123e4567-e89b-12d3-a456-426655440000",
-                        "common_model": "hris.Employee",
-                        "native_name": "Started At",
-                        "operator": "GREATER_THAN_OR_EQUAL",
-                        "value": null,
-                        "field_name": "start_date"
-                      }
-                    ]
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "linked_account_conditions": [
+                    {
+                      "condition_schema_id": "123e4567-e89b-12d3-a456-426655440000",
+                      "common_model": "hris.Employee",
+                      "native_name": "Started At",
+                      "operator": "GREATER_THAN_OR_EQUAL",
+                      "value": null,
+                      "field_name": "start_date"
+                    }
+                  ]
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -17967,7 +17851,7 @@
             }
           ],
           "id": "metaList",
-          "originalEndpointId": "selective-sync.metaList",
+          "originalEndpointId": "endpoint_selectiveSync.metaList",
           "name": "Meta List",
           "path": {
             "pathParameters": [],
@@ -18048,7 +17932,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "PaginatedConditionSchemaListExample",
+              "name": "Employees that started on or after January 1st, 2022",
               "description": "",
               "path": "/selective-sync/meta",
               "pathParameters": {},
@@ -18060,31 +17944,28 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                  "results": [
-                    {
-                      "id": "123e4567-e89b-12d3-a456-426655440000",
-                      "common_model": "hris.Employee",
-                      "native_name": "Started At",
-                      "field_name": "start_date",
-                      "is_unique": true,
-                      "condition_type": "DATE_TIME",
-                      "operators": [
-                        {
-                          "operator": "GREATER_THAN_OR_EQUAL",
-                          "is_unique": true
-                        },
-                        {
-                          "operator": "LESS_THAN_OR_EQUAL",
-                          "is_unique": true
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                "results": [
+                  {
+                    "id": "123e4567-e89b-12d3-a456-426655440000",
+                    "common_model": "hris.Employee",
+                    "native_name": "Started At",
+                    "field_name": "start_date",
+                    "is_unique": true,
+                    "condition_type": "DATE_TIME",
+                    "operators": [
+                      {
+                        "operator": "GREATER_THAN_OR_EQUAL",
+                        "is_unique": true
+                      },
+                      {
+                        "operator": "LESS_THAN_OR_EQUAL",
+                        "is_unique": true
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18145,7 +18026,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "sync-status.list",
+          "originalEndpointId": "endpoint_syncStatus.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -18226,22 +18107,19 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                  "results": [
-                    {
-                      "model_name": "Employee",
-                      "model_id": "hris.Employee",
-                      "last_sync_start": "2021-03-30T19:44:18.695973Z",
-                      "next_sync_start": "2021-03-30T20:44:18.662942Z",
-                      "status": "SYNCING",
-                      "is_initial_sync": true,
-                      "selective_sync_configurations_usage": "IN_NEXT_SYNC"
-                    }
-                  ]
-                }
+                "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                "results": [
+                  {
+                    "model_name": "Employee",
+                    "model_id": "hris.Employee",
+                    "last_sync_start": "2021-03-30T19:44:18.695973Z",
+                    "next_sync_start": "2021-03-30T20:44:18.662942Z",
+                    "status": "SYNCING",
+                    "is_initial_sync": true,
+                    "selective_sync_configurations_usage": "IN_NEXT_SYNC"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18293,7 +18171,7 @@
             }
           ],
           "id": "sync_status_resync_create",
-          "originalEndpointId": "force-resync.sync_status_resync_create",
+          "originalEndpointId": "endpoint_forceResync.sync_status_resync_create",
           "name": "Sync Status Resync Create",
           "path": {
             "pathParameters": [],
@@ -18347,20 +18225,17 @@
                 "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "model_name": "Employee",
-                    "model_id": "hris.Employee",
-                    "last_sync_start": "2021-03-30T19:44:18.695973Z",
-                    "next_sync_start": "2021-03-30T20:44:18.662942Z",
-                    "status": "SYNCING",
-                    "is_initial_sync": true,
-                    "selective_sync_configurations_usage": "IN_NEXT_SYNC"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "model_name": "Employee",
+                  "model_id": "hris.Employee",
+                  "last_sync_start": "2021-03-30T19:44:18.695973Z",
+                  "next_sync_start": "2021-03-30T20:44:18.662942Z",
+                  "status": "SYNCING",
+                  "is_initial_sync": true,
+                  "selective_sync_configurations_usage": "IN_NEXT_SYNC"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -18407,7 +18282,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "teams.list",
+          "originalEndpointId": "endpoint_teams.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -18609,28 +18484,25 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                  "results": [
-                    {
-                      "id": "13a72919-9fae-4f54-81ca-ddfd8712a1ba",
-                      "remote_id": "19202938",
-                      "name": "Engineering",
-                      "parent_team": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                "results": [
+                  {
+                    "id": "13a72919-9fae-4f54-81ca-ddfd8712a1ba",
+                    "remote_id": "19202938",
+                    "name": "Engineering",
+                    "parent_team": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
+                    "remote_was_deleted": true,
+                    "modified_at": "2021-10-16T00:00:00Z",
+                    "field_mappings": {},
+                    "remote_data": [
+                      {
+                        "path": "foo",
+                        "data": {}
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18678,7 +18550,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "teams.retrieve",
+          "originalEndpointId": "endpoint_teams.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -18778,22 +18650,19 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "13a72919-9fae-4f54-81ca-ddfd8712a1ba",
-                  "remote_id": "19202938",
-                  "name": "Engineering",
-                  "parent_team": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
-                  "remote_was_deleted": true,
-                  "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
-                  "remote_data": [
-                    {
-                      "path": "foo",
-                      "data": {}
-                    }
-                  ]
-                }
+                "id": "13a72919-9fae-4f54-81ca-ddfd8712a1ba",
+                "remote_id": "19202938",
+                "name": "Engineering",
+                "parent_team": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
+                "remote_was_deleted": true,
+                "modified_at": "2021-10-16T00:00:00Z",
+                "field_mappings": {},
+                "remote_data": [
+                  {
+                    "path": "foo",
+                    "data": {}
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18845,7 +18714,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "time-off.list",
+          "originalEndpointId": "endpoint_timeOff.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -19107,35 +18976,32 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                  "results": [
-                    {
-                      "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
-                      "remote_id": "19202938",
-                      "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                      "approver": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                      "status": "REQUESTED",
-                      "employee_note": "Moving into the new apartment Kendall Roy gave me!",
-                      "units": "HOURS",
-                      "amount": 3,
-                      "request_type": "VACATION",
-                      "start_time": "2020-11-10T00:00:00Z",
-                      "end_time": "2020-11-17T00:00:00Z",
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                "results": [
+                  {
+                    "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
+                    "remote_id": "19202938",
+                    "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                    "approver": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                    "status": "REQUESTED",
+                    "employee_note": "Moving into the new apartment Kendall Roy gave me!",
+                    "units": "HOURS",
+                    "amount": 3,
+                    "request_type": "VACATION",
+                    "start_time": "2020-11-10T00:00:00Z",
+                    "end_time": "2020-11-17T00:00:00Z",
+                    "remote_was_deleted": true,
+                    "modified_at": "2021-10-16T00:00:00Z",
+                    "field_mappings": {},
+                    "remote_data": [
+                      {
+                        "path": "foo",
+                        "data": {}
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -19190,7 +19056,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "time-off.create",
+          "originalEndpointId": "endpoint_timeOff.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -19291,62 +19157,59 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "model": {
-                    "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
-                    "remote_id": "19202938",
-                    "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                    "approver": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                    "status": "REQUESTED",
-                    "employee_note": "Moving into the new apartment Kendall Roy gave me!",
-                    "units": "HOURS",
-                    "amount": 3,
-                    "request_type": "VACATION",
-                    "start_time": "2020-11-10T00:00:00Z",
-                    "end_time": "2020-11-17T00:00:00Z",
-                    "remote_was_deleted": true,
-                    "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
-                    "remote_data": [
-                      {
-                        "path": "foo",
-                        "data": {}
-                      }
-                    ]
-                  },
-                  "warnings": [
+                "model": {
+                  "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
+                  "remote_id": "19202938",
+                  "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                  "approver": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                  "status": "REQUESTED",
+                  "employee_note": "Moving into the new apartment Kendall Roy gave me!",
+                  "units": "HOURS",
+                  "amount": 3,
+                  "request_type": "VACATION",
+                  "start_time": "2020-11-10T00:00:00Z",
+                  "end_time": "2020-11-17T00:00:00Z",
+                  "remote_was_deleted": true,
+                  "modified_at": "2021-10-16T00:00:00Z",
+                  "field_mappings": {},
+                  "remote_data": [
                     {
-                      "source": {
-                        "pointer": "foo"
-                      },
-                      "title": "Unrecognized Field",
-                      "detail": "An unrecognized field, age, was passed in with request data.",
-                      "problem_type": "UNRECOGNIZED_FIELD"
-                    }
-                  ],
-                  "errors": [
-                    {
-                      "source": {
-                        "pointer": "foo"
-                      },
-                      "title": "Missing Required Field",
-                      "detail": "custom_fields is a required field on model.",
-                      "problem_type": "MISSING_REQUIRED_FIELD"
-                    }
-                  ],
-                  "logs": [
-                    {
-                      "log_id": "99433219-8017-4acd-bb3c-ceb23d663832",
-                      "dashboard_view": "https://app.merge.dev/logs/99433219-8017-4acd-bb3c-ceb23d663832",
-                      "log_summary": {
-                        "url": "https://harvest.greenhouse.io/v1/candidates/",
-                        "method": "POST",
-                        "status_code": 200
-                      }
+                      "path": "foo",
+                      "data": {}
                     }
                   ]
-                }
+                },
+                "warnings": [
+                  {
+                    "source": {
+                      "pointer": "foo"
+                    },
+                    "title": "Unrecognized Field",
+                    "detail": "An unrecognized field, age, was passed in with request data.",
+                    "problem_type": "UNRECOGNIZED_FIELD"
+                  }
+                ],
+                "errors": [
+                  {
+                    "source": {
+                      "pointer": "foo"
+                    },
+                    "title": "Missing Required Field",
+                    "detail": "custom_fields is a required field on model.",
+                    "problem_type": "MISSING_REQUIRED_FIELD"
+                  }
+                ],
+                "logs": [
+                  {
+                    "log_id": "99433219-8017-4acd-bb3c-ceb23d663832",
+                    "dashboard_view": "https://app.merge.dev/logs/99433219-8017-4acd-bb3c-ceb23d663832",
+                    "log_summary": {
+                      "url": "https://harvest.greenhouse.io/v1/candidates/",
+                      "method": "POST",
+                      "status_code": 200
+                    }
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -19428,7 +19291,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "time-off.retrieve",
+          "originalEndpointId": "endpoint_timeOff.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -19552,29 +19415,26 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
-                  "remote_id": "19202938",
-                  "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                  "approver": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                  "status": "REQUESTED",
-                  "employee_note": "Moving into the new apartment Kendall Roy gave me!",
-                  "units": "HOURS",
-                  "amount": 3,
-                  "request_type": "VACATION",
-                  "start_time": "2020-11-10T00:00:00Z",
-                  "end_time": "2020-11-17T00:00:00Z",
-                  "remote_was_deleted": true,
-                  "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
-                  "remote_data": [
-                    {
-                      "path": "foo",
-                      "data": {}
-                    }
-                  ]
-                }
+                "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
+                "remote_id": "19202938",
+                "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                "approver": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                "status": "REQUESTED",
+                "employee_note": "Moving into the new apartment Kendall Roy gave me!",
+                "units": "HOURS",
+                "amount": 3,
+                "request_type": "VACATION",
+                "start_time": "2020-11-10T00:00:00Z",
+                "end_time": "2020-11-17T00:00:00Z",
+                "remote_was_deleted": true,
+                "modified_at": "2021-10-16T00:00:00Z",
+                "field_mappings": {},
+                "remote_data": [
+                  {
+                    "path": "foo",
+                    "data": {}
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -19623,7 +19483,7 @@
             }
           ],
           "id": "metaPostRetrieve",
-          "originalEndpointId": "time-off.metaPostRetrieve",
+          "originalEndpointId": "endpoint_timeOff.metaPostRetrieve",
           "name": "Meta Post Retrieve",
           "path": {
             "pathParameters": [],
@@ -19675,17 +19535,14 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "request_schema": {},
-                  "remote_field_classes": {},
-                  "status": {
-                    "linked_account_status": "foo",
-                    "can_make_request": true
-                  },
-                  "has_conditional_params": true,
-                  "has_required_linked_account_params": true
-                }
+                "request_schema": {},
+                "remote_field_classes": {},
+                "status": {
+                  "linked_account_status": "foo",
+                  "can_make_request": true
+                },
+                "has_conditional_params": true,
+                "has_required_linked_account_params": true
               },
               "responseBodyV3": {
                 "type": "json",
@@ -19732,7 +19589,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "time-off-balances.list",
+          "originalEndpointId": "endpoint_timeOffBalances.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -19969,30 +19826,27 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                  "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                  "results": [
-                    {
-                      "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
-                      "remote_id": "19202938",
-                      "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                      "balance": "60.0",
-                      "used": "45.0",
-                      "policy_type": "VACATION",
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
-                    }
-                  ]
-                }
+                "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                "results": [
+                  {
+                    "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
+                    "remote_id": "19202938",
+                    "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                    "balance": "60.0",
+                    "used": "45.0",
+                    "policy_type": "VACATION",
+                    "remote_was_deleted": true,
+                    "modified_at": "2021-10-16T00:00:00Z",
+                    "field_mappings": {},
+                    "remote_data": [
+                      {
+                        "path": "foo",
+                        "data": {}
+                      }
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -20042,7 +19896,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "time-off-balances.retrieve",
+          "originalEndpointId": "endpoint_timeOffBalances.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -20166,24 +20020,21 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
-                  "remote_id": "19202938",
-                  "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                  "balance": "60.0",
-                  "used": "45.0",
-                  "policy_type": "VACATION",
-                  "remote_was_deleted": true,
-                  "modified_at": "2021-10-16T00:00:00Z",
-                  "field_mappings": {},
-                  "remote_data": [
-                    {
-                      "path": "foo",
-                      "data": {}
-                    }
-                  ]
-                }
+                "id": "91b2b905-e866-40c8-8be2-efe53827a0aa",
+                "remote_id": "19202938",
+                "employee": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                "balance": "60.0",
+                "used": "45.0",
+                "policy_type": "VACATION",
+                "remote_was_deleted": true,
+                "modified_at": "2021-10-16T00:00:00Z",
+                "field_mappings": {},
+                "remote_data": [
+                  {
+                    "path": "foo",
+                    "data": {}
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -20237,7 +20088,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "webhook-receivers.list",
+          "originalEndpointId": "endpoint_webhookReceivers.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -20291,16 +20142,13 @@
                 "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
-              "responseBody": {
-                "type": "json",
-                "value": [
-                  {
-                    "event": "foo",
-                    "is_active": true,
-                    "key": "foo"
-                  }
-                ]
-              },
+              "responseBody": [
+                {
+                  "event": "foo",
+                  "is_active": true,
+                  "key": "foo"
+                }
+              ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
@@ -20333,7 +20181,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "webhook-receivers.create",
+          "originalEndpointId": "endpoint_webhookReceivers.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -20409,12 +20257,9 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "event": "foo",
-                  "is_active": true,
-                  "key": "foo"
-                }
+                "event": "foo",
+                "is_active": true,
+                "key": "foo"
               },
               "responseBodyV3": {
                 "type": "json",

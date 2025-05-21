@@ -28,8 +28,7 @@ export async function replaceReferencedCode({
         return markdown;
     }
 
-    // TODO: add support for other props, such as title, language, line height, etc
-    const regex = /([ \t]*)<Code\s+src={?['"]([^'"]+)['"](?! \+)}?\s*\/>/g;
+    const regex = /([ \t]*)<Code\s+src={?['"]([^'"]+)['"](?! \+)}?((?:\s+[^>]*)?)\/>/g;
 
     let newMarkdown = markdown;
 
@@ -60,6 +59,20 @@ export async function replaceReferencedCode({
             if (title != null) {
                 metastring += ` title="${title}"`;
             }
+            // Extract additional props from the Code component
+            const additionalProps = match[3]?.trim() || "";
+            if (additionalProps) {
+                // Parse and add any additional props to the metastring
+                const propsRegex = /(\w+)=(?:{([^}]+)}|"([^"]+)")/g;
+                let propMatch;
+                while ((propMatch = propsRegex.exec(additionalProps)) !== null) {
+                    const propName = propMatch[1];
+                    const propValue = propMatch[2] || propMatch[3];
+                    if (propName && propValue && propName !== "src") {
+                        metastring += ` ${propName}=${propValue.includes("{") ? propValue : `{${propValue}}`}`;
+                    }
+                }
+            }
 
             // TODO: if the code content includes ```, add more backticks to avoid conflicts
             replacement = `\`\`\`${metastring}\n${replacement}\n\`\`\``;
@@ -70,10 +83,7 @@ export async function replaceReferencedCode({
             replacement = replacement + "\n"; // add newline after the code block
             newMarkdown = newMarkdown.replace(matchString, replacement);
         } catch (e) {
-            context.failAndThrow(
-                `Failed to read markdown file "${src}" referenced in ${absolutePathToMarkdownFile}`,
-                e
-            );
+            context.logger.warn(`Failed to read markdown file "${src}" referenced in ${absolutePathToMarkdownFile}`);
             break;
         }
     }

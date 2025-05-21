@@ -197,14 +197,16 @@
             "type": {
               "type": "id",
               "value": "Block"
-            }
+            },
+            "displayName": "Block"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -219,14 +221,16 @@
             "type": {
               "type": "id",
               "value": "Integer"
-            }
+            },
+            "displayName": "integer"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -241,14 +245,16 @@
             "type": {
               "type": "id",
               "value": "Address"
-            }
+            },
+            "displayName": "address"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -535,14 +541,16 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -568,14 +576,16 @@
             "type": {
               "type": "id",
               "value": "Nonce"
-            }
+            },
+            "displayName": "nonce"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -601,14 +611,16 @@
             "type": {
               "type": "id",
               "value": "Address"
-            }
+            },
+            "displayName": "address"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -623,14 +635,16 @@
             "type": {
               "type": "id",
               "value": "Transaction"
-            }
+            },
+            "displayName": "transaction"
           },
           {
             "typeName": "TransactionHash",
             "type": {
               "type": "id",
               "value": "TransactionHash"
-            }
+            },
+            "displayName": "transactionHash"
           }
         ]
       }
@@ -1067,14 +1081,16 @@
             "type": {
               "type": "id",
               "value": "Keccak"
-            }
+            },
+            "displayName": "keccak"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -1186,7 +1202,7 @@
         }
       }
     },
-    "w_e_b_3___c_l_i_e_n_t_V_e_r_s_i_o_n_Result": {
+    "web3_clientVersion_Result": {
       "name": "Web3ClientVersionResult",
       "shape": {
         "type": "alias",
@@ -1211,7 +1227,7 @@
         }
       }
     },
-    "n_e_t___l_i_s_t_e_n_i_n_g_Result": {
+    "net_listening_Result": {
       "name": "NetListeningResult",
       "shape": {
         "type": "alias",
@@ -1223,7 +1239,7 @@
         }
       }
     },
-    "n_e_t___p_e_e_r_C_o_u_n_t_Result": {
+    "net_peerCount_Result": {
       "description": "Hex representation of number of connected peers",
       "name": "NetPeerCountResult",
       "shape": {
@@ -1236,7 +1252,7 @@
         }
       }
     },
-    "n_e_t___v_e_r_s_i_o_n_Result": {
+    "net_version_Result": {
       "name": "NetVersionResult",
       "shape": {
         "type": "alias",
@@ -1259,19 +1275,21 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "BlockNumberTag",
             "type": {
               "type": "id",
               "value": "BlockNumberTag"
-            }
+            },
+            "displayName": "blockNumberTag"
           }
         ]
       }
     },
-    "e_t_h___b_l_o_c_k_N_u_m_b_e_r_Result": {
+    "eth_blockNumber_Result": {
       "name": "EthBlockNumberResult",
       "shape": {
         "type": "undiscriminatedUnion",
@@ -1281,14 +1299,16 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "BlockNumberTag",
             "type": {
               "type": "id",
               "value": "BlockNumberTag"
-            }
+            },
+            "displayName": "blockNumberTag"
           }
         ]
       }
@@ -1303,19 +1323,21 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "BlockNumberTag",
             "type": {
               "type": "id",
               "value": "BlockNumberTag"
-            }
+            },
+            "displayName": "blockNumberTag"
           }
         ]
       }
     },
-    "e_t_h___c_h_a_i_n_I_d_Result": {
+    "eth_chainId_Result": {
       "name": "EthChainIdResult",
       "shape": {
         "type": "alias",
@@ -1350,14 +1372,16 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "BlockNumberTag",
             "type": {
               "type": "id",
               "value": "BlockNumberTag"
-            }
+            },
+            "displayName": "blockNumberTag"
           }
         ]
       }
@@ -1384,19 +1408,21 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "BlockNumberTag",
             "type": {
               "type": "id",
               "value": "BlockNumberTag"
-            }
+            },
+            "displayName": "blockNumberTag"
           }
         ]
       }
     },
-    "e_t_h___g_e_t_F_i_l_t_e_r_C_h_a_n_g_e_s_Result": {
+    "eth_getFilterChanges_Result": {
       "name": "EthGetFilterChangesResult",
       "shape": {
         "type": "alias",
@@ -1409,7 +1435,7 @@
         }
       }
     },
-    "e_t_h___g_e_t_F_i_l_t_e_r_L_o_g_s_Result": {
+    "eth_getFilterLogs_Result": {
       "name": "EthGetFilterLogsResult",
       "shape": {
         "type": "alias",
@@ -1432,20 +1458,22 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "BlockNumberTag",
             "type": {
               "type": "id",
               "value": "BlockNumberTag"
-            }
+            },
+            "displayName": "blockNumberTag"
           }
         ]
       }
     },
-    "MethodsParams0Address": {
-      "name": "MethodsParams0Address",
+    "EthGetLogsParamFilterAddress": {
+      "name": "EthGetLogsParamFilterAddress",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1454,14 +1482,16 @@
             "type": {
               "type": "id",
               "value": "Address"
-            }
+            },
+            "displayName": "address"
           },
           {
             "typeName": "Addresses",
             "type": {
               "type": "id",
               "value": "Addresses"
-            }
+            },
+            "displayName": "addresses"
           }
         ]
       }
@@ -1499,7 +1529,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams0Address"
+                "value": "EthGetLogsParamFilterAddress"
               }
             }
           },
@@ -1516,7 +1546,7 @@
         ]
       }
     },
-    "e_t_h___g_e_t_L_o_g_s_Result": {
+    "eth_getLogs_Result": {
       "name": "EthGetLogsResult",
       "shape": {
         "type": "alias",
@@ -1539,14 +1569,16 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "BlockNumberTag",
             "type": {
               "type": "id",
               "value": "BlockNumberTag"
-            }
+            },
+            "displayName": "blockNumberTag"
           }
         ]
       }
@@ -1561,19 +1593,21 @@
             "type": {
               "type": "id",
               "value": "Transaction"
-            }
+            },
+            "displayName": "transaction"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_H_a_s_h_A_n_d_I_n_d_e_x_Result": {
+    "eth_getTransactionByBlockHashAndIndex_Result": {
       "name": "EthGetTransactionByBlockHashAndIndexResult",
       "shape": {
         "type": "undiscriminatedUnion",
@@ -1583,14 +1617,16 @@
             "type": {
               "type": "id",
               "value": "Transaction"
-            }
+            },
+            "displayName": "transaction"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -1605,14 +1641,16 @@
             "type": {
               "type": "id",
               "value": "Transaction"
-            }
+            },
+            "displayName": "transaction"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -1627,19 +1665,21 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "BlockNumberTag",
             "type": {
               "type": "id",
               "value": "BlockNumberTag"
-            }
+            },
+            "displayName": "blockNumberTag"
           }
         ]
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Result": {
+    "eth_getTransactionByBlockNumberAndIndex_Result": {
       "name": "EthGetTransactionByBlockNumberAndIndexResult",
       "shape": {
         "type": "undiscriminatedUnion",
@@ -1649,14 +1689,16 @@
             "type": {
               "type": "id",
               "value": "Transaction"
-            }
+            },
+            "displayName": "transaction"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -1671,19 +1713,21 @@
             "type": {
               "type": "id",
               "value": "Transaction"
-            }
+            },
+            "displayName": "transaction"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_H_a_s_h_Result": {
+    "eth_getTransactionByHash_Result": {
       "name": "EthGetTransactionByHashResult",
       "shape": {
         "type": "undiscriminatedUnion",
@@ -1693,14 +1737,16 @@
             "type": {
               "type": "id",
               "value": "Transaction"
-            }
+            },
+            "displayName": "transaction"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -1715,14 +1761,16 @@
             "type": {
               "type": "id",
               "value": "Nonce"
-            }
+            },
+            "displayName": "nonce"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -1737,19 +1785,21 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "BlockNumberTag",
             "type": {
               "type": "id",
               "value": "BlockNumberTag"
-            }
+            },
+            "displayName": "blockNumberTag"
           }
         ]
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_Result": {
+    "eth_getTransactionCount_Result": {
       "name": "EthGetTransactionCountResult",
       "shape": {
         "type": "undiscriminatedUnion",
@@ -1759,14 +1809,16 @@
             "type": {
               "type": "id",
               "value": "Nonce"
-            }
+            },
+            "displayName": "nonce"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -1781,19 +1833,21 @@
             "type": {
               "type": "id",
               "value": "Receipt"
-            }
+            },
+            "displayName": "receipt"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_R_e_c_e_i_p_t_Result": {
+    "eth_getTransactionReceipt_Result": {
       "name": "EthGetTransactionReceiptResult",
       "shape": {
         "type": "undiscriminatedUnion",
@@ -1803,14 +1857,16 @@
             "type": {
               "type": "id",
               "value": "Receipt"
-            }
+            },
+            "displayName": "receipt"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -1825,21 +1881,23 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "BlockNumberTag",
             "type": {
               "type": "id",
               "value": "BlockNumberTag"
-            }
+            },
+            "displayName": "blockNumberTag"
           }
         ]
       }
     },
     "EthGetProofResult0": {
       "description": "The merkle proofs of the specified account connecting them to the blockhash of the block specified",
-      "name": "proofAccount",
+      "name": "EthGetProofResult0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1920,7 +1978,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "proofAccount"
     },
     "EthGetProofResult": {
       "name": "EthGetProofResult",
@@ -1933,14 +1992,16 @@
             "type": {
               "type": "id",
               "value": "EthGetProofResult0"
-            }
+            },
+            "displayName": "proofAccount"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -1955,19 +2016,21 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "BlockNumberTag",
             "type": {
               "type": "id",
               "value": "BlockNumberTag"
-            }
+            },
+            "displayName": "blockNumberTag"
           }
         ]
       }
     },
-    "e_t_h___g_e_t_P_r_o_o_f_Result": {
+    "eth_getProof_Result": {
       "name": "EthGetProofResult",
       "shape": {
         "type": "undiscriminatedUnion",
@@ -1978,14 +2041,16 @@
             "type": {
               "type": "id",
               "value": "EthGetProofResult0"
-            }
+            },
+            "displayName": "proofAccount"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -2000,26 +2065,29 @@
             "type": {
               "type": "id",
               "value": "PowHash"
-            }
+            },
+            "displayName": "powHash"
           },
           {
             "typeName": "SeedHash",
             "type": {
               "type": "id",
               "value": "SeedHash"
-            }
+            },
+            "displayName": "seedHash"
           },
           {
             "typeName": "Difficulty",
             "type": {
               "type": "id",
               "value": "Difficulty"
-            }
+            },
+            "displayName": "difficulty"
           }
         ]
       }
     },
-    "e_t_h___g_e_t_W_o_r_k_Result": {
+    "eth_getWork_Result": {
       "name": "EthGetWorkResult",
       "shape": {
         "type": "alias",
@@ -2032,7 +2100,7 @@
         }
       }
     },
-    "e_t_h___m_i_n_i_n_g_Result": {
+    "eth_mining_Result": {
       "name": "EthMiningResult",
       "shape": {
         "type": "alias",
@@ -2042,6 +2110,30 @@
             "type": "boolean"
           }
         }
+      }
+    },
+    "EthNewFilterParamFilterAddress": {
+      "name": "EthNewFilterParamFilterAddress",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "Address",
+            "type": {
+              "type": "id",
+              "value": "Address"
+            },
+            "displayName": "address"
+          },
+          {
+            "typeName": "Addresses",
+            "type": {
+              "type": "id",
+              "value": "Addresses"
+            },
+            "displayName": "addresses"
+          }
+        ]
       }
     },
     "eth_newFilter_Param_filter": {
@@ -2077,7 +2169,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParams0Address"
+                "value": "EthNewFilterParamFilterAddress"
               }
             }
           },
@@ -2094,7 +2186,7 @@
         ]
       }
     },
-    "e_t_h___s_u_b_m_i_t_H_a_s_h_r_a_t_e_Result": {
+    "eth_submitHashrate_Result": {
       "name": "EthSubmitHashrateResult",
       "shape": {
         "type": "alias",
@@ -2106,7 +2198,7 @@
         }
       }
     },
-    "e_t_h___s_u_b_m_i_t_W_o_r_k_Result": {
+    "eth_submitWork_Result": {
       "name": "EthSubmitWorkResult",
       "shape": {
         "type": "alias",
@@ -2120,7 +2212,7 @@
     },
     "EthSyncingResult0": {
       "description": "An object with sync status data",
-      "name": "syncingData",
+      "name": "EthSyncingResult0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2181,7 +2273,8 @@
             }
           }
         ]
-      }
+      },
+      "displayName": "syncingData"
     },
     "EthSyncingResult": {
       "name": "EthSyncingResult",
@@ -2194,7 +2287,8 @@
             "type": {
               "type": "id",
               "value": "EthSyncingResult0"
-            }
+            },
+            "displayName": "syncingData"
           },
           {
             "type": {
@@ -2207,7 +2301,7 @@
         ]
       }
     },
-    "e_t_h___s_y_n_c_i_n_g_Result": {
+    "eth_syncing_Result": {
       "name": "EthSyncingResult",
       "shape": {
         "type": "undiscriminatedUnion",
@@ -2218,7 +2312,8 @@
             "type": {
               "type": "id",
               "value": "EthSyncingResult0"
-            }
+            },
+            "displayName": "syncingData"
           },
           {
             "type": {
@@ -2231,7 +2326,7 @@
         ]
       }
     },
-    "e_t_h___u_n_i_n_s_t_a_l_l_F_i_l_t_e_r_Result": {
+    "eth_uninstallFilter_Result": {
       "name": "EthUninstallFilterResult",
       "shape": {
         "type": "alias",
@@ -2292,12 +2387,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": "foo"
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -2389,12 +2481,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": "0x47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad"
-              }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": "0x47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad"
             },
             "responseBodyV3": {
               "type": "json",
@@ -2458,12 +2547,9 @@
             "requestBody": [],
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "jsonrpc": "2.0",
-                "id": "1",
-                "result": true
-              }
+              "jsonrpc": "2.0",
+              "id": "1",
+              "result": true
             },
             "responseBodyV3": {
               "type": "json",
@@ -2526,12 +2612,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": "foo"
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -2594,12 +2677,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": "foo"
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -2657,12 +2737,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": "foo"
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -2802,12 +2879,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": "foo"
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -3509,14 +3583,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -3602,14 +3673,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -3921,14 +3989,11 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  {}
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                {}
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -4189,15 +4254,12 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {
-                  "gas": "foo",
-                  "gasPrice": "foo",
-                  "nonce": null
-                }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {
+                "gas": "foo",
+                "gasPrice": "foo",
+                "nonce": null
               }
             },
             "responseBodyV3": {
@@ -4283,15 +4345,12 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {
-                  "gas": "foo",
-                  "gasPrice": "foo",
-                  "nonce": null
-                }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {
+                "gas": "foo",
+                "gasPrice": "foo",
+                "nonce": null
               }
             },
             "responseBodyV3": {
@@ -4383,12 +4442,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": null
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": null
             },
             "responseBodyV3": {
               "type": "json",
@@ -4469,25 +4525,22 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {
-                  "blockHash": "foo",
-                  "blockNumber": "foo",
-                  "contractAddress": "foo",
-                  "cumulativeGasUsed": "foo",
-                  "from": null,
-                  "gasUsed": "foo",
-                  "logs": [
-                    {}
-                  ],
-                  "logsBloom": "foo",
-                  "to": "foo",
-                  "transactionHash": "foo",
-                  "transactionIndex": null
-                }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {
+                "blockHash": "foo",
+                "blockNumber": "foo",
+                "contractAddress": "foo",
+                "cumulativeGasUsed": "foo",
+                "from": null,
+                "gasUsed": "foo",
+                "logs": [
+                  {}
+                ],
+                "logsBloom": "foo",
+                "to": "foo",
+                "transactionHash": "foo",
+                "transactionIndex": null
               }
             },
             "responseBodyV3": {
@@ -4895,12 +4948,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -4961,14 +5011,11 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": [
-                  null
-                ]
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": [
+                null
+              ]
             },
             "responseBodyV3": {
               "type": "json",
@@ -5079,12 +5126,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": true
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": true
             },
             "responseBodyV3": {
               "type": "json",
@@ -5505,12 +5549,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": true
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": true
             },
             "responseBodyV3": {
               "type": "json",
@@ -5665,12 +5706,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {}
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": {}
             },
             "responseBodyV3": {
               "type": "json",
@@ -5753,12 +5791,9 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": true
-              }
+              "id": 1,
+              "jsonrpc": "2.0",
+              "result": true
             },
             "responseBodyV3": {
               "type": "json",

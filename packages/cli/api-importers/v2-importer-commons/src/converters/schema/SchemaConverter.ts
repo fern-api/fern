@@ -420,7 +420,8 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         return {
             typeId: this.id,
             fernFilepath: this.context.createFernFilepath(),
-            name: this.context.casingsGenerator.generateName(this.nameOverride ?? this.id)
+            name: this.context.casingsGenerator.generateName(this.id),
+            displayName: this.nameOverride
         };
     }
 

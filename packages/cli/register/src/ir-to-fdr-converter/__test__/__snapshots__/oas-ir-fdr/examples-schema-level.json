@@ -132,7 +132,7 @@
         "auth": false,
         "method": "GET",
         "id": "listTrees",
-        "originalEndpointId": "listTrees",
+        "originalEndpointId": "endpoint_.listTrees",
         "name": "List all trees",
         "path": {
           "pathParameters": [],
@@ -173,22 +173,19 @@
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": [
-                {
-                  "species": "Ferntacular",
-                  "height": 25.4,
-                  "age": 50,
-                  "location": {
-                    "latitude": 42,
-                    "longitude": 42
-                  },
-                  "id": "foo",
-                  "plantedDate": "foo"
-                }
-              ]
-            },
+            "responseBody": [
+              {
+                "species": "Ferntacular",
+                "height": 25.4,
+                "age": 50,
+                "location": {
+                  "latitude": 42,
+                  "longitude": 42
+                },
+                "id": "foo",
+                "plantedDate": "foo"
+              }
+            ],
             "responseBodyV3": {
               "type": "json",
               "value": [
@@ -215,7 +212,7 @@
         "auth": false,
         "method": "POST",
         "id": "createTree",
-        "originalEndpointId": "createTree",
+        "originalEndpointId": "endpoint_.createTree",
         "name": "Create a new tree",
         "path": {
           "pathParameters": [],
@@ -288,12 +285,9 @@
             },
             "responseStatusCode": 201,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "species": "Ferntacular",
-                "height": 25.4,
-                "id": "foo"
-              }
+              "species": "Ferntacular",
+              "height": 25.4,
+              "id": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -313,7 +307,7 @@
         "auth": false,
         "method": "GET",
         "id": "getTree",
-        "originalEndpointId": "getTree",
+        "originalEndpointId": "endpoint_.getTree",
         "name": "Get a tree by ID",
         "path": {
           "pathParameters": [
@@ -373,12 +367,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "species": "Ferntacular",
-                "height": 25.4,
-                "id": "foo"
-              }
+              "species": "Ferntacular",
+              "height": 25.4,
+              "id": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -398,7 +389,7 @@
         "auth": false,
         "method": "POST",
         "id": "createFern",
-        "originalEndpointId": "createFern",
+        "originalEndpointId": "endpoint_.createFern",
         "name": "Create a new fern",
         "path": {
           "pathParameters": [],
@@ -485,10 +476,7 @@
               }
             },
             "responseStatusCode": 201,
-            "responseBody": {
-              "type": "json",
-              "value": "foo"
-            },
+            "responseBody": "foo",
             "responseBodyV3": {
               "type": "json",
               "value": "foo"
@@ -503,7 +491,7 @@
         "auth": false,
         "method": "GET",
         "id": "getFern",
-        "originalEndpointId": "getFern",
+        "originalEndpointId": "endpoint_.getFern",
         "name": "Get a fern by ID",
         "path": {
           "pathParameters": [
@@ -563,11 +551,8 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "color": "blue",
-                "name": "BlueFern"
-              }
+              "color": "blue",
+              "name": "BlueFern"
             },
             "responseBodyV3": {
               "type": "json",
@@ -586,7 +571,7 @@
         "auth": false,
         "method": "POST",
         "id": "createGrass",
-        "originalEndpointId": "createGrass",
+        "originalEndpointId": "endpoint_.createGrass",
         "name": "Create a new grass",
         "path": {
           "pathParameters": [],

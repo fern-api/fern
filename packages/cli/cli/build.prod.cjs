@@ -1,6 +1,6 @@
 const packageJson = require("./package.json");
 const tsup = require('tsup');
-const { writeFile } = require("fs/promises");
+const { writeFile, truncate } = require("fs/promises");
 const path = require("path");
 
 main();

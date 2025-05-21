@@ -1,5 +1,117 @@
 - changelogEntry:
     - summary: |
+        Correctly merge services when parsing multiple specs; standardize namespaced service naming.
+      type: fix
+  irVersion: 57
+  createdAt: "2025-05-20"
+  version: 0.62.2
+
+- changelogEntry:
+    - summary: |
+        No changes.
+      type: internal
+  irVersion: 57
+  createdAt: "2025-05-20"
+  version: 0.62.1
+
+- changelogEntry:
+    - summary: |
+        Add `--quiet` (-q) flag to `fern diff` command to suppress output written to stderr.
+      type: feat
+    - summary: |
+        Add `--disable-examples` flag to `fern ir` command to disable automatic example generation.
+      type: feat
+    - summary: |
+        Fix an issue where the `fern diff` command mistakenly reported breaking changes
+        for API types that defined multiple errors with the same status code.
+      type: fix
+    - summary: |
+        Fix an issue where the `fern diff` command mistakenly reported breaking changes
+        for APIs that contain literal type references.
+      type: fix
+  irVersion: 57
+  version: 0.62.0
+
+- changelogEntry:
+    - summary: |
+        Standardize package, service, and endpoint naming in the v3 parser.
+      type: fix
+  irVersion: 57
+  version: 0.61.24
+
+- changelogEntry:
+    - summary: |
+        Remove warning for unrecognized PHP SDK generator name.
+      type: fix
+  irVersion: 57
+  version: 0.61.23
+
+- changelogEntry:
+    - summary: |
+        Fix an issue where multiple auth schemes would not be converted during IR -> FDR conversion.
+      type: fix
+  irVersion: 57
+  version: 0.61.22
+
+- changelogEntry:
+    - summary: |
+        Fix AsyncAPI parser to properly handle reference objects in headers and query parameters.
+      type: fix
+  irVersion: 57
+  version: 0.61.21
+
+- changelogEntry:
+    - summary: |
+        Add logging of filepaths when markdown parsing fails to help with debugging. This includes logging the 
+        absolute filepath of the markdown file being parsed and any associated image paths that were 
+        being processed when the error occurred.
+      type: fix
+  irVersion: 57
+  version: 0.61.20
+
+- changelogEntry:
+    - summary: |
+        Correctly build paths for `x-fern-examples` when compiling v2 examples.
+        AsyncAPI endpoints now have the correct associated path parameters.
+      type: fix
+  irVersion: 57
+  version: 0.61.19
+
+- changelogEntry:
+    - summary: |
+        Fix OpenRPC converter to use proper breadcrumbs when generating request and response schemas. 
+        This ensures that schemas with the same name but different contexts (such as parameters and results) 
+        don't overwrite each other during conversion, maintaining the integrity of the API definition.
+      type: fix
+  irVersion: 57
+  version: 0.61.18
+
+- changelogEntry:
+    - summary: |
+        Add support for preserving `maxLines` and `focus` attributes when using `<Code src="..." />` components in docs. 
+        These attributes are now properly carried over to the generated code blocks, allowing you to control 
+        the display of referenced code snippets with features like line limits and syntax highlighting focus.
+      type: fix
+  irVersion: 57
+  version: 0.61.17
+
+- changelogEntry:
+    - summary: |
+        Fix docs preview server by properly killing the Next.js process on exit and setting 
+        a memory limit (--max-old-space-size=2048) to prevent out-of-memory errors during development.
+      type: fix
+  irVersion: 57
+  version: 0.61.16
+
+- changelogEntry:
+    - summary: |
+        Example pairing operates on example summary fields.
+      type: fix
+  irVersion: 57
+  version: 0.61.15
+
+- changelogEntry:
+    - summary: |
         Exclude deprecated fields from examples.
       type: fix
   irVersion: 57
@@ -8,7 +120,7 @@
 - changelogEntry:
     - summary: |
         Introduce `fern check --from-openapi` which prints out validation errors directly from OpenAPI
-        as well as the line numbers that the errors are coming from.
+        as well as the corresponding line numbers originating the errors.
       type: fix
   irVersion: 57
   version: 0.61.13
@@ -1256,7 +1368,7 @@
 - changelogEntry:
     - summary: |
         Update CLI-side markdown parsing to detect more hrefs and src's (where src files are automatically uploaded),
-        enabling the <Download src="./path/to/file.pdf">Download me</Download> pattern to work.
+        enabling the `<Download src="./path/to/file.pdf">Download me</Download>` pattern to work.
       type: fix
     - summary: |
         Update `fern docs broken-links` to handle links within the current directory.

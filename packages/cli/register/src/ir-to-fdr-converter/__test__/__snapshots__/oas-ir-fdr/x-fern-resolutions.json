@@ -52,7 +52,7 @@
         "auth": false,
         "method": "GET",
         "id": "getUser",
-        "originalEndpointId": "getUser",
+        "originalEndpointId": "endpoint_.getUser",
         "name": "Get User",
         "path": {
           "pathParameters": [],
@@ -91,10 +91,7 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo"
-              }
+              "id": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -112,7 +109,7 @@
         "auth": false,
         "method": "GET",
         "id": "getUsers",
-        "originalEndpointId": "getUsers",
+        "originalEndpointId": "endpoint_.getUsers",
         "name": "Get Users",
         "path": {
           "pathParameters": [],
@@ -153,14 +150,11 @@
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": [
-                {
-                  "id": "foo"
-                }
-              ]
-            },
+            "responseBody": [
+              {
+                "id": "foo"
+              }
+            ],
             "responseBodyV3": {
               "type": "json",
               "value": [

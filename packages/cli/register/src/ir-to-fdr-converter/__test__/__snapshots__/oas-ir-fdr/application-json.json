@@ -41,7 +41,7 @@
         "auth": false,
         "method": "GET",
         "id": "getVndFernUserJsonVersion1",
-        "originalEndpointId": "getVndFernUserJsonVersion1",
+        "originalEndpointId": "endpoint_.getVndFernUserJsonVersion1",
         "name": "Get Vnd Fern User Json Version 1",
         "path": {
           "pathParameters": [],
@@ -80,11 +80,8 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "foo": "foo",
-                "bar": "foo"
-              }
+              "foo": "foo",
+              "bar": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -103,7 +100,7 @@
         "auth": false,
         "method": "GET",
         "id": "getApplicationJson",
-        "originalEndpointId": "getApplicationJson",
+        "originalEndpointId": "endpoint_.getApplicationJson",
         "name": "Get Application Json",
         "path": {
           "pathParameters": [],
@@ -142,11 +139,8 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "foo": "foo",
-                "bar": "foo"
-              }
+              "foo": "foo",
+              "bar": "foo"
             },
             "responseBodyV3": {
               "type": "json",

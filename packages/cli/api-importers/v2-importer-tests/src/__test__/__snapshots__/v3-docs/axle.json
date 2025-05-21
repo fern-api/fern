@@ -1,6 +1,6 @@
 {
   "auth": {
-    "requirement": "ANY",
+    "requirement": "ALL",
     "schemes": [
       {
         "name": {
@@ -1030,6 +1030,7 @@
               },
               "typeId": "Address",
               "inline": false,
+              "displayName": "Address",
               "type": "named"
             },
             "v2Examples": {
@@ -1088,6 +1089,7 @@
                   },
                   "typeId": "Coverage",
                   "inline": false,
+                  "displayName": "Coverage",
                   "type": "named"
                 },
                 "type": "list"
@@ -1158,6 +1160,7 @@
                   },
                   "typeId": "Property",
                   "inline": false,
+                  "displayName": "Property",
                   "type": "named"
                 },
                 "type": "list"
@@ -1234,6 +1237,7 @@
                   },
                   "typeId": "Insured",
                   "inline": false,
+                  "displayName": "Insured",
                   "type": "named"
                 },
                 "type": "list"
@@ -1304,6 +1308,7 @@
                   },
                   "typeId": "ThirdParty",
                   "inline": false,
+                  "displayName": "Third Party",
                   "type": "named"
                 },
                 "type": "list"
@@ -2024,6 +2029,7 @@
               },
               "typeId": "Address",
               "inline": false,
+              "displayName": "Address",
               "type": "named"
             },
             "v2Examples": {
@@ -2992,6 +2998,7 @@
               },
               "typeId": "Vehicle",
               "inline": false,
+              "displayName": "Vehicle",
               "type": "named"
             },
             "v2Examples": {
@@ -4102,6 +4109,7 @@
                   },
                   "typeId": "Address",
                   "inline": false,
+                  "displayName": "Address",
                   "type": "named"
                 },
                 "type": "optional"
@@ -4557,6 +4565,7 @@
                   },
                   "typeId": "Success",
                   "inline": false,
+                  "displayName": "Success",
                   "type": "named"
                 },
                 "type": "optional"
@@ -4887,6 +4896,7 @@
               },
               "typeId": "Success",
               "inline": false,
+              "displayName": "Success",
               "type": "named"
             },
             "v2Examples": {
@@ -5233,6 +5243,7 @@
               },
               "typeId": "Success",
               "inline": false,
+              "displayName": "Success",
               "type": "named"
             },
             "v2Examples": {
@@ -5411,6 +5422,7 @@
                   },
                   "typeId": "Success",
                   "inline": false,
+                  "displayName": "Success",
                   "type": "named"
                 },
                 "type": "optional"
@@ -5473,6 +5485,7 @@
                   },
                   "typeId": "Account",
                   "inline": false,
+                  "displayName": "Account",
                   "type": "named"
                 },
                 "type": "optional"
@@ -5581,6 +5594,7 @@
                   },
                   "typeId": "Success",
                   "inline": false,
+                  "displayName": "Success",
                   "type": "named"
                 },
                 "type": "optional"
@@ -5643,6 +5657,7 @@
                   },
                   "typeId": "Policy",
                   "inline": false,
+                  "displayName": "Policy",
                   "type": "named"
                 },
                 "type": "optional"
@@ -5751,6 +5766,7 @@
                   },
                   "typeId": "Success",
                   "inline": false,
+                  "displayName": "Success",
                   "type": "named"
                 },
                 "type": "optional"
@@ -5813,6 +5829,7 @@
                   },
                   "typeId": "Carrier",
                   "inline": false,
+                  "displayName": "Carrier",
                   "type": "named"
                 },
                 "type": "optional"
@@ -5921,6 +5938,7 @@
                   },
                   "typeId": "Success",
                   "inline": false,
+                  "displayName": "Success",
                   "type": "named"
                 },
                 "type": "optional"
@@ -5985,6 +6003,7 @@
                       },
                       "typeId": "Carrier",
                       "inline": false,
+                      "displayName": "Carrier",
                       "type": "named"
                     },
                     "type": "list"
@@ -6030,7 +6049,7 @@
     }
   },
   "services": {
-    "service_Ignition": {
+    "service_ignition": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -6084,7 +6103,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Ignition.StartIgnition",
+          "id": "endpoint_ignition.StartIgnition",
           "displayName": "Start Ignition",
           "method": "POST",
           "name": {
@@ -6367,6 +6386,7 @@
                       },
                       "typeId": "User",
                       "inline": false,
+                      "displayName": "User",
                       "type": "named"
                     },
                     "type": "optional"
@@ -6463,7 +6483,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "d32107e4",
+                "id": "26600df8",
                 "url": "/ignition",
                 "endpointHeaders": [
                   {
@@ -6683,6 +6703,7 @@
                               },
                               "typeId": "User",
                               "inline": false,
+                              "displayName": "User",
                               "type": "named"
                             },
                             "type": "optional"
@@ -7214,7 +7235,7 @@
         }
       ]
     },
-    "service_Tokens": {
+    "service_tokens": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -7268,7 +7289,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Tokens.ExchangeToken",
+          "id": "endpoint_tokens.ExchangeToken",
           "displayName": "Exchange Token",
           "method": "POST",
           "name": {
@@ -7466,7 +7487,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "4128ab68",
+                "id": "516a95ca",
                 "url": "/token/exchange",
                 "endpointHeaders": [
                   {
@@ -8165,7 +8186,7 @@
         }
       ]
     },
-    "service_Accounts": {
+    "service_accounts": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -8219,7 +8240,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Accounts.GetAccount",
+          "id": "endpoint_accounts.GetAccount",
           "displayName": "Get Account",
           "method": "GET",
           "name": {
@@ -8430,7 +8451,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "5beb993",
+                "id": "b626b3c0",
                 "url": "/accounts/id",
                 "endpointHeaders": [
                   {
@@ -8693,6 +8714,7 @@
                                       },
                                       "typeId": "Success",
                                       "inline": false,
+                                      "displayName": "Success",
                                       "type": "named"
                                     },
                                     "type": "optional"
@@ -9539,6 +9561,7 @@
                                       },
                                       "typeId": "Account",
                                       "inline": false,
+                                      "displayName": "Account",
                                       "type": "named"
                                     },
                                     "type": "optional"
@@ -9746,7 +9769,7 @@
         }
       ]
     },
-    "service_Policies": {
+    "service_policies": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -9800,7 +9823,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Policies.GetPolicy",
+          "id": "endpoint_policies.GetPolicy",
           "displayName": "Get Policy",
           "method": "GET",
           "name": {
@@ -10011,7 +10034,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "43325741",
+                "id": "9398eabb",
                 "url": "/policies/id",
                 "endpointHeaders": [
                   {
@@ -10374,6 +10397,7 @@
                                       },
                                       "typeId": "Success",
                                       "inline": false,
+                                      "displayName": "Success",
                                       "type": "named"
                                     },
                                     "type": "optional"
@@ -12947,6 +12971,7 @@
                                                       },
                                                       "typeId": "Coverage",
                                                       "inline": false,
+                                                      "displayName": "Coverage",
                                                       "type": "named"
                                                     },
                                                     "type": "list"
@@ -14335,6 +14360,7 @@
                                                       },
                                                       "typeId": "Property",
                                                       "inline": false,
+                                                      "displayName": "Property",
                                                       "type": "named"
                                                     },
                                                     "type": "list"
@@ -15923,6 +15949,7 @@
                                                       },
                                                       "typeId": "Insured",
                                                       "inline": false,
+                                                      "displayName": "Insured",
                                                       "type": "named"
                                                     },
                                                     "type": "list"
@@ -16895,6 +16922,7 @@
                                                                         },
                                                                         "typeId": "Address",
                                                                         "inline": false,
+                                                                        "displayName": "Address",
                                                                         "type": "named"
                                                                       },
                                                                       "type": "optional"
@@ -17818,6 +17846,7 @@
                                                                         },
                                                                         "typeId": "Address",
                                                                         "inline": false,
+                                                                        "displayName": "Address",
                                                                         "type": "named"
                                                                       },
                                                                       "type": "optional"
@@ -17885,6 +17914,7 @@
                                                       },
                                                       "typeId": "ThirdParty",
                                                       "inline": false,
+                                                      "displayName": "Third Party",
                                                       "type": "named"
                                                     },
                                                     "type": "list"
@@ -18137,6 +18167,7 @@
                                       },
                                       "typeId": "Policy",
                                       "inline": false,
+                                      "displayName": "Policy",
                                       "type": "named"
                                     },
                                     "type": "optional"
@@ -18460,7 +18491,7 @@
         }
       ]
     },
-    "service_Carriers": {
+    "service_carriers": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -18514,7 +18545,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Carriers.GetCarrier",
+          "id": "endpoint_carriers.GetCarrier",
           "displayName": "Get Carrier",
           "method": "GET",
           "name": {
@@ -18677,7 +18708,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "380b5ed3",
+                "id": "5a576fa7",
                 "url": "/carriers/id",
                 "endpointHeaders": [
                   {
@@ -18941,6 +18972,7 @@
                                       },
                                       "typeId": "Success",
                                       "inline": false,
+                                      "displayName": "Success",
                                       "type": "named"
                                     },
                                     "type": "optional"
@@ -20066,6 +20098,7 @@
                                       },
                                       "typeId": "Carrier",
                                       "inline": false,
+                                      "displayName": "Carrier",
                                       "type": "named"
                                     },
                                     "type": "optional"
@@ -20276,7 +20309,7 @@
           }
         },
         {
-          "id": "Carriers.GetCarriers",
+          "id": "endpoint_carriers.GetCarriers",
           "displayName": "Get Carriers",
           "method": "GET",
           "name": {
@@ -20396,7 +20429,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "f88cf6ec",
+                "id": "20c3ebe0",
                 "url": "/carriers",
                 "endpointHeaders": [
                   {
@@ -20644,6 +20677,7 @@
                                       },
                                       "typeId": "Success",
                                       "inline": false,
+                                      "displayName": "Success",
                                       "type": "named"
                                     },
                                     "type": "optional"
@@ -22849,6 +22883,7 @@
                                             },
                                             "typeId": "Carrier",
                                             "inline": false,
+                                            "displayName": "Carrier",
                                             "type": "named"
                                           },
                                           "type": "list"
@@ -22884,6 +22919,7 @@
                                           },
                                           "typeId": "Carrier",
                                           "inline": false,
+                                          "displayName": "Carrier",
                                           "type": "named"
                                         },
                                         "type": "list"
@@ -23221,7 +23257,7 @@
           }
         }
       },
-      "service": "service_Ignition",
+      "service": "service_ignition",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -23290,7 +23326,7 @@
           }
         }
       },
-      "service": "service_Tokens",
+      "service": "service_tokens",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -23359,7 +23395,7 @@
           }
         }
       },
-      "service": "service_Accounts",
+      "service": "service_accounts",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -23428,7 +23464,7 @@
           }
         }
       },
-      "service": "service_Policies",
+      "service": "service_policies",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -23497,7 +23533,7 @@
           }
         }
       },
-      "service": "service_Carriers",
+      "service": "service_carriers",
       "types": [],
       "errors": [],
       "subpackages": [],
