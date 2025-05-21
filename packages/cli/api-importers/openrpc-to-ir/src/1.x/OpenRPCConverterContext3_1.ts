@@ -23,10 +23,12 @@ export class OpenRPCConverterContext3_1 extends AbstractConverterContext<Openrpc
 
     public convertReferenceToTypeReference({
         reference,
-        breadcrumbs
+        breadcrumbs,
+        displayNameOverride
     }: {
         reference: OpenAPIV3_1.ReferenceObject;
         breadcrumbs?: string[];
+        displayNameOverride?: string;
     }): { ok: true; reference: TypeReference } | { ok: false } {
         const typeId = this.getTypeIdFromSchemaReference(reference);
         if (typeId == null) {
@@ -46,7 +48,7 @@ export class OpenRPCConverterContext3_1 extends AbstractConverterContext<Openrpc
                 },
                 name: this.casingsGenerator.generateName(typeId),
                 typeId,
-                displayName: resolvedReference.value.title ?? undefined,
+                displayName: displayNameOverride ?? resolvedReference.value.title ?? undefined,
                 default: undefined,
                 inline: false
             })

@@ -83,10 +83,12 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
     public abstract convertReferenceToTypeReference({
         reference,
-        breadcrumbs
+        breadcrumbs,
+        displayNameOverride
     }: {
         reference: OpenAPIV3_1.ReferenceObject;
         breadcrumbs?: string[];
+        displayNameOverride?: string;
     }): { ok: true; reference: TypeReference } | { ok: false };
 
     /**
@@ -648,6 +650,10 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
     public isExternalReference($ref: string): boolean {
         return $ref.startsWith("http://") || $ref.startsWith("https://");
+    }
+
+    public isReferenceObjectWithTitle(value: unknown): value is OpenAPIV3_1.ReferenceObject & { title: string } {
+        return this.isReferenceObject(value) && "title" in value;
     }
 
     public isExampleWithSummary(example: unknown): example is { summary: string } {

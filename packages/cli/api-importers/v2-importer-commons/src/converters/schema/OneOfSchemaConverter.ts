@@ -55,6 +55,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         ) {
             return this.convertAsDiscriminatedUnion();
         }
+
         return this.convertAsUndiscriminatedUnion();
     }
 
@@ -178,7 +179,29 @@ export class OneOfSchemaConverter extends AbstractConverter<
             ...(this.schema.anyOf ?? []).entries()
         ]) {
             if (this.context.isReferenceObject(subSchema)) {
-                const maybeTypeReference = this.context.convertReferenceToTypeReference({ reference: subSchema });
+                let maybeTypeReference;
+
+                if (this.context.isReferenceObjectWithTitle(subSchema)) {
+                    maybeTypeReference = this.context.convertReferenceToTypeReference({
+                        reference: subSchema,
+                        displayNameOverride: subSchema.title
+                    });
+                } else if (
+                    Object.entries(this.schema.discriminator?.mapping ?? {}).find(
+                        ([_, ref]) => ref === subSchema.$ref
+                    ) != null
+                ) {
+                    const mappingEntry = Object.entries(this.schema.discriminator?.mapping ?? {}).find(
+                        ([_, ref]) => ref === subSchema.$ref
+                    );
+                    maybeTypeReference = this.context.convertReferenceToTypeReference({
+                        reference: subSchema,
+                        displayNameOverride: mappingEntry?.[0]
+                    });
+                } else {
+                    maybeTypeReference = this.context.convertReferenceToTypeReference({ reference: subSchema });
+                }
+
                 if (maybeTypeReference.ok) {
                     unionTypes.push({
                         type: maybeTypeReference.reference,
@@ -264,7 +287,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
         if (withoutNull.length === 0) {
             this.context.errorCollector.collect({
-                message: `Received ${schemaType} schema with no valid non-null types: ${JSON.stringify(this.schema)}`,
+                message: `Received ${schemaType} schema with no valid non-null types`,
                 path: this.breadcrumbs
             });
             return undefined;

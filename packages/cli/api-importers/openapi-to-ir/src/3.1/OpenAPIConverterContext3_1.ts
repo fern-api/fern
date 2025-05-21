@@ -25,10 +25,12 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
 
     public convertReferenceToTypeReference({
         reference,
-        breadcrumbs
+        breadcrumbs,
+        displayNameOverride
     }: {
         reference: OpenAPIV3_1.ReferenceObject;
         breadcrumbs?: string[];
+        displayNameOverride?: string;
     }): { ok: true; reference: TypeReference } | { ok: false } {
         const typeId = this.getTypeIdFromSchemaReference(reference);
         if (typeId == null) {
@@ -50,7 +52,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
                 typeId,
                 default: undefined,
                 inline: false,
-                displayName: resolvedReference.value.title ?? undefined
+                displayName: displayNameOverride ?? resolvedReference.value.title ?? undefined
             })
         };
     }

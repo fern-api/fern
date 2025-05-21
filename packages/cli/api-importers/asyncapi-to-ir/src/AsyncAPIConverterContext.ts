@@ -29,10 +29,12 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
 
     public convertReferenceToTypeReference({
         reference,
-        breadcrumbs
+        breadcrumbs,
+        displayNameOverride
     }: {
         reference: OpenAPIV3_1.ReferenceObject;
         breadcrumbs?: string[];
+        displayNameOverride?: string;
     }): { ok: true; reference: TypeReference } | { ok: false } {
         let typeId: string | undefined;
 
@@ -63,7 +65,7 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
                 fernFilepath: this.createFernFilepath(),
                 name: this.casingsGenerator.generateName(typeId),
                 typeId,
-                displayName: resolvedReference.value.title ?? undefined,
+                displayName: displayNameOverride ?? resolvedReference.value.title ?? undefined,
                 default: undefined,
                 inline: false
             })
