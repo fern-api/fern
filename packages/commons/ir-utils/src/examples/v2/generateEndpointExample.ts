@@ -15,7 +15,6 @@ import { getResponseExamples } from "./getResponseExamples";
 
 export declare namespace generateEndpointExample {
     interface Args {
-        ir: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage">;
         service: HttpService;
         endpoint: HttpEndpoint;
         typeDeclarations: Record<TypeId, TypeDeclaration>;
@@ -29,7 +28,6 @@ export declare namespace generateEndpointExample {
 }
 
 export function generateEndpointExample({
-    ir,
     endpoint,
     service,
     typeDeclarations,
