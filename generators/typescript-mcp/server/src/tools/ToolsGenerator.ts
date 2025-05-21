@@ -141,7 +141,8 @@ export class ToolDefinition {
         this.toolName = this.args.builder.getToolName(this.args.endpoint.name, this.args.service.name.fernFilepath);
         this.toolDescription = this.args.endpoint.docs;
 
-        this.schemaVariableName = this.args.zodTypeMapper.convertSdkRequest(this.args.endpoint.sdkRequest);
+        this.schemaVariableName =
+            this.args.endpoint.sdkRequest && this.args.zodTypeMapper.convertSdkRequest(this.args.endpoint.sdkRequest);
     }
 
     write(writer: ts.Writer): void {

@@ -29,7 +29,7 @@ export class ZodTypeMapper {
     }
 
     // TODO: finish implementing this
-    public convertSdkRequest(sdkRequest?: SdkRequest): string {
+    public convertSdkRequest(sdkRequest: SdkRequest): string {
         return sdkRequest?.shape._visit({
             justRequestBody: (value) =>
                 value._visit({
