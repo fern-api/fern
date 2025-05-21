@@ -310,3 +310,25 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
             if container_union.type == "optional":
                 return self.unwrap_optional_type_reference(container_union.optional)
         return type_reference
+
+    def resolved_schema_is_optional_or_unknown(self, reference: ir_types.TypeReference) -> bool:
+        reference_union = reference.get_as_union()
+        while reference_union.type == "container" or reference_union.type == "named" or reference_union.type == "unknown":
+            if reference_union.type == "unknown":
+                return True
+            elif reference_union.type == "container":
+                container_union = reference_union.container.get_as_union()
+                if container_union.type == "optional":
+                    return True
+                elif container_union.type == "nullable":
+                    return True
+                else:
+                    break
+            elif reference_union.type == "named":
+                declaration = self.pydantic_generator_context.get_declaration_for_type_id(reference_union.type_id)
+                shape = declaration.shape.get_as_union()
+                if shape.type == "alias":
+                    reference_union = shape.alias_of.get_as_union()
+                else:
+                    break
+        return False
