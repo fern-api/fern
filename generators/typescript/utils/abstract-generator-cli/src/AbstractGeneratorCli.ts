@@ -106,7 +106,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
 
             const destinationPath = join(
                 AbsoluteFilePath.of(config.output.path),
-                RelativeFilePath.of(options?.outputSubDirectory ?? ""),
+                RelativeFilePath.of(options?.outputSubDirectory ?? "")
             );
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
