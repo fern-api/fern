@@ -79,6 +79,9 @@ public final class UpdatePlaylistRequest {
   public interface _FinalStage {
     UpdatePlaylistRequest build();
 
+    /**
+     * <p>The problems that make up the playlist.</p>
+     */
     _FinalStage problems(List<ProblemId> problems);
 
     _FinalStage addProblems(ProblemId problems);
@@ -131,6 +134,9 @@ public final class UpdatePlaylistRequest {
       return this;
     }
 
+    /**
+     * <p>The problems that make up the playlist.</p>
+     */
     @java.lang.Override
     @JsonSetter(
         value = "problems",
