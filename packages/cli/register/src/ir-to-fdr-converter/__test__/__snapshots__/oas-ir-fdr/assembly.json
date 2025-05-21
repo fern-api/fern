@@ -2735,7 +2735,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -2840,7 +2840,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -3340,17 +3340,6 @@
         ]
       }
     },
-    "LemurBaseParametersContext1": {
-      "name": "LemurBaseParametersContext1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [],
-        "extraProperties": {
-          "type": "unknown"
-        }
-      }
-    },
     "LemurBaseParametersContext": {
       "description": "Context to provide the model. This can be a string or a free-form JSON value.",
       "name": "LemurBaseParametersContext",
@@ -3366,10 +3355,17 @@
             }
           },
           {
-            "typeName": "LemurBaseParametersContext1",
             "type": {
-              "type": "id",
-              "value": "LemurBaseParametersContext1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -3490,17 +3486,6 @@
         ]
       }
     },
-    "LemurQuestionContext1": {
-      "name": "LemurQuestionContext1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [],
-        "extraProperties": {
-          "type": "unknown"
-        }
-      }
-    },
     "LemurQuestionContext": {
       "description": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
       "name": "LemurQuestionContext",
@@ -3516,10 +3501,17 @@
             }
           },
           {
-            "typeName": "LemurQuestionContext1",
             "type": {
-              "type": "id",
-              "value": "LemurQuestionContext1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]

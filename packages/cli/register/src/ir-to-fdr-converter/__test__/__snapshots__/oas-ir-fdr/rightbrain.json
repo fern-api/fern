@@ -617,7 +617,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 0,
                   "maximum": 1,
                   "default": 0.5
@@ -755,7 +755,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 0,
                   "maximum": 1,
                   "default": 0.5
@@ -1184,7 +1184,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -4001,24 +4001,23 @@
         ]
       }
     },
-    "KratosWebhookResponseIdentity0": {
-      "name": "KratosWebhookResponseIdentity0",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "KratosWebhookResponseIdentity": {
       "name": "KratosWebhookResponseIdentity",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "KratosWebhookResponseIdentity0",
             "type": {
-              "type": "id",
-              "value": "KratosWebhookResponseIdentity0"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
@@ -5901,7 +5900,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 0,
                   "maximum": 1,
                   "default": 0.5
@@ -6038,7 +6037,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 0,
                   "maximum": 1,
                   "default": 0.5
@@ -7333,7 +7332,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 0,
                   "maximum": 1,
                   "default": 0.2
@@ -38532,7 +38531,7 @@
           ],
           "examples": [
             {
-              "name": "0",
+              "name": "undefined",
               "description": "",
               "path": "/org/org_id/project/project_id/task/task_id/run",
               "pathParameters": {
@@ -40562,13 +40561,10 @@
           ],
           "examples": [
             {
-              "name": "0",
+              "name": "undefined",
               "description": "",
-              "path": "/org/01902fbf-6de7-a1cc-fb86-b1230a7af301/project/01902fc0-a119-26bc-827d-4138841301db/model",
-              "pathParameters": {
-                "org_id": "01902fbf-6de7-a1cc-fb86-b1230a7af301",
-                "project_id": "01902fc0-a119-26bc-827d-4138841301db"
-              },
+              "path": "",
+              "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,

@@ -41,13 +41,66 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                 });
             }
             case "number": {
-                return TypeReference.primitive({
-                    v1: "DOUBLE",
-                    v2: PrimitiveTypeV2.double({
-                        default: this.context.getAsNumber(this.schema.default),
-                        validation: this.getNumberValidation(this.schema)
-                    })
-                });
+                switch (this.schema.format) {
+                    case "double": {
+                        return TypeReference.primitive({
+                            v1: "DOUBLE",
+                            v2: PrimitiveTypeV2.double({
+                                default: this.context.getAsNumber(this.schema.default),
+                                validation: this.getNumberValidation(this.schema)
+                            })
+                        });
+                    }
+                    case "float": {
+                        return TypeReference.primitive({
+                            v1: "FLOAT",
+                            v2: PrimitiveTypeV2.float({
+                                default: this.context.getAsNumber(this.schema.default),
+                                validation: this.getNumberValidation(this.schema)
+                            })
+                        });
+                    }
+                    case "int32":
+                        return TypeReference.primitive({
+                            v1: "INTEGER",
+                            v2: PrimitiveTypeV2.integer({
+                                default: this.context.getAsNumber(this.schema.default),
+                                validation: this.getNumberValidation(this.schema)
+                            })
+                        });
+                    case "int64":
+                        return TypeReference.primitive({
+                            v1: "LONG",
+                            v2: PrimitiveTypeV2.long({
+                                default: this.context.getAsNumber(this.schema.default)
+                                // TODO: add validation here
+                            })
+                        });
+                    case "uint32":
+                        return TypeReference.primitive({
+                            v1: "UINT",
+                            v2: PrimitiveTypeV2.uint({
+                                default: this.context.getAsNumber(this.schema.default),
+                                validation: this.getNumberValidation(this.schema)
+                            })
+                        });
+                    case "uint64":
+                        return TypeReference.primitive({
+                            v1: "UINT_64",
+                            v2: PrimitiveTypeV2.uint64({
+                                default: this.context.getAsNumber(this.schema.default),
+                                validation: this.getNumberValidation(this.schema)
+                            })
+                        });
+                    default:
+                        return TypeReference.primitive({
+                            v1: "DOUBLE",
+                            v2: PrimitiveTypeV2.double({
+                                default: this.context.getAsNumber(this.schema.default),
+                                validation: this.getNumberValidation(this.schema)
+                            })
+                        });
+                }
             }
             case "integer":
                 switch (this.schema.format) {

@@ -61,10 +61,10 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "INTEGER",
+                    "v1": "DOUBLE",
                     "v2": {
                       "validation": {},
-                      "type": "integer"
+                      "type": "double"
                     }
                   },
                   "type": "primitive"
@@ -107,10 +107,10 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "INTEGER",
+                    "v1": "DOUBLE",
                     "v2": {
                       "validation": {},
-                      "type": "integer"
+                      "type": "double"
                     }
                   },
                   "type": "primitive"

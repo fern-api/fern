@@ -22088,10 +22088,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22128,10 +22128,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22168,10 +22168,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22208,10 +22208,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22248,10 +22248,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22288,10 +22288,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22328,10 +22328,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22368,10 +22368,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22408,10 +22408,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22448,10 +22448,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22488,10 +22488,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22528,10 +22528,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22568,10 +22568,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22608,10 +22608,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22648,10 +22648,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22688,10 +22688,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22728,10 +22728,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22768,10 +22768,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22808,10 +22808,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22848,10 +22848,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22888,10 +22888,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22928,10 +22928,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22968,10 +22968,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23008,10 +23008,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23048,10 +23048,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23088,10 +23088,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23128,10 +23128,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23168,10 +23168,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23208,10 +23208,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23248,10 +23248,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23288,10 +23288,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23328,10 +23328,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23368,10 +23368,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23408,10 +23408,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23448,10 +23448,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23488,10 +23488,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23528,10 +23528,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23568,10 +23568,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23608,10 +23608,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23648,10 +23648,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23688,10 +23688,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23728,10 +23728,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23768,10 +23768,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23808,10 +23808,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23848,10 +23848,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23888,10 +23888,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23928,10 +23928,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23968,10 +23968,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"

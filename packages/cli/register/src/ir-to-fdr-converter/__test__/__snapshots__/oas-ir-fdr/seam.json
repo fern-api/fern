@@ -4927,7 +4927,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -5131,7 +5131,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -5143,7 +5143,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -5155,7 +5155,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -5167,7 +5167,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -6490,7 +6490,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 0,
                 "maximum": 1
               }
@@ -6562,7 +6562,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 0,
                 "maximum": 1
               }
@@ -6757,7 +6757,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 0,
                   "maximum": 1
                 }
@@ -7382,7 +7382,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -7410,7 +7410,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -13632,7 +13632,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -13644,7 +13644,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -13656,7 +13656,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -13668,7 +13668,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -16350,7 +16350,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "default": 1
                 }
               }
@@ -17169,7 +17169,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
@@ -20861,7 +20861,7 @@
                         "itemType": {
                           "type": "primitive",
                           "value": {
-                            "type": "integer",
+                            "type": "double",
                             "default": 500
                           }
                         }
@@ -22103,7 +22103,7 @@
                         "itemType": {
                           "type": "primitive",
                           "value": {
-                            "type": "integer",
+                            "type": "double",
                             "default": 500
                           }
                         }
@@ -22997,7 +22997,7 @@
                         "itemType": {
                           "type": "primitive",
                           "value": {
-                            "type": "integer",
+                            "type": "double",
                             "default": 500
                           }
                         }
@@ -23536,7 +23536,7 @@
                         "itemType": {
                           "type": "primitive",
                           "value": {
-                            "type": "integer",
+                            "type": "double",
                             "default": 500
                           }
                         }
@@ -24814,7 +24814,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
@@ -24826,7 +24826,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
@@ -25192,7 +25192,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
@@ -25204,7 +25204,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
@@ -25363,7 +25363,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
@@ -25375,7 +25375,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
@@ -25387,7 +25387,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
@@ -25399,7 +25399,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
@@ -25642,7 +25642,7 @@
                         "itemType": {
                           "type": "primitive",
                           "value": {
-                            "type": "integer",
+                            "type": "double",
                             "default": 500
                           }
                         }
@@ -37074,7 +37074,7 @@
                         "itemType": {
                           "type": "primitive",
                           "value": {
-                            "type": "integer",
+                            "type": "double",
                             "default": 500
                           }
                         }
@@ -37595,7 +37595,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
@@ -37607,7 +37607,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
@@ -38285,7 +38285,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
@@ -38297,7 +38297,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
@@ -38914,7 +38914,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
@@ -38926,7 +38926,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
@@ -38938,7 +38938,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
@@ -38950,7 +38950,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
@@ -39674,7 +39674,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
@@ -39686,7 +39686,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
@@ -39698,7 +39698,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
@@ -39710,7 +39710,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
