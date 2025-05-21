@@ -1,3 +1,4 @@
+export * from "./ArrayLiteralNode";
 export * from "./ExportNode";
 export * from "./FunctionNode";
 export * from "./FunctionParameterNode";

@@ -1,6 +1,6 @@
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
-import { ExportNode, FileGenerator, TypescriptFile, ZodTypeMapper } from "@fern-api/typescript-mcp-base";
+import { ArrayLiteralNode, ExportNode, FileGenerator, TypescriptFile } from "@fern-api/typescript-mcp-base";
 
 import { TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
@@ -26,10 +26,20 @@ export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCust
             node: ts.codeblock((writer) => {
                 writer.writeNodeStatement(
                     new ExportNode({
-                        initializer: new ZodUnionNode({
-                            zodReference: this.context.project.builder.zodReference,
-                            unionDeclaration: this.unionDeclaration,
-                            zodTypeMapper: this.context.zodTypeMapper
+                        initializer: ts.invokeMethod({
+                            on: this.context.project.builder.zodReference,
+                            method: "union",
+                            arguments_: [
+                                new ArrayLiteralNode({
+                                    values: this.unionDeclaration.types.map((type) =>
+                                        ts.invokeMethod({
+                                            on: this.context.project.builder.zodReference,
+                                            method: this.context.zodTypeMapper.convertSingleUnionType(type),
+                                            arguments_: []
+                                        })
+                                    )
+                                })
+                            ]
                         }),
                         default: true
                     })
@@ -51,33 +61,5 @@ export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCust
 
     protected getFilepath(): RelativeFilePath {
         return join(this.getDirectory(), RelativeFilePath.of(this.getFilename()));
-    }
-}
-
-export declare namespace ZodUnionNode {
-    interface Args {
-        zodReference: ts.Reference;
-        unionDeclaration: UnionTypeDeclaration;
-        zodTypeMapper: ZodTypeMapper;
-    }
-}
-
-// TODO: test this thoroughly
-export class ZodUnionNode extends ts.AstNode {
-    public constructor(private readonly args: ZodUnionNode.Args) {
-        super();
-    }
-
-    public write(writer: ts.Writer) {
-        writer.writeNode(this.args.zodReference);
-        writer.write(".union([");
-        writer.newLine();
-        writer.indent();
-        for (const type of this.args.unionDeclaration.types) {
-            writer.write(`"${this.args.zodTypeMapper.convertSingleUnionType(type)}",`);
-            writer.newLine();
-        }
-        writer.dedent();
-        writer.write("])");
     }
 }

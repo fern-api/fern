@@ -1,8 +1,8 @@
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
-import { ExportNode, FileGenerator, TypescriptFile, ZodTypeMapper } from "@fern-api/typescript-mcp-base";
+import { ExportNode, FileGenerator, TypescriptFile } from "@fern-api/typescript-mcp-base";
 
-import { AliasTypeDeclaration, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
+import { AliasTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
@@ -26,10 +26,10 @@ export class AliasGenerator extends FileGenerator<TypescriptFile, TypescriptCust
             node: ts.codeblock((writer) => {
                 writer.writeNodeStatement(
                     new ExportNode({
-                        initializer: new ZodAliasNode({
-                            zodReference: this.context.project.builder.zodReference,
-                            typeReference: this.aliasDeclaration.aliasOf,
-                            zodTypeMapper: this.context.zodTypeMapper
+                        initializer: ts.invokeMethod({
+                            on: this.context.project.builder.zodReference,
+                            method: this.context.zodTypeMapper.convert({ reference: this.aliasDeclaration.aliasOf }),
+                            arguments_: []
                         }),
                         default: true
                     })
@@ -51,24 +51,5 @@ export class AliasGenerator extends FileGenerator<TypescriptFile, TypescriptCust
 
     protected getFilepath(): RelativeFilePath {
         return join(this.getDirectory(), RelativeFilePath.of(this.getFilename()));
-    }
-}
-
-export declare namespace ZodAliasNode {
-    interface Args {
-        zodReference: ts.Reference;
-        typeReference: TypeReference;
-        zodTypeMapper: ZodTypeMapper;
-    }
-}
-
-export class ZodAliasNode extends ts.AstNode {
-    public constructor(private readonly args: ZodAliasNode.Args) {
-        super();
-    }
-
-    public write(writer: ts.Writer) {
-        writer.writeNode(this.args.zodReference);
-        writer.write(`.${this.args.zodTypeMapper.convert({ reference: this.args.typeReference })}`);
     }
 }

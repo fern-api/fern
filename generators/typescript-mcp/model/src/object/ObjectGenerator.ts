@@ -1,11 +1,10 @@
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
-import { ExportNode, FileGenerator, TypescriptFile, ZodTypeMapper } from "@fern-api/typescript-mcp-base";
+import { ExportNode, FileGenerator, ObjectLiteralNode, TypescriptFile } from "@fern-api/typescript-mcp-base";
 
 import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { ZodAliasNode } from "../alias/AliasGenerator";
 
 export class ObjectGenerator extends FileGenerator<
     TypescriptFile,
@@ -31,10 +30,21 @@ export class ObjectGenerator extends FileGenerator<
             node: ts.codeblock((writer) => {
                 writer.writeNodeStatement(
                     new ExportNode({
-                        initializer: new ZodObjectNode({
-                            zodReference: this.context.project.builder.zodReference,
-                            objectDeclaration: this.objectDeclaration,
-                            zodTypeMapper: this.context.zodTypeMapper
+                        initializer: ts.invokeMethod({
+                            on: this.context.project.builder.zodReference,
+                            method: "object",
+                            arguments_: [
+                                new ObjectLiteralNode({
+                                    fields: this.objectDeclaration.properties.map((value) => ({
+                                        name: value.name.name.camelCase.safeName,
+                                        value: ts.invokeMethod({
+                                            on: this.context.project.builder.zodReference,
+                                            method: this.context.zodTypeMapper.convert({ reference: value.valueType }),
+                                            arguments_: []
+                                        })
+                                    }))
+                                })
+                            ]
                         }),
                         default: true
                     })
@@ -56,40 +66,5 @@ export class ObjectGenerator extends FileGenerator<
 
     protected getFilepath(): RelativeFilePath {
         return join(this.getDirectory(), RelativeFilePath.of(this.getFilename()));
-    }
-}
-
-export declare namespace ZodObjectNode {
-    interface Args {
-        zodReference: ts.Reference;
-        objectDeclaration: ObjectTypeDeclaration;
-        zodTypeMapper: ZodTypeMapper;
-    }
-}
-
-export class ZodObjectNode extends ts.AstNode {
-    public constructor(private readonly args: ZodObjectNode.Args) {
-        super();
-    }
-
-    public write(writer: ts.Writer) {
-        writer.writeNode(this.args.zodReference);
-        writer.write(".object({");
-        writer.newLine();
-        writer.indent();
-        for (const property of this.args.objectDeclaration.properties) {
-            writer.write(`${property.name.name.camelCase.safeName}: `);
-            writer.writeNode(
-                new ZodAliasNode({
-                    zodReference: this.args.zodReference,
-                    typeReference: property.valueType,
-                    zodTypeMapper: this.args.zodTypeMapper
-                })
-            );
-            writer.write(",");
-            writer.newLine();
-        }
-        writer.dedent();
-        writer.write("})");
     }
 }

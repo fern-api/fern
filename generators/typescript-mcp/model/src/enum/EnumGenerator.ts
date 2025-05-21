@@ -26,9 +26,16 @@ export class EnumGenerator extends FileGenerator<TypescriptFile, TypescriptCusto
             node: ts.codeblock((writer) => {
                 writer.writeNodeStatement(
                     new ExportNode({
-                        initializer: new ZodEnumNode({
-                            zodReference: this.context.project.builder.zodReference,
-                            enumDeclaration: this.enumDeclaration
+                        initializer: ts.invokeMethod({
+                            on: this.context.project.builder.zodReference,
+                            method: "enum",
+                            arguments_: [
+                                ts.TypeLiteral.array({
+                                    values: this.enumDeclaration.values.map((value) =>
+                                        ts.TypeLiteral.string(value.name.name.originalName)
+                                    )
+                                })
+                            ]
                         }),
                         default: true
                     })
@@ -50,31 +57,5 @@ export class EnumGenerator extends FileGenerator<TypescriptFile, TypescriptCusto
 
     protected getFilepath(): RelativeFilePath {
         return join(this.getDirectory(), RelativeFilePath.of(this.getFilename()));
-    }
-}
-
-export declare namespace ZodEnumNode {
-    interface Args {
-        zodReference: ts.Reference;
-        enumDeclaration: EnumTypeDeclaration;
-    }
-}
-
-export class ZodEnumNode extends ts.AstNode {
-    public constructor(private readonly args: ZodEnumNode.Args) {
-        super();
-    }
-
-    public write(writer: ts.Writer) {
-        writer.writeNode(this.args.zodReference);
-        writer.write(".enum([");
-        writer.newLine();
-        writer.indent();
-        for (const value of this.args.enumDeclaration.values) {
-            writer.write(`"${value.name.name.originalName}",`);
-            writer.newLine();
-        }
-        writer.dedent();
-        writer.write("])");
     }
 }
