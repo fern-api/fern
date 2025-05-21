@@ -224,12 +224,18 @@ export class PersistedTypescriptProject {
         await cp(tmpZipLocation, destinationZip);
 
         if (unzipOutput) {
-            // Unzip the file in the destination directory
-            await decompress(destinationZip, destinationPath, {
-                strip: 0
-            });
-            // Clean up (remove) the zip file
-            await rm(destinationZip);
+            try {
+                // Unzip the file in the destination directory
+                await decompress(destinationZip, destinationPath, {
+                    strip: 0
+                });
+                // Clean up (remove) the zip file only after successful decompression
+                await rm(destinationZip);
+            } catch (error) {
+                // Log the error but don't delete the zip file if decompression fails
+                console.error('Failed to decompress file:', error);
+                throw error; // Re-throw to allow caller to handle the error
+            }
         }
     }
 
