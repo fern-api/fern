@@ -85,7 +85,8 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                 breadcrumbs: [this.method.name, "Param", resolvedParam.name],
                 schemaIdOverride: schemaId,
                 context: this.context,
-                schemaOrReference: resolvedParam.schema as OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
+                schemaOrReference: resolvedParam.schema as OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
+                wrapAsOptional: !resolvedParam.required
             });
             const schema = parameterSchemaConverter.convert();
             if (schema != null) {

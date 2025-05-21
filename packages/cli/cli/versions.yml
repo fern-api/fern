@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Support optional parameters in OpenRPC imports by properly handling the `required` field in parameter definitions.
+      type: fix
+  irVersion: 57
+  createdAt: "2025-05-20"
+  version: 0.62.3
+
+- changelogEntry:
+    - summary: |
         Correctly merge services when parsing multiple specs; standardize namespaced service naming.
       type: fix
   irVersion: 57
