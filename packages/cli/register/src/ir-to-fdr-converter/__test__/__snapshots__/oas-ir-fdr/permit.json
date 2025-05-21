@@ -7094,7 +7094,6 @@
           ],
           "examples": [
             {
-              "name": "listOrganizationsExample",
               "description": "",
               "path": "/v2/orgs",
               "pathParameters": {},
@@ -7202,7 +7201,6 @@
           ],
           "examples": [
             {
-              "name": "organizationsCreateOrganizationExample",
               "description": "",
               "path": "/v2/orgs",
               "pathParameters": {},
@@ -7327,7 +7325,6 @@
           ],
           "examples": [
             {
-              "name": "getOrganizationExample",
               "description": "",
               "path": "/v2/orgs/org_id",
               "pathParameters": {
@@ -7428,7 +7425,6 @@
           ],
           "examples": [
             {
-              "name": "deleteOrganizationExample",
               "description": "",
               "path": "/v2/orgs/org_id",
               "pathParameters": {
@@ -7532,7 +7528,6 @@
           ],
           "examples": [
             {
-              "name": "organizationsUpdateOrganizationExample",
               "description": "",
               "path": "/v2/orgs/org_id",
               "pathParameters": {
@@ -7630,7 +7625,6 @@
           ],
           "examples": [
             {
-              "name": "getActiveOrganizationExample",
               "description": "",
               "path": "/v2/orgs/active/org",
               "pathParameters": {},
@@ -7766,7 +7760,6 @@
           ],
           "examples": [
             {
-              "name": "listProjectsExample",
               "description": "",
               "path": "/v2/projects",
               "pathParameters": {},
@@ -7880,7 +7873,6 @@
           ],
           "examples": [
             {
-              "name": "projectsCreateProjectExample",
               "description": "",
               "path": "/v2/projects",
               "pathParameters": {},
@@ -8007,7 +7999,6 @@
           ],
           "examples": [
             {
-              "name": "getProjectExample",
               "description": "",
               "path": "/v2/projects/proj_id",
               "pathParameters": {
@@ -8114,7 +8105,6 @@
           ],
           "examples": [
             {
-              "name": "deleteProjectExample",
               "description": "",
               "path": "/v2/projects/proj_id",
               "pathParameters": {
@@ -8218,7 +8208,6 @@
           ],
           "examples": [
             {
-              "name": "projectsUpdateProjectExample",
               "description": "",
               "path": "/v2/projects/proj_id",
               "pathParameters": {
@@ -8368,7 +8357,6 @@
           ],
           "examples": [
             {
-              "name": "statsEnvironmentsExample",
               "description": "",
               "path": "/v2/projects/proj_id/envs/env_id/stats",
               "pathParameters": {
@@ -8678,7 +8666,6 @@
           ],
           "examples": [
             {
-              "name": "listEnvironmentsExample",
               "description": "",
               "path": "/v2/projects/proj_id/envs",
               "pathParameters": {
@@ -8823,7 +8810,6 @@
           ],
           "examples": [
             {
-              "name": "environmentsCreateEnvironmentExample",
               "description": "",
               "path": "/v2/projects/proj_id/envs",
               "pathParameters": {
@@ -8980,7 +8966,6 @@
           ],
           "examples": [
             {
-              "name": "getEnvironmentExample",
               "description": "",
               "path": "/v2/projects/proj_id/envs/env_id",
               "pathParameters": {
@@ -9116,7 +9101,6 @@
           ],
           "examples": [
             {
-              "name": "deleteEnvironmentExample",
               "description": "",
               "path": "/v2/projects/proj_id/envs/env_id",
               "pathParameters": {
@@ -9239,7 +9223,6 @@
           ],
           "examples": [
             {
-              "name": "environmentsUpdateEnvironmentExample",
               "description": "",
               "path": "/v2/projects/proj_id/envs/env_id",
               "pathParameters": {
@@ -9404,7 +9387,6 @@
           ],
           "examples": [
             {
-              "name": "environmentsCopyEnvironmentExample",
               "description": "",
               "path": "/v2/projects/proj_id/envs/env_id/copy",
               "pathParameters": {
@@ -9643,7 +9625,6 @@
           ],
           "examples": [
             {
-              "name": "listResourcesExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources",
               "pathParameters": {
@@ -9811,7 +9792,6 @@
           ],
           "examples": [
             {
-              "name": "resourcesCreateResourceExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources",
               "pathParameters": {
@@ -10053,7 +10033,6 @@
           ],
           "examples": [
             {
-              "name": "getResourceExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id",
               "pathParameters": {
@@ -10268,7 +10247,6 @@
           ],
           "examples": [
             {
-              "name": "resourcesReplaceResourceExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id",
               "pathParameters": {
@@ -10470,7 +10448,6 @@
           ],
           "examples": [
             {
-              "name": "deleteResourceExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id",
               "pathParameters": {
@@ -10612,7 +10589,6 @@
           ],
           "examples": [
             {
-              "name": "resourcesUpdateResourceExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id",
               "pathParameters": {
@@ -10864,7 +10840,6 @@
           ],
           "examples": [
             {
-              "name": "listResourceActionsExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/actions",
               "pathParameters": {
@@ -11041,7 +11016,6 @@
           ],
           "examples": [
             {
-              "name": "resourceActionsCreateResourceActionExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/actions",
               "pathParameters": {
@@ -11230,7 +11204,6 @@
           ],
           "examples": [
             {
-              "name": "getResourceActionExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/actions/action_id",
               "pathParameters": {
@@ -11396,7 +11369,6 @@
           ],
           "examples": [
             {
-              "name": "deleteResourceActionExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/actions/action_id",
               "pathParameters": {
@@ -11557,7 +11529,6 @@
           ],
           "examples": [
             {
-              "name": "resourceActionsUpdateResourceActionExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/actions/action_id",
               "pathParameters": {
@@ -11770,7 +11741,6 @@
           ],
           "examples": [
             {
-              "name": "listResourceActionGroupsExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/action_groups",
               "pathParameters": {
@@ -11951,7 +11921,6 @@
           ],
           "examples": [
             {
-              "name": "resourceActionGroupsCreateResourceActionGroupExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/action_groups",
               "pathParameters": {
@@ -12154,7 +12123,6 @@
           ],
           "examples": [
             {
-              "name": "getResourceActionGroupExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/action_groups/action_group_id",
               "pathParameters": {
@@ -12326,7 +12294,6 @@
           ],
           "examples": [
             {
-              "name": "deleteResourceActionGroupExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/action_groups/action_group_id",
               "pathParameters": {
@@ -12487,7 +12454,6 @@
           ],
           "examples": [
             {
-              "name": "resourceActionGroupsUpdateResourceActionGroupExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/action_groups/action_group_id",
               "pathParameters": {
@@ -12702,7 +12668,6 @@
           ],
           "examples": [
             {
-              "name": "listResourceRolesExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/roles",
               "pathParameters": {
@@ -12889,7 +12854,6 @@
           ],
           "examples": [
             {
-              "name": "resourceRolesCreateResourceRoleExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/roles",
               "pathParameters": {
@@ -13100,7 +13064,6 @@
           ],
           "examples": [
             {
-              "name": "getResourceRoleExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/roles/role_id",
               "pathParameters": {
@@ -13276,7 +13239,6 @@
           ],
           "examples": [
             {
-              "name": "deleteResourceRoleExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/roles/role_id",
               "pathParameters": {
@@ -13437,7 +13399,6 @@
           ],
           "examples": [
             {
-              "name": "resourceRolesUpdateResourceRoleExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/roles/role_id",
               "pathParameters": {
@@ -13652,7 +13613,6 @@
           ],
           "examples": [
             {
-              "name": "resourceRolesAssignPermissionsToResourceRoleExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/roles/role_id/permissions",
               "pathParameters": {
@@ -13865,7 +13825,6 @@
           ],
           "examples": [
             {
-              "name": "resourceRolesRemovePermissionsFromResourceRoleExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/roles/role_id/permissions",
               "pathParameters": {
@@ -14064,7 +14023,6 @@
           ],
           "examples": [
             {
-              "name": "getResourceRoleAncestorsExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/roles/role_id/ancestors",
               "pathParameters": {
@@ -14260,7 +14218,6 @@
           ],
           "examples": [
             {
-              "name": "getResourceRoleDescendantsExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/roles/role_id/descendants",
               "pathParameters": {
@@ -14484,7 +14441,6 @@
           ],
           "examples": [
             {
-              "name": "listResourceAttributesExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/attributes",
               "pathParameters": {
@@ -14661,7 +14617,6 @@
           ],
           "examples": [
             {
-              "name": "resourceAttributesCreateResourceAttributeExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/attributes",
               "pathParameters": {
@@ -14852,7 +14807,6 @@
           ],
           "examples": [
             {
-              "name": "getResourceAttributeExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/attributes/attribute_id",
               "pathParameters": {
@@ -15052,7 +15006,6 @@
           ],
           "examples": [
             {
-              "name": "deleteResourceAttributeExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/attributes/attribute_id",
               "pathParameters": {
@@ -15213,7 +15166,6 @@
           ],
           "examples": [
             {
-              "name": "resourceAttributesUpdateResourceAttributeExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/resources/resource_id/attributes/attribute_id",
               "pathParameters": {
@@ -15423,7 +15375,6 @@
           ],
           "examples": [
             {
-              "name": "listUserAttributesExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/users/attributes",
               "pathParameters": {
@@ -15595,7 +15546,6 @@
           ],
           "examples": [
             {
-              "name": "userAttributesCreateUserAttributeExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/users/attributes",
               "pathParameters": {
@@ -15781,7 +15731,6 @@
           ],
           "examples": [
             {
-              "name": "getUserAttributeExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/users/attributes/attribute_id",
               "pathParameters": {
@@ -15975,7 +15924,6 @@
           ],
           "examples": [
             {
-              "name": "deleteUserAttributeExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/users/attributes/attribute_id",
               "pathParameters": {
@@ -16131,7 +16079,6 @@
           ],
           "examples": [
             {
-              "name": "userAttributesUpdateUserAttributeExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/users/attributes/attribute_id",
               "pathParameters": {
@@ -16351,7 +16298,6 @@
           ],
           "examples": [
             {
-              "name": "listRolesExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/roles",
               "pathParameters": {
@@ -16525,7 +16471,6 @@
           ],
           "examples": [
             {
-              "name": "rolesCreateRoleExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/roles",
               "pathParameters": {
@@ -16715,7 +16660,6 @@
           ],
           "examples": [
             {
-              "name": "getRoleExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/roles/role_id",
               "pathParameters": {
@@ -16870,7 +16814,6 @@
           ],
           "examples": [
             {
-              "name": "deleteRoleExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/roles/role_id",
               "pathParameters": {
@@ -17012,7 +16955,6 @@
           ],
           "examples": [
             {
-              "name": "rolesUpdateRoleExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/roles/role_id",
               "pathParameters": {
@@ -17206,7 +17148,6 @@
           ],
           "examples": [
             {
-              "name": "rolesAssignPermissionsToRoleExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/roles/role_id/permissions",
               "pathParameters": {
@@ -17398,7 +17339,6 @@
           ],
           "examples": [
             {
-              "name": "rolesRemovePermissionsFromRoleExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/roles/role_id/permissions",
               "pathParameters": {
@@ -17576,7 +17516,6 @@
           ],
           "examples": [
             {
-              "name": "getRoleAncestorsExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/roles/role_id/ancestors",
               "pathParameters": {
@@ -17751,7 +17690,6 @@
           ],
           "examples": [
             {
-              "name": "getRoleDescendantsExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/roles/role_id/descendants",
               "pathParameters": {
@@ -17989,7 +17927,6 @@
           ],
           "examples": [
             {
-              "name": "listConditionSetsExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/condition_sets",
               "pathParameters": {
@@ -18189,7 +18126,6 @@
           ],
           "examples": [
             {
-              "name": "conditionSetsCreateConditionSetExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/condition_sets",
               "pathParameters": {
@@ -18429,7 +18365,6 @@
           ],
           "examples": [
             {
-              "name": "getConditionSetExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/condition_sets/condition_set_id",
               "pathParameters": {
@@ -18612,7 +18547,6 @@
           ],
           "examples": [
             {
-              "name": "deleteConditionSetExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/condition_sets/condition_set_id",
               "pathParameters": {
@@ -18754,7 +18688,6 @@
           ],
           "examples": [
             {
-              "name": "conditionSetsUpdateConditionSetExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/condition_sets/condition_set_id",
               "pathParameters": {
@@ -19024,7 +18957,6 @@
           ],
           "examples": [
             {
-              "name": "getConditionSetAncestorsExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/condition_sets/condition_set_id/ancestors",
               "pathParameters": {
@@ -19257,7 +19189,6 @@
           ],
           "examples": [
             {
-              "name": "getConditionSetDescendantsExample",
               "description": "",
               "path": "/v2/schema/proj_id/env_id/condition_sets/condition_set_id/descendants",
               "pathParameters": {
@@ -19505,7 +19436,6 @@
           ],
           "examples": [
             {
-              "name": "listUsersExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/users",
               "pathParameters": {
@@ -19695,7 +19625,6 @@
           ],
           "examples": [
             {
-              "name": "usersCreateUserExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/users",
               "pathParameters": {
@@ -19945,7 +19874,6 @@
           ],
           "examples": [
             {
-              "name": "getUserExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/users/user_id",
               "pathParameters": {
@@ -20177,7 +20105,6 @@
           ],
           "examples": [
             {
-              "name": "usersReplaceUserExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/users/user_id",
               "pathParameters": {
@@ -20417,7 +20344,6 @@
           ],
           "examples": [
             {
-              "name": "deleteUserExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/users/user_id",
               "pathParameters": {
@@ -20559,7 +20485,6 @@
           ],
           "examples": [
             {
-              "name": "usersUpdateUserExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/users/user_id",
               "pathParameters": {
@@ -20797,7 +20722,6 @@
           ],
           "examples": [
             {
-              "name": "usersAssignRoleToUserExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/users/user_id/roles",
               "pathParameters": {
@@ -20968,7 +20892,6 @@
           ],
           "examples": [
             {
-              "name": "usersUnassignRoleFromUserExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/users/user_id/roles",
               "pathParameters": {
@@ -21175,7 +21098,6 @@
           ],
           "examples": [
             {
-              "name": "listTenantUsersExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/tenants/tenant_id/users",
               "pathParameters": {
@@ -21412,7 +21334,6 @@
           ],
           "examples": [
             {
-              "name": "listTenantsExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/tenants",
               "pathParameters": {
@@ -21576,7 +21497,6 @@
           ],
           "examples": [
             {
-              "name": "tenantsCreateTenantExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/tenants",
               "pathParameters": {
@@ -21764,7 +21684,6 @@
           ],
           "examples": [
             {
-              "name": "getTenantExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/tenants/tenant_id",
               "pathParameters": {
@@ -21919,7 +21838,6 @@
           ],
           "examples": [
             {
-              "name": "deleteTenantExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/tenants/tenant_id",
               "pathParameters": {
@@ -22061,7 +21979,6 @@
           ],
           "examples": [
             {
-              "name": "tenantsUpdateTenantExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/tenants/tenant_id",
               "pathParameters": {
@@ -22239,7 +22156,6 @@
           ],
           "examples": [
             {
-              "name": "deleteTenantUserExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/tenants/tenant_id/users/user_id",
               "pathParameters": {
@@ -22435,7 +22351,6 @@
           ],
           "examples": [
             {
-              "name": "listRoleAssignmentsExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/role_assignments",
               "pathParameters": {
@@ -22591,7 +22506,6 @@
           ],
           "examples": [
             {
-              "name": "roleAssignmentsAssignRoleExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/role_assignments",
               "pathParameters": {
@@ -22745,7 +22659,6 @@
           ],
           "examples": [
             {
-              "name": "roleAssignmentsUnassignRoleExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/role_assignments",
               "pathParameters": {
@@ -22883,7 +22796,6 @@
           ],
           "examples": [
             {
-              "name": "roleAssignmentsBulkAssignRoleExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/role_assignments/bulk",
               "pathParameters": {
@@ -23034,7 +22946,6 @@
           ],
           "examples": [
             {
-              "name": "roleAssignmentsBulkUnassignRoleExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/role_assignments/bulk",
               "pathParameters": {
@@ -23254,7 +23165,6 @@
           ],
           "examples": [
             {
-              "name": "listSetPermissionsExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/set_rules",
               "pathParameters": {
@@ -23411,7 +23321,6 @@
           ],
           "examples": [
             {
-              "name": "conditionSetRulesAssignSetPermissionsExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/set_rules",
               "pathParameters": {
@@ -23567,7 +23476,6 @@
           ],
           "examples": [
             {
-              "name": "conditionSetRulesUnassignSetPermissionsExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/set_rules",
               "pathParameters": {
@@ -23735,7 +23643,6 @@
           ],
           "examples": [
             {
-              "name": "listResourceInstancesExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/resource_instances",
               "pathParameters": {
@@ -23893,7 +23800,6 @@
           ],
           "examples": [
             {
-              "name": "resourceInstancesCreateResourceInstanceExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/resource_instances",
               "pathParameters": {
@@ -24079,7 +23985,6 @@
           ],
           "examples": [
             {
-              "name": "getResourceInstanceExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/resource_instances/instance_id",
               "pathParameters": {
@@ -24234,7 +24139,6 @@
           ],
           "examples": [
             {
-              "name": "deleteResourceInstanceExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/resource_instances/instance_id",
               "pathParameters": {
@@ -24376,7 +24280,6 @@
           ],
           "examples": [
             {
-              "name": "resourceInstancesUpdateResourceInstanceExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/resource_instances/instance_id",
               "pathParameters": {
@@ -24561,7 +24464,6 @@
           ],
           "examples": [
             {
-              "name": "bulkOperationsBulkCreateUsersExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/bulk/users",
               "pathParameters": {
@@ -24705,7 +24607,6 @@
           ],
           "examples": [
             {
-              "name": "bulkOperationsBulkReplaceUsersExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/bulk/users",
               "pathParameters": {
@@ -24849,7 +24750,6 @@
           ],
           "examples": [
             {
-              "name": "bulkOperationsBulkDeleteUsersExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/bulk/users",
               "pathParameters": {
@@ -24989,7 +24889,6 @@
           ],
           "examples": [
             {
-              "name": "bulkOperationsBulkCreateTenantsExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/bulk/tenants",
               "pathParameters": {
@@ -25135,7 +25034,6 @@
           ],
           "examples": [
             {
-              "name": "bulkOperationsBulkDeleteTenantsExample",
               "description": "",
               "path": "/v2/facts/proj_id/env_id/bulk/tenants",
               "pathParameters": {

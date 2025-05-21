@@ -547,7 +547,6 @@
           ],
           "examples": [
             {
-              "name": "petAddPetExample",
               "description": "",
               "path": "/pet",
               "pathParameters": {},
@@ -709,7 +708,6 @@
           ],
           "examples": [
             {
-              "name": "petUpdatePetExample",
               "description": "",
               "path": "/pet",
               "pathParameters": {},
@@ -847,7 +845,6 @@
           ],
           "examples": [
             {
-              "name": "findPetsByStatusExample",
               "description": "",
               "path": "/pet/findByStatus",
               "pathParameters": {},
@@ -979,7 +976,6 @@
           ],
           "examples": [
             {
-              "name": "findPetsByTagsExample",
               "description": "",
               "path": "/pet/findByTags",
               "pathParameters": {},
@@ -1122,7 +1118,6 @@
           ],
           "examples": [
             {
-              "name": "getPetByIdExample",
               "description": "",
               "path": "/pet/42",
               "pathParameters": {
@@ -1278,7 +1273,6 @@
           ],
           "examples": [
             {
-              "name": "updatePetWithFormExample",
               "description": "",
               "path": "/pet/42",
               "pathParameters": {
@@ -1410,7 +1404,6 @@
           ],
           "examples": [
             {
-              "name": "deletePetExample",
               "description": "",
               "path": "/pet/42",
               "pathParameters": {
@@ -1533,7 +1526,6 @@
           ],
           "examples": [
             {
-              "name": "uploadFileExample",
               "description": "",
               "path": "/pet/42/uploadImage",
               "pathParameters": {
@@ -1625,7 +1617,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getInventoryExample",
               "description": "",
               "path": "/store/inventory",
               "pathParameters": {},
@@ -1724,7 +1715,6 @@
           ],
           "examples": [
             {
-              "name": "storePlaceOrderExample",
               "description": "",
               "path": "/store/order",
               "pathParameters": {},
@@ -1848,7 +1838,6 @@
           ],
           "examples": [
             {
-              "name": "getOrderByIdExample",
               "description": "",
               "path": "/store/order/42",
               "pathParameters": {
@@ -1958,7 +1947,6 @@
           ],
           "examples": [
             {
-              "name": "deleteOrderExample",
               "description": "",
               "path": "/store/order/42",
               "pathParameters": {
@@ -2041,7 +2029,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "userCreateUserExample",
               "description": "",
               "path": "/user",
               "pathParameters": {},
@@ -2141,7 +2128,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "userCreateUsersWithListInputExample",
               "description": "",
               "path": "/user/createWithList",
               "pathParameters": {},
@@ -2271,7 +2257,6 @@
           ],
           "examples": [
             {
-              "name": "loginUserExample",
               "description": "",
               "path": "/user/login",
               "pathParameters": {},
@@ -2321,7 +2306,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "logoutUserExample",
               "description": "",
               "path": "/user/logout",
               "pathParameters": {},
@@ -2421,7 +2405,6 @@
           ],
           "examples": [
             {
-              "name": "getUserByNameExample",
               "description": "",
               "path": "/user/username",
               "pathParameters": {
@@ -2550,7 +2533,6 @@
           ],
           "examples": [
             {
-              "name": "userUpdateUserExample",
               "description": "",
               "path": "/user/username",
               "pathParameters": {
@@ -2646,7 +2628,6 @@
           ],
           "examples": [
             {
-              "name": "deleteUserExample",
               "description": "",
               "path": "/user/username",
               "pathParameters": {
@@ -2784,7 +2765,6 @@
           ],
           "examples": [
             {
-              "name": "petAddPetExample",
               "description": "",
               "path": "/pet",
               "pathParameters": {},
@@ -2946,7 +2926,6 @@
           ],
           "examples": [
             {
-              "name": "petUpdatePetExample",
               "description": "",
               "path": "/pet",
               "pathParameters": {},
@@ -3084,7 +3063,6 @@
           ],
           "examples": [
             {
-              "name": "findPetsByStatusExample",
               "description": "",
               "path": "/pet/findByStatus",
               "pathParameters": {},
@@ -3216,7 +3194,6 @@
           ],
           "examples": [
             {
-              "name": "findPetsByTagsExample",
               "description": "",
               "path": "/pet/findByTags",
               "pathParameters": {},
@@ -3359,7 +3336,6 @@
           ],
           "examples": [
             {
-              "name": "getPetByIdExample",
               "description": "",
               "path": "/pet/42",
               "pathParameters": {
@@ -3515,7 +3491,6 @@
           ],
           "examples": [
             {
-              "name": "updatePetWithFormExample",
               "description": "",
               "path": "/pet/42",
               "pathParameters": {
@@ -3647,7 +3622,6 @@
           ],
           "examples": [
             {
-              "name": "deletePetExample",
               "description": "",
               "path": "/pet/42",
               "pathParameters": {
@@ -3770,7 +3744,6 @@
           ],
           "examples": [
             {
-              "name": "uploadFileExample",
               "description": "",
               "path": "/pet/42/uploadImage",
               "pathParameters": {
@@ -3862,7 +3835,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "getInventoryExample",
               "description": "",
               "path": "/store/inventory",
               "pathParameters": {},
@@ -3961,7 +3933,6 @@
           ],
           "examples": [
             {
-              "name": "storePlaceOrderExample",
               "description": "",
               "path": "/store/order",
               "pathParameters": {},
@@ -4085,7 +4056,6 @@
           ],
           "examples": [
             {
-              "name": "getOrderByIdExample",
               "description": "",
               "path": "/store/order/42",
               "pathParameters": {
@@ -4195,7 +4165,6 @@
           ],
           "examples": [
             {
-              "name": "deleteOrderExample",
               "description": "",
               "path": "/store/order/42",
               "pathParameters": {
@@ -4278,7 +4247,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "userCreateUserExample",
               "description": "",
               "path": "/user",
               "pathParameters": {},
@@ -4378,7 +4346,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "userCreateUsersWithListInputExample",
               "description": "",
               "path": "/user/createWithList",
               "pathParameters": {},
@@ -4508,7 +4475,6 @@
           ],
           "examples": [
             {
-              "name": "loginUserExample",
               "description": "",
               "path": "/user/login",
               "pathParameters": {},
@@ -4558,7 +4524,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "logoutUserExample",
               "description": "",
               "path": "/user/logout",
               "pathParameters": {},
@@ -4658,7 +4623,6 @@
           ],
           "examples": [
             {
-              "name": "getUserByNameExample",
               "description": "",
               "path": "/user/username",
               "pathParameters": {
@@ -4787,7 +4751,6 @@
           ],
           "examples": [
             {
-              "name": "userUpdateUserExample",
               "description": "",
               "path": "/user/username",
               "pathParameters": {
@@ -4883,7 +4846,6 @@
           ],
           "examples": [
             {
-              "name": "deleteUserExample",
               "description": "",
               "path": "/user/username",
               "pathParameters": {

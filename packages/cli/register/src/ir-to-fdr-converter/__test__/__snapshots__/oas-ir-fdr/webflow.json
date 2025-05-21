@@ -48627,7 +48627,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/forms",
               "pathParameters": {
@@ -48929,7 +48928,6 @@
           ],
           "examples": [
             {
-              "name": "getExample",
               "description": "",
               "path": "/forms/580e63e98c9a982ac9b8b741",
               "pathParameters": {
@@ -49175,7 +49173,6 @@
           ],
           "examples": [
             {
-              "name": "listSubmissionsExample",
               "description": "",
               "path": "/forms/580e63e98c9a982ac9b8b741/submissions",
               "pathParameters": {
@@ -49395,7 +49392,6 @@
           ],
           "examples": [
             {
-              "name": "getSubmissionExample",
               "description": "",
               "path": "/form_submissions/580e63e98c9a982ac9b8b741",
               "pathParameters": {
@@ -49607,7 +49603,6 @@
           ],
           "examples": [
             {
-              "name": "formsUpdateSubmissionExample",
               "description": "",
               "path": "/form_submissions/580e63e98c9a982ac9b8b741",
               "pathParameters": {
@@ -49785,7 +49780,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/sites",
               "pathParameters": {},
@@ -50186,7 +50180,6 @@
           ],
           "examples": [
             {
-              "name": "getExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741",
               "pathParameters": {
@@ -50375,7 +50368,6 @@
           ],
           "examples": [
             {
-              "name": "getCustomDomainExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/custom_domains",
               "pathParameters": {
@@ -50585,7 +50577,6 @@
           ],
           "examples": [
             {
-              "name": "sitesPublishExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/publish",
               "pathParameters": {
@@ -50869,7 +50860,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/orders",
               "pathParameters": {
@@ -51822,7 +51812,6 @@
           ],
           "examples": [
             {
-              "name": "getExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/orders/5e8518516e147040726cc415",
               "pathParameters": {
@@ -52500,7 +52489,6 @@
           ],
           "examples": [
             {
-              "name": "ordersUpdateExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/orders/5e8518516e147040726cc415",
               "pathParameters": {
@@ -53145,7 +53133,6 @@
           ],
           "examples": [
             {
-              "name": "ordersUpdateFulfillExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/orders/5e8518516e147040726cc415/fulfill",
               "pathParameters": {
@@ -53763,7 +53750,6 @@
           ],
           "examples": [
             {
-              "name": "updateUnfulfillExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/orders/5e8518516e147040726cc415/unfulfill",
               "pathParameters": {
@@ -54400,7 +54386,6 @@
           ],
           "examples": [
             {
-              "name": "ordersRefundExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/orders/5e8518516e147040726cc415/refund",
               "pathParameters": {
@@ -55935,7 +55920,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754/inventory",
               "pathParameters": {
@@ -56181,7 +56165,6 @@
           ],
           "examples": [
             {
-              "name": "inventoryUpdateExample",
               "description": "",
               "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754/inventory",
               "pathParameters": {
@@ -56460,7 +56443,6 @@
           ],
           "examples": [
             {
-              "name": "users_list_example",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/users",
               "pathParameters": {
@@ -56795,7 +56777,6 @@
           ],
           "examples": [
             {
-              "name": "getExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/users/580e63e98c9a982ac9b8b741",
               "pathParameters": {
@@ -56992,7 +56973,6 @@
           ],
           "examples": [
             {
-              "name": "deleteExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/users/580e63e98c9a982ac9b8b741",
               "pathParameters": {
@@ -57203,7 +57183,6 @@
           ],
           "examples": [
             {
-              "name": "usersUpdateExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/users/580e63e98c9a982ac9b8b741",
               "pathParameters": {
@@ -57471,7 +57450,6 @@
           ],
           "examples": [
             {
-              "name": "usersInviteExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/users/invite",
               "pathParameters": {
@@ -58154,7 +58132,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/pages",
               "pathParameters": {
@@ -58425,7 +58402,6 @@
           ],
           "examples": [
             {
-              "name": "getMetadataExample",
               "description": "",
               "path": "/pages/63c720f9347c2139b248e552",
               "pathParameters": {
@@ -58857,7 +58833,6 @@
           ],
           "examples": [
             {
-              "name": "pagesUpdatePageSettingsExample",
               "description": "",
               "path": "/pages/63c720f9347c2139b248e552",
               "pathParameters": {
@@ -59127,7 +59102,6 @@
           ],
           "examples": [
             {
-              "name": "getContentExample",
               "description": "",
               "path": "/pages/63c720f9347c2139b248e552/dom",
               "pathParameters": {
@@ -59393,7 +59367,6 @@
           ],
           "examples": [
             {
-              "name": "pagesUpdateStaticContentExample",
               "description": "",
               "path": "/pages/63c720f9347c2139b248e552/dom",
               "pathParameters": {
@@ -59660,7 +59633,6 @@
           ],
           "examples": [
             {
-              "name": "authorizedByExample",
               "description": "",
               "path": "/token/authorized_by",
               "pathParameters": {},
@@ -59744,7 +59716,6 @@
           ],
           "examples": [
             {
-              "name": "introspectExample",
               "description": "",
               "path": "/token/introspect",
               "pathParameters": {},
@@ -59955,7 +59926,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/activity_logs",
               "pathParameters": {
@@ -60161,7 +60131,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/collections",
               "pathParameters": {
@@ -60406,7 +60375,6 @@
           ],
           "examples": [
             {
-              "name": "collections_create_example",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/collections",
               "pathParameters": {
@@ -60598,7 +60566,6 @@
           ],
           "examples": [
             {
-              "name": "getExample",
               "description": "",
               "path": "/collections/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
@@ -60766,7 +60733,6 @@
           ],
           "examples": [
             {
-              "name": "deleteCollectionExample",
               "description": "",
               "path": "/collections/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
@@ -60914,7 +60880,6 @@
           ],
           "examples": [
             {
-              "name": "deleteExample",
               "description": "",
               "path": "/collections/580e63fc8c9a982ac9b8b745/fields/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
@@ -61125,7 +61090,6 @@
           ],
           "examples": [
             {
-              "name": "collectionsFieldsCreateExample",
               "description": "",
               "path": "/collections/580e63fc8c9a982ac9b8b745/fields",
               "pathParameters": {
@@ -61372,7 +61336,6 @@
           ],
           "examples": [
             {
-              "name": "collectionsFieldsUpdateExample",
               "description": "",
               "path": "/collections/580e63fc8c9a982ac9b8b745/fields/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
@@ -61656,7 +61619,6 @@
           ],
           "examples": [
             {
-              "name": "listItemsExample",
               "description": "",
               "path": "/collections/580e63fc8c9a982ac9b8b745/items",
               "pathParameters": {
@@ -61988,7 +61950,6 @@
           ],
           "examples": [
             {
-              "name": "collectionsItemsCreateItemExample",
               "description": "",
               "path": "/collections/580e63fc8c9a982ac9b8b745/items",
               "pathParameters": {
@@ -62277,7 +62238,6 @@
           ],
           "examples": [
             {
-              "name": "listItemsLiveExample",
               "description": "",
               "path": "/collections/580e63fc8c9a982ac9b8b745/items/live",
               "pathParameters": {
@@ -62609,7 +62569,6 @@
           ],
           "examples": [
             {
-              "name": "collectionsItemsCreateItemLiveExample",
               "description": "",
               "path": "/collections/580e63fc8c9a982ac9b8b745/items/live",
               "pathParameters": {
@@ -62921,7 +62880,6 @@
           ],
           "examples": [
             {
-              "name": "collectionsItemsCreateItemForMultipleLocalesExample",
               "description": "",
               "path": "/collections/580e63fc8c9a982ac9b8b745/items/bulk",
               "pathParameters": {
@@ -63108,7 +63066,6 @@
           ],
           "examples": [
             {
-              "name": "getItemExample",
               "description": "",
               "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754",
               "pathParameters": {
@@ -63300,7 +63257,6 @@
           ],
           "examples": [
             {
-              "name": "deleteItemExample",
               "description": "",
               "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754",
               "pathParameters": {
@@ -63576,7 +63532,6 @@
           ],
           "examples": [
             {
-              "name": "collectionsItemsUpdateItemExample",
               "description": "",
               "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754",
               "pathParameters": {
@@ -63800,7 +63755,6 @@
           ],
           "examples": [
             {
-              "name": "getItemLiveExample",
               "description": "",
               "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754/live",
               "pathParameters": {
@@ -63992,7 +63946,6 @@
           ],
           "examples": [
             {
-              "name": "deleteItemLiveExample",
               "description": "",
               "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754/live",
               "pathParameters": {
@@ -64268,7 +64221,6 @@
           ],
           "examples": [
             {
-              "name": "collectionsItemsUpdateItemLiveExample",
               "description": "",
               "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754/live",
               "pathParameters": {
@@ -64485,7 +64437,6 @@
           ],
           "examples": [
             {
-              "name": "collections_items_publish-item_example",
               "description": "",
               "path": "/collections/580e63fc8c9a982ac9b8b745/items/publish",
               "pathParameters": {
@@ -64669,7 +64620,6 @@
           ],
           "examples": [
             {
-              "name": "pages_scripts_get-custom-code_example",
               "description": "",
               "path": "/pages/63c720f9347c2139b248e552/custom_code",
               "pathParameters": {
@@ -64906,7 +64856,6 @@
           ],
           "examples": [
             {
-              "name": "pages_scripts_upsert-custom-code_example",
               "description": "",
               "path": "/pages/63c720f9347c2139b248e552/custom_code",
               "pathParameters": {
@@ -65115,7 +65064,6 @@
           ],
           "examples": [
             {
-              "name": "deleteCustomCodeExample",
               "description": "",
               "path": "/pages/63c720f9347c2139b248e552/custom_code",
               "pathParameters": {
@@ -65265,7 +65213,6 @@
           ],
           "examples": [
             {
-              "name": "sites_scripts_get-custom-code_example",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/custom_code",
               "pathParameters": {
@@ -65502,7 +65449,6 @@
           ],
           "examples": [
             {
-              "name": "sites_scripts_upsert-custom-code_example",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/custom_code",
               "pathParameters": {
@@ -65705,7 +65651,6 @@
           ],
           "examples": [
             {
-              "name": "deleteCustomCodeExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/custom_code",
               "pathParameters": {
@@ -65872,7 +65817,6 @@
           ],
           "examples": [
             {
-              "name": "listCustomCodeBlocksExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/custom_code/blocks",
               "pathParameters": {
@@ -66122,7 +66066,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/registered_scripts",
               "pathParameters": {
@@ -66390,7 +66333,6 @@
           ],
           "examples": [
             {
-              "name": "scriptsRegisterHostedExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/registered_scripts/hosted",
               "pathParameters": {
@@ -66638,7 +66580,6 @@
           ],
           "examples": [
             {
-              "name": "scriptsRegisterInlineExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/registered_scripts/inline",
               "pathParameters": {
@@ -66820,7 +66761,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/assets",
               "pathParameters": {
@@ -67059,7 +66999,6 @@
           ],
           "examples": [
             {
-              "name": "assetsCreateExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/assets",
               "pathParameters": {
@@ -67261,7 +67200,6 @@
           ],
           "examples": [
             {
-              "name": "getExample",
               "description": "",
               "path": "/assets/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
@@ -67441,7 +67379,6 @@
           ],
           "examples": [
             {
-              "name": "deleteExample",
               "description": "",
               "path": "/assets/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
@@ -67604,7 +67541,6 @@
           ],
           "examples": [
             {
-              "name": "assetsUpdateExample",
               "description": "",
               "path": "/assets/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
@@ -67804,7 +67740,6 @@
           ],
           "examples": [
             {
-              "name": "listFoldersExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/asset_folders",
               "pathParameters": {
@@ -68022,7 +67957,6 @@
           ],
           "examples": [
             {
-              "name": "assetsCreateFolderExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/asset_folders",
               "pathParameters": {
@@ -68198,7 +68132,6 @@
           ],
           "examples": [
             {
-              "name": "getFolderExample",
               "description": "",
               "path": "/asset_folders/6390c49774a71f0e3c1a08ee",
               "pathParameters": {
@@ -68375,7 +68308,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/webhooks",
               "pathParameters": {
@@ -68716,7 +68648,6 @@
           ],
           "examples": [
             {
-              "name": "webhooksCreateExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/webhooks",
               "pathParameters": {
@@ -68888,7 +68819,6 @@
           ],
           "examples": [
             {
-              "name": "getExample",
               "description": "",
               "path": "/webhooks/580e64008c9a982ac9b8b754",
               "pathParameters": {
@@ -69038,7 +68968,6 @@
           ],
           "examples": [
             {
-              "name": "deleteExample",
               "description": "",
               "path": "/webhooks/580e64008c9a982ac9b8b754",
               "pathParameters": {
@@ -69239,7 +69168,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/accessgroups",
               "pathParameters": {
@@ -69493,7 +69421,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/products",
               "pathParameters": {
@@ -69882,7 +69809,6 @@
           ],
           "examples": [
             {
-              "name": "productsCreateExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/products",
               "pathParameters": {
@@ -70229,7 +70155,6 @@
           ],
           "examples": [
             {
-              "name": "getExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/products/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
@@ -70618,7 +70543,6 @@
           ],
           "examples": [
             {
-              "name": "productsUpdateExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/products/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
@@ -70971,7 +70895,6 @@
           ],
           "examples": [
             {
-              "name": "productsCreateSkuExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/products/580e63fc8c9a982ac9b8b745/skus",
               "pathParameters": {
@@ -71302,7 +71225,6 @@
           ],
           "examples": [
             {
-              "name": "productsUpdateSkuExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/products/580e63fc8c9a982ac9b8b745/skus/5e8518516e147040726cc415",
               "pathParameters": {
@@ -71562,7 +71484,6 @@
           ],
           "examples": [
             {
-              "name": "getSettingsExample",
               "description": "",
               "path": "/sites/580e63e98c9a982ac9b8b741/ecommerce/settings",
               "pathParameters": {

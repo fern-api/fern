@@ -68,7 +68,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "generateContentExample",
               "description": "",
               "path": "/generateContent",
               "pathParameters": {

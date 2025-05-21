@@ -213,7 +213,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "getWorkspaceAuditLogsExample",
             "description": "",
             "path": "/test-extension-x-fern-type-name",
             "pathParameters": {},

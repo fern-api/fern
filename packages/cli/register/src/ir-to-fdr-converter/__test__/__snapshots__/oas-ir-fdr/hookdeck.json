@@ -16089,7 +16089,6 @@
           ],
           "examples": [
             {
-              "name": "getIssueTriggersExample",
               "description": "",
               "path": "/issue-triggers",
               "pathParameters": {},
@@ -16316,7 +16315,6 @@
           ],
           "examples": [
             {
-              "name": "issueTriggersCreateIssueTriggerExample",
               "description": "",
               "path": "/issue-triggers",
               "pathParameters": {},
@@ -16527,7 +16525,6 @@
           ],
           "examples": [
             {
-              "name": "issueTriggersUpsertIssueTriggerExample",
               "description": "",
               "path": "/issue-triggers",
               "pathParameters": {},
@@ -16697,7 +16694,6 @@
           ],
           "examples": [
             {
-              "name": "getIssueTriggerExample",
               "description": "",
               "path": "/issue-triggers/id",
               "pathParameters": {
@@ -16933,7 +16929,6 @@
           ],
           "examples": [
             {
-              "name": "issueTriggersUpdateIssueTriggerExample",
               "description": "",
               "path": "/issue-triggers/id",
               "pathParameters": {
@@ -17097,7 +17092,6 @@
           ],
           "examples": [
             {
-              "name": "deleteIssueTriggerExample",
               "description": "",
               "path": "/issue-triggers/id",
               "pathParameters": {
@@ -17220,7 +17214,6 @@
           ],
           "examples": [
             {
-              "name": "disableIssueTriggerExample",
               "description": "",
               "path": "/issue-triggers/id/disable",
               "pathParameters": {
@@ -17379,7 +17372,6 @@
           ],
           "examples": [
             {
-              "name": "enableIssueTriggerExample",
               "description": "",
               "path": "/issue-triggers/id/enable",
               "pathParameters": {
@@ -17614,7 +17606,6 @@
           ],
           "examples": [
             {
-              "name": "getAttemptsExample",
               "description": "",
               "path": "/attempts",
               "pathParameters": {},
@@ -17799,7 +17790,6 @@
           ],
           "examples": [
             {
-              "name": "getAttemptExample",
               "description": "",
               "path": "/attempts/id",
               "pathParameters": {
@@ -18088,7 +18078,6 @@
           ],
           "examples": [
             {
-              "name": "getBookmarksExample",
               "description": "",
               "path": "/bookmarks",
               "pathParameters": {},
@@ -18320,7 +18309,6 @@
           ],
           "examples": [
             {
-              "name": "bookmarksCreateBookmarkExample",
               "description": "",
               "path": "/bookmarks",
               "pathParameters": {},
@@ -18486,7 +18474,6 @@
           ],
           "examples": [
             {
-              "name": "getBookmarkExample",
               "description": "",
               "path": "/bookmarks/id",
               "pathParameters": {
@@ -18736,7 +18723,6 @@
           ],
           "examples": [
             {
-              "name": "bookmarksUpdateBookmarkExample",
               "description": "",
               "path": "/bookmarks/id",
               "pathParameters": {
@@ -18896,7 +18882,6 @@
           ],
           "examples": [
             {
-              "name": "deleteBookmarkExample",
               "description": "",
               "path": "/bookmarks/id",
               "pathParameters": {
@@ -19068,7 +19053,6 @@
           ],
           "examples": [
             {
-              "name": "bookmarksTriggerBookmarkExample",
               "description": "",
               "path": "/bookmarks/id/trigger",
               "pathParameters": {
@@ -19378,7 +19362,6 @@
           ],
           "examples": [
             {
-              "name": "getDestinationsExample",
               "description": "",
               "path": "/destinations",
               "pathParameters": {},
@@ -19634,7 +19617,6 @@
           ],
           "examples": [
             {
-              "name": "destinationsCreateDestinationExample",
               "description": "",
               "path": "/destinations",
               "pathParameters": {},
@@ -19875,7 +19857,6 @@
           ],
           "examples": [
             {
-              "name": "destinationsUpsertDestinationExample",
               "description": "",
               "path": "/destinations",
               "pathParameters": {},
@@ -20025,7 +20006,6 @@
           ],
           "examples": [
             {
-              "name": "getDestinationExample",
               "description": "",
               "path": "/destinations/id",
               "pathParameters": {
@@ -20307,7 +20287,6 @@
           ],
           "examples": [
             {
-              "name": "destinationsUpdateDestinationExample",
               "description": "",
               "path": "/destinations/id",
               "pathParameters": {
@@ -20459,7 +20438,6 @@
           ],
           "examples": [
             {
-              "name": "archiveDestinationExample",
               "description": "",
               "path": "/destinations/id/archive",
               "pathParameters": {
@@ -20602,7 +20580,6 @@
           ],
           "examples": [
             {
-              "name": "unarchiveDestinationExample",
               "description": "",
               "path": "/destinations/id/unarchive",
               "pathParameters": {
@@ -21023,7 +21000,6 @@
           ],
           "examples": [
             {
-              "name": "getEventsExample",
               "description": "",
               "path": "/events",
               "pathParameters": {},
@@ -21218,7 +21194,6 @@
           ],
           "examples": [
             {
-              "name": "getEventExample",
               "description": "",
               "path": "/events/id",
               "pathParameters": {
@@ -21391,7 +21366,6 @@
           ],
           "examples": [
             {
-              "name": "getRequestRawBodyExample",
               "description": "",
               "path": "/events/id/raw_body",
               "pathParameters": {
@@ -21514,7 +21488,6 @@
           ],
           "examples": [
             {
-              "name": "retryEventExample",
               "description": "",
               "path": "/events/id/retry",
               "pathParameters": {
@@ -21737,7 +21710,6 @@
           ],
           "examples": [
             {
-              "name": "muteEventExample",
               "description": "",
               "path": "/events/id/mute",
               "pathParameters": {
@@ -22050,7 +22022,6 @@
           ],
           "examples": [
             {
-              "name": "getEventBulkRetriesExample",
               "description": "",
               "path": "/bulk/events/retry",
               "pathParameters": {},
@@ -22241,7 +22212,6 @@
           ],
           "examples": [
             {
-              "name": "bulkRetryEventsCreateEventBulkRetryExample",
               "description": "",
               "path": "/bulk/events/retry",
               "pathParameters": {},
@@ -22401,7 +22371,6 @@
           ],
           "examples": [
             {
-              "name": "generateEventBulkRetryPlanExample",
               "description": "",
               "path": "/bulk/events/retry/plan",
               "pathParameters": {},
@@ -22526,7 +22495,6 @@
           ],
           "examples": [
             {
-              "name": "getEventBulkRetryExample",
               "description": "",
               "path": "/bulk/events/retry/id",
               "pathParameters": {
@@ -22677,7 +22645,6 @@
           ],
           "examples": [
             {
-              "name": "cancelEventBulkRetryExample",
               "description": "",
               "path": "/bulk/events/retry/id/cancel",
               "pathParameters": {
@@ -22968,7 +22935,6 @@
           ],
           "examples": [
             {
-              "name": "getIgnoredEventBulkRetriesExample",
               "description": "",
               "path": "/bulk/ignored-events/retry",
               "pathParameters": {},
@@ -23159,7 +23125,6 @@
           ],
           "examples": [
             {
-              "name": "bulkRetryIgnoredEventsCreateIgnoredEventBulkRetryExample",
               "description": "",
               "path": "/bulk/ignored-events/retry",
               "pathParameters": {},
@@ -23319,7 +23284,6 @@
           ],
           "examples": [
             {
-              "name": "generateIgnoredEventBulkRetryPlanExample",
               "description": "",
               "path": "/bulk/ignored-events/retry/plan",
               "pathParameters": {},
@@ -23444,7 +23408,6 @@
           ],
           "examples": [
             {
-              "name": "getIgnoredEventBulkRetryExample",
               "description": "",
               "path": "/bulk/ignored-events/retry/id",
               "pathParameters": {
@@ -23595,7 +23558,6 @@
           ],
           "examples": [
             {
-              "name": "cancelIgnoredEventBulkRetryExample",
               "description": "",
               "path": "/bulk/ignored-events/retry/id/cancel",
               "pathParameters": {
@@ -23774,7 +23736,6 @@
           ],
           "examples": [
             {
-              "name": "getIntegrationsExample",
               "description": "",
               "path": "/integrations",
               "pathParameters": {},
@@ -23996,7 +23957,6 @@
           ],
           "examples": [
             {
-              "name": "integrationsCreateIntegrationExample",
               "description": "",
               "path": "/integrations",
               "pathParameters": {},
@@ -24180,7 +24140,6 @@
           ],
           "examples": [
             {
-              "name": "getIntegrationExample",
               "description": "",
               "path": "/integrations/id",
               "pathParameters": {
@@ -24423,7 +24382,6 @@
           ],
           "examples": [
             {
-              "name": "integrationsUpdateIntegrationExample",
               "description": "",
               "path": "/integrations/id",
               "pathParameters": {
@@ -24585,7 +24543,6 @@
           ],
           "examples": [
             {
-              "name": "deleteIntegrationExample",
               "description": "",
               "path": "/integrations/id",
               "pathParameters": {
@@ -24738,7 +24695,6 @@
           ],
           "examples": [
             {
-              "name": "attachIntegrationToSourceExample",
               "description": "",
               "path": "/integrations/id/attach/source_id",
               "pathParameters": {
@@ -24892,7 +24848,6 @@
           ],
           "examples": [
             {
-              "name": "detachIntegrationToSourceExample",
               "description": "",
               "path": "/integrations/id/detach/source_id",
               "pathParameters": {
@@ -25178,7 +25133,6 @@
           ],
           "examples": [
             {
-              "name": "getIssuesExample",
               "description": "",
               "path": "/issues",
               "pathParameters": {},
@@ -25626,7 +25580,6 @@
           ],
           "examples": [
             {
-              "name": "getIssueCountExample",
               "description": "",
               "path": "/issues/count",
               "pathParameters": {},
@@ -25747,7 +25700,6 @@
           ],
           "examples": [
             {
-              "name": "getIssueExample",
               "description": "",
               "path": "/issues/id",
               "pathParameters": {
@@ -26063,7 +26015,6 @@
           ],
           "examples": [
             {
-              "name": "issuesUpdateIssueExample",
               "description": "",
               "path": "/issues/id",
               "pathParameters": {
@@ -26249,7 +26200,6 @@
           ],
           "examples": [
             {
-              "name": "dismissIssueExample",
               "description": "",
               "path": "/issues/id",
               "pathParameters": {
@@ -26646,7 +26596,6 @@
           ],
           "examples": [
             {
-              "name": "getRequestsExample",
               "description": "",
               "path": "/requests",
               "pathParameters": {},
@@ -26837,7 +26786,6 @@
           ],
           "examples": [
             {
-              "name": "getRequestExample",
               "description": "",
               "path": "/requests/id",
               "pathParameters": {
@@ -27006,7 +26954,6 @@
           ],
           "examples": [
             {
-              "name": "getRequestRawBodyExample",
               "description": "",
               "path": "/requests/id/raw_body",
               "pathParameters": {
@@ -27181,7 +27128,6 @@
           ],
           "examples": [
             {
-              "name": "requestsRetryRequestExample",
               "description": "",
               "path": "/requests/id/retry",
               "pathParameters": {
@@ -27726,7 +27672,6 @@
           ],
           "examples": [
             {
-              "name": "getRequestEventsExample",
               "description": "",
               "path": "/requests/id/events",
               "pathParameters": {
@@ -28020,7 +27965,6 @@
           ],
           "examples": [
             {
-              "name": "getRequestIgnoredEventsExample",
               "description": "",
               "path": "/requests/id/ignored_events",
               "pathParameters": {
@@ -28321,7 +28265,6 @@
           ],
           "examples": [
             {
-              "name": "getRequestBulkRetriesExample",
               "description": "",
               "path": "/bulk/requests/retry",
               "pathParameters": {},
@@ -28512,7 +28455,6 @@
           ],
           "examples": [
             {
-              "name": "bulkRetryRequestsCreateRequestBulkRetryExample",
               "description": "",
               "path": "/bulk/requests/retry",
               "pathParameters": {},
@@ -28672,7 +28614,6 @@
           ],
           "examples": [
             {
-              "name": "generateRequestBulkRetryPlanExample",
               "description": "",
               "path": "/bulk/requests/retry/plan",
               "pathParameters": {},
@@ -28797,7 +28738,6 @@
           ],
           "examples": [
             {
-              "name": "getRequestBulkRetryExample",
               "description": "",
               "path": "/bulk/requests/retry/id",
               "pathParameters": {
@@ -28948,7 +28888,6 @@
           ],
           "examples": [
             {
-              "name": "cancelRequestBulkRetryExample",
               "description": "",
               "path": "/bulk/requests/retry/id/cancel",
               "pathParameters": {
@@ -29207,7 +29146,6 @@
           ],
           "examples": [
             {
-              "name": "getRulesetsExample",
               "description": "",
               "path": "/rulesets",
               "pathParameters": {},
@@ -29425,7 +29363,6 @@
           ],
           "examples": [
             {
-              "name": "rulesetsCreateRulesetExample",
               "description": "",
               "path": "/rulesets",
               "pathParameters": {},
@@ -29628,7 +29565,6 @@
           ],
           "examples": [
             {
-              "name": "rulesetsUpsertRulesetExample",
               "description": "",
               "path": "/rulesets",
               "pathParameters": {},
@@ -29786,7 +29722,6 @@
           ],
           "examples": [
             {
-              "name": "getRulesetExample",
               "description": "",
               "path": "/rulesets/id",
               "pathParameters": {
@@ -30033,7 +29968,6 @@
           ],
           "examples": [
             {
-              "name": "rulesetsUpdateRulesetExample",
               "description": "",
               "path": "/rulesets/id",
               "pathParameters": {
@@ -30189,7 +30123,6 @@
           ],
           "examples": [
             {
-              "name": "archiveRulesetExample",
               "description": "",
               "path": "/rulesets/id/archive",
               "pathParameters": {
@@ -30340,7 +30273,6 @@
           ],
           "examples": [
             {
-              "name": "unarchiveRulesetExample",
               "description": "",
               "path": "/rulesets/id/unarchive",
               "pathParameters": {
@@ -30609,7 +30541,6 @@
           ],
           "examples": [
             {
-              "name": "getSourcesExample",
               "description": "",
               "path": "/sources",
               "pathParameters": {},
@@ -30803,7 +30734,6 @@
           ],
           "examples": [
             {
-              "name": "sourcesCreateSourceExample",
               "description": "",
               "path": "/sources",
               "pathParameters": {},
@@ -30982,7 +30912,6 @@
           ],
           "examples": [
             {
-              "name": "sourcesUpsertSourceExample",
               "description": "",
               "path": "/sources",
               "pathParameters": {},
@@ -31142,7 +31071,6 @@
           ],
           "examples": [
             {
-              "name": "getSourceExample",
               "description": "",
               "path": "/sources/id",
               "pathParameters": {
@@ -31365,7 +31293,6 @@
           ],
           "examples": [
             {
-              "name": "sourcesUpdateSourceExample",
               "description": "",
               "path": "/sources/id",
               "pathParameters": {
@@ -31523,7 +31450,6 @@
           ],
           "examples": [
             {
-              "name": "archiveSourceExample",
               "description": "",
               "path": "/sources/id/archive",
               "pathParameters": {
@@ -31676,7 +31602,6 @@
           ],
           "examples": [
             {
-              "name": "unarchiveSourceExample",
               "description": "",
               "path": "/sources/id/unarchive",
               "pathParameters": {
@@ -31859,7 +31784,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "notificationsToggleWebhookNotificationsExample",
               "description": "",
               "path": "/notifications/webhooks",
               "pathParameters": {},
@@ -32079,7 +32003,6 @@
           ],
           "examples": [
             {
-              "name": "getTransformationsExample",
               "description": "",
               "path": "/transformations",
               "pathParameters": {},
@@ -32280,7 +32203,6 @@
           ],
           "examples": [
             {
-              "name": "transformationsCreateTransformationExample",
               "description": "",
               "path": "/transformations",
               "pathParameters": {},
@@ -32468,7 +32390,6 @@
           ],
           "examples": [
             {
-              "name": "transformationsUpsertTransformationExample",
               "description": "",
               "path": "/transformations",
               "pathParameters": {},
@@ -32616,7 +32537,6 @@
           ],
           "examples": [
             {
-              "name": "getTransformationExample",
               "description": "",
               "path": "/transformations/id",
               "pathParameters": {
@@ -32832,7 +32752,6 @@
           ],
           "examples": [
             {
-              "name": "transformationsUpdateTransformationExample",
               "description": "",
               "path": "/transformations/id",
               "pathParameters": {
@@ -33056,7 +32975,6 @@
           ],
           "examples": [
             {
-              "name": "transformationsTestTransformationExample",
               "description": "",
               "path": "/transformations/run",
               "pathParameters": {},
@@ -33328,7 +33246,6 @@
           ],
           "examples": [
             {
-              "name": "getTransformationExecutionsExample",
               "description": "",
               "path": "/transformations/id/executions",
               "pathParameters": {
@@ -33554,7 +33471,6 @@
           ],
           "examples": [
             {
-              "name": "getTransformationExecutionExample",
               "description": "",
               "path": "/transformations/id/executions/execution_id",
               "pathParameters": {
@@ -33892,7 +33808,6 @@
           ],
           "examples": [
             {
-              "name": "getConnectionsExample",
               "description": "",
               "path": "/webhooks",
               "pathParameters": {},
@@ -34294,7 +34209,6 @@
           ],
           "examples": [
             {
-              "name": "connectionsCreateConnectionExample",
               "description": "",
               "path": "/webhooks",
               "pathParameters": {},
@@ -34681,7 +34595,6 @@
           ],
           "examples": [
             {
-              "name": "connectionsUpsertConnectionExample",
               "description": "",
               "path": "/webhooks",
               "pathParameters": {},
@@ -34951,7 +34864,6 @@
           ],
           "examples": [
             {
-              "name": "getConnectionExample",
               "description": "",
               "path": "/webhooks/id",
               "pathParameters": {
@@ -35309,7 +35221,6 @@
           ],
           "examples": [
             {
-              "name": "connectionsUpdateConnectionExample",
               "description": "",
               "path": "/webhooks/id",
               "pathParameters": {
@@ -35577,7 +35488,6 @@
           ],
           "examples": [
             {
-              "name": "archiveConnectionExample",
               "description": "",
               "path": "/webhooks/id/archive",
               "pathParameters": {
@@ -35840,7 +35750,6 @@
           ],
           "examples": [
             {
-              "name": "unarchiveConnectionExample",
               "description": "",
               "path": "/webhooks/id/unarchive",
               "pathParameters": {
@@ -36103,7 +36012,6 @@
           ],
           "examples": [
             {
-              "name": "pauseConnectionExample",
               "description": "",
               "path": "/webhooks/id/pause",
               "pathParameters": {
@@ -36366,7 +36274,6 @@
           ],
           "examples": [
             {
-              "name": "unpauseConnectionExample",
               "description": "",
               "path": "/webhooks/id/unpause",
               "pathParameters": {

@@ -17012,7 +17012,6 @@
           ],
           "examples": [
             {
-              "name": "accessCodesCreateExample",
               "description": "",
               "path": "/access_codes/create",
               "pathParameters": {},
@@ -17375,7 +17374,6 @@
           ],
           "examples": [
             {
-              "name": "accessCodesCreateMultipleExample",
               "description": "",
               "path": "/access_codes/create_multiple",
               "pathParameters": {},
@@ -17575,7 +17573,6 @@
           ],
           "examples": [
             {
-              "name": "accessCodesDeleteExample",
               "description": "",
               "path": "/access_codes/delete",
               "pathParameters": {},
@@ -17709,7 +17706,6 @@
           ],
           "examples": [
             {
-              "name": "accessCodesGenerateCodeExample",
               "description": "",
               "path": "/access_codes/generate_code",
               "pathParameters": {},
@@ -17903,7 +17899,6 @@
           ],
           "examples": [
             {
-              "name": "accessCodesGetExample",
               "description": "",
               "path": "/access_codes/get",
               "pathParameters": {},
@@ -18096,7 +18091,6 @@
           ],
           "examples": [
             {
-              "name": "accessCodesListExample",
               "description": "",
               "path": "/access_codes/list",
               "pathParameters": {},
@@ -18262,7 +18256,6 @@
           ],
           "examples": [
             {
-              "name": "accessCodesPullBackupAccessCodeExample",
               "description": "",
               "path": "/access_codes/pull_backup_access_code",
               "pathParameters": {},
@@ -18634,7 +18627,6 @@
           ],
           "examples": [
             {
-              "name": "accessCodesUpdateExample",
               "description": "",
               "path": "/access_codes/update",
               "pathParameters": {},
@@ -18781,7 +18773,6 @@
           ],
           "examples": [
             {
-              "name": "actionAttemptsGetExample",
               "description": "",
               "path": "/action_attempts/get",
               "pathParameters": {},
@@ -18918,7 +18909,6 @@
           ],
           "examples": [
             {
-              "name": "actionAttemptsListExample",
               "description": "",
               "path": "/action_attempts/list",
               "pathParameters": {},
@@ -19134,7 +19124,6 @@
           ],
           "examples": [
             {
-              "name": "clientSessionsCreateExample",
               "description": "",
               "path": "/client_sessions/create",
               "pathParameters": {},
@@ -19284,7 +19273,6 @@
           ],
           "examples": [
             {
-              "name": "clientSessionsDeleteExample",
               "description": "",
               "path": "/client_sessions/delete",
               "pathParameters": {},
@@ -19418,7 +19406,6 @@
           ],
           "examples": [
             {
-              "name": "clientSessionsGetExample",
               "description": "",
               "path": "/client_sessions/get",
               "pathParameters": {},
@@ -19632,7 +19619,6 @@
           ],
           "examples": [
             {
-              "name": "clientSessionsGetOrCreateExample",
               "description": "",
               "path": "/client_sessions/get_or_create",
               "pathParameters": {},
@@ -19841,7 +19827,6 @@
           ],
           "examples": [
             {
-              "name": "clientSessionsGrantAccessExample",
               "description": "",
               "path": "/client_sessions/grant_access",
               "pathParameters": {},
@@ -20041,7 +20026,6 @@
           ],
           "examples": [
             {
-              "name": "clientSessionsListExample",
               "description": "",
               "path": "/client_sessions/list",
               "pathParameters": {},
@@ -20195,7 +20179,6 @@
           ],
           "examples": [
             {
-              "name": "clientSessionsRevokeExample",
               "description": "",
               "path": "/client_sessions/revoke",
               "pathParameters": {},
@@ -20417,7 +20400,6 @@
           ],
           "examples": [
             {
-              "name": "connectWebviewsCreateExample",
               "description": "",
               "path": "/connect_webviews/create",
               "pathParameters": {},
@@ -20583,7 +20565,6 @@
           ],
           "examples": [
             {
-              "name": "connectWebviewsDeleteExample",
               "description": "",
               "path": "/connect_webviews/delete",
               "pathParameters": {},
@@ -20703,7 +20684,6 @@
           ],
           "examples": [
             {
-              "name": "connectWebviewsGetExample",
               "description": "",
               "path": "/connect_webviews/get",
               "pathParameters": {},
@@ -20911,7 +20891,6 @@
           ],
           "examples": [
             {
-              "name": "connectWebviewsListExample",
               "description": "",
               "path": "/connect_webviews/list",
               "pathParameters": {},
@@ -21104,7 +21083,6 @@
           ],
           "examples": [
             {
-              "name": "connectedAccountsDeleteExample",
               "description": "",
               "path": "/connected_accounts/delete",
               "pathParameters": {},
@@ -21215,7 +21193,6 @@
           ],
           "examples": [
             {
-              "name": "connectedAccountsGetExample",
               "description": "",
               "path": "/connected_accounts/get",
               "pathParameters": {},
@@ -21379,7 +21356,6 @@
           ],
           "examples": [
             {
-              "name": "connectedAccountsListExample",
               "description": "",
               "path": "/connected_accounts/list",
               "pathParameters": {},
@@ -21564,7 +21540,6 @@
           ],
           "examples": [
             {
-              "name": "connectedAccountsUpdateExample",
               "description": "",
               "path": "/connected_accounts/update",
               "pathParameters": {},
@@ -21728,7 +21703,6 @@
           ],
           "examples": [
             {
-              "name": "devicesDeleteExample",
               "description": "",
               "path": "/devices/delete",
               "pathParameters": {},
@@ -21863,7 +21837,6 @@
           ],
           "examples": [
             {
-              "name": "devicesGetExample",
               "description": "",
               "path": "/devices/get",
               "pathParameters": {},
@@ -22226,7 +22199,6 @@
           ],
           "examples": [
             {
-              "name": "devicesListExample",
               "description": "",
               "path": "/devices/list",
               "pathParameters": {},
@@ -22422,7 +22394,6 @@
           ],
           "examples": [
             {
-              "name": "devicesListDeviceProvidersExample",
               "description": "",
               "path": "/devices/list_device_providers",
               "pathParameters": {},
@@ -22615,7 +22586,6 @@
           ],
           "examples": [
             {
-              "name": "devicesUpdateExample",
               "description": "",
               "path": "/devices/update",
               "pathParameters": {},
@@ -22776,7 +22746,6 @@
           ],
           "examples": [
             {
-              "name": "eventsGetExample",
               "description": "",
               "path": "/events/get",
               "pathParameters": {},
@@ -23047,7 +23016,6 @@
           ],
           "examples": [
             {
-              "name": "eventsListExample",
               "description": "",
               "path": "/events/list",
               "pathParameters": {},
@@ -23220,7 +23188,6 @@
           ],
           "examples": [
             {
-              "name": "locksGetExample",
               "description": "",
               "path": "/locks/get",
               "pathParameters": {},
@@ -23659,7 +23626,6 @@
           ],
           "examples": [
             {
-              "name": "locksListExample",
               "description": "",
               "path": "/locks/list",
               "pathParameters": {},
@@ -23948,7 +23914,6 @@
           ],
           "examples": [
             {
-              "name": "locksLockDoorExample",
               "description": "",
               "path": "/locks/lock_door",
               "pathParameters": {},
@@ -24095,7 +24060,6 @@
           ],
           "examples": [
             {
-              "name": "locksUnlockDoorExample",
               "description": "",
               "path": "/locks/unlock_door",
               "pathParameters": {},
@@ -24239,7 +24203,6 @@
           ],
           "examples": [
             {
-              "name": "networksGetExample",
               "description": "",
               "path": "/networks/get",
               "pathParameters": {},
@@ -24360,7 +24323,6 @@
           ],
           "examples": [
             {
-              "name": "networksListExample",
               "description": "",
               "path": "/networks/list",
               "pathParameters": {},
@@ -24501,7 +24463,6 @@
           ],
           "examples": [
             {
-              "name": "phonesDeactivateExample",
               "description": "",
               "path": "/phones/deactivate",
               "pathParameters": {},
@@ -24624,7 +24585,6 @@
           ],
           "examples": [
             {
-              "name": "phonesListExample",
               "description": "",
               "path": "/phones/list",
               "pathParameters": {},
@@ -24887,7 +24847,6 @@
           ],
           "examples": [
             {
-              "name": "thermostatsCoolExample",
               "description": "",
               "path": "/thermostats/cool",
               "pathParameters": {},
@@ -25036,7 +24995,6 @@
           ],
           "examples": [
             {
-              "name": "thermostatsGetExample",
               "description": "",
               "path": "/thermostats/get",
               "pathParameters": {},
@@ -25265,7 +25223,6 @@
           ],
           "examples": [
             {
-              "name": "thermostatsHeatExample",
               "description": "",
               "path": "/thermostats/heat",
               "pathParameters": {},
@@ -25460,7 +25417,6 @@
           ],
           "examples": [
             {
-              "name": "thermostatsHeatCoolExample",
               "description": "",
               "path": "/thermostats/heat_cool",
               "pathParameters": {},
@@ -25765,7 +25721,6 @@
           ],
           "examples": [
             {
-              "name": "thermostatsListExample",
               "description": "",
               "path": "/thermostats/list",
               "pathParameters": {},
@@ -25974,7 +25929,6 @@
           ],
           "examples": [
             {
-              "name": "thermostatsOffExample",
               "description": "",
               "path": "/thermostats/off",
               "pathParameters": {},
@@ -26141,7 +26095,6 @@
           ],
           "examples": [
             {
-              "name": "thermostatsSetFanModeExample",
               "description": "",
               "path": "/thermostats/set_fan_mode",
               "pathParameters": {},
@@ -26282,7 +26235,6 @@
           ],
           "examples": [
             {
-              "name": "thermostatsUpdateExample",
               "description": "",
               "path": "/thermostats/update",
               "pathParameters": {},
@@ -26426,7 +26378,6 @@
           ],
           "examples": [
             {
-              "name": "userIdentitiesAddAcsUserExample",
               "description": "",
               "path": "/user_identities/add_acs_user",
               "pathParameters": {},
@@ -26601,7 +26552,6 @@
           ],
           "examples": [
             {
-              "name": "userIdentitiesCreateExample",
               "description": "",
               "path": "/user_identities/create",
               "pathParameters": {},
@@ -26737,7 +26687,6 @@
           ],
           "examples": [
             {
-              "name": "userIdentitiesDeleteExample",
               "description": "",
               "path": "/user_identities/delete",
               "pathParameters": {},
@@ -26848,7 +26797,6 @@
           ],
           "examples": [
             {
-              "name": "userIdentitiesGetExample",
               "description": "",
               "path": "/user_identities/get",
               "pathParameters": {},
@@ -26998,7 +26946,6 @@
           ],
           "examples": [
             {
-              "name": "userIdentitiesGrantAccessToDeviceExample",
               "description": "",
               "path": "/user_identities/grant_access_to_device",
               "pathParameters": {},
@@ -27123,7 +27070,6 @@
           ],
           "examples": [
             {
-              "name": "userIdentitiesListExample",
               "description": "",
               "path": "/user_identities/list",
               "pathParameters": {},
@@ -27263,7 +27209,6 @@
           ],
           "examples": [
             {
-              "name": "userIdentitiesListAccessibleDevicesExample",
               "description": "",
               "path": "/user_identities/list_accessible_devices",
               "pathParameters": {},
@@ -27543,7 +27488,6 @@
           ],
           "examples": [
             {
-              "name": "userIdentitiesListAcsSystemsExample",
               "description": "",
               "path": "/user_identities/list_acs_systems",
               "pathParameters": {},
@@ -27725,7 +27669,6 @@
           ],
           "examples": [
             {
-              "name": "userIdentitiesListAcsUsersExample",
               "description": "",
               "path": "/user_identities/list_acs_users",
               "pathParameters": {},
@@ -27905,7 +27848,6 @@
           ],
           "examples": [
             {
-              "name": "userIdentitiesRemoveAcsUserExample",
               "description": "",
               "path": "/user_identities/remove_acs_user",
               "pathParameters": {},
@@ -28037,7 +27979,6 @@
           ],
           "examples": [
             {
-              "name": "userIdentitiesRevokeAccessToDeviceExample",
               "description": "",
               "path": "/user_identities/revoke_access_to_device",
               "pathParameters": {},
@@ -28222,7 +28163,6 @@
           ],
           "examples": [
             {
-              "name": "userIdentitiesUpdateExample",
               "description": "",
               "path": "/user_identities/update",
               "pathParameters": {},
@@ -28369,7 +28309,6 @@
           ],
           "examples": [
             {
-              "name": "webhooksCreateExample",
               "description": "",
               "path": "/webhooks/create",
               "pathParameters": {},
@@ -28504,7 +28443,6 @@
           ],
           "examples": [
             {
-              "name": "webhooksDeleteExample",
               "description": "",
               "path": "/webhooks/delete",
               "pathParameters": {},
@@ -28623,7 +28561,6 @@
           ],
           "examples": [
             {
-              "name": "webhooksGetExample",
               "description": "",
               "path": "/webhooks/get",
               "pathParameters": {},
@@ -28737,7 +28674,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/webhooks/list",
               "pathParameters": {},
@@ -28879,7 +28815,6 @@
           ],
           "examples": [
             {
-              "name": "webhooksUpdateExample",
               "description": "",
               "path": "/webhooks/update",
               "pathParameters": {},
@@ -29077,7 +29012,6 @@
           ],
           "examples": [
             {
-              "name": "workspacesCreateExample",
               "description": "",
               "path": "/workspaces/create",
               "pathParameters": {},
@@ -29189,7 +29123,6 @@
           ],
           "examples": [
             {
-              "name": "getExample",
               "description": "",
               "path": "/workspaces/get",
               "pathParameters": {},
@@ -29292,7 +29225,6 @@
           ],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/workspaces/list",
               "pathParameters": {},
@@ -29399,7 +29331,6 @@
           ],
           "examples": [
             {
-              "name": "resetSandboxExample",
               "description": "",
               "path": "/workspaces/reset_sandbox",
               "pathParameters": {},
@@ -29555,7 +29486,6 @@
           ],
           "examples": [
             {
-              "name": "accessCodesSimulateCreateUnmanagedAccessCodeExample",
               "description": "",
               "path": "/access_codes/simulate/create_unmanaged_access_code",
               "pathParameters": {},
@@ -29766,7 +29696,6 @@
           ],
           "examples": [
             {
-              "name": "accessCodesUnmanagedConvertToManagedExample",
               "description": "",
               "path": "/access_codes/unmanaged/convert_to_managed",
               "pathParameters": {},
@@ -29899,7 +29828,6 @@
           ],
           "examples": [
             {
-              "name": "accessCodesUnmanagedDeleteExample",
               "description": "",
               "path": "/access_codes/unmanaged/delete",
               "pathParameters": {},
@@ -30061,7 +29989,6 @@
           ],
           "examples": [
             {
-              "name": "accessCodesUnmanagedGetExample",
               "description": "",
               "path": "/access_codes/unmanaged/get",
               "pathParameters": {},
@@ -30217,7 +30144,6 @@
           ],
           "examples": [
             {
-              "name": "accessCodesUnmanagedListExample",
               "description": "",
               "path": "/access_codes/unmanaged/list",
               "pathParameters": {},
@@ -30414,7 +30340,6 @@
           ],
           "examples": [
             {
-              "name": "accessCodesUnmanagedUpdateExample",
               "description": "",
               "path": "/access_codes/unmanaged/update",
               "pathParameters": {},
@@ -30573,7 +30498,6 @@
           ],
           "examples": [
             {
-              "name": "acsAccessGroupsAddUserExample",
               "description": "",
               "path": "/acs/access_groups/add_user",
               "pathParameters": {},
@@ -30695,7 +30619,6 @@
           ],
           "examples": [
             {
-              "name": "acsAccessGroupsGetExample",
               "description": "",
               "path": "/acs/access_groups/get",
               "pathParameters": {},
@@ -30855,7 +30778,6 @@
           ],
           "examples": [
             {
-              "name": "acsAccessGroupsListExample",
               "description": "",
               "path": "/acs/access_groups/list",
               "pathParameters": {},
@@ -30999,7 +30921,6 @@
           ],
           "examples": [
             {
-              "name": "acsAccessGroupsListUsersExample",
               "description": "",
               "path": "/acs/access_groups/list_users",
               "pathParameters": {},
@@ -31179,7 +31100,6 @@
           ],
           "examples": [
             {
-              "name": "acsAccessGroupsRemoveUserExample",
               "description": "",
               "path": "/acs/access_groups/remove_user",
               "pathParameters": {},
@@ -31311,7 +31231,6 @@
           ],
           "examples": [
             {
-              "name": "acsCredentialPoolsListExample",
               "description": "",
               "path": "/acs/credential_pools/list",
               "pathParameters": {},
@@ -31511,7 +31430,6 @@
           ],
           "examples": [
             {
-              "name": "acsCredentialProvisioningAutomationsLaunchExample",
               "description": "",
               "path": "/acs/credential_provisioning_automations/launch",
               "pathParameters": {},
@@ -31667,7 +31585,6 @@
           ],
           "examples": [
             {
-              "name": "acsCredentialsAssignExample",
               "description": "",
               "path": "/acs/credentials/assign",
               "pathParameters": {},
@@ -31973,7 +31890,6 @@
           ],
           "examples": [
             {
-              "name": "acsCredentialsCreateExample",
               "description": "",
               "path": "/acs/credentials/create",
               "pathParameters": {},
@@ -32181,7 +32097,6 @@
           ],
           "examples": [
             {
-              "name": "acsCredentialsDeleteExample",
               "description": "",
               "path": "/acs/credentials/delete",
               "pathParameters": {},
@@ -32301,7 +32216,6 @@
           ],
           "examples": [
             {
-              "name": "acsCredentialsGetExample",
               "description": "",
               "path": "/acs/credentials/get",
               "pathParameters": {},
@@ -32509,7 +32423,6 @@
           ],
           "examples": [
             {
-              "name": "acsCredentialsListExample",
               "description": "",
               "path": "/acs/credentials/list",
               "pathParameters": {},
@@ -32719,7 +32632,6 @@
           ],
           "examples": [
             {
-              "name": "acsCredentialsListAccessibleEntrancesExample",
               "description": "",
               "path": "/acs/credentials/list_accessible_entrances",
               "pathParameters": {},
@@ -32909,7 +32821,6 @@
           ],
           "examples": [
             {
-              "name": "acsCredentialsUnassignExample",
               "description": "",
               "path": "/acs/credentials/unassign",
               "pathParameters": {},
@@ -33142,7 +33053,6 @@
           ],
           "examples": [
             {
-              "name": "acsCredentialsUpdateExample",
               "description": "",
               "path": "/acs/credentials/update",
               "pathParameters": {},
@@ -33358,7 +33268,6 @@
           ],
           "examples": [
             {
-              "name": "acsEntrancesGetExample",
               "description": "",
               "path": "/acs/entrances/get",
               "pathParameters": {},
@@ -33544,7 +33453,6 @@
           ],
           "examples": [
             {
-              "name": "acsEntrancesGrantAccessExample",
               "description": "",
               "path": "/acs/entrances/grant_access",
               "pathParameters": {},
@@ -33682,7 +33590,6 @@
           ],
           "examples": [
             {
-              "name": "acsEntrancesListExample",
               "description": "",
               "path": "/acs/entrances/list",
               "pathParameters": {},
@@ -33871,7 +33778,6 @@
           ],
           "examples": [
             {
-              "name": "acsEntrancesListCredentialsWithAccessExample",
               "description": "",
               "path": "/acs/entrances/list_credentials_with_access",
               "pathParameters": {},
@@ -34091,7 +33997,6 @@
           ],
           "examples": [
             {
-              "name": "acsSystemsGetExample",
               "description": "",
               "path": "/acs/systems/get",
               "pathParameters": {},
@@ -34272,7 +34177,6 @@
           ],
           "examples": [
             {
-              "name": "acsSystemsListExample",
               "description": "",
               "path": "/acs/systems/list",
               "pathParameters": {},
@@ -34450,7 +34354,6 @@
           ],
           "examples": [
             {
-              "name": "acsSystemsListCompatibleCredentialManagerAcsSystemsExample",
               "description": "",
               "path": "/acs/systems/list_compatible_credential_manager_acs_systems",
               "pathParameters": {},
@@ -34652,7 +34555,6 @@
           ],
           "examples": [
             {
-              "name": "acsUsersAddToAccessGroupExample",
               "description": "",
               "path": "/acs/users/add_to_access_group",
               "pathParameters": {},
@@ -34867,7 +34769,6 @@
           ],
           "examples": [
             {
-              "name": "acsUsersCreateExample",
               "description": "",
               "path": "/acs/users/create",
               "pathParameters": {},
@@ -35033,7 +34934,6 @@
           ],
           "examples": [
             {
-              "name": "acsUsersDeleteExample",
               "description": "",
               "path": "/acs/users/delete",
               "pathParameters": {},
@@ -35153,7 +35053,6 @@
           ],
           "examples": [
             {
-              "name": "acsUsersGetExample",
               "description": "",
               "path": "/acs/users/get",
               "pathParameters": {},
@@ -35362,7 +35261,6 @@
           ],
           "examples": [
             {
-              "name": "acsUsersListExample",
               "description": "",
               "path": "/acs/users/list",
               "pathParameters": {},
@@ -35528,7 +35426,6 @@
           ],
           "examples": [
             {
-              "name": "acsUsersListAccessibleEntrancesExample",
               "description": "",
               "path": "/acs/users/list_accessible_entrances",
               "pathParameters": {},
@@ -35718,7 +35615,6 @@
           ],
           "examples": [
             {
-              "name": "acsUsersRemoveFromAccessGroupExample",
               "description": "",
               "path": "/acs/users/remove_from_access_group",
               "pathParameters": {},
@@ -35840,7 +35736,6 @@
           ],
           "examples": [
             {
-              "name": "acsUsersRevokeAccessToAllEntrancesExample",
               "description": "",
               "path": "/acs/users/revoke_access_to_all_entrances",
               "pathParameters": {},
@@ -35960,7 +35855,6 @@
           ],
           "examples": [
             {
-              "name": "acsUsersSuspendExample",
               "description": "",
               "path": "/acs/users/suspend",
               "pathParameters": {},
@@ -36080,7 +35974,6 @@
           ],
           "examples": [
             {
-              "name": "acsUsersUnsuspendExample",
               "description": "",
               "path": "/acs/users/unsuspend",
               "pathParameters": {},
@@ -36277,7 +36170,6 @@
           ],
           "examples": [
             {
-              "name": "acsUsersUpdateExample",
               "description": "",
               "path": "/acs/users/update",
               "pathParameters": {},
@@ -36407,7 +36299,6 @@
           ],
           "examples": [
             {
-              "name": "devicesSimulateConnectExample",
               "description": "",
               "path": "/devices/simulate/connect",
               "pathParameters": {},
@@ -36527,7 +36418,6 @@
           ],
           "examples": [
             {
-              "name": "devicesSimulateDisconnectExample",
               "description": "",
               "path": "/devices/simulate/disconnect",
               "pathParameters": {},
@@ -36647,7 +36537,6 @@
           ],
           "examples": [
             {
-              "name": "devicesSimulateRemoveExample",
               "description": "",
               "path": "/devices/simulate/remove",
               "pathParameters": {},
@@ -36792,7 +36681,6 @@
           ],
           "examples": [
             {
-              "name": "devicesUnmanagedGetExample",
               "description": "",
               "path": "/devices/unmanaged/get",
               "pathParameters": {},
@@ -37197,7 +37085,6 @@
           ],
           "examples": [
             {
-              "name": "devicesUnmanagedListExample",
               "description": "",
               "path": "/devices/unmanaged/list",
               "pathParameters": {},
@@ -37444,7 +37331,6 @@
           ],
           "examples": [
             {
-              "name": "devicesUnmanagedUpdateExample",
               "description": "",
               "path": "/devices/unmanaged/update",
               "pathParameters": {},
@@ -37655,7 +37541,6 @@
           ],
           "examples": [
             {
-              "name": "noiseSensorsNoiseThresholdsCreateExample",
               "description": "",
               "path": "/noise_sensors/noise_thresholds/create",
               "pathParameters": {},
@@ -37834,7 +37719,6 @@
           ],
           "examples": [
             {
-              "name": "noiseSensorsNoiseThresholdsDeleteExample",
               "description": "",
               "path": "/noise_sensors/noise_thresholds/delete",
               "pathParameters": {},
@@ -37970,7 +37854,6 @@
           ],
           "examples": [
             {
-              "name": "noiseSensorsNoiseThresholdsGetExample",
               "description": "",
               "path": "/noise_sensors/noise_thresholds/get",
               "pathParameters": {},
@@ -38120,7 +38003,6 @@
           ],
           "examples": [
             {
-              "name": "noiseSensorsNoiseThresholdsListExample",
               "description": "",
               "path": "/noise_sensors/noise_thresholds/list",
               "pathParameters": {},
@@ -38345,7 +38227,6 @@
           ],
           "examples": [
             {
-              "name": "noiseSensorsNoiseThresholdsUpdateExample",
               "description": "",
               "path": "/noise_sensors/noise_thresholds/update",
               "pathParameters": {},
@@ -38491,7 +38372,6 @@
           ],
           "examples": [
             {
-              "name": "noiseSensorsSimulateTriggerNoiseThresholdExample",
               "description": "",
               "path": "/noise_sensors/simulate/trigger_noise_threshold",
               "pathParameters": {},
@@ -38653,7 +38533,6 @@
           ],
           "examples": [
             {
-              "name": "phonesSimulateCreateSandboxPhoneExample",
               "description": "",
               "path": "/phones/simulate/create_sandbox_phone",
               "pathParameters": {},
@@ -39010,7 +38889,6 @@
           ],
           "examples": [
             {
-              "name": "thermostatsClimateSettingSchedulesCreateExample",
               "description": "",
               "path": "/thermostats/climate_setting_schedules/create",
               "pathParameters": {},
@@ -39170,7 +39048,6 @@
           ],
           "examples": [
             {
-              "name": "thermostatsClimateSettingSchedulesDeleteExample",
               "description": "",
               "path": "/thermostats/climate_setting_schedules/delete",
               "pathParameters": {},
@@ -39306,7 +39183,6 @@
           ],
           "examples": [
             {
-              "name": "thermostatsClimateSettingSchedulesGetExample",
               "description": "",
               "path": "/thermostats/climate_setting_schedules/get",
               "pathParameters": {},
@@ -39470,7 +39346,6 @@
           ],
           "examples": [
             {
-              "name": "thermostatsClimateSettingSchedulesListExample",
               "description": "",
               "path": "/thermostats/climate_setting_schedules/list",
               "pathParameters": {},
@@ -39770,7 +39645,6 @@
           ],
           "examples": [
             {
-              "name": "thermostatsClimateSettingSchedulesUpdateExample",
               "description": "",
               "path": "/thermostats/climate_setting_schedules/update",
               "pathParameters": {},
@@ -39936,7 +39810,6 @@
           ],
           "examples": [
             {
-              "name": "userIdentitiesEnrollmentAutomationsDeleteExample",
               "description": "",
               "path": "/user_identities/enrollment_automations/delete",
               "pathParameters": {},
@@ -40056,7 +39929,6 @@
           ],
           "examples": [
             {
-              "name": "userIdentitiesEnrollmentAutomationsGetExample",
               "description": "",
               "path": "/user_identities/enrollment_automations/get",
               "pathParameters": {},
@@ -40238,7 +40110,6 @@
           ],
           "examples": [
             {
-              "name": "userIdentitiesEnrollmentAutomationsLaunchExample",
               "description": "",
               "path": "/user_identities/enrollment_automations/launch",
               "pathParameters": {},
@@ -40376,7 +40247,6 @@
           ],
           "examples": [
             {
-              "name": "userIdentitiesEnrollmentAutomationsListExample",
               "description": "",
               "path": "/user_identities/enrollment_automations/list",
               "pathParameters": {},

@@ -10217,7 +10217,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/account-details",
               "pathParameters": {},
@@ -10334,7 +10333,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/account-token/public_token",
               "pathParameters": {
@@ -10450,7 +10448,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/available-actions",
               "pathParameters": {},
@@ -10797,7 +10794,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/bank-info",
               "pathParameters": {},
@@ -10995,7 +10991,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/bank-info/id",
               "pathParameters": {
@@ -11271,7 +11266,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/benefits",
               "pathParameters": {},
@@ -11447,7 +11441,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/benefits/id",
               "pathParameters": {
@@ -11699,7 +11692,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/companies",
               "pathParameters": {},
@@ -11858,7 +11850,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/companies/id",
               "pathParameters": {
@@ -11971,7 +11962,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "createExample",
               "description": "",
               "path": "/delete-account",
               "pathParameters": {},
@@ -12269,7 +12259,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/employee-payroll-runs",
               "pathParameters": {},
@@ -12558,7 +12547,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/employee-payroll-runs/id",
               "pathParameters": {
@@ -13180,7 +13168,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/employees",
               "pathParameters": {},
@@ -13408,7 +13395,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "employeesCreateExample",
               "description": "",
               "path": "/employees",
               "pathParameters": {},
@@ -13728,7 +13714,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/employees/id",
               "pathParameters": {
@@ -13921,7 +13906,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "employeesIgnoreCreateExample",
               "description": "",
               "path": "/employees/ignore/model_id",
               "pathParameters": {
@@ -14005,7 +13989,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "metaPostRetrieveExample",
               "description": "",
               "path": "/employees/meta/post",
               "pathParameters": {},
@@ -14290,7 +14273,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/employments",
               "pathParameters": {},
@@ -14496,7 +14478,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/employments/id",
               "pathParameters": {
@@ -14636,7 +14617,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "generateKeyCreateExample",
               "description": "",
               "path": "/generate-key",
               "pathParameters": {},
@@ -14894,7 +14874,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/groups",
               "pathParameters": {},
@@ -15073,7 +15052,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/groups/id",
               "pathParameters": {
@@ -15354,7 +15332,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/issues",
               "pathParameters": {},
@@ -15474,7 +15451,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/issues/id",
               "pathParameters": {
@@ -15586,7 +15562,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "linkTokenCreateExample",
               "description": "",
               "path": "/link-token",
               "pathParameters": {},
@@ -15856,7 +15831,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/linked-accounts",
               "pathParameters": {},
@@ -16170,7 +16144,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/locations",
               "pathParameters": {},
@@ -16361,7 +16334,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/locations/id",
               "pathParameters": {
@@ -16509,7 +16481,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "passthroughCreateExample",
               "description": "",
               "path": "/passthrough",
               "pathParameters": {},
@@ -16746,7 +16717,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/pay-groups",
               "pathParameters": {},
@@ -16897,7 +16867,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/pay-groups/id",
               "pathParameters": {
@@ -17224,7 +17193,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/payroll-runs",
               "pathParameters": {},
@@ -17407,7 +17375,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/payroll-runs/id",
               "pathParameters": {
@@ -17536,7 +17503,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "regenerateKeyCreateExample",
               "description": "",
               "path": "/regenerate-key",
               "pathParameters": {},
@@ -17640,7 +17606,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "Employees that started on or after January 1st, 2022",
               "description": "",
               "path": "/selective-sync/configurations",
               "pathParameters": {},
@@ -17760,7 +17725,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "Employees that started on or after January 1st, 2022",
               "description": "",
               "path": "/selective-sync/configurations",
               "pathParameters": {},
@@ -17932,7 +17896,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "Employees that started on or after January 1st, 2022",
               "description": "",
               "path": "/selective-sync/meta",
               "pathParameters": {},
@@ -18095,7 +18058,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/sync-status",
               "pathParameters": {},
@@ -18216,7 +18178,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "syncStatusResyncCreateExample",
               "description": "",
               "path": "/sync-status/resync",
               "pathParameters": {},
@@ -18470,7 +18431,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/teams",
               "pathParameters": {},
@@ -18636,7 +18596,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/teams/id",
               "pathParameters": {
@@ -18959,7 +18918,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/time-off",
               "pathParameters": {},
@@ -19138,7 +19096,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "timeOffCreateExample",
               "description": "",
               "path": "/time-off",
               "pathParameters": {},
@@ -19399,7 +19356,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/time-off/id",
               "pathParameters": {
@@ -19525,7 +19481,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "metaPostRetrieveExample",
               "description": "",
               "path": "/time-off/meta/post",
               "pathParameters": {},
@@ -19810,7 +19765,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/time-off-balances",
               "pathParameters": {},
@@ -20004,7 +19958,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "retrieveExample",
               "description": "",
               "path": "/time-off-balances/id",
               "pathParameters": {
@@ -20133,7 +20086,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "listExample",
               "description": "",
               "path": "/webhook-receivers",
               "pathParameters": {},
@@ -20236,7 +20188,6 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "webhookReceiversCreateExample",
               "description": "",
               "path": "/webhook-receivers",
               "pathParameters": {},

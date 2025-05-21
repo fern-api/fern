@@ -150,7 +150,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "getExample",
             "description": "",
             "path": "/test",
             "pathParameters": {},
@@ -225,7 +224,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "postExample",
             "description": "",
             "path": "/test",
             "pathParameters": {},
