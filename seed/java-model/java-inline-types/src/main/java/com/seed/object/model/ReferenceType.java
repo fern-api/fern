@@ -53,6 +53,9 @@ public final class ReferenceType {
     }
 
     public interface FooStage {
+        /**
+         * lorem ipsum
+         */
         _FinalStage foo(String foo);
 
         Builder from(ReferenceType other);
@@ -75,7 +78,7 @@ public final class ReferenceType {
         }
 
         /**
-         * <p>lorem ipsum</p>
+         * lorem ipsum<p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
