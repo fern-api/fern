@@ -1,14 +1,5 @@
 // requestBuilder.ts
-import {
-    HandleRequestOptions,
-    http,
-    HttpHandler,
-    HttpResponse,
-    HttpResponseResolver,
-    JsonBodyType,
-    passthrough,
-    RequestHandlerOptions,
-} from "msw";
+import { http, HttpHandler, HttpResponse, HttpResponseResolver, JsonBodyType } from "msw";
 import { withHeaders } from "./withHeaders";
 import { withJson } from "./withJson";
 
@@ -28,33 +19,42 @@ interface MethodStage {
 }
 
 // Stage 2: Headers configuration
-interface HeaderStage {
+interface HeaderStage extends BodyStage, ResponseStage {
     header(name: string, value: string): BodyStage;
     headers(headers: Record<string, string>): BodyStage;
-    respondWith(resolver: HttpResponseResolver): HttpHandler;
 }
 
 // Stage 3: Body configuration or skip to response
-interface BodyStage {
+interface BodyStage extends ResponseStage {
     requestJsonBody(body: unknown): ResponseStage;
-    respondWith(resolver: HttpResponseResolver): HttpHandler;
 }
 
-// Stage 4: Final response configuration
+// Stage 4: Response configuration
 interface ResponseStage {
-    respondWithJsonBody(body: unknown): HttpHandler;
-    respondWith(resolver: HttpResponseResolver): HttpHandler;
+    respondWithJsonBody(body: unknown): BuildStage;
+    respondWith(resolver: HttpResponseResolver): BuildStage;
+}
+
+// Stage 5: Final configuration
+interface BuildStage {
+    build(): HttpHandler;
+}
+
+export interface HttpHandlerBuilderOptions {
+    onBuild?: (handler: HttpHandler) => void;
+    once?: boolean;
 }
 
 // Internal implementation class that implements all stages
-class HttpHandlerBuilder implements MethodStage, HeaderStage, BodyStage, ResponseStage {
+class HttpHandlerBuilder implements MethodStage, HeaderStage, BodyStage, ResponseStage, BuildStage {
     private method: HttpMethod = "get";
     #baseUrl: string = "";
     private path: string = "/";
-    private predicates: ((resolver: HttpResponseResolver) => HttpResponseResolver)[] = [];
-    private readonly handlerOptions?: RequestHandlerOptions;
+    private readonly predicates: ((resolver: HttpResponseResolver) => HttpResponseResolver)[] = [];
+    private responseResolver: HttpResponseResolver | undefined = undefined;
+    private readonly handlerOptions?: HttpHandlerBuilderOptions;
 
-    constructor(options?: RequestHandlerOptions) {
+    constructor(options?: HttpHandlerBuilderOptions) {
         this.handlerOptions = options;
     }
 
@@ -110,7 +110,7 @@ class HttpHandlerBuilder implements MethodStage, HeaderStage, BodyStage, Respons
         this.path = path;
         return this;
     }
-    
+
     header(name: string, value: string): BodyStage {
         this.predicates.push((resolver) => withHeaders({ [name]: value }, resolver));
         return this;
@@ -126,17 +126,24 @@ class HttpHandlerBuilder implements MethodStage, HeaderStage, BodyStage, Respons
         return this;
     }
 
-    respondWith(resolver: HttpResponseResolver): HttpHandler {
-        // this.predicates.push(() => resolver);
-        // Apply all predicates by composing them in reverse order
-        const finalResolver = this.predicates.reduceRight((acc, predicate) => predicate(acc), resolver);
-        // Create the handler using the final resolver
-        const handler = http[this.method](this.buildPath(), finalResolver, this.handlerOptions);
-        return handler;
+    respondWith(resolver: HttpResponseResolver): BuildStage {
+        this.responseResolver = resolver;
+        return this;
     }
 
-    respondWithJsonBody(body: JsonBodyType): HttpHandler {
+    respondWithJsonBody(body: JsonBodyType): BuildStage {
         return this.respondWith(() => HttpResponse.json(body));
+    }
+
+    public build(): HttpHandler {
+        if (!this.responseResolver) {
+            throw new Error("Response resolver is not defined. Please call respondWith or respondWithJsonBody.");
+        }
+        const finalResolver = this.predicates.reduceRight((acc, predicate) => predicate(acc), this.responseResolver);
+        // Create the handler using the final resolver
+        const handler = http[this.method](this.buildPath(), finalResolver, this.handlerOptions);
+        this.handlerOptions?.onBuild?.(handler);
+        return handler;
     }
 
     private buildPath(): string {
@@ -153,6 +160,6 @@ class HttpHandlerBuilder implements MethodStage, HeaderStage, BodyStage, Respons
 /**
  * Create a new request builder instance
  */
-export function requestBuilder(options?: RequestHandlerOptions): MethodStage {
+export function httpHandlerBuilder(options?: HttpHandlerBuilderOptions): MethodStage {
     return new HttpHandlerBuilder(options);
 }
