@@ -731,7 +731,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -795,7 +795,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -2879,15 +2879,6 @@
         }
       }
     },
-    "GetHealthResult1": {
-      "description": "An error object if unhealthy.",
-      "name": "GetHealthResult1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "GetHealthResult": {
       "description": "Result is 'ok' if healthy, or an error object if unhealthy.",
       "name": "GetHealthResult",
@@ -2904,11 +2895,18 @@
             }
           },
           {
-            "typeName": "GetHealthResult1",
             "description": "An error object if unhealthy.",
             "type": {
-              "type": "id",
-              "value": "GetHealthResult1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -2930,11 +2928,18 @@
             }
           },
           {
-            "typeName": "GetHealthResult1",
             "description": "An error object if unhealthy.",
             "type": {
-              "type": "id",
-              "value": "GetHealthResult1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -3074,7 +3079,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3087,7 +3092,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3100,7 +3105,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3113,7 +3118,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3126,7 +3131,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3199,7 +3204,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3212,7 +3217,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3225,7 +3230,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3238,7 +3243,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3251,7 +3256,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3273,7 +3278,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3286,7 +3291,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3299,7 +3304,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3334,7 +3339,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3347,7 +3352,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3360,7 +3365,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -5354,7 +5359,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -5469,7 +5474,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -5844,7 +5849,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -5959,7 +5964,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -5981,15 +5986,6 @@
         ]
       }
     },
-    "GetTransactionResultTransaction0": {
-      "description": "The transaction details in JSON format.",
-      "name": "GetTransactionResultTransaction0",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "GetTransactionResultTransaction": {
       "description": "The transaction details, either in JSON format or encoded binary data.",
       "name": "GetTransactionResultTransaction",
@@ -5997,11 +5993,18 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "GetTransactionResultTransaction0",
             "description": "The transaction details in JSON format.",
             "type": {
-              "type": "id",
-              "value": "GetTransactionResultTransaction0"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
@@ -6043,7 +6046,7 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -6435,7 +6438,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -6554,7 +6557,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }

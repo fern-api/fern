@@ -97,20 +97,20 @@
       "shape": {
         "aliasOf": {
           "primitive": {
-            "v1": "INTEGER",
+            "v1": "DOUBLE",
             "v2": {
               "validation": {},
-              "type": "integer"
+              "type": "double"
             }
           },
           "type": "primitive"
         },
         "resolvedType": {
           "primitive": {
-            "v1": "INTEGER",
+            "v1": "DOUBLE",
             "v2": {
               "validation": {},
-              "type": "integer"
+              "type": "double"
             }
           },
           "type": "primitive"
@@ -1583,10 +1583,10 @@
                   "container": {
                     "nullable": {
                       "primitive": {
-                        "v1": "INTEGER",
+                        "v1": "DOUBLE",
                         "v2": {
                           "validation": {},
-                          "type": "integer"
+                          "type": "double"
                         }
                       },
                       "type": "primitive"
@@ -1634,10 +1634,10 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "INTEGER",
+                    "v1": "DOUBLE",
                     "v2": {
                       "validation": {},
-                      "type": "integer"
+                      "type": "double"
                     }
                   },
                   "type": "primitive"
@@ -3132,10 +3132,10 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "INTEGER",
+                    "v1": "DOUBLE",
                     "v2": {
                       "validation": {},
-                      "type": "integer"
+                      "type": "double"
                     }
                   },
                   "type": "primitive"
@@ -7653,10 +7653,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -7694,10 +7694,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -8178,10 +8178,10 @@
                   "container": {
                     "list": {
                       "primitive": {
-                        "v1": "INTEGER",
+                        "v1": "DOUBLE",
                         "v2": {
                           "validation": {},
-                          "type": "integer"
+                          "type": "double"
                         }
                       },
                       "type": "primitive"
@@ -8296,10 +8296,10 @@
                   "container": {
                     "nullable": {
                       "primitive": {
-                        "v1": "INTEGER",
+                        "v1": "DOUBLE",
                         "v2": {
                           "validation": {},
-                          "type": "integer"
+                          "type": "double"
                         }
                       },
                       "type": "primitive"
@@ -8402,10 +8402,10 @@
                   "container": {
                     "nullable": {
                       "primitive": {
-                        "v1": "INTEGER",
+                        "v1": "DOUBLE",
                         "v2": {
                           "validation": {},
-                          "type": "integer"
+                          "type": "double"
                         }
                       },
                       "type": "primitive"
@@ -8553,10 +8553,10 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "INTEGER",
+                    "v1": "DOUBLE",
                     "v2": {
                       "validation": {},
-                      "type": "integer"
+                      "type": "double"
                     }
                   },
                   "type": "primitive"
@@ -8600,10 +8600,10 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "INTEGER",
+                    "v1": "DOUBLE",
                     "v2": {
                       "validation": {},
-                      "type": "integer"
+                      "type": "double"
                     }
                   },
                   "type": "primitive"
@@ -8647,10 +8647,10 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "INTEGER",
+                    "v1": "DOUBLE",
                     "v2": {
                       "validation": {},
-                      "type": "integer"
+                      "type": "double"
                     }
                   },
                   "type": "primitive"
@@ -8694,10 +8694,10 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "INTEGER",
+                    "v1": "DOUBLE",
                     "v2": {
                       "validation": {},
-                      "type": "integer"
+                      "type": "double"
                     }
                   },
                   "type": "primitive"
@@ -8835,10 +8835,10 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "INTEGER",
+                    "v1": "DOUBLE",
                     "v2": {
                       "validation": {},
-                      "type": "integer"
+                      "type": "double"
                     }
                   },
                   "type": "primitive"
@@ -8929,10 +8929,10 @@
               "container": {
                 "optional": {
                   "primitive": {
-                    "v1": "INTEGER",
+                    "v1": "DOUBLE",
                     "v2": {
                       "validation": {},
-                      "type": "integer"
+                      "type": "double"
                     }
                   },
                   "type": "primitive"
@@ -9513,10 +9513,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -9554,10 +9554,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -10038,10 +10038,10 @@
                   "container": {
                     "list": {
                       "primitive": {
-                        "v1": "INTEGER",
+                        "v1": "DOUBLE",
                         "v2": {
                           "validation": {},
-                          "type": "integer"
+                          "type": "double"
                         }
                       },
                       "type": "primitive"
@@ -10474,10 +10474,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -15346,7 +15346,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "d48545b6",
+                "id": "3eecffc0",
                 "url": "/info/",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -15488,30 +15488,30 @@
                           "height": 1,
                           "width": 1,
                           "geo_location": {
-                            "latitude": 1,
-                            "longitude": 1
+                            "latitude": 1.1,
+                            "longitude": 1.1
                           },
                           "datetime_original": "datetime_original",
                           "dpi": [
-                            1,
-                            1
+                            1.1,
+                            1.1
                           ]
                         },
                         "video_info": {
-                          "duration": 1,
+                          "duration": 1.1,
                           "format": "format",
-                          "bitrate": 1,
+                          "bitrate": 1.1,
                           "audio": {
-                            "bitrate": 1,
+                            "bitrate": 1.1,
                             "codec": "codec",
-                            "sample_rate": 1,
+                            "sample_rate": 1.1,
                             "channels": "channels"
                           },
                           "video": {
-                            "height": 1,
-                            "width": 1,
-                            "frame_rate": 1,
-                            "bitrate": 1,
+                            "height": 1.1,
+                            "width": 1.1,
+                            "frame_rate": 1.1,
+                            "bitrate": 1.1,
                             "codec": "codec"
                           }
                         },
@@ -15529,13 +15529,13 @@
                             "height": 1,
                             "width": 1,
                             "geo_location": {
-                              "latitude": 1,
-                              "longitude": 1
+                              "latitude": 1.1,
+                              "longitude": 1.1
                             },
                             "datetime_original": "datetime_original",
                             "dpi": [
-                              1,
-                              1
+                              1.1,
+                              1.1
                             ]
                           },
                           "video": {
@@ -15560,14 +15560,14 @@
                               {
                                 "height": 1,
                                 "width": 1,
-                                "frame_rate": 1,
+                                "frame_rate": 1.1,
                                 "bitrate": 1,
                                 "codec": "codec"
                               },
                               {
                                 "height": 1,
                                 "width": 1,
-                                "frame_rate": 1,
+                                "frame_rate": 1.1,
                                 "bitrate": 1,
                                 "codec": "codec"
                               }
@@ -16131,13 +16131,13 @@
                                   "height": 1,
                                   "width": 1,
                                   "geo_location": {
-                                    "latitude": 1,
-                                    "longitude": 1
+                                    "latitude": 1.1,
+                                    "longitude": 1.1
                                   },
                                   "datetime_original": "datetime_original",
                                   "dpi": [
-                                    1,
-                                    1
+                                    1.1,
+                                    1.1
                                   ]
                                 },
                                 "shape": {
@@ -16625,15 +16625,15 @@
                                         },
                                         "value": {
                                           "jsonExample": {
-                                            "latitude": 1,
-                                            "longitude": 1
+                                            "latitude": 1.1,
+                                            "longitude": 1.1
                                           },
                                           "shape": {
                                             "container": {
                                               "nullable": {
                                                 "jsonExample": {
-                                                  "latitude": 1,
-                                                  "longitude": 1
+                                                  "latitude": 1.1,
+                                                  "longitude": 1.1
                                                 },
                                                 "shape": {
                                                   "shape": {
@@ -16688,11 +16688,11 @@
                                                           }
                                                         },
                                                         "value": {
-                                                          "jsonExample": 1,
+                                                          "jsonExample": 1.1,
                                                           "shape": {
                                                             "primitive": {
-                                                              "integer": 1,
-                                                              "type": "integer"
+                                                              "double": 1.1,
+                                                              "type": "double"
                                                             },
                                                             "type": "primitive"
                                                           }
@@ -16748,11 +16748,11 @@
                                                           }
                                                         },
                                                         "value": {
-                                                          "jsonExample": 1,
+                                                          "jsonExample": 1.1,
                                                           "shape": {
                                                             "primitive": {
-                                                              "integer": 1,
-                                                              "type": "integer"
+                                                              "double": 1.1,
+                                                              "type": "double"
                                                             },
                                                             "type": "primitive"
                                                           }
@@ -16958,35 +16958,35 @@
                                         },
                                         "value": {
                                           "jsonExample": [
-                                            1,
-                                            1
+                                            1.1,
+                                            1.1
                                           ],
                                           "shape": {
                                             "container": {
                                               "nullable": {
                                                 "jsonExample": [
-                                                  1,
-                                                  1
+                                                  1.1,
+                                                  1.1
                                                 ],
                                                 "shape": {
                                                   "container": {
                                                     "list": [
                                                       {
-                                                        "jsonExample": 1,
+                                                        "jsonExample": 1.1,
                                                         "shape": {
                                                           "primitive": {
-                                                            "integer": 1,
-                                                            "type": "integer"
+                                                            "double": 1.1,
+                                                            "type": "double"
                                                           },
                                                           "type": "primitive"
                                                         }
                                                       },
                                                       {
-                                                        "jsonExample": 1,
+                                                        "jsonExample": 1.1,
                                                         "shape": {
                                                           "primitive": {
-                                                            "integer": 1,
-                                                            "type": "integer"
+                                                            "double": 1.1,
+                                                            "type": "double"
                                                           },
                                                           "type": "primitive"
                                                         }
@@ -16994,10 +16994,10 @@
                                                     ],
                                                     "itemType": {
                                                       "primitive": {
-                                                        "v1": "INTEGER",
+                                                        "v1": "DOUBLE",
                                                         "v2": {
                                                           "validation": {},
-                                                          "type": "integer"
+                                                          "type": "double"
                                                         }
                                                       },
                                                       "type": "primitive"
@@ -17011,10 +17011,10 @@
                                                 "container": {
                                                   "list": {
                                                     "primitive": {
-                                                      "v1": "INTEGER",
+                                                      "v1": "DOUBLE",
                                                       "v2": {
                                                         "validation": {},
-                                                        "type": "integer"
+                                                        "type": "double"
                                                       }
                                                     },
                                                     "type": "primitive"
@@ -17113,20 +17113,20 @@
                               },
                               "value": {
                                 "jsonExample": {
-                                  "duration": 1,
+                                  "duration": 1.1,
                                   "format": "format",
-                                  "bitrate": 1,
+                                  "bitrate": 1.1,
                                   "audio": {
-                                    "bitrate": 1,
+                                    "bitrate": 1.1,
                                     "codec": "codec",
-                                    "sample_rate": 1,
+                                    "sample_rate": 1.1,
                                     "channels": "channels"
                                   },
                                   "video": {
-                                    "height": 1,
-                                    "width": 1,
-                                    "frame_rate": 1,
-                                    "bitrate": 1,
+                                    "height": 1.1,
+                                    "width": 1.1,
+                                    "frame_rate": 1.1,
+                                    "bitrate": 1.1,
                                     "codec": "codec"
                                   }
                                 },
@@ -17183,25 +17183,25 @@
                                           }
                                         },
                                         "value": {
-                                          "jsonExample": 1,
+                                          "jsonExample": 1.1,
                                           "shape": {
                                             "container": {
                                               "optional": {
-                                                "jsonExample": 1,
+                                                "jsonExample": 1.1,
                                                 "shape": {
                                                   "primitive": {
-                                                    "integer": 1,
-                                                    "type": "integer"
+                                                    "double": 1.1,
+                                                    "type": "double"
                                                   },
                                                   "type": "primitive"
                                                 }
                                               },
                                               "valueType": {
                                                 "primitive": {
-                                                  "v1": "INTEGER",
+                                                  "v1": "DOUBLE",
                                                   "v2": {
                                                     "validation": {},
-                                                    "type": "integer"
+                                                    "type": "double"
                                                   }
                                                 },
                                                 "type": "primitive"
@@ -17343,25 +17343,25 @@
                                           }
                                         },
                                         "value": {
-                                          "jsonExample": 1,
+                                          "jsonExample": 1.1,
                                           "shape": {
                                             "container": {
                                               "optional": {
-                                                "jsonExample": 1,
+                                                "jsonExample": 1.1,
                                                 "shape": {
                                                   "primitive": {
-                                                    "integer": 1,
-                                                    "type": "integer"
+                                                    "double": 1.1,
+                                                    "type": "double"
                                                   },
                                                   "type": "primitive"
                                                 }
                                               },
                                               "valueType": {
                                                 "primitive": {
-                                                  "v1": "INTEGER",
+                                                  "v1": "DOUBLE",
                                                   "v2": {
                                                     "validation": {},
-                                                    "type": "integer"
+                                                    "type": "double"
                                                   }
                                                 },
                                                 "type": "primitive"
@@ -17423,27 +17423,27 @@
                                         },
                                         "value": {
                                           "jsonExample": {
-                                            "bitrate": 1,
+                                            "bitrate": 1.1,
                                             "codec": "codec",
-                                            "sample_rate": 1,
+                                            "sample_rate": 1.1,
                                             "channels": "channels"
                                           },
                                           "shape": {
                                             "container": {
                                               "optional": {
                                                 "jsonExample": {
-                                                  "bitrate": 1,
+                                                  "bitrate": 1.1,
                                                   "codec": "codec",
-                                                  "sample_rate": 1,
+                                                  "sample_rate": 1.1,
                                                   "channels": "channels"
                                                 },
                                                 "shape": {
                                                   "container": {
                                                     "nullable": {
                                                       "jsonExample": {
-                                                        "bitrate": 1,
+                                                        "bitrate": 1.1,
                                                         "codec": "codec",
-                                                        "sample_rate": 1,
+                                                        "sample_rate": 1.1,
                                                         "channels": "channels"
                                                       },
                                                       "shape": {
@@ -17499,29 +17499,29 @@
                                                                 }
                                                               },
                                                               "value": {
-                                                                "jsonExample": 1,
+                                                                "jsonExample": 1.1,
                                                                 "shape": {
                                                                   "container": {
                                                                     "optional": {
-                                                                      "jsonExample": 1,
+                                                                      "jsonExample": 1.1,
                                                                       "shape": {
                                                                         "container": {
                                                                           "nullable": {
-                                                                            "jsonExample": 1,
+                                                                            "jsonExample": 1.1,
                                                                             "shape": {
                                                                               "primitive": {
-                                                                                "integer": 1,
-                                                                                "type": "integer"
+                                                                                "double": 1.1,
+                                                                                "type": "double"
                                                                               },
                                                                               "type": "primitive"
                                                                             }
                                                                           },
                                                                           "valueType": {
                                                                             "primitive": {
-                                                                              "v1": "INTEGER",
+                                                                              "v1": "DOUBLE",
                                                                               "v2": {
                                                                                 "validation": {},
-                                                                                "type": "integer"
+                                                                                "type": "double"
                                                                               }
                                                                             },
                                                                             "type": "primitive"
@@ -17535,10 +17535,10 @@
                                                                       "container": {
                                                                         "nullable": {
                                                                           "primitive": {
-                                                                            "v1": "INTEGER",
+                                                                            "v1": "DOUBLE",
                                                                             "v2": {
                                                                               "validation": {},
-                                                                              "type": "integer"
+                                                                              "type": "double"
                                                                             }
                                                                           },
                                                                           "type": "primitive"
@@ -17709,29 +17709,29 @@
                                                                 }
                                                               },
                                                               "value": {
-                                                                "jsonExample": 1,
+                                                                "jsonExample": 1.1,
                                                                 "shape": {
                                                                   "container": {
                                                                     "optional": {
-                                                                      "jsonExample": 1,
+                                                                      "jsonExample": 1.1,
                                                                       "shape": {
                                                                         "container": {
                                                                           "nullable": {
-                                                                            "jsonExample": 1,
+                                                                            "jsonExample": 1.1,
                                                                             "shape": {
                                                                               "primitive": {
-                                                                                "integer": 1,
-                                                                                "type": "integer"
+                                                                                "double": 1.1,
+                                                                                "type": "double"
                                                                               },
                                                                               "type": "primitive"
                                                                             }
                                                                           },
                                                                           "valueType": {
                                                                             "primitive": {
-                                                                              "v1": "INTEGER",
+                                                                              "v1": "DOUBLE",
                                                                               "v2": {
                                                                                 "validation": {},
-                                                                                "type": "integer"
+                                                                                "type": "double"
                                                                               }
                                                                             },
                                                                             "type": "primitive"
@@ -17745,10 +17745,10 @@
                                                                       "container": {
                                                                         "nullable": {
                                                                           "primitive": {
-                                                                            "v1": "INTEGER",
+                                                                            "v1": "DOUBLE",
                                                                             "v2": {
                                                                               "validation": {},
-                                                                              "type": "integer"
+                                                                              "type": "double"
                                                                             }
                                                                           },
                                                                           "type": "primitive"
@@ -18025,20 +18025,20 @@
                                         },
                                         "value": {
                                           "jsonExample": {
-                                            "height": 1,
-                                            "width": 1,
-                                            "frame_rate": 1,
-                                            "bitrate": 1,
+                                            "height": 1.1,
+                                            "width": 1.1,
+                                            "frame_rate": 1.1,
+                                            "bitrate": 1.1,
                                             "codec": "codec"
                                           },
                                           "shape": {
                                             "container": {
                                               "optional": {
                                                 "jsonExample": {
-                                                  "height": 1,
-                                                  "width": 1,
-                                                  "frame_rate": 1,
-                                                  "bitrate": 1,
+                                                  "height": 1.1,
+                                                  "width": 1.1,
+                                                  "frame_rate": 1.1,
+                                                  "bitrate": 1.1,
                                                   "codec": "codec"
                                                 },
                                                 "shape": {
@@ -18094,25 +18094,25 @@
                                                           }
                                                         },
                                                         "value": {
-                                                          "jsonExample": 1,
+                                                          "jsonExample": 1.1,
                                                           "shape": {
                                                             "container": {
                                                               "optional": {
-                                                                "jsonExample": 1,
+                                                                "jsonExample": 1.1,
                                                                 "shape": {
                                                                   "primitive": {
-                                                                    "integer": 1,
-                                                                    "type": "integer"
+                                                                    "double": 1.1,
+                                                                    "type": "double"
                                                                   },
                                                                   "type": "primitive"
                                                                 }
                                                               },
                                                               "valueType": {
                                                                 "primitive": {
-                                                                  "v1": "INTEGER",
+                                                                  "v1": "DOUBLE",
                                                                   "v2": {
                                                                     "validation": {},
-                                                                    "type": "integer"
+                                                                    "type": "double"
                                                                   }
                                                                 },
                                                                 "type": "primitive"
@@ -18173,25 +18173,25 @@
                                                           }
                                                         },
                                                         "value": {
-                                                          "jsonExample": 1,
+                                                          "jsonExample": 1.1,
                                                           "shape": {
                                                             "container": {
                                                               "optional": {
-                                                                "jsonExample": 1,
+                                                                "jsonExample": 1.1,
                                                                 "shape": {
                                                                   "primitive": {
-                                                                    "integer": 1,
-                                                                    "type": "integer"
+                                                                    "double": 1.1,
+                                                                    "type": "double"
                                                                   },
                                                                   "type": "primitive"
                                                                 }
                                                               },
                                                               "valueType": {
                                                                 "primitive": {
-                                                                  "v1": "INTEGER",
+                                                                  "v1": "DOUBLE",
                                                                   "v2": {
                                                                     "validation": {},
-                                                                    "type": "integer"
+                                                                    "type": "double"
                                                                   }
                                                                 },
                                                                 "type": "primitive"
@@ -18252,25 +18252,25 @@
                                                           }
                                                         },
                                                         "value": {
-                                                          "jsonExample": 1,
+                                                          "jsonExample": 1.1,
                                                           "shape": {
                                                             "container": {
                                                               "optional": {
-                                                                "jsonExample": 1,
+                                                                "jsonExample": 1.1,
                                                                 "shape": {
                                                                   "primitive": {
-                                                                    "integer": 1,
-                                                                    "type": "integer"
+                                                                    "double": 1.1,
+                                                                    "type": "double"
                                                                   },
                                                                   "type": "primitive"
                                                                 }
                                                               },
                                                               "valueType": {
                                                                 "primitive": {
-                                                                  "v1": "INTEGER",
+                                                                  "v1": "DOUBLE",
                                                                   "v2": {
                                                                     "validation": {},
-                                                                    "type": "integer"
+                                                                    "type": "double"
                                                                   }
                                                                 },
                                                                 "type": "primitive"
@@ -18331,25 +18331,25 @@
                                                           }
                                                         },
                                                         "value": {
-                                                          "jsonExample": 1,
+                                                          "jsonExample": 1.1,
                                                           "shape": {
                                                             "container": {
                                                               "optional": {
-                                                                "jsonExample": 1,
+                                                                "jsonExample": 1.1,
                                                                 "shape": {
                                                                   "primitive": {
-                                                                    "integer": 1,
-                                                                    "type": "integer"
+                                                                    "double": 1.1,
+                                                                    "type": "double"
                                                                   },
                                                                   "type": "primitive"
                                                                 }
                                                               },
                                                               "valueType": {
                                                                 "primitive": {
-                                                                  "v1": "INTEGER",
+                                                                  "v1": "DOUBLE",
                                                                   "v2": {
                                                                     "validation": {},
-                                                                    "type": "integer"
+                                                                    "type": "double"
                                                                   }
                                                                 },
                                                                 "type": "primitive"
@@ -18604,13 +18604,13 @@
                                     "height": 1,
                                     "width": 1,
                                     "geo_location": {
-                                      "latitude": 1,
-                                      "longitude": 1
+                                      "latitude": 1.1,
+                                      "longitude": 1.1
                                     },
                                     "datetime_original": "datetime_original",
                                     "dpi": [
-                                      1,
-                                      1
+                                      1.1,
+                                      1.1
                                     ]
                                   },
                                   "video": {
@@ -18635,14 +18635,14 @@
                                       {
                                         "height": 1,
                                         "width": 1,
-                                        "frame_rate": 1,
+                                        "frame_rate": 1.1,
                                         "bitrate": 1,
                                         "codec": "codec"
                                       },
                                       {
                                         "height": 1,
                                         "width": 1,
-                                        "frame_rate": 1,
+                                        "frame_rate": 1.1,
                                         "bitrate": 1,
                                         "codec": "codec"
                                       }
@@ -19028,13 +19028,13 @@
                                             "height": 1,
                                             "width": 1,
                                             "geo_location": {
-                                              "latitude": 1,
-                                              "longitude": 1
+                                              "latitude": 1.1,
+                                              "longitude": 1.1
                                             },
                                             "datetime_original": "datetime_original",
                                             "dpi": [
-                                              1,
-                                              1
+                                              1.1,
+                                              1.1
                                             ]
                                           },
                                           "shape": {
@@ -19048,13 +19048,13 @@
                                                   "height": 1,
                                                   "width": 1,
                                                   "geo_location": {
-                                                    "latitude": 1,
-                                                    "longitude": 1
+                                                    "latitude": 1.1,
+                                                    "longitude": 1.1
                                                   },
                                                   "datetime_original": "datetime_original",
                                                   "dpi": [
-                                                    1,
-                                                    1
+                                                    1.1,
+                                                    1.1
                                                   ]
                                                 },
                                                 "shape": {
@@ -19542,15 +19542,15 @@
                                                         },
                                                         "value": {
                                                           "jsonExample": {
-                                                            "latitude": 1,
-                                                            "longitude": 1
+                                                            "latitude": 1.1,
+                                                            "longitude": 1.1
                                                           },
                                                           "shape": {
                                                             "container": {
                                                               "nullable": {
                                                                 "jsonExample": {
-                                                                  "latitude": 1,
-                                                                  "longitude": 1
+                                                                  "latitude": 1.1,
+                                                                  "longitude": 1.1
                                                                 },
                                                                 "shape": {
                                                                   "shape": {
@@ -19605,11 +19605,11 @@
                                                                           }
                                                                         },
                                                                         "value": {
-                                                                          "jsonExample": 1,
+                                                                          "jsonExample": 1.1,
                                                                           "shape": {
                                                                             "primitive": {
-                                                                              "integer": 1,
-                                                                              "type": "integer"
+                                                                              "double": 1.1,
+                                                                              "type": "double"
                                                                             },
                                                                             "type": "primitive"
                                                                           }
@@ -19665,11 +19665,11 @@
                                                                           }
                                                                         },
                                                                         "value": {
-                                                                          "jsonExample": 1,
+                                                                          "jsonExample": 1.1,
                                                                           "shape": {
                                                                             "primitive": {
-                                                                              "integer": 1,
-                                                                              "type": "integer"
+                                                                              "double": 1.1,
+                                                                              "type": "double"
                                                                             },
                                                                             "type": "primitive"
                                                                           }
@@ -19875,35 +19875,35 @@
                                                         },
                                                         "value": {
                                                           "jsonExample": [
-                                                            1,
-                                                            1
+                                                            1.1,
+                                                            1.1
                                                           ],
                                                           "shape": {
                                                             "container": {
                                                               "nullable": {
                                                                 "jsonExample": [
-                                                                  1,
-                                                                  1
+                                                                  1.1,
+                                                                  1.1
                                                                 ],
                                                                 "shape": {
                                                                   "container": {
                                                                     "list": [
                                                                       {
-                                                                        "jsonExample": 1,
+                                                                        "jsonExample": 1.1,
                                                                         "shape": {
                                                                           "primitive": {
-                                                                            "integer": 1,
-                                                                            "type": "integer"
+                                                                            "double": 1.1,
+                                                                            "type": "double"
                                                                           },
                                                                           "type": "primitive"
                                                                         }
                                                                       },
                                                                       {
-                                                                        "jsonExample": 1,
+                                                                        "jsonExample": 1.1,
                                                                         "shape": {
                                                                           "primitive": {
-                                                                            "integer": 1,
-                                                                            "type": "integer"
+                                                                            "double": 1.1,
+                                                                            "type": "double"
                                                                           },
                                                                           "type": "primitive"
                                                                         }
@@ -19911,10 +19911,10 @@
                                                                     ],
                                                                     "itemType": {
                                                                       "primitive": {
-                                                                        "v1": "INTEGER",
+                                                                        "v1": "DOUBLE",
                                                                         "v2": {
                                                                           "validation": {},
-                                                                          "type": "integer"
+                                                                          "type": "double"
                                                                         }
                                                                       },
                                                                       "type": "primitive"
@@ -19928,10 +19928,10 @@
                                                                 "container": {
                                                                   "list": {
                                                                     "primitive": {
-                                                                      "v1": "INTEGER",
+                                                                      "v1": "DOUBLE",
                                                                       "v2": {
                                                                         "validation": {},
-                                                                        "type": "integer"
+                                                                        "type": "double"
                                                                       }
                                                                     },
                                                                     "type": "primitive"
@@ -20084,14 +20084,14 @@
                                               {
                                                 "height": 1,
                                                 "width": 1,
-                                                "frame_rate": 1,
+                                                "frame_rate": 1.1,
                                                 "bitrate": 1,
                                                 "codec": "codec"
                                               },
                                               {
                                                 "height": 1,
                                                 "width": 1,
-                                                "frame_rate": 1,
+                                                "frame_rate": 1.1,
                                                 "bitrate": 1,
                                                 "codec": "codec"
                                               }
@@ -20122,14 +20122,14 @@
                                                     {
                                                       "height": 1,
                                                       "width": 1,
-                                                      "frame_rate": 1,
+                                                      "frame_rate": 1.1,
                                                       "bitrate": 1,
                                                       "codec": "codec"
                                                     },
                                                     {
                                                       "height": 1,
                                                       "width": 1,
-                                                      "frame_rate": 1,
+                                                      "frame_rate": 1.1,
                                                       "bitrate": 1,
                                                       "codec": "codec"
                                                     }
@@ -21234,14 +21234,14 @@
                                                             {
                                                               "height": 1,
                                                               "width": 1,
-                                                              "frame_rate": 1,
+                                                              "frame_rate": 1.1,
                                                               "bitrate": 1,
                                                               "codec": "codec"
                                                             },
                                                             {
                                                               "height": 1,
                                                               "width": 1,
-                                                              "frame_rate": 1,
+                                                              "frame_rate": 1.1,
                                                               "bitrate": 1,
                                                               "codec": "codec"
                                                             }
@@ -21253,7 +21253,7 @@
                                                                   "jsonExample": {
                                                                     "height": 1,
                                                                     "width": 1,
-                                                                    "frame_rate": 1,
+                                                                    "frame_rate": 1.1,
                                                                     "bitrate": 1,
                                                                     "codec": "codec"
                                                                   },
@@ -21430,11 +21430,11 @@
                                                                             }
                                                                           },
                                                                           "value": {
-                                                                            "jsonExample": 1,
+                                                                            "jsonExample": 1.1,
                                                                             "shape": {
                                                                               "primitive": {
-                                                                                "integer": 1,
-                                                                                "type": "integer"
+                                                                                "double": 1.1,
+                                                                                "type": "double"
                                                                               },
                                                                               "type": "primitive"
                                                                             }
@@ -21636,7 +21636,7 @@
                                                                   "jsonExample": {
                                                                     "height": 1,
                                                                     "width": 1,
-                                                                    "frame_rate": 1,
+                                                                    "frame_rate": 1.1,
                                                                     "bitrate": 1,
                                                                     "codec": "codec"
                                                                   },
@@ -21813,11 +21813,11 @@
                                                                             }
                                                                           },
                                                                           "value": {
-                                                                            "jsonExample": 1,
+                                                                            "jsonExample": 1.1,
                                                                             "shape": {
                                                                               "primitive": {
-                                                                                "integer": 1,
-                                                                                "type": "integer"
+                                                                                "double": 1.1,
+                                                                                "type": "double"
                                                                               },
                                                                               "type": "primitive"
                                                                             }
@@ -23367,7 +23367,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "f1291c5",
+                "id": "dc2169db",
                 "url": "/group/info/",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -23496,7 +23496,7 @@
                         "id": "id",
                         "datetime_created": "datetime_created",
                         "datetime_stored": "datetime_stored",
-                        "files_count": 1,
+                        "files_count": 1.1,
                         "cdn_url": "cdn_url",
                         "url": "url",
                         "files": [
@@ -23835,25 +23835,25 @@
                                 }
                               },
                               "value": {
-                                "jsonExample": 1,
+                                "jsonExample": 1.1,
                                 "shape": {
                                   "container": {
                                     "optional": {
-                                      "jsonExample": 1,
+                                      "jsonExample": 1.1,
                                       "shape": {
                                         "primitive": {
-                                          "integer": 1,
-                                          "type": "integer"
+                                          "double": 1.1,
+                                          "type": "double"
                                         },
                                         "type": "primitive"
                                       }
                                     },
                                     "valueType": {
                                       "primitive": {
-                                        "v1": "INTEGER",
+                                        "v1": "DOUBLE",
                                         "v2": {
                                           "validation": {},
-                                          "type": "integer"
+                                          "type": "double"
                                         }
                                       },
                                       "type": "primitive"

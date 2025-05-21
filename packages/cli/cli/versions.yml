@@ -1,5 +1,16 @@
 - changelogEntry:
     - summary: |
+        Parse `number` types as `double` instead of `integer`.
+        Empty objects are now interpreted as unnamed primitives in union schemas.
+        Update `x-fern-examples` to extract codeSamples in isolation from example request & responses.
+        Propagate `x-fern-examples` name to generated code samples.
+      type: fix
+  irVersion: 57
+  createdAt: "2025-05-21"
+  version: 0.62.5
+
+- changelogEntry:
+    - summary: |
         Improve naming for discriminated unions based on title/discriminator key.
       type: fix
   irVersion: 57
