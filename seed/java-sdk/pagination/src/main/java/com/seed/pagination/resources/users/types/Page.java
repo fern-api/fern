@@ -95,6 +95,9 @@ public final class Page {
     }
 
     public interface PageStage {
+        /**
+         * The current page
+         */
         PerPageStage page(int page);
 
         Builder from(Page other);
@@ -141,7 +144,7 @@ public final class Page {
         }
 
         /**
-         * <p>The current page</p>
+         * The current page<p>The current page</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

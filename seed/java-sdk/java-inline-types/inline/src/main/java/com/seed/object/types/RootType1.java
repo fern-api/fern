@@ -140,34 +140,52 @@ public final class RootType1 {
     }
 
     public interface FooStage {
+        /**
+         * lorem ipsum
+         */
         BarStage foo(@NotNull String foo);
 
         Builder from(RootType1 other);
     }
 
     public interface BarStage {
+        /**
+         * lorem ipsum
+         */
         RefStage bar(@NotNull Bar bar);
     }
 
     public interface RefStage {
+        /**
+         * lorem ipsum
+         */
         _FinalStage ref(@NotNull ReferenceType ref);
     }
 
     public interface _FinalStage {
         RootType1 build();
 
+        /**
+         * <p>lorem ipsum</p>
+         */
         _FinalStage fooMap(Map<String, FooMapValue> fooMap);
 
         _FinalStage putAllFooMap(Map<String, FooMapValue> fooMap);
 
         _FinalStage fooMap(String key, FooMapValue value);
 
+        /**
+         * <p>lorem ipsum</p>
+         */
         _FinalStage fooList(List<FooListItem> fooList);
 
         _FinalStage addFooList(FooListItem fooList);
 
         _FinalStage addAllFooList(List<FooListItem> fooList);
 
+        /**
+         * <p>lorem ipsum</p>
+         */
         _FinalStage fooSet(Set<FooSetItem> fooSet);
 
         _FinalStage addFooSet(FooSetItem fooSet);
@@ -206,7 +224,7 @@ public final class RootType1 {
         }
 
         /**
-         * <p>lorem ipsum</p>
+         * lorem ipsum<p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -217,7 +235,7 @@ public final class RootType1 {
         }
 
         /**
-         * <p>lorem ipsum</p>
+         * lorem ipsum<p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -228,7 +246,7 @@ public final class RootType1 {
         }
 
         /**
-         * <p>lorem ipsum</p>
+         * lorem ipsum<p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -258,6 +276,9 @@ public final class RootType1 {
             return this;
         }
 
+        /**
+         * <p>lorem ipsum</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "fooSet", nulls = Nulls.SKIP)
         public _FinalStage fooSet(Set<FooSetItem> fooSet) {
@@ -286,6 +307,9 @@ public final class RootType1 {
             return this;
         }
 
+        /**
+         * <p>lorem ipsum</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "fooList", nulls = Nulls.SKIP)
         public _FinalStage fooList(List<FooListItem> fooList) {
@@ -314,6 +338,9 @@ public final class RootType1 {
             return this;
         }
 
+        /**
+         * <p>lorem ipsum</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "fooMap", nulls = Nulls.SKIP)
         public _FinalStage fooMap(Map<String, FooMapValue> fooMap) {
@@ -389,12 +416,18 @@ public final class RootType1 {
         }
 
         public interface FooStage {
+            /**
+             * lorem ipsum
+             */
             RefStage foo(@NotNull String foo);
 
             Builder from(FooMapValue other);
         }
 
         public interface RefStage {
+            /**
+             * lorem ipsum
+             */
             _FinalStage ref(@NotNull ReferenceType ref);
         }
 
@@ -421,7 +454,7 @@ public final class RootType1 {
             }
 
             /**
-             * <p>lorem ipsum</p>
+             * lorem ipsum<p>lorem ipsum</p>
              * @return Reference to {@code this} so that method calls can be chained together.
              */
             @java.lang.Override
@@ -432,7 +465,7 @@ public final class RootType1 {
             }
 
             /**
-             * <p>lorem ipsum</p>
+             * lorem ipsum<p>lorem ipsum</p>
              * @return Reference to {@code this} so that method calls can be chained together.
              */
             @java.lang.Override
@@ -521,16 +554,25 @@ public final class RootType1 {
         }
 
         public interface FooStage {
+            /**
+             * lorem ipsum
+             */
             BarStage foo(@NotNull String foo);
 
             Builder from(Bar other);
         }
 
         public interface BarStage {
+            /**
+             * lorem ipsum
+             */
             RefStage bar(@NotNull Bar_ bar);
         }
 
         public interface RefStage {
+            /**
+             * lorem ipsum
+             */
             _FinalStage ref(@NotNull ReferenceType ref);
         }
 
@@ -560,7 +602,7 @@ public final class RootType1 {
             }
 
             /**
-             * <p>lorem ipsum</p>
+             * lorem ipsum<p>lorem ipsum</p>
              * @return Reference to {@code this} so that method calls can be chained together.
              */
             @java.lang.Override
@@ -571,7 +613,7 @@ public final class RootType1 {
             }
 
             /**
-             * <p>lorem ipsum</p>
+             * lorem ipsum<p>lorem ipsum</p>
              * @return Reference to {@code this} so that method calls can be chained together.
              */
             @java.lang.Override
@@ -582,7 +624,7 @@ public final class RootType1 {
             }
 
             /**
-             * <p>lorem ipsum</p>
+             * lorem ipsum<p>lorem ipsum</p>
              * @return Reference to {@code this} so that method calls can be chained together.
              */
             @java.lang.Override
@@ -689,20 +731,32 @@ public final class RootType1 {
             }
 
             public interface FooStage {
+                /**
+                 * lorem ipsum
+                 */
                 BarStage foo(@NotNull String foo);
 
                 Builder from(Bar_ other);
             }
 
             public interface BarStage {
+                /**
+                 * lorem ipsum
+                 */
                 MyEnumStage bar(@NotNull String bar);
             }
 
             public interface MyEnumStage {
+                /**
+                 * lorem ipsum
+                 */
                 RefStage myEnum(@NotNull MyEnum myEnum);
             }
 
             public interface RefStage {
+                /**
+                 * lorem ipsum
+                 */
                 _FinalStage ref(@NotNull ReferenceType ref);
             }
 
@@ -735,7 +789,7 @@ public final class RootType1 {
                 }
 
                 /**
-                 * <p>lorem ipsum</p>
+                 * lorem ipsum<p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
                 @java.lang.Override
@@ -746,7 +800,7 @@ public final class RootType1 {
                 }
 
                 /**
-                 * <p>lorem ipsum</p>
+                 * lorem ipsum<p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
                 @java.lang.Override
@@ -757,7 +811,7 @@ public final class RootType1 {
                 }
 
                 /**
-                 * <p>lorem ipsum</p>
+                 * lorem ipsum<p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
                 @java.lang.Override
@@ -768,7 +822,7 @@ public final class RootType1 {
                 }
 
                 /**
-                 * <p>lorem ipsum</p>
+                 * lorem ipsum<p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
                 @java.lang.Override
@@ -869,12 +923,18 @@ public final class RootType1 {
         }
 
         public interface FooStage {
+            /**
+             * lorem ipsum
+             */
             RefStage foo(@NotNull String foo);
 
             Builder from(FooListItem other);
         }
 
         public interface RefStage {
+            /**
+             * lorem ipsum
+             */
             _FinalStage ref(@NotNull ReferenceType ref);
         }
 
@@ -901,7 +961,7 @@ public final class RootType1 {
             }
 
             /**
-             * <p>lorem ipsum</p>
+             * lorem ipsum<p>lorem ipsum</p>
              * @return Reference to {@code this} so that method calls can be chained together.
              */
             @java.lang.Override
@@ -912,7 +972,7 @@ public final class RootType1 {
             }
 
             /**
-             * <p>lorem ipsum</p>
+             * lorem ipsum<p>lorem ipsum</p>
              * @return Reference to {@code this} so that method calls can be chained together.
              */
             @java.lang.Override
@@ -990,12 +1050,18 @@ public final class RootType1 {
         }
 
         public interface FooStage {
+            /**
+             * lorem ipsum
+             */
             RefStage foo(@NotNull String foo);
 
             Builder from(FooSetItem other);
         }
 
         public interface RefStage {
+            /**
+             * lorem ipsum
+             */
             _FinalStage ref(@NotNull ReferenceType ref);
         }
 
@@ -1022,7 +1088,7 @@ public final class RootType1 {
             }
 
             /**
-             * <p>lorem ipsum</p>
+             * lorem ipsum<p>lorem ipsum</p>
              * @return Reference to {@code this} so that method calls can be chained together.
              */
             @java.lang.Override
@@ -1033,7 +1099,7 @@ public final class RootType1 {
             }
 
             /**
-             * <p>lorem ipsum</p>
+             * lorem ipsum<p>lorem ipsum</p>
              * @return Reference to {@code this} so that method calls can be chained together.
              */
             @java.lang.Override
