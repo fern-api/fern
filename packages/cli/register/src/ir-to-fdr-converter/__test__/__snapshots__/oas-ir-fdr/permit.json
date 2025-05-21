@@ -4868,8 +4868,7 @@
             "type": {
               "type": "id",
               "value": "PaginatedResult_ResourceRoleRead_"
-            },
-            "displayName": "PaginatedResult[ResourceRoleRead]"
+            }
           }
         ]
       }
@@ -5604,8 +5603,7 @@
             "type": {
               "type": "id",
               "value": "PaginatedResult_RoleRead_"
-            },
-            "displayName": "PaginatedResult[RoleRead]"
+            }
           }
         ]
       }
@@ -6881,8 +6879,7 @@
             "type": {
               "type": "id",
               "value": "PaginatedResult_ResourceRead_"
-            },
-            "displayName": "PaginatedResult[ResourceRead]"
+            }
           },
           {
             "typeName": "ResourcesListResourcesResponse2001",
@@ -6917,8 +6914,7 @@
             "type": {
               "type": "id",
               "value": "PaginatedResult_RoleRead_"
-            },
-            "displayName": "PaginatedResult[RoleRead]"
+            }
           },
           {
             "typeName": "RolesListRolesResponse2001",
@@ -6953,8 +6949,7 @@
             "type": {
               "type": "id",
               "value": "PaginatedResult_ConditionSetRead_"
-            },
-            "displayName": "PaginatedResult[ConditionSetRead]"
+            }
           },
           {
             "typeName": "ConditionSetsListConditionSetsResponse2001",
@@ -6989,8 +6984,7 @@
             "type": {
               "type": "id",
               "value": "PaginatedResult_TenantRead_"
-            },
-            "displayName": "PaginatedResult[TenantRead]"
+            }
           },
           {
             "typeName": "TenantsListTenantsResponse2001",

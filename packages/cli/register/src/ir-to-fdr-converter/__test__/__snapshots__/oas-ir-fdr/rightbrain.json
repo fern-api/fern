@@ -4026,8 +4026,7 @@
             "type": {
               "type": "id",
               "value": "KratosIdentity"
-            },
-            "displayName": "KratosIdentity"
+            }
           }
         ]
       }

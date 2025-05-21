@@ -7901,7 +7901,6 @@
                   },
                   "typeId": "Pet",
                   "inline": false,
-                  "displayName": "a Pet",
                   "type": "named"
                 },
                 "docs": "A list of pets",
@@ -8701,7 +8700,6 @@
                   },
                   "typeId": "Order",
                   "inline": false,
-                  "displayName": "Pet Order",
                   "type": "named"
                 },
                 "docs": "An order object",

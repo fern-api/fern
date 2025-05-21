@@ -3965,7 +3965,6 @@
                   },
                   "typeId": "SpeechMarks",
                   "inline": false,
-                  "displayName": "SpeechMarks holds the structured data of speech synthesis marks.",
                   "type": "named"
                 },
                 "type": "optional"
@@ -6429,7 +6428,6 @@
                       },
                       "typeId": "NestedChunk",
                       "inline": false,
-                      "displayName": "NestedChunk represents a detailed segment within the synthesized speech.",
                       "type": "named"
                     },
                     "type": "list"

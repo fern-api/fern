@@ -5520,24 +5520,21 @@
             "type": {
               "type": "id",
               "value": "contact_reply_intercom_user_id_request"
-            },
-            "displayName": "Intercom User ID"
+            }
           },
           {
             "typeName": "contact_reply_email_request",
             "type": {
               "type": "id",
               "value": "contact_reply_email_request"
-            },
-            "displayName": "Email"
+            }
           },
           {
             "typeName": "contact_reply_user_id_request",
             "type": {
               "type": "id",
               "value": "contact_reply_user_id_request"
-            },
-            "displayName": "User ID"
+            }
           }
         ]
       }
@@ -5668,24 +5665,21 @@
             "type": {
               "type": "id",
               "value": "contact_reply_ticket_intercom_user_id_request"
-            },
-            "displayName": "Intercom User ID"
+            }
           },
           {
             "typeName": "contact_reply_ticket_user_id_request",
             "type": {
               "type": "id",
               "value": "contact_reply_ticket_user_id_request"
-            },
-            "displayName": "User ID"
+            }
           },
           {
             "typeName": "contact_reply_ticket_email_request",
             "type": {
               "type": "id",
               "value": "contact_reply_ticket_email_request"
-            },
-            "displayName": "Email"
+            }
           }
         ]
       }
@@ -8586,16 +8580,14 @@
             "type": {
               "type": "id",
               "value": "contact_reply_ticket_request"
-            },
-            "displayName": "Contact Reply on ticket"
+            }
           },
           {
             "typeName": "admin_reply_ticket_request",
             "type": {
               "type": "id",
               "value": "admin_reply_ticket_request"
-            },
-            "displayName": "Admin Reply on ticket"
+            }
           }
         ]
       }
@@ -9112,8 +9104,7 @@
             "type": {
               "type": "id",
               "value": "custom_object_instance"
-            },
-            "displayName": "Custom Object Instance"
+            }
           }
         ]
       }
@@ -12815,16 +12806,14 @@
             "type": {
               "type": "id",
               "value": "news_item"
-            },
-            "displayName": "News Item"
+            }
           },
           {
             "typeName": "newsfeed",
             "type": {
               "type": "id",
               "value": "newsfeed"
-            },
-            "displayName": "Newsfeed"
+            }
           }
         ]
       }
@@ -13212,16 +13201,14 @@
             "type": {
               "type": "id",
               "value": "contact_reply_conversation_request"
-            },
-            "displayName": "Contact Reply"
+            }
           },
           {
             "typeName": "admin_reply_conversation_request",
             "type": {
               "type": "id",
               "value": "admin_reply_conversation_request"
-            },
-            "displayName": "Admin Reply"
+            }
           }
         ]
       }
@@ -13237,7 +13224,7 @@
               "type": "id",
               "value": "single_filter_search_request"
             },
-            "displayName": "Single Filter Search Request"
+            "displayName": "Single filter search request"
           },
           {
             "typeName": "multiple_filter_search_request",
@@ -13245,7 +13232,7 @@
               "type": "id",
               "value": "multiple_filter_search_request"
             },
-            "displayName": "Multiple Filter Search Request"
+            "displayName": "multiple filter search request"
           }
         ]
       }
@@ -14793,8 +14780,7 @@
             "type": {
               "type": "id",
               "value": "file_attribute"
-            },
-            "displayName": "File"
+            }
           }
         ]
       }
@@ -17926,8 +17912,7 @@
             "type": {
               "type": "id",
               "value": "update_contact_request"
-            },
-            "displayName": "Update Contact Request Payload"
+            }
           }
         ]
       }
@@ -17942,8 +17927,7 @@
             "type": {
               "type": "id",
               "value": "create_contact_request"
-            },
-            "displayName": "Create Contact Request Payload"
+            }
           }
         ]
       }
@@ -17958,32 +17942,28 @@
             "type": {
               "type": "id",
               "value": "close_conversation_request"
-            },
-            "displayName": "Close Conversation Request"
+            }
           },
           {
             "typeName": "snooze_conversation_request",
             "type": {
               "type": "id",
               "value": "snooze_conversation_request"
-            },
-            "displayName": "Snooze Conversation Request"
+            }
           },
           {
             "typeName": "open_conversation_request",
             "type": {
               "type": "id",
               "value": "open_conversation_request"
-            },
-            "displayName": "Open Conversation Request"
+            }
           },
           {
             "typeName": "assign_conversation_request",
             "type": {
               "type": "id",
               "value": "assign_conversation_request"
-            },
-            "displayName": "Assign Conversation Request"
+            }
           }
         ]
       }
@@ -18104,32 +18084,28 @@
             "type": {
               "type": "id",
               "value": "create_or_update_tag_request"
-            },
-            "displayName": "Create or Update Tag Request Payload"
+            }
           },
           {
             "typeName": "tag_company_request",
             "type": {
               "type": "id",
               "value": "tag_company_request"
-            },
-            "displayName": "Tag Company Request Payload"
+            }
           },
           {
             "typeName": "untag_company_request",
             "type": {
               "type": "id",
               "value": "untag_company_request"
-            },
-            "displayName": "Untag Company Request Payload"
+            }
           },
           {
             "typeName": "tag_multiple_users_request",
             "type": {
               "type": "id",
               "value": "tag_multiple_users_request"
-            },
-            "displayName": "Tag Users Request Payload"
+            }
           }
         ]
       }
@@ -18144,16 +18120,14 @@
             "type": {
               "type": "id",
               "value": "contact_reply_ticket_request"
-            },
-            "displayName": "Contact Reply on ticket"
+            }
           },
           {
             "typeName": "admin_reply_ticket_request",
             "type": {
               "type": "id",
               "value": "admin_reply_ticket_request"
-            },
-            "displayName": "Admin Reply on ticket"
+            }
           }
         ]
       }
