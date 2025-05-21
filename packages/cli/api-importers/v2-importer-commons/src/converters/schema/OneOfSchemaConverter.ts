@@ -184,19 +184,13 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 if (this.context.isReferenceObjectWithTitle(subSchema)) {
                     maybeTypeReference = this.context.convertReferenceToTypeReference({
                         reference: subSchema,
-                        displayNameOverride: subSchema.title
+                        displayNameOverride: ["TITLE", subSchema.title]
                     });
-                } else if (
-                    Object.entries(this.schema.discriminator?.mapping ?? {}).find(
-                        ([_, ref]) => ref === subSchema.$ref
-                    ) != null
-                ) {
-                    const mappingEntry = Object.entries(this.schema.discriminator?.mapping ?? {}).find(
-                        ([_, ref]) => ref === subSchema.$ref
-                    );
+                } else if (this.getDiscriminatorKeyForRef(subSchema) != null) {
+                    const mappingEntry = this.getDiscriminatorKeyForRef(subSchema);
                     maybeTypeReference = this.context.convertReferenceToTypeReference({
                         reference: subSchema,
-                        displayNameOverride: mappingEntry?.[0]
+                        displayNameOverride: ["DISCRIMINATOR_KEY", mappingEntry]
                     });
                 } else {
                     maybeTypeReference = this.context.convertReferenceToTypeReference({ reference: subSchema });
@@ -404,5 +398,9 @@ export class OneOfSchemaConverter extends AbstractConverter<
             });
         }
         return undefined;
+    }
+
+    private getDiscriminatorKeyForRef(subSchema: OpenAPIV3_1.ReferenceObject): string | undefined {
+        return Object.entries(this.schema.discriminator?.mapping ?? {}).find(([_, ref]) => ref === subSchema.$ref)?.[0];
     }
 }

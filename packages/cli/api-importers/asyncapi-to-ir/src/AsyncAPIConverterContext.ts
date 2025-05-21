@@ -34,7 +34,7 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
     }: {
         reference: OpenAPIV3_1.ReferenceObject;
         breadcrumbs?: string[];
-        displayNameOverride?: string;
+        displayNameOverride?: ["DISCRIMINATOR_KEY" | "TITLE", string | undefined];
     }): { ok: true; reference: TypeReference } | { ok: false } {
         let typeId: string | undefined;
 
@@ -59,13 +59,22 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         if (!resolvedReference.resolved) {
             return { ok: false };
         }
+
+        let displayName: string | undefined;
+
+        if (displayNameOverride?.[0] === "TITLE") {
+            displayName = displayNameOverride[1] ?? resolvedReference.value.title;
+        } else if (displayNameOverride?.[0] === "DISCRIMINATOR_KEY") {
+            displayName = resolvedReference.value.title ?? displayNameOverride[1];
+        }
+
         return {
             ok: true,
             reference: TypeReference.named({
                 fernFilepath: this.createFernFilepath(),
                 name: this.casingsGenerator.generateName(typeId),
                 typeId,
-                displayName: displayNameOverride ?? resolvedReference.value.title ?? undefined,
+                displayName,
                 default: undefined,
                 inline: false
             })

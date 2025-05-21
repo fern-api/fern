@@ -28,7 +28,7 @@ export class OpenRPCConverterContext3_1 extends AbstractConverterContext<Openrpc
     }: {
         reference: OpenAPIV3_1.ReferenceObject;
         breadcrumbs?: string[];
-        displayNameOverride?: string;
+        displayNameOverride?: ["DISCRIMINATOR_KEY" | "TITLE", string | undefined];
     }): { ok: true; reference: TypeReference } | { ok: false } {
         const typeId = this.getTypeIdFromSchemaReference(reference);
         if (typeId == null) {
@@ -38,6 +38,15 @@ export class OpenRPCConverterContext3_1 extends AbstractConverterContext<Openrpc
         if (!resolvedReference.resolved) {
             return { ok: false };
         }
+
+        let displayName: string | undefined;
+
+        if (displayNameOverride?.[0] === "TITLE") {
+            displayName = displayNameOverride[1] ?? resolvedReference.value.title;
+        } else if (displayNameOverride?.[0] === "DISCRIMINATOR_KEY") {
+            displayName = resolvedReference.value.title ?? displayNameOverride[1];
+        }
+
         return {
             ok: true,
             reference: TypeReference.named({
@@ -48,7 +57,7 @@ export class OpenRPCConverterContext3_1 extends AbstractConverterContext<Openrpc
                 },
                 name: this.casingsGenerator.generateName(typeId),
                 typeId,
-                displayName: displayNameOverride ?? resolvedReference.value.title ?? undefined,
+                displayName,
                 default: undefined,
                 inline: false
             })

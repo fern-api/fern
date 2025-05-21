@@ -30,7 +30,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
     }: {
         reference: OpenAPIV3_1.ReferenceObject;
         breadcrumbs?: string[];
-        displayNameOverride?: string;
+        displayNameOverride?: ["DISCRIMINATOR_KEY" | "TITLE", string | undefined];
     }): { ok: true; reference: TypeReference } | { ok: false } {
         const typeId = this.getTypeIdFromSchemaReference(reference);
         if (typeId == null) {
@@ -40,6 +40,15 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
         if (!resolvedReference.resolved) {
             return { ok: false };
         }
+
+        let displayName: string | undefined;
+
+        if (displayNameOverride?.[0] === "TITLE") {
+            displayName = displayNameOverride[1] ?? resolvedReference.value.title;
+        } else if (displayNameOverride?.[0] === "DISCRIMINATOR_KEY") {
+            displayName = resolvedReference.value.title ?? displayNameOverride[1];
+        }
+
         return {
             ok: true,
             reference: TypeReference.named({
@@ -52,7 +61,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
                 typeId,
                 default: undefined,
                 inline: false,
-                displayName: displayNameOverride ?? resolvedReference.value.title ?? undefined
+                displayName
             })
         };
     }
