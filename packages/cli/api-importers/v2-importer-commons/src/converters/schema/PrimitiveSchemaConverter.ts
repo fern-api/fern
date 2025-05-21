@@ -40,7 +40,15 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                     })
                 });
             }
-            case "number":
+            case "number": {
+                return TypeReference.primitive({
+                    v1: "DOUBLE",
+                    v2: PrimitiveTypeV2.double({
+                        default: this.context.getAsNumber(this.schema.default),
+                        validation: this.getNumberValidation(this.schema)
+                    })
+                });
+            }
             case "integer":
                 switch (this.schema.format) {
                     case "double":

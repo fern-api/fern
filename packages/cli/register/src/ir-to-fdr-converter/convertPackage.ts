@@ -758,7 +758,6 @@ function convertV2HttpEndpointExample({
     if (example == null) {
         return undefined;
     }
-    const responseBodyType = example.response?.body?.type;
     const responseBodyValue = example.response?.body != null ? example.response.body.value : undefined;
     const { codeSamples } = example ?? { codeSamples: [] };
     return {
@@ -852,7 +851,7 @@ function convertV2HttpEndpointExample({
                 : undefined,
         codeSamples: codeSamples
             ?.map((codeSample) => ({
-                name: "",
+                name: exampleName,
                 description: codeSample.docs ?? undefined,
                 install: undefined,
                 language: codeSample.language,

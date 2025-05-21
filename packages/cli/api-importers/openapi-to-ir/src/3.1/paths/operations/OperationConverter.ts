@@ -262,29 +262,35 @@ export class OperationConverter extends AbstractOperationConverter {
             return {};
         }
         return Object.fromEntries(
-            fernExamples.map((example, index) => {
+            fernExamples.map((example) => {
                 return [
-                    example.id ?? index.toString(),
+                    example.name,
                     {
-                        request: {
-                            docs: undefined,
-                            endpoint: {
-                                method: httpMethod,
-                                path: this.buildExamplePath(httpPath, example["path-parameters"] ?? {})
-                            },
-                            baseUrl: undefined,
-                            environment: baseUrl,
-                            auth: undefined,
-                            pathParameters: example["path-parameters"] ?? {},
-                            queryParameters: example["query-parameters"] ?? {},
-                            headers: example.headers ?? {},
-                            requestBody: example.request
-                        },
-                        response: {
-                            docs: undefined,
-                            statusCode: undefined,
-                            body: FernIr.V2HttpEndpointResponseBody.json(example.response)
-                        },
+                        request:
+                            example.request != null
+                                ? {
+                                      docs: undefined,
+                                      endpoint: {
+                                          method: httpMethod,
+                                          path: this.buildExamplePath(httpPath, example["path-parameters"] ?? {})
+                                      },
+                                      baseUrl: undefined,
+                                      environment: baseUrl,
+                                      auth: undefined,
+                                      pathParameters: example["path-parameters"] ?? {},
+                                      queryParameters: example["query-parameters"] ?? {},
+                                      headers: example.headers ?? {},
+                                      requestBody: example.request
+                                  }
+                                : undefined,
+                        response:
+                            example.response != null
+                                ? {
+                                      docs: undefined,
+                                      statusCode: undefined,
+                                      body: FernIr.V2HttpEndpointResponseBody.json(example.response)
+                                  }
+                                : undefined,
                         codeSamples: example["code-samples"]?.map((codeSample) => {
                             const language =
                                 ("language" in codeSample ? codeSample.language : codeSample.sdk) ?? undefined;
