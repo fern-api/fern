@@ -75,16 +75,25 @@ public final class RootType1InlineType1 {
     }
 
     public interface FooStage {
+        /**
+         * lorem ipsum
+         */
         BarStage foo(String foo);
 
         Builder from(RootType1InlineType1 other);
     }
 
     public interface BarStage {
+        /**
+         * lorem ipsum
+         */
         RefStage bar(RootType1InlineType1NestedInlineType1 bar);
     }
 
     public interface RefStage {
+        /**
+         * lorem ipsum
+         */
         _FinalStage ref(ReferenceType ref);
     }
 
@@ -111,7 +120,7 @@ public final class RootType1InlineType1 {
         }
 
         /**
-         * <p>lorem ipsum</p>
+         * lorem ipsum<p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -122,7 +131,7 @@ public final class RootType1InlineType1 {
         }
 
         /**
-         * <p>lorem ipsum</p>
+         * lorem ipsum<p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -133,7 +142,7 @@ public final class RootType1InlineType1 {
         }
 
         /**
-         * <p>lorem ipsum</p>
+         * lorem ipsum<p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override

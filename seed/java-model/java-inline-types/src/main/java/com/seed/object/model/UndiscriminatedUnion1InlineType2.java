@@ -64,12 +64,18 @@ public final class UndiscriminatedUnion1InlineType2 {
     }
 
     public interface BazStage {
+        /**
+         * lorem ipsum
+         */
         RefStage baz(String baz);
 
         Builder from(UndiscriminatedUnion1InlineType2 other);
     }
 
     public interface RefStage {
+        /**
+         * lorem ipsum
+         */
         _FinalStage ref(ReferenceType ref);
     }
 
@@ -93,7 +99,7 @@ public final class UndiscriminatedUnion1InlineType2 {
         }
 
         /**
-         * <p>lorem ipsum</p>
+         * lorem ipsum<p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -104,7 +110,7 @@ public final class UndiscriminatedUnion1InlineType2 {
         }
 
         /**
-         * <p>lorem ipsum</p>
+         * lorem ipsum<p>lorem ipsum</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
