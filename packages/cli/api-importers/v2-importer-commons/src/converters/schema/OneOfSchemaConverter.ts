@@ -181,11 +181,11 @@ export class OneOfSchemaConverter extends AbstractConverter<
             if (this.context.isReferenceObject(subSchema)) {
                 let maybeTypeReference;
 
-                if (this.context.isReferenceObjectWithTitle(subSchema)) {
+                if (this.context.isReferenceObjectWithIdentifier(subSchema)) {
                     maybeTypeReference = this.context.convertReferenceToTypeReference({
                         reference: subSchema,
-                        displayNameOverride: subSchema.title,
-                        displayNameOverrideSource: "reference_title"
+                        displayNameOverride: subSchema.title ?? subSchema.name ?? subSchema.messageId,
+                        displayNameOverrideSource: "reference_identifier"
                     });
                 } else if (this.getDiscriminatorKeyForRef(subSchema) != null) {
                     const mappingEntry = this.getDiscriminatorKeyForRef(subSchema);
@@ -197,7 +197,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 } else {
                     maybeTypeReference = this.context.convertReferenceToTypeReference({
                         reference: subSchema,
-                        displayNameOverrideSource: "schema_title"
+                        displayNameOverrideSource: "schema_identifier"
                     });
                 }
 
