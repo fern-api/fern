@@ -31,12 +31,12 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         reference,
         breadcrumbs,
         displayNameOverride,
-        displayNameOverrideType
+        prioritizeOverride
     }: {
         reference: OpenAPIV3_1.ReferenceObject;
         breadcrumbs?: string[];
         displayNameOverride?: string | undefined;
-        displayNameOverrideType?: "DISCRIMINATOR_KEY" | "TITLE";
+        prioritizeOverride?: boolean;
     }): { ok: true; reference: TypeReference } | { ok: false } {
         let typeId: string | undefined;
 
@@ -64,9 +64,9 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
 
         let displayName: string | undefined;
 
-        if (displayNameOverrideType === "TITLE") {
+        if (prioritizeOverride) {
             displayName = displayNameOverride ?? resolvedReference.value.title;
-        } else if (displayNameOverrideType === "DISCRIMINATOR_KEY") {
+        } else {
             displayName = resolvedReference.value.title ?? displayNameOverride;
         }
 
