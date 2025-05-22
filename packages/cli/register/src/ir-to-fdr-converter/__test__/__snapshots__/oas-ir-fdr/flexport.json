@@ -27912,7 +27912,8 @@
                             "_object": "/shipment/dangerous_goods",
                             "review_status": "pending",
                             "classifications": [
-                              "foo"
+                              "1.2",
+                              "2"
                             ]
                           },
                           "shippers": [
@@ -28229,7 +28230,8 @@
                             "_object": "/shipment/dangerous_goods",
                             "review_status": "pending",
                             "classifications": [
-                              "foo"
+                              "1.2",
+                              "2"
                             ]
                           },
                           "shippers": [
@@ -28717,7 +28719,8 @@
                               "_object": "/shipment/dangerous_goods",
                               "review_status": "pending",
                               "classifications": [
-                                "foo"
+                                "1.2",
+                                "2"
                               ]
                             },
                             "shippers": [
@@ -29034,7 +29037,8 @@
                               "_object": "/shipment/dangerous_goods",
                               "review_status": "pending",
                               "classifications": [
-                                "foo"
+                                "1.2",
+                                "2"
                               ]
                             },
                             "shippers": [
@@ -29607,7 +29611,8 @@
                         "_object": "/shipment/dangerous_goods",
                         "review_status": "pending",
                         "classifications": [
-                          "foo"
+                          "1.2",
+                          "2"
                         ]
                       },
                       "shippers": [
@@ -29925,7 +29930,8 @@
                         "_object": "/shipment/dangerous_goods",
                         "review_status": "pending",
                         "classifications": [
-                          "foo"
+                          "1.2",
+                          "2"
                         ]
                       },
                       "shippers": [
@@ -30407,7 +30413,8 @@
                           "_object": "/shipment/dangerous_goods",
                           "review_status": "pending",
                           "classifications": [
-                            "foo"
+                            "1.2",
+                            "2"
                           ]
                         },
                         "shippers": [
@@ -30725,7 +30732,8 @@
                           "_object": "/shipment/dangerous_goods",
                           "review_status": "pending",
                           "classifications": [
-                            "foo"
+                            "1.2",
+                            "2"
                           ]
                         },
                         "shippers": [

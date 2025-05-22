@@ -34,14 +34,6 @@
         }
       }
     },
-    "MetadataModelInfo": {
-      "name": "MetadataModelInfo",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "MetadataSummaryInfo": {
       "name": "MetadataSummaryInfo",
       "shape": {
@@ -304,8 +296,16 @@
           {
             "key": "model_info",
             "valueType": {
-              "type": "id",
-              "value": "MetadataModelInfo"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
@@ -13667,7 +13667,7 @@
                   "duration": 25.933313,
                   "channels": 1,
                   "models": [
-                    "foo"
+                    "30089e05-99d1-4376-b32e-c263170674af"
                   ],
                   "model_info": {},
                   "summary_info": {
@@ -13691,7 +13691,7 @@
                     "output_tokens": 4
                   },
                   "tags": [
-                    "foo"
+                    "test"
                   ]
                 },
                 "results": {
@@ -13854,7 +13854,7 @@
                     "duration": 25.933313,
                     "channels": 1,
                     "models": [
-                      "foo"
+                      "30089e05-99d1-4376-b32e-c263170674af"
                     ],
                     "model_info": {},
                     "summary_info": {
@@ -13878,7 +13878,7 @@
                       "output_tokens": 4
                     },
                     "tags": [
-                      "foo"
+                      "test"
                     ]
                   },
                   "results": {
@@ -16329,7 +16329,8 @@
                       "canonical_name": "conversationalai",
                       "architecture": "base",
                       "languages": [
-                        "foo"
+                        "en",
+                        "en-us"
                       ],
                       "version": "2021-11-10.1",
                       "uuid": "6b28e919-8427-4f32-9847-492e2efd7daf",
@@ -16346,7 +16347,8 @@
                       "canonical_name": "aura-zeus-en",
                       "architecture": "aura",
                       "languages": [
-                        "foo"
+                        "en",
+                        "en-us"
                       ],
                       "version": "2024-07-30.0",
                       "uuid": "9c28bce5-f144-4d32-9034-843aa7aed63e",
@@ -16356,7 +16358,7 @@
                         "image": "https://static.deepgram.com/examples/avatars/zeus.jpg",
                         "sample": "https://static.deepgram.com/examples/voices/zeus.wav",
                         "tags": [
-                          "foo"
+                          "masculine"
                         ]
                       }
                     }
@@ -16373,7 +16375,8 @@
                         "canonical_name": "conversationalai",
                         "architecture": "base",
                         "languages": [
-                          "foo"
+                          "en",
+                          "en-us"
                         ],
                         "version": "2021-11-10.1",
                         "uuid": "6b28e919-8427-4f32-9847-492e2efd7daf",
@@ -16390,7 +16393,8 @@
                         "canonical_name": "aura-zeus-en",
                         "architecture": "aura",
                         "languages": [
-                          "foo"
+                          "en",
+                          "en-us"
                         ],
                         "version": "2024-07-30.0",
                         "uuid": "9c28bce5-f144-4d32-9034-843aa7aed63e",
@@ -16400,7 +16404,7 @@
                           "image": "https://static.deepgram.com/examples/avatars/zeus.jpg",
                           "sample": "https://static.deepgram.com/examples/voices/zeus.wav",
                           "tags": [
-                            "foo"
+                            "masculine"
                           ]
                         }
                       }
@@ -16522,7 +16526,8 @@
                   "canonical_name": "conversationalai",
                   "architecture": "base",
                   "languages": [
-                    "foo"
+                    "en",
+                    "en-us"
                   ],
                   "version": "2021-11-10.1",
                   "uuid": "6b28e919-8427-4f32-9847-492e2efd7daf",
@@ -16539,7 +16544,8 @@
                     "canonical_name": "conversationalai",
                     "architecture": "base",
                     "languages": [
-                      "foo"
+                      "en",
+                      "en-us"
                     ],
                     "version": "2021-11-10.1",
                     "uuid": "6b28e919-8427-4f32-9847-492e2efd7daf",
@@ -16665,7 +16671,7 @@
                         "api_key_id": "1234567890abcdef1234567890abcdef",
                         "comment": "A comment",
                         "scopes": [
-                          "foo"
+                          "admin"
                         ],
                         "created": "2021-01-01T00:00:00Z"
                       }
@@ -16687,7 +16693,7 @@
                           "api_key_id": "1234567890abcdef1234567890abcdef",
                           "comment": "A comment",
                           "scopes": [
-                            "foo"
+                            "admin"
                           ],
                           "created": "2021-01-01T00:00:00Z"
                         }
@@ -16981,7 +16987,7 @@
                       "api_key_id": "1234567890abcdef1234567890abcdef",
                       "comment": "A comment",
                       "scopes": [
-                        "foo"
+                        "admin"
                       ],
                       "created": "2021-01-01T00:00:00Z"
                     }
@@ -17001,7 +17007,7 @@
                         "api_key_id": "1234567890abcdef1234567890abcdef",
                         "comment": "A comment",
                         "scopes": [
-                          "foo"
+                          "admin"
                         ],
                         "created": "2021-01-01T00:00:00Z"
                       }
@@ -18812,7 +18818,8 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "tags": [
-                  "foo"
+                  "tag=dev",
+                  "tag=production"
                 ],
                 "models": [
                   {
@@ -18823,17 +18830,21 @@
                   }
                 ],
                 "processing_methods": [
-                  "foo"
+                  "sync",
+                  "streaming"
                 ],
                 "features": [
-                  "foo"
+                  "alternatives",
+                  "detect_entities",
+                  "detect_language"
                 ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "tags": [
-                    "foo"
+                    "tag=dev",
+                    "tag=production"
                   ],
                   "models": [
                     {
@@ -18844,10 +18855,13 @@
                     }
                   ],
                   "processing_methods": [
-                    "foo"
+                    "sync",
+                    "streaming"
                   ],
                   "features": [
-                    "foo"
+                    "alternatives",
+                    "detect_entities",
+                    "detect_language"
                   ]
                 }
               }
@@ -19314,7 +19328,8 @@
                     "canonical_name": "enhanced-general",
                     "architecture": "polaris",
                     "languages": [
-                      "foo"
+                      "en",
+                      "en-us"
                     ],
                     "version": "2022-05-18.1",
                     "uuid": "c7226e9e-ae1c-4057-ae2a-a71a6b0dc588",
@@ -19329,7 +19344,8 @@
                     "canonical_name": "aura-angus-en",
                     "architecture": "aura",
                     "languages": [
-                      "foo"
+                      "en",
+                      "en-us"
                     ],
                     "version": "2024-07-30.0",
                     "uuid": "eed36e9e-37aa-40a3-91fa-a2911e73a5da",
@@ -19339,7 +19355,7 @@
                       "image": "https://static.deepgram.com/examples/avatars/angus.jpg",
                       "sample": "https://static.deepgram.com/examples/voices/angus.wav",
                       "tags": [
-                        "foo"
+                        "masculine"
                       ]
                     }
                   }
@@ -19354,7 +19370,8 @@
                       "canonical_name": "enhanced-general",
                       "architecture": "polaris",
                       "languages": [
-                        "foo"
+                        "en",
+                        "en-us"
                       ],
                       "version": "2022-05-18.1",
                       "uuid": "c7226e9e-ae1c-4057-ae2a-a71a6b0dc588",
@@ -19369,7 +19386,8 @@
                       "canonical_name": "aura-angus-en",
                       "architecture": "aura",
                       "languages": [
-                        "foo"
+                        "en",
+                        "en-us"
                       ],
                       "version": "2024-07-30.0",
                       "uuid": "eed36e9e-37aa-40a3-91fa-a2911e73a5da",
@@ -19379,7 +19397,7 @@
                         "image": "https://static.deepgram.com/examples/avatars/angus.jpg",
                         "sample": "https://static.deepgram.com/examples/voices/angus.wav",
                         "tags": [
-                          "foo"
+                          "masculine"
                         ]
                       }
                     }
@@ -19482,7 +19500,8 @@
                 "canonical_name": "enhanced-general",
                 "architecture": "polaris",
                 "languages": [
-                  "foo"
+                  "en",
+                  "en-us"
                 ],
                 "version": "2022-05-18.1",
                 "uuid": "c7226e9e-ae1c-4057-ae2a-a71a6b0dc588",
@@ -19497,7 +19516,8 @@
                   "canonical_name": "enhanced-general",
                   "architecture": "polaris",
                   "languages": [
-                    "foo"
+                    "en",
+                    "en-us"
                   ],
                   "version": "2022-05-18.1",
                   "uuid": "c7226e9e-ae1c-4057-ae2a-a71a6b0dc588",
@@ -19622,7 +19642,8 @@
                       "provider": "quay",
                       "comment": "My Self-Hosted Distribution Credentials",
                       "scopes": [
-                        "foo"
+                        "self-hosted:product:api",
+                        "self-hosted:product:engine"
                       ],
                       "created": "2023-06-28T15:36:59.609841Z"
                     }
@@ -19643,7 +19664,8 @@
                         "provider": "quay",
                         "comment": "My Self-Hosted Distribution Credentials",
                         "scopes": [
-                          "foo"
+                          "self-hosted:product:api",
+                          "self-hosted:product:engine"
                         ],
                         "created": "2023-06-28T15:36:59.609841Z"
                       }
@@ -19909,7 +19931,8 @@
                   "provider": "quay",
                   "comment": "My Self-Hosted Distribution Credentials",
                   "scopes": [
-                    "foo"
+                    "self-hosted:product:api",
+                    "self-hosted:product:engine"
                   ],
                   "created": "2023-06-28T15:36:59.609841Z"
                 }
@@ -19926,7 +19949,8 @@
                     "provider": "quay",
                     "comment": "My Self-Hosted Distribution Credentials",
                     "scopes": [
-                      "foo"
+                      "self-hosted:product:api",
+                      "self-hosted:product:engine"
                     ],
                     "created": "2023-06-28T15:36:59.609841Z"
                   }
@@ -20065,7 +20089,8 @@
                   "provider": "quay",
                   "comment": "My Self-Hosted Distribution Credentials",
                   "scopes": [
-                    "foo"
+                    "self-hosted:product:api",
+                    "self-hosted:product:engine"
                   ],
                   "created": "2023-06-28T15:36:59.609841Z"
                 }
@@ -20082,7 +20107,8 @@
                     "provider": "quay",
                     "comment": "My Self-Hosted Distribution Credentials",
                     "scopes": [
-                      "foo"
+                      "self-hosted:product:api",
+                      "self-hosted:product:engine"
                     ],
                     "created": "2023-06-28T15:36:59.609841Z"
                   }

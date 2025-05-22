@@ -2682,6 +2682,7 @@
               },
               "datetime_original": "foo",
               "dpi": [
+                72,
                 72
               ]
             },
@@ -8232,6 +8233,7 @@
             },
             "datetime_original": "foo",
             "dpi": [
+              72,
               72
             ]
           }
@@ -10092,6 +10094,7 @@
             },
             "datetime_original": "foo",
             "dpi": [
+              72,
               72
             ]
           }

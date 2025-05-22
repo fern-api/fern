@@ -2448,7 +2448,8 @@
                     "name": "Acme corp login",
                     "status": "foo",
                     "tags": [
-                      "foo"
+                      "blue",
+                      "red"
                     ],
                     "upload_uri": "foo"
                   }
@@ -2479,7 +2480,8 @@
                       "name": "Acme corp login",
                       "status": "foo",
                       "tags": [
-                        "foo"
+                        "blue",
+                        "red"
                       ],
                       "upload_uri": "foo"
                     }
@@ -2585,7 +2587,8 @@
                   "name": "Acme corp login",
                   "status": "foo",
                   "tags": [
-                    "foo"
+                    "blue",
+                    "red"
                   ],
                   "upload_uri": "foo"
                 },
@@ -2614,7 +2617,8 @@
                     "name": "Acme corp login",
                     "status": "foo",
                     "tags": [
-                      "foo"
+                      "blue",
+                      "red"
                     ],
                     "upload_uri": "foo"
                   },
@@ -2840,7 +2844,8 @@
                   "name": "Acme corp login",
                   "status": "foo",
                   "tags": [
-                    "foo"
+                    "blue",
+                    "red"
                   ],
                   "upload_uri": "foo"
                 },
@@ -2869,7 +2874,8 @@
                     "name": "Acme corp login",
                     "status": "foo",
                     "tags": [
-                      "foo"
+                      "blue",
+                      "red"
                     ],
                     "upload_uri": "foo"
                   },

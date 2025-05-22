@@ -25563,13 +25563,15 @@
                   "ld_proof": {
                     "credential": {
                       "@context": [
-                        {}
+                        "https://www.w3.org/2018/credentials/v1",
+                        "https://www.w3.org/2018/credentials/examples/v1"
                       ],
                       "credentialSubject": {},
                       "issuanceDate": "2010-01-01 19:23:24+00:00",
                       "issuer": {},
                       "type": [
-                        "foo"
+                        "VerifiableCredential",
+                        "AlumniCredential"
                       ]
                     },
                     "options": {
@@ -25590,13 +25592,15 @@
                     "ld_proof": {
                       "credential": {
                         "@context": [
-                          {}
+                          "https://www.w3.org/2018/credentials/v1",
+                          "https://www.w3.org/2018/credentials/examples/v1"
                         ],
                         "credentialSubject": {},
                         "issuanceDate": "2010-01-01 19:23:24+00:00",
                         "issuer": {},
                         "type": [
-                          "foo"
+                          "VerifiableCredential",
+                          "AlumniCredential"
                         ]
                       },
                       "options": {
