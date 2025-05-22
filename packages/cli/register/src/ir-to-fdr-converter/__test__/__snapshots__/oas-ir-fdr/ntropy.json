@@ -4813,21 +4813,24 @@
             "type": {
               "type": "id",
               "value": "If"
-            }
+            },
+            "displayName": "if"
           },
           {
             "typeName": "ModifyLabels",
             "type": {
               "type": "id",
               "value": "ModifyLabels"
-            }
+            },
+            "displayName": "modify labels"
           },
           {
             "typeName": "Setter",
             "type": {
               "type": "id",
               "value": "Setter"
-            }
+            },
+            "displayName": "set"
           }
         ]
       }

@@ -185,17 +185,20 @@ export class OneOfSchemaConverter extends AbstractConverter<
                     maybeTypeReference = this.context.convertReferenceToTypeReference({
                         reference: subSchema,
                         displayNameOverride: subSchema.title,
-                        displayNameOverrideType: "TITLE"
+                        displayNameOverrideSource: "reference_title"
                     });
                 } else if (this.getDiscriminatorKeyForRef(subSchema) != null) {
                     const mappingEntry = this.getDiscriminatorKeyForRef(subSchema);
                     maybeTypeReference = this.context.convertReferenceToTypeReference({
                         reference: subSchema,
                         displayNameOverride: mappingEntry,
-                        displayNameOverrideType: "DISCRIMINATOR_KEY"
+                        displayNameOverrideSource: "discriminator_key"
                     });
                 } else {
-                    maybeTypeReference = this.context.convertReferenceToTypeReference({ reference: subSchema });
+                    maybeTypeReference = this.context.convertReferenceToTypeReference({
+                        reference: subSchema,
+                        displayNameOverrideSource: "schema_title"
+                    });
                 }
 
                 if (maybeTypeReference.ok) {
