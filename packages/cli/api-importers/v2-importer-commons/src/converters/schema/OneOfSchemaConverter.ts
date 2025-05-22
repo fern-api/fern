@@ -230,6 +230,16 @@ export class OneOfSchemaConverter extends AbstractConverter<
                         type: typeShape.aliasOf,
                         docs: subSchema.description
                     });
+                } else if (typeShape.type === "object" && typeShape.properties.length === 0) {
+                    unionTypes.push({
+                        type: TypeReference.container(
+                            ContainerType.map({
+                                keyType: AbstractConverter.STRING,
+                                valueType: TypeReference.unknown()
+                            })
+                        ),
+                        docs: subSchema.description
+                    });
                 } else {
                     unionTypes.push({
                         type: this.context.createNamedTypeReference(schemaId, displayName),
@@ -339,7 +349,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
             case "primitive":
                 return true;
             case "unknown":
-                return false;
+                return true;
             default:
                 return false;
         }

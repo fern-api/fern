@@ -43,9 +43,11 @@ export class FernDefinitionConverter {
                 }
             }),
             authOverrides:
-                this.args.generatorsConfiguration?.api?.auth != null
-                    ? { ...this.args.generatorsConfiguration?.api }
-                    : undefined,
+                settings?.auth != null
+                    ? { auth: settings.auth }
+                    : this.args.generatorsConfiguration?.api?.auth != null
+                      ? { ...this.args.generatorsConfiguration.api }
+                      : undefined,
             environmentOverrides:
                 this.args.generatorsConfiguration?.api?.environments != null
                     ? { ...this.args.generatorsConfiguration?.api }

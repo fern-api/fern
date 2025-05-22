@@ -1,3 +1,5 @@
+import { RawSchemas } from "@fern-api/fern-definition-schema";
+
 export interface ConvertOpenAPIOptions {
     /**
      * If true, each error will be made unique per endpoint. This is the preferred behavior for Docs.
@@ -45,6 +47,11 @@ export interface ConvertOpenAPIOptions {
      * If true, the converter will respect forward compatible enums during generation.
      */
     respectForwardCompatibleEnums: boolean;
+
+    /**
+     * Overrides the auth schema that would be detected from the OpenAPI spec.
+     */
+    auth?: RawSchemas.ApiAuthSchema;
 }
 
 export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
