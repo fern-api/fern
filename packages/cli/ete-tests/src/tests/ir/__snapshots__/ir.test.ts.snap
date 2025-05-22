@@ -1824,6 +1824,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                     "auth": false,
                     "idempotent": false,
                     "baseUrl": null,
+                    "v2BaseUrls": null,
                     "method": "POST",
                     "basePath": null,
                     "path": {
@@ -9083,6 +9084,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "auth": false,
                     "idempotent": false,
                     "baseUrl": "ServerA",
+                    "v2BaseUrls": null,
                     "method": "GET",
                     "basePath": null,
                     "path": {
@@ -9161,6 +9163,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "auth": false,
                     "idempotent": false,
                     "baseUrl": "ServerB",
+                    "v2BaseUrls": null,
                     "method": "POST",
                     "basePath": null,
                     "path": {
@@ -9303,6 +9306,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "auth": false,
                     "idempotent": false,
                     "baseUrl": "ServerA",
+                    "v2BaseUrls": null,
                     "method": "GET",
                     "basePath": null,
                     "path": {
@@ -11010,6 +11014,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                     "auth": true,
                     "idempotent": false,
                     "baseUrl": null,
+                    "v2BaseUrls": null,
                     "method": "POST",
                     "basePath": null,
                     "path": {
@@ -13579,6 +13584,7 @@ exports[`ir > {"name":"packages"} 1`] = `
                     "auth": false,
                     "idempotent": false,
                     "baseUrl": null,
+                    "v2BaseUrls": null,
                     "method": "GET",
                     "basePath": null,
                     "path": {
@@ -15244,6 +15250,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "auth": false,
                     "idempotent": false,
                     "baseUrl": null,
+                    "v2BaseUrls": null,
                     "method": "POST",
                     "basePath": null,
                     "path": {
@@ -16021,6 +16028,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                     "auth": false,
                     "idempotent": false,
                     "baseUrl": null,
+                    "v2BaseUrls": null,
                     "method": "POST",
                     "basePath": null,
                     "path": {
@@ -17902,6 +17910,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     "auth": false,
                     "idempotent": false,
                     "baseUrl": null,
+                    "v2BaseUrls": null,
                     "method": "POST",
                     "basePath": null,
                     "path": {
@@ -20176,6 +20185,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     "auth": false,
                     "idempotent": false,
                     "baseUrl": null,
+                    "v2BaseUrls": null,
                     "method": "POST",
                     "basePath": null,
                     "path": {
@@ -30129,6 +30139,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "auth": false,
                     "idempotent": false,
                     "baseUrl": null,
+                    "v2BaseUrls": null,
                     "method": "POST",
                     "basePath": null,
                     "path": {
@@ -30739,6 +30750,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "auth": false,
                     "idempotent": false,
                     "baseUrl": null,
+                    "v2BaseUrls": null,
                     "method": "POST",
                     "basePath": null,
                     "path": {
@@ -32583,6 +32595,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "auth": false,
                     "idempotent": false,
                     "baseUrl": null,
+                    "v2BaseUrls": null,
                     "method": "GET",
                     "basePath": null,
                     "path": {
@@ -34817,6 +34830,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "auth": false,
                     "idempotent": false,
                     "baseUrl": null,
+                    "v2BaseUrls": null,
                     "method": "DELETE",
                     "basePath": null,
                     "path": {
@@ -38211,6 +38225,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "auth": false,
                     "idempotent": false,
                     "baseUrl": null,
+                    "v2BaseUrls": null,
                     "method": "POST",
                     "basePath": null,
                     "path": {
@@ -38321,6 +38336,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                     "auth": false,
                     "idempotent": false,
                     "baseUrl": null,
+                    "v2BaseUrls": null,
                     "method": "POST",
                     "basePath": null,
                     "path": {
@@ -39233,6 +39249,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                     "auth": false,
                     "idempotent": false,
                     "baseUrl": null,
+                    "v2BaseUrls": null,
                     "method": "POST",
                     "basePath": null,
                     "path": {
