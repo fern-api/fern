@@ -80,9 +80,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 continue;
             }
 
-            // if no top level schemes, then just add the scheme to the whole api
             if (
-                this.shouldAddSchemeToIr({
+                this.shouldAddAuthSchemeToIr({
                     authScheme: convertedScheme,
                     schemeId: id,
                     currentSecuritySchemes: securitySchemes
@@ -280,7 +279,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         return { endpointLevelServers, errors };
     }
 
-    private shouldAddSchemeToIr({
+    private shouldAddAuthSchemeToIr({
         authScheme,
         schemeId,
         currentSecuritySchemes
