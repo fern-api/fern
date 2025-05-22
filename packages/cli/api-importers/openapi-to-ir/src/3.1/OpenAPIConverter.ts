@@ -303,20 +303,4 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         );
         return (topLevelSchemes.size === 0 || topLevelSchemes.has(schemeId)) && !schemeAlreadyExists;
     }
-
-    private shouldAddServerToCollectedServers({
-        server,
-        currentServers
-    }: {
-        server: OpenAPIV3_1.ServerObject;
-        currentServers: OpenAPIV3_1.ServerObject[];
-    }): boolean {
-        return !currentServers.some(
-            (s) =>
-                s.url === server.url &&
-                "x-fern-server-name" in s &&
-                "x-fern-server-name" in server &&
-                s["x-fern-server-name"] === server["x-fern-server-name"]
-        );
-    }
 }

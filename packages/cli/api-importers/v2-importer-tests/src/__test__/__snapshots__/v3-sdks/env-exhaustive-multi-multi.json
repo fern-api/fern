@@ -686,6 +686,9 @@
             }
           },
           "baseUrl": "Debug",
+          "v2BaseUrls": [
+            "Debug"
+          ],
           "path": {
             "head": "/pets",
             "parts": []
@@ -866,6 +869,9 @@
             }
           },
           "baseUrl": "Debug-1",
+          "v2BaseUrls": [
+            "Debug-1"
+          ],
           "path": {
             "head": "/pets",
             "parts": []

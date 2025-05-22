@@ -9,7 +9,7 @@
         "defaultEnvironment": "Prod",
         "environments": [
           {
-            "id": "Prod",
+            "id": "Debug",
             "baseUrl": "http://debug.api.com"
           }
         ],
