@@ -127,8 +127,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                         })
                     ),
                     streamResponseBody: undefined,
-                    inlinedTypes: {},
-                    examples: {}
+                    inlinedTypes: convertedSchema.inlinedTypes,
+                    examples: convertedSchema.examples
                 };
             }
             case "sse": {
@@ -146,8 +146,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                         })
                     ),
                     streamResponseBody: undefined,
-                    inlinedTypes: {},
-                    examples: {}
+                    inlinedTypes: convertedSchema.inlinedTypes,
+                    examples: convertedSchema.examples
                 };
             }
             default: {
