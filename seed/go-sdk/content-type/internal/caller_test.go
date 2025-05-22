@@ -34,6 +34,7 @@ type TestCase struct {
 
 	// Client-side assertions.
 	wantResponse *Response
+	wantHeaders  http.Header
 	wantError    error
 }
 
@@ -231,6 +232,67 @@ func TestCall(t *testing.T) {
 			}
 			require.NoError(t, err)
 			assert.Equal(t, test.wantResponse, response)
+		})
+	}
+}
+
+func TestCallRaw(t *testing.T) {
+	tests := []*TestCase{
+		{
+			description: "HEAD success",
+			giveMethod:  http.MethodHead,
+			giveHeader: http.Header{
+				"X-API-Status": []string{"success"},
+			},
+			wantHeaders: http.Header{
+				"Content-Length": []string{"250"},
+				"Date":           []string{"1970-01-01"},
+			},
+		},
+	}
+	for _, test := range tests {
+		t.Run(test.description, func(t *testing.T) {
+			server := httptest.NewServer(
+				http.HandlerFunc(
+					func(w http.ResponseWriter, r *http.Request) {
+						assert.Equal(t, test.giveMethod, r.Method)
+						for header, value := range test.giveHeader {
+							assert.Equal(t, value, r.Header.Values(header))
+						}
+						for header, values := range test.wantHeaders {
+							for _, value := range values {
+								w.Header().Add(header, value)
+							}
+						}
+						w.WriteHeader(http.StatusOK)
+					},
+				),
+			)
+			defer server.Close()
+
+			caller := NewCaller(
+				&CallerParams{
+					Client: server.Client(),
+				},
+			)
+			response, err := caller.CallRaw(
+				context.Background(),
+				&CallRawParams{
+					URL:             server.URL + test.givePathSuffix,
+					Method:          test.giveMethod,
+					Headers:         test.giveHeader,
+					BodyProperties:  test.giveBodyProperties,
+					QueryParameters: test.giveQueryParams,
+					Request:         test.giveRequest,
+					ErrorDecoder:    test.giveErrorDecoder,
+				},
+			)
+			if test.wantError != nil {
+				assert.EqualError(t, err, test.wantError.Error())
+				return
+			}
+			require.NoError(t, err)
+			assert.Equal(t, test.wantHeaders, response.Header)
 		})
 	}
 }
