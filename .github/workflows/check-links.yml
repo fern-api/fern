@@ -13,12 +13,24 @@ jobs:
   check-links:
     name: Check links
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        site:
+         - name: Fern Docs
+           url: "buildwithfern.com/learn"
     steps:
-      - name: Check Links
-        uses: DAKLabb/check-links@v0.0.1
+      - name: Install link checker
+        run: pip install linkchecker
+      - name: Create config
+        run: echo -e "[csv]\nseparator=,\n[output]\nignoreerrors=\n  ^http ^403 Forbidden" > lcconfig
+      - name: Check ${{ matrix.site.name }} Links
+        run: linkchecker https://${{ matrix.site.url }} --check-extern --no-status --no-warnings --config lcconfig -F csv/utf-8/link_report.csv
+      - name: Postprocess report
+        run: python postprocess_report.py
+      - name: Upload report
+        if: failure()
+        uses: actions/upload-artifact@v4
         with:
-          url: buildwithfern.com/learn
-          site-name: Fern Docs
-          report-name: Fern Docs Link report
-          check-external: true
-          include-warnings: false
+          name: Report - ${{ matrix.site.name }}
+          path: link_report.csv
