@@ -1,5 +1,5 @@
 export { AbstractConverter } from "./AbstractConverter";
-export { AbstractConverterContext, type Spec } from "./AbstractConverterContext";
+export { AbstractConverterContext, type Spec, type DisplayNameOverrideSource } from "./AbstractConverterContext";
 export { AbstractExtension } from "./AbstractExtension";
 export { AbstractSpecConverter } from "./AbstractSpecConverter";
 export * from "./converters";
