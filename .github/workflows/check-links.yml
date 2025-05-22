@@ -1,0 +1,24 @@
+name: Check Links
+
+on:
+  #TODO: Remove before merging
+  push:
+    branches:
+      - "dak/ci/link-checking"
+  #TODO: Uncomment after testing/validation
+  #schedule:
+  #- cron: "0 0 * * *"
+  workflow_dispatch:
+jobs:
+  check-links:
+    name: Check links
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Links
+        uses: DAKLabb/check-links@v0.0.1
+        with:
+          url: buildwithfern.com/learn
+          site-name: Fern Docs
+          report-name: Fern Docs Link report
+          check-external: true
+          include-warnings: false
