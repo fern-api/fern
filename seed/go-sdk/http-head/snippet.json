@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.list"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/http-head/fern\"\n\tfernclient \"github.com/http-head/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.List(\n\tcontext.TODO(),\n\t\u0026fern.ListUsersRequest{\n\t\tLimit: 1,\n\t},\n)\n"
+            }
+        }
+    ]
+}
