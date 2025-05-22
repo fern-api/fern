@@ -45,9 +45,9 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
 
         let displayName: string | undefined;
 
-        if (prioritizeOverride) {
+        if (prioritizeOverride === true) {
             displayName = displayNameOverride ?? resolvedReference.value.title;
-        } else {
+        } else if (prioritizeOverride === false) {
             displayName = resolvedReference.value.title ?? displayNameOverride;
         }
 
