@@ -42,9 +42,10 @@ export class FernDefinitionConverter {
                         settings?.respectForwardCompatibleEnums ?? this.args.respectForwardCompatibleEnums
                 }
             }),
-            authOverrides:
-                this.args.generatorsConfiguration?.api?.auth != null
-                    ? { ...this.args.generatorsConfiguration?.api }
+            authOverrides: settings?.auth != null 
+                ? { auth: settings.auth }
+                : this.args.generatorsConfiguration?.api?.auth != null
+                    ? { ...this.args.generatorsConfiguration.api }
                     : undefined,
             environmentOverrides:
                 this.args.generatorsConfiguration?.api?.environments != null

@@ -52,9 +52,11 @@ export async function runRemoteGenerationForAPIWorkspace({
     interactiveTasks.push(
         ...generatorGroup.generators.map((generatorInvocation) =>
             context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
+                const settings = getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation);
+
                 const fernWorkspace = await workspace.toFernWorkspace(
                     { context },
-                    getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
+                    settings,
                 );
 
                 const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({

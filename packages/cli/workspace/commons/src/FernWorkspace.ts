@@ -3,6 +3,8 @@ import { AbsoluteFilePath } from "@fern-api/path-utils";
 
 import { AbstractAPIWorkspace, FernDefinition } from "./AbstractAPIWorkspace";
 import { IdentifiableSource } from "./Source";
+import { RawSchemas } from "@fern-api/fern-definition-schema"
+import { TaskContext } from "@fern-api/task-context";
 
 export declare namespace FernWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
@@ -10,9 +12,13 @@ export declare namespace FernWorkspace {
         definition: FernDefinition;
         sources?: IdentifiableSource[];
     }
+
+    export interface Settings {
+        auth?: RawSchemas.ApiAuthSchema;
+    }
 }
 
-export class FernWorkspace extends AbstractAPIWorkspace<void> {
+export class FernWorkspace extends AbstractAPIWorkspace<FernWorkspace.Settings> {
     public definition: FernDefinition;
     public sources: IdentifiableSource[];
 
