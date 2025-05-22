@@ -3,7 +3,7 @@
       Re-release `0.18.0-rc1`
     type: fix
   irVersion: 55
-  createdAt: '2025-05-21'
+  createdAt: '2025-05-22'
   version: 0.18.0-rc2
 
 - changelogEntry:
@@ -11,7 +11,7 @@
       Re-release `0.18.0-rc1`
     type: fix
   irVersion: 55
-  createdAt: '2025-05-21'
+  createdAt: '2025-05-22'
   version: 0.18.0-rc1
 
 - changelogEntry:
