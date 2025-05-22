@@ -1291,6 +1291,38 @@ func (f *fileWriter) WriteClient(
 			f.P(headersParameter, `.Set("Content-Type", writer.ContentType())`)
 		}
 
+		if endpoint.Method == "http.MethodHead" {
+			// HEAD requests don't have a response body, so we can simply return the raw
+			// response headers.
+			f.P("response, err := ", receiver, ".caller.CallRaw(")
+			f.P("ctx,")
+			f.P("&internal.CallRawParams{")
+			f.P("URL: endpointURL, ")
+			f.P("Method:", endpoint.Method, ",")
+			f.P("Headers:", headersParameter, ",")
+			f.P("MaxAttempts: options.MaxAttempts,")
+			f.P("BodyProperties: options.BodyProperties,")
+			f.P("QueryParameters: options.QueryParameters,")
+			f.P("Client: options.HTTPClient,")
+			if endpoint.RequestValueName != "" {
+				f.P("Request: ", endpoint.RequestValueName, ",")
+			}
+			if endpoint.ErrorDecoderParameterName != "" {
+				f.P("ErrorDecoder:", endpoint.ErrorDecoderParameterName, ",")
+			}
+			f.P("},")
+			f.P(")")
+			f.P("if err != nil {")
+			f.P("return ", endpoint.ErrorReturnValues)
+			f.P("}")
+			f.P("defer response.Body.Close()")
+			f.P("return response.Header, nil")
+			f.P("}")
+			f.P()
+
+			continue
+		}
+
 		f.P()
 
 		// Prepare a response variable.
@@ -2505,6 +2537,11 @@ func (f *fileWriter) endpointFromIR(
 		default:
 			return nil, fmt.Errorf("%s requests are not supported yet", irEndpoint.Response.Body.Type)
 		}
+	} else if irEndpoint.Method == "HEAD" {
+		responseParameterName = "response"
+		signatureReturnValues = "(http.Header, error)"
+		successfulReturnValues = "response, nil"
+		errorReturnValues = "nil, err"
 	} else {
 		responseParameterName = ""
 		signatureReturnValues = "error"
@@ -3289,6 +3326,8 @@ func irMethodToMethodEnum(method ir.HttpMethod) string {
 		return "http.MethodPatch"
 	case ir.HttpMethodDelete:
 		return "http.MethodDelete"
+	case ir.HttpMethodHead:
+		return "http.MethodHead"
 	}
 	return ""
 }

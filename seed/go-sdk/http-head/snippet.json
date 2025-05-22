@@ -3,6 +3,16 @@
         {
             "id": {
                 "path": "/users",
+                "identifier_override": "endpoint_user.head"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/http-head/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.User.Head(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
                 "method": "GET",
                 "identifier_override": "endpoint_user.list"
             },

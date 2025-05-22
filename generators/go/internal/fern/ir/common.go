@@ -721,6 +721,7 @@ const (
 	HttpMethodPut    HttpMethod = "PUT"
 	HttpMethodPatch  HttpMethod = "PATCH"
 	HttpMethodDelete HttpMethod = "DELETE"
+	HttpMethodHead   HttpMethod = "HEAD"
 )
 
 func NewHttpMethodFromString(s string) (HttpMethod, error) {
@@ -735,6 +736,8 @@ func NewHttpMethodFromString(s string) (HttpMethod, error) {
 		return HttpMethodPatch, nil
 	case "DELETE":
 		return HttpMethodDelete, nil
+	case "HEAD":
+		return HttpMethodHead, nil
 	}
 	var t HttpMethod
 	return "", fmt.Errorf("%s is not a valid %T", s, t)

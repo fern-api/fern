@@ -1,6 +1,15 @@
 - changelogEntry:
     - summary: |
         Fix a bug where array property examples would not be used in favor of item examples.
+        Correctly process `additionalProperties: true` case for empty object schemas.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-22"
+  version: 0.63.3
+
+- changelogEntry:
+    - summary: |
+        The CLI now recognizes that Go `1.1.0` requires IRv58.
       type: fix
   irVersion: 58
   createdAt: "2025-05-22"
