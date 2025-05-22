@@ -85,12 +85,12 @@ export abstract class AbstractConverterContext<Spec extends object> {
         reference,
         breadcrumbs,
         displayNameOverride,
-        prioritizeOverride
+        displayNameOverrideSource
     }: {
         reference: OpenAPIV3_1.ReferenceObject;
         breadcrumbs?: string[];
         displayNameOverride?: string | undefined;
-        prioritizeOverride?: boolean;
+        displayNameOverrideSource?: "reference_title" | "discriminator_key" | "schema_title";
     }): { ok: true; reference: TypeReference } | { ok: false };
 
     /**

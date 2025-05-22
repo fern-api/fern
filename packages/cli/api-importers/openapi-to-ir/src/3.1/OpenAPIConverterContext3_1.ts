@@ -27,12 +27,12 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
         reference,
         breadcrumbs,
         displayNameOverride,
-        prioritizeOverride
+        displayNameOverrideSource
     }: {
         reference: OpenAPIV3_1.ReferenceObject;
         breadcrumbs?: string[];
         displayNameOverride?: string | undefined;
-        prioritizeOverride?: boolean;
+        displayNameOverrideSource?: "reference_title" | "discriminator_key" | "schema_title";
     }): { ok: true; reference: TypeReference } | { ok: false } {
         const typeId = this.getTypeIdFromSchemaReference(reference);
         if (typeId == null) {
@@ -45,9 +45,9 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
 
         let displayName: string | undefined;
 
-        if (prioritizeOverride === true) {
+        if (displayNameOverrideSource === "reference_title") {
             displayName = displayNameOverride ?? resolvedReference.value.title;
-        } else if (prioritizeOverride === false) {
+        } else if (displayNameOverrideSource === "discriminator_key" || displayNameOverrideSource === "schema_title") {
             displayName = resolvedReference.value.title ?? displayNameOverride;
         }
 

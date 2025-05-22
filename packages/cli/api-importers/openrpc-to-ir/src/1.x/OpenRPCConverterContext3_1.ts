@@ -25,12 +25,12 @@ export class OpenRPCConverterContext3_1 extends AbstractConverterContext<Openrpc
         reference,
         breadcrumbs,
         displayNameOverride,
-        prioritizeOverride
+        displayNameOverrideSource
     }: {
         reference: OpenAPIV3_1.ReferenceObject;
         breadcrumbs?: string[];
         displayNameOverride?: string | undefined;
-        prioritizeOverride?: boolean;
+        displayNameOverrideSource?: "reference_title" | "discriminator_key" | "schema_title";
     }): { ok: true; reference: TypeReference } | { ok: false } {
         const typeId = this.getTypeIdFromSchemaReference(reference);
         if (typeId == null) {
@@ -43,9 +43,9 @@ export class OpenRPCConverterContext3_1 extends AbstractConverterContext<Openrpc
 
         let displayName: string | undefined;
 
-        if (prioritizeOverride === true) {
+        if (displayNameOverrideSource === "reference_title") {
             displayName = displayNameOverride ?? resolvedReference.value.title;
-        } else if (prioritizeOverride === false) {
+        } else if (displayNameOverrideSource === "discriminator_key" || displayNameOverrideSource === "schema_title") {
             displayName = resolvedReference.value.title ?? displayNameOverride;
         }
 
