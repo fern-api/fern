@@ -23,7 +23,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
     private readonly responseBody: OpenAPIV3_1.ResponseObject;
     private readonly statusCode: string;
     private readonly streamingExtension: FernStreamingExtension.Output | undefined;
-
+    private readonly schemaId: string;
     constructor({
         context,
         breadcrumbs,
@@ -37,16 +37,16 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
         this.responseBody = responseBody;
         this.statusCode = statusCode;
         this.streamingExtension = streamingExtension;
+        this.schemaId = [...this.group, this.method, "Response", this.statusCode].join("_");
     }
 
     public convert(): ResponseBodyConverter.Output | undefined {
-        const schemaId = [...this.group, this.method, "Response", this.statusCode].join("_");
         const jsonContentTypes = Object.keys(this.responseBody.content ?? {}).filter((type) => type.includes("json"));
         for (const contentType of jsonContentTypes) {
             const mediaTypeObject = this.responseBody.content?.[contentType];
             const convertedSchema = this.parseMediaTypeObject({
                 mediaTypeObject,
-                schemaId,
+                schemaId: this.schemaId,
                 contentType
             });
             if (convertedSchema == null) {
@@ -73,7 +73,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
             const mediaTypeObject = this.responseBody.content?.[contentType];
             const convertedSchema = this.parseMediaTypeObject({
                 mediaTypeObject,
-                schemaId,
+                schemaId: this.schemaId,
                 contentType
             });
             if (convertedSchema == null) {
@@ -127,8 +127,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                         })
                     ),
                     streamResponseBody: undefined,
-                    inlinedTypes: {},
-                    examples: {}
+                    inlinedTypes: convertedSchema.inlinedTypes,
+                    examples: convertedSchema.examples
                 };
             }
             case "sse": {
@@ -146,8 +146,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                         })
                     ),
                     streamResponseBody: undefined,
-                    inlinedTypes: {},
-                    examples: {}
+                    inlinedTypes: convertedSchema.inlinedTypes,
+                    examples: convertedSchema.examples
                 };
             }
             default: {

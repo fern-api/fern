@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Fix a bug where stream endpoint response types would not be stored in the IR.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-22"
+  version: 0.63.5
+
+- changelogEntry:
+    - summary: |
         Fix a bug where array property examples would not be used in favor of item examples.
         Correctly process `additionalProperties: true` case for empty object schemas.
       type: fix
