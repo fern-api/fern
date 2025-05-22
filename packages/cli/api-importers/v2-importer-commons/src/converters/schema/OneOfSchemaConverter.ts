@@ -195,7 +195,10 @@ export class OneOfSchemaConverter extends AbstractConverter<
                         prioritizeOverride: false
                     });
                 } else {
-                    maybeTypeReference = this.context.convertReferenceToTypeReference({ reference: subSchema });
+                    maybeTypeReference = this.context.convertReferenceToTypeReference({
+                        reference: subSchema,
+                        prioritizeOverride: false
+                    });
                 }
 
                 if (maybeTypeReference.ok) {
