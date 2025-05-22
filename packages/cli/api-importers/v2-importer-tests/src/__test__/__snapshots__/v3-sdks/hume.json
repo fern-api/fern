@@ -21673,6 +21673,7 @@
                 }
               },
               "typeId": "ToolResponseMessage",
+              "displayName": "ToolResponseMessage",
               "inline": false,
               "type": "named"
             }
@@ -21703,6 +21704,7 @@
                 }
               },
               "typeId": "ToolErrorMessage",
+              "displayName": "ToolErrorMessage",
               "inline": false,
               "type": "named"
             }
