@@ -8,7 +8,7 @@ import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 
 export declare namespace MapSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
-        schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | boolean;
+        schemaOrReferenceOrBoolean: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | boolean;
     }
 
     export interface Output {
@@ -19,11 +19,11 @@ export declare namespace MapSchemaConverter {
 }
 
 export class MapSchemaConverter extends AbstractConverter<AbstractConverterContext<object>, MapSchemaConverter.Output> {
-    private readonly schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | boolean;
+    private readonly schemaOrReferenceOrBoolean: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | boolean;
 
-    constructor({ context, breadcrumbs, schema }: MapSchemaConverter.Args) {
+    constructor({ context, breadcrumbs, schemaOrReferenceOrBoolean }: MapSchemaConverter.Args) {
         super({ context, breadcrumbs });
-        this.schema = schema;
+        this.schemaOrReferenceOrBoolean = schemaOrReferenceOrBoolean;
     }
     public convert(): MapSchemaConverter.Output | undefined {
         const maybeUnknownMap = this.tryConvertUnknownMap();
@@ -40,7 +40,7 @@ export class MapSchemaConverter extends AbstractConverter<AbstractConverterConte
     }
 
     private tryConvertUnknownMap(): MapSchemaConverter.Output | undefined {
-        if (typeof this.schema === "boolean") {
+        if (typeof this.schemaOrReferenceOrBoolean === "boolean") {
             const additionalPropertiesType = TypeReference.container(
                 ContainerType.map({
                     keyType: AbstractConverter.STRING,
@@ -61,14 +61,14 @@ export class MapSchemaConverter extends AbstractConverter<AbstractConverterConte
     }
 
     private tryConvertTypedMap(): MapSchemaConverter.Output | undefined {
-        if (typeof this.schema === "boolean") {
+        if (typeof this.schemaOrReferenceOrBoolean === "boolean") {
             return undefined;
         }
 
         const additionalPropertiesSchemaConverter = new SchemaOrReferenceConverter({
             context: this.context,
             breadcrumbs: this.breadcrumbs,
-            schemaOrReference: this.schema
+            schemaOrReference: this.schemaOrReferenceOrBoolean
         });
         const convertedAdditionalProperties = additionalPropertiesSchemaConverter.convert();
         if (convertedAdditionalProperties != null) {
