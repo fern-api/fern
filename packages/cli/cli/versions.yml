@@ -13,7 +13,7 @@
       type: internal
   irVersion: 57
   createdAt: "2025-05-21"
-  version: 0.62.9
+  version: 0.62.10
 
 - changelogEntry:
     - summary: |
