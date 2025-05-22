@@ -64,9 +64,9 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
 
         let displayName: string | undefined;
 
-        if (prioritizeOverride) {
+        if (prioritizeOverride === true) {
             displayName = displayNameOverride ?? resolvedReference.value.title;
-        } else {
+        } else if (prioritizeOverride === false) {
             displayName = resolvedReference.value.title ?? displayNameOverride;
         }
 

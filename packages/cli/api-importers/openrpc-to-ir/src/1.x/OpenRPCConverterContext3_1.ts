@@ -43,9 +43,9 @@ export class OpenRPCConverterContext3_1 extends AbstractConverterContext<Openrpc
 
         let displayName: string | undefined;
 
-        if (prioritizeOverride) {
+        if (prioritizeOverride === true) {
             displayName = displayNameOverride ?? resolvedReference.value.title;
-        } else {
+        } else if (prioritizeOverride === false) {
             displayName = resolvedReference.value.title ?? displayNameOverride;
         }
 
