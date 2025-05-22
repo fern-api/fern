@@ -8,7 +8,7 @@ import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 
 export declare namespace MapSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
-        schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
+        schema: OpenAPIV3_1.SchemaObject | boolean;
     }
 
     export interface Output {
@@ -19,14 +19,52 @@ export declare namespace MapSchemaConverter {
 }
 
 export class MapSchemaConverter extends AbstractConverter<AbstractConverterContext<object>, MapSchemaConverter.Output> {
-    private readonly schema: OpenAPIV3_1.SchemaObject;
+    private readonly schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | boolean;
 
     constructor({ context, breadcrumbs, schema }: MapSchemaConverter.Args) {
         super({ context, breadcrumbs });
         this.schema = schema;
     }
-
     public convert(): MapSchemaConverter.Output | undefined {
+        const maybeUnknownMap = this.tryConvertUnknownMap();
+        if (maybeUnknownMap != null) {
+            return maybeUnknownMap;
+        }
+
+        const maybeTypedMap = this.tryConvertTypedMap();
+        if (maybeTypedMap != null) {
+            return maybeTypedMap;
+        }
+
+        return undefined;
+    }
+
+    private tryConvertUnknownMap(): MapSchemaConverter.Output | undefined {
+        if (typeof this.schema === "boolean") {
+            const additionalPropertiesType = TypeReference.container(
+                ContainerType.map({
+                    keyType: AbstractConverter.STRING,
+                    valueType: TypeReference.unknown()
+                })
+            );
+            return {
+                type: Type.alias({
+                    aliasOf: additionalPropertiesType,
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    resolvedType: additionalPropertiesType as any
+                }),
+                referencedTypes: new Set(),
+                inlinedTypes: {}
+            };
+        }
+        return undefined;
+    }
+
+    private tryConvertTypedMap(): MapSchemaConverter.Output | undefined {
+        if (typeof this.schema === "boolean") {
+            return undefined;
+        }
+
         const additionalPropertiesSchemaConverter = new SchemaOrReferenceConverter({
             context: this.context,
             breadcrumbs: this.breadcrumbs,

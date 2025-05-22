@@ -283,7 +283,8 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
     private tryConvertMapSchema(): SchemaConverter.Output | undefined {
         if (
-            typeof this.schema.additionalProperties === "object" &&
+            (typeof this.schema.additionalProperties === "object" ||
+                typeof this.schema.additionalProperties === "boolean") &&
             this.schema.additionalProperties != null &&
             !this.schema.properties &&
             !this.schema.allOf
