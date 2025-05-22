@@ -17,7 +17,9 @@ export type EndpointLocation = Omit<dynamic.EndpointLocation, "method"> & {
 
 export function convertEndpoints(endpoints: Record<string, dynamic.Endpoint>): Record<string, Endpoint> {
     return Object.fromEntries(
-        Object.entries(endpoints).map(([key, endpoint]) => [key, convertEndpoint(endpoint)]).filter(([_, endpoint]) => endpoint != null)
+        Object.entries(endpoints)
+            .map(([key, endpoint]) => [key, convertEndpoint(endpoint)])
+            .filter(([_, endpoint]) => endpoint != null)
     );
 }
 

@@ -20,7 +20,7 @@ describe("no-head-response-body", () => {
                 nodePath: ["service", "endpoints", "qux"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
                 severity: "fatal"
-            },
+            }
         ]);
     });
 });

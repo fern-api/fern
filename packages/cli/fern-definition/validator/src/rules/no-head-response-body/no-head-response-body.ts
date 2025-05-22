@@ -9,10 +9,7 @@ export const NoHeadResponseBodyRule: Rule = {
             definitionFile: {
                 httpEndpoint: ({ endpoint }) => {
                     const method = endpoint.method;
-                    if (
-                        method === "HEAD" &&
-                        getResponseBodyType(endpoint) != null
-                    ) {
+                    if (method === "HEAD" && getResponseBodyType(endpoint) != null) {
                         return [
                             {
                                 severity: "fatal",

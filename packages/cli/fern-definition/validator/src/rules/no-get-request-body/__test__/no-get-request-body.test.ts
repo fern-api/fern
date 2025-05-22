@@ -32,7 +32,7 @@ describe("no-get-request-body", () => {
                 nodePath: ["service", "endpoints", "qux"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
                 severity: "fatal"
-            },
+            }
         ]);
     });
 });

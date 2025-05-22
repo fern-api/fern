@@ -55,15 +55,12 @@ export class DynamicSnippetsCsharpTestGenerator {
                 if (convertedRequest == null) {
                     continue;
                 }
-                const response = await this.dynamicSnippetsGenerator.generate(
-                    convertedRequest,
-                    {
-                        config: {
-                            fullStyleClassName: `Example${idx}`
-                        } as Config,
-                        style: Style.Full
-                    }
-                );
+                const response = await this.dynamicSnippetsGenerator.generate(convertedRequest, {
+                    config: {
+                        fullStyleClassName: `Example${idx}`
+                    } as Config,
+                    style: Style.Full
+                });
                 const dynamicSnippetFilePath = this.getTestFilePath({ absolutePathToOutputDir, idx });
                 await mkdir(path.dirname(dynamicSnippetFilePath), { recursive: true });
                 await writeFile(dynamicSnippetFilePath, response.snippet);

@@ -72,11 +72,15 @@ function convertDynamicEndpoints(
     endpoints: Record<string, IrVersions.V57.dynamic.Endpoint>
 ): Record<string, IrVersions.V56.dynamic.Endpoint> {
     return Object.fromEntries(
-        Object.entries(endpoints).map(([key, endpoint]) => [key, convertDynamicEndpoint(endpoint)]).filter(([_, endpoint]) => endpoint != null)
+        Object.entries(endpoints)
+            .map(([key, endpoint]) => [key, convertDynamicEndpoint(endpoint)])
+            .filter(([_, endpoint]) => endpoint != null)
     );
 }
 
-function convertDynamicEndpoint(endpoint: IrVersions.V57.dynamic.Endpoint): IrVersions.V56.dynamic.Endpoint | undefined {
+function convertDynamicEndpoint(
+    endpoint: IrVersions.V57.dynamic.Endpoint
+): IrVersions.V56.dynamic.Endpoint | undefined {
     const method = endpoint.location.method;
     if (method === "HEAD") {
         // HEAD methods can dropped entirely.
@@ -112,9 +116,9 @@ function convertDynamicExample(
         auth: example.auth != null ? convertDynamicAuthValues(example.auth) : undefined,
         endpoint: {
             ...example.endpoint,
-            method,
+            method
         }
-    }
+    };
 }
 
 function convertDynamicAuth(auth: IrVersions.V57.dynamic.Auth): IrVersions.V56.dynamic.Auth | undefined {

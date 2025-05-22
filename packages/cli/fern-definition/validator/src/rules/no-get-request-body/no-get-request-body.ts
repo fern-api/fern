@@ -9,10 +9,7 @@ export const NoGetRequestBodyRule: Rule = {
             definitionFile: {
                 httpEndpoint: ({ endpoint }) => {
                     const method = endpoint.method;
-                    if (
-                        (method === "GET" || method === "HEAD") &&
-                        getRequestBody(endpoint) != null
-                    ) {
+                    if ((method === "GET" || method === "HEAD") && getRequestBody(endpoint) != null) {
                         return [
                             {
                                 severity: "fatal",

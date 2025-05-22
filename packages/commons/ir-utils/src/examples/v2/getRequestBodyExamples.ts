@@ -1,11 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import {
-    HttpEndpoint,
-    HttpService,
-    TypeDeclaration,
-    TypeId,
-    V2HttpEndpointRequest,
-} from "@fern-api/ir-sdk";
+import { HttpEndpoint, HttpService, TypeDeclaration, TypeId, V2HttpEndpointRequest } from "@fern-api/ir-sdk";
 
 import { getParameterExamples } from "./getParameterExamples";
 import { getFirstExamples, getV2Examples } from "./getV2Examples";
