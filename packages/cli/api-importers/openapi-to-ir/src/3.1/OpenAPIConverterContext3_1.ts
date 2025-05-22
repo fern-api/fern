@@ -1,7 +1,7 @@
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { TypeReference } from "@fern-api/ir-sdk";
-import { AbstractConverterContext } from "@fern-api/v2-importer-commons";
+import { AbstractConverterContext, DisplayNameOverrideSource } from "@fern-api/v2-importer-commons";
 
 /**
  * Context class for converting OpenAPI 3.1 specifications
@@ -32,7 +32,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
         reference: OpenAPIV3_1.ReferenceObject;
         breadcrumbs?: string[];
         displayNameOverride?: string | undefined;
-        displayNameOverrideSource?: "reference_title" | "discriminator_key" | "schema_title";
+        displayNameOverrideSource?: DisplayNameOverrideSource;
     }): { ok: true; reference: TypeReference } | { ok: false } {
         const typeId = this.getTypeIdFromSchemaReference(reference);
         if (typeId == null) {
@@ -45,9 +45,12 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
 
         let displayName: string | undefined;
 
-        if (displayNameOverrideSource === "reference_title") {
+        if (displayNameOverrideSource === "reference_identifier") {
             displayName = displayNameOverride ?? resolvedReference.value.title;
-        } else if (displayNameOverrideSource === "discriminator_key" || displayNameOverrideSource === "schema_title") {
+        } else if (
+            displayNameOverrideSource === "discriminator_key" ||
+            displayNameOverrideSource === "schema_identifier"
+        ) {
             displayName = resolvedReference.value.title ?? displayNameOverride;
         }
 
