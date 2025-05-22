@@ -469,7 +469,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         if (resolvedSchema.items == null) {
             resolvedSchema.items = { type: "string" };
         }
-        const exampleArray = Array.isArray(this.example) ? this.example : [this.example];
+        const maybeExampleArray = this.example ?? resolvedSchema.example;
+        const exampleArray = Array.isArray(maybeExampleArray) ? maybeExampleArray : [maybeExampleArray];
         const results = exampleArray.map((item) => {
             const exampleConverter = new ExampleConverter({
                 breadcrumbs: [...this.breadcrumbs, "items"],

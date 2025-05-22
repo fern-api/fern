@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Fix a bug where array property examples would not be used in favor of item examples.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-22"
+  version: 0.63.2
+
+- changelogEntry:
+    - summary: |
         Add support for rendering and parsing multiple endpoint baseUrls in the v3 parser.
       type: feat
   irVersion: 58
