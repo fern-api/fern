@@ -37,7 +37,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -49,7 +49,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -451,7 +451,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -464,7 +464,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -518,7 +518,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -531,7 +531,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -706,7 +706,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 0
               }
             }
@@ -735,7 +735,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -2855,7 +2855,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -2868,7 +2868,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3148,7 +3148,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -3158,7 +3158,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -3168,7 +3168,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -3570,7 +3570,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 0
               }
             }
@@ -3755,7 +3755,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 0
               }
             }
@@ -4172,7 +4172,8 @@
             "type": {
               "type": "id",
               "value": "FnCall"
-            }
+            },
+            "displayName": "function"
           }
         ]
       }
@@ -4812,24 +4813,21 @@
             "type": {
               "type": "id",
               "value": "If"
-            },
-            "displayName": "if"
+            }
           },
           {
             "typeName": "ModifyLabels",
             "type": {
               "type": "id",
               "value": "ModifyLabels"
-            },
-            "displayName": "modify labels"
+            }
           },
           {
             "typeName": "Setter",
             "type": {
               "type": "id",
               "value": "Setter"
-            },
-            "displayName": "set"
+            }
           }
         ]
       }

@@ -822,28 +822,32 @@
             "type": {
               "type": "id",
               "value": "InitiatedExecutePromptEvent"
-            }
+            },
+            "displayName": "INITIATED"
           },
           {
             "typeName": "StreamingExecutePromptEvent",
             "type": {
               "type": "id",
               "value": "StreamingExecutePromptEvent"
-            }
+            },
+            "displayName": "STREAMING"
           },
           {
             "typeName": "FulfilledExecutePromptEvent",
             "type": {
               "type": "id",
               "value": "FulfilledExecutePromptEvent"
-            }
+            },
+            "displayName": "FULFILLED"
           },
           {
             "typeName": "RejectedExecutePromptEvent",
             "type": {
               "type": "id",
               "value": "RejectedExecutePromptEvent"
-            }
+            },
+            "displayName": "REJECTED"
           }
         ]
       }
@@ -1117,28 +1121,32 @@
             "type": {
               "type": "id",
               "value": "StringVellumValue"
-            }
+            },
+            "displayName": "STRING"
           },
           {
             "typeName": "JsonVellumValue",
             "type": {
               "type": "id",
               "value": "JsonVellumValue"
-            }
+            },
+            "displayName": "JSON"
           },
           {
             "typeName": "ErrorVellumValue",
             "type": {
               "type": "id",
               "value": "ErrorVellumValue"
-            }
+            },
+            "displayName": "ERROR"
           },
           {
             "typeName": "FunctionCallVellumValue",
             "type": {
               "type": "id",
               "value": "FunctionCallVellumValue"
-            }
+            },
+            "displayName": "FUNCTION_CALL"
           }
         ]
       }
@@ -5094,21 +5102,24 @@
             "type": {
               "type": "id",
               "value": "TerminalNodeStringResult"
-            }
+            },
+            "displayName": "STRING"
           },
           {
             "typeName": "TerminalNodeJsonResult",
             "type": {
               "type": "id",
               "value": "TerminalNodeJsonResult"
-            }
+            },
+            "displayName": "JSON"
           },
           {
             "typeName": "TerminalNodeChatHistoryResult",
             "type": {
               "type": "id",
               "value": "TerminalNodeChatHistoryResult"
-            }
+            },
+            "displayName": "CHAT_HISTORY"
           }
         ]
       }
@@ -5673,42 +5684,48 @@
             "type": {
               "type": "id",
               "value": "PromptNodeResult"
-            }
+            },
+            "displayName": "PROMPT"
           },
           {
             "typeName": "SandboxNodeResult",
             "type": {
               "type": "id",
               "value": "SandboxNodeResult"
-            }
+            },
+            "displayName": "SANDBOX"
           },
           {
             "typeName": "DeploymentNodeResult",
             "type": {
               "type": "id",
               "value": "DeploymentNodeResult"
-            }
+            },
+            "displayName": "DEPLOYMENT"
           },
           {
             "typeName": "SearchNodeResult",
             "type": {
               "type": "id",
               "value": "SearchNodeResult"
-            }
+            },
+            "displayName": "SEARCH"
           },
           {
             "typeName": "ConditionalNodeResult",
             "type": {
               "type": "id",
               "value": "ConditionalNodeResult"
-            }
+            },
+            "displayName": "CONDITIONAL"
           },
           {
             "typeName": "TerminalNodeResult",
             "type": {
               "type": "id",
               "value": "TerminalNodeResult"
-            }
+            },
+            "displayName": "TERMINAL"
           }
         ]
       }
@@ -6017,21 +6034,24 @@
             "type": {
               "type": "id",
               "value": "WorkflowResultEventOutputDataString"
-            }
+            },
+            "displayName": "STRING"
           },
           {
             "typeName": "WorkflowResultEventOutputDataJSON",
             "type": {
               "type": "id",
               "value": "WorkflowResultEventOutputDataJSON"
-            }
+            },
+            "displayName": "JSON"
           },
           {
             "typeName": "WorkflowResultEventOutputDataChatHistory",
             "type": {
               "type": "id",
               "value": "WorkflowResultEventOutputDataChatHistory"
-            }
+            },
+            "displayName": "CHAT_HISTORY"
           }
         ]
       }
@@ -6266,14 +6286,16 @@
             "type": {
               "type": "id",
               "value": "WorkflowExecutionWorkflowResultEvent"
-            }
+            },
+            "displayName": "WORKFLOW"
           },
           {
             "typeName": "WorkflowExecutionNodeResultEvent",
             "type": {
               "type": "id",
               "value": "WorkflowExecutionNodeResultEvent"
-            }
+            },
+            "displayName": "NODE"
           }
         ]
       }

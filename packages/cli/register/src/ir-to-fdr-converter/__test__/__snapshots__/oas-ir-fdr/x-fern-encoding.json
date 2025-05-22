@@ -19,18 +19,6 @@
         }
       }
     },
-    "MetadataValue3": {
-      "name": "MetadataValue3",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "unknown"
-          }
-        }
-      }
-    },
     "MetadataValue": {
       "name": "MetadataValue",
       "shape": {
@@ -61,10 +49,11 @@
             }
           },
           {
-            "typeName": "MetadataValue3",
             "type": {
-              "type": "id",
-              "value": "MetadataValue3"
+              "type": "list",
+              "itemType": {
+                "type": "unknown"
+              }
             }
           }
         ]

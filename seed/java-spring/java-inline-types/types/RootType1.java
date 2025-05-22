@@ -122,34 +122,52 @@ public final class RootType1 {
   }
 
   public interface FooStage {
+    /**
+     * lorem ipsum
+     */
     BarStage foo(@NotNull String foo);
 
     Builder from(RootType1 other);
   }
 
   public interface BarStage {
+    /**
+     * lorem ipsum
+     */
     RefStage bar(@NotNull RootType1InlineType1 bar);
   }
 
   public interface RefStage {
+    /**
+     * lorem ipsum
+     */
     _FinalStage ref(@NotNull ReferenceType ref);
   }
 
   public interface _FinalStage {
     RootType1 build();
 
+    /**
+     * <p>lorem ipsum</p>
+     */
     _FinalStage fooMap(Map<String, RootType1FooMapValue> fooMap);
 
     _FinalStage putAllFooMap(Map<String, RootType1FooMapValue> fooMap);
 
     _FinalStage fooMap(String key, RootType1FooMapValue value);
 
+    /**
+     * <p>lorem ipsum</p>
+     */
     _FinalStage fooList(List<RootType1FooListItem> fooList);
 
     _FinalStage addFooList(RootType1FooListItem fooList);
 
     _FinalStage addAllFooList(List<RootType1FooListItem> fooList);
 
+    /**
+     * <p>lorem ipsum</p>
+     */
     _FinalStage fooSet(Set<RootType1FooSetItem> fooSet);
 
     _FinalStage addFooSet(RootType1FooSetItem fooSet);
@@ -188,7 +206,7 @@ public final class RootType1 {
     }
 
     /**
-     * <p>lorem ipsum</p>
+     * lorem ipsum<p>lorem ipsum</p>
      * @return Reference to {@code this} so that method calls can be chained together.
      */
     @java.lang.Override
@@ -199,7 +217,7 @@ public final class RootType1 {
     }
 
     /**
-     * <p>lorem ipsum</p>
+     * lorem ipsum<p>lorem ipsum</p>
      * @return Reference to {@code this} so that method calls can be chained together.
      */
     @java.lang.Override
@@ -210,7 +228,7 @@ public final class RootType1 {
     }
 
     /**
-     * <p>lorem ipsum</p>
+     * lorem ipsum<p>lorem ipsum</p>
      * @return Reference to {@code this} so that method calls can be chained together.
      */
     @java.lang.Override
@@ -240,6 +258,9 @@ public final class RootType1 {
       return this;
     }
 
+    /**
+     * <p>lorem ipsum</p>
+     */
     @java.lang.Override
     @JsonSetter(
         value = "fooSet",
@@ -271,6 +292,9 @@ public final class RootType1 {
       return this;
     }
 
+    /**
+     * <p>lorem ipsum</p>
+     */
     @java.lang.Override
     @JsonSetter(
         value = "fooList",
@@ -302,6 +326,9 @@ public final class RootType1 {
       return this;
     }
 
+    /**
+     * <p>lorem ipsum</p>
+     */
     @java.lang.Override
     @JsonSetter(
         value = "fooMap",

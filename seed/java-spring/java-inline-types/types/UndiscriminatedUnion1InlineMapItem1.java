@@ -70,12 +70,18 @@ public final class UndiscriminatedUnion1InlineMapItem1 {
   }
 
   public interface FooStage {
+    /**
+     * lorem ipsum
+     */
     RefStage foo(@NotNull String foo);
 
     Builder from(UndiscriminatedUnion1InlineMapItem1 other);
   }
 
   public interface RefStage {
+    /**
+     * lorem ipsum
+     */
     _FinalStage ref(@NotNull ReferenceType ref);
   }
 
@@ -102,7 +108,7 @@ public final class UndiscriminatedUnion1InlineMapItem1 {
     }
 
     /**
-     * <p>lorem ipsum</p>
+     * lorem ipsum<p>lorem ipsum</p>
      * @return Reference to {@code this} so that method calls can be chained together.
      */
     @java.lang.Override
@@ -113,7 +119,7 @@ public final class UndiscriminatedUnion1InlineMapItem1 {
     }
 
     /**
-     * <p>lorem ipsum</p>
+     * lorem ipsum<p>lorem ipsum</p>
      * @return Reference to {@code this} so that method calls can be chained together.
      */
     @java.lang.Override

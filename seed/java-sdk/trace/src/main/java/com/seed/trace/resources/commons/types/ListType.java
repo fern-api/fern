@@ -85,6 +85,9 @@ public final class ListType {
     public interface _FinalStage {
         ListType build();
 
+        /**
+         * <p>Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.</p>
+         */
         _FinalStage isFixedLength(Optional<Boolean> isFixedLength);
 
         _FinalStage isFixedLength(Boolean isFixedLength);
@@ -125,6 +128,9 @@ public final class ListType {
             return this;
         }
 
+        /**
+         * <p>Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.</p>
+         */
         @java.lang.Override
         @JsonSetter(value = "isFixedLength", nulls = Nulls.SKIP)
         public _FinalStage isFixedLength(Optional<Boolean> isFixedLength) {

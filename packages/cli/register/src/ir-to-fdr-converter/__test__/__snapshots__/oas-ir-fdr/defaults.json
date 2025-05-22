@@ -52,7 +52,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "default": 3.14
                 }
               }
@@ -157,7 +157,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "default": 42
                 }
               }

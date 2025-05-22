@@ -8680,8 +8680,11 @@
                   "description": "The block number, tag, or hash at which to execute the call. Defaults to `'latest'` if not provided.",
                   "key": "Block",
                   "valueType": {
-                    "type": "id",
-                    "value": "eth_call_Param_Block"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "eth_call_Param_Block"
+                    }
                   }
                 }
               ]
@@ -8878,8 +8881,11 @@
                   "description": "The block number or tag at which to estimate gas usage. Defaults to `'latest'` if not provided.",
                   "key": "Block",
                   "valueType": {
-                    "type": "id",
-                    "value": "eth_estimateGas_Param_Block"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "eth_estimateGas_Param_Block"
+                    }
                   }
                 }
               ]

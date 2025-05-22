@@ -115,7 +115,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 1262300400000,
                 "maximum": 4133890801000
               }
@@ -391,7 +391,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -404,7 +404,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -497,72 +497,63 @@
             "type": {
               "type": "id",
               "value": "CardDetails"
-            },
-            "displayName": "CardDetails"
+            }
           },
           {
             "typeName": "GenericBankAccountDetails",
             "type": {
               "type": "id",
               "value": "GenericBankAccountDetails"
-            },
-            "displayName": "GenericBankAccountDetails"
+            }
           },
           {
             "typeName": "IBANDetails",
             "type": {
               "type": "id",
               "value": "IBANDetails"
-            },
-            "displayName": "IBANDetails"
+            }
           },
           {
             "typeName": "ACHDetails",
             "type": {
               "type": "id",
               "value": "ACHDetails"
-            },
-            "displayName": "ACHDetails"
+            }
           },
           {
             "typeName": "SWIFTDetails",
             "type": {
               "type": "id",
               "value": "SWIFTDetails"
-            },
-            "displayName": "SWIFTDetails"
+            }
           },
           {
             "typeName": "MpesaDetails",
             "type": {
               "type": "id",
               "value": "MpesaDetails"
-            },
-            "displayName": "MpesaDetails"
+            }
           },
           {
             "typeName": "UPIDetails",
             "type": {
               "type": "id",
               "value": "UPIDetails"
-            },
-            "displayName": "UPIDetails"
+            }
           },
           {
             "typeName": "WalletDetails",
             "type": {
               "type": "id",
               "value": "WalletDetails"
-            },
-            "displayName": "WalletDetails"
+            }
           },
           {
             "typeName": "CheckDetails",
             "type": {
               "type": "id",
               "value": "CheckDetails"
-            },
-            "displayName": "CheckDetails"
+            }
           }
         ]
       }
@@ -578,72 +569,63 @@
             "type": {
               "type": "id",
               "value": "CardDetails"
-            },
-            "displayName": "CardDetails"
+            }
           },
           {
             "typeName": "GenericBankAccountDetails",
             "type": {
               "type": "id",
               "value": "GenericBankAccountDetails"
-            },
-            "displayName": "GenericBankAccountDetails"
+            }
           },
           {
             "typeName": "IBANDetails",
             "type": {
               "type": "id",
               "value": "IBANDetails"
-            },
-            "displayName": "IBANDetails"
+            }
           },
           {
             "typeName": "ACHDetails",
             "type": {
               "type": "id",
               "value": "ACHDetails"
-            },
-            "displayName": "ACHDetails"
+            }
           },
           {
             "typeName": "UPIDetails",
             "type": {
               "type": "id",
               "value": "UPIDetails"
-            },
-            "displayName": "UPIDetails"
+            }
           },
           {
             "typeName": "WalletDetails",
             "type": {
               "type": "id",
               "value": "WalletDetails"
-            },
-            "displayName": "WalletDetails"
+            }
           },
           {
             "typeName": "SWIFTDetails",
             "type": {
               "type": "id",
               "value": "SWIFTDetails"
-            },
-            "displayName": "SWIFTDetails"
+            }
           },
           {
             "typeName": "MpesaDetails",
             "type": {
               "type": "id",
               "value": "MpesaDetails"
-            },
-            "displayName": "MpesaDetails"
+            }
           },
           {
             "typeName": "CheckDetails",
             "type": {
               "type": "id",
               "value": "CheckDetails"
-            },
-            "displayName": "CheckDetails"
+            }
           }
         ]
       }
@@ -824,7 +806,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 1262300400000,
                 "maximum": 4133890801000
               }
@@ -906,7 +888,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -919,7 +901,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -932,7 +914,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -1438,7 +1420,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -1448,7 +1430,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -1460,7 +1442,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -1530,7 +1512,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -1567,7 +1549,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -2101,7 +2083,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 1262300400000,
                 "maximum": 4133890801000
               }
@@ -2120,72 +2102,63 @@
             "type": {
               "type": "id",
               "value": "CardDetails"
-            },
-            "displayName": "CardDetails"
+            }
           },
           {
             "typeName": "GenericBankAccountDetails",
             "type": {
               "type": "id",
               "value": "GenericBankAccountDetails"
-            },
-            "displayName": "GenericBankAccountDetails"
+            }
           },
           {
             "typeName": "IBANDetails",
             "type": {
               "type": "id",
               "value": "IBANDetails"
-            },
-            "displayName": "IBANDetails"
+            }
           },
           {
             "typeName": "ACHDetails",
             "type": {
               "type": "id",
               "value": "ACHDetails"
-            },
-            "displayName": "ACHDetails"
+            }
           },
           {
             "typeName": "SWIFTDetails",
             "type": {
               "type": "id",
               "value": "SWIFTDetails"
-            },
-            "displayName": "SWIFTDetails"
+            }
           },
           {
             "typeName": "MpesaDetails",
             "type": {
               "type": "id",
               "value": "MpesaDetails"
-            },
-            "displayName": "MpesaDetails"
+            }
           },
           {
             "typeName": "UPIDetails",
             "type": {
               "type": "id",
               "value": "UPIDetails"
-            },
-            "displayName": "UPIDetails"
+            }
           },
           {
             "typeName": "WalletDetails",
             "type": {
               "type": "id",
               "value": "WalletDetails"
-            },
-            "displayName": "WalletDetails"
+            }
           },
           {
             "typeName": "CheckDetails",
             "type": {
               "type": "id",
               "value": "CheckDetails"
-            },
-            "displayName": "CheckDetails"
+            }
           }
         ]
       }
@@ -3643,7 +3616,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 1262300400000,
                 "maximum": 4133890801000
               }
@@ -3735,7 +3708,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 1262300400000,
                 "maximum": 4133890801000
               }
@@ -3817,7 +3790,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 1262300400000,
                 "maximum": 4133890801000
               }
@@ -3943,7 +3916,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 1262300400000
               }
             }
@@ -4025,7 +3998,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4035,7 +4008,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4045,7 +4018,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -4672,7 +4645,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -4684,7 +4657,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -4728,8 +4701,7 @@
             "type": {
               "type": "id",
               "value": "UserStateDetails"
-            },
-            "displayName": "UserStateDetails"
+            }
           }
         ]
       }
@@ -4768,7 +4740,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 1262300400000
               }
             }
@@ -5071,7 +5043,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -5080,7 +5052,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -5309,7 +5281,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 1262300400000
                 }
               }
@@ -6916,7 +6888,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -6949,7 +6921,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -6961,7 +6933,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -6973,7 +6945,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -6985,7 +6957,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -7101,7 +7073,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }

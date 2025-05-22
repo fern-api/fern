@@ -114,7 +114,7 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -173,7 +173,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -1716,7 +1716,7 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -1765,7 +1765,7 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -1898,7 +1898,7 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -1947,7 +1947,7 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -2079,29 +2079,6 @@
         ]
       }
     },
-    "V1EvalPostResponsesContentApplicationJsonSchema2": {
-      "name": "V1EvalPostResponsesContentApplicationJsonSchema2",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [],
-        "extraProperties": {
-          "type": "unknown"
-        }
-      }
-    },
-    "V1EvalPostResponsesContentApplicationJsonSchema3": {
-      "name": "V1EvalPostResponsesContentApplicationJsonSchema3",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "unknown"
-          }
-        }
-      }
-    },
     "V1EvalPostResponsesContentApplicationJsonSchema": {
       "name": "V1EvalPostResponsesContentApplicationJsonSchema",
       "shape": {
@@ -2119,22 +2096,30 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
           {
-            "typeName": "V1EvalPostResponsesContentApplicationJsonSchema2",
             "type": {
-              "type": "id",
-              "value": "V1EvalPostResponsesContentApplicationJsonSchema2"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
-            "typeName": "V1EvalPostResponsesContentApplicationJsonSchema3",
             "type": {
-              "type": "id",
-              "value": "V1EvalPostResponsesContentApplicationJsonSchema3"
+              "type": "list",
+              "itemType": {
+                "type": "unknown"
+              }
             }
           },
           {
@@ -2184,29 +2169,6 @@
         ]
       }
     },
-    "V1EvalCodeGetResponsesContentApplicationJsonSchema2": {
-      "name": "V1EvalCodeGetResponsesContentApplicationJsonSchema2",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [],
-        "extraProperties": {
-          "type": "unknown"
-        }
-      }
-    },
-    "V1EvalCodeGetResponsesContentApplicationJsonSchema3": {
-      "name": "V1EvalCodeGetResponsesContentApplicationJsonSchema3",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "unknown"
-          }
-        }
-      }
-    },
     "V1EvalCodeGetResponsesContentApplicationJsonSchema": {
       "name": "V1EvalCodeGetResponsesContentApplicationJsonSchema",
       "shape": {
@@ -2224,22 +2186,30 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
           {
-            "typeName": "V1EvalCodeGetResponsesContentApplicationJsonSchema2",
             "type": {
-              "type": "id",
-              "value": "V1EvalCodeGetResponsesContentApplicationJsonSchema2"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
-            "typeName": "V1EvalCodeGetResponsesContentApplicationJsonSchema3",
             "type": {
-              "type": "id",
-              "value": "V1EvalCodeGetResponsesContentApplicationJsonSchema3"
+              "type": "list",
+              "itemType": {
+                "type": "unknown"
+              }
             }
           },
           {

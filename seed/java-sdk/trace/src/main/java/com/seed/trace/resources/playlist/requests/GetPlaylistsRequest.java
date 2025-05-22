@@ -118,12 +118,19 @@ public final class GetPlaylistsRequest {
     }
 
     public interface OtherFieldStage {
+        /**
+         * i'm another field
+         */
         MultiLineDocsStage otherField(@NotNull String otherField);
 
         Builder from(GetPlaylistsRequest other);
     }
 
     public interface MultiLineDocsStage {
+        /**
+         * I'm a multiline
+         * description
+         */
         _FinalStage multiLineDocs(@NotNull String multiLineDocs);
     }
 
@@ -177,7 +184,7 @@ public final class GetPlaylistsRequest {
         }
 
         /**
-         * <p>i'm another field</p>
+         * i'm another field<p>i'm another field</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */
         @java.lang.Override
@@ -188,7 +195,8 @@ public final class GetPlaylistsRequest {
         }
 
         /**
-         * <p>I'm a multiline
+         * I'm a multiline
+         * description<p>I'm a multiline
          * description</p>
          * @return Reference to {@code this} so that method calls can be chained together.
          */

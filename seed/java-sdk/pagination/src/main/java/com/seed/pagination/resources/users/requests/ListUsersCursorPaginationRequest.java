@@ -129,6 +129,9 @@ public final class ListUsersCursorPaginationRequest {
             return this;
         }
 
+        /**
+         * <p>Defaults to first page</p>
+         */
         @JsonSetter(value = "page", nulls = Nulls.SKIP)
         public Builder page(Optional<Integer> page) {
             this.page = page;
@@ -140,6 +143,9 @@ public final class ListUsersCursorPaginationRequest {
             return this;
         }
 
+        /**
+         * <p>Defaults to per page</p>
+         */
         @JsonSetter(value = "per_page", nulls = Nulls.SKIP)
         public Builder perPage(Optional<Integer> perPage) {
             this.perPage = perPage;
@@ -162,6 +168,10 @@ public final class ListUsersCursorPaginationRequest {
             return this;
         }
 
+        /**
+         * <p>The cursor used for pagination in order to fetch
+         * the next page of results.</p>
+         */
         @JsonSetter(value = "starting_after", nulls = Nulls.SKIP)
         public Builder startingAfter(Optional<String> startingAfter) {
             this.startingAfter = startingAfter;

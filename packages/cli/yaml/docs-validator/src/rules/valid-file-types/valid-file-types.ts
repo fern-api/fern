@@ -15,6 +15,7 @@ const ALLOWED_FILE_TYPES = new Set<MimeType>([
     "image/webp",
     "image/tiff",
     "image/x-icon",
+    "image/avif",
     // video files
     "video/quicktime",
     "video/mp4",

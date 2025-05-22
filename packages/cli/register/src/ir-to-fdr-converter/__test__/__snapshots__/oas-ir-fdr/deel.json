@@ -13,7 +13,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -25,7 +25,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -144,7 +144,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -196,7 +196,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -1478,7 +1478,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -1511,7 +1511,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -1746,7 +1746,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -1755,7 +1755,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -1766,7 +1766,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -1776,7 +1776,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -1839,7 +1839,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 1
                 }
               }
@@ -1892,7 +1892,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 0
                 }
               }
@@ -1915,7 +1915,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 1,
                   "maximum": 31
                 }
@@ -1949,7 +1949,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 0,
                   "maximum": 90
                 }
@@ -1992,7 +1992,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -2006,7 +2006,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -2334,7 +2334,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -2353,7 +2353,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -2402,7 +2402,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -2444,7 +2444,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -2734,7 +2734,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -2759,7 +2759,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -2787,7 +2787,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -2812,7 +2812,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 1,
                 "maximum": 31
               }
@@ -2837,7 +2837,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 0,
                 "maximum": 90
               }
@@ -2874,7 +2874,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 0,
                   "default": 0
                 }
@@ -2937,7 +2937,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -3180,7 +3180,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -3250,7 +3250,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -3307,7 +3307,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -3371,7 +3371,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 0
               }
             }
@@ -3381,7 +3381,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 0
               }
             }
@@ -3391,7 +3391,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 0
               }
             }
@@ -3401,7 +3401,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 0
               }
             }
@@ -3420,7 +3420,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -3528,7 +3528,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -3624,7 +3624,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3880,7 +3880,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -3945,7 +3945,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -4214,7 +4214,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -4812,7 +4812,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 0
               }
             }
@@ -4822,7 +4822,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 0
               }
             }
@@ -4832,7 +4832,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 0
               }
             }
@@ -4842,7 +4842,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 0
               }
             }
@@ -4861,7 +4861,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4963,7 +4963,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -5046,7 +5046,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -5304,7 +5304,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 0
               }
             }
@@ -5332,7 +5332,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -5458,7 +5458,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 0
                 }
               }
@@ -5545,7 +5545,7 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -6555,7 +6555,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -6614,7 +6614,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -6635,7 +6635,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -6655,7 +6655,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -6680,7 +6680,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -7064,7 +7064,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -7082,7 +7082,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -7100,7 +7100,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -7109,7 +7109,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 1,
                 "maximum": 99
               }
@@ -7120,7 +7120,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 0,
                 "maximum": 999999999
               }
@@ -7263,7 +7263,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -7293,7 +7293,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -7322,7 +7322,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -7470,7 +7470,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -7607,7 +7607,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 0
               }
             }
@@ -7663,7 +7663,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 0
                 }
               }
@@ -7697,7 +7697,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 1,
                   "maximum": 31
                 }
@@ -7731,7 +7731,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 0,
                   "maximum": 90
                 }
@@ -7857,7 +7857,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 0
                 }
               }
@@ -7871,7 +7871,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 0
                 }
               }
@@ -7885,7 +7885,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 0
                 }
               }
@@ -7899,7 +7899,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 0
                 }
               }
@@ -8009,7 +8009,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -8058,7 +8058,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -8448,7 +8448,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -8716,7 +8716,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -8743,7 +8743,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -8770,7 +8770,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -8828,7 +8828,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -9111,7 +9111,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "default": 1
               }
             }
@@ -9122,7 +9122,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "default": 5
               }
             }
@@ -9257,7 +9257,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -9320,7 +9320,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -9709,7 +9709,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -9734,7 +9734,7 @@
         "value": {
           "type": "primitive",
           "value": {
-            "type": "integer",
+            "type": "double",
             "minimum": 0,
             "default": 0
           }
@@ -10081,7 +10081,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -10121,7 +10121,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -10144,7 +10144,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -10166,7 +10166,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -10190,7 +10190,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -10257,7 +10257,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -10285,7 +10285,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -10561,7 +10561,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -10638,7 +10638,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -11086,7 +11086,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -11109,7 +11109,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -11122,7 +11122,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -11243,7 +11243,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -11412,7 +11412,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -11470,7 +11470,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -11504,7 +11504,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -11769,7 +11769,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -11787,7 +11787,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -11805,7 +11805,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -11876,7 +11876,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -11889,7 +11889,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -11902,7 +11902,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -11915,7 +11915,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -11941,7 +11941,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -11987,7 +11987,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -12552,7 +12552,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -12852,7 +12852,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -12909,7 +12909,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -12942,7 +12942,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -13120,7 +13120,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -13260,7 +13260,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -13640,7 +13640,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -13767,7 +13767,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -13823,7 +13823,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -14277,7 +14277,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -14400,7 +14400,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -14430,7 +14430,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -14485,7 +14485,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -14558,7 +14558,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -14573,7 +14573,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -14589,7 +14589,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -14605,7 +14605,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -14621,7 +14621,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -14781,7 +14781,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -14790,7 +14790,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -14808,7 +14808,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -14828,7 +14828,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -14914,7 +14914,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -14964,7 +14964,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 1,
                 "maximum": 99
               }
@@ -15067,7 +15067,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 1,
                 "maximum": 365
               }
@@ -16058,7 +16058,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -16071,7 +16071,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -16223,7 +16223,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -16297,7 +16297,7 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -20396,7 +20396,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer",
+                    "type": "double",
                     "minimum": 1,
                     "maximum": 10
                   }
@@ -20444,7 +20444,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -24499,7 +24499,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -24864,7 +24864,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -31372,7 +31372,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -31407,7 +31407,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer",
+                    "type": "double",
                     "minimum": 1,
                     "maximum": 99,
                     "default": 10
@@ -31764,7 +31764,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -31799,7 +31799,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer",
+                    "type": "double",
                     "minimum": 1,
                     "maximum": 99,
                     "default": 10
@@ -32294,7 +32294,7 @@
                 "type": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -32494,7 +32494,7 @@
                 "type": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -32708,7 +32708,7 @@
                 "type": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -36150,7 +36150,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer",
+                    "type": "double",
                     "minimum": 1,
                     "maximum": 200
                   }
