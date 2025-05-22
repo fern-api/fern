@@ -9,40 +9,43 @@ describe("Object_", () => {
     test("getAndReturnWithOptionalField", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
+        const rawRequestBody = {
+            string: "string",
+            integer: 1,
+            long: 1000000,
+            double: 1.1,
+            bool: true,
+            datetime: "2024-01-15T09:30:00Z",
+            date: "2023-01-15",
+            uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            base64: "SGVsbG8gd29ybGQh",
+            list: ["list", "list"],
+            set: ["set"],
+            map: { "1": "map" },
+            bigint: "1000000",
+        };
+        const rawResponseBody = {
+            string: "string",
+            integer: 1,
+            long: 1000000,
+            double: 1.1,
+            bool: true,
+            datetime: "2024-01-15T09:30:00Z",
+            date: "2023-01-15",
+            uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            base64: "SGVsbG8gd29ybGQh",
+            list: ["list", "list"],
+            set: ["set"],
+            map: { "1": "map" },
+            bigint: "1000000",
+        };
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/object/get-and-return-with-optional-field")
-            .requestJsonBody({
-                string: "string",
-                integer: 1,
-                long: 1000000,
-                double: 1.1,
-                bool: true,
-                datetime: "2024-01-15T09:30:00Z",
-                date: "2023-01-15",
-                uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                base64: "SGVsbG8gd29ybGQh",
-                list: ["list", "list"],
-                set: ["set"],
-                map: { "1": "map" },
-                bigint: "1000000",
-            })
-            .respondWithJsonBody({
-                string: "string",
-                integer: 1,
-                long: 1000000,
-                double: 1.1,
-                bool: true,
-                datetime: "2024-01-15T09:30:00Z",
-                date: "2023-01-15",
-                uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                base64: "SGVsbG8gd29ybGQh",
-                list: ["list", "list"],
-                set: ["set"],
-                map: { "1": "map" },
-                bigint: "1000000",
-            })
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.object.getAndReturnWithOptionalField({
@@ -82,12 +85,15 @@ describe("Object_", () => {
     test("getAndReturnWithRequiredField", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
+        const rawRequestBody = { string: "string" };
+        const rawResponseBody = { string: "string" };
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/object/get-and-return-with-required-field")
-            .requestJsonBody({ string: "string" })
-            .respondWithJsonBody({ string: "string" })
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.object.getAndReturnWithRequiredField({
@@ -99,12 +105,15 @@ describe("Object_", () => {
     test("getAndReturnWithMapOfMap", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
+        const rawRequestBody = { map: { map: { map: "map" } } };
+        const rawResponseBody = { map: { map: { map: "map" } } };
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/object/get-and-return-with-map-of-map")
-            .requestJsonBody({ map: { map: { map: "map" } } })
-            .respondWithJsonBody({ map: { map: { map: "map" } } })
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.object.getAndReturnWithMapOfMap({
@@ -120,46 +129,49 @@ describe("Object_", () => {
     test("getAndReturnNestedWithOptionalField", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
+        const rawRequestBody = {
+            string: "string",
+            NestedObject: {
+                string: "string",
+                integer: 1,
+                long: 1000000,
+                double: 1.1,
+                bool: true,
+                datetime: "2024-01-15T09:30:00Z",
+                date: "2023-01-15",
+                uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                base64: "SGVsbG8gd29ybGQh",
+                list: ["list", "list"],
+                set: ["set"],
+                map: { "1": "map" },
+                bigint: "1000000",
+            },
+        };
+        const rawResponseBody = {
+            string: "string",
+            NestedObject: {
+                string: "string",
+                integer: 1,
+                long: 1000000,
+                double: 1.1,
+                bool: true,
+                datetime: "2024-01-15T09:30:00Z",
+                date: "2023-01-15",
+                uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                base64: "SGVsbG8gd29ybGQh",
+                list: ["list", "list"],
+                set: ["set"],
+                map: { "1": "map" },
+                bigint: "1000000",
+            },
+        };
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/object/get-and-return-nested-with-optional-field")
-            .requestJsonBody({
-                string: "string",
-                NestedObject: {
-                    string: "string",
-                    integer: 1,
-                    long: 1000000,
-                    double: 1.1,
-                    bool: true,
-                    datetime: "2024-01-15T09:30:00Z",
-                    date: "2023-01-15",
-                    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    base64: "SGVsbG8gd29ybGQh",
-                    list: ["list", "list"],
-                    set: ["set"],
-                    map: { "1": "map" },
-                    bigint: "1000000",
-                },
-            })
-            .respondWithJsonBody({
-                string: "string",
-                nestedObject: {
-                    string: "string",
-                    integer: 1,
-                    long: 1000000,
-                    double: 1.1,
-                    bool: true,
-                    datetime: "2024-01-15T09:30:00Z",
-                    date: "2023-01-15",
-                    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    base64: "SGVsbG8gd29ybGQh",
-                    list: ["list", "list"],
-                    set: ["set"],
-                    map: { "1": "map" },
-                    bigint: "1000000",
-                },
-            })
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.object.getAndReturnNestedWithOptionalField({
@@ -184,7 +196,7 @@ describe("Object_", () => {
         });
         expect(response).toEqual({
             string: "string",
-            nestedObject: {
+            NestedObject: {
                 string: "string",
                 integer: 1,
                 long: 1000000,
@@ -205,46 +217,49 @@ describe("Object_", () => {
     test("getAndReturnNestedWithRequiredField", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
+        const rawRequestBody = {
+            string: "string",
+            NestedObject: {
+                string: "string",
+                integer: 1,
+                long: 1000000,
+                double: 1.1,
+                bool: true,
+                datetime: "2024-01-15T09:30:00Z",
+                date: "2023-01-15",
+                uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                base64: "SGVsbG8gd29ybGQh",
+                list: ["list", "list"],
+                set: ["set"],
+                map: { "1": "map" },
+                bigint: "1000000",
+            },
+        };
+        const rawResponseBody = {
+            string: "string",
+            NestedObject: {
+                string: "string",
+                integer: 1,
+                long: 1000000,
+                double: 1.1,
+                bool: true,
+                datetime: "2024-01-15T09:30:00Z",
+                date: "2023-01-15",
+                uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                base64: "SGVsbG8gd29ybGQh",
+                list: ["list", "list"],
+                set: ["set"],
+                map: { "1": "map" },
+                bigint: "1000000",
+            },
+        };
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/object/get-and-return-nested-with-required-field/string")
-            .requestJsonBody({
-                string: "string",
-                NestedObject: {
-                    string: "string",
-                    integer: 1,
-                    long: 1000000,
-                    double: 1.1,
-                    bool: true,
-                    datetime: "2024-01-15T09:30:00Z",
-                    date: "2023-01-15",
-                    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    base64: "SGVsbG8gd29ybGQh",
-                    list: ["list", "list"],
-                    set: ["set"],
-                    map: { "1": "map" },
-                    bigint: "1000000",
-                },
-            })
-            .respondWithJsonBody({
-                string: "string",
-                nestedObject: {
-                    string: "string",
-                    integer: 1,
-                    long: 1000000,
-                    double: 1.1,
-                    bool: true,
-                    datetime: "2024-01-15T09:30:00Z",
-                    date: "2023-01-15",
-                    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    base64: "SGVsbG8gd29ybGQh",
-                    list: ["list", "list"],
-                    set: ["set"],
-                    map: { "1": "map" },
-                    bigint: "1000000",
-                },
-            })
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
@@ -269,7 +284,7 @@ describe("Object_", () => {
         });
         expect(response).toEqual({
             string: "string",
-            nestedObject: {
+            NestedObject: {
                 string: "string",
                 integer: 1,
                 long: 1000000,
@@ -290,51 +305,10 @@ describe("Object_", () => {
     test("getAndReturnNestedWithRequiredFieldAsList", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
-        server
-            .buildHttpHandler()
-            .post("/object/get-and-return-nested-with-required-field-list")
-            .requestJsonBody([
-                {
-                    string: "string",
-                    NestedObject: {
-                        string: "string",
-                        integer: 1,
-                        long: 1000000,
-                        double: 1.1,
-                        bool: true,
-                        datetime: "2024-01-15T09:30:00Z",
-                        date: "2023-01-15",
-                        uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                        base64: "SGVsbG8gd29ybGQh",
-                        list: ["list", "list"],
-                        set: ["set"],
-                        map: { "1": "map" },
-                        bigint: "1000000",
-                    },
-                },
-                {
-                    string: "string",
-                    NestedObject: {
-                        string: "string",
-                        integer: 1,
-                        long: 1000000,
-                        double: 1.1,
-                        bool: true,
-                        datetime: "2024-01-15T09:30:00Z",
-                        date: "2023-01-15",
-                        uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                        base64: "SGVsbG8gd29ybGQh",
-                        list: ["list", "list"],
-                        set: ["set"],
-                        map: { "1": "map" },
-                        bigint: "1000000",
-                    },
-                },
-            ])
-            .respondWithJsonBody({
+        const rawRequestBody = [
+            {
                 string: "string",
-                nestedObject: {
+                NestedObject: {
                     string: "string",
                     integer: 1,
                     long: 1000000,
@@ -349,7 +323,51 @@ describe("Object_", () => {
                     map: { "1": "map" },
                     bigint: "1000000",
                 },
-            })
+            },
+            {
+                string: "string",
+                NestedObject: {
+                    string: "string",
+                    integer: 1,
+                    long: 1000000,
+                    double: 1.1,
+                    bool: true,
+                    datetime: "2024-01-15T09:30:00Z",
+                    date: "2023-01-15",
+                    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    base64: "SGVsbG8gd29ybGQh",
+                    list: ["list", "list"],
+                    set: ["set"],
+                    map: { "1": "map" },
+                    bigint: "1000000",
+                },
+            },
+        ];
+        const rawResponseBody = {
+            string: "string",
+            NestedObject: {
+                string: "string",
+                integer: 1,
+                long: 1000000,
+                double: 1.1,
+                bool: true,
+                datetime: "2024-01-15T09:30:00Z",
+                date: "2023-01-15",
+                uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                base64: "SGVsbG8gd29ybGQh",
+                list: ["list", "list"],
+                set: ["set"],
+                map: { "1": "map" },
+                bigint: "1000000",
+            },
+        };
+        server
+            .mockEndpoint()
+            .post("/object/get-and-return-nested-with-required-field-list")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([
@@ -396,7 +414,7 @@ describe("Object_", () => {
         ]);
         expect(response).toEqual({
             string: "string",
-            nestedObject: {
+            NestedObject: {
                 string: "string",
                 integer: 1,
                 long: 1000000,

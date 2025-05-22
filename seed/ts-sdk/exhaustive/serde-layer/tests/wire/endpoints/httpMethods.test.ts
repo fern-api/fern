@@ -13,7 +13,8 @@ describe("HttpMethods", () => {
             environment: server.baseUrl,
         });
 
-        server.buildHttpHandler().get("/http-methods/id").respondWithJsonBody("string").build();
+        const rawResponseBody = "string";
+        server.mockEndpoint().get("/http-methods/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.endpoints.httpMethods.testGet("id");
         expect(response).toEqual("string");
@@ -25,26 +26,29 @@ describe("HttpMethods", () => {
             token: process.env.TESTS_AUTH || "test",
             environment: server.baseUrl,
         });
-
+        const rawRequestBody = { string: "string" };
+        const rawResponseBody = {
+            string: "string",
+            integer: 1,
+            long: 1000000,
+            double: 1.1,
+            bool: true,
+            datetime: "2024-01-15T09:30:00Z",
+            date: "2023-01-15",
+            uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            base64: "SGVsbG8gd29ybGQh",
+            list: ["list", "list"],
+            set: ["set"],
+            map: { "1": "map" },
+            bigint: "1000000",
+        };
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/http-methods")
-            .requestJsonBody({ string: "string" })
-            .respondWithJsonBody({
-                string: "string",
-                integer: 1,
-                long: 1000000,
-                double: 1.1,
-                bool: true,
-                datetime: new Date("2024-01-15T09:30:00.000Z"),
-                date: "2023-01-15",
-                uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                base64: "SGVsbG8gd29ybGQh",
-                list: ["list", "list"],
-                set: ["set"],
-                map: { "1": "map" },
-                bigint: "1000000",
-            })
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.httpMethods.testPost({
@@ -56,7 +60,7 @@ describe("HttpMethods", () => {
             long: 1000000,
             double: 1.1,
             bool: true,
-            datetime: new Date("2024-01-15T09:30:00.000Z"),
+            datetime: "2024-01-15T09:30:00Z",
             date: "2023-01-15",
             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             base64: "SGVsbG8gd29ybGQh",
@@ -73,26 +77,29 @@ describe("HttpMethods", () => {
             token: process.env.TESTS_AUTH || "test",
             environment: server.baseUrl,
         });
-
+        const rawRequestBody = { string: "string" };
+        const rawResponseBody = {
+            string: "string",
+            integer: 1,
+            long: 1000000,
+            double: 1.1,
+            bool: true,
+            datetime: "2024-01-15T09:30:00Z",
+            date: "2023-01-15",
+            uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            base64: "SGVsbG8gd29ybGQh",
+            list: ["list", "list"],
+            set: ["set"],
+            map: { "1": "map" },
+            bigint: "1000000",
+        };
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .put("/http-methods/id")
-            .requestJsonBody({ string: "string" })
-            .respondWithJsonBody({
-                string: "string",
-                integer: 1,
-                long: 1000000,
-                double: 1.1,
-                bool: true,
-                datetime: new Date("2024-01-15T09:30:00.000Z"),
-                date: "2023-01-15",
-                uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                base64: "SGVsbG8gd29ybGQh",
-                list: ["list", "list"],
-                set: ["set"],
-                map: { "1": "map" },
-                bigint: "1000000",
-            })
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.httpMethods.testPut("id", {
@@ -104,7 +111,7 @@ describe("HttpMethods", () => {
             long: 1000000,
             double: 1.1,
             bool: true,
-            datetime: new Date("2024-01-15T09:30:00.000Z"),
+            datetime: "2024-01-15T09:30:00Z",
             date: "2023-01-15",
             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             base64: "SGVsbG8gd29ybGQh",
@@ -121,40 +128,43 @@ describe("HttpMethods", () => {
             token: process.env.TESTS_AUTH || "test",
             environment: server.baseUrl,
         });
-
+        const rawRequestBody = {
+            string: "string",
+            integer: 1,
+            long: 1000000,
+            double: 1.1,
+            bool: true,
+            datetime: "2024-01-15T09:30:00Z",
+            date: "2023-01-15",
+            uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            base64: "SGVsbG8gd29ybGQh",
+            list: ["list", "list"],
+            set: ["set"],
+            map: { "1": "map" },
+            bigint: "1000000",
+        };
+        const rawResponseBody = {
+            string: "string",
+            integer: 1,
+            long: 1000000,
+            double: 1.1,
+            bool: true,
+            datetime: "2024-01-15T09:30:00Z",
+            date: "2023-01-15",
+            uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            base64: "SGVsbG8gd29ybGQh",
+            list: ["list", "list"],
+            set: ["set"],
+            map: { "1": "map" },
+            bigint: "1000000",
+        };
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .patch("/http-methods/id")
-            .requestJsonBody({
-                string: "string",
-                integer: 1,
-                long: 1000000,
-                double: 1.1,
-                bool: true,
-                datetime: "2024-01-15T09:30:00Z",
-                date: "2023-01-15",
-                uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                base64: "SGVsbG8gd29ybGQh",
-                list: ["list", "list"],
-                set: ["set"],
-                map: { "1": "map" },
-                bigint: "1000000",
-            })
-            .respondWithJsonBody({
-                string: "string",
-                integer: 1,
-                long: 1000000,
-                double: 1.1,
-                bool: true,
-                datetime: new Date("2024-01-15T09:30:00.000Z"),
-                date: "2023-01-15",
-                uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                base64: "SGVsbG8gd29ybGQh",
-                list: ["list", "list"],
-                set: ["set"],
-                map: { "1": "map" },
-                bigint: "1000000",
-            })
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.httpMethods.testPatch("id", {
@@ -163,7 +173,7 @@ describe("HttpMethods", () => {
             long: 1000000,
             double: 1.1,
             bool: true,
-            datetime: "2024-01-15T09:30:00Z",
+            datetime: new Date("2024-01-15T09:30:00.000Z"),
             date: "2023-01-15",
             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             base64: "SGVsbG8gd29ybGQh",
@@ -180,7 +190,7 @@ describe("HttpMethods", () => {
             long: 1000000,
             double: 1.1,
             bool: true,
-            datetime: new Date("2024-01-15T09:30:00.000Z"),
+            datetime: "2024-01-15T09:30:00Z",
             date: "2023-01-15",
             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             base64: "SGVsbG8gd29ybGQh",
@@ -198,7 +208,14 @@ describe("HttpMethods", () => {
             environment: server.baseUrl,
         });
 
-        server.buildHttpHandler().delete("/http-methods/id").respondWithJsonBody(true).build();
+        const rawResponseBody = true;
+        server
+            .mockEndpoint()
+            .delete("/http-methods/id")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
         const response = await client.endpoints.httpMethods.testDelete("id");
         expect(response).toEqual(true);

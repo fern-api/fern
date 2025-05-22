@@ -378,7 +378,7 @@ await client.endpoints.contentType.postJsonPatchContentType({
     long: BigInt("1000000"),
     double: 1.1,
     bool: true,
-    datetime: "2024-01-15T09:30:00Z",
+    datetime: new Date("2024-01-15T09:30:00.000Z"),
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base64: "SGVsbG8gd29ybGQh",
@@ -442,7 +442,7 @@ await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
     long: BigInt("1000000"),
     double: 1.1,
     bool: true,
-    datetime: "2024-01-15T09:30:00Z",
+    datetime: new Date("2024-01-15T09:30:00.000Z"),
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base64: "SGVsbG8gd29ybGQh",
@@ -714,7 +714,7 @@ await client.endpoints.httpMethods.testPatch("id", {
     long: BigInt("1000000"),
     double: 1.1,
     bool: true,
-    datetime: "2024-01-15T09:30:00Z",
+    datetime: new Date("2024-01-15T09:30:00.000Z"),
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base64: "SGVsbG8gd29ybGQh",
@@ -836,7 +836,7 @@ await client.endpoints.object.getAndReturnWithOptionalField({
     long: BigInt("1000000"),
     double: 1.1,
     bool: true,
-    datetime: "2024-01-15T09:30:00Z",
+    datetime: new Date("2024-01-15T09:30:00.000Z"),
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base64: "SGVsbG8gd29ybGQh",
@@ -1006,7 +1006,7 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
         long: BigInt("1000000"),
         double: 1.1,
         bool: true,
-        datetime: "2024-01-15T09:30:00Z",
+        datetime: new Date("2024-01-15T09:30:00.000Z"),
         date: "2023-01-15",
         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         base64: "SGVsbG8gd29ybGQh",
@@ -1073,7 +1073,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
         long: BigInt("1000000"),
         double: 1.1,
         bool: true,
-        datetime: "2024-01-15T09:30:00Z",
+        datetime: new Date("2024-01-15T09:30:00.000Z"),
         date: "2023-01-15",
         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         base64: "SGVsbG8gd29ybGQh",
@@ -1149,7 +1149,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([
             long: BigInt("1000000"),
             double: 1.1,
             bool: true,
-            datetime: "2024-01-15T09:30:00Z",
+            datetime: new Date("2024-01-15T09:30:00.000Z"),
             date: "2023-01-15",
             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             base64: "SGVsbG8gd29ybGQh",
@@ -1169,7 +1169,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([
             long: BigInt("1000000"),
             double: 1.1,
             bool: true,
-            datetime: "2024-01-15T09:30:00Z",
+            datetime: new Date("2024-01-15T09:30:00.000Z"),
             date: "2023-01-15",
             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             base64: "SGVsbG8gd29ybGQh",
@@ -2009,7 +2009,7 @@ await client.endpoints.primitive.getAndReturnBool(true);
 <dd>
 
 ```typescript
-await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z");
+await client.endpoints.primitive.getAndReturnDatetime(new Date("2024-01-15T09:30:00.000Z"));
 ```
 
 </dd>
@@ -2333,7 +2333,7 @@ await client.inlinedRequests.postWithObjectBodyandResponse({
         long: BigInt("1000000"),
         double: 1.1,
         bool: true,
-        datetime: "2024-01-15T09:30:00Z",
+        datetime: new Date("2024-01-15T09:30:00.000Z"),
         date: "2023-01-15",
         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         base64: "SGVsbG8gd29ybGQh",

@@ -9,12 +9,15 @@ describe("Container", () => {
     test("getAndReturnListOfPrimitives", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
+        const rawRequestBody = ["string", "string"];
+        const rawResponseBody = ["string", "string"];
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/container/list-of-primitives")
-            .requestJsonBody(["string", "string"])
-            .respondWithJsonBody(["string", "string"])
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"]);
@@ -24,12 +27,15 @@ describe("Container", () => {
     test("getAndReturnListOfObjects", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
+        const rawRequestBody = [{ string: "string" }, { string: "string" }];
+        const rawResponseBody = [{ string: "string" }, { string: "string" }];
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/container/list-of-objects")
-            .requestJsonBody([{ string: "string" }, { string: "string" }])
-            .respondWithJsonBody([{ string: "string" }, { string: "string" }])
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.container.getAndReturnListOfObjects([
@@ -46,12 +52,15 @@ describe("Container", () => {
     test("getAndReturnSetOfPrimitives", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
+        const rawRequestBody = ["string"];
+        const rawResponseBody = ["string"];
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/container/set-of-primitives")
-            .requestJsonBody(["string"])
-            .respondWithJsonBody(["string"])
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.container.getAndReturnSetOfPrimitives(["string"]);
@@ -61,12 +70,15 @@ describe("Container", () => {
     test("getAndReturnSetOfObjects", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
+        const rawRequestBody = [{ string: "string" }];
+        const rawResponseBody = [{ string: "string" }];
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/container/set-of-objects")
-            .requestJsonBody([{ string: "string" }])
-            .respondWithJsonBody([{ string: "string" }])
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.container.getAndReturnSetOfObjects([
@@ -80,12 +92,15 @@ describe("Container", () => {
     test("getAndReturnMapPrimToPrim", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
+        const rawRequestBody = { string: "string" };
+        const rawResponseBody = { string: "string" };
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/container/map-prim-to-prim")
-            .requestJsonBody({ string: "string" })
-            .respondWithJsonBody({ string: "string" })
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.container.getAndReturnMapPrimToPrim({
@@ -97,12 +112,15 @@ describe("Container", () => {
     test("getAndReturnMapOfPrimToObject", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
+        const rawRequestBody = { string: { string: "string" } };
+        const rawResponseBody = { string: { string: "string" } };
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/container/map-prim-to-object")
-            .requestJsonBody({ string: { string: "string" } })
-            .respondWithJsonBody({ string: { string: "string" } })
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.container.getAndReturnMapOfPrimToObject({
@@ -116,12 +134,15 @@ describe("Container", () => {
     test("getAndReturnOptional", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
+        const rawRequestBody = { string: "string" };
+        const rawResponseBody = { string: "string" };
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/container/opt-objects")
-            .requestJsonBody({ string: "string" })
-            .respondWithJsonBody({ string: "string" })
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.container.getAndReturnOptional({

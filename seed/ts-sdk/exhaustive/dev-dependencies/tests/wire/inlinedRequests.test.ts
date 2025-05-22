@@ -9,30 +9,10 @@ describe("InlinedRequests", () => {
     test("postWithObjectBodyandResponse", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
-        server
-            .buildHttpHandler()
-            .post("/req-bodies/object")
-            .requestJsonBody({
-                string: "string",
-                integer: 1,
-                NestedObject: {
-                    string: "string",
-                    integer: 1,
-                    long: 1000000,
-                    double: 1.1,
-                    bool: true,
-                    datetime: "2024-01-15T09:30:00Z",
-                    date: "2023-01-15",
-                    uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    base64: "SGVsbG8gd29ybGQh",
-                    list: ["list", "list"],
-                    set: ["set"],
-                    map: { "1": "map" },
-                    bigint: "1000000",
-                },
-            })
-            .respondWithJsonBody({
+        const rawRequestBody = {
+            string: "string",
+            integer: 1,
+            NestedObject: {
                 string: "string",
                 integer: 1,
                 long: 1000000,
@@ -46,7 +26,30 @@ describe("InlinedRequests", () => {
                 set: ["set"],
                 map: { "1": "map" },
                 bigint: "1000000",
-            })
+            },
+        };
+        const rawResponseBody = {
+            string: "string",
+            integer: 1,
+            long: 1000000,
+            double: 1.1,
+            bool: true,
+            datetime: "2024-01-15T09:30:00Z",
+            date: "2023-01-15",
+            uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            base64: "SGVsbG8gd29ybGQh",
+            list: ["list", "list"],
+            set: ["set"],
+            map: { "1": "map" },
+            bigint: "1000000",
+        };
+        server
+            .mockEndpoint()
+            .post("/req-bodies/object")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.inlinedRequests.postWithObjectBodyandResponse({

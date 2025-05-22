@@ -885,6 +885,7 @@ export class SdkGenerator {
                     const file = this.jestTestGenerator.buildFile(
                         this.sdkClientClassDeclarationReferencer.getExportedName(packageId),
                         service,
+                        packageId,
                         context.sdkClientClass.getGeneratedSdkClientClass(packageId),
                         context
                     );

@@ -1,6 +1,7 @@
-import type { SetupServer } from "msw/node";
-import { httpHandlerBuilder } from "./httpHandlerBuilder";
 import { RequestHandlerOptions } from "msw";
+import type { SetupServer } from "msw/node";
+
+import { mockEndpointBuilder } from "./mockEndpointBuilder";
 
 export interface MockServerOptions {
     baseUrl: string;
@@ -23,8 +24,8 @@ export class MockServer {
         this.server = server;
     }
 
-    public buildHttpHandler(options?: RequestHandlerOptions): ReturnType<typeof httpHandlerBuilder> {
-        const builder = httpHandlerBuilder({
+    public mockEndpoint(options?: RequestHandlerOptions): ReturnType<typeof mockEndpointBuilder> {
+        const builder = mockEndpointBuilder({
             once: options?.once,
             onBuild: (handler) => {
                 this.server.use(handler);

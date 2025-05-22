@@ -2,6 +2,7 @@ import {
     DependencyManager,
     DependencyType,
     ExportedFilePath,
+    PackageId,
     Reference,
     getExampleEndpointCalls,
     getTextOfTsNode
@@ -10,7 +11,7 @@ import { GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
 import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
 import path from "path";
 import { Directory, ts } from "ts-morph";
-import { Code, arrayOf, code, conditionalOutput, literalOf } from "ts-poet";
+import { Code, code, conditionalOutput } from "ts-poet";
 
 import { assertNever } from "@fern-api/core-utils";
 
@@ -138,6 +139,7 @@ describe("test", () => {
     public buildFile(
         serviceName: string,
         service: IR.HttpService,
+        packageId: PackageId,
         serviceGenerator: GeneratedSdkClientClass,
         context: SdkContext
     ): Code {
@@ -229,7 +231,15 @@ describe("test", () => {
 
         const tests = service.endpoints
             .map((endpoint) => {
-                return this.buildTest(adaptResponse, endpoint, serviceGenerator, context, importStatement, options);
+                return this.buildTest(
+                    adaptResponse,
+                    endpoint,
+                    packageId,
+                    serviceGenerator,
+                    context,
+                    importStatement,
+                    options
+                );
             })
             .filter(Boolean);
 
@@ -245,6 +255,7 @@ describe("test", () => {
     private buildTest(
         adaptResponse: ReturnType<typeof conditionalOutput>,
         endpoint: IR.HttpEndpoint,
+        packageId: PackageId,
         serviceGenerator: GeneratedSdkClientClass,
         context: SdkContext,
         importStatement: Reference,
@@ -298,126 +309,18 @@ describe("test", () => {
             throw new Error("Only successful responses are supported");
         }
 
-        // For certain complex types, we just JSON.parse/JSON.stringify to simplify some times
-        let shouldJsonParseStringify = false;
-
-        const includeSerdeLayer = this.includeSerdeLayer;
-
-        const getExpectedResponse = () => {
-            const body = getExampleTypeReferenceForResponse(example.response);
-            if (!body) {
-                return code`undefined`;
-            }
-
-            const visitExampleTypeReference = ({ shape, jsonExample }: IR.ExampleTypeReference): Code | unknown => {
-                return shape._visit({
-                    primitive: (value) => {
-                        return value._visit({
-                            integer: (value) => literalOf(value),
-                            double: (value) => literalOf(value),
-                            string: (value) => literalOf(value.original),
-                            boolean: (value) => literalOf(value),
-                            long: (value) => literalOf(value),
-                            uint: (value) => literalOf(value),
-                            uint64: (value) => literalOf(value),
-                            float: (value) => literalOf(value),
-                            base64: (value) => literalOf(value),
-                            bigInteger: (value) => literalOf(value),
-                            datetime: (value) => {
-                                return includeSerdeLayer
-                                    ? code`new Date(${literalOf(value.datetime.toISOString())})`
-                                    : literalOf(value.raw);
-                            },
-                            date: (value) => literalOf(value),
-                            uuid: (value) => literalOf(value),
-                            _other: (value) => literalOf(value)
-                        });
-                    },
-                    container: (value) => {
-                        return value._visit({
-                            list: (value) => {
-                                return arrayOf(...value.list.map((item) => visitExampleTypeReference(item)));
-                            },
-                            map: (value) => {
-                                return Object.fromEntries(
-                                    value.map.map((item) => {
-                                        return [item.key.jsonExample, visitExampleTypeReference(item.value)];
-                                    })
-                                );
-                            },
-                            nullable: (value) => {
-                                if (!value.nullable) {
-                                    return code`null`;
-                                }
-                                return visitExampleTypeReference(value.nullable);
-                            },
-                            optional: (value) => {
-                                if (!value.optional) {
-                                    return code`undefined`;
-                                }
-                                return visitExampleTypeReference(value.optional);
-                            },
-                            set: (value) => {
-                                // return code`new Set(${arrayOf(value.map(visitExampleTypeReference))})`;
-                                // Sets are not supported in ts-sdk
-                                return arrayOf(...value.set.map(visitExampleTypeReference));
-                            },
-                            literal: (value) => {
-                                return jsonExample;
-                            },
-                            _other: (value) => {
-                                return jsonExample;
-                            }
-                        });
-                    },
-                    named: (value) => {
-                        return value.shape._visit({
-                            alias: (value) => {
-                                return code`${visitExampleTypeReference(value.value)}`;
-                            },
-                            enum: (value) => {
-                                return literalOf(value.value.wireValue);
-                            },
-                            object: (value) => {
-                                return Object.fromEntries(
-                                    value.properties.map((property) => {
-                                        return [
-                                            property.name.name.camelCase.unsafeName,
-                                            visitExampleTypeReference(property.value)
-                                        ];
-                                    })
-                                );
-                            },
-                            union: (value) => {
-                                shouldJsonParseStringify = true;
-                                return jsonExample;
-                            },
-                            undiscriminatedUnion: (value) => {
-                                shouldJsonParseStringify = true;
-                                return code`${visitExampleTypeReference(value.singleUnionType)}`;
-                            },
-                            _other: (value: { type: string }) => {
-                                return jsonExample;
-                            }
-                        });
-                    },
-                    unknown: (value) => {
-                        return code`${literalOf(jsonExample)}`;
-                    },
-                    _other: (value) => {
-                        return jsonExample;
-                    }
-                });
-            };
-
-            return visitExampleTypeReference(body);
-        };
-
         const rawRequestBody = example.request?.jsonExample;
-        const rawResponseBody = getExpectedResponse();
-        const expected = getExpectedResponse();
-        // Uncomment if/when we support Sets in responses from the TS-SDK
-        // const expected = shouldJsonParseStringify ? code`${adaptResponse}(response)` : "response";
+        const endpointTypeSchemas = context.sdkEndpointTypeSchemas.getGeneratedEndpointTypeSchemas(
+            packageId,
+            endpoint.name
+        );
+        //const parsedRequestBody = endpointTypeSchemas.serializeRequest(ts.factory.createExpressionStatement());
+        let rawResponseBody = getExampleTypeReferenceForResponse(example.response)?.jsonExample ?? undefined;
+        if (rawResponseBody) {
+            rawResponseBody = JSON.stringify(rawResponseBody);
+        }
+        const responseStatusCode = getExampleResponseStatusCode(example.response);
+        const expected = rawResponseBody;
 
         const generateEnvironment = () => {
             if (!this.ir.environments) {
@@ -443,18 +346,28 @@ describe("test", () => {
             test("${endpoint.name.camelCase.unsafeName}", async () => {
                 const server = mockServerPool.createServer();
                 const client = new ${getTextOfTsNode(importStatement.getEntityName())}(${Object.fromEntries(options)});
-
+                ${rawRequestBody ? `const rawRequestBody = ${JSON.stringify(rawRequestBody)}` : ""}
+                ${rawResponseBody ? `const rawResponseBody = ${rawResponseBody}` : ""}
                 server
-                    .buildHttpHandler()
+                    .mockEndpoint()
                     .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders.map((h) => {
                         return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
                             `;
                     })}${example.endpointHeaders.map((h) => {
                         return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
                             `;
-                    })}${rawRequestBody ? code`.requestJsonBody(${JSON.stringify(rawRequestBody)})` : ""}
-                    ${rawResponseBody ? code`.respondWithJsonBody(${rawResponseBody})` : ""}
-                    .build();
+                    })}${
+                        rawRequestBody
+                            ? code`.jsonBody(rawRequestBody)
+                        `
+                            : ""
+                    }.respondWith()
+                    .statusCode(${responseStatusCode})${
+                        rawResponseBody
+                            ? code`.jsonBody(rawResponseBody)
+                        `
+                            : ""
+                    }.build();
 
                 const response = ${getTextOfTsNode(generatedExample)};
                 expect(response).toEqual(${expected});
@@ -488,4 +401,21 @@ function getExampleTypeReferenceForSuccessResponse(
         default:
             assertNever(successResponse);
     }
+}
+function getExampleResponseStatusCode(response: IR.ExampleResponse): number {
+    return response._visit({
+        ok: () => 200,
+        error: () => 500,
+        _other: () => {
+            throw new Error("Unsupported response type");
+        }
+    });
+}
+
+function isJsonResponse(response: IR.ExampleResponse): boolean {
+    return response._visit({
+        ok: (value) => value.type === "body",
+        error: () => false,
+        _other: () => false
+    });
 }

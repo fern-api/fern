@@ -9,12 +9,15 @@ describe("Primitive", () => {
     test("getAndReturnString", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
+        const rawRequestBody = "string";
+        const rawResponseBody = "string";
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/primitive/string")
-            .requestJsonBody("string")
-            .respondWithJsonBody("string")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnString("string");
@@ -24,8 +27,16 @@ describe("Primitive", () => {
     test("getAndReturnInt", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
-        server.buildHttpHandler().post("/primitive/integer").requestJsonBody(1).respondWithJsonBody(1).build();
+        const rawRequestBody = 1;
+        const rawResponseBody = 1;
+        server
+            .mockEndpoint()
+            .post("/primitive/integer")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
         const response = await client.endpoints.primitive.getAndReturnInt(1);
         expect(response).toEqual(1);
@@ -34,8 +45,16 @@ describe("Primitive", () => {
     test("getAndReturnLong", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
-        server.buildHttpHandler().post("/primitive/long").requestJsonBody(1000000).respondWithJsonBody(1000000).build();
+        const rawRequestBody = 1000000;
+        const rawResponseBody = 1000000;
+        server
+            .mockEndpoint()
+            .post("/primitive/long")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
         const response = await client.endpoints.primitive.getAndReturnLong(1000000);
         expect(response).toEqual(1000000);
@@ -44,8 +63,16 @@ describe("Primitive", () => {
     test("getAndReturnDouble", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
-        server.buildHttpHandler().post("/primitive/double").requestJsonBody(1.1).respondWithJsonBody(1.1).build();
+        const rawRequestBody = 1.1;
+        const rawResponseBody = 1.1;
+        server
+            .mockEndpoint()
+            .post("/primitive/double")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
         const response = await client.endpoints.primitive.getAndReturnDouble(1.1);
         expect(response).toEqual(1.1);
@@ -54,8 +81,16 @@ describe("Primitive", () => {
     test("getAndReturnBool", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
-        server.buildHttpHandler().post("/primitive/boolean").requestJsonBody(true).respondWithJsonBody(true).build();
+        const rawRequestBody = true;
+        const rawResponseBody = true;
+        server
+            .mockEndpoint()
+            .post("/primitive/boolean")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
         const response = await client.endpoints.primitive.getAndReturnBool(true);
         expect(response).toEqual(true);
@@ -64,12 +99,15 @@ describe("Primitive", () => {
     test("getAndReturnDatetime", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
+        const rawRequestBody = "2024-01-15T09:30:00Z";
+        const rawResponseBody = "2024-01-15T09:30:00Z";
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/primitive/datetime")
-            .requestJsonBody("2024-01-15T09:30:00Z")
-            .respondWithJsonBody("2024-01-15T09:30:00Z")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z");
@@ -79,12 +117,15 @@ describe("Primitive", () => {
     test("getAndReturnDate", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
+        const rawRequestBody = "2023-01-15";
+        const rawResponseBody = "2023-01-15";
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/primitive/date")
-            .requestJsonBody("2023-01-15")
-            .respondWithJsonBody("2023-01-15")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnDate("2023-01-15");
@@ -94,12 +135,15 @@ describe("Primitive", () => {
     test("getAndReturnUuid", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
+        const rawRequestBody = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32";
+        const rawResponseBody = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32";
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/primitive/uuid")
-            .requestJsonBody("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
-            .respondWithJsonBody("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
@@ -109,12 +153,15 @@ describe("Primitive", () => {
     test("getAndReturnBase64", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
+        const rawRequestBody = "SGVsbG8gd29ybGQh";
+        const rawResponseBody = "SGVsbG8gd29ybGQh";
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/primitive/base64")
-            .requestJsonBody("SGVsbG8gd29ybGQh")
-            .respondWithJsonBody("SGVsbG8gd29ybGQh")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh");

@@ -9,14 +9,16 @@ describe("ReqWithHeaders", () => {
     test("getWithCustomHeader", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
+        const rawRequestBody = "string";
 
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/test-headers/custom-header")
             .header("X-TEST-SERVICE-HEADER", "X-TEST-SERVICE-HEADER")
             .header("X-TEST-ENDPOINT-HEADER", "X-TEST-ENDPOINT-HEADER")
-            .requestJsonBody("string")
-            .respondWithJsonBody(undefined)
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
             .build();
 
         const response = await client.reqWithHeaders.getWithCustomHeader({

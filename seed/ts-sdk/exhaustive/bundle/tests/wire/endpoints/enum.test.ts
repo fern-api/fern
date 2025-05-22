@@ -9,8 +9,16 @@ describe("Enum", () => {
     test("getAndReturnEnum", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
-        server.buildHttpHandler().post("/enum").requestJsonBody("SUNNY").respondWithJsonBody("SUNNY").build();
+        const rawRequestBody = "SUNNY";
+        const rawResponseBody = "SUNNY";
+        server
+            .mockEndpoint()
+            .post("/enum")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
         const response = await client.endpoints.enum.getAndReturnEnum("SUNNY");
         expect(response).toEqual("SUNNY");

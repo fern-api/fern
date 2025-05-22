@@ -12,12 +12,15 @@ describe("Union", () => {
             token: process.env.TESTS_AUTH || "test",
             environment: server.baseUrl,
         });
-
+        const rawRequestBody = { animal: "dog", name: "name", likesToWoof: true };
+        const rawResponseBody = { animal: "dog", name: "name", likesToWoof: true };
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/union")
-            .requestJsonBody({ animal: "dog", name: "name", likesToWoof: true })
-            .respondWithJsonBody({ animal: "dog", name: "name", likesToWoof: true })
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.union.getAndReturnUnion({

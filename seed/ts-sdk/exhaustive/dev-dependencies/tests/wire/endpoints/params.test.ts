@@ -10,7 +10,8 @@ describe("Params", () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
 
-        server.buildHttpHandler().get("/params/path/param").respondWithJsonBody("string").build();
+        const rawResponseBody = "string";
+        server.mockEndpoint().get("/params/path/param").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.endpoints.params.getWithPath("param");
         expect(response).toEqual("string");
@@ -20,7 +21,8 @@ describe("Params", () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
 
-        server.buildHttpHandler().get("/params/path/param").respondWithJsonBody("string").build();
+        const rawResponseBody = "string";
+        server.mockEndpoint().get("/params/path/param").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.endpoints.params.getWithInlinePath({
             param: "param",
@@ -32,7 +34,7 @@ describe("Params", () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
 
-        server.buildHttpHandler().get("/params").respondWithJsonBody(undefined).build();
+        server.mockEndpoint().get("/params").respondWith().statusCode(200).build();
 
         const response = await client.endpoints.params.getWithQuery({
             query: "query",
@@ -45,7 +47,7 @@ describe("Params", () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
 
-        server.buildHttpHandler().get("/params").respondWithJsonBody(undefined).build();
+        server.mockEndpoint().get("/params").respondWith().statusCode(200).build();
 
         const response = await client.endpoints.params.getWithAllowMultipleQuery({
             query: "query",
@@ -58,7 +60,7 @@ describe("Params", () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
 
-        server.buildHttpHandler().get("/params/path-query/param").respondWithJsonBody(undefined).build();
+        server.mockEndpoint().get("/params/path-query/param").respondWith().statusCode(200).build();
 
         const response = await client.endpoints.params.getWithPathAndQuery("param", {
             query: "query",
@@ -70,7 +72,7 @@ describe("Params", () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
 
-        server.buildHttpHandler().get("/params/path-query/param").respondWithJsonBody(undefined).build();
+        server.mockEndpoint().get("/params/path-query/param").respondWith().statusCode(200).build();
 
         const response = await client.endpoints.params.getWithInlinePathAndQuery({
             param: "param",
@@ -82,12 +84,15 @@ describe("Params", () => {
     test("modifyWithPath", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
+        const rawRequestBody = "string";
+        const rawResponseBody = "string";
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .put("/params/path/param")
-            .requestJsonBody("string")
-            .respondWithJsonBody("string")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.params.modifyWithPath("param", "string");
@@ -97,12 +102,15 @@ describe("Params", () => {
     test("modifyWithInlinePath", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
+        const rawRequestBody = "string";
+        const rawResponseBody = "string";
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .put("/params/path/param")
-            .requestJsonBody("string")
-            .respondWithJsonBody("string")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.params.modifyWithInlinePath({

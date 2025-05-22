@@ -70,7 +70,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     boolean: (booleanExample) => (booleanExample ? ts.factory.createTrue() : ts.factory.createFalse()),
                     uuid: (uuidExample) => ts.factory.createStringLiteral(uuidExample),
                     datetime: (datetimeExample) => {
-                        if (context.includeSerdeLayer != null && datetimeExample.raw != null) {
+                        if (!context.includeSerdeLayer && datetimeExample.raw != null) {
                             return ts.factory.createStringLiteral(datetimeExample.raw);
                         } else {
                             return ts.factory.createNewExpression(ts.factory.createIdentifier("Date"), undefined, [

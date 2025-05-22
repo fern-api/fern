@@ -12,12 +12,15 @@ describe("Container", () => {
             token: process.env.TESTS_AUTH || "test",
             environment: server.baseUrl,
         });
-
+        const rawRequestBody = ["string", "string"];
+        const rawResponseBody = ["string", "string"];
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/container/list-of-primitives")
-            .requestJsonBody(["string", "string"])
-            .respondWithJsonBody(["string", "string"])
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"]);
@@ -30,12 +33,15 @@ describe("Container", () => {
             token: process.env.TESTS_AUTH || "test",
             environment: server.baseUrl,
         });
-
+        const rawRequestBody = [{ string: "string" }, { string: "string" }];
+        const rawResponseBody = [{ string: "string" }, { string: "string" }];
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/container/list-of-objects")
-            .requestJsonBody([{ string: "string" }, { string: "string" }])
-            .respondWithJsonBody([{ string: "string" }, { string: "string" }])
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.container.getAndReturnListOfObjects([
@@ -55,12 +61,15 @@ describe("Container", () => {
             token: process.env.TESTS_AUTH || "test",
             environment: server.baseUrl,
         });
-
+        const rawRequestBody = ["string"];
+        const rawResponseBody = ["string"];
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/container/set-of-primitives")
-            .requestJsonBody(["string"])
-            .respondWithJsonBody(["string"])
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]));
@@ -73,12 +82,15 @@ describe("Container", () => {
             token: process.env.TESTS_AUTH || "test",
             environment: server.baseUrl,
         });
-
+        const rawRequestBody = [{ string: "string" }];
+        const rawResponseBody = [{ string: "string" }];
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/container/set-of-objects")
-            .requestJsonBody([{ string: "string" }])
-            .respondWithJsonBody([{ string: "string" }])
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.container.getAndReturnSetOfObjects([
@@ -95,12 +107,15 @@ describe("Container", () => {
             token: process.env.TESTS_AUTH || "test",
             environment: server.baseUrl,
         });
-
+        const rawRequestBody = { string: "string" };
+        const rawResponseBody = { string: "string" };
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/container/map-prim-to-prim")
-            .requestJsonBody({ string: "string" })
-            .respondWithJsonBody({ string: "string" })
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.container.getAndReturnMapPrimToPrim({
@@ -115,12 +130,15 @@ describe("Container", () => {
             token: process.env.TESTS_AUTH || "test",
             environment: server.baseUrl,
         });
-
+        const rawRequestBody = { string: { string: "string" } };
+        const rawResponseBody = { string: { string: "string" } };
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/container/map-prim-to-object")
-            .requestJsonBody({ string: { string: "string" } })
-            .respondWithJsonBody({ string: { string: "string" } })
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.container.getAndReturnMapOfPrimToObject({
@@ -137,12 +155,15 @@ describe("Container", () => {
             token: process.env.TESTS_AUTH || "test",
             environment: server.baseUrl,
         });
-
+        const rawRequestBody = { string: "string" };
+        const rawResponseBody = { string: "string" };
         server
-            .buildHttpHandler()
+            .mockEndpoint()
             .post("/container/opt-objects")
-            .requestJsonBody({ string: "string" })
-            .respondWithJsonBody({ string: "string" })
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.endpoints.container.getAndReturnOptional({

@@ -10,16 +10,13 @@ describe("Put", () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
 
-        server
-            .buildHttpHandler()
-            .put("/id")
-            .respondWithJsonBody({
-                errors: [
-                    { category: "API_ERROR", code: "INTERNAL_SERVER_ERROR", detail: "detail", field: "field" },
-                    { category: "API_ERROR", code: "INTERNAL_SERVER_ERROR", detail: "detail", field: "field" },
-                ],
-            })
-            .build();
+        const rawResponseBody = {
+            errors: [
+                { category: "API_ERROR", code: "INTERNAL_SERVER_ERROR", detail: "detail", field: "field" },
+                { category: "API_ERROR", code: "INTERNAL_SERVER_ERROR", detail: "detail", field: "field" },
+            ],
+        };
+        server.mockEndpoint().put("/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.endpoints.put.add({
             id: "id",

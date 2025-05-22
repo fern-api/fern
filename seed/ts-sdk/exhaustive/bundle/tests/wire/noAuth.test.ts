@@ -9,8 +9,16 @@ describe("NoAuth", () => {
     test("postWithNoAuth", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
-
-        server.buildHttpHandler().post("/no-auth").requestJsonBody({ key: "value" }).respondWithJsonBody(true).build();
+        const rawRequestBody = { key: "value" };
+        const rawResponseBody = true;
+        server
+            .mockEndpoint()
+            .post("/no-auth")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
         const response = await client.noAuth.postWithNoAuth({
             key: "value",
