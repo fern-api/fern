@@ -5,6 +5,14 @@
       type: fix
   irVersion: 58
   createdAt: "2025-05-22"
+  version: 0.63.4
+
+- changelogEntry:
+    - summary: |
+        Re-release `0.63.2`
+      type: internal
+  irVersion: 58
+  createdAt: "2025-05-22"
   version: 0.63.3
 
 - changelogEntry:
