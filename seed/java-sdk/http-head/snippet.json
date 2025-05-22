@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "d5ee06",
+            "id": {
+                "method": "GET",
+                "path": "/users",
+                "identifier_override": "endpoint_user.list"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.httpHead.SeedHttpHeadClient;\nimport com.seed.httpHead.resources.user.requests.ListUsersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedHttpHeadClient client = SeedHttpHeadClient\n            .builder()\n            .build();\n\n        client.user().list(\n            ListUsersRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.httpHead.SeedHttpHeadClient;\nimport com.seed.httpHead.resources.user.requests.ListUsersRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedHttpHeadClient client = SeedHttpHeadClient\n            .builder()\n            .build();\n\n        client.user().list(\n            ListUsersRequest\n                .builder()\n                .limit(1)\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}
