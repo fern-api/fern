@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Add support for `HEAD` HTTP methods and validate that they define no response body.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-05-22"
+  version: 0.63.0
+
+- changelogEntry:
+    - summary: |
         Add support for overriding auth in generators.yml. You can now specify auth for a specific generator by adding an `api` field with an `auth` property. For example:
 
         ```yaml

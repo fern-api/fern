@@ -79,6 +79,8 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 return HttpMethod.Delete;
             case "patch":
                 return HttpMethod.Patch;
+            case "head":
+                return HttpMethod.Head;
             default:
                 return undefined;
         }

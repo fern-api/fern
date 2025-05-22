@@ -7,8 +7,8 @@ import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const HttpMethod: core.serialization.Schema<serializers.HttpMethod.Raw, FernIr.HttpMethod> =
-    core.serialization.enum_(["GET", "POST", "PUT", "PATCH", "DELETE"]);
+    core.serialization.enum_(["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"]);
 
 export declare namespace HttpMethod {
-    export type Raw = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+    export type Raw = "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD";
 }
