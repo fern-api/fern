@@ -129,7 +129,7 @@ describe("Primitive", () => {
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnDatetime(new Date("2024-01-15T09:30:00.000Z"));
-        expect(response).toEqual("2024-01-15T09:30:00Z");
+        expect(response).toEqual(new Date("2024-01-15T09:30:00.000Z"));
     });
 
     test("getAndReturnDate", async () => {
@@ -153,7 +153,7 @@ describe("Primitive", () => {
         expect(response).toEqual("2023-01-15");
     });
 
-    test("getAndReturnUuid", async () => {
+    test("getAndReturnUUID", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
             token: process.env.TESTS_AUTH || "test",

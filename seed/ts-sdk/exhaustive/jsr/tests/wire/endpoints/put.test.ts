@@ -26,8 +26,18 @@ describe("Put", () => {
         });
         expect(response).toEqual({
             errors: [
-                { category: "API_ERROR", code: "INTERNAL_SERVER_ERROR", detail: "detail", field: "field" },
-                { category: "API_ERROR", code: "INTERNAL_SERVER_ERROR", detail: "detail", field: "field" },
+                {
+                    category: "API_ERROR",
+                    code: "INTERNAL_SERVER_ERROR",
+                    detail: "detail",
+                    field: "field",
+                },
+                {
+                    category: "API_ERROR",
+                    code: "INTERNAL_SERVER_ERROR",
+                    detail: "detail",
+                    field: "field",
+                },
             ],
         });
     });

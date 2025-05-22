@@ -40,7 +40,9 @@ describe("NoReqBody", () => {
             base64: "SGVsbG8gd29ybGQh",
             list: ["list", "list"],
             set: ["set"],
-            map: { "1": "map" },
+            map: {
+                1: "map",
+            },
             bigint: "1000000",
         });
     });

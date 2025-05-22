@@ -80,7 +80,9 @@ describe("Object_", () => {
             base64: "SGVsbG8gd29ybGQh",
             list: ["list", "list"],
             set: ["set"],
-            map: { "1": "map" },
+            map: {
+                1: "map",
+            },
             bigint: "1000000",
         });
     });
@@ -105,7 +107,9 @@ describe("Object_", () => {
         const response = await client.endpoints.object.getAndReturnWithRequiredField({
             string: "string",
         });
-        expect(response).toEqual({ string: "string" });
+        expect(response).toEqual({
+            string: "string",
+        });
     });
 
     test("getAndReturnWithMapOfMap", async () => {
@@ -132,7 +136,13 @@ describe("Object_", () => {
                 },
             },
         });
-        expect(response).toEqual({ map: { map: { map: "map" } } });
+        expect(response).toEqual({
+            map: {
+                map: {
+                    map: "map",
+                },
+            },
+        });
     });
 
     test("getAndReturnNestedWithOptionalField", async () => {
@@ -220,7 +230,9 @@ describe("Object_", () => {
                 base64: "SGVsbG8gd29ybGQh",
                 list: ["list", "list"],
                 set: ["set"],
-                map: { "1": "map" },
+                map: {
+                    1: "map",
+                },
                 bigint: "1000000",
             },
         });
@@ -311,7 +323,9 @@ describe("Object_", () => {
                 base64: "SGVsbG8gd29ybGQh",
                 list: ["list", "list"],
                 set: ["set"],
-                map: { "1": "map" },
+                map: {
+                    1: "map",
+                },
                 bigint: "1000000",
             },
         });
@@ -444,7 +458,9 @@ describe("Object_", () => {
                 base64: "SGVsbG8gd29ybGQh",
                 list: ["list", "list"],
                 set: ["set"],
-                map: { "1": "map" },
+                map: {
+                    1: "map",
+                },
                 bigint: "1000000",
             },
         });

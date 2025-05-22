@@ -15,7 +15,7 @@ describe("ContentType", () => {
         const rawRequestBody = {
             string: "string",
             integer: 1,
-            long: 1000000,
+            long: BigInt(1000000),
             double: 1.1,
             bool: true,
             datetime: "2024-01-15T09:30:00Z",
@@ -25,7 +25,7 @@ describe("ContentType", () => {
             list: ["list", "list"],
             set: ["set"],
             map: { "1": "map" },
-            bigint: "1000000",
+            bigint: BigInt("1000000"),
         };
 
         server.mockEndpoint().post("/foo/bar").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
@@ -59,7 +59,7 @@ describe("ContentType", () => {
         const rawRequestBody = {
             string: "string",
             integer: 1,
-            long: 1000000,
+            long: BigInt(1000000),
             double: 1.1,
             bool: true,
             datetime: "2024-01-15T09:30:00Z",
@@ -69,7 +69,7 @@ describe("ContentType", () => {
             list: ["list", "list"],
             set: ["set"],
             map: { "1": "map" },
-            bigint: "1000000",
+            bigint: BigInt("1000000"),
         };
 
         server.mockEndpoint().post("/foo/baz").jsonBody(rawRequestBody).respondWith().statusCode(200).build();

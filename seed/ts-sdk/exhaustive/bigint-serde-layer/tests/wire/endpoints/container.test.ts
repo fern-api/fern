@@ -52,7 +52,14 @@ describe("Container", () => {
                 string: "string",
             },
         ]);
-        expect(response).toEqual([{ string: "string" }, { string: "string" }]);
+        expect(response).toEqual([
+            {
+                string: "string",
+            },
+            {
+                string: "string",
+            },
+        ]);
     });
 
     test("getAndReturnSetOfPrimitives", async () => {
@@ -73,7 +80,7 @@ describe("Container", () => {
             .build();
 
         const response = await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]));
-        expect(response).toEqual(["string"]);
+        expect(response).toEqual(new Set(["string"]));
     });
 
     test("getAndReturnSetOfObjects", async () => {
@@ -98,7 +105,11 @@ describe("Container", () => {
                 string: "string",
             },
         ]);
-        expect(response).toEqual([{ string: "string" }]);
+        expect(response).toEqual([
+            {
+                string: "string",
+            },
+        ]);
     });
 
     test("getAndReturnMapPrimToPrim", async () => {
@@ -121,7 +132,9 @@ describe("Container", () => {
         const response = await client.endpoints.container.getAndReturnMapPrimToPrim({
             string: "string",
         });
-        expect(response).toEqual({ string: "string" });
+        expect(response).toEqual({
+            string: "string",
+        });
     });
 
     test("getAndReturnMapOfPrimToObject", async () => {
@@ -146,7 +159,11 @@ describe("Container", () => {
                 string: "string",
             },
         });
-        expect(response).toEqual({ string: { string: "string" } });
+        expect(response).toEqual({
+            string: {
+                string: "string",
+            },
+        });
     });
 
     test("getAndReturnOptional", async () => {
@@ -169,6 +186,8 @@ describe("Container", () => {
         const response = await client.endpoints.container.getAndReturnOptional({
             string: "string",
         });
-        expect(response).toEqual({ string: "string" });
+        expect(response).toEqual({
+            string: "string",
+        });
     });
 });

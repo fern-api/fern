@@ -1,7 +1,8 @@
-import { DefaultBodyType, HttpHandler, HttpResponse, HttpResponseResolver, JsonBodyType, http } from "msw";
+import { DefaultBodyType, HttpHandler, HttpResponse, HttpResponseResolver, http } from "msw";
 
 import { withHeaders } from "./withHeaders";
 import { withJson } from "./withJson";
+import { toJson } from "../../src/core/json";
 
 type HttpMethod = "all" | "get" | "post" | "put" | "delete" | "patch" | "options" | "head";
 
@@ -23,7 +24,7 @@ interface RequestHeadersStage extends RequestBodyStage, ResponseStage {
 }
 
 interface RequestBodyStage extends ResponseStage {
-    jsonBody(body: JsonBodyType): ResponseStage;
+    jsonBody(body: unknown): ResponseStage;
 }
 
 interface ResponseStage {
@@ -39,7 +40,7 @@ interface ResponseHeaderStage extends ResponseBodyStage, BuildStage {
 }
 
 interface ResponseBodyStage {
-    jsonBody(body: JsonBodyType): BuildStage;
+    jsonBody(body: unknown): BuildStage;
 }
 
 interface BuildStage {
@@ -51,7 +52,6 @@ export interface HttpHandlerBuilderOptions {
     once?: boolean;
 }
 
-// Implementation class for request configuration
 class RequestBuilder implements MethodStage, RequestHeadersStage, RequestBodyStage, ResponseStage {
     private method: HttpMethod = "get";
     #baseUrl: string = "";
@@ -146,14 +146,12 @@ class RequestBuilder implements MethodStage, RequestHeadersStage, RequestBodySta
     }
 }
 
-// Implementation class for response configuration
 class ResponseBuilder implements ResponseStatusStage, ResponseHeaderStage, ResponseBodyStage, BuildStage {
     private readonly method: HttpMethod;
     private readonly path: string;
     private readonly requestPredicates: ((resolver: HttpResponseResolver) => HttpResponseResolver)[];
     private readonly handlerOptions?: HttpHandlerBuilderOptions;
 
-    // Simple response properties
     private responseStatusCode: number = 200;
     private responseHeaders: Record<string, string> = {};
     private responseBody: DefaultBodyType = undefined;
@@ -185,13 +183,12 @@ class ResponseBuilder implements ResponseStatusStage, ResponseHeaderStage, Respo
         return this;
     }
 
-    public jsonBody(body: JsonBodyType): BuildStage {
-        this.responseBody = JSON.stringify(body);
+    public jsonBody(body: unknown): BuildStage {
+        this.responseBody = toJson(body);
         return this;
     }
 
     public build(): HttpHandler {
-        // Create base response resolver
         const responseResolver: HttpResponseResolver = () => {
             return new HttpResponse(this.responseBody, {
                 status: this.responseStatusCode,
@@ -199,19 +196,14 @@ class ResponseBuilder implements ResponseStatusStage, ResponseHeaderStage, Respo
             });
         };
 
-        // Apply request predicates on top of base response
         const finalResolver = this.requestPredicates.reduceRight((acc, predicate) => predicate(acc), responseResolver);
 
-        // Create the handler using the final resolver
         const handler = http[this.method](this.path, finalResolver, this.handlerOptions);
         this.handlerOptions?.onBuild?.(handler);
         return handler;
     }
 }
 
-/**
- * Create a new request builder instance
- */
 export function mockEndpointBuilder(options?: HttpHandlerBuilderOptions): MethodStage {
     return new RequestBuilder(options);
 }

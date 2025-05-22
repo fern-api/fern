@@ -74,13 +74,15 @@ describe("Object_", () => {
             long: 1000000,
             double: 1.1,
             bool: true,
-            datetime: "2024-01-15T09:30:00Z",
+            datetime: new Date("2024-01-15T09:30:00.000Z"),
             date: "2023-01-15",
             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             base64: "SGVsbG8gd29ybGQh",
             list: ["list", "list"],
-            set: ["set"],
-            map: { "1": "map" },
+            set: new Set(["set"]),
+            map: {
+                1: "map",
+            },
             bigint: "1000000",
         });
     });
@@ -105,7 +107,9 @@ describe("Object_", () => {
         const response = await client.endpoints.object.getAndReturnWithRequiredField({
             string: "string",
         });
-        expect(response).toEqual({ string: "string" });
+        expect(response).toEqual({
+            string: "string",
+        });
     });
 
     test("getAndReturnWithMapOfMap", async () => {
@@ -132,7 +136,13 @@ describe("Object_", () => {
                 },
             },
         });
-        expect(response).toEqual({ map: { map: { map: "map" } } });
+        expect(response).toEqual({
+            map: {
+                map: {
+                    map: "map",
+                },
+            },
+        });
     });
 
     test("getAndReturnNestedWithOptionalField", async () => {
@@ -208,19 +218,21 @@ describe("Object_", () => {
         });
         expect(response).toEqual({
             string: "string",
-            NestedObject: {
+            nestedObject: {
                 string: "string",
                 integer: 1,
                 long: 1000000,
                 double: 1.1,
                 bool: true,
-                datetime: "2024-01-15T09:30:00Z",
+                datetime: new Date("2024-01-15T09:30:00.000Z"),
                 date: "2023-01-15",
                 uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 base64: "SGVsbG8gd29ybGQh",
                 list: ["list", "list"],
-                set: ["set"],
-                map: { "1": "map" },
+                set: new Set(["set"]),
+                map: {
+                    1: "map",
+                },
                 bigint: "1000000",
             },
         });
@@ -299,19 +311,21 @@ describe("Object_", () => {
         });
         expect(response).toEqual({
             string: "string",
-            NestedObject: {
+            nestedObject: {
                 string: "string",
                 integer: 1,
                 long: 1000000,
                 double: 1.1,
                 bool: true,
-                datetime: "2024-01-15T09:30:00Z",
+                datetime: new Date("2024-01-15T09:30:00.000Z"),
                 date: "2023-01-15",
                 uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 base64: "SGVsbG8gd29ybGQh",
                 list: ["list", "list"],
-                set: ["set"],
-                map: { "1": "map" },
+                set: new Set(["set"]),
+                map: {
+                    1: "map",
+                },
                 bigint: "1000000",
             },
         });
@@ -432,19 +446,21 @@ describe("Object_", () => {
         ]);
         expect(response).toEqual({
             string: "string",
-            NestedObject: {
+            nestedObject: {
                 string: "string",
                 integer: 1,
                 long: 1000000,
                 double: 1.1,
                 bool: true,
-                datetime: "2024-01-15T09:30:00Z",
+                datetime: new Date("2024-01-15T09:30:00.000Z"),
                 date: "2023-01-15",
                 uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 base64: "SGVsbG8gd29ybGQh",
                 list: ["list", "list"],
-                set: ["set"],
-                map: { "1": "map" },
+                set: new Set(["set"]),
+                map: {
+                    1: "map",
+                },
                 bigint: "1000000",
             },
         });

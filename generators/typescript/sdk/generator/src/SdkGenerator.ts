@@ -411,7 +411,8 @@ export class SdkGenerator {
             rootDirectory: this.rootDirectory,
             writeUnitTests: this.config.writeUnitTests,
             includeSerdeLayer: config.includeSerdeLayer,
-            generateWireTests: config.generateWireTests
+            generateWireTests: config.generateWireTests,
+            useBigInt: config.useBigInt
         });
         this.referenceConfigBuilder = new ReferenceConfigBuilder();
         this.generatorAgent = new TypeScriptGeneratorAgent({

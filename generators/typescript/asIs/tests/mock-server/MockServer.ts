@@ -8,17 +8,10 @@ export interface MockServerOptions {
     server: SetupServer;
 }
 
-/**
- * MockServer wraps MSW functionality for easier API mocking in tests
- */
 export class MockServer {
     private readonly server: SetupServer;
     public readonly baseUrl: string;
 
-    /**
-     * Create a new MockServer instance
-     * @param baseUrl - The base URL for all request handlers
-     */
     constructor({ baseUrl, server }: MockServerOptions) {
         this.baseUrl = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
         this.server = server;

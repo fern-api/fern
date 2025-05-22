@@ -28,6 +28,10 @@ describe("Union", () => {
             name: "name",
             likesToWoof: true,
         });
-        expect(response).toEqual({ animal: "dog", name: "name", likesToWoof: true });
+        expect(response).toEqual({
+            animal: "dog",
+            name: "name",
+            likesToWoof: true,
+        });
     });
 });

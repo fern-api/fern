@@ -54,8 +54,8 @@ describe("Primitive", () => {
             token: process.env.TESTS_AUTH || "test",
             environment: server.baseUrl,
         });
-        const rawRequestBody = 1000000;
-        const rawResponseBody = 1000000;
+        const rawRequestBody = BigInt(1000000);
+        const rawResponseBody = BigInt(1000000);
         server
             .mockEndpoint()
             .post("/primitive/long")
@@ -66,7 +66,7 @@ describe("Primitive", () => {
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnLong(BigInt("1000000"));
-        expect(response).toEqual(1000000);
+        expect(response).toEqual(BigInt("1000000"));
     });
 
     test("getAndReturnDouble", async () => {
@@ -129,7 +129,7 @@ describe("Primitive", () => {
             .build();
 
         const response = await client.endpoints.primitive.getAndReturnDatetime(new Date("2024-01-15T09:30:00.000Z"));
-        expect(response).toEqual("2024-01-15T09:30:00Z");
+        expect(response).toEqual(new Date("2024-01-15T09:30:00.000Z"));
     });
 
     test("getAndReturnDate", async () => {
@@ -153,7 +153,7 @@ describe("Primitive", () => {
         expect(response).toEqual("2023-01-15");
     });
 
-    test("getAndReturnUuid", async () => {
+    test("getAndReturnUUID", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
             token: process.env.TESTS_AUTH || "test",

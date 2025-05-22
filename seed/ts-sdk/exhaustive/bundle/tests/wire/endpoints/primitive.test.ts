@@ -132,7 +132,7 @@ describe("Primitive", () => {
         expect(response).toEqual("2023-01-15");
     });
 
-    test("getAndReturnUuid", async () => {
+    test("getAndReturnUUID", async () => {
         const server = mockServerPool.createServer();
         const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
         const rawRequestBody = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32";

@@ -153,7 +153,7 @@ describe("Primitive", () => {
         expect(response).toEqual("2023-01-15");
     });
 
-    test("getAndReturnUuid", async () => {
+    test("getAndReturnUUID", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
             token: process.env.TESTS_AUTH || "test",

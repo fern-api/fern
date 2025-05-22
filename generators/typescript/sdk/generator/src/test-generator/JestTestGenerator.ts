@@ -11,11 +11,12 @@ import { GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
 import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
 import path from "path";
 import { Directory, ts } from "ts-morph";
-import { Code, code, conditionalOutput } from "ts-poet";
+import { Code, arrayOf, code, literalOf } from "ts-poet";
 
 import { assertNever } from "@fern-api/core-utils";
 
 import * as IR from "@fern-fern/ir-sdk/api";
+import { ExampleRequestBody } from "@fern-fern/ir-sdk/api";
 
 export declare namespace JestTestGenerator {
     interface Args {
@@ -25,6 +26,7 @@ export declare namespace JestTestGenerator {
         includeSerdeLayer: boolean;
         writeUnitTests: boolean;
         generateWireTests: boolean;
+        useBigInt: boolean;
     }
 }
 
@@ -35,6 +37,7 @@ export class JestTestGenerator {
     private readonly writeUnitTests: boolean;
     private readonly includeSerdeLayer: boolean;
     private readonly generateWireTests: boolean;
+    private readonly useBigInt: boolean;
 
     constructor({
         ir,
@@ -42,7 +45,8 @@ export class JestTestGenerator {
         rootDirectory,
         includeSerdeLayer,
         writeUnitTests,
-        generateWireTests
+        generateWireTests,
+        useBigInt
     }: JestTestGenerator.Args) {
         this.ir = ir;
         this.dependencyManager = dependencyManager;
@@ -50,6 +54,7 @@ export class JestTestGenerator {
         this.writeUnitTests = writeUnitTests;
         this.generateWireTests = generateWireTests;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.useBigInt = useBigInt;
     }
 
     private addJestConfig(): void {
@@ -143,18 +148,6 @@ describe("test", () => {
         serviceGenerator: GeneratedSdkClientClass,
         context: SdkContext
     ): Code {
-        const adaptResponse = conditionalOutput(
-            // The string to output at the usage site
-            "adaptResponse",
-            // The code to conditionally output if convertTimestamps is used
-            code`function adaptResponse(response: unknown) {
-                return JSON.parse(JSON.stringify(
-                    response,
-                    (_key, value) => (value instanceof Set ? [...value] : value)
-                ));
-            }`
-        );
-
         const fallbackTest = code`
             test("constructor", () => {
                 expect(${getTextOfTsNode(
@@ -231,21 +224,11 @@ describe("test", () => {
 
         const tests = service.endpoints
             .map((endpoint) => {
-                return this.buildTest(
-                    adaptResponse,
-                    endpoint,
-                    packageId,
-                    serviceGenerator,
-                    context,
-                    importStatement,
-                    options
-                );
+                return this.buildTest(endpoint, packageId, serviceGenerator, context, importStatement, options);
             })
             .filter(Boolean);
 
         return code`
-            ${adaptResponse.ifUsed}
-
             describe("${serviceName}", () => {
                 ${tests.length > 0 ? tests : fallbackTest}
             });
@@ -253,7 +236,6 @@ describe("test", () => {
     }
 
     private buildTest(
-        adaptResponse: ReturnType<typeof conditionalOutput>,
         endpoint: IR.HttpEndpoint,
         packageId: PackageId,
         serviceGenerator: GeneratedSdkClientClass,
@@ -309,18 +291,10 @@ describe("test", () => {
             throw new Error("Only successful responses are supported");
         }
 
-        const rawRequestBody = example.request?.jsonExample;
-        const endpointTypeSchemas = context.sdkEndpointTypeSchemas.getGeneratedEndpointTypeSchemas(
-            packageId,
-            endpoint.name
-        );
-        //const parsedRequestBody = endpointTypeSchemas.serializeRequest(ts.factory.createExpressionStatement());
-        let rawResponseBody = getExampleTypeReferenceForResponse(example.response)?.jsonExample ?? undefined;
-        if (rawResponseBody) {
-            rawResponseBody = JSON.stringify(rawResponseBody);
-        }
+        const rawRequestBody = this.getRequestExample(example.request);
+        let rawResponseBody = this.getResponseExample(example.response);
         const responseStatusCode = getExampleResponseStatusCode(example.response);
-        const expected = rawResponseBody;
+        const expected = getExpectedResponseBody(example.response, context);
 
         const generateEnvironment = () => {
             if (!this.ir.environments) {
@@ -343,11 +317,11 @@ describe("test", () => {
         options.push(["environment", generateEnvironment()]);
 
         return code`
-            test("${endpoint.name.camelCase.unsafeName}", async () => {
+            test("${endpoint.name.originalName}", async () => {
                 const server = mockServerPool.createServer();
                 const client = new ${getTextOfTsNode(importStatement.getEntityName())}(${Object.fromEntries(options)});
-                ${rawRequestBody ? `const rawRequestBody = ${JSON.stringify(rawRequestBody)}` : ""}
-                ${rawResponseBody ? `const rawResponseBody = ${rawResponseBody}` : ""}
+                ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
+                ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
                 server
                     .mockEndpoint()
                     .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders.map((h) => {
@@ -373,6 +347,184 @@ describe("test", () => {
                 expect(response).toEqual(${expected});
             });
           `;
+    }
+    getRequestExample(request: ExampleRequestBody | undefined): Code | undefined {
+        if (!request) return undefined;
+        return request._visit({
+            inlinedRequestBody: (value) => {
+                return code`${literalOf(
+                    Object.fromEntries(
+                        value.properties.map((p) => {
+                            return [p.name.wireValue, this.createRawJsonExample(p.value)];
+                        })
+                    )
+                )}`;
+            },
+            reference: (value) => this.createRawJsonExample(value),
+            _other: () => code`${literalOf(request.jsonExample)}`
+        });
+    }
+    getResponseExample(response: IR.ExampleResponse | undefined): Code | undefined {
+        if (!response) return undefined;
+        const createRawJsonExample = this.createRawJsonExample.bind(this);
+        return response._visit<Code | undefined>({
+            ok: (value) => {
+                return value._visit({
+                    body: (value) => {
+                        if (!value) {
+                            return undefined;
+                        }
+                        return createRawJsonExample(value);
+                    },
+                    stream: () => {
+                        throw new Error("Stream not supported in wire tests");
+                    },
+                    sse: () => {
+                        throw new Error("SSE not supported in wire tests");
+                    },
+                    _other: () => {
+                        throw new Error("Unsupported response type");
+                    }
+                });
+            },
+            error: (value) => {
+                if (!value.body) {
+                    return undefined;
+                }
+                return createRawJsonExample(value.body);
+            },
+            _other: () => {
+                throw new Error("Unsupported response type");
+            }
+        });
+    }
+
+    createRawJsonExample({ shape, jsonExample }: IR.ExampleTypeReference): Code {
+        const createRawJsonExample = this.createRawJsonExample.bind(this);
+        return shape._visit<Code>({
+            primitive: (value) => {
+                return value._visit<Code>({
+                    integer: (value) => code`${literalOf(value)}`,
+                    double: (value) => code`${literalOf(value)}`,
+                    string: (value) => code`${literalOf(value.original)}`,
+                    boolean: (value) => code`${literalOf(value)}`,
+                    long: (value) => {
+                        if (this.useBigInt) {
+                            return code`BigInt(${literalOf(value)})`;
+                        }
+                        return code`${literalOf(value)}`;
+                    },
+                    uint: (value) => code`${literalOf(value)}`,
+                    uint64: (value) => code`${literalOf(value)}`,
+                    float: (value) => code`${literalOf(value)}`,
+                    base64: (value) => code`${literalOf(value)}`,
+                    bigInteger: (value) => {
+                        if (this.useBigInt) {
+                            return code`BigInt(${literalOf(value)})`;
+                        }
+                        return code`${literalOf(value)}`;
+                    },
+                    datetime: (value) => code`${literalOf(value.raw)}`,
+                    date: (value) => code`${literalOf(value)}`,
+                    uuid: (value) => code`${literalOf(value)}`,
+                    _other: () => code`${literalOf(jsonExample)}`
+                });
+            },
+            container: (value) => {
+                return value._visit({
+                    list: (value) => {
+                        return code`${arrayOf(...value.list.map((item) => createRawJsonExample(item)))}`;
+                    },
+                    map: (value) => {
+                        return code`${literalOf(
+                            Object.fromEntries(
+                                value.map.map((item) => {
+                                    return [item.key.jsonExample, createRawJsonExample(item.value)];
+                                })
+                            )
+                        )}`;
+                    },
+                    nullable: (value) => {
+                        if (!value.nullable) {
+                            return code`null`;
+                        }
+                        return createRawJsonExample(value.nullable);
+                    },
+                    optional: (value) => {
+                        if (!value.optional) {
+                            return code`undefined`;
+                        }
+                        return createRawJsonExample(value.optional);
+                    },
+                    set: (value) => {
+                        return code`${arrayOf(...value.set.map(createRawJsonExample))}`;
+                    },
+                    literal: (value) => {
+                        return value.literal._visit({
+                            integer: (value) => code`${literalOf(value)}`,
+                            long: (value) => {
+                                if (this.useBigInt) {
+                                    return code`BigInt(${literalOf(value)})`;
+                                }
+                                return code`${literalOf(value)}`;
+                            },
+                            uint: (value) => code`${literalOf(value)}`,
+                            uint64: (value) => code`${literalOf(value)}`,
+                            float: (value) => code`${literalOf(value)}`,
+                            double: (value) => code`${literalOf(value)}`,
+                            boolean: (value) => code`${literalOf(value)}`,
+                            string: (value) => code`${literalOf(value.original)}`,
+                            date: (value) => code`${literalOf(value)}`,
+                            datetime: (value) => code`${literalOf(value.raw)}`,
+                            uuid: (value) => code`${literalOf(value)}`,
+                            base64: (value) => code`${literalOf(value)}`,
+                            bigInteger: (value) => {
+                                if (this.useBigInt) {
+                                    return code`BigInt(${value})`;
+                                }
+                                return code`${literalOf(value)}`;
+                            },
+                            _other: () => code`${literalOf(jsonExample)}`
+                        });
+                    },
+                    _other: () => code`${literalOf(jsonExample)}`
+                });
+            },
+            named: (value) => {
+                return value.shape._visit<Code>({
+                    alias: (value) => {
+                        return createRawJsonExample(value.value);
+                    },
+                    enum: (value) => {
+                        return code`${literalOf(value.value.wireValue)}`;
+                    },
+                    object: (value) => {
+                        return code`${literalOf(
+                            Object.fromEntries(
+                                value.properties.map((property) => {
+                                    return [property.name.wireValue, createRawJsonExample(property.value)];
+                                })
+                            )
+                        )}`;
+                    },
+                    union: () => {
+                        return code`${literalOf(jsonExample)}`;
+                    },
+                    undiscriminatedUnion: (value) => {
+                        return createRawJsonExample(value.singleUnionType);
+                    },
+                    _other: () => {
+                        return code`${literalOf(jsonExample)}`;
+                    }
+                });
+            },
+            unknown: () => {
+                return code`${literalOf(jsonExample)}`;
+            },
+            _other: () => {
+                return code`${literalOf(jsonExample)}`;
+            }
+        });
     }
 }
 
@@ -412,10 +564,33 @@ function getExampleResponseStatusCode(response: IR.ExampleResponse): number {
     });
 }
 
-function isJsonResponse(response: IR.ExampleResponse): boolean {
+function getExpectedResponseBody(response: IR.ExampleResponse, context: SdkContext): Code {
     return response._visit({
-        ok: (value) => value.type === "body",
-        error: () => false,
-        _other: () => false
+        ok: (response) => {
+            return response._visit({
+                body: (value) => {
+                    if (!value) return code`undefined`;
+                    const example = context.type.getGeneratedExample(value).build(context, {
+                        isForSnippet: true
+                    });
+                    return code`${getTextOfTsNode(example)}`;
+                },
+                stream: () => {
+                    throw new Error("Stream not supported in wire tests");
+                },
+                sse: () => {
+                    throw new Error("SSE not supported in wire tests");
+                },
+                _other: () => {
+                    throw new Error("Unsupported response type");
+                }
+            });
+        },
+        error: () => {
+            throw new Error("Error response not supported in wire tests");
+        },
+        _other: () => {
+            throw new Error("Unsupported response type");
+        }
     });
 }

@@ -18,7 +18,7 @@ describe("InlinedRequests", () => {
             NestedObject: {
                 string: "string",
                 integer: 1,
-                long: 1000000,
+                long: BigInt(1000000),
                 double: 1.1,
                 bool: true,
                 datetime: "2024-01-15T09:30:00Z",
@@ -28,13 +28,13 @@ describe("InlinedRequests", () => {
                 list: ["list", "list"],
                 set: ["set"],
                 map: { "1": "map" },
-                bigint: "1000000",
+                bigint: BigInt("1000000"),
             },
         };
         const rawResponseBody = {
             string: "string",
             integer: 1,
-            long: 1000000,
+            long: BigInt(1000000),
             double: 1.1,
             bool: true,
             datetime: "2024-01-15T09:30:00Z",
@@ -44,7 +44,7 @@ describe("InlinedRequests", () => {
             list: ["list", "list"],
             set: ["set"],
             map: { "1": "map" },
-            bigint: "1000000",
+            bigint: BigInt("1000000"),
         };
         server
             .mockEndpoint()
@@ -79,7 +79,7 @@ describe("InlinedRequests", () => {
         expect(response).toEqual({
             string: "string",
             integer: 1,
-            long: 1000000,
+            long: BigInt("1000000"),
             double: 1.1,
             bool: true,
             datetime: "2024-01-15T09:30:00Z",
@@ -88,8 +88,10 @@ describe("InlinedRequests", () => {
             base64: "SGVsbG8gd29ybGQh",
             list: ["list", "list"],
             set: ["set"],
-            map: { "1": "map" },
-            bigint: "1000000",
+            map: {
+                1: "map",
+            },
+            bigint: BigInt("1000000"),
         });
     });
 });
