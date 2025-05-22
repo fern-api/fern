@@ -4,6 +4,14 @@
       type: internal
   irVersion: 57
   createdAt: "2025-05-21"
+  version: 0.62.9
+
+- changelogEntry:
+    - summary: |
+        Re-release `0.62.7`
+      type: internal
+  irVersion: 57
+  createdAt: "2025-05-21"
   version: 0.62.8
 
 - changelogEntry:
