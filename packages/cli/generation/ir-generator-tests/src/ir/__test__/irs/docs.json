@@ -251,6 +251,7 @@
                     "auth": false,
                     "idempotent": false,
                     "baseUrl": null,
+                    "v2BaseUrls": null,
                     "method": "POST",
                     "basePath": null,
                     "path": {

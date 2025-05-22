@@ -80,9 +80,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 continue;
             }
 
-            // if no top level schemes, then just add the scheme to the whole api
             if (
-                this.shouldAddSchemeToApi({
+                this.shouldAddAuthSchemeToIr({
                     authScheme: convertedScheme,
                     schemeId: id,
                     currentSecuritySchemes: securitySchemes
@@ -241,8 +240,17 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                         });
                     }
 
-                    if (endpoint.servers && endpoint.servers[0] != null) {
-                        endpointLevelServers.push(endpoint.servers[0]);
+                    if (endpoint.servers) {
+                        for (const server of endpoint.servers) {
+                            if (
+                                this.shouldAddServerToCollectedServers({
+                                    server,
+                                    currentServers: endpointLevelServers
+                                })
+                            ) {
+                                endpointLevelServers.push(server);
+                            }
+                        }
                     }
                     if (endpoint.errors) {
                         // TODO: For SDK-IR, errorIds are not guaranteed to be unique.
@@ -271,7 +279,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         return { endpointLevelServers, errors };
     }
 
-    private shouldAddSchemeToApi({
+    private shouldAddAuthSchemeToIr({
         authScheme,
         schemeId,
         currentSecuritySchemes

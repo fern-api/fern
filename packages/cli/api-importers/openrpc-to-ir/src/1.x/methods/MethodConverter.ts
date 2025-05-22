@@ -149,6 +149,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
 
         const endpoint: HttpEndpoint = {
             baseUrl: undefined,
+            v2BaseUrls: undefined,
             basePath: undefined,
             auth: false,
             method: "POST",

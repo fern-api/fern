@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Add support for rendering and parsing multiple endpoint baseUrls in the v3 parser.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-05-22"
+  version: 0.63.1
+
+- changelogEntry:
+    - summary: |
         Add support for `HEAD` HTTP methods and validate that they define no response body.
       type: feat
   irVersion: 58
