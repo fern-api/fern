@@ -1,6 +1,7 @@
 irVersion: v57
 displayName: TypeScript MCP Server
 image: fernapi/fern-typescript-mcp-server
+changelogLocation: ../../generators/typescript-mcp/model/versions.yml
 test:
   docker:
     image: fernapi/fern-typescript-mcp-server:latest

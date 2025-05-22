@@ -3,6 +3,7 @@
   changelogEntry:
     - type: internal
       summary: Upgrade to IRv57.
+  irVersion: 57
 - version: 0.23.5
   createdAt: '2024-11-07'
   changelogEntry:

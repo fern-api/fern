@@ -1,0 +1,6 @@
+## 0.8.0-rc0
+**`(fix):`** The SDK now better handles cyclical references.
+
+### What's been fixed
+- The SDK now better handles cyclical references. In particular, cyclical references are tracked for undiscriminated unions, and update_forward_refs is always called with object references.
+
