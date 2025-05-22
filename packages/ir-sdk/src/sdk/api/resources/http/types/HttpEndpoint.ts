@@ -11,6 +11,7 @@ export interface HttpEndpoint extends FernIr.Declaration {
     method: FernIr.HttpMethod;
     headers: FernIr.HttpHeader[];
     baseUrl: FernIr.EnvironmentBaseUrlId | undefined;
+    v2BaseUrls: FernIr.EnvironmentBaseUrlId[] | undefined;
     /** Overrides the service and endpoint level base paths */
     basePath: FernIr.HttpPath | undefined;
     path: FernIr.HttpPath;

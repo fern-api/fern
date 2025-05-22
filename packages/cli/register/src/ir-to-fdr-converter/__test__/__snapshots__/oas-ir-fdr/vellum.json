@@ -6877,7 +6877,7 @@
           "defaultEnvironment": "Default",
           "environments": [
             {
-              "id": "Default",
+              "id": "Documents",
               "baseUrl": "https://documents.vellum.ai"
             }
           ],
@@ -8183,7 +8183,7 @@
         "defaultEnvironment": "Default",
         "environments": [
           {
-            "id": "Default",
+            "id": "Predict",
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
@@ -8351,7 +8351,7 @@
         "defaultEnvironment": "Default",
         "environments": [
           {
-            "id": "Default",
+            "id": "Predict",
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
@@ -8496,7 +8496,7 @@
         "defaultEnvironment": "Default",
         "environments": [
           {
-            "id": "Default",
+            "id": "Predict",
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
@@ -8702,7 +8702,7 @@
         "defaultEnvironment": "Default",
         "environments": [
           {
-            "id": "Default",
+            "id": "Predict",
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
@@ -8914,7 +8914,7 @@
         "defaultEnvironment": "Default",
         "environments": [
           {
-            "id": "Default",
+            "id": "Predict",
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
@@ -9067,7 +9067,7 @@
         "defaultEnvironment": "Default",
         "environments": [
           {
-            "id": "Default",
+            "id": "Predict",
             "baseUrl": "https://predict.vellum.ai"
           }
         ],

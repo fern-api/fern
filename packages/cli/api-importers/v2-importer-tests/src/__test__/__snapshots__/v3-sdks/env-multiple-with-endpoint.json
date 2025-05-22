@@ -43,6 +43,9 @@
             }
           },
           "baseUrl": "Debug",
+          "v2BaseUrls": [
+            "Debug"
+          ],
           "path": {
             "head": "/pets",
             "parts": []

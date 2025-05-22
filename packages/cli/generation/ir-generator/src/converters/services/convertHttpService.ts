@@ -106,6 +106,7 @@ export function convertHttpService({
                 auth: endpoint.auth ?? serviceDefinition.auth,
                 idempotent: endpoint.idempotent ?? serviceDefinition.idempotent ?? false,
                 baseUrl: endpoint.url ?? serviceDefinition.url ?? rootDefaultUrl,
+                v2BaseUrls: undefined,
                 method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
                 basePath: endpoint["base-path"] != null ? constructHttpPath(endpoint["base-path"]) : undefined,
                 path: constructHttpPath(endpoint.path),

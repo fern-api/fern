@@ -320,6 +320,9 @@ function mergeServicesAndChannels(
                     if (endpoint.baseUrl == key) {
                         endpoint.baseUrl = value;
                     }
+                    if (endpoint.v2BaseUrls?.includes(key)) {
+                        endpoint.v2BaseUrls = endpoint.v2BaseUrls.map((baseUrl) => (baseUrl === key ? value : baseUrl));
+                    }
                 }
             }
             for (const websocketChannel of Object.values(ir1.websocketChannels ?? {})) {
@@ -335,6 +338,9 @@ function mergeServicesAndChannels(
                 for (const endpoint of Object.values(service.endpoints)) {
                     if (endpoint.baseUrl == key) {
                         endpoint.baseUrl = value;
+                    }
+                    if (endpoint.v2BaseUrls?.includes(key)) {
+                        endpoint.v2BaseUrls = endpoint.v2BaseUrls.map((baseUrl) => (baseUrl === key ? value : baseUrl));
                     }
                 }
             }
