@@ -1,0 +1,135 @@
+---
+title: Product Switching
+subtitle: Allow users to seamlessly navigate between different products you offer. 
+---
+
+<Frame>
+![A dropdown of the available products](product-switcher.avif)
+</Frame>
+
+Each product can contain its own distinct versions, tabs, sections, pages, and API references. Products can share content as well. 
+
+**To add products to your docs:**
+
+<Steps>
+### Define your products
+
+Create a `products` folder inside of your `fern` folder. To specify a product's contents and navigational structure, add a `.yml` file to the `products` folder for each product.
+Make sure to include the `navigation` and `tabs` properties, if applicable.
+
+```bash
+fern/
+  ├─ fern.config.json
+  ├─ generators.yml
+  ├─ docs.yml
+  └─ products/
+    ├─ ...
+    ├─ product-a.yml
+    └─ product-b.yml
+```
+
+<CodeBlocks>
+<CodeBlock title="products/product-a.yml">
+```yaml
+navigation: 
+  - section: Introduction
+    contents:
+      - page: Shared Resource
+        path: ../pages/shared-resource.mdx
+  - api: API Reference
+```
+</CodeBlock>
+<CodeBlock title="products/product-b.yml">
+```yaml
+tabs: 
+  api: 
+    title: API Reference
+    icon: puzzle
+  help:
+    title: Help Center
+    icon: home
+    
+ navigation:
+  - tab: api
+     contents:
+        - section: Introduction
+           contents: 
+              - page: My Page
+                path: ./latest/pages/my-page.mdx # relative path to the file
+              - page: Shared Resource
+                path: ../pages/shared-resource.mdx
+        - api: API Reference
+   - tab: help
+      contents: 
+         - section: Help Center
+           contents: 
+              - page: Contact Us
+                 path: contact-us.mdx
+```
+</CodeBlock>
+</CodeBlocks>
+
+### Add your product configuration
+
+To define a product, add an item to the `products` list in `docs.yml`, specifying the `display-name` and `path`.
+
+The optional parameters are: `image`, `icon`, `subtitle`, `slug`, and `versions`.
+
+<Note>If you provide both an `image` and an `icon`, the `image` will take precedence.</Note>
+
+<Accordion title='Setting up Versioned Products'>
+  Products can be versioned or unversioned. The following is an example of how more complex products might be organized:
+
+  ```bash
+  fern/
+    ├─ fern.config.json
+    ├─ generators.yml
+    ├─ docs.yml
+    ├─ pages/
+      ├─ ...
+    └─ products/
+      ├── product-a.yml # basic unversioned product
+      ├── product-b/ # unversioned product with product-specific pages
+      │   ├─ pages/...
+      │   └─ product-with-pages.yml
+      └── product-c/ # versioned product
+          ├─ product-c.yml
+          └─ versions/
+            ├─ v1/
+            │  ├─ v1.yml
+            │  └─ pages/...
+            └─ v2/
+              ├─ v2.yml
+              └─ pages/...
+  ```
+
+  For more information on setting up versions, follow our [versioning docs](/docs/building-your-docs/versioning).
+</Accordion>
+
+
+
+<CodeBlock title="docs.yml">
+```yaml
+products:
+  - display-name: Product A
+    path: ./products/product-a.yml
+    icon: fa-solid fa-leaf # optional
+    slug: product-a # optional
+    subtitle: Product A subtitle # optional
+
+  - display-name: Product B
+    path: ./products/product-b/latest.yml # <-- default showing latest
+    image: ./images/product-b.png # optional
+    slug: product-b # optional
+    subtitle: Product B subtitle # optional
+    versions: # optional
+      - display-name: Latest
+        path: ./products/product-b/latest.yml
+      - display-name: V2
+        path: ./products/product-b/v2.yml
+```
+</CodeBlock>
+
+### Remove extra `navigation` from `docs.yml`
+If your `docs.yml` file includes a `navigation` field or a `tabs` field, be sure to remove. Those fields should now belong in the product-specific `.yml` files. 
+</Steps>
