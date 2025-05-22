@@ -103,10 +103,10 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
                         ...definition.rootApiFile,
                         contents: {
                             ...definition.rootApiFile.contents,
-                            auth: settings?.auth,
-                        },
+                            auth: settings?.auth
+                        }
                     }
-                }
+                };
             }
 
             workspace = new FernWorkspace({

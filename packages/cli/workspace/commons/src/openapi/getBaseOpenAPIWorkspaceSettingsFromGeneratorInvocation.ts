@@ -11,13 +11,14 @@ export function getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(
     const result: Partial<BaseOpenAPIWorkspace.Settings> = {
         detectGlobalHeaders: true
     };
-    
+
     if (generatorInvocation.settings?.unions === "v1") {
         result.discriminatedUnionV2 = true;
     }
-    
+
     if (generatorInvocation.raw?.api?.auth != null) {
-        result.auth = generatorInvocation.raw?.api?.auth
+        result.auth = generatorInvocation.raw?.api?.auth;
     }
+
     return result;
 }
