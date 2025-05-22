@@ -171,6 +171,46 @@ paths:
                 foo: "bar"
                 bar: 123
 
+  /succulents:
+    post:
+      summary: Create several new succulents
+      operationId: createSucculents
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - succulents
+              properties:
+                succulents:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: "Aeonium"
+                  example:
+                    - name: "Aeonium"
+                    - name: "Sedum"
+                    - name: "Crassula"
+      responses:
+        '201':
+          description: Succulents created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  code:
+                    type: integer
+              example:
+                message: "Succulents created successfully"
+                code: 201
 components:
   schemas:
     TreeCreate:

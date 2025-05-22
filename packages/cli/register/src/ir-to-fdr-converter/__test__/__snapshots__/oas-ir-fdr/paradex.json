@@ -16644,7 +16644,8 @@
                     "strike_price": "66500",
                     "symbol": "ETH-USD-PERP",
                     "tags": [
-                      "foo"
+                      "MEME",
+                      "DEFI"
                     ]
                   }
                 ]
@@ -16714,7 +16715,8 @@
                       "strike_price": "66500",
                       "symbol": "ETH-USD-PERP",
                       "tags": [
-                        "foo"
+                        "MEME",
+                        "DEFI"
                       ]
                     }
                   ]

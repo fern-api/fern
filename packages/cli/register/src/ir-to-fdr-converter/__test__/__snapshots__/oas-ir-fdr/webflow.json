@@ -59440,16 +59440,12 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "errors": [
-                  "foo"
-                ]
+                "errors": []
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "errors": [
-                    "foo"
-                  ]
+                  "errors": []
                 }
               }
             }

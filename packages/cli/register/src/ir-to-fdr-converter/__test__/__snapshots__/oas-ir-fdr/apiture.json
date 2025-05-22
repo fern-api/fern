@@ -2796,18 +2796,6 @@
         ]
       }
     },
-    "ApiProblemAttributes": {
-      "description": "Additional optional attributes related to the problem. This data conforms to the schema associated with the error type.",
-      "name": "ApiProblemAttributes",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [],
-        "extraProperties": {
-          "type": "unknown"
-        }
-      }
-    },
     "apiProblem": {
       "description": "API problem or error, as per [RFC 7807 application/problem+json](https://tools.ietf.org/html/rfc7807).",
       "name": "apiProblem",
@@ -2928,8 +2916,16 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "ApiProblemAttributes"
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
               }
             }
           }

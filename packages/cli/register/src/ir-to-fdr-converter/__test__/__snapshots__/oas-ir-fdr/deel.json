@@ -23881,7 +23881,8 @@
                 "data": {
                   "status": "approved",
                   "ids": [
-                    42
+                    1234,
+                    1235
                   ]
                 }
               },
@@ -23891,7 +23892,8 @@
                   "data": {
                     "status": "approved",
                     "ids": [
-                      42
+                      1234,
+                      1235
                     ]
                   }
                 }
@@ -34761,14 +34763,18 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "data": [
-                  "foo"
+                  "VACATION",
+                  "SICK_LEAVE",
+                  "OTHER"
                 ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
                   "data": [
-                    "foo"
+                    "VACATION",
+                    "SICK_LEAVE",
+                    "OTHER"
                   ]
                 }
               }
@@ -36840,7 +36846,7 @@
                     "signing_key": "foo",
                     "api_version": "v1",
                     "events": [
-                      "foo"
+                      "contract.created"
                     ],
                     "created_at": "foo",
                     "updated_at": "foo",
@@ -36861,7 +36867,7 @@
                       "signing_key": "foo",
                       "api_version": "v1",
                       "events": [
-                        "foo"
+                        "contract.created"
                       ],
                       "created_at": "foo",
                       "updated_at": "foo",
@@ -37042,7 +37048,7 @@
                 "signing_key": "foo",
                 "api_version": "v1",
                 "events": [
-                  "foo"
+                  "contract.created"
                 ]
               },
               "requestBodyV3": {
@@ -37055,7 +37061,7 @@
                   "signing_key": "foo",
                   "api_version": "v1",
                   "events": [
-                    "foo"
+                    "contract.created"
                   ]
                 }
               },
@@ -37070,7 +37076,7 @@
                   "signing_key": "foo",
                   "api_version": "v1",
                   "events": [
-                    "foo"
+                    "contract.created"
                   ],
                   "created_at": "foo",
                   "updated_at": "foo",
@@ -37089,7 +37095,7 @@
                     "signing_key": "foo",
                     "api_version": "v1",
                     "events": [
-                      "foo"
+                      "contract.created"
                     ],
                     "created_at": "foo",
                     "updated_at": "foo",
@@ -37279,7 +37285,7 @@
                   "signing_key": "foo",
                   "api_version": "v1",
                   "events": [
-                    "foo"
+                    "contract.created"
                   ],
                   "created_at": "foo",
                   "updated_at": "foo",
@@ -37298,7 +37304,7 @@
                     "signing_key": "foo",
                     "api_version": "v1",
                     "events": [
-                      "foo"
+                      "contract.created"
                     ],
                     "created_at": "foo",
                     "updated_at": "foo",
@@ -37658,7 +37664,7 @@
                 "url": "https://mywebhook.com/listening",
                 "signing_key": "foo",
                 "events": [
-                  "foo"
+                  "contract.created"
                 ]
               },
               "requestBodyV3": {
@@ -37670,7 +37676,7 @@
                   "url": "https://mywebhook.com/listening",
                   "signing_key": "foo",
                   "events": [
-                    "foo"
+                    "contract.created"
                   ]
                 }
               },
@@ -37685,7 +37691,7 @@
                   "signing_key": "foo",
                   "api_version": "v1",
                   "events": [
-                    "foo"
+                    "contract.created"
                   ],
                   "created_at": "foo",
                   "updated_at": "foo",
@@ -37704,7 +37710,7 @@
                     "signing_key": "foo",
                     "api_version": "v1",
                     "events": [
-                      "foo"
+                      "contract.created"
                     ],
                     "created_at": "foo",
                     "updated_at": "foo",

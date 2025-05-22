@@ -10477,13 +10477,17 @@
                   {
                     "model_name": "Candidate",
                     "available_operations": [
-                      "foo"
+                      "FETCH",
+                      "CREATE"
                     ],
                     "required_post_parameters": [
-                      "foo"
+                      "remote_user_id"
                     ],
                     "supported_fields": [
-                      "foo"
+                      "first_name",
+                      "last_name",
+                      "company",
+                      "title"
                     ]
                   }
                 ]
@@ -10508,13 +10512,17 @@
                     {
                       "model_name": "Candidate",
                       "available_operations": [
-                        "foo"
+                        "FETCH",
+                        "CREATE"
                       ],
                       "required_post_parameters": [
-                        "foo"
+                        "remote_user_id"
                       ],
                       "supported_fields": [
-                        "foo"
+                        "first_name",
+                        "last_name",
+                        "company",
+                        "title"
                       ]
                     }
                   ]
@@ -10830,8 +10838,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/bank-info",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -10857,8 +10867,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/bank-info",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -11024,8 +11036,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/bank-info",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -11045,8 +11059,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/bank-info",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -11303,8 +11319,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/benefits",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -11331,8 +11349,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/benefits",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -11475,8 +11495,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/benefits",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -11497,8 +11519,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/benefits",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -11720,15 +11744,19 @@
                     "legal_name": "Waystar Royco, Inc.",
                     "display_name": "Waystar Royco",
                     "eins": [
-                      "foo"
+                      "12-3456789",
+                      "12-3451111",
+                      "11-0011000"
                     ],
                     "remote_was_deleted": true,
                     "modified_at": "2021-10-16T00:00:00Z",
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/companies",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -11746,15 +11774,19 @@
                       "legal_name": "Waystar Royco, Inc.",
                       "display_name": "Waystar Royco",
                       "eins": [
-                        "foo"
+                        "12-3456789",
+                        "12-3451111",
+                        "11-0011000"
                       ],
                       "remote_was_deleted": true,
                       "modified_at": "2021-10-16T00:00:00Z",
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/companies",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -11875,15 +11907,19 @@
                 "legal_name": "Waystar Royco, Inc.",
                 "display_name": "Waystar Royco",
                 "eins": [
-                  "foo"
+                  "12-3456789",
+                  "12-3451111",
+                  "11-0011000"
                 ],
                 "remote_was_deleted": true,
                 "modified_at": "2021-10-16T00:00:00Z",
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/companies",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -11895,15 +11931,19 @@
                   "legal_name": "Waystar Royco, Inc.",
                   "display_name": "Waystar Royco",
                   "eins": [
-                    "foo"
+                    "12-3456789",
+                    "12-3451111",
+                    "11-0011000"
                   ],
                   "remote_was_deleted": true,
                   "modified_at": "2021-10-16T00:00:00Z",
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/companies",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -12299,58 +12339,30 @@
                     "check_date": "2020-11-10T00:00:00Z",
                     "earnings": [
                       {
-                        "id": "babbced6-3a81-4775-8da2-490dc6385259",
-                        "remote_id": "52802",
                         "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                         "amount": 1002.34,
-                        "type": "SALARY",
-                        "remote_was_deleted": true,
-                        "modified_at": "2021-10-16T00:00:00Z",
-                        "field_mappings": {},
-                        "remote_data": [
-                          {
-                            "path": "foo",
-                            "data": {}
-                          }
-                        ]
+                        "type": "SALARY"
+                      },
+                      {
+                        "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                        "amount": 8342.34,
+                        "type": "OVERTIME"
                       }
                     ],
                     "deductions": [
                       {
-                        "id": "5fd439fc-1b64-4755-b275-64918936c365",
-                        "remote_id": "93478612",
                         "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                         "name": "Social Security",
                         "employee_deduction": 34.54,
-                        "company_deduction": 78.78,
-                        "remote_was_deleted": true,
-                        "modified_at": "2021-10-16T00:00:00Z",
-                        "field_mappings": {},
-                        "remote_data": [
-                          {
-                            "path": "foo",
-                            "data": {}
-                          }
-                        ]
+                        "company_deduction": 78.78
                       }
                     ],
                     "taxes": [
                       {
-                        "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
-                        "remote_id": "26806834",
                         "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                         "name": "California State Income Tax",
                         "amount": 100.25,
-                        "employer_tax": "False",
-                        "remote_was_deleted": true,
-                        "modified_at": "2021-10-16T00:00:00Z",
-                        "field_mappings": {},
-                        "remote_data": [
-                          {
-                            "path": "foo",
-                            "data": {}
-                          }
-                        ]
+                        "employer_tax": "False"
                       }
                     ],
                     "remote_was_deleted": true,
@@ -12358,8 +12370,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/employee-payroll",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -12383,58 +12397,30 @@
                       "check_date": "2020-11-10T00:00:00Z",
                       "earnings": [
                         {
-                          "id": "babbced6-3a81-4775-8da2-490dc6385259",
-                          "remote_id": "52802",
                           "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                           "amount": 1002.34,
-                          "type": "SALARY",
-                          "remote_was_deleted": true,
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "field_mappings": {},
-                          "remote_data": [
-                            {
-                              "path": "foo",
-                              "data": {}
-                            }
-                          ]
+                          "type": "SALARY"
+                        },
+                        {
+                          "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                          "amount": 8342.34,
+                          "type": "OVERTIME"
                         }
                       ],
                       "deductions": [
                         {
-                          "id": "5fd439fc-1b64-4755-b275-64918936c365",
-                          "remote_id": "93478612",
                           "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                           "name": "Social Security",
                           "employee_deduction": 34.54,
-                          "company_deduction": 78.78,
-                          "remote_was_deleted": true,
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "field_mappings": {},
-                          "remote_data": [
-                            {
-                              "path": "foo",
-                              "data": {}
-                            }
-                          ]
+                          "company_deduction": 78.78
                         }
                       ],
                       "taxes": [
                         {
-                          "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
-                          "remote_id": "26806834",
                           "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                           "name": "California State Income Tax",
                           "amount": 100.25,
-                          "employer_tax": "False",
-                          "remote_was_deleted": true,
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "field_mappings": {},
-                          "remote_data": [
-                            {
-                              "path": "foo",
-                              "data": {}
-                            }
-                          ]
+                          "employer_tax": "False"
                         }
                       ],
                       "remote_was_deleted": true,
@@ -12442,8 +12428,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/employee-payroll",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -12583,58 +12571,30 @@
                 "check_date": "2020-11-10T00:00:00Z",
                 "earnings": [
                   {
-                    "id": "babbced6-3a81-4775-8da2-490dc6385259",
-                    "remote_id": "52802",
                     "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                     "amount": 1002.34,
-                    "type": "SALARY",
-                    "remote_was_deleted": true,
-                    "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
-                    "remote_data": [
-                      {
-                        "path": "foo",
-                        "data": {}
-                      }
-                    ]
+                    "type": "SALARY"
+                  },
+                  {
+                    "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                    "amount": 8342.34,
+                    "type": "OVERTIME"
                   }
                 ],
                 "deductions": [
                   {
-                    "id": "5fd439fc-1b64-4755-b275-64918936c365",
-                    "remote_id": "93478612",
                     "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                     "name": "Social Security",
                     "employee_deduction": 34.54,
-                    "company_deduction": 78.78,
-                    "remote_was_deleted": true,
-                    "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
-                    "remote_data": [
-                      {
-                        "path": "foo",
-                        "data": {}
-                      }
-                    ]
+                    "company_deduction": 78.78
                   }
                 ],
                 "taxes": [
                   {
-                    "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
-                    "remote_id": "26806834",
                     "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                     "name": "California State Income Tax",
                     "amount": 100.25,
-                    "employer_tax": "False",
-                    "remote_was_deleted": true,
-                    "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
-                    "remote_data": [
-                      {
-                        "path": "foo",
-                        "data": {}
-                      }
-                    ]
+                    "employer_tax": "False"
                   }
                 ],
                 "remote_was_deleted": true,
@@ -12642,8 +12602,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/employee-payroll",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -12661,58 +12623,30 @@
                   "check_date": "2020-11-10T00:00:00Z",
                   "earnings": [
                     {
-                      "id": "babbced6-3a81-4775-8da2-490dc6385259",
-                      "remote_id": "52802",
                       "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                       "amount": 1002.34,
-                      "type": "SALARY",
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
+                      "type": "SALARY"
+                    },
+                    {
+                      "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                      "amount": 8342.34,
+                      "type": "OVERTIME"
                     }
                   ],
                   "deductions": [
                     {
-                      "id": "5fd439fc-1b64-4755-b275-64918936c365",
-                      "remote_id": "93478612",
                       "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                       "name": "Social Security",
                       "employee_deduction": 34.54,
-                      "company_deduction": 78.78,
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
+                      "company_deduction": 78.78
                     }
                   ],
                   "taxes": [
                     {
-                      "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
-                      "remote_id": "26806834",
                       "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                       "name": "California State Income Tax",
                       "amount": 100.25,
-                      "employer_tax": "False",
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
+                      "employer_tax": "False"
                     }
                   ],
                   "remote_was_deleted": true,
@@ -12720,8 +12654,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/employee-payroll",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -13213,13 +13149,13 @@
                     "display_full_name": "Cousin Greg Hirsch",
                     "username": "cousingreg",
                     "groups": [
-                      "foo"
+                      "21a54124-397f-494d-985e-3c5b330b8a68"
                     ],
                     "work_email": "greg@merge.dev",
                     "personal_email": "greg@gmail.com",
                     "mobile_phone_number": "+1234567890",
                     "employments": [
-                      "foo"
+                      "17a54124-287f-494d-965e-3c5b330c9a68"
                     ],
                     "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                     "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
@@ -13243,8 +13179,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/people",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -13266,13 +13204,13 @@
                       "display_full_name": "Cousin Greg Hirsch",
                       "username": "cousingreg",
                       "groups": [
-                        "foo"
+                        "21a54124-397f-494d-985e-3c5b330b8a68"
                       ],
                       "work_email": "greg@merge.dev",
                       "personal_email": "greg@gmail.com",
                       "mobile_phone_number": "+1234567890",
                       "employments": [
-                        "foo"
+                        "17a54124-287f-494d-965e-3c5b330c9a68"
                       ],
                       "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                       "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
@@ -13296,8 +13234,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/people",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -13437,13 +13377,13 @@
                   "display_full_name": "Cousin Greg Hirsch",
                   "username": "cousingreg",
                   "groups": [
-                    "foo"
+                    "21a54124-397f-494d-985e-3c5b330b8a68"
                   ],
                   "work_email": "greg@merge.dev",
                   "personal_email": "greg@gmail.com",
                   "mobile_phone_number": "+1234567890",
                   "employments": [
-                    "foo"
+                    "17a54124-287f-494d-965e-3c5b330c9a68"
                   ],
                   "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                   "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
@@ -13467,8 +13407,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/people",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 },
@@ -13517,13 +13459,13 @@
                     "display_full_name": "Cousin Greg Hirsch",
                     "username": "cousingreg",
                     "groups": [
-                      "foo"
+                      "21a54124-397f-494d-985e-3c5b330b8a68"
                     ],
                     "work_email": "greg@merge.dev",
                     "personal_email": "greg@gmail.com",
                     "mobile_phone_number": "+1234567890",
                     "employments": [
-                      "foo"
+                      "17a54124-287f-494d-965e-3c5b330c9a68"
                     ],
                     "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                     "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
@@ -13547,8 +13489,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/people",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   },
@@ -13753,13 +13697,13 @@
                 "display_full_name": "Cousin Greg Hirsch",
                 "username": "cousingreg",
                 "groups": [
-                  "foo"
+                  "21a54124-397f-494d-985e-3c5b330b8a68"
                 ],
                 "work_email": "greg@merge.dev",
                 "personal_email": "greg@gmail.com",
                 "mobile_phone_number": "+1234567890",
                 "employments": [
-                  "foo"
+                  "17a54124-287f-494d-965e-3c5b330c9a68"
                 ],
                 "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                 "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
@@ -13783,8 +13727,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/people",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -13800,13 +13746,13 @@
                   "display_full_name": "Cousin Greg Hirsch",
                   "username": "cousingreg",
                   "groups": [
-                    "foo"
+                    "21a54124-397f-494d-985e-3c5b330b8a68"
                   ],
                   "work_email": "greg@merge.dev",
                   "personal_email": "greg@gmail.com",
                   "mobile_phone_number": "+1234567890",
                   "employments": [
-                    "foo"
+                    "17a54124-287f-494d-965e-3c5b330c9a68"
                   ],
                   "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                   "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
@@ -13830,8 +13776,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/people",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -14327,8 +14275,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/jobs",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -14358,8 +14308,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/jobs",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -14529,8 +14481,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/jobs",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -14554,8 +14508,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/jobs",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -14922,8 +14878,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/group",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -14946,8 +14904,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/group",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -15098,8 +15058,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/group",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -15116,8 +15078,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/group",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -15376,7 +15340,8 @@
                     "last_incident_time": "2022-12-05T16:19:15.161Z",
                     "is_muted": true,
                     "error_details": [
-                      "foo"
+                      "Missing employee permissions.",
+                      "Missing time off permissions."
                     ]
                   }
                 ]
@@ -15396,7 +15361,8 @@
                       "last_incident_time": "2022-12-05T16:19:15.161Z",
                       "is_muted": true,
                       "error_details": [
-                        "foo"
+                        "Missing employee permissions.",
+                        "Missing time off permissions."
                       ]
                     }
                   ]
@@ -15492,7 +15458,8 @@
                 "last_incident_time": "2022-12-05T16:19:15.161Z",
                 "is_muted": true,
                 "error_details": [
-                  "foo"
+                  "Missing employee permissions.",
+                  "Missing time off permissions."
                 ]
               },
               "responseBodyV3": {
@@ -15506,7 +15473,8 @@
                   "last_incident_time": "2022-12-05T16:19:15.161Z",
                   "is_muted": true,
                   "error_details": [
-                    "foo"
+                    "Missing employee permissions.",
+                    "Missing time off permissions."
                   ]
                 }
               }
@@ -15893,13 +15861,17 @@
                         {
                           "model_name": "Candidate",
                           "available_operations": [
-                            "foo"
+                            "FETCH",
+                            "CREATE"
                           ],
                           "required_post_parameters": [
-                            "foo"
+                            "remote_user_id"
                           ],
                           "supported_fields": [
-                            "foo"
+                            "first_name",
+                            "last_name",
+                            "company",
+                            "title"
                           ]
                         }
                       ]
@@ -15937,13 +15909,17 @@
                           {
                             "model_name": "Candidate",
                             "available_operations": [
-                              "foo"
+                              "FETCH",
+                              "CREATE"
                             ],
                             "required_post_parameters": [
-                              "foo"
+                              "remote_user_id"
                             ],
                             "supported_fields": [
-                              "foo"
+                              "first_name",
+                              "last_name",
+                              "company",
+                              "title"
                             ]
                           }
                         ]
@@ -16204,8 +16180,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/locations",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -16234,8 +16212,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/locations",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -16392,8 +16372,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/locations",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -16416,8 +16398,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/locations",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -16770,8 +16754,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/pay-group",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -16792,8 +16778,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/pay-group",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -16917,8 +16905,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/pay-group",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -16933,8 +16923,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/pay-group",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -17254,8 +17246,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/payroll",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -17280,8 +17274,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/payroll",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -17434,8 +17430,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/payroll",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -17454,8 +17452,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/payroll",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -18497,8 +18497,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/teams",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -18520,8 +18522,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/teams",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -18659,8 +18663,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/teams",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -18676,8 +18682,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/teams",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -18996,8 +19004,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/leave",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -19026,8 +19036,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/leave",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -19174,8 +19186,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/leave",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 },
@@ -19231,8 +19245,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/leave",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   },
@@ -19431,8 +19447,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/leave",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -19455,8 +19473,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/leave",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -19841,8 +19861,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/leave",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -19866,8 +19888,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/leave",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -20031,8 +20055,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/leave",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -20050,8 +20076,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/leave",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }

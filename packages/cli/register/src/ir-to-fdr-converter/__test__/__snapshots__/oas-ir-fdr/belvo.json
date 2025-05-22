@@ -39180,7 +39180,13 @@
                       }
                     ],
                     "resources": [
-                      "ACCOUNTS"
+                      "ACCOUNTS",
+                      "BALANCES",
+                      "INCOMES",
+                      "OWNERS",
+                      "RECURRING_EXPENSES",
+                      "RISK_INSIGHTS",
+                      "TRANSACTIONS"
                     ],
                     "integration_type": "credentials",
                     "status": "healthy"
@@ -39233,7 +39239,13 @@
                         }
                       ],
                       "resources": [
-                        "ACCOUNTS"
+                        "ACCOUNTS",
+                        "BALANCES",
+                        "INCOMES",
+                        "OWNERS",
+                        "RECURRING_EXPENSES",
+                        "RISK_INSIGHTS",
+                        "TRANSACTIONS"
                       ],
                       "integration_type": "credentials",
                       "status": "healthy"
@@ -39426,7 +39438,13 @@
                   }
                 ],
                 "resources": [
-                  "ACCOUNTS"
+                  "ACCOUNTS",
+                  "BALANCES",
+                  "INCOMES",
+                  "OWNERS",
+                  "RECURRING_EXPENSES",
+                  "RISK_INSIGHTS",
+                  "TRANSACTIONS"
                 ],
                 "integration_type": "credentials",
                 "status": "healthy"
@@ -39472,7 +39490,13 @@
                     }
                   ],
                   "resources": [
-                    "ACCOUNTS"
+                    "ACCOUNTS",
+                    "BALANCES",
+                    "INCOMES",
+                    "OWNERS",
+                    "RECURRING_EXPENSES",
+                    "RISK_INSIGHTS",
+                    "TRANSACTIONS"
                   ],
                   "integration_type": "credentials",
                   "status": "healthy"
@@ -54944,7 +54968,9 @@
                     "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                     "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                     "accounts": [
-                      "0d3ffb69-f83b-456e-ad8e-208d0998d71d"
+                      "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                      "00293c8e-1152-440b-9892-3c071fb88672",
+                      "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e"
                     ],
                     "created_at": "2022-02-01T20:25:47.307911Z",
                     "transactions_metrics": {
@@ -55028,7 +55054,9 @@
                       "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                       "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                       "accounts": [
-                        "0d3ffb69-f83b-456e-ad8e-208d0998d71d"
+                        "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "00293c8e-1152-440b-9892-3c071fb88672",
+                        "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e"
                       ],
                       "created_at": "2022-02-01T20:25:47.307911Z",
                       "transactions_metrics": {
@@ -55304,7 +55332,9 @@
                   "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                   "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                   "accounts": [
-                    "0d3ffb69-f83b-456e-ad8e-208d0998d71d"
+                    "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                    "00293c8e-1152-440b-9892-3c071fb88672",
+                    "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e"
                   ],
                   "created_at": "2022-02-01T20:25:47.307911Z",
                   "transactions_metrics": {
@@ -55383,7 +55413,9 @@
                     "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                     "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                     "accounts": [
-                      "0d3ffb69-f83b-456e-ad8e-208d0998d71d"
+                      "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                      "00293c8e-1152-440b-9892-3c071fb88672",
+                      "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e"
                     ],
                     "created_at": "2022-02-01T20:25:47.307911Z",
                     "transactions_metrics": {
@@ -55660,7 +55692,9 @@
                   "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                   "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                   "accounts": [
-                    "0d3ffb69-f83b-456e-ad8e-208d0998d71d"
+                    "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                    "00293c8e-1152-440b-9892-3c071fb88672",
+                    "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e"
                   ],
                   "created_at": "2022-02-01T20:25:47.307911Z",
                   "transactions_metrics": {
@@ -55739,7 +55773,9 @@
                     "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                     "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                     "accounts": [
-                      "0d3ffb69-f83b-456e-ad8e-208d0998d71d"
+                      "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                      "00293c8e-1152-440b-9892-3c071fb88672",
+                      "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e"
                     ],
                     "created_at": "2022-02-01T20:25:47.307911Z",
                     "transactions_metrics": {
@@ -55966,7 +56002,9 @@
                   "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                   "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                   "accounts": [
-                    "0d3ffb69-f83b-456e-ad8e-208d0998d71d"
+                    "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                    "00293c8e-1152-440b-9892-3c071fb88672",
+                    "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e"
                   ],
                   "created_at": "2022-02-01T20:25:47.307911Z",
                   "transactions_metrics": {
@@ -56045,7 +56083,9 @@
                     "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                     "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                     "accounts": [
-                      "0d3ffb69-f83b-456e-ad8e-208d0998d71d"
+                      "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                      "00293c8e-1152-440b-9892-3c071fb88672",
+                      "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e"
                     ],
                     "created_at": "2022-02-01T20:25:47.307911Z",
                     "transactions_metrics": {

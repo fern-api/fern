@@ -3330,9 +3330,19 @@
       "description": "A actions definition block, typically contained within a resource type definition block.\nThe actions represents the ways you can interact with a protected resource.",
       "name": "RelationsBlock",
       "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
+        "type": "alias",
+        "value": {
+          "type": "map",
+          "keyType": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          },
+          "valueType": {
+            "type": "unknown"
+          }
+        }
       }
     },
     "RemoveRolePermissions": {
@@ -5877,9 +5887,19 @@
       "description": "Resource roles definition block, defines all the roles on the resource.",
       "name": "RolesBlock",
       "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
+        "type": "alias",
+        "value": {
+          "type": "map",
+          "keyType": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          },
+          "valueType": {
+            "type": "unknown"
+          }
+        }
       }
     },
     "Statistics": {
