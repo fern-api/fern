@@ -90,7 +90,7 @@ export class OperationConverter extends AbstractOperationConverter {
 
         const path = constructHttpPath(this.path);
         const baseUrl = this.getEndpointBaseUrl();
-
+        const v2BaseUrls = this.getEndpointBaseUrls();
         const fernExamples = this.convertExamples({
             httpPath: path,
             httpMethod,
@@ -131,6 +131,7 @@ export class OperationConverter extends AbstractOperationConverter {
             method: httpMethod,
             name: this.context.casingsGenerator.generateName(method),
             baseUrl,
+            v2BaseUrls,
             path,
             pathParameters,
             queryParameters,
@@ -318,6 +319,24 @@ export class OperationConverter extends AbstractOperationConverter {
             server: serverToUse,
             context: this.context
         });
+    }
+
+    private getEndpointBaseUrls(): string[] | undefined {
+        const operationServers = this.operation.servers;
+        if (operationServers == null) {
+            return undefined;
+        }
+        const baseUrls = operationServers.map((server) => {
+            const matchingTopLevelServer = this.topLevelServers?.find(
+                (topLevelServer) => topLevelServer.url === server.url
+            );
+            const serverToUse = matchingTopLevelServer ?? server;
+            return ServersConverter.getServerName({
+                server: serverToUse,
+                context: this.context
+            });
+        });
+        return baseUrls;
     }
 
     private buildExamplePath(httpPath: HttpPath, pathParameters: Record<string, unknown>): string {

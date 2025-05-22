@@ -82,7 +82,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
             // if no top level schemes, then just add the scheme to the whole api
             if (
-                this.shouldAddSchemeToApi({
+                this.shouldAddSchemeToIr({
                     authScheme: convertedScheme,
                     schemeId: id,
                     currentSecuritySchemes: securitySchemes
@@ -241,8 +241,17 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                         });
                     }
 
-                    if (endpoint.servers && endpoint.servers[0] != null) {
-                        endpointLevelServers.push(endpoint.servers[0]);
+                    if (endpoint.servers) {
+                        for (const server of endpoint.servers) {
+                            if (
+                                this.shouldAddServerToCollectedServers({
+                                    server,
+                                    currentServers: endpointLevelServers
+                                })
+                            ) {
+                                endpointLevelServers.push(server);
+                            }
+                        }
                     }
                     if (endpoint.errors) {
                         // TODO: For SDK-IR, errorIds are not guaranteed to be unique.
@@ -271,7 +280,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         return { endpointLevelServers, errors };
     }
 
-    private shouldAddSchemeToApi({
+    private shouldAddSchemeToIr({
         authScheme,
         schemeId,
         currentSecuritySchemes
@@ -294,5 +303,21 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             this.context.spec.security?.flatMap((securityRequirement) => Object.keys(securityRequirement)) ?? []
         );
         return (topLevelSchemes.size === 0 || topLevelSchemes.has(schemeId)) && !schemeAlreadyExists;
+    }
+
+    private shouldAddServerToCollectedServers({
+        server,
+        currentServers
+    }: {
+        server: OpenAPIV3_1.ServerObject;
+        currentServers: OpenAPIV3_1.ServerObject[];
+    }): boolean {
+        return !currentServers.some(
+            (s) =>
+                s.url === server.url &&
+                "x-fern-server-name" in s &&
+                "x-fern-server-name" in server &&
+                s["x-fern-server-name"] === server["x-fern-server-name"]
+        );
     }
 }
