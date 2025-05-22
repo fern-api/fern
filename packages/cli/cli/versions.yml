@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Re-release `0.63.2`
+      type: internal
+  irVersion: 58
+  createdAt: "2025-05-22"
+  version: 0.63.3
+
+- changelogEntry:
+    - summary: |
         The CLI now recognizes that Go `1.1.0` requires IRv58.
       type: fix
   irVersion: 58
