@@ -60,30 +60,22 @@ export const V58_TO_V57_MIGRATION: IrMigration<
 function convertServicesIr(
     services: Record<string, IrVersions.V58.http.HttpService>
 ): Record<string, IrVersions.V57.http.HttpService> {
-    return Object.fromEntries(
-        Object.entries(services).map(([key, service]) => [key, convertServiceIr(service)])
-    );
+    return Object.fromEntries(Object.entries(services).map(([key, service]) => [key, convertServiceIr(service)]));
 }
 
-function convertServiceIr(
-    service: IrVersions.V58.http.HttpService
-): IrVersions.V57.http.HttpService {
+function convertServiceIr(service: IrVersions.V58.http.HttpService): IrVersions.V57.http.HttpService {
     return {
         ...service,
         endpoints: convertEndpointsIr(service.endpoints)
     };
 }
 
-function convertEndpointsIr(
-    endpoints: IrVersions.V58.http.HttpEndpoint[]
-): IrVersions.V57.http.HttpEndpoint[] {
+function convertEndpointsIr(endpoints: IrVersions.V58.http.HttpEndpoint[]): IrVersions.V57.http.HttpEndpoint[] {
     return endpoints.map(convertEndpointIr).filter((endpoint) => endpoint != null);
 }
 
-function convertEndpointIr(
-    endpoint: IrVersions.V58.http.HttpEndpoint
-): IrVersions.V57.http.HttpEndpoint | undefined {
-    const method = endpoint.method; 
+function convertEndpointIr(endpoint: IrVersions.V58.http.HttpEndpoint): IrVersions.V57.http.HttpEndpoint | undefined {
+    const method = endpoint.method;
     if (method === "HEAD") {
         // HEAD methods can dropped entirely.
         return undefined;

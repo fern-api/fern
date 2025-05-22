@@ -60,8 +60,8 @@ import { V54_TO_V53_MIGRATION } from "./migrations/v54-to-v53/migrateFromV54ToV5
 import { V55_TO_V54_MIGRATION } from "./migrations/v55-to-v54/migrateFromV55ToV54";
 import { V56_TO_V55_MIGRATION } from "./migrations/v56-to-v55/migrateFromV56ToV55";
 import { V57_TO_V56_MIGRATION } from "./migrations/v57-to-v56/migrateFromV57ToV56";
-import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "./types/IrMigration";
 import { V58_TO_V57_MIGRATION } from "./migrations/v58-to-v57/migrateFromV58ToV57";
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "./types/IrMigration";
 
 export function getIntermediateRepresentationMigrator(): IntermediateRepresentationMigrator {
     return INTERMEDIATE_REPRESENTATION_MIGRATOR;

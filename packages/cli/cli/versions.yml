@@ -2,7 +2,7 @@
     - summary: |
         Add support for `HEAD` HTTP methods and validate that they define no response body.
       type: feat
-  irVersion: 57
+  irVersion: 58
   createdAt: "2025-05-22"
   version: 0.63.0
 

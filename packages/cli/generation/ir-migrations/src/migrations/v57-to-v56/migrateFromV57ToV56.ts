@@ -84,7 +84,7 @@ function convertDynamicEndpoint(
     return {
         ...endpoint,
         auth: endpoint.auth != null ? convertDynamicAuth(endpoint.auth) : undefined,
-        examples: endpoint.examples != null ? convertDynamicExamples(endpoint.examples) : undefined,
+        examples: endpoint.examples != null ? convertDynamicExamples(endpoint.examples) : undefined
     };
 }
 
@@ -99,7 +99,7 @@ function convertDynamicExample(
 ): IrVersions.V56.dynamic.EndpointExample | undefined {
     return {
         ...example,
-        auth: example.auth != null ? convertDynamicAuthValues(example.auth) : undefined,
+        auth: example.auth != null ? convertDynamicAuthValues(example.auth) : undefined
     };
 }
 
