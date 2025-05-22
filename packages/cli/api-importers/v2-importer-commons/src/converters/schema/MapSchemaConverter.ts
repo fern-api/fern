@@ -8,7 +8,7 @@ import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 
 export declare namespace MapSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
-        schema: OpenAPIV3_1.SchemaObject | boolean;
+        schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | boolean;
     }
 
     export interface Output {
