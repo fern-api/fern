@@ -1,5 +1,4 @@
 import { HttpResponseResolver, passthrough } from "msw";
-
 import { fromJson, toJson } from "../../src/core/json";
 
 /**

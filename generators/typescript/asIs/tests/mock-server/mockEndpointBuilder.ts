@@ -1,8 +1,8 @@
 import { DefaultBodyType, HttpHandler, HttpResponse, HttpResponseResolver, http } from "msw";
 
-import { toJson } from "../../src/core/json";
 import { withHeaders } from "./withHeaders";
 import { withJson } from "./withJson";
+import { toJson } from "../../src/core/json";
 
 type HttpMethod = "all" | "get" | "post" | "put" | "delete" | "patch" | "options" | "head";
 
@@ -160,7 +160,7 @@ class ResponseBuilder implements ResponseStatusStage, ResponseHeaderStage, Respo
         method: HttpMethod,
         path: string,
         requestPredicates: ((resolver: HttpResponseResolver) => HttpResponseResolver)[],
-        options?: HttpHandlerBuilderOptions
+        options?: HttpHandlerBuilderOptions,
     ) {
         this.method = method;
         this.path = path;
@@ -192,7 +192,7 @@ class ResponseBuilder implements ResponseStatusStage, ResponseHeaderStage, Respo
         const responseResolver: HttpResponseResolver = () => {
             return new HttpResponse(this.responseBody, {
                 status: this.responseStatusCode,
-                headers: this.responseHeaders
+                headers: this.responseHeaders,
             });
         };
 

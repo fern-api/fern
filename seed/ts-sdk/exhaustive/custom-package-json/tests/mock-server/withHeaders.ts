@@ -1,4 +1,3 @@
-// withHeaders.ts
 import { HttpResponseResolver, passthrough } from "msw";
 
 /**

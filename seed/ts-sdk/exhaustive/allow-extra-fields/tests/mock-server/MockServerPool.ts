@@ -1,4 +1,3 @@
-import {} from "msw/";
 import { setupServer } from "msw/node";
 
 import { MockServer } from "./MockServer";

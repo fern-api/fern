@@ -58,6 +58,13 @@ export class JestTestGenerator {
     }
 
     private addJestConfig(): void {
+        const setupFilesAfterEnv = [];
+        if (this.useBigInt) {
+            setupFilesAfterEnv.push("<rootDir>/tests/bigint-setup.ts");
+        }
+        if (this.generateWireTests) {
+            setupFilesAfterEnv.push("<rootDir>/tests/mock-server/setup.ts");
+        }
         const jestConfig = this.rootDirectory.createSourceFile(
             "jest.config.mjs",
             code`
@@ -68,9 +75,14 @@ export class JestTestGenerator {
                 moduleNameMapper: {
                     '(.+)\\.js$': '$1'
                 },${
-                    this.generateWireTests
+                    setupFilesAfterEnv.length > 0
+                        ? code`
+                setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv)},`
+                        : ""
+                }${
+                    this.useBigInt
                         ? `
-                setupFilesAfterEnv: ["<rootDir>/tests/mock-server/setup.ts"],`
+                    workerThreads: true,`
                         : ""
                 }
             };
@@ -95,8 +107,8 @@ export class JestTestGenerator {
 
     private addDependencies(): void {
         this.dependencyManager.addDependency("jest", "^29.7.0", { type: DependencyType.DEV });
-        this.dependencyManager.addDependency("@types/jest", "^29.5.14", { type: DependencyType.DEV });
-        this.dependencyManager.addDependency("ts-jest", "^29.1.1", { type: DependencyType.DEV });
+        this.dependencyManager.addDependency("@jest/globals", "^29.7.0", { type: DependencyType.DEV });
+        this.dependencyManager.addDependency("ts-jest", "^29.3.4", { type: DependencyType.DEV });
         this.dependencyManager.addDependency("jest-environment-jsdom", "^29.7.0", { type: DependencyType.DEV });
         if (this.generateWireTests) {
             this.dependencyManager.addDependency("msw", "^2.8.4", { type: DependencyType.DEV });
@@ -109,17 +121,17 @@ export class JestTestGenerator {
     }
 
     public get scripts(): Record<string, string> {
+        const scripts: Record<string, string> = {};
         if (this.writeUnitTests) {
-            return {
-                test: "jest tests/unit",
-                "wire:test": "yarn test:wire",
-                "test:wire": "jest tests/wire"
-            };
+            scripts.test = "jest tests/unit --passWithNoTests";
         } else {
-            return {
-                test: "jest"
-            };
+            scripts.test = "jest --passWithNoTests";
         }
+        if (this.generateWireTests) {
+            scripts["test:wire"] = "jest tests/wire --passWithNoTests";
+            scripts["wire:test"] = "yarn test:wire";
+        }
+        return scripts;
     }
 
     public get extraFiles(): Record<string, string> {

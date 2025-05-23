@@ -17,7 +17,8 @@ const asIsFiles = {
     tests: {
         mockServer: {
             "tests/mock-server/*": "tests/mock-server/"
-        }
+        },
+        bigintSetup: { "tests/bigint-setup.ts": "tests/bigint-setup.ts" }
     }
 } as const;
 
@@ -37,14 +38,20 @@ export class AsIsManager {
     }
 
     public async AddToTsProject({ project }: { project: Project }): Promise<void> {
-        const filesToCopy: Record<string, string>[] = [];
+        let filesToCopy: Record<string, string>[] = [];
 
         filesToCopy.push(this.useBigInt ? asIsFiles.json.bigint : asIsFiles.json.vanilla);
+        if (this.useBigInt) {
+            filesToCopy.push(asIsFiles.tests.bigintSetup);
+            filesToCopy.push(asIsFiles.json.bigint);
+        } else {
+            filesToCopy.push(asIsFiles.json.vanilla);
+        }
         if (this.generateWireTests) {
             filesToCopy.push(asIsFiles.tests.mockServer);
         }
 
-        for (const [sourcePattern, targetPattern] of filesToCopy.flatMap(Object.entries)) {
+        for (const [sourcePattern, targetPattern] of filesToCopy.flatMap(Object.entries) as [string, string][]) {
             if (sourcePattern.includes("*")) {
                 const matches = await glob(sourcePattern, {
                     cwd: filePathOnDockerContainer,
