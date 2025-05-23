@@ -32,8 +32,15 @@ export function convertUndiscriminatedUnionTypeDeclaration({
                     type: file.parseTypeReference(member)
                 };
             }
+
+            const parsedType = file.parseTypeReference(member.type);
+            const typeWithDisplayName =
+                parsedType.type === "named"
+                    ? { ...parsedType, displayName: member["display-name"] ?? parsedType.name.originalName }
+                    : parsedType;
+
             return {
-                type: file.parseTypeReference(member.type),
+                type: typeWithDisplayName,
                 docs: member.docs
             };
         })
