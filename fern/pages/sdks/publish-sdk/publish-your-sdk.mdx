@@ -23,7 +23,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
   <Step title="Run `fern add <generator>`">
   In order to generate the SDK, we'll need to add the generator to your 
   `generators.yml`. You can use the `fern <add>` command to do this.
-  </Step>
+  
 
   <CodeBlocks>
     ```bash TypeScript
@@ -110,12 +110,13 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
   </CodeBlocks>
 
   Here are the [latest versions of each generator](https://github.com/fern-api/fern?tab=readme-ov-file#-generators).
+  </Step>
 
   <Step title="Configure `output` location">
   In order to setup publishing your SDK, you'll need to configure 
-  an output location in your `generators.yml`.
+  an output location in your `generators.yml`:
 
-    <CodeBlocks>
+  <CodeBlocks>
     ```yaml title="TypeScript" {6-9}
     groups: 
       ts-sdk:
@@ -193,7 +194,18 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
             version: 0.2.2
     ```
   </CodeBlocks>
-  
+  You can also publish your openAPI specification to Github by adding the following to your `generators.yml`:
+  <CodeBlocks>
+  ```yaml title="GitHub" {6-9}
+  groups:
+    openapi:
+      generators:
+        - name: fernapi/fern-openapi
+          version: 0.1.6
+          github:
+            repository: your-org/your-repository
+  ```
+  </CodeBlocks>
   </Step>
 
   <Step title="Install GitHub app">
