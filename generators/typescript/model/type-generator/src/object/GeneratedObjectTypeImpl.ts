@@ -58,7 +58,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                 }
                 return ts.factory.createPropertySignature(
                     undefined,
-                    ts.factory.createIdentifier(name),
+                    ts.factory.createIdentifier(getPropertyKey(name)),
                     hasQuestionToken ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
                     propertyValue
                 );
@@ -174,7 +174,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                     })
                 });
                 return ts.factory.createPropertyAssignment(
-                    propertyKey,
+                    getPropertyKey(propertyKey),
                     context.type.getGeneratedExample(property.value).build(context, opts)
                 );
             }
@@ -183,7 +183,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
             }
             const key = originalTypeForProperty.getPropertyKey({ propertyWireKey: property.name.wireValue });
             return ts.factory.createPropertyAssignment(
-                key,
+                getPropertyKey(key),
                 context.type.getGeneratedExample(property.value).build(context, opts)
             );
         });

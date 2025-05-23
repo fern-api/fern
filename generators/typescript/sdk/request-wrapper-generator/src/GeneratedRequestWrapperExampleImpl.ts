@@ -1,4 +1,4 @@
-import { GetReferenceOpts, PackageId } from "@fern-typescript/commons";
+import { getPropertyKey, GetReferenceOpts, PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapperExample, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -46,16 +46,6 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
     }
 
     private buildExample({ context, opts }: { context: SdkContext; opts: GetReferenceOpts }): ts.Expression {
-        // We may need to wrap it in quotes if it contains special characters
-        // These get placed in the object literal as keys, so they may need to be strings
-        const asObjectProperty = (value: string) => {
-            const regex = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
-            if (regex.test(value)) {
-                return value;
-            }
-            return ts.factory.createStringLiteral(value);
-        };
-
         const generatedType = context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpointName);
         const fileProperties = [];
         if (context.inlineFileProperties && this.requestBody != null && this.requestBody.type === "fileUpload") {
@@ -70,7 +60,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                     if (property.value.type === "fileArray") {
                         fileProperties.push(
                             ts.factory.createPropertyAssignment(
-                                asObjectProperty(
+                                getPropertyKey(
                                     generatedType.getPropertyNameOfFileParameter(property.value).propertyName
                                 ),
                                 ts.factory.createArrayLiteralExpression([createReadStream])
@@ -79,7 +69,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                     } else {
                         fileProperties.push(
                             ts.factory.createPropertyAssignment(
-                                asObjectProperty(
+                                getPropertyKey(
                                     generatedType.getPropertyNameOfFileParameter(property.value).propertyName
                                 ),
                                 createReadStream
@@ -93,7 +83,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
             .filter((header) => this.isNotLiteral(header.value.shape))
             .map((header) => {
                 return ts.factory.createPropertyAssignment(
-                    asObjectProperty(generatedType.getPropertyNameOfNonLiteralHeaderFromName(header.name).propertyName),
+                    getPropertyKey(generatedType.getPropertyNameOfNonLiteralHeaderFromName(header.name).propertyName),
                     context.type.getGeneratedExample(header.value).build(context, opts)
                 );
             });
@@ -103,7 +93,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                   .filter((pathParam) => this.isNotLiteral(pathParam.value.shape))
                   .map((pathParam) => {
                       return ts.factory.createPropertyAssignment(
-                          asObjectProperty(
+                          getPropertyKey(
                               generatedType.getPropertyNameOfPathParameterFromName(pathParam.name).propertyName
                           ),
                           context.type.getGeneratedExample(pathParam.value).build(context, opts)
@@ -115,7 +105,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
             .filter((queryParam) => this.isNotLiteral(queryParam.value.shape))
             .map((queryParam) => {
                 return ts.factory.createPropertyAssignment(
-                    asObjectProperty(
+                    getPropertyKey(
                         generatedType.getPropertyNameOfQueryParameterFromName(queryParam.name).propertyName
                     ),
                     context.type.getGeneratedExample(queryParam.value).build(context, opts)
@@ -141,7 +131,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                                         })
                                     });
                                     return ts.factory.createPropertyAssignment(
-                                        propertyKey,
+                                        getPropertyKey(propertyKey),
                                         context.type.getGeneratedExample(property.value).build(context, opts)
                                     );
                                 }
@@ -154,12 +144,12 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                                     propertyWireKey: property.name.wireValue
                                 });
                                 return ts.factory.createPropertyAssignment(
-                                    key,
+                                    getPropertyKey(key),
                                     context.type.getGeneratedExample(property.value).build(context, opts)
                                 );
                             } else {
                                 return ts.factory.createPropertyAssignment(
-                                    asObjectProperty(
+                                    getPropertyKey(
                                         generatedType.getInlinedRequestBodyPropertyKeyFromName(property.name)
                                     ),
                                     context.type.getGeneratedExample(property.value).build(context, opts)
@@ -170,7 +160,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                 reference: (type) => {
                     return [
                         ts.factory.createPropertyAssignment(
-                            this.bodyPropertyName,
+                            getPropertyKey(this.bodyPropertyName),
                             context.type.getGeneratedExample(type).build(context, opts)
                         )
                     ];

@@ -6,6 +6,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
 import { AbstractParsedSingleUnionType } from "../parsed-single-union-type/AbstractParsedSingleUnionType";
 import { KnownSingleUnionType } from "./KnownSingleUnionType";
+import { getPropertyKey } from "@fern-typescript/commons";
 
 export abstract class AbstractKnownSingleUnionType<Context extends ModelContext>
     extends AbstractParsedSingleUnionType<Context>
@@ -33,7 +34,7 @@ export abstract class AbstractKnownSingleUnionType<Context extends ModelContext>
     }): ts.ObjectLiteralElementLike[] {
         return [
             ...this.singleUnionType.getNonDiscriminantPropertiesForBuilder(context),
-            ts.factory.createPropertyAssignment(generatedUnion.discriminant, this.getDiscriminantValueAsExpression())
+            ts.factory.createPropertyAssignment(getPropertyKey(generatedUnion.discriminant), this.getDiscriminantValueAsExpression())
         ];
     }
 

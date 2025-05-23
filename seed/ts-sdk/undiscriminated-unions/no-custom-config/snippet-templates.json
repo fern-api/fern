@@ -222,7 +222,7 @@
                                                 "template": {
                                                     "imports": [],
                                                     "isOptional": true,
-                                                    "containerTemplateString": "new Set([\n\t\t\t\t$FERN_INPUT\n\t\t\t])",
+                                                    "containerTemplateString": "[\n\t\t\t\t$FERN_INPUT\n\t\t\t]",
                                                     "delimiter": ",\n\t\t\t\t",
                                                     "innerTemplate": {
                                                         "imports": [],
