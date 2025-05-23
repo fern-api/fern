@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Union variant names use 'display-name' for Fern definitions, and fallback to the type name for all others
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-23"
+  version: 0.63.6
+
+- changelogEntry:
+    - summary: |
         Fix a bug where stream endpoint response types would not be stored in the IR.
       type: fix
   irVersion: 58

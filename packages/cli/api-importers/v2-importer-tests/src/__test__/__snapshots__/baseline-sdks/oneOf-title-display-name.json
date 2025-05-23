@@ -254,6 +254,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Post Test One of Display Name Request Fields Item ID",
               "typeId": "type_:PostTestOneOfDisplayNameRequestFieldsItemId",
               "type": "named"
             }
@@ -283,6 +284,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Post Test One of Display Name Request Fields Item Name",
               "typeId": "type_:PostTestOneOfDisplayNameRequestFieldsItemName",
               "type": "named"
             }
