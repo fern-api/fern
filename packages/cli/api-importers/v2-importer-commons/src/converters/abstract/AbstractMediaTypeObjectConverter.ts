@@ -45,14 +45,11 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
         contentType,
         schemaId
     }: {
-        mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
+        mediaTypeObject: OpenAPIV3_1.MediaTypeObject;
         contentType: string;
         resolveSchema?: boolean;
         schemaId: string;
     }): AbstractMediaTypeObjectConverter.MediaTypeObject | undefined {
-        if (mediaTypeObject == null) {
-            return undefined;
-        }
         if (mediaTypeObject.schema == null) {
             return undefined;
         }

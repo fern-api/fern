@@ -10,22 +10,30 @@ import {
 } from "@fern-api/ir-sdk";
 import { Converters } from "@fern-api/v2-importer-commons";
 
+import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
+
 export declare namespace RequestBodyConverter {
     export interface Args extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Args {
         requestBody: OpenAPIV3_1.RequestBodyObject;
+        streamingExtension: FernStreamingExtension.Output | undefined;
     }
 
     export interface Output extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Output {
         requestBody: HttpRequestBody;
+        streamRequestBody: HttpRequestBody | undefined;
     }
 }
 
 export class RequestBodyConverter extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter {
     private readonly requestBody: OpenAPIV3_1.RequestBodyObject;
+    protected readonly schemaId: string;
+    private readonly streamingExtension: FernStreamingExtension.Output | undefined;
 
-    constructor({ context, breadcrumbs, requestBody, group, method }: RequestBodyConverter.Args) {
+    constructor({ context, breadcrumbs, requestBody, group, method, streamingExtension }: RequestBodyConverter.Args) {
         super({ context, breadcrumbs, group, method });
         this.requestBody = requestBody;
+        this.schemaId = [...this.group, this.method, "Request"].join("_");
+        this.streamingExtension = streamingExtension;
     }
 
     public convert(): RequestBodyConverter.Output | undefined {
@@ -87,11 +95,13 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
     }
 
     private handleJsonOrFormContent({ contentType }: { contentType: string }): RequestBodyConverter.Output | undefined {
-        const schemaId = [...this.group, this.method, "Request"].join("_");
         const mediaTypeObject = this.requestBody.content[contentType];
+        if (mediaTypeObject == null) {
+            return undefined;
+        }
         const convertedSchema = this.parseMediaTypeObject({
             mediaTypeObject,
-            schemaId,
+            schemaId: this.schemaId,
             contentType
         });
         if (convertedSchema == null) {
@@ -99,40 +109,38 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         }
 
         if (convertedSchema.schema?.typeDeclaration.shape.type === "object") {
-            const requestBody = HttpRequestBody.inlinedRequestBody({
-                contentType,
-                docs: this.requestBody.description,
-                name: this.context.casingsGenerator.generateName(schemaId),
-                extendedProperties: convertedSchema.schema?.typeDeclaration.shape.extendedProperties,
-                extends: convertedSchema.schema?.typeDeclaration.shape.extends,
-                properties: convertedSchema.schema?.typeDeclaration.shape.properties,
-                extraProperties: convertedSchema.schema?.typeDeclaration.shape.extraProperties,
-                v2Examples: this.convertMediaTypeObjectExamples({
-                    mediaTypeObject,
-                    exampleGenerationStrategy: "request"
-                })
-            });
-
             return {
-                requestBody,
+                requestBody: HttpRequestBody.inlinedRequestBody({
+                    contentType,
+                    docs: this.requestBody.description,
+                    name: this.context.casingsGenerator.generateName(this.schemaId),
+                    extendedProperties: convertedSchema.schema?.typeDeclaration.shape.extendedProperties,
+                    extends: convertedSchema.schema?.typeDeclaration.shape.extends,
+                    properties: convertedSchema.schema?.typeDeclaration.shape.properties,
+                    extraProperties: convertedSchema.schema?.typeDeclaration.shape.extraProperties,
+                    v2Examples: this.convertMediaTypeObjectExamples({
+                        mediaTypeObject,
+                        exampleGenerationStrategy: "request"
+                    })
+                }),
+                streamRequestBody: undefined,
                 inlinedTypes: this.context.removeSchemaFromInlinedTypes({
-                    id: schemaId,
+                    id: this.schemaId,
                     inlinedTypes: convertedSchema.inlinedTypes
                 })
             };
         } else {
-            const requestBody = HttpRequestBody.reference({
-                contentType,
-                docs: this.requestBody.description,
-                requestBodyType: convertedSchema.type,
-                v2Examples: this.convertMediaTypeObjectExamples({
-                    mediaTypeObject,
-                    exampleGenerationStrategy: "request"
-                })
-            });
-
             return {
-                requestBody,
+                requestBody: HttpRequestBody.reference({
+                    contentType,
+                    docs: this.requestBody.description,
+                    requestBodyType: convertedSchema.type,
+                    v2Examples: this.convertMediaTypeObjectExamples({
+                        mediaTypeObject,
+                        exampleGenerationStrategy: "request"
+                    })
+                }),
+                streamRequestBody: undefined,
                 inlinedTypes: convertedSchema.inlinedTypes ?? {}
             };
         }
@@ -140,13 +148,12 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
 
     private handleMultipartContent({ contentType }: { contentType: string }): RequestBodyConverter.Output | undefined {
         const mediaTypeObject = this.requestBody.content[contentType];
-        const schemaId = [...this.group, this.method, "Request"].join("_");
         if (mediaTypeObject == null || mediaTypeObject.schema == null) {
             return undefined;
         }
         const convertedSchema = this.parseMediaTypeObject({
             mediaTypeObject,
-            schemaId,
+            schemaId: this.schemaId,
             resolveSchema: true,
             contentType
         });
@@ -155,22 +162,22 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         }
 
         if (convertedSchema.schema?.typeDeclaration.shape.type === "object") {
-            const requestBody = HttpRequestBody.fileUpload({
-                contentType,
-                docs: this.requestBody.description,
-                name: this.context.casingsGenerator.generateName(schemaId),
-                properties: convertedSchema.schema?.typeDeclaration.shape.properties.map((property) => {
-                    return this.convertRequestBodyProperty({ property, contentType });
-                }),
-                v2Examples: this.convertMediaTypeObjectExamples({
-                    mediaTypeObject,
-                    exampleGenerationStrategy: "request"
-                })
-            });
             return {
-                requestBody,
+                requestBody: HttpRequestBody.fileUpload({
+                    contentType,
+                    docs: this.requestBody.description,
+                    name: this.context.casingsGenerator.generateName(this.schemaId),
+                    properties: convertedSchema.schema?.typeDeclaration.shape.properties.map((property) => {
+                        return this.convertRequestBodyProperty({ property, contentType });
+                    }),
+                    v2Examples: this.convertMediaTypeObjectExamples({
+                        mediaTypeObject,
+                        exampleGenerationStrategy: "request"
+                    })
+                }),
+                streamRequestBody: undefined,
                 inlinedTypes: this.context.removeSchemaFromInlinedTypes({
-                    id: schemaId,
+                    id: this.schemaId,
                     inlinedTypes: convertedSchema.inlinedTypes
                 }),
                 examples: convertedSchema.examples
@@ -186,23 +193,25 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         contentType: string;
     }): RequestBodyConverter.Output | undefined {
         const mediaTypeObject = this.requestBody.content[contentType];
-        const schemaId = [...this.group, this.method, "Request"].join("_");
+        if (mediaTypeObject == null) {
+            return undefined;
+        }
         const convertedSchema = this.parseMediaTypeObject({
             mediaTypeObject,
-            schemaId,
+            schemaId: this.schemaId,
             contentType
         });
-        const requestBody = HttpRequestBody.bytes({
-            contentType,
-            isOptional: this.requestBody.required === false,
-            docs: this.requestBody.description,
-            v2Examples: this.convertMediaTypeObjectExamples({
-                mediaTypeObject,
-                exampleGenerationStrategy: "request"
-            })
-        });
         return {
-            requestBody,
+            requestBody: HttpRequestBody.bytes({
+                contentType,
+                isOptional: this.requestBody.required === false,
+                docs: this.requestBody.description,
+                v2Examples: this.convertMediaTypeObjectExamples({
+                    mediaTypeObject,
+                    exampleGenerationStrategy: "request"
+                })
+            }),
+            streamRequestBody: undefined,
             inlinedTypes: convertedSchema?.inlinedTypes ?? {}
         };
     }
@@ -274,10 +283,10 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                 isArray
             });
         }
-        if (this.context.isFile(typeReference)) {
-            return { isFile: true, isOptional: isOptional ?? false, isArray: isArray ?? false };
-        } else {
-            return { isFile: false, isOptional: isOptional ?? false, isArray: isArray ?? false };
-        }
+        return {
+            isFile: this.context.isFile(typeReference),
+            isOptional: isOptional ?? false,
+            isArray: isArray ?? false
+        };
     }
 }

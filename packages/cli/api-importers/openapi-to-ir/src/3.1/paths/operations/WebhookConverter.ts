@@ -47,7 +47,8 @@ export class WebhookConverter extends AbstractOperationConverter {
         const requestBody = this.convertRequestBody({
             breadcrumbs: payloadBreadcrumbs,
             group,
-            method
+            method,
+            streamingExtension: undefined
         });
 
         let payload: WebhookPayload;

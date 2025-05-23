@@ -73,15 +73,12 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
                 context: this.context
             });
             const streamingExtension = streamingExtensionConverter.convert();
-            if (streamingExtension != null) {
-                // TODO: Use streaming extension to branch between streaming and non-streaming endpoints
-                // Use streamFormat to modify response conversion.
-            }
 
             const convertedEndpoint = this.tryParseAsHttpEndpoint({
                 operationBreadcrumbs,
                 operation,
-                method
+                method,
+                streamingExtension
             });
             if (convertedEndpoint != null) {
                 endpoints.push(convertedEndpoint);
@@ -130,11 +127,13 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
     private tryParseAsHttpEndpoint({
         operation,
         method,
-        operationBreadcrumbs
+        operationBreadcrumbs,
+        streamingExtension
     }: {
         operation: OpenAPIV3_1.OperationObject;
         method: string;
         operationBreadcrumbs: string[];
+        streamingExtension: FernStreamingExtension.Output | undefined;
     }): OperationConverter.Output | undefined {
         const paginationExtensionConverter = new FernPaginationExtension({
             breadcrumbs: operationBreadcrumbs,
@@ -163,7 +162,8 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             path: this.path,
             idempotent: isIdempotent,
             idToAuthScheme: this.idToAuthScheme,
-            topLevelServers: this.topLevelServers
+            topLevelServers: this.topLevelServers,
+            streamingExtension
         });
         return operationConverter.convert();
     }
