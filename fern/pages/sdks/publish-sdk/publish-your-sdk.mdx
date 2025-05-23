@@ -122,7 +122,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       ts-sdk:
         generators:
           - name: fernapi/fern-typescript-node-sdk
-            version: 0.48.4
+            version: 1.0.0
             output:
               location: npm
               package-name: imdb
@@ -133,7 +133,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       python-sdk:
         generators:
           - name: fernapi/fern-python-sdk
-            version: 4.3.11
+            version: 4.20.3
             output:
               location: pypi
               package-name: imdb
@@ -144,7 +144,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       java-sdk:
         generators:
           - name: fernapi/fern-java-sdk
-            version: 2.10.7
+            version: 2.36.4
             output:
               location: maven
               artifact: com.imdb:imdb-java
@@ -160,7 +160,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       go-sdk:
         generators:
           - name: fernapi/fern-go-sdk
-            version: 0.36.2
+            version: 0.36.4
             github: 
               repository: imdb/imdb-go
     ```
@@ -169,7 +169,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       csharp-sdk:
         generators:
           - name: fernapi/fern-csharp-sdk
-            version: 1.9.12
+            version: 1.17.4
             output:
               location: nuget
               package-name: Imdb.Net
@@ -191,20 +191,19 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       php-sdk:
         generators:
           - name: fernapi/fern-php-sdk
-            version: 0.2.2
+            version: 0.15.0
     ```
-  </CodeBlocks>
-  You can also publish your openAPI specification to Github by adding the following to your `generators.yml`:
-  <CodeBlocks>
-  ```yaml title="GitHub" {6-7}
-  groups:
-    openapi:
-      generators:
-        - name: fernapi/fern-openapi
-          version: 0.1.6
-          github:
-            repository: your-org/your-repository
-  ```
+    ```yaml title="OpenAPI" {6-7}
+    # Only relevant if you're using the Fern Definition
+
+    groups:
+      openapi:
+        generators:
+          - name: fernapi/fern-openapi
+            version: 0.1.6
+            github:
+              repository: imdb/imdb-openapi
+    ```
   </CodeBlocks>
   </Step>
 
