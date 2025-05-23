@@ -1,12 +1,14 @@
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { FernIr, HttpEndpoint, HttpEndpointSource, HttpPath } from "@fern-api/ir-sdk";
+import { FernIr, HttpEndpoint, HttpEndpointSource, HttpPath, HttpResponse } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
 import { AbstractConverter, ServersConverter } from "@fern-api/v2-importer-commons";
 
 import { FernExamplesExtension } from "../../../extensions/x-fern-examples";
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
+import { ResponseBodyConverter } from "../ResponseBodyConverter";
+import { ResponseErrorConverter } from "../ResponseErrorConverter";
 import { AbstractOperationConverter } from "./AbstractOperationConverter";
 
 export declare namespace OperationConverter {
@@ -14,6 +16,7 @@ export declare namespace OperationConverter {
         idempotent: boolean | undefined;
         idToAuthScheme?: Record<string, FernIr.AuthScheme>;
         topLevelServers?: OpenAPIV3_1.ServerObject[];
+        streamingExtension: FernStreamingExtension.Output | undefined;
     }
 
     export interface Output extends AbstractOperationConverter.Output {
@@ -23,13 +26,20 @@ export declare namespace OperationConverter {
         errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration>;
         servers?: OpenAPIV3_1.ServerObject[];
     }
+
+    export interface ConvertedResponseBody {
+        response: HttpResponse | undefined;
+        streamResponse: HttpResponse | undefined;
+        errors: ResponseErrorConverter.Output[];
+        examples?: Record<string, OpenAPIV3_1.ExampleObject>;
+    }
 }
 
 export class OperationConverter extends AbstractOperationConverter {
     private readonly idempotent: boolean | undefined;
-    private readonly streamingExtensionConverter: FernStreamingExtension;
     private readonly idToAuthScheme?: Record<string, FernIr.AuthScheme>;
     private readonly topLevelServers?: OpenAPIV3_1.ServerObject[];
+    private readonly streamingExtension: FernStreamingExtension.Output | undefined;
 
     private static readonly AUTHORIZATION_HEADER = "Authorization";
 
@@ -41,17 +51,14 @@ export class OperationConverter extends AbstractOperationConverter {
         path,
         idempotent,
         idToAuthScheme,
-        topLevelServers
+        topLevelServers,
+        streamingExtension
     }: OperationConverter.Args) {
         super({ context, breadcrumbs, operation, method, path });
         this.idempotent = idempotent;
         this.idToAuthScheme = idToAuthScheme;
         this.topLevelServers = topLevelServers;
-        this.streamingExtensionConverter = new FernStreamingExtension({
-            breadcrumbs: this.breadcrumbs,
-            operation: this.operation,
-            context: this.context
-        });
+        this.streamingExtension = streamingExtension;
     }
 
     public convert(): OperationConverter.Output | undefined {
@@ -63,8 +70,6 @@ export class OperationConverter extends AbstractOperationConverter {
         const { group, method } =
             this.computeGroupNameAndLocationFromExtensions() ?? this.computeGroupNameFromTagAndOperationId();
 
-        const streamingExtension = this.streamingExtensionConverter.convert();
-
         const { headers, pathParameters, queryParameters } = this.convertParameters({
             breadcrumbs: [...this.breadcrumbs, "parameters"]
         });
@@ -72,7 +77,8 @@ export class OperationConverter extends AbstractOperationConverter {
         const convertedRequestBody = this.convertRequestBody({
             breadcrumbs: [...this.breadcrumbs, "requestBody"],
             group,
-            method
+            method,
+            streamingExtension: this.streamingExtension
         });
         const requestBody = convertedRequestBody != null ? convertedRequestBody.value : undefined;
 
@@ -80,7 +86,7 @@ export class OperationConverter extends AbstractOperationConverter {
             breadcrumbs: [...this.breadcrumbs, "responses"],
             group,
             method,
-            streamingExtension
+            streamingExtension: this.streamingExtension
         });
         const response = convertedResponseBody != null ? convertedResponseBody.response : undefined;
         const streamResponse = convertedResponseBody != null ? convertedResponseBody.streamResponse : undefined;
@@ -190,6 +196,110 @@ export class OperationConverter extends AbstractOperationConverter {
             inlinedTypes: this.inlinedTypes,
             servers: this.filterOutTopLevelServers(this.operation.servers ?? [])
         };
+    }
+
+    protected convertResponseBody({
+        breadcrumbs,
+        group,
+        method,
+        streamingExtension
+    }: {
+        breadcrumbs: string[];
+        group: string[] | undefined;
+        method: string;
+        streamingExtension: FernStreamingExtension.Output | undefined;
+    }): OperationConverter.ConvertedResponseBody | undefined {
+        if (this.operation.responses == null) {
+            return undefined;
+        }
+
+        let convertedResponseBody: OperationConverter.ConvertedResponseBody | undefined = undefined;
+        // TODO: Our existing Parser will only parse the first successful response.
+        // We'll need to update it to parse all successful responses.
+        let hasSuccessfulResponse = false;
+
+        for (const [statusCode, response] of Object.entries(this.operation.responses)) {
+            const statusCodeNum = parseInt(statusCode);
+            if (isNaN(statusCodeNum) || statusCodeNum < 200 || (statusCodeNum >= 300 && statusCodeNum < 400)) {
+                continue;
+            }
+            if (convertedResponseBody == null) {
+                convertedResponseBody = {
+                    response: undefined,
+                    streamResponse: undefined,
+                    errors: [],
+                    examples: {}
+                };
+            }
+            // Convert Successful Responses (2xx)
+            if (statusCodeNum >= 200 && statusCodeNum < 300 && !hasSuccessfulResponse) {
+                const resolvedResponse = this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
+                    schemaOrReference: response,
+                    breadcrumbs: [...breadcrumbs, statusCode]
+                });
+
+                if (resolvedResponse == null) {
+                    continue;
+                }
+
+                const responseBodyConverter = new ResponseBodyConverter({
+                    context: this.context,
+                    breadcrumbs: [...breadcrumbs, statusCode],
+                    responseBody: resolvedResponse,
+                    group: group ?? [],
+                    method,
+                    statusCode,
+                    streamingExtension
+                });
+                const converted = responseBodyConverter.convert();
+                if (converted != null) {
+                    hasSuccessfulResponse = true;
+                    this.inlinedTypes = {
+                        ...this.inlinedTypes,
+                        ...converted.inlinedTypes
+                    };
+                    convertedResponseBody.response = {
+                        statusCode: statusCodeNum,
+                        body: converted.responseBody
+                    };
+                    convertedResponseBody.streamResponse = {
+                        statusCode: statusCodeNum,
+                        body: converted.streamResponseBody
+                    };
+                }
+            }
+            // Convert Error Responses (4xx and 5xx)
+            if (statusCodeNum >= 400 && statusCodeNum < 600) {
+                const resolvedResponse = this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
+                    schemaOrReference: response,
+                    breadcrumbs: [...breadcrumbs, statusCode]
+                });
+
+                if (resolvedResponse == null) {
+                    continue;
+                }
+
+                const responseErrorConverter = new ResponseErrorConverter({
+                    context: this.context,
+                    breadcrumbs: [...breadcrumbs, statusCode],
+                    responseError: resolvedResponse,
+                    group: group ?? [],
+                    method,
+                    methodName: this.evaluateMethodNameFromOperation(),
+                    statusCode: statusCodeNum
+                });
+                const converted = responseErrorConverter.convert();
+                if (converted != null) {
+                    this.inlinedTypes = {
+                        ...this.inlinedTypes,
+                        ...converted.inlinedTypes
+                    };
+                    convertedResponseBody.errors.push(converted);
+                }
+            }
+        }
+
+        return convertedResponseBody;
     }
 
     /**
