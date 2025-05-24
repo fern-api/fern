@@ -37,7 +37,8 @@ export declare namespace AbstractOperationConverter {
     }
 }
 interface ConvertedRequestBody {
-    value: HttpRequestBody;
+    requestBody: HttpRequestBody;
+    streamRequestBody: HttpRequestBody | undefined;
     examples?: Record<string, OpenAPIV3_1.ExampleObject>;
 }
 
@@ -213,7 +214,11 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 ...this.inlinedTypes,
                 ...convertedRequestBody.inlinedTypes
             };
-            return { value: convertedRequestBody.requestBody, examples: convertedRequestBody.examples };
+            return {
+                requestBody: convertedRequestBody.requestBody,
+                streamRequestBody: convertedRequestBody.streamRequestBody,
+                examples: convertedRequestBody.examples
+            };
         }
 
         return undefined;
