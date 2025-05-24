@@ -46,47 +46,59 @@ export async function getPreviewDocsDefinition({
         const allMarkdownFiles = editedAbsoluteFilepaths.every(
             (filepath) => filepath.endsWith(".mdx") || filepath.endsWith(".md")
         );
-        for (const absoluteFilePath of editedAbsoluteFilepaths) {
-            const relativePath = relative(docsWorkspace.absoluteFilePath, absoluteFilePath);
-            const markdown = (await readFile(absoluteFilePath)).toString();
-            const processedMarkdown = await replaceReferencedMarkdown({
-                markdown,
-                absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
-                absolutePathToMarkdownFile: absoluteFilePath,
-                context
-            });
 
-            const previousValue = previousDocsDefinition.pages[FdrAPI.PageId(relativePath)];
-            if (previousValue == null) {
-                continue;
-            }
+        // Check if any edited files are snippet files
+        const snippetFilesEdited = editedAbsoluteFilepaths.some((filepath) => {
+            const relativePath = relative(docsWorkspace.absoluteFilePath, filepath);
+            return relativePath.startsWith("snippets/") || relativePath.includes("/snippets/");
+        });
 
-            const fileIdsMap = new Map(
-                Object.entries(previousDocsDefinition.filesV2 ?? {}).map(([id, file]) => {
-                    const path = "/" + file.url.replace("/_local/", "");
-                    return [AbsoluteFilePath.of(path), id];
-                })
-            );
-
-            // Then replace image paths with file IDs
-            const finalMarkdown = replaceImagePathsAndUrls(
-                processedMarkdown,
-                fileIdsMap,
-                {}, // markdownFilesToPathName - empty object since we don't need it for images
-                {
-                    absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
-                    absolutePathToMarkdownFile: absoluteFilePath
-                },
-                context
-            );
-
-            previousDocsDefinition.pages[FdrAPI.PageId(relativePath)] = {
-                markdown: finalMarkdown,
-                editThisPageUrl: previousValue.editThisPageUrl
-            };
+        if (snippetFilesEdited) {
+            context.logger.info("Snippet files were modified, performing full rebuild to update all references...");
         }
 
-        if (allMarkdownFiles) {
+        // Use incremental update only if all files are markdown AND no snippets were edited
+        if (allMarkdownFiles && !snippetFilesEdited) {
+            for (const absoluteFilePath of editedAbsoluteFilepaths) {
+                const relativePath = relative(docsWorkspace.absoluteFilePath, absoluteFilePath);
+                const markdown = (await readFile(absoluteFilePath)).toString();
+                const processedMarkdown = await replaceReferencedMarkdown({
+                    markdown,
+                    absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                    absolutePathToMarkdownFile: absoluteFilePath,
+                    context
+                });
+
+                const previousValue = previousDocsDefinition.pages[FdrAPI.PageId(relativePath)];
+                if (previousValue == null) {
+                    continue;
+                }
+
+                const fileIdsMap = new Map(
+                    Object.entries(previousDocsDefinition.filesV2 ?? {}).map(([id, file]) => {
+                        const path = "/" + file.url.replace("/_local/", "");
+                        return [AbsoluteFilePath.of(path), id];
+                    })
+                );
+
+                // Then replace image paths with file IDs
+                const finalMarkdown = replaceImagePathsAndUrls(
+                    processedMarkdown,
+                    fileIdsMap,
+                    {}, // markdownFilesToPathName - empty object since we don't need it for images
+                    {
+                        absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                        absolutePathToMarkdownFile: absoluteFilePath
+                    },
+                    context
+                );
+
+                previousDocsDefinition.pages[FdrAPI.PageId(relativePath)] = {
+                    markdown: finalMarkdown,
+                    editThisPageUrl: previousValue.editThisPageUrl
+                };
+            }
+
             return previousDocsDefinition;
         }
     }
