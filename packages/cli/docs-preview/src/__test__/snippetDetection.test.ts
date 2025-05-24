@@ -1,7 +1,10 @@
 import { AbsoluteFilePath, relative } from "@fern-api/fs-utils";
 
 // Test just the snippet detection logic (extracted from our fix)
-function detectSnippetFiles(editedAbsoluteFilepaths: AbsoluteFilePath[], docsWorkspaceAbsolutePath: AbsoluteFilePath): boolean {
+function detectSnippetFiles(
+    editedAbsoluteFilepaths: AbsoluteFilePath[],
+    docsWorkspaceAbsolutePath: AbsoluteFilePath
+): boolean {
     return editedAbsoluteFilepaths.some((filepath) => {
         const relativePath = relative(docsWorkspaceAbsolutePath, filepath);
         return relativePath.startsWith("snippets/") || relativePath.includes("/snippets/");
