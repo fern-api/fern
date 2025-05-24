@@ -79,6 +79,7 @@ export async function getPreviewDocsDefinition({
                     })
                 );
 
+                // Then replace image paths with file IDs
                 const finalMarkdown = replaceImagePathsAndUrls(
                     processedMarkdown,
                     fileIdsMap,
