@@ -1,7 +1,7 @@
 from typing import List, Optional, Tuple
 
 from ..context.sdk_generator_context import SdkGeneratorContext
-from .client_generator import ConstructorParameter
+from .base_client_generator import ConstructorParameter
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 
