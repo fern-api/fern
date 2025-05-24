@@ -47,7 +47,6 @@ export async function getPreviewDocsDefinition({
             (filepath) => filepath.endsWith(".mdx") || filepath.endsWith(".md")
         );
 
-        // Check if any edited files are snippet files
         const snippetFilesEdited = editedAbsoluteFilepaths.some((filepath) => {
             const relativePath = relative(docsWorkspace.absoluteFilePath, filepath);
             return relativePath.startsWith("snippets/") || relativePath.includes("/snippets/");
@@ -57,7 +56,6 @@ export async function getPreviewDocsDefinition({
             context.logger.info("Snippet files were modified, performing full rebuild to update all references...");
         }
 
-        // Use incremental update only if all files are markdown AND no snippets were edited
         if (allMarkdownFiles && !snippetFilesEdited) {
             for (const absoluteFilePath of editedAbsoluteFilepaths) {
                 const relativePath = relative(docsWorkspace.absoluteFilePath, absoluteFilePath);
@@ -81,11 +79,10 @@ export async function getPreviewDocsDefinition({
                     })
                 );
 
-                // Then replace image paths with file IDs
                 const finalMarkdown = replaceImagePathsAndUrls(
                     processedMarkdown,
                     fileIdsMap,
-                    {}, // markdownFilesToPathName - empty object since we don't need it for images
+                    {},
                     {
                         absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
                         absolutePathToMarkdownFile: absoluteFilePath
