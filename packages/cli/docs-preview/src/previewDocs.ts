@@ -83,7 +83,7 @@ export async function getPreviewDocsDefinition({
                 const finalMarkdown = replaceImagePathsAndUrls(
                     processedMarkdown,
                     fileIdsMap,
-                    {}, // markdownFilesToPathName - empty object since we don't need it for images
+                    {},
                     {
                         absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
                         absolutePathToMarkdownFile: absoluteFilePath
