@@ -57,7 +57,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       ts-sdk:
         generators:
           - name: fernapi/fern-typescript-node-sdk
-            version: 0.48.4
+            version: 1.0.0
             output:
               location: local-file-system
               path: ../sdks/typescript
@@ -67,7 +67,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       python-sdk:
         generators:
           - name: fernapi/fern-python-sdk
-            version: 4.3.11
+            version: 4.20.3
             output:
               location: local-file-system
               path: ../sdks/python
@@ -77,35 +77,35 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
       java-sdk:
         generators:
           - name: fernapi/fern-java-sdk
-            version: 2.10.7
+            version: 2.36.4
     ```
     ```yaml Go 
     groups:
       go-sdk:
         generators:
           - name: fernapi/fern-go-sdk
-            version: 0.36.2
+            version: 0.36.4
     ```
     ```yaml .NET 
     groups: 
       csharp-sdk:
         generators:
           - name: fernapi/fern-csharp-sdk
-            version: 1.9.12
+            version: 1.17.4
     ```
     ```yaml Ruby 
     groups: 
       ruby-sdk:
         generators:
           - name: fernapi/fern-ruby-sdk
-            version: 0.9.0
+            version: 0.9.0-rc2
     ```
     ```yaml PHP 
     groups: 
       php-sdk:
         generators:
           - name: fernapi/fern-php-sdk
-            version: 0.2.2
+            version: 0.15.2
     ```
   </CodeBlocks>
 
@@ -117,7 +117,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
   an output location in your `generators.yml`:
 
   <CodeBlocks>
-    ```yaml title="TypeScript" {6-9}
+    ```yaml title="TypeScript" {6-8}
     groups: 
       ts-sdk:
         generators:
@@ -128,7 +128,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
               package-name: imdb
               token: ${NPM_TOKEN} # reads from environment
     ```
-    ```yaml title="Python" {6-9}
+    ```yaml title="Python" {6-8}
     groups: 
       python-sdk:
         generators:
@@ -139,7 +139,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
               package-name: imdb
               token: ${PYPI_TOKEN} # reads from environment
     ```
-    ```yaml title="Java" {9-12}
+    ```yaml title="Java" {6-8}
     groups: 
       java-sdk:
         generators:
@@ -155,16 +155,16 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
                 password: ${MAVEN_CENTRAL_SECRET_KEY_PASSWORD}
                 secretKey: ${MAVEN_CENTRAL_SECRET_KEY}
     ```
-    ```yaml title="Go"
+    ```yaml title="Go" {6-7}
     groups: 
       go-sdk:
         generators:
           - name: fernapi/fern-go-sdk
             version: 0.36.4
-            github: 
+            github: #Go publishes via Git repositories
               repository: imdb/imdb-go
     ```
-    ```yaml title=".NET"
+    ```yaml title=".NET" {6-8}
     groups: 
       csharp-sdk:
         generators:
@@ -175,7 +175,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
               package-name: Imdb.Net
               api-key: ${NUGET_API_KEY}
     ```
-    ```yaml title="Ruby"
+    ```yaml title="Ruby" {6-8}
     groups: 
       ruby-sdk:
         generators:
@@ -186,16 +186,17 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
               package-name: imdb
               api-key: ${RUBYGEMS_API_KEY}
     ```
-    ```yaml title="PHP"
+    ```yaml title="PHP" {6-7}
     groups: 
       php-sdk:
         generators:
           - name: fernapi/fern-php-sdk
             version: 0.15.0
+            github: #PHP publishes via Git repositories
+              repository: imdb/imdb-php
     ```
-    ```yaml title="OpenAPI" {6-7}
-    # Only relevant if you're using the Fern Definition
-
+    ```yaml title="OpenAPI" {7-8}
+    # Only relevant if using Fern Definition and want OpenAPI spec to use with third-party tools
     groups:
       openapi:
         generators:
