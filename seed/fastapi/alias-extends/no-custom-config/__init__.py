@@ -2,7 +2,5 @@
 
 # isort: skip_file
 
-from .service import InlinedChildRequest
 from .types import AliasType, Child, Parent
-
-__all__ = ["AliasType", "Child", "InlinedChildRequest", "Parent"]
+__all__ = ["AliasType", "Child", "Parent"]

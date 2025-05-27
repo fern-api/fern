@@ -4,5 +4,4 @@
 
 from .resources import CreateOrganizationRequest, Organization, User, organization, user
 from .types import Id
-
 __all__ = ["CreateOrganizationRequest", "Id", "Organization", "User", "organization", "user"]

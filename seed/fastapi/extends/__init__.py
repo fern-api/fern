@@ -2,7 +2,5 @@
 
 # isort: skip_file
 
-from .service import Inlined
 from .types import Docs, ExampleType, Json, NestedType
-
-__all__ = ["Docs", "ExampleType", "Inlined", "Json", "NestedType"]
+__all__ = ["Docs", "ExampleType", "Json", "NestedType"]

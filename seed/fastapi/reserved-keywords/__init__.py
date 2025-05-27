@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .resources import Package, Record, package
-
 __all__ = ["Package", "Record", "package"]

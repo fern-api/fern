@@ -2,24 +2,19 @@
 
 import enum
 import typing
-
 T_Result = typing.TypeVar("T_Result")
-
-
 class ComplexType(str, enum.Enum):
     OBJECT = "object"
     UNION = "union"
     UNKNOWN = "unknown"
-
-    def visit(
-        self,
-        object: typing.Callable[[], T_Result],
-        union: typing.Callable[[], T_Result],
-        unknown: typing.Callable[[], T_Result],
-    ) -> T_Result:
+    
+    def visit(self, object: typing.Callable[[], T_Result], union: typing.Callable[[], T_Result], unknown: typing.Callable[[], T_Result]) -> T_Result:
         if self is ComplexType.OBJECT:
-            return object()
+            return object(
+            )
         if self is ComplexType.UNION:
-            return union()
+            return union(
+            )
         if self is ComplexType.UNKNOWN:
-            return unknown()
+            return unknown(
+            )

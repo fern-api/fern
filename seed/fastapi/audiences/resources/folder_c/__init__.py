@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .resources import FolderCFoo, common
-
 __all__ = ["FolderCFoo", "common"]

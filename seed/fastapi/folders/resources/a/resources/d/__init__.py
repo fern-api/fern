@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .resources import Foo, types
-
 __all__ = ["Foo", "types"]

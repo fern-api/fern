@@ -2,10 +2,7 @@
 
 import enum
 import typing
-
 T_Result = typing.TypeVar("T_Result")
-
-
 class SingleFilterSearchRequestOperator(str, enum.Enum):
     EQUALS = "="
     NOT_EQUALS = "!="
@@ -17,37 +14,35 @@ class SingleFilterSearchRequestOperator(str, enum.Enum):
     DOES_NOT_CONTAIN = "!~"
     STARTS_WITH = "^"
     ENDS_WITH = "$"
-
-    def visit(
-        self,
-        equals: typing.Callable[[], T_Result],
-        not_equals: typing.Callable[[], T_Result],
-        in_: typing.Callable[[], T_Result],
-        not_in: typing.Callable[[], T_Result],
-        less_than: typing.Callable[[], T_Result],
-        greater_than: typing.Callable[[], T_Result],
-        contains: typing.Callable[[], T_Result],
-        does_not_contain: typing.Callable[[], T_Result],
-        starts_with: typing.Callable[[], T_Result],
-        ends_with: typing.Callable[[], T_Result],
-    ) -> T_Result:
+    
+    def visit(self, equals: typing.Callable[[], T_Result], not_equals: typing.Callable[[], T_Result], in_: typing.Callable[[], T_Result], not_in: typing.Callable[[], T_Result], less_than: typing.Callable[[], T_Result], greater_than: typing.Callable[[], T_Result], contains: typing.Callable[[], T_Result], does_not_contain: typing.Callable[[], T_Result], starts_with: typing.Callable[[], T_Result], ends_with: typing.Callable[[], T_Result]) -> T_Result:
         if self is SingleFilterSearchRequestOperator.EQUALS:
-            return equals()
+            return equals(
+            )
         if self is SingleFilterSearchRequestOperator.NOT_EQUALS:
-            return not_equals()
+            return not_equals(
+            )
         if self is SingleFilterSearchRequestOperator.IN:
-            return in_()
+            return in_(
+            )
         if self is SingleFilterSearchRequestOperator.NOT_IN:
-            return not_in()
+            return not_in(
+            )
         if self is SingleFilterSearchRequestOperator.LESS_THAN:
-            return less_than()
+            return less_than(
+            )
         if self is SingleFilterSearchRequestOperator.GREATER_THAN:
-            return greater_than()
+            return greater_than(
+            )
         if self is SingleFilterSearchRequestOperator.CONTAINS:
-            return contains()
+            return contains(
+            )
         if self is SingleFilterSearchRequestOperator.DOES_NOT_CONTAIN:
-            return does_not_contain()
+            return does_not_contain(
+            )
         if self is SingleFilterSearchRequestOperator.STARTS_WITH:
-            return starts_with()
+            return starts_with(
+            )
         if self is SingleFilterSearchRequestOperator.ENDS_WITH:
-            return ends_with()
+            return ends_with(
+            )

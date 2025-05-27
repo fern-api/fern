@@ -2,7 +2,6 @@
 
 import enum
 import typing
-
 T_Result = typing.TypeVar("T_Result")
 class WeatherReport(str, enum.Enum):
     SUNNY = "SUNNY"

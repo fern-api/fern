@@ -2,7 +2,5 @@
 
 # isort: skip_file
 
-from .errors import MovieDoesNotExistError
 from .types import CreateMovieRequest, Movie, MovieId
-
-__all__ = ["CreateMovieRequest", "Movie", "MovieDoesNotExistError", "MovieId"]
+__all__ = ["CreateMovieRequest", "Movie", "MovieId"]
