@@ -54,52 +54,53 @@ export async function runLocalGenerationForWorkspace({
                 );
 
                 let organization;
-                let intermediateRepresentation;
+                let intermediateRepresentation = generateIntermediateRepresentation({
+                    workspace: fernWorkspace,
+                    audiences: generatorGroup.audiences,
+                    generationLanguage: generatorInvocation.language,
+                    keywords: generatorInvocation.keywords,
+                    smartCasing: generatorInvocation.smartCasing,
+                    exampleGeneration: {
+                        includeOptionalRequestPropertyExamples: false,
+                        disabled: generatorInvocation.disableExamples
+                    },
+                    readme: generatorInvocation.readme,
+                    version: undefined,
+                    packageName: generatorsYml.getPackageName({ generatorInvocation }),
+                    context,
+                    sourceResolver: new SourceResolverImpl(context, fernWorkspace)
+                });
+
+                const venus = createVenusService({ token: token?.value });
 
                 if (generatorInvocation.absolutePathToLocalOutput == null) {
                     token = await getAccessToken();
                     if (token == null) {
-                        interactiveTaskContext.failWithoutThrowing("Fern token is required.");
+                        interactiveTaskContext.failWithoutThrowing("Please provide a FERN_TOKEN in your environment.");
                         return;
                     }
-                    const venus = createVenusService({ token: token?.value });
+                }
 
-                    organization = await venus.organization.get(
-                        FernVenusApi.OrganizationId(projectConfig.organization)
+                organization = await venus.organization.get(FernVenusApi.OrganizationId(projectConfig.organization));
+
+                if (generatorInvocation.absolutePathToLocalOutput == null && !organization.ok) {
+                    interactiveTaskContext.failWithoutThrowing(
+                        `Failed to load details for organization ${projectConfig.organization}.`
                     );
-                    if (!organization.ok) {
-                        interactiveTaskContext.failWithoutThrowing(
-                            `Failed to load details for organization ${projectConfig.organization}.`
-                        );
-                        return;
-                    }
+                    return;
+                }
 
-                    intermediateRepresentation = generateIntermediateRepresentation({
-                        workspace: fernWorkspace,
-                        audiences: generatorGroup.audiences,
-                        generationLanguage: generatorInvocation.language,
-                        keywords: generatorInvocation.keywords,
-                        smartCasing: generatorInvocation.smartCasing,
-                        exampleGeneration: {
-                            includeOptionalRequestPropertyExamples: false,
-                            disabled: generatorInvocation.disableExamples
-                        },
-                        readme: generatorInvocation.readme,
-                        version: undefined,
-                        packageName: generatorsYml.getPackageName({ generatorInvocation }),
-                        context,
-                        sourceResolver: new SourceResolverImpl(context, fernWorkspace)
-                    });
+                if (organization.ok && organization.body.selfHostedSdKs) {
+                    intermediateRepresentation.selfHosted = true;
+                }
 
-                    if (organization.body.selfHostedSdKs) {
-                        intermediateRepresentation.selfHosted = true;
-                    }
-
-                    // Set the publish config on the intermediateRepresentation if available
-                    const publishConfig = getPublishConfig({ generatorInvocation });
-                    if (publishConfig != null) {
-                        intermediateRepresentation.publishConfig = publishConfig;
-                    }
+                // Set the publish config on the intermediateRepresentation if available
+                const publishConfig = getPublishConfig({
+                    generatorInvocation,
+                    org: organization.ok ? organization.body : undefined
+                });
+                if (publishConfig != null) {
+                    intermediateRepresentation.publishConfig = publishConfig;
                 }
 
                 const absolutePathToLocalOutput =
@@ -124,9 +125,9 @@ export async function runLocalGenerationForWorkspace({
                     context: interactiveTaskContext,
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     outputVersionOverride: undefined,
-                    writeUnitTests: organization?.body.snippetUnitTestsEnabled ?? false,
-                    generateOauthClients: organization?.body.oauthClientEnabled ?? false,
-                    generatePaginatedClients: organization?.body.paginationEnabled ?? false,
+                    writeUnitTests: organization.ok ? (organization?.body.snippetUnitTestsEnabled ?? false) : false,
+                    generateOauthClients: organization.ok ? (organization?.body.oauthClientEnabled ?? false) : false,
+                    generatePaginatedClients: organization.ok ? (organization?.body.paginationEnabled ?? false) : false,
                     ir: intermediateRepresentation,
                     runner
                 });
@@ -151,9 +152,11 @@ export async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {
 }
 
 function getPublishConfig({
-    generatorInvocation
+    generatorInvocation,
+    org
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
+    org?: FernVenusApi.Organization;
 }): FernIr.PublishingConfig | undefined {
     if (generatorInvocation.raw?.github != null && isGithubSelfhosted(generatorInvocation.raw.github)) {
         return FernIr.PublishingConfig.github({
@@ -166,6 +169,12 @@ function getPublishConfig({
                 workspaceId: "",
                 collectionId: undefined
             })
+        });
+    }
+
+    if (generatorInvocation.raw?.output?.location === "local-file-system") {
+        return FernIr.PublishingConfig.filesystem({
+            generateFullProject: org?.selfHostedSdKs ?? false
         });
     }
 
