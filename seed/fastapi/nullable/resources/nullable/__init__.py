@@ -2,7 +2,5 @@
 
 # isort: skip_file
 
-from .service import CreateUserRequest, DeleteUserRequest
 from .types import Email, Metadata, Status, User, UserId, WeirdNumber
-
-__all__ = ["CreateUserRequest", "DeleteUserRequest", "Email", "Metadata", "Status", "User", "UserId", "WeirdNumber"]
+__all__ = ["Email", "Metadata", "Status", "User", "UserId", "WeirdNumber"]

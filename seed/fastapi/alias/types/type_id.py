@@ -3,5 +3,4 @@
 """
 "type-kaljhv87"
 """
-
 TypeId = str

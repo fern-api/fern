@@ -3,27 +3,5 @@
 # isort: skip_file
 
 from . import union
-from .union import (
-    Key,
-    KeyType,
-    Metadata,
-    MetadataUnion,
-    MyUnion,
-    NamedMetadata,
-    OptionalMetadata,
-    Request,
-    TypeWithOptionalUnion,
-)
-
-__all__ = [
-    "Key",
-    "KeyType",
-    "Metadata",
-    "MetadataUnion",
-    "MyUnion",
-    "NamedMetadata",
-    "OptionalMetadata",
-    "Request",
-    "TypeWithOptionalUnion",
-    "union",
-]
+from .union import Key, KeyType, Metadata, MetadataUnion, MyUnion, NamedMetadata, OptionalMetadata, Request, TypeWithOptionalUnion
+__all__ = ["Key", "KeyType", "Metadata", "MetadataUnion", "MyUnion", "NamedMetadata", "OptionalMetadata", "Request", "TypeWithOptionalUnion", "union"]

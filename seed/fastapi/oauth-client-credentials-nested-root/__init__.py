@@ -3,6 +3,4 @@
 # isort: skip_file
 
 from .resources import auth
-from .security import ApiAuth
-
-__all__ = ["ApiAuth", "auth"]
+__all__ = ["auth"]

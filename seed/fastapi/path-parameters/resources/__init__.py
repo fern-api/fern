@@ -5,5 +5,4 @@
 from . import organizations, user
 from .organizations import Organization
 from .user import User
-
 __all__ = ["Organization", "User", "organizations", "user"]

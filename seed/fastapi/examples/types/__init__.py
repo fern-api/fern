@@ -6,5 +6,4 @@ from .basic_type import BasicType
 from .complex_type import ComplexType
 from .identifier import Identifier
 from .type import Type
-
 __all__ = ["BasicType", "ComplexType", "Identifier", "Type"]

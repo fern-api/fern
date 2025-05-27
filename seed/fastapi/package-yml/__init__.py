@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .types import EchoRequest
-
 __all__ = ["EchoRequest"]

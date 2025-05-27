@@ -4,5 +4,4 @@
 
 from . import service
 from .service import NestedUser, Organization, Resource, ResourceStatus, User
-
 __all__ = ["NestedUser", "Organization", "Resource", "ResourceStatus", "User", "service"]

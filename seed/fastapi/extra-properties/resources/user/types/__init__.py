@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .user import User
-
 __all__ = ["User"]

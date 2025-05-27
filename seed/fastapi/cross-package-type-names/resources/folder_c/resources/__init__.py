@@ -4,5 +4,4 @@
 
 from . import common
 from .common import Foo
-
 __all__ = ["Foo", "common"]

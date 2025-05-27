@@ -5,5 +5,4 @@
 from .object import Object
 from .type import Type
 from .type_id import TypeId
-
 __all__ = ["Object", "Type", "TypeId"]

@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .types import FolderCFoo
-
 __all__ = ["FolderCFoo"]

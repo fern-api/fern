@@ -4,13 +4,4 @@
 
 from . import service
 from .service import Id, MyAliasObject, MyCollectionAliasObject, MyObject, MyObjectWithOptional, ObjectType
-
-__all__ = [
-    "Id",
-    "MyAliasObject",
-    "MyCollectionAliasObject",
-    "MyObject",
-    "MyObjectWithOptional",
-    "ObjectType",
-    "service",
-]
+__all__ = ["Id", "MyAliasObject", "MyCollectionAliasObject", "MyObject", "MyObjectWithOptional", "ObjectType", "service"]

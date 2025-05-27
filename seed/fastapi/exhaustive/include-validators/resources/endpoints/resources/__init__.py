@@ -4,5 +4,4 @@
 
 from . import put
 from .put import Error, ErrorCategory, ErrorCode, PutResponse
-
 __all__ = ["Error", "ErrorCategory", "ErrorCode", "PutResponse", "put"]
