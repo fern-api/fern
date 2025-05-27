@@ -7,6 +7,15 @@ types:
       direct: 
         type: DirectPublish
         docs: Publish directly from the generator
+      filesystem: 
+        type: Filesystem
+        docs: Do not publish anywhere but deposit files in the local filesytesm
+  
+  Filesystem: 
+    properties: 
+      generateFullProject:
+        type: boolean
+        docs: If true, will generate the entire project (pyroject.toml, package.json, etc)
   
   GithubPublish: 
     properties: 
