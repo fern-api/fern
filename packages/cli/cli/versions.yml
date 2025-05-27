@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Support retrieving subpackages in the ApiDefinitionHolder by both Id locator and tag locator.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-27"
+  version: 0.63.8
+
+- changelogEntry:
+    - summary: |
         Support running python generators with v58 of IR.
       type: fix
   irVersion: 58

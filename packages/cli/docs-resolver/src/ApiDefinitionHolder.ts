@@ -1,3 +1,4 @@
+import { camelCase } from "lodash-es";
 import urlJoin from "url-join";
 
 import { APIV1Read, FernNavigation } from "@fern-api/fdr-sdk";
@@ -52,10 +53,15 @@ export class ApiDefinitionHolder {
             return undefined;
         }
         const subpackageId = APIV1Read.SubpackageId(subpackageIdRaw);
+        const fallbackSubpackageId = APIV1Read.SubpackageId(`subpackage_${camelCase(subpackageIdRaw)}`);
         if (subpackageId === ROOT_PACKAGE_ID) {
             return this.api.rootPackage;
         } else {
-            return this.api.subpackages[subpackageId] ?? this.#subpackagesByLocator.get(subpackageId);
+            return (
+                this.api.subpackages[subpackageId] ??
+                this.#subpackagesByLocator.get(subpackageId) ??
+                this.api.subpackages[fallbackSubpackageId]
+            );
         }
     }
 
