@@ -6,8 +6,11 @@ import {
     AuthSchemesRequirement,
     PrimitiveTypeV1,
     PrimitiveTypeV2,
-    TypeReference
+    RequestPropertyValue,
+    TypeReference,
+    OAuthConfiguration
 } from "@fern-api/ir-sdk";
+import { STRING_TYPE_REFERENCE } from "../utils/constants";
 
 export function convertApiAuth({
     rawApiFileSchema,
@@ -94,10 +97,10 @@ function convertSchemeReference({
                     rawScheme
                 }),
             oauth: (rawScheme) =>
-                generateBearerAuth({
+                generateOauth({
                     casingsGenerator,
                     docs,
-                    rawScheme: undefined
+                    rawScheme
                 })
         });
     };
@@ -106,7 +109,6 @@ function convertSchemeReference({
 
     switch (scheme) {
         case "bearer":
-        case "oauth":
             return generateBearerAuth({
                 casingsGenerator,
                 docs: undefined,
@@ -118,6 +120,8 @@ function convertSchemeReference({
                 docs: undefined,
                 rawScheme: undefined
             });
+        case "oauth":
+
         default:
             return convertNamedAuthSchemeReference(scheme, typeof reference !== "string" ? reference.docs : undefined);
     }
@@ -154,5 +158,75 @@ function generateBasicAuth({
         usernameEnvVar: rawScheme?.username?.env,
         password: casingsGenerator.generateName(rawScheme?.password?.name ?? "password"),
         passwordEnvVar: rawScheme?.password?.env
+    });
+}
+
+function generateOauth({
+    casingsGenerator,
+    docs,
+    rawScheme
+}: {
+    casingsGenerator: CasingsGenerator;
+    docs: string | undefined;
+    rawScheme: RawSchemas.OAuthSchemeSchema | undefined;
+}): AuthScheme.Oauth {
+    return AuthScheme.oauth({
+        docs,
+        configuration: OAuthConfiguration.clientCredentials({
+            clientIdEnvVar: rawScheme?.["client-id-env"],
+            clientSecretEnvVar: rawScheme?.["client-secret-env"],
+            tokenPrefix: rawScheme?.["token-prefix"],
+            tokenHeader: rawScheme?.["token-header"],
+            scopes: rawScheme?.scopes,
+            tokenEndpoint: {
+                requestProperties: {
+                    clientId: {
+                        propertyPath: undefined,
+                        property: RequestPropertyValue.body({
+                            name: { wireValue: "client_id", name: casingsGenerator.generateName("client_id") },
+                            valueType: STRING_TYPE_REFERENCE,
+                            v2Examples: undefined,
+                            availability: undefined,
+                            docs: undefined,
+                            propertyAccess: undefined
+                        }),
+                    },
+                    clientSecret: {
+                        propertyPath: undefined,
+                        property: RequestPropertyValue.body({
+                            name: { wireValue: "client_secret", name: casingsGenerator.generateName("client_secret") },
+                            valueType: STRING_TYPE_REFERENCE,
+                            v2Examples: undefined,
+                            availability: undefined,
+                            docs: undefined,
+                            propertyAccess: undefined
+                        }),
+                    },
+                    scopes: undefined,
+                    customProperties: undefined
+                },
+                endpointReference: {
+                    endpointId: "",
+                    serviceId: "",
+                    subpackageId: undefined
+                },
+                responseProperties: {
+                    accessToken: {
+                        propertyPath: undefined,
+                        property: {
+                            name: { wireValue: "access_token", name: casingsGenerator.generateName("access_token") },
+                            valueType: STRING_TYPE_REFERENCE,
+                            v2Examples: undefined,
+                            availability: undefined,
+                            docs: undefined,
+                            propertyAccess: undefined
+                        }
+                    },
+                    expiresIn: undefined,
+                    refreshToken: undefined
+                }
+            },
+            refreshEndpoint: rawScheme && rawScheme["refresh-token"] ? (rawScheme["refresh-token"] as any) : undefined
+        })
     });
 }
