@@ -60,7 +60,8 @@ export class ApiDefinitionHolder {
             return (
                 this.api.subpackages[subpackageId] ??
                 this.#subpackagesByLocator.get(subpackageId) ??
-                this.api.subpackages[fallbackSubpackageId]
+                this.api.subpackages[fallbackSubpackageId] ??
+                this.#subpackagesByLocator.get(fallbackSubpackageId)
             );
         }
     }
