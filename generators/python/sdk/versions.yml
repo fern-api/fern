@@ -1,4 +1,12 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.21.2
+  changelogEntry:
+    - summary: |
+        Handle HEAD HTTP method gracefully by treating it as a POST method when constructing the snippet registry, rather than failing.
+      type: chore
+  createdAt: '2025-05-27'
+  irVersion: 58
+
 - version: 4.21.1
   changelogEntry:
     - summary: |
