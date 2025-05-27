@@ -153,7 +153,7 @@ export async function getPreviewDocsDefinition({
         pages: dbDocsDefinition.pages,
         search: { type: "legacyMultiAlgoliaIndex", algoliaIndex: undefined },
         algoliaSearchIndex: undefined,
-        jsFiles: undefined,
+        jsFiles: dbDocsDefinition.jsFiles,
         id: undefined
     };
 }
