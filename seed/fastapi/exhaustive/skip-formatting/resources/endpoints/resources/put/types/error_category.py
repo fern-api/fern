@@ -2,7 +2,6 @@
 
 import enum
 import typing
-
 T_Result = typing.TypeVar("T_Result")
 class ErrorCategory(str, enum.Enum):
     API_ERROR = "API_ERROR"

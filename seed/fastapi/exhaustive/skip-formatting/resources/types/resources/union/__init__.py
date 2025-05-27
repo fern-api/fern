@@ -2,6 +2,5 @@
 
 # isort: skip_file
 
-from .errors import ErrorWithUnionBody
 from .types import Animal, Cat, Dog
-__all__ = ["Animal", "Cat", "Dog", "ErrorWithUnionBody"]
+__all__ = ["Animal", "Cat", "Dog"]

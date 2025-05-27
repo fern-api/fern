@@ -3,6 +3,5 @@
 # isort: skip_file
 
 from . import errors
-from .errors import BadRequest, UnauthorizedRequest, UnauthorizedRequestErrorBody
-
-__all__ = ["BadRequest", "UnauthorizedRequest", "UnauthorizedRequestErrorBody", "errors"]
+from .errors import UnauthorizedRequestErrorBody
+__all__ = ["UnauthorizedRequestErrorBody", "errors"]

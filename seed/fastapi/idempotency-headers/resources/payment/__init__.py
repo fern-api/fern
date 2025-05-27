@@ -2,7 +2,5 @@
 
 # isort: skip_file
 
-from .service import CreatePaymentRequest
 from .types import Currency
-
-__all__ = ["CreatePaymentRequest", "Currency"]
+__all__ = ["Currency"]

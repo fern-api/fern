@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .response import Response
-
 __all__ = ["Response"]

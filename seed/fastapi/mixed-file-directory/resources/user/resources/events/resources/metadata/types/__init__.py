@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .metadata import Metadata
-
 __all__ = ["Metadata"]

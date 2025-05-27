@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .resources import Error, ErrorCategory, ErrorCode, PutResponse, put
-
 __all__ = ["Error", "ErrorCategory", "ErrorCode", "PutResponse", "put"]

@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .folder_c_foo import FolderCFoo
-
 __all__ = ["FolderCFoo"]

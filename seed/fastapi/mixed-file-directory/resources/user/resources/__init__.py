@@ -4,5 +4,4 @@
 
 from . import events
 from .events import Event
-
 __all__ = ["Event", "events"]

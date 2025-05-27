@@ -2,7 +2,5 @@
 
 # isort: skip_file
 
-from .resources import BadRequest, UnauthorizedRequest, UnauthorizedRequestErrorBody, errors
-from .security import ApiAuth
-
-__all__ = ["ApiAuth", "BadRequest", "UnauthorizedRequest", "UnauthorizedRequestErrorBody", "errors"]
+from .resources import UnauthorizedRequestErrorBody, errors
+__all__ = ["UnauthorizedRequestErrorBody", "errors"]

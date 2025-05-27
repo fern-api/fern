@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from . import auth
-
 __all__ = ["auth"]

@@ -4,5 +4,4 @@
 
 from . import common
 from .common import FolderCFoo
-
 __all__ = ["FolderCFoo", "common"]

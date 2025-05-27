@@ -2,7 +2,5 @@
 
 # isort: skip_file
 
-from .security import ApiAuth
 from .types import UsernameCursor, UsernamePage
-
-__all__ = ["ApiAuth", "UsernameCursor", "UsernamePage"]
+__all__ = ["UsernameCursor", "UsernamePage"]

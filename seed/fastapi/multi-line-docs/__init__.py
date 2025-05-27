@@ -2,7 +2,6 @@
 
 # isort: skip_file
 
-from .resources import CreateUserRequest, User, user
+from .resources import User, user
 from .types import Operand
-
-__all__ = ["CreateUserRequest", "Operand", "User", "user"]
+__all__ = ["Operand", "User", "user"]

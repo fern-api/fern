@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .imported import Imported
-
 __all__ = ["Imported"]

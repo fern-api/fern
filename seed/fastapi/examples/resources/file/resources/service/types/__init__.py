@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .filename import Filename
-
 __all__ = ["Filename"]
