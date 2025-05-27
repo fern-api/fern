@@ -289,6 +289,9 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             !this.schema.properties &&
             !this.schema.allOf
         ) {
+            if (typeof this.schema.additionalProperties === "boolean" && this.schema.additionalProperties === false) {
+                return undefined;
+            }
             const additionalPropertiesConverter = new MapSchemaConverter({
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
