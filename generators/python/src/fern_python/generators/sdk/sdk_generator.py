@@ -280,59 +280,58 @@ class SdkGenerator(AbstractGenerator):
         output_mode = generator_config.output.mode.get_as_union().type
         print(f"Output mode: {output_mode}")
 
-        if generator_config.output.mode.get_as_union().type != "downloadFiles":
-            generator_cli = GeneratorCli(
-                organization=generator_config.organization,
-                project_config=project._project_config,
-                ir=ir,
-                generator_exec_wrapper=generator_exec_wrapper,
+        generator_cli = GeneratorCli(
+            organization=generator_config.organization,
+            project_config=project._project_config,
+            ir=ir,
+            generator_exec_wrapper=generator_exec_wrapper,
+            context=context,
+            endpoint_metadata=endpoint_metadata_collector,
+        )
+
+        snippets = snippet_registry.snippets()
+        if snippets is not None and generator_config.output.mode.get_as_union().type == "downloadFiles":
+            self._maybe_write_snippets(
                 context=context,
-                endpoint_metadata=endpoint_metadata_collector,
+                snippets=snippets,
+                project=project,
             )
 
-            snippets = snippet_registry.snippets()
-            if snippets is not None:
-                self._maybe_write_snippets(
+            try:
+                self._write_readme(
                     context=context,
+                    generator_cli=generator_cli,
+                    snippets=snippets,
+                    project=project,
+                    generated_root_client=generated_root_client,
+                    write_websocket_snippets=write_websocket_snippets,
+                )
+            except Exception as e:
+                generator_exec_wrapper.send_update(
+                    GeneratorUpdate.factory.log(
+                        LogUpdate(
+                            level=LogLevel.DEBUG,
+                            message=f"Failed to generate README.md. Email support@buildwithfern.com with the error: \n{e}\n",
+                        )
+                    )
+                )
+
+            try:
+                self._write_reference(
+                    context=context,
+                    generator_cli=generator_cli,
                     snippets=snippets,
                     project=project,
                 )
-
-                try:
-                    self._write_readme(
-                        context=context,
-                        generator_cli=generator_cli,
-                        snippets=snippets,
-                        project=project,
-                        generated_root_client=generated_root_client,
-                        write_websocket_snippets=write_websocket_snippets,
+            except Exception as e:
+                generator_exec_wrapper.send_update(
+                    GeneratorUpdate.factory.log(
+                        LogUpdate(
+                            level=LogLevel.DEBUG,
+                            message=f"Failed to generate reference.md. Email support@buildwithfern.com with the error: \n{e}\n",
+                        ),
                     )
-                except Exception as e:
-                    generator_exec_wrapper.send_update(
-                        GeneratorUpdate.factory.log(
-                            LogUpdate(
-                                level=LogLevel.DEBUG,
-                                message=f"Failed to generate README.md. Email support@buildwithfern.com with the error: \n{e}\n",
-                            )
-                        )
-                    )
-
-                try:
-                    self._write_reference(
-                        context=context,
-                        generator_cli=generator_cli,
-                        snippets=snippets,
-                        project=project,
-                    )
-                except Exception as e:
-                    generator_exec_wrapper.send_update(
-                        GeneratorUpdate.factory.log(
-                            LogUpdate(
-                                level=LogLevel.DEBUG,
-                                message=f"Failed to generate reference.md. Email support@buildwithfern.com with the error: \n{e}\n",
-                            ),
-                        )
-                    )
+                )
 
         context.core_utilities.copy_to_project(project=project)
 

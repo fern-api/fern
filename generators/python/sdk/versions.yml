@@ -1,4 +1,12 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.21.1
+  changelogEntry:
+    - summary: |
+        Make sure to generate README and Reference even when generating in local mode (if self hosting is enabled).
+      type: chore
+  createdAt: '2025-05-27'
+  irVersion: 58
+
 - version: 4.21.0
   changelogEntry:
     - summary: |
