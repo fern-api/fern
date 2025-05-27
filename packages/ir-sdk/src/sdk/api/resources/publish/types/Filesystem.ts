@@ -3,6 +3,6 @@
  */
 
 export interface Filesystem {
-    /** If true, will generate the entire project (pyroject.toml, package.json, etc) */
+    /** If true, will generate the entire project (pyproject.toml, package.json, etc) */
     generateFullProject: boolean;
 }

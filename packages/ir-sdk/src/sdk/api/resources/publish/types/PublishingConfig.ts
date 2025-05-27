@@ -12,7 +12,7 @@ export type PublishingConfig =
      * Publish directly from the generator */
     | FernIr.PublishingConfig.Direct
     /**
-     * Do not publish anywhere but deposit files in the local filesytesm */
+     * Do not publish anywhere but deposit files in the local filesystem */
     | FernIr.PublishingConfig.Filesystem;
 
 export namespace PublishingConfig {
