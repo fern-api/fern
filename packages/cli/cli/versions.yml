@@ -1,6 +1,6 @@
 - changelogEntry:
     - summary: |
-        Support retrieving subpackages in the ApiDefinitionHolder by both Id locator and tag locator.
+        Support retrieving subpackages in the ApiDefinitionHolder by both the id locator and tag locator.
       type: fix
   irVersion: 58
   createdAt: "2025-05-27"
