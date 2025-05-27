@@ -5,7 +5,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.45.1
+        version: 0.51.7
         output:
           location: local-file-system
           path: ../../../packages/cli/fern-definition/schema/src/schemas
@@ -19,7 +19,7 @@ groups:
       - docs-parsers
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.39.3
+        version: 0.51.7
         output:
           location: npm
           url: npm.buildwithfern.com
