@@ -3,8 +3,8 @@ import path from "path";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 
-import { generateAndSnapshotDynamicIR } from "./generateAndSnapshotDynamicIR";
 import { loadApisOrThrow } from "../../loadApisOrThrow";
+import { generateAndSnapshotDynamicIR } from "./generateAndSnapshotDynamicIR";
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 describe("test definitions", async () => {
