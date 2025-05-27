@@ -5,7 +5,7 @@
         Bump to v58 of IR.
       type: chore
   createdAt: '2025-05-27'
-  irVersion: 57
+  irVersion: 58
 
 - version: 1.6.4
   irVersion: 57
