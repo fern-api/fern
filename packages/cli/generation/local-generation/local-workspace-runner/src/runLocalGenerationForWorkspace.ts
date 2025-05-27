@@ -81,9 +81,7 @@ export async function runLocalGenerationForWorkspace({
                     }
                 }
 
-                organization = await venus.organization.get(
-                    FernVenusApi.OrganizationId(projectConfig.organization)
-                );
+                organization = await venus.organization.get(FernVenusApi.OrganizationId(projectConfig.organization));
 
                 if (generatorInvocation.absolutePathToLocalOutput == null && !organization.ok) {
                     interactiveTaskContext.failWithoutThrowing(
@@ -97,7 +95,10 @@ export async function runLocalGenerationForWorkspace({
                 }
 
                 // Set the publish config on the intermediateRepresentation if available
-                const publishConfig = getPublishConfig({ generatorInvocation, org: organization.ok ? organization.body : undefined });
+                const publishConfig = getPublishConfig({
+                    generatorInvocation,
+                    org: organization.ok ? organization.body : undefined
+                });
                 if (publishConfig != null) {
                     intermediateRepresentation.publishConfig = publishConfig;
                 }
@@ -124,9 +125,9 @@ export async function runLocalGenerationForWorkspace({
                     context: interactiveTaskContext,
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     outputVersionOverride: undefined,
-                    writeUnitTests: organization.ok ? organization?.body.snippetUnitTestsEnabled ?? false : false,
-                    generateOauthClients: organization.ok ? organization?.body.oauthClientEnabled ?? false  : false,
-                    generatePaginatedClients: organization.ok ? organization?.body.paginationEnabled ?? false  : false,
+                    writeUnitTests: organization.ok ? (organization?.body.snippetUnitTestsEnabled ?? false) : false,
+                    generateOauthClients: organization.ok ? (organization?.body.oauthClientEnabled ?? false) : false,
+                    generatePaginatedClients: organization.ok ? (organization?.body.paginationEnabled ?? false) : false,
                     ir: intermediateRepresentation,
                     runner
                 });
@@ -152,7 +153,7 @@ export async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {
 
 function getPublishConfig({
     generatorInvocation,
-    org,
+    org
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
     org?: FernVenusApi.Organization;
@@ -173,8 +174,8 @@ function getPublishConfig({
 
     if (generatorInvocation.raw?.output?.location === "local-file-system") {
         return FernIr.PublishingConfig.filesystem({
-            generateFullProject: org?.selfHostedSdKs ?? false,
-        })
+            generateFullProject: org?.selfHostedSdKs ?? false
+        });
     }
 
     return generatorInvocation.outputMode._visit({
