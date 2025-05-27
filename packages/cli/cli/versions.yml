@@ -3,7 +3,15 @@
       type: fix
   irVersion: 58
   createdAt: "2025-05-27"
-  version: 0.63.8
+  version: 0.63.8-rc1
+
+- changelogEntry:
+    - summary: |
+        Beta support for custom React components in local development mode.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-05-27"
+  version: 0.63.8-rc0
 
 - changelogEntry:
     - summary: |
