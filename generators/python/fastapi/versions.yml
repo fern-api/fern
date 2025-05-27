@@ -1,4 +1,12 @@
 # For unreleased changes, use unreleased.yml
+- version: 1.7.0
+  changelogEntry:
+    - summary: |
+        Bump to v58 of IR.
+      type: chore
+  createdAt: '2025-05-27'
+  irVersion: 57
+
 - version: 1.6.4
   irVersion: 57
   changelogEntry:
