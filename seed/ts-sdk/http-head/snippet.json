@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.list"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedHttpHeadClient } from \"@fern/http-head\";\n\nconst client = new SeedHttpHeadClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.list({\n    limit: 1\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}
