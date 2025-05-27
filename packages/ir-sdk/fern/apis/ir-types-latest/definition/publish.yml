@@ -15,7 +15,7 @@ types:
     properties: 
       generateFullProject:
         type: boolean
-        docs: If true, will generate the entire project (pyroject.toml, package.json, etc)
+        docs: If true, will generate the entire project (pyproject.toml, package.json, etc)
   
   GithubPublish: 
     properties: 
