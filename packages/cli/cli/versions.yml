@@ -1,9 +1,17 @@
 - changelogEntry:
     - summary: |
+        Support retrieving subpackages in the ApiDefinitionHolder by both Id locator and tag locator.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-27"
+  version: 0.63.8-rc1
+
+- changelogEntry:
+    - summary: |
         Beta support for custom React components in local development mode.
       type: feat
   irVersion: 58
-  createdAt: "2025-05-27"
+  createdAt: "2025-05-27
   version: 0.63.8-rc0
 
 - changelogEntry:
