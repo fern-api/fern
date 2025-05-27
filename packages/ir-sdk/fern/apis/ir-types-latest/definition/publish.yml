@@ -9,7 +9,7 @@ types:
         docs: Publish directly from the generator
       filesystem: 
         type: Filesystem
-        docs: Do not publish anywhere but deposit files in the local filesytesm
+        docs: Do not publish anywhere but deposit files in the local filesystem
   
   Filesystem: 
     properties: 
