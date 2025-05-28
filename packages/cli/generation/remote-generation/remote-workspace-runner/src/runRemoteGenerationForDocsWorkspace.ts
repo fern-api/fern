@@ -21,7 +21,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     ossWorkspaces: OSSWorkspace[];
     docsWorkspace: DocsWorkspace;
     context: TaskContext;
-    token: FernToken;
+    token: FernToken | null;
     instanceUrl: string | undefined;
     preview: boolean;
 }): Promise<void> {
@@ -71,20 +71,27 @@ export async function runRemoteGenerationForDocsWorkspace({
         }
     }
 
-    await context.runInteractiveTask({ name: maybeInstance.url }, async () => {
-        await publishDocs({
-            docsWorkspace,
-            customDomains,
-            domain: maybeInstance.url,
-            token,
-            organization,
-            context,
-            apiWorkspaces,
-            ossWorkspaces,
-            preview,
-            editThisPage: maybeInstance.editThisPage,
-            isPrivate: maybeInstance.private
+    if (token == null) {
+        // TODO: don't want to publish docs if we are skipping auth
+        // want to return a dockerfile instead....
+        // console.log("token is null");
+        return;
+    } else {
+        await context.runInteractiveTask({ name: maybeInstance.url }, async () => {
+            await publishDocs({
+                docsWorkspace,
+                customDomains,
+                domain: maybeInstance.url,
+                token,
+                organization,
+                context,
+                apiWorkspaces,
+                ossWorkspaces,
+                preview,
+                editThisPage: maybeInstance.editThisPage,
+                isPrivate: maybeInstance.private
+            });
         });
-    });
+    }
     return;
 }

@@ -1,4 +1,4 @@
-import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
+import { FernToken, FernUserToken, createOrganizationIfDoesNotExist } from "@fern-api/auth";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
@@ -27,19 +27,22 @@ export async function generateDocsWorkspace({
     if (docsWorkspace == null) {
         return;
     }
+    const shouldSkipAuth = process.env["FERN_AUTH_NO_VERIFY"] === "true";
 
-    const token = await cliContext.runTask(async (context) => {
-        return askToLogin(context);
-    });
-
-    if (token.type === "user") {
-        await cliContext.runTask(async (context) => {
-            await createOrganizationIfDoesNotExist({
-                organization: project.config.organization,
-                token,
-                context
-            });
+    let token: FernToken | null = null;
+    if (!shouldSkipAuth) {
+        token = await cliContext.runTask(async (context) => {
+            return askToLogin(context);
         });
+        if (token.type === "user") {
+            await cliContext.runTask(async (context) => {
+                await createOrganizationIfDoesNotExist({
+                    organization: project.config.organization,
+                    token: token as FernUserToken,
+                    context
+                });
+            });
+        }
     }
 
     await cliContext.instrumentPostHogEvent({
