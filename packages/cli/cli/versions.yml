@@ -1,4 +1,11 @@
 - changelogEntry:
+    - summary: Fix duplicate properties in example IR generation.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-28"
+  version: 0.63.14
+
+- changelogEntry:
     - summary: Make nullable properties optional in examples in the Fern Definition.
       type: fix
   irVersion: 58
