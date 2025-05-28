@@ -3272,8 +3272,8 @@
         }
       }
     },
-    "AccountsGetParametersSchema": {
-      "name": "AccountsGetParametersSchema",
+    "AccountsGetParametersLocation": {
+      "name": "AccountsGetParametersLocation",
       "shape": {
         "type": "enum",
         "values": [
@@ -3341,7 +3341,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "AccountsGetParametersSchema"
+                  "value": "AccountsGetParametersLocation"
                 }
               }
             },

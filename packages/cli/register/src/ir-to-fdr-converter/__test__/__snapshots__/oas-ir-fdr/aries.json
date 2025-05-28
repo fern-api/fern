@@ -18186,8 +18186,57 @@
         "properties": []
       }
     },
-    "ConnectionsGetParametersSchema": {
-      "name": "ConnectionsGetParametersSchema",
+    "ConnectionsGetParametersConnectionProtocol": {
+      "name": "ConnectionsGetParametersConnectionProtocol",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "connections/1.0"
+          },
+          {
+            "value": "didexchange/1.0"
+          }
+        ]
+      }
+    },
+    "ConnectionsGetParametersState": {
+      "name": "ConnectionsGetParametersState",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "start"
+          },
+          {
+            "value": "error"
+          },
+          {
+            "value": "response"
+          },
+          {
+            "value": "request"
+          },
+          {
+            "value": "abandoned"
+          },
+          {
+            "value": "init"
+          },
+          {
+            "value": "invitation"
+          },
+          {
+            "value": "active"
+          },
+          {
+            "value": "completed"
+          }
+        ]
+      }
+    },
+    "ConnectionsGetParametersTheirRole": {
+      "name": "ConnectionsGetParametersTheirRole",
       "shape": {
         "type": "enum",
         "values": [
@@ -18206,8 +18255,22 @@
         ]
       }
     },
-    "IssueCredential20RecordsGetParametersSchema": {
-      "name": "IssueCredential20RecordsGetParametersSchema",
+    "IssueCredential20RecordsGetParametersRole": {
+      "name": "IssueCredential20RecordsGetParametersRole",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "issuer"
+          },
+          {
+            "value": "holder"
+          }
+        ]
+      }
+    },
+    "IssueCredential20RecordsGetParametersState": {
+      "name": "IssueCredential20RecordsGetParametersState",
       "shape": {
         "type": "enum",
         "values": [
@@ -18247,8 +18310,22 @@
         ]
       }
     },
-    "IssueCredentialRecordsGetParametersSchema": {
-      "name": "IssueCredentialRecordsGetParametersSchema",
+    "IssueCredentialRecordsGetParametersRole": {
+      "name": "IssueCredentialRecordsGetParametersRole",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "issuer"
+          },
+          {
+            "value": "holder"
+          }
+        ]
+      }
+    },
+    "IssueCredentialRecordsGetParametersState": {
+      "name": "IssueCredentialRecordsGetParametersState",
       "shape": {
         "type": "enum",
         "values": [
@@ -18288,8 +18365,8 @@
         ]
       }
     },
-    "LedgerDidEndpointGetParametersSchema": {
-      "name": "LedgerDidEndpointGetParametersSchema",
+    "LedgerDidEndpointGetParametersEndpointType": {
+      "name": "LedgerDidEndpointGetParametersEndpointType",
       "shape": {
         "type": "enum",
         "values": [
@@ -18305,8 +18382,8 @@
         ]
       }
     },
-    "LedgerRegisterNymPostParametersSchema": {
-      "name": "LedgerRegisterNymPostParametersSchema",
+    "LedgerRegisterNymPostParametersRole": {
+      "name": "LedgerRegisterNymPostParametersRole",
       "shape": {
         "type": "enum",
         "values": [
@@ -18328,8 +18405,8 @@
         ]
       }
     },
-    "MediationKeylistsGetParametersSchema": {
-      "name": "MediationKeylistsGetParametersSchema",
+    "MediationKeylistsGetParametersRole": {
+      "name": "MediationKeylistsGetParametersRole",
       "shape": {
         "type": "enum",
         "default": "server",
@@ -18343,8 +18420,8 @@
         ]
       }
     },
-    "MediationRequestsGetParametersSchema": {
-      "name": "MediationRequestsGetParametersSchema",
+    "MediationRequestsGetParametersState": {
+      "name": "MediationRequestsGetParametersState",
       "shape": {
         "type": "enum",
         "values": [
@@ -18360,8 +18437,22 @@
         ]
       }
     },
-    "PresentProof20RecordsGetParametersSchema": {
-      "name": "PresentProof20RecordsGetParametersSchema",
+    "PresentProof20RecordsGetParametersRole": {
+      "name": "PresentProof20RecordsGetParametersRole",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "prover"
+          },
+          {
+            "value": "verifier"
+          }
+        ]
+      }
+    },
+    "PresentProof20RecordsGetParametersState": {
+      "name": "PresentProof20RecordsGetParametersState",
       "shape": {
         "type": "enum",
         "values": [
@@ -18392,8 +18483,22 @@
         ]
       }
     },
-    "PresentProofRecordsGetParametersSchema": {
-      "name": "PresentProofRecordsGetParametersSchema",
+    "PresentProofRecordsGetParametersRole": {
+      "name": "PresentProofRecordsGetParametersRole",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "prover"
+          },
+          {
+            "value": "verifier"
+          }
+        ]
+      }
+    },
+    "PresentProofRecordsGetParametersState": {
+      "name": "PresentProofRecordsGetParametersState",
       "shape": {
         "type": "enum",
         "values": [
@@ -18427,8 +18532,8 @@
         ]
       }
     },
-    "RevocationRegistriesCreatedGetParametersSchema": {
-      "name": "RevocationRegistriesCreatedGetParametersSchema",
+    "RevocationRegistriesCreatedGetParametersState": {
+      "name": "RevocationRegistriesCreatedGetParametersState",
       "shape": {
         "type": "enum",
         "values": [
@@ -18450,8 +18555,8 @@
         ]
       }
     },
-    "RevocationRegistryRevRegIdSetStatePatchParametersSchema": {
-      "name": "RevocationRegistryRevRegIdSetStatePatchParametersSchema",
+    "RevocationRegistryRevRegIdSetStatePatchParametersState": {
+      "name": "RevocationRegistryRevRegIdSetStatePatchParametersState",
       "shape": {
         "type": "enum",
         "values": [
@@ -18473,8 +18578,8 @@
         ]
       }
     },
-    "TransactionsConnIdSetEndorserRolePostParametersSchema": {
-      "name": "TransactionsConnIdSetEndorserRolePostParametersSchema",
+    "TransactionsConnIdSetEndorserRolePostParametersTransactionMyJob": {
+      "name": "TransactionsConnIdSetEndorserRolePostParametersTransactionMyJob",
       "shape": {
         "type": "enum",
         "values": [
@@ -18490,8 +18595,36 @@
         ]
       }
     },
-    "WalletDidGetParametersSchema": {
-      "name": "WalletDidGetParametersSchema",
+    "WalletDidGetParametersKeyType": {
+      "name": "WalletDidGetParametersKeyType",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ed25519"
+          },
+          {
+            "value": "bls12381g2"
+          }
+        ]
+      }
+    },
+    "WalletDidGetParametersMethod": {
+      "name": "WalletDidGetParametersMethod",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "key"
+          },
+          {
+            "value": "sov"
+          }
+        ]
+      }
+    },
+    "WalletDidGetParametersPosture": {
+      "name": "WalletDidGetParametersPosture",
       "shape": {
         "type": "enum",
         "values": [
@@ -19039,7 +19172,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "ConnectionsGetParametersSchema"
+                  "value": "ConnectionsGetParametersConnectionProtocol"
                 }
               }
             },
@@ -19092,7 +19225,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "ConnectionsGetParametersSchema"
+                  "value": "ConnectionsGetParametersState"
                 }
               }
             },
@@ -19131,7 +19264,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "ConnectionsGetParametersSchema"
+                  "value": "ConnectionsGetParametersTheirRole"
                 }
               }
             }
@@ -24025,7 +24158,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "IssueCredential20RecordsGetParametersSchema"
+                  "value": "IssueCredential20RecordsGetParametersRole"
                 }
               }
             },
@@ -24036,7 +24169,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "IssueCredential20RecordsGetParametersSchema"
+                  "value": "IssueCredential20RecordsGetParametersState"
                 }
               }
             },
@@ -26044,7 +26177,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "IssueCredentialRecordsGetParametersSchema"
+                  "value": "IssueCredentialRecordsGetParametersRole"
                 }
               }
             },
@@ -26055,7 +26188,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "IssueCredentialRecordsGetParametersSchema"
+                  "value": "IssueCredentialRecordsGetParametersState"
                 }
               }
             },
@@ -27844,7 +27977,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "LedgerDidEndpointGetParametersSchema"
+                  "value": "LedgerDidEndpointGetParametersEndpointType"
                 }
               }
             }
@@ -28297,7 +28430,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "LedgerRegisterNymPostParametersSchema"
+                  "value": "LedgerRegisterNymPostParametersRole"
                 }
               }
             }
@@ -28846,7 +28979,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "MediationKeylistsGetParametersSchema"
+                  "value": "MediationKeylistsGetParametersRole"
                 }
               }
             }
@@ -29456,7 +29589,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "MediationRequestsGetParametersSchema"
+                  "value": "MediationRequestsGetParametersState"
                 }
               }
             }
@@ -32125,7 +32258,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PresentProof20RecordsGetParametersSchema"
+                  "value": "PresentProof20RecordsGetParametersRole"
                 }
               }
             },
@@ -32136,7 +32269,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PresentProof20RecordsGetParametersSchema"
+                  "value": "PresentProof20RecordsGetParametersState"
                 }
               }
             },
@@ -33661,7 +33794,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PresentProofRecordsGetParametersSchema"
+                  "value": "PresentProofRecordsGetParametersRole"
                 }
               }
             },
@@ -33672,7 +33805,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PresentProofRecordsGetParametersSchema"
+                  "value": "PresentProofRecordsGetParametersState"
                 }
               }
             },
@@ -35858,7 +35991,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "RevocationRegistriesCreatedGetParametersSchema"
+                  "value": "RevocationRegistriesCreatedGetParametersState"
                 }
               }
             }
@@ -37034,7 +37167,7 @@
               "key": "state",
               "type": {
                 "type": "id",
-                "value": "RevocationRegistryRevRegIdSetStatePatchParametersSchema"
+                "value": "RevocationRegistryRevRegIdSetStatePatchParametersState"
               }
             }
           ],
@@ -38610,7 +38743,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "TransactionsConnIdSetEndorserRolePostParametersSchema"
+                  "value": "TransactionsConnIdSetEndorserRolePostParametersTransactionMyJob"
                 }
               }
             }
@@ -39310,7 +39443,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "WalletDidGetParametersSchema"
+                  "value": "WalletDidGetParametersKeyType"
                 }
               }
             },
@@ -39321,7 +39454,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "WalletDidGetParametersSchema"
+                  "value": "WalletDidGetParametersMethod"
                 }
               }
             },
@@ -39332,7 +39465,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "WalletDidGetParametersSchema"
+                  "value": "WalletDidGetParametersPosture"
                 }
               }
             },

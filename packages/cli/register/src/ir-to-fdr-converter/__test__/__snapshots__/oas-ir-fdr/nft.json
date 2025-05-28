@@ -4563,22 +4563,13 @@
         ]
       }
     },
-    "V3ApiKeyGetNfTsForOwnerGetParametersSchema": {
-      "name": "V3ApiKeyGetNfTsForOwnerGetParametersSchema",
+    "V3ApiKeyGetNfTsForOwnerGetParametersOrderBy": {
+      "name": "V3ApiKeyGetNfTsForOwnerGetParametersOrderBy",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "VERY_HIGH"
-          },
-          {
-            "value": "HIGH"
-          },
-          {
-            "value": "MEDIUM"
-          },
-          {
-            "value": "LOW"
+            "value": "transferTime"
           }
         ]
       }
@@ -4594,6 +4585,26 @@
           },
           {
             "value": "AIRDROPS"
+          }
+        ]
+      }
+    },
+    "V3ApiKeyGetNfTsForOwnerGetParametersSpamConfidenceLevel": {
+      "name": "V3ApiKeyGetNfTsForOwnerGetParametersSpamConfidenceLevel",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "VERY_HIGH"
+          },
+          {
+            "value": "HIGH"
+          },
+          {
+            "value": "MEDIUM"
+          },
+          {
+            "value": "LOW"
           }
         ]
       }
@@ -9894,8 +9905,49 @@
         ]
       }
     },
-    "V3ApiKeyGetNftSalesGetParametersSchema": {
-      "name": "V3ApiKeyGetNftSalesGetParametersSchema",
+    "V3ApiKeyGetNftSalesGetParametersOrder": {
+      "name": "V3ApiKeyGetNftSalesGetParametersOrder",
+      "shape": {
+        "type": "enum",
+        "default": "asc",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
+    "V3ApiKeyGetNftSalesGetParametersMarketplace": {
+      "name": "V3ApiKeyGetNftSalesGetParametersMarketplace",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "seaport"
+          },
+          {
+            "value": "looksrare"
+          },
+          {
+            "value": "x2y2"
+          },
+          {
+            "value": "wyvern"
+          },
+          {
+            "value": "blur"
+          },
+          {
+            "value": "cryptopunks"
+          }
+        ]
+      }
+    },
+    "V3ApiKeyGetNftSalesGetParametersTaker": {
+      "name": "V3ApiKeyGetNftSalesGetParametersTaker",
       "shape": {
         "type": "enum",
         "values": [
@@ -10416,8 +10468,19 @@
         ]
       }
     },
-    "V3ApiKeyGetContractsForOwnerGetParametersSchema": {
-      "name": "V3ApiKeyGetContractsForOwnerGetParametersSchema",
+    "V3ApiKeyGetContractsForOwnerGetParametersOrderBy": {
+      "name": "V3ApiKeyGetContractsForOwnerGetParametersOrderBy",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "transferTime"
+          }
+        ]
+      }
+    },
+    "V3ApiKeyGetContractsForOwnerGetParametersSpamConfidenceLevel": {
+      "name": "V3ApiKeyGetContractsForOwnerGetParametersSpamConfidenceLevel",
       "shape": {
         "type": "enum",
         "values": [
@@ -11454,22 +11517,13 @@
         ]
       }
     },
-    "V2ApiKeyGetNfTsGetParametersSchema": {
-      "name": "V2ApiKeyGetNfTsGetParametersSchema",
+    "V2ApiKeyGetNfTsGetParametersOrderBy": {
+      "name": "V2ApiKeyGetNfTsGetParametersOrderBy",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "VERY_HIGH"
-          },
-          {
-            "value": "HIGH"
-          },
-          {
-            "value": "MEDIUM"
-          },
-          {
-            "value": "LOW"
+            "value": "transferTime"
           }
         ]
       }
@@ -11485,6 +11539,26 @@
           },
           {
             "value": "AIRDROPS"
+          }
+        ]
+      }
+    },
+    "V2ApiKeyGetNfTsGetParametersSpamConfidenceLevel": {
+      "name": "V2ApiKeyGetNfTsGetParametersSpamConfidenceLevel",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "VERY_HIGH"
+          },
+          {
+            "value": "HIGH"
+          },
+          {
+            "value": "MEDIUM"
+          },
+          {
+            "value": "LOW"
           }
         ]
       }
@@ -16237,8 +16311,49 @@
         ]
       }
     },
-    "V2ApiKeyGetNftSalesGetParametersSchema": {
-      "name": "V2ApiKeyGetNftSalesGetParametersSchema",
+    "V2ApiKeyGetNftSalesGetParametersOrder": {
+      "name": "V2ApiKeyGetNftSalesGetParametersOrder",
+      "shape": {
+        "type": "enum",
+        "default": "asc",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
+    "V2ApiKeyGetNftSalesGetParametersMarketplace": {
+      "name": "V2ApiKeyGetNftSalesGetParametersMarketplace",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "seaport"
+          },
+          {
+            "value": "looksrare"
+          },
+          {
+            "value": "x2y2"
+          },
+          {
+            "value": "wyvern"
+          },
+          {
+            "value": "blur"
+          },
+          {
+            "value": "cryptopunks"
+          }
+        ]
+      }
+    },
+    "V2ApiKeyGetNftSalesGetParametersTaker": {
+      "name": "V2ApiKeyGetNftSalesGetParametersTaker",
       "shape": {
         "type": "enum",
         "values": [
@@ -16647,8 +16762,19 @@
         ]
       }
     },
-    "V2ApiKeyGetContractsForOwnerGetParametersSchema": {
-      "name": "V2ApiKeyGetContractsForOwnerGetParametersSchema",
+    "V2ApiKeyGetContractsForOwnerGetParametersOrderBy": {
+      "name": "V2ApiKeyGetContractsForOwnerGetParametersOrderBy",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "transferTime"
+          }
+        ]
+      }
+    },
+    "V2ApiKeyGetContractsForOwnerGetParametersSpamConfidenceLevel": {
+      "name": "V2ApiKeyGetContractsForOwnerGetParametersSpamConfidenceLevel",
       "shape": {
         "type": "enum",
         "values": [
@@ -17324,7 +17450,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetNfTsForOwnerGetParametersSchema"
+                  "value": "V3ApiKeyGetNfTsForOwnerGetParametersOrderBy"
                 }
               }
             },
@@ -17363,7 +17489,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetNfTsForOwnerGetParametersSchema"
+                  "value": "V3ApiKeyGetNfTsForOwnerGetParametersSpamConfidenceLevel"
                 }
               }
             },
@@ -18990,7 +19116,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetContractsForOwnerGetParametersSchema"
+                  "value": "V3ApiKeyGetContractsForOwnerGetParametersOrderBy"
                 }
               }
             },
@@ -19001,7 +19127,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetContractsForOwnerGetParametersSchema"
+                  "value": "V3ApiKeyGetContractsForOwnerGetParametersSpamConfidenceLevel"
                 }
               }
             }
@@ -25156,7 +25282,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetNftSalesGetParametersSchema"
+                  "value": "V3ApiKeyGetNftSalesGetParametersOrder"
                 }
               }
             },
@@ -25167,7 +25293,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetNftSalesGetParametersSchema"
+                  "value": "V3ApiKeyGetNftSalesGetParametersMarketplace"
                 }
               }
             },
@@ -25232,7 +25358,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V3ApiKeyGetNftSalesGetParametersSchema"
+                  "value": "V3ApiKeyGetNftSalesGetParametersTaker"
                 }
               }
             },
@@ -25665,7 +25791,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetNfTsGetParametersSchema"
+                  "value": "V2ApiKeyGetNfTsGetParametersOrderBy"
                 }
               }
             },
@@ -25704,7 +25830,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetNfTsGetParametersSchema"
+                  "value": "V2ApiKeyGetNfTsGetParametersSpamConfidenceLevel"
                 }
               }
             },
@@ -31097,7 +31223,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetNftSalesGetParametersSchema"
+                  "value": "V2ApiKeyGetNftSalesGetParametersOrder"
                 }
               }
             },
@@ -31108,7 +31234,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetNftSalesGetParametersSchema"
+                  "value": "V2ApiKeyGetNftSalesGetParametersMarketplace"
                 }
               }
             },
@@ -31173,7 +31299,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetNftSalesGetParametersSchema"
+                  "value": "V2ApiKeyGetNftSalesGetParametersTaker"
                 }
               }
             },
@@ -31625,7 +31751,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetContractsForOwnerGetParametersSchema"
+                  "value": "V2ApiKeyGetContractsForOwnerGetParametersOrderBy"
                 }
               }
             },
@@ -31636,7 +31762,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V2ApiKeyGetContractsForOwnerGetParametersSchema"
+                  "value": "V2ApiKeyGetContractsForOwnerGetParametersSpamConfidenceLevel"
                 }
               }
             }
