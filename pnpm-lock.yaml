@@ -2467,6 +2467,9 @@ importers:
       '@fern-api/typescript-ast':
         specifier: workspace:*
         version: link:../../typescript-v2/ast
+      '@fern-api/typescript-base':
+        specifier: workspace:*
+        version: link:../../typescript-v2/base
       '@fern-api/typescript-formatter':
         specifier: workspace:*
         version: link:../../typescript-v2/formatter

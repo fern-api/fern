@@ -15,6 +15,7 @@ export const V31_TO_V30_MIGRATION: IrMigration<
     laterVersion: "v31",
     earlierVersion: "v30",
     firstGeneratorVersionToConsumeNewIR: {
+        [GeneratorName.TYPESCRIPT_MCP]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT_NODE_SDK]: "0.8.8",
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "0.8.8",
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,

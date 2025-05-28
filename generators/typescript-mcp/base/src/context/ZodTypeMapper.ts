@@ -1,6 +1,18 @@
 import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
 
-import { PrimitiveTypeV1, SdkRequest, SingleUnionType, TypeId, TypeReference } from "@fern-fern/ir-sdk/api";
+import {
+    ContainerType,
+    HttpEndpoint,
+    HttpPathPart,
+    Literal,
+    MapType,
+    Name,
+    NamedType,
+    PrimitiveTypeV1,
+    SdkRequestWrapper,
+    SingleUnionType,
+    TypeReference
+} from "@fern-fern/ir-sdk/api";
 
 import { AbstractTypescriptMcpGeneratorContext } from "./AbstractTypescriptMcpGeneratorContext";
 
@@ -20,65 +32,152 @@ export class ZodTypeMapper {
     // TODO: finish implementing this
     public convert({ reference }: ZodTypeMapper.Args): string {
         return reference._visit({
-            container: (value) => "any",
-            named: (value) => "any",
+            container: (value) => this.convertContainer(value),
+            named: (value) => this.convertNamed(value),
             primitive: (value) => this.convertPrimitiveTypeV1(value.v1),
-            unknown: () => "unknown",
-            _other: (value) => "any"
+            unknown: () => "z.unknown()",
+            _other: (value) => "z.any()"
         });
     }
 
     // TODO: finish implementing this
-    public convertSdkRequest(sdkRequest: SdkRequest): string {
-        return sdkRequest?.shape._visit({
-            justRequestBody: (value) =>
-                value._visit({
-                    typeReference: (value) =>
-                        value.requestBodyType._visit({
-                            container: (value) => "any",
-                            named: (value) => {
-                                const { name: schemaName, fernFilepath: schemaFilepath } = value;
-                                return this.context.project.builder.getSchemaVariableName(schemaName, schemaFilepath);
-                            },
-                            primitive: (value) => this.convertPrimitiveTypeV1(value.v1),
-                            unknown: () => "unknown",
-                            _other: (value) => "any"
-                        }),
-                    bytes: (value) => "any",
-                    _other: (value) => "any"
-                }),
-            wrapper: (value) => "any",
-            _other: (value) => "any"
+    public convertEndpoint(endpoint: HttpEndpoint): string {
+        return (
+            endpoint.sdkRequest?.shape._visit({
+                justRequestBody: (value) =>
+                    value._visit({
+                        typeReference: (value) =>
+                            value.requestBodyType._visit({
+                                container: (value) => this.convertContainer(value),
+                                named: (value) => this.convertNamed(value),
+                                primitive: (value) => this.convertPrimitiveTypeV1(value.v1),
+                                unknown: () => "z.unknown()",
+                                _other: (value) => "z.any()"
+                            }),
+                        bytes: (value) => "z.any()",
+                        _other: (value) => "z.any()"
+                    }),
+                wrapper: (value) => this.convertWrapper(endpoint, value),
+                _other: (value) => "z.any()"
+            }) ?? "z.any()"
+        );
+    }
+
+    // TODO: finish implementing this, use SdkRequestWrapper type instead of Name
+    public convertWrapper(endpoint: HttpEndpoint, sdkRequestWrapper: SdkRequestWrapper): string {
+        // sdkRequestWrapper.bodyKey
+        const bodyProperties =
+            endpoint.requestBody?.type === "inlinedRequestBody"
+                ? endpoint.requestBody.properties.reduce(
+                      (acc, property) => {
+                          acc[property.name.name.snakeCase.safeName] = this.convert({ reference: property.valueType });
+                          return acc;
+                      },
+                      {} as Record<string, string>
+                  )
+                : {};
+        const extendedProperties =
+            endpoint.requestBody?.type === "inlinedRequestBody"
+                ? endpoint.requestBody.extendedProperties?.reduce(
+                      (acc, property) => {
+                          acc[property.name.name.snakeCase.safeName] = this.convert({ reference: property.valueType });
+                          return acc;
+                      },
+                      {} as Record<string, string>
+                  )
+                : {};
+        // sdkRequestWrapper.includePathParameters
+        // sdkRequestWrapper.onlyPathParameters
+        const pathParameters = endpoint.allPathParameters.reduce(
+            (acc, pathParameter) => {
+                acc[pathParameter.name.snakeCase.safeName] = this.convert({ reference: pathParameter.valueType });
+                return acc;
+            },
+            {} as Record<string, string>
+        );
+        const queryParameters = endpoint.queryParameters.reduce(
+            (acc, queryParameter) => {
+                acc[queryParameter.name.name.snakeCase.safeName] = this.convert({
+                    reference: queryParameter.valueType
+                });
+                return acc;
+            },
+            {} as Record<string, string>
+        );
+        // sdkRequestWrapper.wrapperName
+        return `z.object({
+            ${Object.entries({ ...bodyProperties, ...extendedProperties, ...pathParameters, ...queryParameters })
+                .map(([key, value]) => `${key}: ${value}`)
+                .join(",\n")}
+        })`;
+    }
+
+    // TODO: finish implementing this
+    public convertContainer(container: ContainerType): string {
+        return container._visit({
+            list: (value) => `${this.convert({ reference: value })}.array()`,
+            map: (value) => this.convertMap(value),
+            nullable: (value) => `${this.convert({ reference: value })}.nullable()`,
+            optional: (value) => `${this.convert({ reference: value })}.optional()`,
+            set: (value) => this.convert({ reference: value }), // TODO:
+            literal: (value) => this.convertLiteral(value),
+            _other: (value) => "z.any()"
         });
+    }
+
+    // TODO: finish implementing this
+    public convertMap(map: MapType): string {
+        return `z.record(${this.convert({ reference: map.keyType })}, ${this.convert({ reference: map.valueType })})`;
+    }
+
+    // TODO TODO: finish implementing this
+    // TODO TODO: Need to refactor so that all type mappers return method calls
+    public convertLiteral(literal: Literal): string {
+        return literal._visit({
+            string: (value) => `z.literal("${value}")`,
+            boolean: (value) => `z.literal(${value})`,
+            _other: () => "z.any()"
+        });
+    }
+
+    // TODO: finish implementing this
+    public convertNamed(named: NamedType): string {
+        // TODO: previously was using this.context.project.builder but need to resolve circular dependency
+        return `schemas.${named.name.pascalCase.safeName}`;
     }
 
     // TODO: finish implementing this
     public convertPrimitiveTypeV1(primitiveTypeV1: PrimitiveTypeV1): string {
         return PrimitiveTypeV1._visit(primitiveTypeV1, {
-            integer: () => "number",
-            long: () => "number",
-            uint: () => "number",
-            uint64: () => "number",
-            float: () => "number",
-            double: () => "number",
-            boolean: () => "boolean",
-            string: () => "string",
-            date: () => "date",
-            dateTime: () => "string().datetime",
-            uuid: () => "string().uuid",
-            base64: () => "string().base64",
-            bigInteger: () => "bigint",
-            _other: () => "any"
+            integer: () => "z.number()",
+            long: () => "z.number()",
+            uint: () => "z.number()",
+            uint64: () => "z.number()",
+            float: () => "z.number()",
+            double: () => "z.number()",
+            boolean: () => "z.boolean()",
+            string: () => "z.string()",
+            date: () => "z.date()",
+            dateTime: () => "z.string().datetime()",
+            uuid: () => "z.string().uuid()",
+            base64: () => "z.string().base64()",
+            bigInteger: () => "z.bigint()",
+            _other: () => "z.any()"
         });
     }
 
     // TODO: finish implementing this
     public convertSingleUnionType(singleUnionType: SingleUnionType): string {
         return singleUnionType.shape._visit({
-            samePropertiesAsObject: (value) => "any",
-            singleProperty: (value) => "any",
-            noProperties: () => "any",
-            _other: (value) => "any"
+            samePropertiesAsObject: (value) => "z.any()",
+            singleProperty: (value) => "z.any()",
+            noProperties: () => "z.any()",
+            _other: (value) => "z.any()"
         });
+    }
+
+    // TODO: finish implementing this
+    public convertHttpPathPart(httpPathPart: HttpPathPart): string {
+        return "z.string()";
     }
 }

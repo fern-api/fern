@@ -13,6 +13,9 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<generatorsYml.Gen
             path: "../src/fern"
         }
     },
+    [GeneratorName.TYPESCRIPT_MCP]: {
+        version: "0.0.0"
+    },
     [GeneratorName.JAVA_MODEL]: {
         version: "0.9.2"
     },

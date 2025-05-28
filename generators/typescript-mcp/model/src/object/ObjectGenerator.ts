@@ -19,15 +19,13 @@ export class ObjectGenerator extends FileGenerator<
         private readonly objectDeclaration: ObjectTypeDeclaration
     ) {
         super(context);
-        this.schemaVariableName = this.context.project.builder.getSchemaVariableName(
-            this.typeDeclaration.name.name,
-            this.typeDeclaration.name.fernFilepath
-        );
+        this.schemaVariableName = this.context.project.builder.getSchemaVariableName(this.typeDeclaration);
     }
 
     public doGenerate(): TypescriptFile {
         return new TypescriptFile({
             node: ts.codeblock((writer) => {
+                writer.writeLine("import * as schemas from './';");
                 writer.writeNodeStatement(
                     new ExportNode({
                         initializer: ts.invokeMethod({
@@ -36,11 +34,11 @@ export class ObjectGenerator extends FileGenerator<
                             arguments_: [
                                 new ObjectLiteralNode({
                                     fields: this.objectDeclaration.properties.map((value) => ({
-                                        name: value.name.name.camelCase.safeName,
-                                        value: ts.invokeMethod({
-                                            on: this.context.project.builder.zodReference,
-                                            method: this.context.zodTypeMapper.convert({ reference: value.valueType }),
-                                            arguments_: []
+                                        name: value.name.name.snakeCase.safeName,
+                                        value: ts.codeblock((writer) => {
+                                            writer.write(
+                                                this.context.zodTypeMapper.convert({ reference: value.valueType })
+                                            );
                                         })
                                     }))
                                 })

@@ -44,6 +44,7 @@ export class ToolsGenerator extends FileGenerator<
     public doGenerate(): TypescriptFile {
         return new TypescriptFile({
             node: ts.codeblock((writer) => {
+                writer.writeLine(`import z from "zod";`);
                 writer.writeNodeStatement(
                     ts.variable({
                         name: this.sdkClientVariableName,
@@ -131,18 +132,20 @@ export class ToolDefinition {
     public constructor(private readonly args: ToolDefinition.Args) {
         this.sdkMethodPath = this.args.builder.getSdkMethodPath(
             this.args.endpoint.name,
-            this.args.service.name.fernFilepath
+            this.args.service.name.fernFilepath.allParts
         );
 
         this.toolVariableName = this.args.builder.getToolVariableName(
             this.args.endpoint.name,
-            this.args.service.name.fernFilepath
+            this.args.service.name.fernFilepath.allParts
         );
-        this.toolName = this.args.builder.getToolName(this.args.endpoint.name, this.args.service.name.fernFilepath);
+        this.toolName = this.args.builder.getToolName(
+            this.args.endpoint.name,
+            this.args.service.name.fernFilepath.allParts
+        );
         this.toolDescription = this.args.endpoint.docs;
 
-        this.schemaVariableName =
-            this.args.endpoint.sdkRequest && this.args.zodTypeMapper.convertSdkRequest(this.args.endpoint.sdkRequest);
+        this.schemaVariableName = this.args.builder.getSchemaVariableNameForEndpoint(this.args.endpoint);
     }
 
     write(writer: ts.Writer): void {
@@ -152,16 +155,15 @@ export class ToolDefinition {
             hasSchema && writer.write(this.schemaVariableName);
         };
 
-        const partsFromPath = this.getPartsFromPath();
+        const partsFromPath = this.args.endpoint.path.parts;
         const hasPartsFromPath = partsFromPath.length > 0;
         const writeSchemaShapeFromParts = (writer: ts.Writer) => {
             writer.writeNode(
                 new ObjectLiteralNode({
                     fields: partsFromPath.map((part) => ({
-                        name: part.key,
+                        name: part.pathParameter,
                         value: ts.codeblock((writer) => {
-                            writer.writeNode(this.args.schemasReference);
-                            writer.write(part.value);
+                            writer.write(this.args.zodTypeMapper.convertHttpPathPart(part));
                         })
                     }))
                 })
@@ -186,7 +188,7 @@ export class ToolDefinition {
         const writeExtractParams = (writer: ts.Writer) => {
             if (hasPartsFromPath) {
                 writer.write("const { ");
-                writer.write(partsFromPath?.map((part) => part.key).join(", "));
+                writer.write(partsFromPath?.map((part) => part.pathParameter).join(", "));
                 writer.write(hasSchema && hasPartsFromPath ? ", " : "");
                 writer.write(hasSchema ? "...request" : "");
                 writer.write(" } = params;");
@@ -210,7 +212,7 @@ export class ToolDefinition {
                                 arguments_: [
                                     ...(partsFromPath ?? []).map((part) =>
                                         ts.codeblock((writer) => {
-                                            writer.write(part.key);
+                                            writer.write(part.pathParameter);
                                         })
                                     ),
                                     ...(hasSchema
@@ -292,19 +294,5 @@ export class ToolDefinition {
                 })
             })
         );
-    }
-
-    private getPartsFromPath() {
-        const schemaPrefix = this.args.service.name.fernFilepath.allParts
-            .map((part) => part.pascalCase.safeName)
-            .join("");
-        return this.args.endpoint.path.parts.map((part) => ({
-            key: part.pathParameter,
-            value: `${schemaPrefix}${this.capitalize(part.pathParameter)}`
-        }));
-    }
-
-    private capitalize(str: string) {
-        return str.charAt(0).toUpperCase() + str.slice(1);
     }
 }

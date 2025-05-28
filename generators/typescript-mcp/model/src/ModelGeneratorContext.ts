@@ -3,6 +3,6 @@ import { AbstractTypescriptMcpGeneratorContext, AsIsFiles } from "@fern-api/type
 
 export class ModelGeneratorContext extends AbstractTypescriptMcpGeneratorContext<TypescriptCustomConfigSchema> {
     public getRawAsIsFiles(): string[] {
-        return [AsIsFiles.GitIgnore, AsIsFiles.TsConfigJson];
+        return [AsIsFiles.FernIgnore, AsIsFiles.GitIgnore, AsIsFiles.TsConfigJson];
     }
 }

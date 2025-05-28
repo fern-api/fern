@@ -1,19 +1,20 @@
-import { SeedApiClient } from "seed-api";
+import { SeedApiClient } from "sdk";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import * as schemas from "../schemas";
 
+import z from "zod";
 const client = new SeedApiClient({
-    environment () {
+    environment: function () {
         return "";
     },
 });
 
 export const imdbCreateMovie = {
-    register (server: McpServer) {
+    register: function (server: McpServer) {
         return server.tool(
             "imdb_create_movie",
             "Add a movie to the database using the movies/* /... path.",
-            schemas.ImdbCreateMovieRequest.shape,
+            schemas.CreateMovie.shape,
             async function (params) {
                 const request = params;
                 const result = await client.imdb.createMovie(request);
@@ -25,11 +26,11 @@ export const imdbCreateMovie = {
     },
 };
 export const imdbGetMovie = {
-    register (server: McpServer) {
+    register: function (server: McpServer) {
         return server.tool(
             "imdb_get_movie",
             {
-                movieId: schemas.ImdbMovieId,
+                movieId: z.string(),
             },
             async function (params) {
                 const { movieId } = params;

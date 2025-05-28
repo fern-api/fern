@@ -1,5 +1,6 @@
 export enum AsIsFiles {
     // Top-level files.
+    FernIgnore = ".fernignore",
     GitIgnore = ".gitignore",
     TsConfigJson = "tsconfig.json",
 

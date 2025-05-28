@@ -15,15 +15,13 @@ export class EnumGenerator extends FileGenerator<TypescriptFile, TypescriptCusto
         private readonly enumDeclaration: EnumTypeDeclaration
     ) {
         super(context);
-        this.schemaVariableName = this.context.project.builder.getSchemaVariableName(
-            this.typeDeclaration.name.name,
-            this.typeDeclaration.name.fernFilepath
-        );
+        this.schemaVariableName = this.context.project.builder.getSchemaVariableName(this.typeDeclaration);
     }
 
     public doGenerate(): TypescriptFile {
         return new TypescriptFile({
             node: ts.codeblock((writer) => {
+                writer.writeLine("import * as schemas from './';");
                 writer.writeNodeStatement(
                     new ExportNode({
                         initializer: ts.invokeMethod({

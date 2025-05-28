@@ -15,15 +15,13 @@ export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCust
         private readonly unionDeclaration: UnionTypeDeclaration
     ) {
         super(context);
-        this.schemaVariableName = this.context.project.builder.getSchemaVariableName(
-            this.typeDeclaration.name.name,
-            this.typeDeclaration.name.fernFilepath
-        );
+        this.schemaVariableName = this.context.project.builder.getSchemaVariableName(this.typeDeclaration);
     }
 
     public doGenerate(): TypescriptFile {
         return new TypescriptFile({
             node: ts.codeblock((writer) => {
+                writer.writeLine("import * as schemas from './';");
                 writer.writeNodeStatement(
                     new ExportNode({
                         initializer: ts.invokeMethod({
@@ -32,10 +30,8 @@ export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCust
                             arguments_: [
                                 new ArrayLiteralNode({
                                     values: this.unionDeclaration.types.map((type) =>
-                                        ts.invokeMethod({
-                                            on: this.context.project.builder.zodReference,
-                                            method: this.context.zodTypeMapper.convertSingleUnionType(type),
-                                            arguments_: []
+                                        ts.codeblock((writer) => {
+                                            writer.write(this.context.zodTypeMapper.convertSingleUnionType(type));
                                         })
                                     )
                                 })
