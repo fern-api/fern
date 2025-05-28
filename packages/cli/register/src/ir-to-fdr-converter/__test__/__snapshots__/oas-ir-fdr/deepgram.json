@@ -3144,39 +3144,510 @@
         ]
       }
     },
-    "V1ListenPostParametersSchema": {
-      "name": "V1ListenPostParametersSchema",
+    "V1ListenPostParametersCallbackMethod": {
+      "name": "V1ListenPostParametersCallbackMethod",
+      "shape": {
+        "type": "enum",
+        "default": "POST",
+        "values": [
+          {
+            "value": "POST"
+          },
+          {
+            "value": "PUT"
+          }
+        ]
+      }
+    },
+    "V1ListenPostParametersCustomTopic": {
+      "name": "V1ListenPostParametersCustomTopic",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1ListenPostParametersSchema0",
-            "description": "Use the latest version of a model",
-            "type": {
-              "type": "id",
-              "value": "V1ListenPostParametersSchema0"
-            }
-          },
-          {
-            "description": "Use a previous version of a model",
             "type": {
               "type": "primitive",
               "value": {
                 "type": "string"
               }
             }
+          },
+          {
+            "type": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
           }
         ]
       }
     },
-    "V1ListenPostParametersSchema0": {
-      "description": "Use the latest version of a model",
-      "name": "V1ListenPostParametersSchema0",
+    "V1ListenPostParametersCustomTopicMode": {
+      "name": "V1ListenPostParametersCustomTopicMode",
+      "shape": {
+        "type": "enum",
+        "default": "extended",
+        "values": [
+          {
+            "value": "extended"
+          },
+          {
+            "value": "strict"
+          }
+        ]
+      }
+    },
+    "V1ListenPostParametersCustomIntent": {
+      "name": "V1ListenPostParametersCustomIntent",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "V1ListenPostParametersCustomIntentMode": {
+      "name": "V1ListenPostParametersCustomIntentMode",
+      "shape": {
+        "type": "enum",
+        "default": "extended",
+        "values": [
+          {
+            "value": "extended"
+          },
+          {
+            "value": "strict"
+          }
+        ]
+      }
+    },
+    "V1ListenPostParametersDetectLanguage": {
+      "name": "V1ListenPostParametersDetectLanguage",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean",
+                "default": false
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "V1ListenPostParametersEncoding": {
+      "name": "V1ListenPostParametersEncoding",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "latest"
+            "value": "linear16"
+          },
+          {
+            "value": "flac"
+          },
+          {
+            "value": "mulaw"
+          },
+          {
+            "value": "amr-nb"
+          },
+          {
+            "value": "amr-wb"
+          },
+          {
+            "value": "opus"
+          },
+          {
+            "value": "speex"
+          },
+          {
+            "value": "g729"
+          }
+        ]
+      }
+    },
+    "V1ListenPostParametersExtra": {
+      "name": "V1ListenPostParametersExtra",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "V1ListenPostParametersKeywords": {
+      "name": "V1ListenPostParametersKeywords",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "V1ListenPostParametersLanguage": {
+      "name": "V1ListenPostParametersLanguage",
+      "shape": {
+        "type": "enum",
+        "default": "en",
+        "values": [
+          {
+            "value": "bg"
+          },
+          {
+            "value": "ca"
+          },
+          {
+            "value": "zh"
+          },
+          {
+            "value": "zh-CN"
+          },
+          {
+            "value": "zh-TW"
+          },
+          {
+            "value": "zh-HK"
+          },
+          {
+            "value": "zh-Hans"
+          },
+          {
+            "value": "zh-Hant"
+          },
+          {
+            "value": "cs"
+          },
+          {
+            "value": "da"
+          },
+          {
+            "value": "da-DK"
+          },
+          {
+            "value": "nl"
+          },
+          {
+            "value": "nl-BE"
+          },
+          {
+            "value": "en"
+          },
+          {
+            "value": "en-US"
+          },
+          {
+            "value": "en-AU"
+          },
+          {
+            "value": "en-GB"
+          },
+          {
+            "value": "en-NZ"
+          },
+          {
+            "value": "en-IN"
+          },
+          {
+            "value": "et"
+          },
+          {
+            "value": "fi"
+          },
+          {
+            "value": "fr"
+          },
+          {
+            "value": "fr-CA"
+          },
+          {
+            "value": "de"
+          },
+          {
+            "value": "de-CH"
+          },
+          {
+            "value": "el"
+          },
+          {
+            "value": "hi"
+          },
+          {
+            "value": "hi-Latn"
+          },
+          {
+            "value": "hu"
+          },
+          {
+            "value": "id"
+          },
+          {
+            "value": "it"
+          },
+          {
+            "value": "ja"
+          },
+          {
+            "value": "ko"
+          },
+          {
+            "value": "ko-KR"
+          },
+          {
+            "value": "lv"
+          },
+          {
+            "value": "lt"
+          },
+          {
+            "value": "ms"
+          },
+          {
+            "value": "no"
+          },
+          {
+            "value": "pl"
+          },
+          {
+            "value": "pt"
+          },
+          {
+            "value": "pt-BR"
+          },
+          {
+            "value": "pt-PT"
+          },
+          {
+            "value": "ro"
+          },
+          {
+            "value": "ru"
+          },
+          {
+            "value": "sk"
+          },
+          {
+            "value": "es"
+          },
+          {
+            "value": "es-419"
+          },
+          {
+            "value": "es-LATAM"
+          },
+          {
+            "value": "sv"
+          },
+          {
+            "value": "sv-SE"
+          },
+          {
+            "value": "taq"
+          },
+          {
+            "value": "th"
+          },
+          {
+            "value": "th-TH"
+          },
+          {
+            "value": "tr"
+          },
+          {
+            "value": "uk"
+          },
+          {
+            "value": "vi"
+          }
+        ]
+      }
+    },
+    "V1ListenPostParametersModel0": {
+      "description": "Our public models available to all accounts",
+      "name": "V1ListenPostParametersModel0",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "nova-3"
+          },
+          {
+            "value": "nova-3-general"
+          },
+          {
+            "value": "nova-2"
+          },
+          {
+            "value": "nova-2-general"
+          },
+          {
+            "value": "nova-2-meeting"
+          },
+          {
+            "value": "nova-2-finance"
+          },
+          {
+            "value": "nova-2-conversationalai"
+          },
+          {
+            "value": "nova-2-voicemail"
+          },
+          {
+            "value": "nova-2-video"
+          },
+          {
+            "value": "nova-2-medical"
+          },
+          {
+            "value": "nova-2-drivethru"
+          },
+          {
+            "value": "nova-2-automotive"
+          },
+          {
+            "value": "nova"
+          },
+          {
+            "value": "nova-general"
+          },
+          {
+            "value": "nova-phonecall"
+          },
+          {
+            "value": "nova-medical"
+          },
+          {
+            "value": "enhanced"
+          },
+          {
+            "value": "enhanced-general"
+          },
+          {
+            "value": "enhanced-meeting"
+          },
+          {
+            "value": "enhanced-phonecall"
+          },
+          {
+            "value": "enhanced-finance"
+          },
+          {
+            "value": "base"
+          },
+          {
+            "value": "meeting"
+          },
+          {
+            "value": "phonecall"
+          },
+          {
+            "value": "finance"
+          },
+          {
+            "value": "conversationalai"
+          },
+          {
+            "value": "voicemail"
+          },
+          {
+            "value": "video"
+          }
+        ]
+      }
+    },
+    "V1ListenPostParametersModel": {
+      "name": "V1ListenPostParametersModel",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "V1ListenPostParametersModel0",
+            "description": "Our public models available to all accounts",
+            "type": {
+              "type": "id",
+              "value": "V1ListenPostParametersModel0"
+            }
+          },
+          {
+            "description": "Custom string if you've had a model trained by Deepgram",
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
           }
         ]
       }
@@ -3198,8 +3669,8 @@
         ]
       }
     },
-    "V1ListenPostParametersSchema1": {
-      "name": "V1ListenPostParametersSchema1",
+    "V1ListenPostParametersRedact1": {
+      "name": "V1ListenPostParametersRedact1",
       "shape": {
         "type": "alias",
         "value": {
@@ -3209,6 +3680,186 @@
             "value": "V1ListenPostParametersSchemaOneOf1Items"
           }
         }
+      }
+    },
+    "V1ListenPostParametersRedact": {
+      "name": "V1ListenPostParametersRedact",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "typeName": "V1ListenPostParametersRedact1",
+            "type": {
+              "type": "id",
+              "value": "V1ListenPostParametersRedact1"
+            }
+          }
+        ]
+      }
+    },
+    "V1ListenPostParametersReplace": {
+      "name": "V1ListenPostParametersReplace",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "V1ListenPostParametersSearch": {
+      "name": "V1ListenPostParametersSearch",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "V1ListenPostParametersSummarize0": {
+      "name": "V1ListenPostParametersSummarize0",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "v2"
+          },
+          {
+            "value": "v1"
+          }
+        ]
+      },
+      "displayName": "Versions"
+    },
+    "V1ListenPostParametersSummarize": {
+      "name": "V1ListenPostParametersSummarize",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "V1ListenPostParametersSummarize0",
+            "type": {
+              "type": "id",
+              "value": "V1ListenPostParametersSummarize0"
+            },
+            "displayName": "Versions"
+          },
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "V1ListenPostParametersTag": {
+      "name": "V1ListenPostParametersTag",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "V1ListenPostParametersVersion0": {
+      "description": "Use the latest version of a model",
+      "name": "V1ListenPostParametersVersion0",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "latest"
+          }
+        ]
+      }
+    },
+    "V1ListenPostParametersVersion": {
+      "name": "V1ListenPostParametersVersion",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "V1ListenPostParametersVersion0",
+            "description": "Use the latest version of a model",
+            "type": {
+              "type": "id",
+              "value": "V1ListenPostParametersVersion0"
+            }
+          },
+          {
+            "description": "Use a previous version of a model",
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
       }
     },
     "ListenRequestBadRequestError": {
@@ -3259,8 +3910,65 @@
         ]
       }
     },
-    "V1ReadPostParametersSchema": {
-      "name": "V1ReadPostParametersSchema",
+    "V1ReadPostParametersCallbackMethod": {
+      "name": "V1ReadPostParametersCallbackMethod",
+      "shape": {
+        "type": "enum",
+        "default": "POST",
+        "values": [
+          {
+            "value": "POST"
+          },
+          {
+            "value": "PUT"
+          }
+        ]
+      }
+    },
+    "V1ReadPostParametersCustomTopic": {
+      "name": "V1ReadPostParametersCustomTopic",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "V1ReadPostParametersCustomTopicMode": {
+      "name": "V1ReadPostParametersCustomTopicMode",
+      "shape": {
+        "type": "enum",
+        "default": "extended",
+        "values": [
+          {
+            "value": "extended"
+          },
+          {
+            "value": "strict"
+          }
+        ]
+      }
+    },
+    "V1ReadPostParametersReadLanguage": {
+      "name": "V1ReadPostParametersReadLanguage",
       "shape": {
         "type": "enum",
         "default": "en",
@@ -3319,9 +4027,367 @@
         ]
       }
     },
-    "V1SpeakPostParametersSchema0": {
+    "V1SpeakPostParametersBitRate0": {
+      "description": "Encoding - mp3(default). Supported bitrates - 32000, 48000(default) bps.",
+      "name": "V1SpeakPostParametersBitRate0",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "32000"
+          },
+          {
+            "value": "48000"
+          }
+        ]
+      },
+      "displayName": "mp3(default)"
+    },
+    "V1SpeakPostParametersBitRate": {
+      "name": "V1SpeakPostParametersBitRate",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "V1SpeakPostParametersBitRate0",
+            "description": "Encoding - mp3(default). Supported bitrates - 32000, 48000(default) bps.",
+            "type": {
+              "type": "id",
+              "value": "V1SpeakPostParametersBitRate0"
+            },
+            "displayName": "mp3(default)"
+          },
+          {
+            "description": "Encoding - opus. Bitrate range - 4000-650000 bps.",
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "integer",
+                "minimum": 4000,
+                "maximum": 650000
+              }
+            }
+          },
+          {
+            "description": "Encoding -aac. Bitrate range - 4000-192000 bps.",
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "integer",
+                "minimum": 4000,
+                "maximum": 192000
+              }
+            }
+          }
+        ]
+      }
+    },
+    "V1SpeakPostParametersContainer0": {
+      "description": "Encoding - linear16. Supported container - wav (default), or no container.",
+      "name": "V1SpeakPostParametersContainer0",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "wav"
+          }
+        ]
+      },
+      "displayName": "linear16"
+    },
+    "V1SpeakPostParametersContainer1": {
+      "description": "Encoding - mulaw. Supported container - wav (default), or no container.",
+      "name": "V1SpeakPostParametersContainer1",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "wav"
+          }
+        ]
+      },
+      "displayName": "mulaw"
+    },
+    "V1SpeakPostParametersContainer2": {
+      "description": "Encoding - alaw. Supported container - wav (default), or no container.",
+      "name": "V1SpeakPostParametersContainer2",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "wav"
+          }
+        ]
+      },
+      "displayName": "alaw"
+    },
+    "V1SpeakPostParametersContainer3": {
+      "description": "Encoding - opus. Supported container - ogg (default).",
+      "name": "V1SpeakPostParametersContainer3",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ogg"
+          }
+        ]
+      },
+      "displayName": "opus"
+    },
+    "V1SpeakPostParametersContainer": {
+      "name": "V1SpeakPostParametersContainer",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "V1SpeakPostParametersContainer0",
+            "description": "Encoding - linear16. Supported container - wav (default), or no container.",
+            "type": {
+              "type": "id",
+              "value": "V1SpeakPostParametersContainer0"
+            },
+            "displayName": "linear16"
+          },
+          {
+            "typeName": "V1SpeakPostParametersContainer1",
+            "description": "Encoding - mulaw. Supported container - wav (default), or no container.",
+            "type": {
+              "type": "id",
+              "value": "V1SpeakPostParametersContainer1"
+            },
+            "displayName": "mulaw"
+          },
+          {
+            "typeName": "V1SpeakPostParametersContainer2",
+            "description": "Encoding - alaw. Supported container - wav (default), or no container.",
+            "type": {
+              "type": "id",
+              "value": "V1SpeakPostParametersContainer2"
+            },
+            "displayName": "alaw"
+          },
+          {
+            "typeName": "V1SpeakPostParametersContainer3",
+            "description": "Encoding - opus. Supported container - ogg (default).",
+            "type": {
+              "type": "id",
+              "value": "V1SpeakPostParametersContainer3"
+            },
+            "displayName": "opus"
+          }
+        ]
+      }
+    },
+    "V1SpeakPostParametersSpeakEncoding0": {
+      "description": "Encoding - linear16. Uncompressed, high-quality audio format often used for telephony or audio processing.",
+      "name": "V1SpeakPostParametersSpeakEncoding0",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "linear16"
+          }
+        ]
+      },
+      "displayName": "linear16"
+    },
+    "V1SpeakPostParametersSpeakEncoding1": {
+      "description": "Encoding - flac. Lossless audio format for high-quality compression.",
+      "name": "V1SpeakPostParametersSpeakEncoding1",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "flac"
+          }
+        ]
+      },
+      "displayName": "flac"
+    },
+    "V1SpeakPostParametersSpeakEncoding2": {
+      "description": "Encoding - mulaw. Compressed audio format commonly used in telephony.",
+      "name": "V1SpeakPostParametersSpeakEncoding2",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "mulaw"
+          }
+        ]
+      },
+      "displayName": "mulaw"
+    },
+    "V1SpeakPostParametersSpeakEncoding3": {
+      "description": "Encoding - alaw. Similar to mulaw but used in international telephony.",
+      "name": "V1SpeakPostParametersSpeakEncoding3",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "alaw"
+          }
+        ]
+      },
+      "displayName": "alaw"
+    },
+    "V1SpeakPostParametersSpeakEncoding4": {
+      "description": "Encoding - mp3. Popular compressed audio format for music and streaming.",
+      "name": "V1SpeakPostParametersSpeakEncoding4",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "mp3"
+          }
+        ]
+      },
+      "displayName": "mp3"
+    },
+    "V1SpeakPostParametersSpeakEncoding5": {
+      "description": "Encoding - opus. High-compression audio format optimized for real-time communications.",
+      "name": "V1SpeakPostParametersSpeakEncoding5",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "opus"
+          }
+        ]
+      },
+      "displayName": "opus"
+    },
+    "V1SpeakPostParametersSpeakEncoding6": {
+      "description": "Encoding - aac. Advanced audio format offering better quality at smaller file sizes than mp3.",
+      "name": "V1SpeakPostParametersSpeakEncoding6",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "aac"
+          }
+        ]
+      },
+      "displayName": "aac"
+    },
+    "V1SpeakPostParametersSpeakEncoding": {
+      "name": "V1SpeakPostParametersSpeakEncoding",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "V1SpeakPostParametersSpeakEncoding0",
+            "description": "Encoding - linear16. Uncompressed, high-quality audio format often used for telephony or audio processing.",
+            "type": {
+              "type": "id",
+              "value": "V1SpeakPostParametersSpeakEncoding0"
+            },
+            "displayName": "linear16"
+          },
+          {
+            "typeName": "V1SpeakPostParametersSpeakEncoding1",
+            "description": "Encoding - flac. Lossless audio format for high-quality compression.",
+            "type": {
+              "type": "id",
+              "value": "V1SpeakPostParametersSpeakEncoding1"
+            },
+            "displayName": "flac"
+          },
+          {
+            "typeName": "V1SpeakPostParametersSpeakEncoding2",
+            "description": "Encoding - mulaw. Compressed audio format commonly used in telephony.",
+            "type": {
+              "type": "id",
+              "value": "V1SpeakPostParametersSpeakEncoding2"
+            },
+            "displayName": "mulaw"
+          },
+          {
+            "typeName": "V1SpeakPostParametersSpeakEncoding3",
+            "description": "Encoding - alaw. Similar to mulaw but used in international telephony.",
+            "type": {
+              "type": "id",
+              "value": "V1SpeakPostParametersSpeakEncoding3"
+            },
+            "displayName": "alaw"
+          },
+          {
+            "typeName": "V1SpeakPostParametersSpeakEncoding4",
+            "description": "Encoding - mp3. Popular compressed audio format for music and streaming.",
+            "type": {
+              "type": "id",
+              "value": "V1SpeakPostParametersSpeakEncoding4"
+            },
+            "displayName": "mp3"
+          },
+          {
+            "typeName": "V1SpeakPostParametersSpeakEncoding5",
+            "description": "Encoding - opus. High-compression audio format optimized for real-time communications.",
+            "type": {
+              "type": "id",
+              "value": "V1SpeakPostParametersSpeakEncoding5"
+            },
+            "displayName": "opus"
+          },
+          {
+            "typeName": "V1SpeakPostParametersSpeakEncoding6",
+            "description": "Encoding - aac. Advanced audio format offering better quality at smaller file sizes than mp3.",
+            "type": {
+              "type": "id",
+              "value": "V1SpeakPostParametersSpeakEncoding6"
+            },
+            "displayName": "aac"
+          }
+        ]
+      }
+    },
+    "V1SpeakPostParametersSpeakModel": {
+      "name": "V1SpeakPostParametersSpeakModel",
+      "shape": {
+        "type": "enum",
+        "default": "aura-asteria-en",
+        "values": [
+          {
+            "value": "aura-asteria-en"
+          },
+          {
+            "value": "aura-luna-en"
+          },
+          {
+            "value": "aura-stella-en"
+          },
+          {
+            "value": "aura-athena-en"
+          },
+          {
+            "value": "aura-hera-en"
+          },
+          {
+            "value": "aura-orion-en"
+          },
+          {
+            "value": "aura-arcas-en"
+          },
+          {
+            "value": "aura-perseus-en"
+          },
+          {
+            "value": "aura-angus-en"
+          },
+          {
+            "value": "aura-orpheus-en"
+          },
+          {
+            "value": "aura-helios-en"
+          },
+          {
+            "value": "aura-zeus-en"
+          }
+        ]
+      }
+    },
+    "V1SpeakPostParametersSpeakSampleRate0": {
       "description": "Encoding - linear16. Supported sample rates - 8000, 16000, 24000, 32000, 48000 Hz.",
-      "name": "V1SpeakPostParametersSchema0",
+      "name": "V1SpeakPostParametersSpeakSampleRate0",
       "shape": {
         "type": "enum",
         "values": [
@@ -3344,62 +4410,9 @@
       },
       "displayName": "linear16"
     },
-    "V1SpeakPostParametersSchema": {
-      "name": "V1SpeakPostParametersSchema",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "V1SpeakPostParametersSchema0",
-            "description": "Encoding - linear16. Supported sample rates - 8000, 16000, 24000, 32000, 48000 Hz.",
-            "type": {
-              "type": "id",
-              "value": "V1SpeakPostParametersSchema0"
-            },
-            "displayName": "linear16"
-          },
-          {
-            "typeName": "V1SpeakPostParametersSchema1",
-            "description": "Encoding - mulaw. Supported sample rates - 8000, 16000 Hz.",
-            "type": {
-              "type": "id",
-              "value": "V1SpeakPostParametersSchema1"
-            },
-            "displayName": "mulaw"
-          },
-          {
-            "typeName": "V1SpeakPostParametersSchema2",
-            "description": "Encoding - alaw. Supported sample rates - 8000, 16000 Hz.",
-            "type": {
-              "type": "id",
-              "value": "V1SpeakPostParametersSchema2"
-            },
-            "displayName": "alaw"
-          },
-          {
-            "typeName": "V1SpeakPostParametersSchema3",
-            "description": "Encoding - mp3. Sample rate is fixed and not configurable (22050 Hz).",
-            "type": {
-              "type": "id",
-              "value": "V1SpeakPostParametersSchema3"
-            },
-            "displayName": "mp3"
-          },
-          {
-            "typeName": "V1SpeakPostParametersSchema4",
-            "description": "Encoding - opus. Sample rate is fixed at 48000 Hz.",
-            "type": {
-              "type": "id",
-              "value": "V1SpeakPostParametersSchema4"
-            },
-            "displayName": "opus"
-          }
-        ]
-      }
-    },
-    "V1SpeakPostParametersSchema1": {
+    "V1SpeakPostParametersSpeakSampleRate1": {
       "description": "Encoding - mulaw. Supported sample rates - 8000, 16000 Hz.",
-      "name": "V1SpeakPostParametersSchema1",
+      "name": "V1SpeakPostParametersSpeakSampleRate1",
       "shape": {
         "type": "enum",
         "values": [
@@ -3413,9 +4426,9 @@
       },
       "displayName": "mulaw"
     },
-    "V1SpeakPostParametersSchema2": {
+    "V1SpeakPostParametersSpeakSampleRate2": {
       "description": "Encoding - alaw. Supported sample rates - 8000, 16000 Hz.",
-      "name": "V1SpeakPostParametersSchema2",
+      "name": "V1SpeakPostParametersSpeakSampleRate2",
       "shape": {
         "type": "enum",
         "values": [
@@ -3429,9 +4442,9 @@
       },
       "displayName": "alaw"
     },
-    "V1SpeakPostParametersSchema3": {
+    "V1SpeakPostParametersSpeakSampleRate3": {
       "description": "Encoding - mp3. Sample rate is fixed and not configurable (22050 Hz).",
-      "name": "V1SpeakPostParametersSchema3",
+      "name": "V1SpeakPostParametersSpeakSampleRate3",
       "shape": {
         "type": "enum",
         "values": [
@@ -3442,9 +4455,9 @@
       },
       "displayName": "mp3"
     },
-    "V1SpeakPostParametersSchema4": {
+    "V1SpeakPostParametersSpeakSampleRate4": {
       "description": "Encoding - opus. Sample rate is fixed at 48000 Hz.",
-      "name": "V1SpeakPostParametersSchema4",
+      "name": "V1SpeakPostParametersSpeakSampleRate4",
       "shape": {
         "type": "enum",
         "values": [
@@ -3455,31 +4468,58 @@
       },
       "displayName": "opus"
     },
-    "V1SpeakPostParametersSchema5": {
-      "description": "Encoding - opus. High-compression audio format optimized for real-time communications.",
-      "name": "V1SpeakPostParametersSchema5",
+    "V1SpeakPostParametersSpeakSampleRate": {
+      "name": "V1SpeakPostParametersSpeakSampleRate",
       "shape": {
-        "type": "enum",
-        "values": [
+        "type": "undiscriminatedUnion",
+        "variants": [
           {
-            "value": "opus"
+            "typeName": "V1SpeakPostParametersSpeakSampleRate0",
+            "description": "Encoding - linear16. Supported sample rates - 8000, 16000, 24000, 32000, 48000 Hz.",
+            "type": {
+              "type": "id",
+              "value": "V1SpeakPostParametersSpeakSampleRate0"
+            },
+            "displayName": "linear16"
+          },
+          {
+            "typeName": "V1SpeakPostParametersSpeakSampleRate1",
+            "description": "Encoding - mulaw. Supported sample rates - 8000, 16000 Hz.",
+            "type": {
+              "type": "id",
+              "value": "V1SpeakPostParametersSpeakSampleRate1"
+            },
+            "displayName": "mulaw"
+          },
+          {
+            "typeName": "V1SpeakPostParametersSpeakSampleRate2",
+            "description": "Encoding - alaw. Supported sample rates - 8000, 16000 Hz.",
+            "type": {
+              "type": "id",
+              "value": "V1SpeakPostParametersSpeakSampleRate2"
+            },
+            "displayName": "alaw"
+          },
+          {
+            "typeName": "V1SpeakPostParametersSpeakSampleRate3",
+            "description": "Encoding - mp3. Sample rate is fixed and not configurable (22050 Hz).",
+            "type": {
+              "type": "id",
+              "value": "V1SpeakPostParametersSpeakSampleRate3"
+            },
+            "displayName": "mp3"
+          },
+          {
+            "typeName": "V1SpeakPostParametersSpeakSampleRate4",
+            "description": "Encoding - opus. Sample rate is fixed at 48000 Hz.",
+            "type": {
+              "type": "id",
+              "value": "V1SpeakPostParametersSpeakSampleRate4"
+            },
+            "displayName": "opus"
           }
         ]
-      },
-      "displayName": "opus"
-    },
-    "V1SpeakPostParametersSchema6": {
-      "description": "Encoding - aac. Advanced audio format offering better quality at smaller file sizes than mp3.",
-      "name": "V1SpeakPostParametersSchema6",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "aac"
-          }
-        ]
-      },
-      "displayName": "aac"
+      }
     },
     "SpeakRequestBadRequestError": {
       "name": "SpeakRequestBadRequestError",
@@ -7001,8 +8041,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdUsageGetParametersSchema": {
-      "name": "V1ProjectsProjectIdUsageGetParametersSchema",
+    "V1ProjectsProjectIdUsageGetParametersProjectFilters": {
+      "name": "V1ProjectsProjectIdUsageGetParametersProjectFilters",
       "shape": {
         "type": "enum",
         "values": [
@@ -7580,8 +8620,133 @@
         ]
       }
     },
-    "V1ProjectsProjectIdUsageBreakdownGetParametersSchema": {
-      "name": "V1ProjectsProjectIdUsageBreakdownGetParametersSchema",
+    "V1ProjectsProjectIdUsageBreakdownGetParametersProjectFilters": {
+      "name": "V1ProjectsProjectIdUsageBreakdownGetParametersProjectFilters",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "alternatives.yml"
+          },
+          {
+            "value": "callback_method.yml"
+          },
+          {
+            "value": "callback.yml"
+          },
+          {
+            "value": "channels.yml"
+          },
+          {
+            "value": "custom_intent_mode.yml"
+          },
+          {
+            "value": "custom_intent.yml"
+          },
+          {
+            "value": "custom_topic_mode.yml"
+          },
+          {
+            "value": "custom_topic.yml"
+          },
+          {
+            "value": "detect_entities.yml"
+          },
+          {
+            "value": "detect_language.yml"
+          },
+          {
+            "value": "diarize.yml"
+          },
+          {
+            "value": "diarize_version.yml"
+          },
+          {
+            "value": "dictation.yml"
+          },
+          {
+            "value": "detect_topics.yml"
+          },
+          {
+            "value": "encoding.yml"
+          },
+          {
+            "value": "extra.yml"
+          },
+          {
+            "value": "filler_words.yml"
+          },
+          {
+            "value": "intents.yml"
+          },
+          {
+            "value": "keywords.yml"
+          },
+          {
+            "value": "language.yml"
+          },
+          {
+            "value": "measurements.yml"
+          },
+          {
+            "value": "model.yml"
+          },
+          {
+            "value": "multichannel.yml"
+          },
+          {
+            "value": "numerals.yml"
+          },
+          {
+            "value": "paragraphs.yml"
+          },
+          {
+            "value": "profanity_filter.yml"
+          },
+          {
+            "value": "punctuate.yml"
+          },
+          {
+            "value": "redact.yml"
+          },
+          {
+            "value": "replace.yml"
+          },
+          {
+            "value": "sample_rate.yml"
+          },
+          {
+            "value": "smart_format.yml"
+          },
+          {
+            "value": "search.yml"
+          },
+          {
+            "value": "sentiment.yml"
+          },
+          {
+            "value": "summarize.yml"
+          },
+          {
+            "value": "tag.yml"
+          },
+          {
+            "value": "topics.yml"
+          },
+          {
+            "value": "utterances.yml"
+          },
+          {
+            "value": "utt_split.yml"
+          },
+          {
+            "value": "version.yml"
+          }
+        ]
+      }
+    },
+    "V1ProjectsProjectIdUsageBreakdownGetParametersUsageBreakdownFilters": {
+      "name": "V1ProjectsProjectIdUsageBreakdownGetParametersUsageBreakdownFilters",
       "shape": {
         "type": "object",
         "extends": [],
@@ -9338,8 +10503,8 @@
         ]
       }
     },
-    "V1ProjectsProjectIdSelfHostedDistributionCredentialsPostParametersSchema": {
-      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsPostParametersSchema",
+    "V1ProjectsProjectIdSelfHostedDistributionCredentialsPostParametersProvider": {
+      "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsPostParametersProvider",
       "shape": {
         "type": "enum",
         "default": "quay",
@@ -13109,7 +14274,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ListenPostParametersSchema"
+                  "value": "V1ListenPostParametersCallbackMethod"
                 }
               }
             },
@@ -13120,7 +14285,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ListenPostParametersSchema"
+                  "value": "V1ListenPostParametersCustomTopic"
                 }
               }
             },
@@ -13131,7 +14296,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ListenPostParametersSchema"
+                  "value": "V1ListenPostParametersCustomTopicMode"
                 }
               }
             },
@@ -13142,7 +14307,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ListenPostParametersSchema"
+                  "value": "V1ListenPostParametersCustomIntent"
                 }
               }
             },
@@ -13153,7 +14318,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ListenPostParametersSchema"
+                  "value": "V1ListenPostParametersCustomIntentMode"
                 }
               }
             },
@@ -13178,7 +14343,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ListenPostParametersSchema"
+                  "value": "V1ListenPostParametersDetectLanguage"
                 }
               }
             },
@@ -13231,7 +14396,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ListenPostParametersSchema"
+                  "value": "V1ListenPostParametersEncoding"
                 }
               }
             },
@@ -13242,7 +14407,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ListenPostParametersSchema"
+                  "value": "V1ListenPostParametersExtra"
                 }
               }
             },
@@ -13297,7 +14462,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ListenPostParametersSchema"
+                  "value": "V1ListenPostParametersKeywords"
                 }
               }
             },
@@ -13308,7 +14473,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ListenPostParametersSchema"
+                  "value": "V1ListenPostParametersLanguage"
                 }
               }
             },
@@ -13333,7 +14498,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ListenPostParametersSchema"
+                  "value": "V1ListenPostParametersModel"
                 }
               }
             },
@@ -13414,7 +14579,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ListenPostParametersSchema"
+                  "value": "V1ListenPostParametersRedact"
                 }
               }
             },
@@ -13425,7 +14590,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ListenPostParametersSchema"
+                  "value": "V1ListenPostParametersReplace"
                 }
               }
             },
@@ -13436,7 +14601,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ListenPostParametersSchema"
+                  "value": "V1ListenPostParametersSearch"
                 }
               }
             },
@@ -13475,7 +14640,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ListenPostParametersSchema"
+                  "value": "V1ListenPostParametersSummarize"
                 }
               }
             },
@@ -13486,7 +14651,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ListenPostParametersSchema"
+                  "value": "V1ListenPostParametersTag"
                 }
               }
             },
@@ -13539,7 +14704,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ListenPostParametersSchema"
+                  "value": "V1ListenPostParametersVersion"
                 }
               }
             }
@@ -14629,7 +15794,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ReadPostParametersSchema"
+                  "value": "V1ReadPostParametersCallbackMethod"
                 }
               }
             },
@@ -14640,7 +15805,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ReadPostParametersSchema"
+                  "value": "V1ReadPostParametersCustomTopic"
                 }
               }
             },
@@ -14651,7 +15816,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ReadPostParametersSchema"
+                  "value": "V1ReadPostParametersCustomTopicMode"
                 }
               }
             },
@@ -14676,7 +15841,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ReadPostParametersSchema"
+                  "value": "V1ReadPostParametersReadLanguage"
                 }
               }
             },
@@ -15032,7 +16197,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1SpeakPostParametersSchema"
+                  "value": "V1SpeakPostParametersBitRate"
                 }
               }
             },
@@ -15056,7 +16221,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1SpeakPostParametersSchema"
+                  "value": "V1SpeakPostParametersContainer"
                 }
               }
             },
@@ -15067,7 +16232,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1SpeakPostParametersSchema"
+                  "value": "V1SpeakPostParametersSpeakEncoding"
                 }
               }
             },
@@ -15078,7 +16243,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1SpeakPostParametersSchema"
+                  "value": "V1SpeakPostParametersSpeakModel"
                 }
               }
             },
@@ -15089,7 +16254,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1SpeakPostParametersSchema"
+                  "value": "V1SpeakPostParametersSpeakSampleRate"
                 }
               }
             }
@@ -18602,7 +19767,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsProjectIdUsageGetParametersSchema"
+                  "value": "V1ProjectsProjectIdUsageGetParametersProjectFilters"
                 }
               }
             }
@@ -18953,7 +20118,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsProjectIdUsageBreakdownGetParametersSchema"
+                  "value": "V1ProjectsProjectIdUsageBreakdownGetParametersProjectFilters"
                 }
               }
             },
@@ -18964,7 +20129,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "V1ProjectsProjectIdUsageBreakdownGetParametersSchema"
+                  "value": "V1ProjectsProjectIdUsageBreakdownGetParametersUsageBreakdownFilters"
                 }
               }
             }
@@ -19755,7 +20920,7 @@
               "key": "provider",
               "type": {
                 "type": "id",
-                "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsPostParametersSchema"
+                "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsPostParametersProvider"
               }
             }
           ],
