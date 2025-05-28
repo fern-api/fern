@@ -159,17 +159,7 @@ describe("test", () => {
         packageId: PackageId,
         serviceGenerator: GeneratedSdkClientClass,
         context: SdkContext
-    ): Code {
-        const fallbackTest = code`
-            test("constructor", () => {
-                expect(${getTextOfTsNode(
-                    serviceGenerator.accessFromRootClient({
-                        referenceToRootClient: ts.factory.createIdentifier("client")
-                    })
-                )}).toBeDefined();
-            });
-        `;
-
+    ): Code | undefined {
         context.importsManager.addImportFromRoot("tests/mock-server/MockServerPool.js", {
             namedImports: ["mockServerPool"]
         });
@@ -240,9 +230,13 @@ describe("test", () => {
             })
             .filter(Boolean);
 
+        if (tests.length === 0) {
+            return undefined;
+        }
+
         return code`
             describe("${serviceName}", () => {
-                ${tests.length > 0 ? tests : fallbackTest}
+                ${tests}
             });
             `;
     }
@@ -304,7 +298,7 @@ describe("test", () => {
         }
 
         const rawRequestBody = this.getRequestExample(example.request);
-        let rawResponseBody = this.getResponseExample(example.response);
+        const rawResponseBody = this.getResponseExample(example.response);
         const responseStatusCode = getExampleResponseStatusCode(example.response);
         const expected = getExpectedResponseBody(example.response, context);
 
@@ -361,7 +355,9 @@ describe("test", () => {
           `;
     }
     getRequestExample(request: ExampleRequestBody | undefined): Code | undefined {
-        if (!request) return undefined;
+        if (!request) {
+            return undefined;
+        }
         return request._visit({
             inlinedRequestBody: (value) => {
                 return code`${literalOf(
@@ -377,7 +373,9 @@ describe("test", () => {
         });
     }
     getResponseExample(response: IR.ExampleResponse | undefined): Code | undefined {
-        if (!response) return undefined;
+        if (!response) {
+            return undefined;
+        }
         const createRawJsonExample = this.createRawJsonExample.bind(this);
         return response._visit<Code | undefined>({
             ok: (value) => {
@@ -581,7 +579,9 @@ function getExpectedResponseBody(response: IR.ExampleResponse, context: SdkConte
         ok: (response) => {
             return response._visit({
                 body: (value) => {
-                    if (!value) return code`undefined`;
+                    if (!value) {
+                        return code`undefined`;
+                    }
                     const example = context.type.getGeneratedExample(value).build(context, {
                         isForSnippet: true
                     });

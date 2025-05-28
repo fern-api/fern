@@ -890,7 +890,9 @@ export class SdkGenerator {
                         context.sdkClientClass.getGeneratedSdkClientClass(packageId),
                         context
                     );
-                    sourceFile.replaceWithText(file.toString({ dprintOptions: { indentWidth: 4 } }));
+                    if (file) {
+                        sourceFile.replaceWithText(file.toString({ dprintOptions: { indentWidth: 4 } }));
+                    }
                 }
             });
         });
