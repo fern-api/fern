@@ -70,6 +70,39 @@ export function generateTypeDeclarationExample({
             };
         }
         case "object": {
+            const baseJsonExample: Record<string, unknown> = {};
+            const baseProperties: ExampleObjectProperty[] = [];
+
+            // TODO: remove dependency on .extends and only use .extendedProperties
+            // The dependency on .extends is here to keep compatibility with the V3 parser which doesn't supply .extendedProperties yet
+            // When v3 parser supplies .extendedProperties, we should stop relying on .extends.
+            if (
+                (typeDeclaration.shape.extendedProperties == null ||
+                    typeDeclaration.shape.extendedProperties.length === 0) &&
+                typeDeclaration.shape.extends != null
+            ) {
+                for (const extendedTypeReference of typeDeclaration.shape.extends) {
+                    const extendedTypeDeclaration = typeDeclarations[extendedTypeReference.typeId];
+                    if (extendedTypeDeclaration == null) {
+                        continue;
+                    }
+                    const extendedExample = generateTypeDeclarationExample({
+                        fieldName,
+                        typeDeclaration: extendedTypeDeclaration,
+                        typeDeclarations,
+                        currentDepth: currentDepth + 1,
+                        maxDepth,
+                        skipOptionalProperties
+                    });
+                    if (extendedExample == null) {
+                        continue;
+                    }
+                    if (extendedExample.type === "success" && extendedExample.example.type === "object") {
+                        Object.assign(baseJsonExample, extendedExample.jsonExample);
+                        baseProperties.push(...extendedExample.example.properties);
+                    }
+                }
+            }
             const objectExample = generateObjectDeclarationExample({
                 fieldName,
                 typeDeclaration,
@@ -86,9 +119,9 @@ export function generateTypeDeclarationExample({
             return {
                 type: "success",
                 example: ExampleTypeShape.object({
-                    properties: [...example.properties]
+                    properties: [...baseProperties, ...example.properties]
                 }),
-                jsonExample
+                jsonExample: Object.assign({}, baseJsonExample, jsonExample)
             };
         }
         case "undiscriminatedUnion": {
