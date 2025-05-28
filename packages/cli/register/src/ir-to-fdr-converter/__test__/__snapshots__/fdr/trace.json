@@ -8267,24 +8267,24 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
+                "playlist_id": "playlist_id",
+                "owner-id": "owner-id",
                 "name": "name",
                 "problems": [
                   "problems",
                   "problems"
-                ],
-                "playlist_id": "playlist_id",
-                "owner-id": "owner-id"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "playlist_id": "playlist_id",
+                  "owner-id": "owner-id",
                   "name": "name",
                   "problems": [
                     "problems",
                     "problems"
-                  ],
-                  "playlist_id": "playlist_id",
-                  "owner-id": "owner-id"
+                  ]
                 }
               },
               "codeSamples": []
@@ -8420,44 +8420,44 @@
               "responseStatusCode": 200,
               "responseBody": [
                 {
+                  "playlist_id": "playlist_id",
+                  "owner-id": "owner-id",
                   "name": "name",
                   "problems": [
                     "problems",
                     "problems"
-                  ],
-                  "playlist_id": "playlist_id",
-                  "owner-id": "owner-id"
+                  ]
                 },
                 {
+                  "playlist_id": "playlist_id",
+                  "owner-id": "owner-id",
                   "name": "name",
                   "problems": [
                     "problems",
                     "problems"
-                  ],
-                  "playlist_id": "playlist_id",
-                  "owner-id": "owner-id"
+                  ]
                 }
               ],
               "responseBodyV3": {
                 "type": "json",
                 "value": [
                   {
+                    "playlist_id": "playlist_id",
+                    "owner-id": "owner-id",
                     "name": "name",
                     "problems": [
                       "problems",
                       "problems"
-                    ],
-                    "playlist_id": "playlist_id",
-                    "owner-id": "owner-id"
+                    ]
                   },
                   {
+                    "playlist_id": "playlist_id",
+                    "owner-id": "owner-id",
                     "name": "name",
                     "problems": [
                       "problems",
                       "problems"
-                    ],
-                    "playlist_id": "playlist_id",
-                    "owner-id": "owner-id"
+                    ]
                   }
                 ]
               },
@@ -8582,24 +8582,24 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
+                "playlist_id": "playlist_id",
+                "owner-id": "owner-id",
                 "name": "name",
                 "problems": [
                   "problems",
                   "problems"
-                ],
-                "playlist_id": "playlist_id",
-                "owner-id": "owner-id"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "playlist_id": "playlist_id",
+                  "owner-id": "owner-id",
                   "name": "name",
                   "problems": [
                     "problems",
                     "problems"
-                  ],
-                  "playlist_id": "playlist_id",
-                  "owner-id": "owner-id"
+                  ]
                 }
               },
               "codeSamples": []
@@ -8740,24 +8740,24 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
+                "playlist_id": "playlist_id",
+                "owner-id": "owner-id",
                 "name": "name",
                 "problems": [
                   "problems",
                   "problems"
-                ],
-                "playlist_id": "playlist_id",
-                "owner-id": "owner-id"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "playlist_id": "playlist_id",
+                  "owner-id": "owner-id",
                   "name": "name",
                   "problems": [
                     "problems",
                     "problems"
-                  ],
-                  "playlist_id": "playlist_id",
-                  "owner-id": "owner-id"
+                  ]
                 }
               },
               "codeSamples": []

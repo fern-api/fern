@@ -1214,8 +1214,8 @@
         ]
       }
     },
-    "V1MeCommentsGetParametersSchema": {
-      "name": "V1MeCommentsGetParametersSchema",
+    "V1MeCommentsGetParametersRelationship": {
+      "name": "V1MeCommentsGetParametersRelationship",
       "shape": {
         "type": "enum",
         "default": "any",
@@ -3925,7 +3925,7 @@
               "key": "relationship",
               "type": {
                 "type": "id",
-                "value": "V1MeCommentsGetParametersSchema"
+                "value": "V1MeCommentsGetParametersRelationship"
               }
             }
           ],

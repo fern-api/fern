@@ -1313,31 +1313,37 @@
               "wireValue": "allows"
             },
             "valueType": {
-              "name": {
-                "originalName": "FullAccountPermissions",
-                "camelCase": {
-                  "unsafeName": "fullAccountPermissions",
-                  "safeName": "fullAccountPermissions"
+              "container": {
+                "optional": {
+                  "name": {
+                    "originalName": "FullAccountPermissions",
+                    "camelCase": {
+                      "unsafeName": "fullAccountPermissions",
+                      "safeName": "fullAccountPermissions"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "full_account_permissions",
+                      "safeName": "full_account_permissions"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "FULL_ACCOUNT_PERMISSIONS",
+                      "safeName": "FULL_ACCOUNT_PERMISSIONS"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "FullAccountPermissions",
+                      "safeName": "FullAccountPermissions"
+                    }
+                  },
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "typeId": "type_:FullAccountPermissions",
+                  "type": "named"
                 },
-                "snakeCase": {
-                  "unsafeName": "full_account_permissions",
-                  "safeName": "full_account_permissions"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "FULL_ACCOUNT_PERMISSIONS",
-                  "safeName": "FULL_ACCOUNT_PERMISSIONS"
-                },
-                "pascalCase": {
-                  "unsafeName": "FullAccountPermissions",
-                  "safeName": "FullAccountPermissions"
-                }
+                "type": "optional"
               },
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "typeId": "type_:FullAccountPermissions",
-              "type": "named"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -1467,16 +1473,22 @@
               "wireValue": "label"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "maxLength": 80
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "maxLength": 80
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -2145,16 +2157,22 @@
               "wireValue": "maximumOverdraftAccounts"
             },
             "valueType": {
-              "primitive": {
-                "v1": "INTEGER",
-                "v2": {
-                  "validation": {
-                    "max": 4
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "INTEGER",
+                    "v2": {
+                      "validation": {
+                        "max": 4
+                      },
+                      "type": "integer"
+                    }
                   },
-                  "type": "integer"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -2596,16 +2614,22 @@
               "wireValue": "maximumOverdraftAccounts"
             },
             "valueType": {
-              "primitive": {
-                "v1": "INTEGER",
-                "v2": {
-                  "validation": {
-                    "max": 4
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "INTEGER",
+                    "v2": {
+                      "validation": {
+                        "max": 4
+                      },
+                      "type": "integer"
+                    }
                   },
-                  "type": "integer"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -2747,34 +2771,40 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "name": {
-                    "originalName": "AccountItem",
-                    "camelCase": {
-                      "unsafeName": "accountItem",
-                      "safeName": "accountItem"
+                "optional": {
+                  "container": {
+                    "list": {
+                      "name": {
+                        "originalName": "AccountItem",
+                        "camelCase": {
+                          "unsafeName": "accountItem",
+                          "safeName": "accountItem"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "account_item",
+                          "safeName": "account_item"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "ACCOUNT_ITEM",
+                          "safeName": "ACCOUNT_ITEM"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "AccountItem",
+                          "safeName": "AccountItem"
+                        }
+                      },
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "typeId": "type_:AccountItem",
+                      "type": "named"
                     },
-                    "snakeCase": {
-                      "unsafeName": "account_item",
-                      "safeName": "account_item"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "ACCOUNT_ITEM",
-                      "safeName": "ACCOUNT_ITEM"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "AccountItem",
-                      "safeName": "AccountItem"
-                    }
+                    "type": "list"
                   },
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                  },
-                  "typeId": "type_:AccountItem",
-                  "type": "named"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -3266,16 +3296,22 @@
               "wireValue": "label"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "maxLength": 80
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "maxLength": 80
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -8874,18 +8910,24 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "pattern": "^[-_:,.~$a-zA-Z0-9]{6,128}$",
-                    "minLength": 6,
-                    "maxLength": 128
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "pattern": "^[-_:,.~$a-zA-Z0-9]{6,128}$",
+                        "minLength": 6,
+                        "maxLength": 128
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -9030,16 +9072,22 @@
               "wireValue": "occurredOn"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -10074,18 +10122,24 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "pattern": "^[-_:.~$a-zA-Z0-9]{1,32}$",
-                    "minLength": 1,
-                    "maxLength": 32
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "pattern": "^[-_:.~$a-zA-Z0-9]{1,32}$",
+                        "minLength": 1,
+                        "maxLength": 32
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -10476,18 +10530,24 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "pattern": "^[-_:,.~$a-zA-Z0-9]{6,128}$",
-                    "minLength": 6,
-                    "maxLength": 128
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "pattern": "^[-_:,.~$a-zA-Z0-9]{6,128}$",
+                        "minLength": 6,
+                        "maxLength": 128
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -10632,16 +10692,22 @@
               "wireValue": "occurredOn"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "date"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "date"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -11946,18 +12012,24 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "pattern": "^[-_:.~$a-zA-Z0-9]{1,32}$",
-                    "minLength": 1,
-                    "maxLength": 32
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "pattern": "^[-_:.~$a-zA-Z0-9]{1,32}$",
+                        "minLength": 1,
+                        "maxLength": 32
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -13904,31 +13976,37 @@
               "wireValue": "state"
             },
             "valueType": {
-              "name": {
-                "originalName": "TransferState",
-                "camelCase": {
-                  "unsafeName": "transferState",
-                  "safeName": "transferState"
+              "container": {
+                "optional": {
+                  "name": {
+                    "originalName": "TransferState",
+                    "camelCase": {
+                      "unsafeName": "transferState",
+                      "safeName": "transferState"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "transfer_state",
+                      "safeName": "transfer_state"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "TRANSFER_STATE",
+                      "safeName": "TRANSFER_STATE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "TransferState",
+                      "safeName": "TransferState"
+                    }
+                  },
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "typeId": "type_:TransferState",
+                  "type": "named"
                 },
-                "snakeCase": {
-                  "unsafeName": "transfer_state",
-                  "safeName": "transfer_state"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TRANSFER_STATE",
-                  "safeName": "TRANSFER_STATE"
-                },
-                "pascalCase": {
-                  "unsafeName": "TransferState",
-                  "safeName": "TransferState"
-                }
+                "type": "optional"
               },
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "typeId": "type_:TransferState",
-              "type": "named"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -14579,31 +14657,37 @@
               "wireValue": "state"
             },
             "valueType": {
-              "name": {
-                "originalName": "TransferState",
-                "camelCase": {
-                  "unsafeName": "transferState",
-                  "safeName": "transferState"
+              "container": {
+                "optional": {
+                  "name": {
+                    "originalName": "TransferState",
+                    "camelCase": {
+                      "unsafeName": "transferState",
+                      "safeName": "transferState"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "transfer_state",
+                      "safeName": "transfer_state"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "TRANSFER_STATE",
+                      "safeName": "TRANSFER_STATE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "TransferState",
+                      "safeName": "TransferState"
+                    }
+                  },
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "typeId": "type_:TransferState",
+                  "type": "named"
                 },
-                "snakeCase": {
-                  "unsafeName": "transfer_state",
-                  "safeName": "transfer_state"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TRANSFER_STATE",
-                  "safeName": "TRANSFER_STATE"
-                },
-                "pascalCase": {
-                  "unsafeName": "TransferState",
-                  "safeName": "TransferState"
-                }
+                "type": "optional"
               },
-              "fernFilepath": {
-                "allParts": [],
-                "packagePath": []
-              },
-              "typeId": "type_:TransferState",
-              "type": "named"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -50836,8 +50920,11 @@
               "wireValue": "label"
             },
             "typeReference": {
-              "value": "STRING",
-              "type": "primitive"
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "optional"
             }
           },
           {
@@ -50979,8 +51066,11 @@
               "wireValue": "allows"
             },
             "typeReference": {
-              "value": "type_:FullAccountPermissions",
-              "type": "named"
+              "value": {
+                "value": "type_:FullAccountPermissions",
+                "type": "named"
+              },
+              "type": "optional"
             }
           },
           {
@@ -51249,8 +51339,11 @@
               "wireValue": "maximumOverdraftAccounts"
             },
             "typeReference": {
-              "value": "INTEGER",
-              "type": "primitive"
+              "value": {
+                "value": "INTEGER",
+                "type": "primitive"
+              },
+              "type": "optional"
             }
           },
           {
@@ -51521,8 +51614,11 @@
               "wireValue": "maximumOverdraftAccounts"
             },
             "typeReference": {
-              "value": "INTEGER",
-              "type": "primitive"
+              "value": {
+                "value": "INTEGER",
+                "type": "primitive"
+              },
+              "type": "optional"
             }
           }
         ],
@@ -51581,10 +51677,13 @@
             },
             "typeReference": {
               "value": {
-                "value": "type_:AccountItem",
-                "type": "named"
+                "value": {
+                  "value": "type_:AccountItem",
+                  "type": "named"
+                },
+                "type": "list"
               },
-              "type": "list"
+              "type": "optional"
             }
           },
           {
@@ -51918,8 +52017,11 @@
               "wireValue": "label"
             },
             "typeReference": {
-              "value": "STRING",
-              "type": "primitive"
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "optional"
             }
           },
           {
@@ -55315,8 +55417,11 @@
               "wireValue": "id"
             },
             "typeReference": {
-              "value": "STRING",
-              "type": "primitive"
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "optional"
             }
           },
           {
@@ -55399,8 +55504,11 @@
               "wireValue": "occurredOn"
             },
             "typeReference": {
-              "value": "STRING",
-              "type": "primitive"
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "optional"
             }
           },
           {
@@ -56038,8 +56146,11 @@
               "wireValue": "id"
             },
             "typeReference": {
-              "value": "STRING",
-              "type": "primitive"
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "optional"
             }
           }
         ],
@@ -56299,8 +56410,11 @@
               "wireValue": "id"
             },
             "typeReference": {
-              "value": "STRING",
-              "type": "primitive"
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "optional"
             }
           },
           {
@@ -56383,8 +56497,11 @@
               "wireValue": "occurredOn"
             },
             "typeReference": {
-              "value": "STRING",
-              "type": "primitive"
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "optional"
             }
           },
           {
@@ -57096,8 +57213,11 @@
               "wireValue": "id"
             },
             "typeReference": {
-              "value": "STRING",
-              "type": "primitive"
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "optional"
             }
           },
           {
@@ -58468,8 +58588,11 @@
               "wireValue": "state"
             },
             "typeReference": {
-              "value": "type_:TransferState",
-              "type": "named"
+              "value": {
+                "value": "type_:TransferState",
+                "type": "named"
+              },
+              "type": "optional"
             }
           },
           {
@@ -58645,8 +58768,11 @@
               "wireValue": "state"
             },
             "typeReference": {
-              "value": "type_:TransferState",
-              "type": "named"
+              "value": {
+                "value": "type_:TransferState",
+                "type": "named"
+              },
+              "type": "optional"
             }
           },
           {
