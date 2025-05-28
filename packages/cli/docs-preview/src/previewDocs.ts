@@ -20,7 +20,11 @@ import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 
-import { replaceImagePathsAndUrls, replaceReferencedCode, replaceReferencedMarkdown } from "../../docs-markdown-utils/src";
+import {
+    replaceImagePathsAndUrls,
+    replaceReferencedCode,
+    replaceReferencedMarkdown
+} from "../../docs-markdown-utils/src";
 import { FernWorkspace } from "../../workspace/loader/src";
 
 export async function getPreviewDocsDefinition({
