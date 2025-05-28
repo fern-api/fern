@@ -1755,8 +1755,8 @@
                                         }
                                     ],
                                     "jsonExample": {
-                                        "docs": "docs",
                                         "name": "name",
+                                        "docs": "docs",
                                         "unique": "unique"
                                     }
                                 },

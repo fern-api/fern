@@ -2001,6 +2001,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
+                "total_count": 1,
                 "data": {
                   "users": [
                     {
@@ -2013,12 +2014,12 @@
                     }
                   ]
                 },
-                "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                "total_count": 1
+                "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "total_count": 1,
                   "data": {
                     "users": [
                       {
@@ -2031,8 +2032,7 @@
                       }
                     ]
                   },
-                  "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                  "total_count": 1
+                  "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
                 }
               },
               "codeSamples": []
@@ -2091,6 +2091,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
+                "total_count": 1,
                 "data": {
                   "users": [
                     {
@@ -2103,12 +2104,12 @@
                     }
                   ]
                 },
-                "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                "total_count": 1
+                "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "total_count": 1,
                   "data": {
                     "users": [
                       {
@@ -2121,8 +2122,7 @@
                       }
                     ]
                   },
-                  "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                  "total_count": 1
+                  "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
                 }
               },
               "codeSamples": []
