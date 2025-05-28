@@ -70,33 +70,6 @@ export function generateTypeDeclarationExample({
             };
         }
         case "object": {
-            const baseJsonExample: Record<string, unknown> = {};
-            const baseProperties: ExampleObjectProperty[] = [];
-
-            if (typeDeclaration.shape.extends != null) {
-                for (const extendedTypeReference of typeDeclaration.shape.extends) {
-                    const extendedTypeDeclaration = typeDeclarations[extendedTypeReference.typeId];
-                    if (extendedTypeDeclaration == null) {
-                        continue;
-                    }
-                    const extendedExample = generateTypeDeclarationExample({
-                        fieldName,
-                        typeDeclaration: extendedTypeDeclaration,
-                        typeDeclarations,
-                        currentDepth: currentDepth + 1,
-                        maxDepth,
-                        skipOptionalProperties
-                    });
-                    if (extendedExample == null) {
-                        continue;
-                    }
-                    if (extendedExample.type === "success" && extendedExample.example.type === "object") {
-                        Object.assign(baseJsonExample, extendedExample.jsonExample);
-                        baseProperties.push(...extendedExample.example.properties);
-                    }
-                }
-            }
-
             const objectExample = generateObjectDeclarationExample({
                 fieldName,
                 typeDeclaration,
@@ -113,10 +86,9 @@ export function generateTypeDeclarationExample({
             return {
                 type: "success",
                 example: ExampleTypeShape.object({
-                    ...example,
-                    properties: [...baseProperties, ...example.properties]
+                    properties: [...example.properties]
                 }),
-                jsonExample: Object.assign({}, baseJsonExample, jsonExample)
+                jsonExample
             };
         }
         case "undiscriminatedUnion": {
