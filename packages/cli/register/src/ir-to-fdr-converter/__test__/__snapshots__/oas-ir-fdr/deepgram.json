@@ -34,6 +34,14 @@
         }
       }
     },
+    "MetadataModelInfo": {
+      "name": "MetadataModelInfo",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "MetadataSummaryInfo": {
       "name": "MetadataSummaryInfo",
       "shape": {
@@ -296,16 +304,8 @@
           {
             "key": "model_info",
             "valueType": {
-              "type": "map",
-              "keyType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              },
-              "valueType": {
-                "type": "unknown"
-              }
+              "type": "id",
+              "value": "MetadataModelInfo"
             }
           },
           {
