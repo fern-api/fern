@@ -116,6 +116,9 @@ export class LocalTaskHandler {
         await this.runGitCommand(["reset", "--", ...fernIgnorePaths], tmpOutputResolutionDir);
         await this.runGitCommand(["restore", "."], tmpOutputResolutionDir);
 
+        // remove .git dir before copying files over
+        await rmdir(join(tmpOutputResolutionDir, RelativeFilePath.of(".git")), { recursive: true });
+
         // Delete local output directory and copy all files from the generated directory
         await rmdir(this.absolutePathToLocalOutput, { recursive: true });
         await cp(tmpOutputResolutionDir, this.absolutePathToLocalOutput, { recursive: true });
