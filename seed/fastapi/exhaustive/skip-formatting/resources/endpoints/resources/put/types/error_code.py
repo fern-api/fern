@@ -2,7 +2,6 @@
 
 import enum
 import typing
-
 T_Result = typing.TypeVar("T_Result")
 class ErrorCode(str, enum.Enum):
     INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR"

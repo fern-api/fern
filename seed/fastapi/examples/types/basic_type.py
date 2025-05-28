@@ -2,16 +2,15 @@
 
 import enum
 import typing
-
 T_Result = typing.TypeVar("T_Result")
-
-
 class BasicType(str, enum.Enum):
     PRIMITIVE = "primitive"
     LITERAL = "literal"
-
+    
     def visit(self, primitive: typing.Callable[[], T_Result], literal: typing.Callable[[], T_Result]) -> T_Result:
         if self is BasicType.PRIMITIVE:
-            return primitive()
+            return primitive(
+            )
         if self is BasicType.LITERAL:
-            return literal()
+            return literal(
+            )

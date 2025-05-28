@@ -213,6 +213,22 @@ public partial class ServiceClient
     ///             },
     ///             Revenue = 1000000,
     ///             Cast = new List&lt;string&gt;() { "cast", "cast" },
+    ///             Id = "id",
+    ///             Prequel = "prequel",
+    ///             Title = "title",
+    ///             From = "from",
+    ///             Rating = 1.1,
+    ///             Type = "movie",
+    ///             Tag = "tag",
+    ///             Book = "book",
+    ///             Metadata = new Dictionary&lt;string, object&gt;()
+    ///             {
+    ///                 {
+    ///                     "metadata",
+    ///                     new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
+    ///                 },
+    ///             },
+    ///             Revenue = 1000000,
     ///         },
     ///         Entity = new Entity { Type = BasicType.Primitive, Name = "name" },
     ///         Metadata = "metadata",

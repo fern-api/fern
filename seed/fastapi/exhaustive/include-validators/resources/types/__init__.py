@@ -2,48 +2,5 @@
 
 # isort: skip_file
 
-from .resources import (
-    Animal,
-    Cat,
-    Dog,
-    DoubleOptional,
-    ErrorWithEnumBody,
-    ErrorWithUnionBody,
-    NestedObjectWithOptionalField,
-    NestedObjectWithOptionalFieldError,
-    NestedObjectWithRequiredField,
-    NestedObjectWithRequiredFieldError,
-    ObjectWithMapOfMap,
-    ObjectWithOptionalField,
-    ObjectWithOptionalFieldError,
-    ObjectWithRequiredField,
-    ObjectWithRequiredFieldError,
-    OptionalAlias,
-    WeatherReport,
-    enum,
-    object,
-    union,
-)
-
-__all__ = [
-    "Animal",
-    "Cat",
-    "Dog",
-    "DoubleOptional",
-    "ErrorWithEnumBody",
-    "ErrorWithUnionBody",
-    "NestedObjectWithOptionalField",
-    "NestedObjectWithOptionalFieldError",
-    "NestedObjectWithRequiredField",
-    "NestedObjectWithRequiredFieldError",
-    "ObjectWithMapOfMap",
-    "ObjectWithOptionalField",
-    "ObjectWithOptionalFieldError",
-    "ObjectWithRequiredField",
-    "ObjectWithRequiredFieldError",
-    "OptionalAlias",
-    "WeatherReport",
-    "enum",
-    "object",
-    "union",
-]
+from .resources import Animal, Cat, Dog, DoubleOptional, NestedObjectWithOptionalField, NestedObjectWithRequiredField, ObjectWithMapOfMap, ObjectWithOptionalField, ObjectWithRequiredField, OptionalAlias, WeatherReport, enum, object, union
+__all__ = ["Animal", "Cat", "Dog", "DoubleOptional", "NestedObjectWithOptionalField", "NestedObjectWithRequiredField", "ObjectWithMapOfMap", "ObjectWithOptionalField", "ObjectWithRequiredField", "OptionalAlias", "WeatherReport", "enum", "object", "union"]

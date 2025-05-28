@@ -2,7 +2,5 @@
 
 # isort: skip_file
 
-from .service import StoreTracedTestCaseRequest, StoreTracedWorkspaceRequest
 from .types import Test
-
-__all__ = ["StoreTracedTestCaseRequest", "StoreTracedWorkspaceRequest", "Test"]
+__all__ = ["Test"]

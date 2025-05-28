@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .resources import Organization, User, organizations, user
-
 __all__ = ["Organization", "User", "organizations", "user"]

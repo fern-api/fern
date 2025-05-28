@@ -1,0 +1,831 @@
+{
+    "selfHosted": false,
+    "fdrApiDefinitionId": null,
+    "apiVersion": null,
+    "apiName": {
+        "originalName": "content-types",
+        "camelCase": {
+            "unsafeName": "contentTypes",
+            "safeName": "contentTypes"
+        },
+        "snakeCase": {
+            "unsafeName": "content_types",
+            "safeName": "content_types"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "CONTENT_TYPES",
+            "safeName": "CONTENT_TYPES"
+        },
+        "pascalCase": {
+            "unsafeName": "ContentTypes",
+            "safeName": "ContentTypes"
+        }
+    },
+    "apiDisplayName": null,
+    "apiDocs": null,
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [],
+        "docs": null
+    },
+    "headers": [],
+    "idempotencyHeaders": [],
+    "types": {},
+    "errors": {},
+    "services": {
+        "service_service": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
+            "endpoints": [
+                {
+                    "id": "endpoint_service.patch",
+                    "name": {
+                        "originalName": "patch",
+                        "camelCase": {
+                            "unsafeName": "patch",
+                            "safeName": "patch"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "patch",
+                            "safeName": "patch"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PATCH",
+                            "safeName": "PATCH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Patch",
+                            "safeName": "Patch"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": false,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "PATCH",
+                    "basePath": null,
+                    "path": {
+                        "head": "/",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "type": "inlinedRequestBody",
+                        "name": {
+                            "originalName": "PatchProxyRequest",
+                            "camelCase": {
+                                "unsafeName": "patchProxyRequest",
+                                "safeName": "patchProxyRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "patch_proxy_request",
+                                "safeName": "patch_proxy_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PATCH_PROXY_REQUEST",
+                                "safeName": "PATCH_PROXY_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "PatchProxyRequest",
+                                "safeName": "PatchProxyRequest"
+                            }
+                        },
+                        "extends": [],
+                        "properties": [
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "application",
+                                        "camelCase": {
+                                            "unsafeName": "application",
+                                            "safeName": "application"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "application",
+                                            "safeName": "application"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "APPLICATION",
+                                            "safeName": "APPLICATION"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Application",
+                                            "safeName": "Application"
+                                        }
+                                    },
+                                    "wireValue": "application"
+                                },
+                                "valueType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "v2Examples": {
+                                    "userSpecifiedExamples": {},
+                                    "autogeneratedExamples": {}
+                                },
+                                "availability": null,
+                                "docs": null
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "require_auth",
+                                        "camelCase": {
+                                            "unsafeName": "requireAuth",
+                                            "safeName": "requireAuth"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "require_auth",
+                                            "safeName": "require_auth"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "REQUIRE_AUTH",
+                                            "safeName": "REQUIRE_AUTH"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "RequireAuth",
+                                            "safeName": "RequireAuth"
+                                        }
+                                    },
+                                    "wireValue": "require_auth"
+                                },
+                                "valueType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "BOOLEAN",
+                                                "v2": {
+                                                    "type": "boolean",
+                                                    "default": null
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "v2Examples": {
+                                    "userSpecifiedExamples": {},
+                                    "autogeneratedExamples": {}
+                                },
+                                "availability": null,
+                                "docs": null
+                            }
+                        ],
+                        "extra-properties": false,
+                        "extendedProperties": [],
+                        "docs": null,
+                        "v2Examples": null,
+                        "contentType": "application/merge-patch+json"
+                    },
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "wrapper",
+                            "wrapperName": {
+                                "originalName": "PatchProxyRequest",
+                                "camelCase": {
+                                    "unsafeName": "patchProxyRequest",
+                                    "safeName": "patchProxyRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "patch_proxy_request",
+                                    "safeName": "patch_proxy_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PATCH_PROXY_REQUEST",
+                                    "safeName": "PATCH_PROXY_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "PatchProxyRequest",
+                                    "safeName": "PatchProxyRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            },
+                            "includePathParameters": false,
+                            "onlyPathParameters": false
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
+                        "streamParameter": null
+                    },
+                    "response": {
+                        "body": null,
+                        "status-code": null
+                    },
+                    "errors": [],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "bd6cfdb8",
+                                "url": "",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "inlinedRequestBody",
+                                    "properties": [
+                                        {
+                                            "name": {
+                                                "name": {
+                                                    "originalName": "application",
+                                                    "camelCase": {
+                                                        "unsafeName": "application",
+                                                        "safeName": "application"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "application",
+                                                        "safeName": "application"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "APPLICATION",
+                                                        "safeName": "APPLICATION"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Application",
+                                                        "safeName": "Application"
+                                                    }
+                                                },
+                                                "wireValue": "application"
+                                            },
+                                            "originalTypeDeclaration": null,
+                                            "value": {
+                                                "shape": {
+                                                    "type": "container",
+                                                    "container": {
+                                                        "type": "nullable",
+                                                        "nullable": null,
+                                                        "valueType": {
+                                                            "_type": "primitive",
+                                                            "primitive": {
+                                                                "v1": "STRING",
+                                                                "v2": {
+                                                                    "type": "string",
+                                                                    "default": null,
+                                                                    "validation": null
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "name": {
+                                                "name": {
+                                                    "originalName": "require_auth",
+                                                    "camelCase": {
+                                                        "unsafeName": "requireAuth",
+                                                        "safeName": "requireAuth"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "require_auth",
+                                                        "safeName": "require_auth"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "REQUIRE_AUTH",
+                                                        "safeName": "REQUIRE_AUTH"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "RequireAuth",
+                                                        "safeName": "RequireAuth"
+                                                    }
+                                                },
+                                                "wireValue": "require_auth"
+                                            },
+                                            "originalTypeDeclaration": null,
+                                            "value": {
+                                                "shape": {
+                                                    "type": "container",
+                                                    "container": {
+                                                        "type": "nullable",
+                                                        "nullable": null,
+                                                        "valueType": {
+                                                            "_type": "primitive",
+                                                            "primitive": {
+                                                                "v1": "BOOLEAN",
+                                                                "v2": {
+                                                                    "type": "boolean",
+                                                                    "default": null
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "jsonExample": {}
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": null
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "availability": null,
+                    "docs": null
+                }
+            ]
+        }
+    },
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "environments": null,
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "basePath": null,
+    "pathParameters": [],
+    "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": []
+    },
+    "webhookGroups": {},
+    "websocketChannels": {},
+    "readmeConfig": null,
+    "sourceConfig": null,
+    "publishConfig": null,
+    "dynamic": {
+        "version": "1.0.0",
+        "types": {},
+        "headers": [],
+        "endpoints": {
+            "endpoint_service.patch": {
+                "auth": null,
+                "declaration": {
+                    "name": {
+                        "originalName": "patch",
+                        "camelCase": {
+                            "unsafeName": "patch",
+                            "safeName": "patch"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "patch",
+                            "safeName": "patch"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PATCH",
+                            "safeName": "PATCH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Patch",
+                            "safeName": "Patch"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    }
+                },
+                "location": {
+                    "method": "PATCH",
+                    "path": "/"
+                },
+                "request": {
+                    "type": "inlined",
+                    "declaration": {
+                        "name": {
+                            "originalName": "PatchProxyRequest",
+                            "camelCase": {
+                                "unsafeName": "patchProxyRequest",
+                                "safeName": "patchProxyRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "patch_proxy_request",
+                                "safeName": "patch_proxy_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PATCH_PROXY_REQUEST",
+                                "safeName": "PATCH_PROXY_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "PatchProxyRequest",
+                                "safeName": "PatchProxyRequest"
+                            }
+                        },
+                        "fernFilepath": {
+                            "allParts": [
+                                {
+                                    "originalName": "service",
+                                    "camelCase": {
+                                        "unsafeName": "service",
+                                        "safeName": "service"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "service",
+                                        "safeName": "service"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "SERVICE",
+                                        "safeName": "SERVICE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Service",
+                                        "safeName": "Service"
+                                    }
+                                }
+                            ],
+                            "packagePath": [],
+                            "file": {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        }
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "body": {
+                        "type": "properties",
+                        "value": [
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "application",
+                                        "camelCase": {
+                                            "unsafeName": "application",
+                                            "safeName": "application"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "application",
+                                            "safeName": "application"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "APPLICATION",
+                                            "safeName": "APPLICATION"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Application",
+                                            "safeName": "Application"
+                                        }
+                                    },
+                                    "wireValue": "application"
+                                },
+                                "typeReference": {
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
+                                }
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "require_auth",
+                                        "camelCase": {
+                                            "unsafeName": "requireAuth",
+                                            "safeName": "requireAuth"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "require_auth",
+                                            "safeName": "require_auth"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "REQUIRE_AUTH",
+                                            "safeName": "REQUIRE_AUTH"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "RequireAuth",
+                                            "safeName": "RequireAuth"
+                                        }
+                                    },
+                                    "wireValue": "require_auth"
+                                },
+                                "typeReference": {
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "BOOLEAN"
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "metadata": {
+                        "includePathParameters": false,
+                        "onlyPathParameters": false
+                    }
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            }
+        },
+        "pathParameters": [],
+        "environments": null,
+        "generatorConfig": null
+    },
+    "subpackages": {
+        "subpackage_service": {
+            "name": {
+                "originalName": "service",
+                "camelCase": {
+                    "unsafeName": "service",
+                    "safeName": "service"
+                },
+                "snakeCase": {
+                    "unsafeName": "service",
+                    "safeName": "service"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "SERVICE",
+                    "safeName": "SERVICE"
+                },
+                "pascalCase": {
+                    "unsafeName": "Service",
+                    "safeName": "Service"
+                }
+            },
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "service",
+                    "camelCase": {
+                        "unsafeName": "service",
+                        "safeName": "service"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "service",
+                        "safeName": "service"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SERVICE",
+                        "safeName": "SERVICE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Service",
+                        "safeName": "Service"
+                    }
+                }
+            },
+            "service": "service_service",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": [],
+            "file": null
+        },
+        "websocket": null,
+        "service": null,
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "subpackage_service"
+        ],
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "docs": null
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
+        "hasFileDownloadEndpoints": false,
+        "platformHeaders": {
+            "language": "X-Fern-Language",
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
+        }
+    }
+}

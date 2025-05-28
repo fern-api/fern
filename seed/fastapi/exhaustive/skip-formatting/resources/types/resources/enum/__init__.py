@@ -2,6 +2,5 @@
 
 # isort: skip_file
 
-from .errors import ErrorWithEnumBody
 from .types import WeatherReport
-__all__ = ["ErrorWithEnumBody", "WeatherReport"]
+__all__ = ["WeatherReport"]

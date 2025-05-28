@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .resources import Filename, service
-
 __all__ = ["Filename", "service"]

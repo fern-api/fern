@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .currency import Currency
-
 __all__ = ["Currency"]

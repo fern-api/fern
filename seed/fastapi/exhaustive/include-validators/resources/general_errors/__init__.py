@@ -2,7 +2,5 @@
 
 # isort: skip_file
 
-from .errors import BadRequestBody
 from .types import BadObjectRequestInfo
-
-__all__ = ["BadObjectRequestInfo", "BadRequestBody"]
+__all__ = ["BadObjectRequestInfo"]

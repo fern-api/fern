@@ -1,5 +1,67 @@
 - changelogEntry:
     - summary: |
+        Mark readonly fields as optional in the IR.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-28"
+  version: 0.63.11-rc0
+
+- changelogEntry:
+    - summary: Fix missing properties from base schemas in example generation.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-27"
+  version: 0.63.10
+
+- changelogEntry:
+    - summary: Rerelease CLI at 0.63.8-rc1
+      type: internal
+  irVersion: 58
+  createdAt: "2025-05-27"
+  version: 0.63.9
+
+- changelogEntry:
+    - summary: |
+        Fix a bug where `additionalProperties: false` would lead to objects still being converted as maps.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-27"
+  version: 0.63.8-rc3
+
+- changelogEntry:
+    - summary: |
+        Rerelease CLI at 0.63.8-rc1
+      type: internal
+  irVersion: 58
+  createdAt: "2025-05-27"
+  version: 0.63.8-rc2
+
+- changelogEntry:
+    - summary: |
+        Support retrieving subpackages in the ApiDefinitionHolder by both the id locator and tag locator.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-27"
+  version: 0.63.8-rc1
+
+- changelogEntry:
+    - summary: |
+        Beta support for custom React components in local development mode.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-05-27"
+  version: 0.63.8-rc0
+
+- changelogEntry:
+    - summary: |
+        Support running python generators with v58 of IR.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-27"
+  version: 0.63.7
+
+- changelogEntry:
+    - summary: |
         Union variant names use 'display-name' for Fern definitions, and fallback to the type name for all others
       type: fix
   irVersion: 58

@@ -8,5 +8,4 @@ from .my_collection_alias_object import MyCollectionAliasObject
 from .my_object import MyObject
 from .my_object_with_optional import MyObjectWithOptional
 from .object_type import ObjectType
-
 __all__ = ["Id", "MyAliasObject", "MyCollectionAliasObject", "MyObject", "MyObjectWithOptional", "ObjectType"]

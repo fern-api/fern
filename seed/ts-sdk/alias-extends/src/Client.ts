@@ -35,7 +35,8 @@ export class SeedAliasExtendsClient {
      *
      * @example
      *     await client.extendedInlineRequestBody({
-     *         child: "child"
+     *         child: "child",
+     *         parent: "parent"
      *     })
      */
     public extendedInlineRequestBody(

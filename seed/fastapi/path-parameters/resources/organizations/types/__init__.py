@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .organization import Organization
-
 __all__ = ["Organization"]

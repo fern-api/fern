@@ -2,6 +2,5 @@
 
 # isort: skip_file
 
-from .resources import a, folder
-
-__all__ = ["a", "folder"]
+from .resources import a
+__all__ = ["a"]

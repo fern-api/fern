@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .resources import d
-
 __all__ = ["d"]
