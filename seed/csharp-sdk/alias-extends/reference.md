@@ -12,7 +12,9 @@
 <dd>
 
 ```csharp
-await client.ExtendedInlineRequestBodyAsync(new InlinedChildRequest { Child = "child" });
+await client.ExtendedInlineRequestBodyAsync(
+    new InlinedChildRequest { Child = "child", Parent = "parent" }
+);
 ```
 </dd>
 </dl>

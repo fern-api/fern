@@ -496,6 +496,20 @@ await client.service.createBigEntity({
         },
         revenue: 1000000,
         cast: ["cast", "cast"],
+        id: "id",
+        prequel: "prequel",
+        title: "title",
+        from: "from",
+        rating: 1.1,
+        type: "movie",
+        tag: "tag",
+        book: "book",
+        metadata: {
+            metadata: {
+                key: "value",
+            },
+        },
+        revenue: 1000000,
     },
     entity: {
         type: "primitive",

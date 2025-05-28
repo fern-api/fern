@@ -9,7 +9,7 @@ import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
 import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
