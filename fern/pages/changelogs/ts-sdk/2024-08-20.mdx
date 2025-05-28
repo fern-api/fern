@@ -1,6 +1,9 @@
 ## 0.39.5
-**`(fix):`** Use strings instead of Date objects in snippets when noSerdeLayer is enabled
+**`(fix):`** If `noSerdeLayer` is enabled, then the generated TypeScript SDK snippets and wire tests
+will not use `Date` objects but instead use strings. Without this fix, the generated
+wire tests would result in failures.
+
 
 ## 0.39.4
-**`(fix):`** Only generate environment files when a valid environment is available
+**`(fix):`** Ensure that environment files don't generate, unless there is a valid environment available.
 

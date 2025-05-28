@@ -35,7 +35,9 @@ export class SeedExtendsClient {
      *
      * @example
      *     await client.extendedInlineRequestBody({
-     *         unique: "unique"
+     *         unique: "unique",
+     *         name: "name",
+     *         docs: "docs"
      *     })
      */
     public extendedInlineRequestBody(

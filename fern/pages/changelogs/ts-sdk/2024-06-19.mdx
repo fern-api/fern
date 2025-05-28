@@ -1,16 +1,36 @@
 ## 0.25.0
-**`(fix):`** Fix snippet generation for streaming endpoints
+**`(fix):`** The generator now generates snippets for streaming endpoints. There is also a fix where literals are excluded from inlined requests.
 
-**`(feat):`** Merge user's original README.md file if present
+## 0.25.0-rc0
+**`(feat):`** The generator now merges the user's original `README.md` file (if any).
 
 ## 0.24.4
-**`(fix):`** Fix unused environment import in snippets with default environment
+**`(fix):`** APIs that specify a default environment no longer include an unused environment import in their generated snippets.
 
 ## 0.24.2
-**`(feat):`** Remove unnecessary client call from README.md
+**`(feat):`** Remove the unnecessary client call from the request/response README.md section.
 
-**`(fix):`** Fix nested method references in README.md snippets
+**`(fix):`** The generated README.md snippets now correctly referenced nested methods. For example,
+`client.users.create` (instead of `client.create`) in the following:
+
+```ts
+import { AcmeClient } from "acme";
+
+const client = new AcmeClient({ apiKey: "YOUR_API_KEY" });
+await client.users.create({
+  firstName: "john",
+  lastName: "doe"
+});
+```
+
 
 ## 0.24.1
-**`(fix):`** Fix dynamic snippets to support importing client directly from package
+**`(fix):`** Dynamic snippets now support importing the client directly from the package.
+
+```typescript
+import { MyClient } from "@org/sdk";
+
+const client = new MyClient({ ... });
+```
+
 

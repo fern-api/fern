@@ -97,6 +97,7 @@ class SeedAliasExtends:
         )
         client.extended_inline_request_body(
             child="child",
+            parent="parent",
         )
         """
         _response = self._raw_client.extended_inline_request_body(
@@ -196,6 +197,7 @@ class AsyncSeedAliasExtends:
         async def main() -> None:
             await client.extended_inline_request_body(
                 child="child",
+                parent="parent",
             )
 
 

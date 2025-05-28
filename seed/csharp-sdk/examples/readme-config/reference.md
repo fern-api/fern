@@ -468,6 +468,22 @@ await client.Service.CreateBigEntityAsync(
             },
             Revenue = 1000000,
             Cast = new List<string>() { "cast", "cast" },
+            Id = "id",
+            Prequel = "prequel",
+            Title = "title",
+            From = "from",
+            Rating = 1.1,
+            Type = "movie",
+            Tag = "tag",
+            Book = "book",
+            Metadata = new Dictionary<string, object>()
+            {
+                {
+                    "metadata",
+                    new Dictionary<object, object?>() { { "key", "value" } }
+                },
+            },
+            Revenue = 1000000,
         },
         Entity = new Entity { Type = BasicType.Primitive, Name = "name" },
         Metadata = "metadata",
