@@ -1,0 +1,523 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  examples:
+    merchantPlatformCreated:
+      summary: Created merchant platform
+      description: New merchant platform created
+      value:
+        merchantPlatformId: '12345'
+        createdDate: '2024-07-02T12:00:00.000Z'
+        lastModifiedDate: '2024-07-02T12:00:00.000Z'
+        business: 
+          name: Example Corp
+          taxId: xxxxx6789
+          organizationType: privateCorporation
+          countryOfOperation: US
+          addresses:
+            - type: legalAddress
+              address1: 1 Example Ave.
+              address2: Example Address Line 2
+              address3: Example Address Line 3
+              city: Chicago
+              state: Illinois
+              country: US
+              postalCode: '60056'
+          contactMethods: 
+            - type: email
+              value: jane.doe@example.com
+        processingAccounts: 
+          - processingAccountId: '38765'
+            doingBusinessAs: Pizza Doe
+            status: pending
+            link: 
+              rel: processingAccount
+              href: 'https://api.payroc.com/v1/processing-accounts/38765'
+              method: get
+            signature: 
+              type: requestedViaDirectLink
+              link: 
+                rel: agreement
+                href: 'https://us.agreementexpress.net/mv2/viewer2.jsp?docId=00000000-0000-0000-0000-000000000000'
+                method: get
+
+    listMerchantPlatforms:
+      summary: Paginated list of merchant platforms
+      description: Retrieve a list of merchant platforms associated with your account.
+      value:
+        limit: 2
+        count: 2
+        hasMore: true
+        links:
+          - rel: previous
+            method: get
+            href: 'https://api.payroc.com/v1/merchant-platforms?before=12345&limit=2'
+          - rel: next
+            method: get
+            href: 'https://api.payroc.com/v1/merchant-platforms?after=12346&limit=2'
+        data:
+          - merchantPlatformId: '12345'
+            createdDate: '2024-07-02T12:00:00.000Z'
+            lastModifiedDate: '2024-07-02T12:00:00.000Z'
+            business: 
+              name: Example Corp
+              taxId: xxxxx6789
+              organizationType: privateCorporation
+              countryOfOperation: US
+              addresses:
+                - type: legalAddress
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  state: Illinois
+                  country: US
+                  postalCode: '60056'
+              contactMethods: 
+                - type: email
+                  value: example-corp@example.com
+                - type: phone
+                  value: '123 456 7890'
+            processingAccounts: 
+              - processingAccountId: '38765'
+                doingBusinessAs: Pizza Doe
+                status: pending
+                link: 
+                  rel: processingAccount
+                  href: "https://api.payroc.com/v1/processing-accounts/38765"
+                  method: get
+                signature: 
+                  type: requestedViaDirectLink
+                  link: 
+                    rel: agreement
+                    href: 'https://us.agreementexpress.net/mv2/viewer2.jsp?docId=00000000-0000-0000-0000-000000000000'
+                    method: get
+          - merchantPlatformId: '12346'
+            createdDate: '2024-07-02T12:00:00.000Z'
+            lastModifiedDate: '2024-07-02T12:00:00.000Z'
+            business: 
+              name: Example Corp
+              taxId: xxxxx6789
+              organizationType: privateCorporation
+              countryOfOperation: US
+              addresses:
+                - type: legalAddress
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  state: Illinois
+                  country: US
+                  postalCode: '60056'
+              contactMethods: 
+                - type: email
+                  value: example-corp@example.com
+                - type: phone
+                  value: '123 456 7890'
+            processingAccounts: 
+              - processingAccountId: '38766'
+                doingBusinessAs: Doe Hot Dogs
+                status: pending
+                link: 
+                  rel: processingAccount
+                  href: 'https://api.payroc.com/v1/processing-accounts/38766'
+                  method: get
+                signature: 
+                  type: requestedViaDirectLink
+                  link: 
+                    rel: agreement
+                    href: 'https://us.agreementexpress.net/mv2/viewer2.jsp?docId=00000000-0000-0000-0000-000000000001'
+                    method: get
+
+    retrievedMerchantPlatforms:
+      summary: Retrieve merchant platform
+      description: Retrieve a merchant platform.
+      value:
+        merchantPlatformId: '12345'
+        createdDate: '2024-07-02T12:00:00.000Z'
+        lastModifiedDate: '2024-07-02T12:00:00.000Z'
+        business:
+          name: Example Corp
+          taxId: xxxxx6789
+          organizationType: privateCorporation
+          countryOfOperation: US
+          addresses:
+            - type: legalAddress
+              address1: 1 Example Ave.
+              address2: Example Address Line 2
+              address3: Example Address Line 3
+              city: Chicago
+              state: Illinois
+              country: US
+              postalCode: '60056'
+          contactMethods:
+            - type: email
+              value: jane.doe@example.com
+        processingAccounts:
+          - processingAccountId: '38765'
+            doingBusinessAs: Pizza Doe
+            status: approved
+            link:
+              rel: processingAccount
+              href: 'https://api.payroc.com/v1/processing-accounts/38765'
+              method: get
+            signature:
+              type: requestedViaDirectLink
+              link:
+                rel: agreement
+                href: >-
+                  https://us.agreementexpress.net/mv2/viewer2.jsp?docId=00000000-0000-0000-0000-000000000000
+                method: get
+        metadata:
+          customerId: '2345'
+        links: []
+
+    listProcessingAccounts:
+      summary: Paginated list of processing account
+      description: Retrieve processing accounts associated with a merchant platform.
+      value:
+        limit: 2
+        count: 2
+        hasMore: true
+        links:
+          - rel: previous
+            method: get
+            href: 'https://api.payroc.com/v1/merchant-platforms/12345/processing-accounts?before=38765&limit=2'
+          - rel: next
+            method: get
+            href: 'https://api.payroc.com/v1/merchant-platforms/12345/processing-accounts?after=38766&limit=2'
+        data:
+          - processingAccountId: '38765'
+            createdDate: '2024-07-02T12:00:00.000Z'
+            lastModifiedDate: '2024-07-02T12:00:00.000Z'
+            status: approved
+            doingBusinessAs: Pizza Doe
+            owners:
+              - ownerId: 4564
+                firstName: Jane
+                lastName: Doe
+                link: 
+                  rel: owner
+                  href: 'https://api.payroc.com/v1/owners/4564'
+                  method: get
+            website: www.example.com
+            businessType: restaurant
+            categoryCode: 5999
+            merchandiseOrServiceSold: Food
+            businessStartDate: '2020-01-01'
+            timezone: America/Chicago
+            address: 
+              address1: 1 Example Ave.
+              address2: Example Address Line 2
+              address3: Example Address Line 3
+              city: Chicago
+              state: Illinois
+              country: US
+              postalCode: '60056'
+            contactMethods: 
+              - type: email
+                value: example-corp@example.com
+              - type: phone
+                value: '123 456 7890'
+            processing: 
+              merchantId: '444412365478965'
+              transactionAmounts:
+                average: 1000
+                highest: 200000
+              monthlyAmounts:
+                average: 1000000
+                highest: 200000000
+              volumeBreakdown:
+                cardPresentKeyed: 47
+                cardPresentSwiped: 30
+                mailOrTelephone: 3
+                ecommerce: 20
+              isSeasonal: true
+              monthsOfOperation:
+                - jan
+                - feb 
+                - mar
+                - nov
+                - dec
+              ach:
+                naics: '5812'
+                previouslyTerminatedForAch: false
+                refunds:
+                  writtenRefundPolicy: true
+                  refundPolicyUrl: 'http://www.example.com/refunds'
+                estimatedMonthlyTransactions: 1000
+                limits:
+                  singleTransaction: 10000000
+                  dailyDeposit: 1000
+                  monthlyDeposit: 2000
+                transactionTypes:
+                  - telephoneInitiatedPayment
+                  - webInitiatedPayment
+              cardAcceptance:
+                debitOnly: false
+                hsaFsa: false
+                cardsAccepted:
+                  - visa
+                  - mastercard
+                specialityCards:
+                  americanExpressDirect: 
+                    enabled: true
+                    merchantNumber: '1234567890'
+                  electronicBenefitsTransfer:
+                    enabled: true
+                    fnsNumber: '1234567'
+                  other: 
+                    wexMerchantNumber: '1234567890'
+                    voyagerMerchantId: '1234567890'
+                    fleetMerchantId: '1234567890'
+            funding: 
+              status: enabled 
+              fundingSchedule: nextday
+              acceleratedFundingFee: 1999
+              fundingAccounts:
+              - fundingAccountId: 123
+                status: pending
+                link:
+                  rel: fundingAccount
+                  method: get
+                  href: 'https://api.payroc.com/v1/funding-accounts/123'
+            pricing: 
+              link: 
+                rel: pricing
+                method: get 
+                href: 'https://api.payroc.com/v1/processing-accounts/12345/pricing'
+            signature:
+              type: requestedViaEmail
+            contacts:
+              - contactId: 1543
+                firstName: Jane
+                lastName: Doe
+                link: 
+                  rel: owner
+                  href: 'https://api.payroc.com/v1/contacts/1543'
+                  method: get
+          - processingAccountId: '38766'
+            createdDate: '2024-07-02T12:00:00.000Z'
+            lastModifiedDate: '2024-07-02T12:00:00.000Z'
+            status: approved
+            doingBusinessAs: Doe Hot Dogs
+            owners:
+              - ownerId: 4564
+                firstName: Jane
+                lastName: Doe
+                link: 
+                  rel: owner
+                  href: 'https://api.payroc.com/v1/owners/4564'
+                  method: get
+            website: www.example.com
+            businessType: internet
+            categoryCode: 5999
+            merchandiseOrServiceSold: Food
+            businessStartDate: '2020-01-01'
+            timezone: America/Chicago
+            address: 
+              address1: 3 Example Ave.
+              address2: Example Address Line 2
+              address3: Example Address Line 3
+              city: Chicago
+              state: Illinois
+              country: US
+              postalCode: '60056'
+            contactMethods: 
+              - type: email
+                value: jane.doe@example.com
+              - type: phone
+                value: '555 555 3456'
+            processing: 
+              merchantId: '444412365478966'
+              transactionAmounts:
+                average: 2000
+                highest: 300000
+              monthlyAmounts:
+                average: 2000000
+                highest: 300000000
+              volumeBreakdown:
+                cardPresentKeyed: 0
+                cardPresentSwiped: 0
+                mailOrTelephone: 0
+                ecommerce: 100
+              isSeasonal: true
+            funding: 
+              status: enabled 
+              fundingSchedule: nextday
+              acceleratedFundingFee: 1999
+              fundingAccounts:
+              - fundingAccountId: 124
+                status: pending
+                link:
+                  rel: fundingAccount
+                  method: get
+                  href: 'https://api.payroc.com/v1/funding-accounts/124'
+            pricing: 
+              link: 
+                rel: pricing
+                method: get 
+                href: 'https://api.payroc.com/v1/processing-accounts/12346/pricing'
+            signature:
+              type: requestedViaEmail
+            contacts: 
+              - contactId: 1543
+                firstName: Jane
+                lastName: Doe
+                link: 
+                  rel: owner
+                  href: 'https://api.payroc.com/v1/contacts/1543'
+                  method: get
+
+    processingAccountCreated:
+      summary: Retrieve merchant platform
+      description: Retrieve a merchant platform.
+      value:
+        processingAccountId: '38765'
+        createdDate: '2024-07-02T12:00:00.000Z'
+        lastModifiedDate: '2024-07-02T12:00:00.000Z'
+        status: entered
+        doingBusinessAs: Pizza Doe
+        owners:
+          - ownerId: 4564
+            firstName: Jane
+            lastName: Doe
+            link:
+              rel: owner
+              href: 'https://api.payroc.com/v1/owners/4564'
+              method: get
+        website: www.example.com
+        businessType: restaurant
+        categoryCode: 5999
+        merchandiseOrServiceSold: Pizza
+        businessStartDate: '2020-01-01'
+        timezone: America/Chicago
+        address:
+          address1: 1 Example Ave.
+          address2: Example Address Line 2
+          address3: Example Address Line 3
+          city: Chicago
+          state: Illinois
+          country: US
+          postalCode: '60056'
+        contactMethods:
+          - type: email
+            value: jane.doe@example.com
+        processing:
+          # A processing account just created would not have a MID. The MID is not populated until the account is processed.
+          # merchantId: '444412365478965'
+          transactionAmounts:
+            average: 5000
+            highest: 10000
+          monthlyAmounts:
+            average: 50000
+            highest: 100000
+          volumeBreakdown:
+            cardPresentKeyed: 47
+            cardPresentSwiped: 30
+            mailOrTelephone: 3
+            ecommerce: 20
+          isSeasonal: true
+          monthsOfOperation:
+            - jan
+            - feb
+          ach:
+            naics: '5812'
+            previouslyTerminatedForAch: false
+            refunds:
+              writtenRefundPolicy: true
+              refundPolicyUrl: www.example.com/refund-poilcy-url
+            estimatedMonthlyTransactions: 3000
+            limits:
+              singleTransaction: 10000
+              dailyDeposit: 200000
+              monthlyDeposit: 6000000
+            transactionTypes:
+              - prearrangedPayment
+              - other
+            transactionTypesOther: anotherTransactionType
+          cardAcceptance:
+            debitOnly: false
+            hsaFsa: false
+            cardsAccepted:
+              - visa
+              - mastercard
+            specialityCards:
+              americanExpressDirect:
+                enabled: true
+                merchantNumber: abc1234567
+              electronicBenefitsTransfer:
+                enabled: true
+                fnsNumber: '6789012'
+              other:
+                wexMerchantNumber: abc1234567
+                voyagerMerchantId: abc1234567
+                fleetMerchantId: abc1234567
+        funding:
+          status: enabled
+          fundingSchedule: nextday
+          acceleratedFundingFee: 1999
+          dailyDiscount: false
+          fundingAccounts:
+            - fundingAccountId: 123
+              status: pending
+              link:
+                rel: fundingAccount
+                method: get
+                href: 'https://api.payroc.com/v1/funding-accounts/123'
+        pricing:
+          link:
+            rel: pricing
+            href: 'https://api.payroc.com/v1/processing-accounts/12345/pricing'
+            method: get
+        contacts:
+          - contactId: 1543
+            firstName: Jane
+            lastName: Doe
+            link:
+              rel: contact
+              href: 'https://api.payroc.com/v1/contacts/1543'
+              method: get
+        signature:
+          type: requestedViaDirectLink
+          link:
+            rel: agreement
+            href: >-
+              https://us.agreementexpress.net/mv2/viewer2.jsp?docId=00000000-0000-0000-0000-000000000000
+            method: get
+        metadata:
+          customerId: '2345'
+
+    processingAccountFailed:
+      summary: Failed processing account
+      description: We successfully created the merchant platform, but failed to add one or more processing accounts.
+      value:
+        merchantPlatformId: '12346'
+        createdDate: '2024-07-02T12:00:00.000Z'
+        lastModifiedDate: '2024-07-02T12:00:00.000Z'
+        business: 
+          name: Example Corp
+          taxId: xxxxx6789
+          organizationType: privateCorporation
+          countryOfOperation: US
+          addresses:
+            - type: legalAddress
+              address1: 1 Example Ave.
+              address2: Example Address Line 2
+              address3: Example Address Line 3
+              city: Chicago
+              state: Illinois
+              country: US
+              postalCode: '60056'
+          contactMethods: 
+            - type: email
+              value: jane.doe@example.com
+            - type: phone
+              value: '555 555 3456'
+        processingAccounts: 
+          - doingBusinessAs: Pizza Doe
+            status: failed            

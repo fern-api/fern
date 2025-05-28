@@ -1,0 +1,383 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  examples:
+    paymentResponse:
+      summary: Payment
+      description: Payment
+      value:
+        paymentId: M2MJOG6O2Y
+        processingTerminalId: '1234001'
+        operator: Postman
+        order:
+          orderId: OrderRef6543
+          dateTime: '2024-07-02T15:30:00Z'
+          description: Large Pepperoni Pizza
+          amount: 4999
+          currency: USD
+        customer:
+          firstName: Sarah
+          lastName: Hopper
+          billingAddress:
+            address1: 1 Example Ave.
+            address2: Example Address Line 2
+            address3: Example Address Line 3
+            city: Chicago
+            state: Illinois
+            country: US
+            postalCode: '60056'
+          shippingAddress:
+            recipientName: Sarah Hopper
+            address:
+              address1: 1 Example Ave.
+              address2: Example Address Line 2
+              address3: Example Address Line 3
+              city: Chicago
+              state: Illinois
+              country: US
+              postalCode: '60056'
+        card:
+          type: MasterCard
+          entryMethod: keyed
+          cardNumber: '453985******7062'
+          expiryDate: '1225'
+          securityChecks:
+            cvvResult: M
+            avsResult: Y
+        supportedOperations:
+          - capture
+          - fullyReverse
+          - partiallyReverse
+          - incrementAuthorization
+          - adjustTip
+          - setAsPending
+        transactionResult:
+          type: sale
+          status: ready
+          approvalCode: OK3
+          authorizedAmount: 4999
+          currency: USD
+          responseCode: A
+          responseMessage: OK3
+        customFields:
+          - name: yourCustomField
+            value: abc123
+
+    paginatedPayment:
+      summary: Payment
+      description: Payment
+      value:
+        limit: 2
+        count: 2
+        hasMore: true
+        data:
+          - paymentId: M2MJOG6O2Y
+            processingTerminalId: '1234001'
+            operator: Automatic Payment
+            order:
+              orderId: OrderRef6543
+              dateTime: '2024-07-02T15:30:00Z'
+              description: Monthly Premium Club subscription
+              amount: 4999
+              currency: USD
+            card:
+              type: Visa Credit
+              cardholderName: Sarah Hopper
+              cardNumber: '453985******7062'
+              expiryDate: '1225'
+              secureToken:
+                secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                customerName: Sarah Hopper
+                token: '296753123456'
+                status: notValidated
+                link:
+                  rel: self
+                  method: GET
+                  href: https://api.payroc.com/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+              securityChecks:
+                cvvResult: M
+                avsResult: X
+            supportedOperations:
+              - fullyReverse
+              - setAsPending
+            transactionResult:
+              type: sale
+              status: ready
+              approvalCode: OK3
+              authorizedAmount: 4999
+              currency: USD
+              responseCode: A
+              responseMessage: APPROVAL
+          - paymentId: E29U8OU8Q4
+            processingTerminalId: '1234001'
+            operator: Automatic Payment
+            order:
+              orderId: OrderRef7654
+              dateTime: '2024-07-02T15:30:00Z'
+              description: Monthly Premium Club subscription
+              amount: 4999
+              currency: USD
+            card:
+              type: Visa Debit
+              cardholderName: Sarah Hopper
+              cardNumber: '453985******7062'
+              expiryDate: '1225'
+              secureToken:
+                secureTokenId: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+                customerName: Sarah Hopper
+                token: '296753123456'
+                status: notValidated
+                link:
+                  rel: self
+                  method: GET
+                  href: https://api.payroc.com/v1/processing-terminals/1234001/secure-tokens/MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+              securityChecks:
+                cvvResult: M
+                avsResult: X
+            supportedOperations:
+              - fullyReverse
+              - setAsPending
+            transactionResult:
+              type: sale
+              status: ready
+              approvalCode: '475318'
+              authorizedAmount: 1000
+              currency: EUR
+              responseCode: A
+              responseMessage: APPROVAL
+            customFields:
+              - name: yourCustomField
+                value: abc123
+        links:
+          - rel: next
+            method: get
+            href: https://api.payroc.com/v1/payments?processingTerminalId=1234001&limit=2&after=E29U8OU8Q4
+          - rel: previous
+            method: get
+            href: https://api.payroc.com/v1/payments?processingTerminalId=1234001&limit=2&before=M2MJOG6O2Y
+
+    adjustPaymentResponse:
+      summary: Adjust Payment
+      description: Adjust Payment
+      value:
+        paymentId: M2MJOG6O2Y
+        processingTerminalId: '1234001'
+        order:
+          orderId: OrderRef6543
+          dateTime: '2024-07-02T15:30:00Z'
+          description: Example payment
+          amount: 4999
+          currency: USD
+        customer:
+          firstName: Sarah
+          lastName: Hopper
+          billingAddress:
+            address1: 1 Example Ave.
+            address2: Example Address Line 2
+            address3: Example Address Line 3
+            city: Chicago
+            state: Illinois
+            country: US
+            postalCode: '60056'
+          shippingAddress:
+            recipientName: Sarah Hopper
+            address:
+              address1: 1 Example Ave.
+              address2: Example Address Line 2
+              address3: Example Address Line 3
+              city: Chicago
+              state: Illinois
+              country: US
+              postalCode: '60056'
+        card:
+          type: MasterCard
+          entryMethod: keyed
+          cardNumber: '453985******7062'
+          expiryDate: '1225'
+          securityChecks:
+            cvvResult: M
+            avsResult: Y
+        supportedOperations:
+          - capture
+          - fullyReverse
+          - partiallyReverse
+          - incrementAuthorization
+          - adjustTip
+          - setAsPending
+        transactionResult:
+          type: sale
+          status: ready
+          approvalCode: OK6
+          authorizedAmount: 4999
+          currency: USD
+          responseCode: A
+          responseMessage: OK6
+        customFields:
+          - name: yourCustomField
+            value: abc123
+
+    reversalPaymentResponse:
+      summary: Reversal Payment
+      description: Reversal Payment
+      value:
+        paymentId: M2MJOG6O2Y
+        processingTerminalId: '1234001'
+        order:
+          orderId: OrderRef6543
+          dateTime: '2024-07-02T15:30:00Z'
+          description: Large Pepperoni Pizza
+          amount: 4999
+          currency: USD
+        customer:
+          firstName: Sarah
+          lastName: Hopper
+          billingAddress:
+            address1: 1 Example Ave.
+            address2: Example Address Line 2
+            address3: Example Address Line 3
+            city: Chicago
+            state: Illinois
+            country: USA
+            postalCode: '60056'
+          shippingAddress:
+            recipientName: Sarah Hopper
+            address:
+              address1: 1 Example Ave.
+              address2: Example Address Line 2
+              address3: Example Address Line 3
+              city: Chicago
+              state: Illinois
+              country: IT
+              postalCode: '60056'
+        card:
+          type: MasterCard
+          entryMethod: keyed
+          cardNumber: '453985******7062'
+          expiryDate: '1225'
+          securityChecks:
+            cvvResult: M
+            avsResult: 'Y'
+        supportedOperations:
+          - capture
+          - fullyReverse
+          - partiallyReverse
+          - incrementAuthorization
+          - adjustTip
+          - setAsPending
+        transactionResult:
+          type: sale
+          status: reversal
+          approvalCode: OK2
+          authorizedAmount: 100
+          currency: USD
+          responseCode: A
+          responseMessage: OK2
+        customFields:
+          - name: yourCustomField
+            value: abc123
+
+    refundPaymentResponse:
+      summary: Refund Payment
+      description: Refund Payment
+      value:
+        paymentId: M2MJOG6O2Y
+        processingTerminalId: '1234001'
+        operator: Jane
+        order:
+          orderId: OrderRef6543
+          dateTime: '2024-07-02T15:30:00Z'
+          description: Large Pepperoni Pizza
+          amount: 4999
+          currency: USD
+        customer:
+          firstName: Sarah
+          lastName: Hopper
+          billingAddress:
+            address1: 1 Example Ave.
+            address2: Example Address Line 2
+            address3: Example Address Line 3
+            city: Chicago
+            state: Illinois
+            country: US
+            postalCode: '60056'
+          shippingAddress:
+            recipientName: Sarah Hopper
+            address:
+              address1: 1 Example Ave.
+              address2: Example Address Line 2
+              address3: Example Address Line 3
+              city: Chicago
+              state: Illinois
+              country: US
+              postalCode: '60056'
+        card:
+          type: MasterCard
+          entryMethod: keyed
+          cardNumber: '453985******7062'
+          expiryDate: '1225'
+          securityChecks:
+            cvvResult: M
+            avsResult: Y
+        refunds:
+          - refundId: CD3HN88U9F
+            dateTime: '2024-07-02T15:30:00Z'
+            amount: -4999
+            currency: USD
+            status: ready
+            link:
+              rel: self
+              method: GET
+              href: https://api.payroc.com/v1/refunds/BI77XQFQ05
+        supportedOperations:
+          - refund
+        transactionResult:
+          type: sale
+          status: complete
+          approvalCode: OK3
+          authorizedAmount: 4999
+          currency: USD
+          responseCode: A
+          responseMessage: OK13
+        customFields:
+          - name: yourCustomField
+            value: acb123
+  
+    applePaySaleResponse:
+      summary: Apple Pay Payment
+      value:
+        paymentId: J9VULKIKFP
+        processingTerminalId: '1234001'
+        operator: Jane
+        order:
+          orderId: '1234567890W'
+          dateTime: '2024-07-02T15:30:00Z'
+          description: Card Transaction (APPLE)
+          amount: 4999
+          currency: USD
+        card:
+          type: MasterCard
+          entryMethod: keyed
+          cardNumber: '500165******0000'
+          expiryDate: '0328'
+          securityChecks:
+            avsResult: U
+        supportedOperations:
+          - capture
+          - fullyReverse
+          - partiallyReverse
+          - incrementAuthorization
+          - adjustTip
+          - setAsPending
+        transactionResult:
+          type: sale
+          status: ready
+          approvalCode: OK3
+          authorizedAmount: 4999
+          currency: USD
+          responseCode: A
+          responseMessage: APPROVAL
+          processorResponseCode: '00'

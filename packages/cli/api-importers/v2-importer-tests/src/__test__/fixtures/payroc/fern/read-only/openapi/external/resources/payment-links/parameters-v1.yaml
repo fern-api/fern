@@ -1,0 +1,104 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:             
+  parameters:
+    paymentLinkId:
+      name: paymentLinkId
+      in: path
+      description: Unique identifier that we assigned to the payment link.
+      required: true
+      schema:
+        type: string
+        minLength: 10
+        maxLength: 10
+      example: JZURRJBUPS
+
+    merchantReference:
+      name: merchantReference
+      in: query
+      description: Filter results by the unique identifier that the merchant assigned to the payment link.
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 48
+      example: LinkRef6543
+
+    linkType:
+      name: linkType
+      in: query
+      description: Filter results by the type of link. Send a value of <code>singleUse</code> or <code>multiUse</code>.
+      schema:
+        type: string
+        enum:
+          - multiUse
+          - singleUse
+      example: multiUse
+
+    chargeType:
+      name: chargeType
+      in: query
+      description: |  
+        Filter results by the user that entered the amount. Send one of the following values:
+        - <code>prompt</code> - Customer entered the amount.
+        - <code>preset</code> - Merchant entered the amount.
+      schema:
+        type: string
+        enum:
+          - preset
+          - prompt
+      example: prompt
+
+    payment-link-status:
+      name: status
+      in: query
+      description: Filter results by the status of the payment link. Send a value of <code>active</code>, <code>completed</code>,<code>deactived</code>, or <code>expired</code>.
+      schema:
+        type: string
+        enum:
+          - active
+          - completed
+          - deactivated
+          - expired
+      example: active
+
+    recipientName:
+      name: recipientName
+      in: query
+      description: Filter results by the customer's name.
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 48
+      example: Sarah Hazel Hopper
+
+    recipientEmail:
+      name: recipientEmail
+      in: query
+      description: Filter results by the customer's email address.
+      schema:
+        type: string
+        minLength: 6
+        maxLength: 128
+      example: sarah.hopper@example.com
+
+    createdOn:
+      name: createdOn
+      in: query
+      description: Filter results by the link's created date. Send a value in **YYYY-MM-DD** format.
+      schema:
+        type: string
+        format: date
+      example: '2024-07-02'
+
+    expiresOn:
+      name: expiresOn
+      in: query
+      description: Filter results by the link's expiry date. Send a value in **YYYY-MM-DD** format.
+      schema:
+        type: string
+        format: date
+      example: '2024-08-02'

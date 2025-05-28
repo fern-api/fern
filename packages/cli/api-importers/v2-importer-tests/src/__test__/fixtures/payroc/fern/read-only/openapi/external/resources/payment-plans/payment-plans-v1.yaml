@@ -1,0 +1,393 @@
+openapi: 3.0.1
+info:
+  title: Transaction API
+  version: '1'
+  termsOfService: https://www.payroc.com/terms
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+servers:
+  - url: https://api.payroc.com/v1
+    description: Production
+  - url: https://api.uat.payroc.com/v1
+    description: UAT
+tags:
+- name: Payment plans
+
+paths:
+  /processing-terminals/{processingTerminalId}/payment-plans:
+    post:
+      tags:
+        - Payment plans
+      summary: Create payment plan
+      description: Create a new payment plan.
+      operationId: createPaymentPlan
+      parameters:
+        - $ref: '../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey'
+        - $ref: ../../../common/parameters/processing-terminal-id-v1.yaml#/components/parameters/processingTerminalIdPath
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/paymentPlan'
+            examples:
+              paymentPlanRequest:
+                $ref: './example-requests-v1.yaml#/components/examples/paymentPlanRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful request. We created the payment plan.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/paymentPlan'
+              examples:
+                createdPaymentPlan:
+                  $ref: './example-responses-v1.yaml#/components/examples/paymentPlanResponse'
+          headers:
+            location:
+              $ref: '../../../common/headers/location-v1.yaml#/components/headers/location'
+        '400':
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '409':
+          $ref: ../../../common/responses/errors/409-v1.yaml#/components/responses/409
+        '415':
+          $ref: ../../../common/responses/errors/415-v1.yaml#/components/responses/415
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+    get:
+      tags:
+        - Payment plans
+      summary: List payment plans
+      description: Retrieve a list of payment plans.
+      operationId: listPaymentPlans
+      parameters:
+        - $ref: ../../../common/parameters/processing-terminal-id-v1.yaml#/components/parameters/processingTerminalIdPath
+        - $ref: '../../../common/parameters/before-v1.yaml#/components/parameters/before'
+        - $ref: '../../../common/parameters/after-v1.yaml#/components/parameters/after'
+        - $ref: '../../../common/parameters/limit-v1.yaml#/components/parameters/limit'
+      responses:
+        '200':
+          description: Successful request. Returns a paginated list of payment plans.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/paymentPlanPaginatedList'
+              examples:
+                paginatedResults:
+                  $ref: './example-responses-v1.yaml#/components/examples/paginatedPaymentPlan'
+                noActivity:
+                  $ref: '../../../common/responses/no-activity-v1.yaml#/components/examples/noActivity'
+        '400':
+          $ref: ../../../common/responses/errors/400-v1.yaml#/components/responses/400
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+  /processing-terminals/{processingTerminalId}/payment-plans/{paymentPlanId}:
+    get:
+      tags:
+        - Payment plans
+      summary: Retrieve payment plan
+      description: Retrieve a specific payment plan.
+      operationId: getPaymentPlan
+      parameters:
+        - $ref: ../../../common/parameters/processing-terminal-id-v1.yaml#/components/parameters/processingTerminalIdPath
+        - $ref: './parameters-v1.yaml#/components/parameters/paymentPlanId'
+      responses:
+        '200':
+          description: Successful request. Returns the requested payment plan.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/paymentPlan'
+              examples:
+                paymentPlan:
+                  $ref: './example-responses-v1.yaml#/components/examples/paymentPlanResponse'
+        '400':
+          $ref: ../../../common/responses/errors/400-v1.yaml#/components/responses/400
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '404':
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+    patch:
+      tags:
+        - Payment plans
+      summary: Update payment plan
+      description: | 
+        Make changes to an existing payment plan.  
+
+        Structure your request to follow the RFC 6902 standard.
+      operationId: updatePaymentPlan
+      parameters:
+        - $ref: ../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey
+        - $ref: ../../../common/parameters/processing-terminal-id-v1.yaml#/components/parameters/processingTerminalIdPath
+        - $ref: ./parameters-v1.yaml#/components/parameters/paymentPlanId
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../../../common/schemas/common/patch-request-v1.yaml#/components/schemas/patchRequest
+            examples:
+              patchPaymentPlanRealistic:
+                $ref: './example-requests-v1.yaml#/components/examples/patchPaymentPlanRealistic'
+              patchOperations:
+                $ref: '../../../common/requests/patch-v1.yaml#/components/examples/patchOperations'            
+        required: true
+      responses:
+        '200':
+          description: Successful request. We updated the payment plan.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/paymentPlan'
+              examples:
+                paymentPlan:
+                  $ref: './example-responses-v1.yaml#/components/examples/paymentPlanResponse'
+        '400':
+          $ref: ../../../common/responses/errors/400-v1.yaml#/components/responses/400
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '404':
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '409':
+          $ref: ../../../common/responses/errors/409-v1.yaml#/components/responses/409
+        '415':
+          $ref: ../../../common/responses/errors/415-v1.yaml#/components/responses/415
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+    delete:
+      tags:
+        - Payment plans
+      summary: Delete payment plan
+      description: |
+        Delete an existing payment plan.  
+        **Note:** After you delete a payment plan, you can't reuse the paymentPlanId.
+      operationId: deletePaymentPlan
+      parameters:
+        - $ref: ../../../common/parameters/processing-terminal-id-v1.yaml#/components/parameters/processingTerminalIdPath
+        - $ref: './parameters-v1.yaml#/components/parameters/paymentPlanId'
+      responses:
+        '204':
+          description: Successful request. We deleted the payment plan.
+        '400':
+          $ref: ../../../common/responses/errors/400-v1.yaml#/components/responses/400
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '404':
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+
+components:
+  schemas:
+    paymentPlanOrderBreakdown:
+      required:
+        - subtotal
+      type: object
+      description: |
+        Object that contains information about the taxes that apply to the transaction.
+      properties:
+        subtotal:
+          type: integer
+          format: int64
+          description: Total amount for the transaction before tax. The value is in the currency's lowest denomination, for example, cents.
+          example: 4999
+        taxes:
+          type: array
+          description: Array of tax objects.
+          items:
+            $ref: '../../../common/schemas/transaction/order-v1.yaml#/components/schemas/tax'
+
+    paymentPlanSetupOrder:
+      type: object
+      description: Object that contains information about the initial cost that a customer pays to set up the subscription.
+      properties:
+        amount:
+          type: integer
+          format: int64
+          description: Total amount before surcharges. The value is in the currency's lowest denomination, for example, cents.
+          example: 4999
+        description:
+          maxLength: 1024
+          minLength: 1
+          type: string
+          description: Description of the transaction.
+          example: Initial setup fee for Premium Club subscription
+        breakdown:
+          $ref: "#/components/schemas/paymentPlanOrderBreakdown"
+
+    paymentPlanRecurringOrder:
+      type: object
+      description: |
+        Object that contains information about the cost of each payment.  
+        **Note:** Send this object only if the value for **type** is `automatic`.
+      properties:
+        amount:
+          type: integer
+          format: int64
+          description: Total amount before surcharges. The value is in the currency's lowest denomination, for example, cents.
+          example: 4999
+        description:
+          maxLength: 1024
+          minLength: 1
+          type: string
+          description: Description of the transaction.
+          example: Monthly Premium Club subscription
+        breakdown:
+          $ref: "#/components/schemas/paymentPlanOrderBreakdown"
+
+    paymentPlan:
+      required:
+        - paymentPlanId
+        - name
+        - currency
+        - frequency
+        - onDelete
+        - onUpdate
+        - type
+      type: object
+      properties:
+        paymentPlanId:
+          maxLength: 48
+          minLength: 1
+          type: string
+          description: Unique identifier that the merchant assigns to the payment plan.
+          example: PlanRef8765
+        processingTerminalId:
+          maxLength: 50
+          minLength: 4
+          type: string
+          readOnly: true
+          description: Unique identifier of the terminal that the payment plan is assigned to.
+          example: '1234001'
+        name:
+          maxLength: 128
+          minLength: 5
+          type: string
+          description: Name of the payment plan.
+          example: Premium Club
+        description:
+          maxLength: 128
+          minLength: 0
+          type: string
+          description: Description of the payment plan.
+          example: Monthly Premium Club subscription
+        currency:
+          $ref: '../../../common/schemas/common/currency-v1.yaml#/components/schemas/currency'
+        setupOrder:
+          $ref: "#/components/schemas/paymentPlanSetupOrder"
+        recurringOrder:
+          $ref: "#/components/schemas/paymentPlanRecurringOrder"
+        length:
+          minimum: 0
+          default: 0
+          type: integer
+          format: int32
+          description: |
+            Object that contains information about the cost of each payment.  
+            To indicate that the payment plan should run indefinitely, send a value of `0`.
+          example: 12
+        type:
+          type: string
+          default: automatic
+          description: | 
+            Indicates how the merchant takes the payment from the customer's account.
+            - `manual` - The merchant manually collects payments from the customer.
+            - `automatic` - The terminal automatically collects payments from the customer.
+          enum:
+            - manual
+            - automatic
+          example: automatic
+        frequency:
+          type: string
+          description: Indicates how often the merchant or the terminal collects a payment from the customer.
+          enum:
+            - weekly
+            - fortnightly
+            - monthly
+            - quarterly
+            - yearly
+          example: monthly
+        onUpdate:
+          type: string
+          default: continue
+          description: | 
+            Indicates whether any changes that the merchant makes to the payment plan apply to existing subscriptions.
+            - `update` - Changes apply to existing subscriptions.
+            - `continue` - Changes don't apply to existing subscriptions.
+          enum:
+            - update
+            - continue
+          example: continue
+        onDelete:
+          type: string
+          default: complete
+          description: |
+            Indicates what happens to existing subscriptions if the merchant deletes the payment plan.
+            - `complete` - Stops existing subscriptions.
+            - `continue` - Continues existing subscriptions.
+          enum:
+            - complete
+            - continue
+          example: continue
+        customFieldNames:
+          type: array
+          description: |
+            Array of custom fields that you can use in subscriptions linked to the payment plan.
+          items:
+            maxLength: 56
+            minLength: 1
+            type: string
+          example:
+            - yourCustomField
+    paymentPlanPaginatedList:
+      required:
+        - count
+        - data
+        - hasMore
+        - limit
+      type: object
+      allOf:
+        - $ref: '../../../common/schemas/common/paginated-list-v1.yaml#/components/schemas/paginatedList'
+        - type: object
+          properties:
+            data:
+              type: array
+              description: Array of paymentPlan objects.
+              items:
+                $ref: '#/components/schemas/paymentPlan'

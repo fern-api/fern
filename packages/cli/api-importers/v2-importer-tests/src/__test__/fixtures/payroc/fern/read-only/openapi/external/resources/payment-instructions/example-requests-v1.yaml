@@ -1,0 +1,21 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  examples:
+    paymentInstructionRequest:
+      summary: Payment Instruction
+      description: Submit an instruction for initiating a payment on a physical device.
+      value:
+        operator: Jane
+        processingTerminalId: '1234001'
+        order:
+          orderId: OrderRef6543
+          currency: USD
+          amount: 4999
+        customizationOptions:
+          entryMethod: deviceRead
+        autoCapture: true

@@ -1,0 +1,161 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  examples:
+    refundResponse:
+      summary: Refund
+      description: Refund
+      value:
+        refundId: CD3HN88U9F
+        processingTerminalId: '1234001'
+        order:
+          orderId: OrderRef6543
+          dateTime: '2024-07-02T15:30:00Z'
+          description: Refund for order OrderRef6543
+          amount: 4999
+          currency: USD
+        card:
+          type: Visa Credit
+          entryMethod: keyed
+          cardNumber: '453985******7062'
+          expiryDate: '1225'
+        transactionResult:
+          type: refund
+          status: ready
+          approvalCode: '000000'
+          authorizedAmount: -4999
+          currency: USD
+          responseCode: A
+          responseMessage: OK5
+        customFields:
+          - name: yourCustomField
+            value: abc123
+  
+    paginatedRefund:
+      summary: Paginated Refund
+      description: Paginated Refund
+      value:
+        limit: 2
+        count: 2
+        hasMore: true
+        data:
+          - refundId: CD3HN88U9F
+            processingTerminalId: '1234001'
+            order:
+              orderId: OrderRef6543
+              dateTime: '2024-07-02T15:30:00Z'
+              description: Refund for order OrderRef6543
+              amount: 4999
+              currency: USD
+            card:
+              type: Visa Credit
+              entryMethod: keyed
+              cardNumber: '453985******7062'
+              expiryDate: '1225'
+            transactionResult:
+              type: refund
+              status: ready
+              approvalCode: '000000'
+              authorizedAmount: -4999
+              currency: USD
+              responseCode: A
+              responseMessage: APPROVAL
+          - refundId: B6ZOFZNVOP
+            processingTerminalId: '1234001'
+            order:
+              orderId: OrderRef7654
+              dateTime: '2024-07-02T15:30:00Z'
+              description: Refund for order OrderRef7654
+              amount: 3999
+              currency: USD
+            card:
+              type: MasterCard
+              entryMethod: keyed
+              cardNumber: '500165******0000'
+              expiryDate: '0328'
+            transactionResult:
+              type: refund
+              status: reversal
+              approvalCode: '000000'
+              authorizedAmount: -3999
+              currency: USD
+              responseCode: A
+              responseMessage: APPROVAL
+            customFields:
+              - name: yourCustomField
+                value: abc123
+        links:
+          - rel: next
+            method: get
+            href: https://api.payroc.com/v1/refunds?processingTerminalId=1234001&limit=2&after=B6ZOFZNVOP
+          - rel: previous
+            method: get
+            href: https://api.payroc.com/v1/refunds?processingTerminalId=1234001&limit=2&before=CD3HN88U9F
+
+    adjustRefundResponse:
+      summary: Adjust Refund
+      description: Adjust Refund
+      value:
+        refundId: CD3HN88U9F
+        processingTerminalId: '1234001'
+        operator: Jane
+        order:
+          orderId: OrderRef6543
+          dateTime: '2024-07-02T15:30:00Z'
+          description: Refund for order OrderRef6543
+          amount: 4999
+          currency: USD
+        customer:
+          contactMethods:
+            - type: mobile
+              value: '8445558735'
+        card:
+          type: Visa Credit
+          entryMethod: keyed
+          cardNumber: '453985******7062'
+          expiryDate: '1225'
+        transactionResult:
+          type: refund
+          status: ready
+          approvalCode: '000000'
+          authorizedAmount: -4999
+          currency: USD
+          responseCode: A
+          responseMessage: OK13
+        customFields:
+          - name: yourCustomField
+            value: abc123
+  
+    reverseRefund:
+      summary: Reverse Refund
+      description: Reverse Refund
+      value:
+        refundId: CD3HN88U9F
+        processingTerminalId: '1234001'
+        order:
+          orderId: OrderRef6543
+          dateTime: '2024-07-02T15:30:00Z'
+          description: Refund for order OrderRef6543
+          amount: 4999
+          currency: USD
+        card:
+          type: Visa Credit
+          entryMethod: keyed
+          cardNumber: '453985******7062'
+          expiryDate: '1225'
+        transactionResult:
+          type: refund
+          status: reversal
+          approvalCode: '000000'
+          authorizedAmount: -4999
+          currency: USD
+          responseCode: A
+          responseMessage: APPROVAL
+        customFields:
+          - name: yourCustomField
+            value: abc123
+            

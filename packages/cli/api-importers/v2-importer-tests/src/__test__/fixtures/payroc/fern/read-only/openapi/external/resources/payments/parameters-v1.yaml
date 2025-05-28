@@ -1,0 +1,181 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:             
+  parameters:
+    orderId:
+      name: orderId
+      in: query
+      description: Filter payments by order ID.
+      schema:
+        maxLength: 24
+        minLength: 1
+        type: string
+      example: OrderRef6543
+
+    operator:
+      name: operator
+      in: query
+      description: Filter payments by operator.
+      schema:
+        maxLength: 50
+        minLength: 1
+        type: string
+      example: Jane
+
+    cardholderName:
+      name: cardholderName
+      in: query
+      description: Filter payments by the cardholder’s name.
+      schema:
+        maxLength: 50
+        minLength: 1
+        type: string
+      example: Sarah%20Hazel%20Hopper
+
+    first6:
+      name: first6
+      in: query
+      description: Filter payments by the first six digits of the card number that the customer used in the transaction.
+      schema:
+        pattern: '[0-9]{6}'
+        type: string
+      example: '453985'
+
+    last4:
+      name: last4
+      in: query
+      description: Filter payments by the last four digits of the card number that the customer used in the transaction.
+      schema:
+        pattern: '[0-9]{4}'
+        type: string
+      example: '7062'
+
+    tender:
+      name: tender
+      in: query
+      description: Filter by tender type.
+      schema:
+        type: string
+        enum:
+          - ebt
+          - creditDebit
+      example: ebt
+
+    tipMode:
+      name: tipMode
+      in: query
+      description: Filter payments by tip.
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - noTip
+            - prompted
+            - adjusted
+      example:
+            - noTip
+            - prompted
+
+    type:
+      name: type
+      in: query
+      description: Filter payments by transaction type.
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - sale
+            - preAuthorization
+            - preAuthorizationCompletion
+      example: 
+            - sale
+            - preAuthorization
+
+    status:
+      name: status
+      in: query
+      description: Filter payments by the status of the transaction.
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - ready
+            - pending
+            - declined
+            - complete
+            - referral
+            - pickup
+            - reversal
+            - admin
+            - expired
+            - accepted
+      example:
+            - accepted
+            - ready
+            - complete
+
+    dateFrom:
+      name: dateFrom
+      in: query
+      description: Filter by payments that the processor processed after a specific date. The date format follows the ISO 8601 standard.
+      schema:
+        type: string
+        format: date-time
+      example: '2024-07-01T15:30:00Z'
+
+    dateTo:
+      name: dateTo
+      in: query
+      description: Filter by payments that the processer processed before a specific date. The date format follows the ISO 8601 standard.
+      schema:
+        type: string
+        format: date-time
+      example: '2024-07-03T15:30:00Z'
+
+    settlementState:
+      name: settlementState
+      in: query
+      description: Filter payments by the settlement status of the transaction.
+      schema:
+        type: string
+        enum:
+          - settled
+          - unsettled
+      example: settled
+
+    settlementDate:
+      name: settlementDate
+      in: query
+      description: Filter by payments that the processor settled on a specific date in the format **YYYY-MM-DD**.
+      schema:
+        type: string
+        format: date
+      example: '2024-07-02'
+
+    paymentId:
+      name: paymentId
+      in: path
+      required: true
+      description: Unique identifier of the payment that the merchant wants to retrieve.
+      schema:
+        maxLength: 10
+        minLength: 10
+        type: string
+      example: M2MJOG6O2Y
+
+    paymentLinkId:
+      name: paymentLinkId
+      in: query
+      description: Unique identifier that our gateway assigned to the payment link.
+      schema:
+        maxLength: 10
+        minLength: 10
+        type: string
+        example: JZURRJBUPS

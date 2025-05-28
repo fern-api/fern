@@ -1,0 +1,362 @@
+openapi: 3.0.1
+info:
+  title: Transaction API
+  version: '1'
+  termsOfService: https://www.payroc.com/terms
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+servers:
+  - url: https://api.payroc.com/v1
+    description: Production
+  - url: https://api.uat.payroc.com/v1
+    description: UAT
+tags:
+- name: Cards
+
+paths:
+  /cards/verify:
+    post:
+      tags:
+        - Cards
+      summary: Verify a card
+      operationId: verifyCard
+      description: Verify that a card is valid. For banks that do not support verification, we charge a micro deposit that we void immediately.
+      parameters:
+        - $ref: ../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/cardVerificationRequest'
+            examples:
+              cardVerificationRequest:
+                $ref: './example-requests-v1.yaml#/components/examples/cardVerificationRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful request. Returns the verification status of the card details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cardVerificationResult'
+              examples:
+                cardVerificationResponse:
+                  $ref: './example-responses-v1.yaml#/components/examples/cardVerificationResponse'
+        '400':
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '404':
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '409':
+          $ref: ../../../common/responses/errors/409-v1.yaml#/components/responses/409
+        '415':
+          $ref: ../../../common/responses/errors/415-v1.yaml#/components/responses/415
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+  /cards/balance:
+    post:
+      tags:
+        - Cards
+      summary: Balance inquiry
+      operationId: balanceCard
+      description: Request the balance of an Electronic Benefit Transfer (EBT) card.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/balanceInquiry'
+            examples:
+              cardBalanceRequest:
+                $ref: './example-requests-v1.yaml#/components/examples/cardBalanceRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful request. Returns the current balance of the EBT card. 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/balance'
+              examples:
+                cardBalanceResponse:
+                  $ref: './example-responses-v1.yaml#/components/examples/cardBalanceResponse'
+        '400':
+          $ref: ../../../common/responses/errors/400-v1.yaml#/components/responses/400
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '404':
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '409':
+          $ref: ../../../common/responses/errors/409-v1.yaml#/components/responses/409
+        '415':
+          $ref: ../../../common/responses/errors/415-v1.yaml#/components/responses/415
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+  /cards/bin-lookup:
+    post:
+      tags:
+        - Cards
+      summary: Lookup BIN information
+      description: Perform a BIN (Bank Identification Number) lookup to retrieve information about a card.
+      operationId: binLookup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/binLookup"
+            examples:
+              binLookupRequest:
+                $ref: './example-requests-v1.yaml#/components/examples/binLookupRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful request. Returns the BIN information.
+          content:
+            application/json:
+              schema:
+                $ref: "../../../common/schemas/transaction/card-v1.yaml#/components/schemas/cardInfo"
+              examples:
+                binLookupResponse:
+                  $ref: './example-responses-v1.yaml#/components/examples/binLookupResponse'
+        '400':
+          $ref: ../../../common/responses/errors/400-v1.yaml#/components/responses/400
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '404':
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '409':
+          $ref: ../../../common/responses/errors/409-v1.yaml#/components/responses/409
+        '415':
+          $ref: ../../../common/responses/errors/415-v1.yaml#/components/responses/415
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+
+components:
+  schemas:
+    cardVerificationRequest:
+      required:
+        - card
+        - processingTerminalId
+      type: object
+      properties:
+        processingTerminalId:
+          maxLength: 50
+          minLength: 4
+          type: string
+          description: Unique identifier that we assigned to the terminal.
+          example: '1234001'
+        operator:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Operator who requested to verify the card.
+          example: Jane
+        customer:
+          $ref: "../../../common/schemas/transaction/customer-v1.yaml#/components/schemas/customer"
+        card:
+          type: object
+          description: Object that contains information about the card.
+          discriminator:
+            propertyName: type
+            mapping:
+              card: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/cardPayload'
+          oneOf:
+            - $ref: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/cardPayload'
+    cardVerificationResult:
+      required:
+        - card
+        - processingTerminalId
+        - verified
+      type: object
+      properties:
+        processingTerminalId:
+          maxLength: 50
+          minLength: 4
+          type: string
+          description: Unique identifier that we assigned to the terminal.
+          example: '1234001'
+        operator:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Operator who requested to verify the card.
+          example: Jane
+        verified:
+          type: boolean
+          description: |
+            Indicates if we have verified the card details.
+            - `true` - The card details are valid.
+            - `false` - The card details are not valid.
+          example: true
+        dateTime:
+          type: string
+          format: date-time
+          description: Date and time that we processed the request. This format follows the ISO 8601 standard, for example, 2024-07-02T15:02:07+00:00. 
+          example: '2024-07-02T15:30:00Z'
+        responseCode:
+          type: string
+          description: |
+            Response from the processor.  
+            - `A` - The processor approved the transaction.  
+            - `D` - The processor declined the transaction.  
+            - `E` - The processor received the transaction but will process the transaction later.  
+            - `P` - The processor authorized a portion of the original amount of the transaction.  
+            - `R` - The issuer declined the transaction and indicated that the customer should contact their bank.  
+            - `C` - The issuer declined the transaction and indicated that the merchant should keep the card as it was reported lost or stolen.
+          enum:
+            - A
+            - D
+            - E
+            - P
+            - R
+            - C
+          example: A
+        responseMessage:
+          maxLength: 48
+          minLength: 1
+          type: string
+          description: 'Response description from the payment processor. For example, "Refer to Card Issuer".'
+          example: Refer to Card Issuer
+        processorResponseCode:
+          type: string
+          description: Response code from payment processor. This code is then mapped onto a `responseCode` enum.
+          example: A
+    balanceInquiry:
+      required:
+        - card
+        - currency
+        - processingTerminalId
+      type: object
+      properties:
+        processingTerminalId:
+          maxLength: 50
+          minLength: 4
+          type: string
+          description: Unique identifier that we assigned to the terminal.
+          example: '1234001'
+        operator:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Operator who requested the balance inquiry.
+          example: Jane
+        currency:
+          $ref: '../../../common/schemas/common/currency-v1.yaml#/components/schemas/currency'
+        customer:
+          $ref: '../../../common/schemas/transaction/customer-v1.yaml#/components/schemas/customer'
+        card:
+          type: object
+          description: Object that contains information about the card.
+          discriminator:
+            propertyName: type
+            mapping:
+              card: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/cardPayload'
+              singleUseToken: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/singleUseTokenPayload'
+          oneOf:
+            - $ref: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/cardPayload'
+            - $ref: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/singleUseTokenPayload'
+    balance:
+      required:
+        - card
+        - processingTerminalId
+      type: object
+      properties:
+        processingTerminalId:
+          maxLength: 50
+          minLength: 4
+          type: string
+          description: Unique identifier that we assigned to the terminal.
+          example: '1234001'
+        operator:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Operator who requested the balance inquiry.
+          example: Jane
+        card:
+          $ref: '../../../common/schemas/transaction/card-v1.yaml#/components/schemas/card'
+        responseCode:
+          type: string
+          description: |
+            Response from the processor.  
+            - `A` - The processor approved the transaction.  
+            - `D` - The processor declined the transaction.  
+            - `E` - The processor received the transaction but will process the transaction later.  
+            - `P` - The processor authorized a portion of the original amount of the transaction.  
+            - `R` - The issuer declined the transaction and indicated that the customer should contact their bank.  
+            - `C` - The issuer declined the transaction and indicated that the merchant should keep the card as it was reported lost or stolen.
+          enum:
+            - A
+            - D
+            - E
+            - P
+            - R
+            - C
+        responseMessage:
+          maxLength: 48
+          minLength: 1
+          type: string
+          description: 'Response description from the payment processor. For example, "Refer to Card Issuer".'
+          example: Refer to Card Issuer
+    binLookup:
+      required:
+        - card
+      type: object
+      properties:
+        processingTerminalId:
+          maxLength: 50
+          minLength: 4
+          type: string
+          description: Unique identifier that we assigned to the terminal.
+          example: '1234001'
+        amount:
+          minimum: 0
+          exclusiveMinimum: true
+          type: integer
+          format: int64
+          description: |
+            The amount in the currency's lowest denomination.  
+            If the card is eligible for surcharging, sending this field will allow the gateway to calculate and return the surcharge amount.
+          # example: 4999 # Linting won't allow explicit value
+        currency:
+          $ref: '../../../common/schemas/common/currency-v1.yaml#/components/schemas/currency'        
+        card:
+          type: object
+          description: Object that contains information about the card.
+          discriminator:
+            propertyName: type
+            mapping:
+              card: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/cardPayload'
+              cardBin: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/cardBinPayload'
+              secureToken: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/secureTokenPayload'
+              digitalWallet: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/digitalWalletPayload'
+          oneOf:
+            - $ref: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/cardPayload'
+            - $ref: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/cardBinPayload'
+            - $ref: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/secureTokenPayload'
+            - $ref: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/digitalWalletPayload'

@@ -1,0 +1,174 @@
+openapi: 3.0.3
+info:
+  title: Transaction API
+  version: '1'
+  termsOfService: https://www.payroc.com/terms
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+
+servers:
+  - url: https://api.payroc.com/v1
+    description: Production
+  - url: https://api.uat.payroc.com/v1
+    description: UAT
+
+tags:
+- name: Single use tokens
+
+paths:
+  /processing-terminals/{processingTerminalId}/single-use-tokens:
+    post:
+      tags:
+        - Single use tokens
+      summary: Create single use token
+      description: Create a single-use token. The token expires after 30 minutes. 
+      operationId: createSingleUseToken
+      parameters:
+        - $ref: '../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey'
+        - $ref: './parameters-v1.yaml#/components/parameters/processingTerminalId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/singleUseTokenRequest'
+            examples:
+              createSingleUseToken:
+                $ref: './example-requests-v1.yaml#/components/examples/singleUseTokenRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful request. We created the single-use token. 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/singleUseToken'
+              examples:
+                createSingleUseToken:
+                  $ref: './example-responses-v1.yaml#/components/examples/singleUseTokenResponse'
+          headers:
+            location:
+              $ref: '../../../common/headers/location-v1.yaml#/components/headers/location'
+        '400':
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '409':
+          $ref: '../../../common/responses/errors/409-v1.yaml#/components/responses/409'
+        '415':
+          $ref: '../../../common/responses/errors/415-v1.yaml#/components/responses/415'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+
+components:
+  schemas:
+    singleUseTokenRequest:
+      required:
+        - channel
+        - source
+      type: object
+      properties:
+        channel:
+          type: string
+          description: Channel that the merchant used to receive the payment details.
+          enum:
+            - pos
+            - web
+            - moto
+          example: web
+        operator:
+          maxLength: 50
+          minLength: 1
+          type: string
+          description: Operator who initiated the request.
+          example: Jane
+        source:
+          description: Object that contains information about the payment method to tokenize.
+          type: object
+          discriminator:
+            propertyName: type
+            mapping:
+              ach: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/achPayload'
+              pad: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/padPayload'
+              card: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/cardPayload'
+          oneOf:
+            - $ref: "../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/achPayload"
+            - $ref: "../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/padPayload"
+            - $ref: "../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/cardPayload"
+
+    singleUseToken:
+      required:
+        - processingTerminalId
+        - token
+        - expiresAt
+        - source
+      type: object
+      properties:
+        processingTerminalId:
+          maxLength: 50
+          minLength: 4
+          type: string
+          readOnly: true
+          description: Unique identifier that we assigned to the terminal. 
+          example: '1234001'
+        operator:
+          maxLength: 50
+          minLength: 0
+          type: string
+          writeOnly: true
+          description: Operator who initiated the request.
+          example: Jane
+        paymentMethod:
+          type: object
+          description: Object that contains information about the customer's payment details.
+          writeOnly: true
+          discriminator:
+            propertyName: type
+            mapping:
+              card: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/cardPayload'
+          oneOf:
+            - $ref: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/cardPayload'
+        token:
+          maxLength: 128
+          minLength: 128
+          type: string
+          readOnly: true
+          description: |
+            Unique identifier that our gateway assigned to the payment details.  
+            **Note:** Merchants can use the token with other terminals linked to their account.
+          example: fa2e9e51bc5265a33a5ca41449524d53d1def596ffd8c0904f222183a71a65cdb58835120a65196a48a6375abc4deafe2b7e948689ab9d6aba919e860f32e247
+        expiresAt:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Date and time that the token expires. We return this value in the ISO 8601 format.
+          example: '2024-07-02T16:00:00Z'
+        source:
+          description: Object that contains information about the payment method that we tokenized.
+          type: object
+          discriminator:
+            propertyName: type
+            mapping:
+              ach: '../../../common/schemas/transaction/bank-account-v1.yaml#/components/schemas/achSource'
+              pad: '../../../common/schemas/transaction/bank-account-v1.yaml#/components/schemas/padSource'
+              card: '../../../common/schemas/transaction/card-v1.yaml#/components/schemas/cardSource'
+          oneOf:
+            - $ref: '../../../common/schemas/transaction/bank-account-v1.yaml#/components/schemas/achSource'
+            - $ref: '../../../common/schemas/transaction/bank-account-v1.yaml#/components/schemas/padSource'
+            - $ref: '../../../common/schemas/transaction/card-v1.yaml#/components/schemas/cardSource'

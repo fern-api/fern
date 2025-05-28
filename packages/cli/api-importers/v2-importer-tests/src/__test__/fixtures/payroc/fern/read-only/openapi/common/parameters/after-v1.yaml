@@ -1,0 +1,26 @@
+openapi: 3.0.3
+
+paths: {}
+
+info:
+  title: Common Domain Models
+  description: Common domain models that are shared across the Payroc API
+  version: '1'
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+
+tags:
+  - name: Common parameters
+    description: Common parameters that can be resued
+
+components:
+    parameters:
+      after:  
+        name: after
+        in: query
+        description: Points to the resource identifier that you want to receive your results after. Typically, this is the last resource on the previous page.
+        schema:
+          type: string
+        example: '8516'

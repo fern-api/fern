@@ -1,0 +1,221 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  schemas:
+    paymentSummary:
+      required:
+        - amount
+        - currency
+        - dateTime
+        - paymentId
+        - status
+        - responseCode
+        - responseMessage
+      type: object
+      description: Object that contains information about a payment.
+      properties:
+        paymentId:
+          maxLength: 10
+          minLength: 10
+          type: string
+          description: Unique identifier of the payment.
+          example: M2MJOG6O2Y
+        dateTime:
+          type: string
+          format: date-time
+          description: Date and time that the payment was processed.
+          example: '2024-07-02T15:30:00Z'
+        currency:
+          $ref: '../../../common/schemas/common/currency-v1.yaml#/components/schemas/currency'
+        amount:
+          type: integer
+          format: int64
+          description: Amount of the payment. This value is in the currency’s lowest denomination, for example, cents.
+          example: 4999
+        status:
+          type: string
+          description: Current status of the payment.
+          enum:
+            - ready
+            - pending
+            - declined
+            - complete
+            - referral
+            - pickup
+            - reversal
+            - returned
+            - admin
+            - expired
+            - accepted
+          example: complete
+        responseCode:
+          type: string
+          description: |
+            Response from the processor.  
+            - `A` - The processor approved the transaction.  
+            - `D` - The processor declined the transaction.  
+            - `E` - The processor received the transaction but will process the transaction later.  
+            - `P` - The processor authorized a portion of the original amount of the transaction.  
+            - `R` - The issuer declined the transaction and indicated that the customer should contact their bank.  
+            - `C` - The issuer declined the transaction and indicated that the merchant should keep the card as it was reported lost or stolen.
+          enum:
+            - A
+            - D
+            - E
+            - P
+            - R
+            - C
+          example: A
+        responseMessage:
+          maxLength: 48
+          minLength: 1
+          type: string
+          description: Description of the response from the processor.
+          example: Transaction approved
+        link:
+          $ref: ../../../common/schemas/common/link/link-v1.yaml#/components/schemas/link
+
+    paymentPlanSummary:
+      required:
+        - name
+        - paymentPlanId
+      type: object
+      properties:
+        paymentPlanId:
+          maxLength: 48
+          minLength: 1
+          type: string
+          description: Unique identifier that the merchant assigns to the payment plan.
+          example: PlanRef8765
+        name:
+          maxLength: 128
+          minLength: 5
+          type: string
+          description: Name of the payment plan.
+          example: Monthly Premium Club subscription
+        link:
+          $ref: ../../../common/schemas/common/link/link-v1.yaml#/components/schemas/link
+
+    refundSummary:
+      required:
+        - amount
+        - currency
+        - dateTime
+        - refundId
+        - status
+        - responseCode
+        - responseMessage
+      type: object
+      description: Object that contains information about a refund.
+      properties:
+        refundId:
+          maxLength: 10
+          minLength: 10
+          type: string
+          description: Unique identifier of the refund.
+          example: CD3HN88U9F
+        dateTime:
+          type: string
+          format: date-time
+          description: Date and time that the refund was processed.
+          example: '2024-07-14T12:25:00Z'
+        currency:
+          $ref: '../../../common/schemas/common/currency-v1.yaml#/components/schemas/currency'
+        amount:
+          type: integer
+          format: int64
+          description: Amount of the refund. This value is in the currency’s lowest denomination, for example, cents.
+          example: 4999
+        status:
+          type: string
+          description: Current status of the refund.
+          enum:
+            - ready
+            - pending
+            - declined
+            - complete
+            - referral
+            - pickup
+            - reversal
+            - returned
+            - admin
+            - expired
+            - accepted
+          example: complete
+        responseCode:
+          type: string
+          description: |
+            Response from the processor.  
+            - `A` - The processor approved the transaction.  
+            - `D` - The processor declined the transaction.  
+            - `E` - The processor received the transaction but will process the transaction later.  
+            - `P` - The processor authorized a portion of the original amount of the transaction.  
+            - `R` - The issuer declined the transaction and indicated that the customer should contact their bank.  
+            - `C` - The issuer declined the transaction and indicated that the merchant should keep the card as it was reported lost or stolen.
+          enum:
+            - A
+            - D
+            - E
+            - P
+            - R
+            - C
+          example: A
+        responseMessage:
+          maxLength: 48
+          minLength: 1
+          type: string
+          description: Description of the response from the processor.
+          example: Transaction refunded
+        link:
+          $ref: ../../../common/schemas/common/link/link-v1.yaml#/components/schemas/link
+    
+    secureTokenSummary:
+      required:
+        - customerName
+        - secureTokenId
+        - status
+        - token
+      type: object
+      description: Object that contains information about the secure token.
+      properties:
+        secureTokenId:
+          maxLength: 200
+          minLength: 1
+          type: string
+          description: Unique identifier that the merchant assigned to the secure token.
+          example: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+        customerName:
+          maxLength: 50
+          minLength: 1
+          type: string
+          description: Customer's name.
+          example: Sarah Hazel Hopper
+        token:
+          maxLength: 19
+          minLength: 12
+          type: string
+          description: |
+            Token that the merchant can use in future transactions to represent the customer's payment details. The token:  
+            - Begins with the six-digit identification number **296753**.  
+            - Contains up to 12 digits.  
+            - Contains a single check digit that we calculate using the Luhn algorithm.  
+          example: '296753123456'
+        status:
+          type: string
+          description: |
+            Status of the customer's bank account. The processor performs a security check on the customer's bank account and returns the status of the account.  
+            **Note:** Depending on the merchant's account settings, this feature may be unavailable.
+          enum:
+            - notValidated
+            - cvvValidated
+            - validationFailed
+            - issueNumberValidated
+            - cardNumberValidated
+            - bankAccountValidated
+          example: cvvValidated
+        link:
+          $ref: ../../../common/schemas/common/link/link-v1.yaml#/components/schemas/link

@@ -1,0 +1,464 @@
+openapi: 3.0.1
+info:
+  title: Transaction API
+  version: '1'
+  termsOfService: https://www.payroc.com/terms
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+servers:
+  - url: https://api.payroc.com/v1
+    description: Production
+  - url: https://api.uat.payroc.com/v1
+    description: UAT
+tags:
+- name: Refunds
+
+paths:
+  /refunds:
+    post:
+      tags:
+        - Refunds
+      summary: Create refund
+      operationId: unreferencedRefund
+      description: Create an unreferenced refund.
+      parameters:
+        - $ref: ../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/unreferencedRefund'
+            examples:
+              refund:
+                $ref: './example-requests-v1.yaml#/components/examples/refundRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful request. We processed the refund.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/refund'
+              examples:
+                refund:
+                  $ref: './example-responses-v1.yaml#/components/examples/refundResponse'
+          headers:
+            location:
+              $ref: '../../../common/headers/location-v1.yaml#/components/headers/location'
+        '400':
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '409':
+          $ref: ../../../common/responses/errors/409-v1.yaml#/components/responses/409
+        '415':
+          $ref: ../../../common/responses/errors/415-v1.yaml#/components/responses/415
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+    get:
+      tags:
+        - Refunds
+      summary: List refunds
+      description: |
+        Return a list of refunds.  
+        To filter your results, use query parameters.
+      operationId: listRefunds
+      parameters:
+        - $ref: ../../../common/parameters/processing-terminal-id-v1.yaml#/components/parameters/processingTerminalIdQuery
+        - $ref: './parameters-v1.yaml#/components/parameters/orderId'
+        - $ref: './parameters-v1.yaml#/components/parameters/operator'
+        - $ref: './parameters-v1.yaml#/components/parameters/cardholderName'
+        - $ref: './parameters-v1.yaml#/components/parameters/first6'
+        - $ref: './parameters-v1.yaml#/components/parameters/last4'
+        - $ref: './parameters-v1.yaml#/components/parameters/tender'
+        - $ref: './parameters-v1.yaml#/components/parameters/status'
+        - $ref: './parameters-v1.yaml#/components/parameters/dateFrom'
+        - $ref: './parameters-v1.yaml#/components/parameters/dateTo'
+        - $ref: './parameters-v1.yaml#/components/parameters/settlementState'
+        - $ref: './parameters-v1.yaml#/components/parameters/settlementDate'
+        - $ref: '../../../common/parameters/before-v1.yaml#/components/parameters/before'
+        - $ref: '../../../common/parameters/after-v1.yaml#/components/parameters/after'
+        - $ref: '../../../common/parameters/limit-v1.yaml#/components/parameters/limit'
+      responses:
+        '200':
+          description: Successful request. Returns a paginated list of refunds.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/refundPaginatedList'
+              examples:
+                paginatedResults:
+                  $ref: './example-responses-v1.yaml#/components/examples/paginatedRefund'
+                noActivity:
+                  $ref: '../../../common/responses/no-activity-v1.yaml#/components/examples/noActivity'
+        '400':
+          $ref: ../../../common/responses/errors/400-v1.yaml#/components/responses/400
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+  /refunds/{refundId}:
+    get:
+      tags:
+        - Refunds
+      summary: Retrieve refund
+      operationId: getRefund
+      description: Retrieve a specific refund.
+      parameters:      
+        - $ref: './parameters-v1.yaml#/components/parameters/refundId'
+      responses:
+        '200':
+          description: Successful request. Returns the specific refund.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/refund'
+              examples:
+                refundResponse:
+                  $ref: './example-responses-v1.yaml#/components/examples/refundResponse'
+        '400':
+          $ref: ../../../common/responses/errors/400-v1.yaml#/components/responses/400
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '404':
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+  /refunds/{refundId}/adjust:
+    post:
+      tags:
+        - Refunds
+      summary: Adjust refund
+      operationId: adjustRefund
+      description: Adjust an existing refund.
+      parameters:
+        - $ref: ../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey
+        - $ref: './parameters-v1.yaml#/components/parameters/refundId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/refundAdjustment'
+            examples:
+              refundRequest:
+                $ref: './example-requests-v1.yaml#/components/examples/adjustRefundRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful request. We updated the refund.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/refund'
+              examples:
+                refundResponse:
+                  $ref: './example-responses-v1.yaml#/components/examples/adjustRefundResponse'
+        '400':
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '404':
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '409':
+          $ref: ../../../common/responses/errors/409-v1.yaml#/components/responses/409
+        '415':
+          $ref: ../../../common/responses/errors/415-v1.yaml#/components/responses/415
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+  /refunds/{refundId}/reverse:
+    post:
+      tags:
+        - Refunds
+      summary: Reverse refund
+      operationId: reverseRefund
+      description: Void an existing refund.
+      parameters:
+        - $ref: ../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey
+        - $ref: './parameters-v1.yaml#/components/parameters/refundId'
+      responses:
+        '200':
+          description: Successful request. We voided the refund.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/refund'
+              examples:
+                refund:
+                  $ref: './example-responses-v1.yaml#/components/examples/reverseRefund'
+        '400':
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '404':
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '409':
+          $ref: ../../../common/responses/errors/409-v1.yaml#/components/responses/409
+        '415':
+          $ref: ../../../common/responses/errors/415-v1.yaml#/components/responses/415
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+
+components:
+  schemas:
+    refund:
+      required:
+        - card
+        - order
+        - processingTerminalId
+        - refundId
+        - transactionResult
+      type: object
+      description: Object that contains information about the refund.
+      properties:
+        refundId:
+          maxLength: 10
+          minLength: 10
+          type: string
+          description: Unique identifier that our gateway assigned to the refund.
+          example: CD3HN88U9F
+        processingTerminalId:
+          maxLength: 50
+          minLength: 4
+          type: string
+          description: Unique identifier that we assigned to the terminal.
+          example: '1234001'
+        operator:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Operator who requested the refund.
+          example: Jane
+        order:
+          $ref: "#/components/schemas/refundOrder"
+        customer:
+          $ref: '../../../common/schemas/transaction/customer-v1.yaml#/components/schemas/customer'
+        card:
+          $ref: '../../../common/schemas/transaction/card-v1.yaml#/components/schemas/card'
+        payment:
+          $ref: "../../../common/schemas/transaction/summary-v1.yaml#/components/schemas/paymentSummary"
+        supportedOperations:
+          $ref: "../../../common/schemas/transaction/card-transaction-v1.yaml#/components/schemas/supportedOperations"
+        transactionResult:
+          $ref: '../../../common/schemas/transaction/card-transaction-v1.yaml#/components/schemas/transactionResult'
+        customFields:
+          type: array
+          description: |
+            Array of customField objects.
+          items:
+            $ref: '../../../common/schemas/common/custom-field-v1.yaml#/components/schemas/customField'
+
+    referencedRefund:
+      description: Object that contains the details of the payment that the merchant wants to refund.
+      required:
+        - amount
+        - description
+      type: object
+      properties:
+        operator:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Operator who refunded the payment.
+          example: Jane
+        amount:
+          type: integer
+          format: int64
+          description: Amount of the payment that the merchant wants to refund. The value is in the currency’s lowest denomination, for example, cents.
+          example: 4999
+        description:
+          maxLength: 100
+          minLength: 1
+          type: string
+          description: Reason for the refund.
+          example: Customer requested a refund due to a wrong order.
+
+    refundPaginatedList:
+      required:
+        - count
+        - data
+        - hasMore
+        - limit
+      type: object
+      description: Object that contains information about refund objects.
+      allOf:
+        - $ref: '../../../common/schemas/common/paginated-list-v1.yaml#/components/schemas/paginatedList'
+        - type: object
+          properties:
+            data:
+              type: array
+              description: Array of refund objects.
+              items:
+                $ref: '#/components/schemas/refund'
+
+    unreferencedRefund:
+      required:
+        - channel
+        - order
+        - processingTerminalId
+        - refundMethod
+      type: object
+      description: Refund a payment that is not linked to a previous transaction. Unreferenced refunds are available only on certain accounts.
+      properties:
+        channel:
+          type: string
+          description: Channel that the merchant used to request the refund. 
+          enum:
+            - pos
+            - moto
+          example: pos
+        processingTerminalId:
+          maxLength: 50
+          minLength: 4
+          type: string
+          description: Unique identifier that we assigned to the terminal.
+          example: '1234001'
+        operator:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Operator who initiated the request.
+          example: Jane
+        order:
+          $ref: '#/components/schemas/refundOrder'
+        customer:
+          $ref: '../../../common/schemas/transaction/customer-v1.yaml#/components/schemas/customer'
+        ipAddress:
+          $ref: '../../../common/schemas/common/ip-address-v1.yaml#/components/schemas/ipAddress'
+        refundMethod:
+          description: Object that contains information about how the merchant refunds the customer. 
+          type: object
+          discriminator:
+            propertyName: type
+            mapping:
+              card: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/cardPayload'
+              secureToken: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/secureTokenPayload'
+          oneOf:
+            - $ref: "../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/cardPayload"
+            - $ref: "../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/secureTokenPayload"
+        customFields:
+          type: array
+          description: |
+            Array of customField objects.
+          items:
+            $ref: '../../../common/schemas/common/custom-field-v1.yaml#/components/schemas/customField'
+
+    refundAdjustment:
+      required:
+        - adjustments
+      type: object
+      description: Object that contains information about the adjustment to the refund.
+      properties:
+        operator:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Operator who requested the adjustment to the refund.
+          example: Jane
+        adjustments:
+          type: array
+          description: Array of objects that contain information about the adjustments to the refund.
+          uniqueItems: true
+          items:
+            discriminator:
+              propertyName: type
+              mapping:
+                status: '../../../common/schemas/transaction/transaction-adjustment-v1.yaml#/components/schemas/statusAdjustment'
+                customer: '../../../common/schemas/transaction/transaction-adjustment-v1.yaml#/components/schemas/customerAdjustment'
+            oneOf:
+              - $ref: '../../../common/schemas/transaction/transaction-adjustment-v1.yaml#/components/schemas/statusAdjustment'
+              - $ref: '../../../common/schemas/transaction/transaction-adjustment-v1.yaml#/components/schemas/customerAdjustment'
+
+    refundOrder:
+      required:
+        - amount
+        - currency
+        - description
+        - orderId
+      type: object
+      description: Object that contains information about the refund.
+      allOf:
+        - $ref: '../../../common/schemas/transaction/order-v1.yaml#/components/schemas/order'
+        - type: object
+          properties:
+            orderId:
+              maxLength: 24
+              minLength: 1
+              type: string
+              description: A unique identifier assigned by the merchant.
+              example: OrderRef6543
+            dateTime:
+              type: string
+              format: date-time
+              readOnly: true
+              description: Date and time that the processor processed the transaction. Our gateway returns this value in the ISO 8601 format.
+              example: '2024-07-02T15:30:00Z'
+            description:
+              maxLength: 256
+              minLength: 1
+              type: string
+              description: Description of the transaction.
+              example: Refund for order OrderRef6543
+            amount:
+              type: integer
+              format: int64
+              description: Total amount of the transaction. The value is in the currency’s lowest denomination, for example, cents.
+              example: 4999
+            currency:
+              $ref: '../../../common/schemas/common/currency-v1.yaml#/components/schemas/currency'
+            dccOffer:
+              $ref: '../../../common/schemas/transaction/dcc-offer-v1.yaml#/components/schemas/dccOffer'

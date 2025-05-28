@@ -1,0 +1,64 @@
+openapi: 3.0.3
+
+paths: {}
+
+info:
+  title: Common Domain Models
+  description: Common domain models that are shared across the Payroc API
+  version: '1'
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+
+tags:
+  - name: Common responses
+    description: Common responses that can be resued
+
+components:
+  responses:
+    '406':
+      description: Not acceptable
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/406'
+          examples:
+            notAcceptable:
+              $ref: '#/components/examples/notAcceptable'
+    
+  schemas:
+    '406':
+      type: object
+      properties:
+        type: 
+          type: string
+          description: URI reference identifying the problem type
+          example: https://docs.payroc.com/api/errors#not-acceptable
+        title:
+          type: string
+          description: Short description of the issue.
+          example: Not acceptable
+        status:
+          type: integer
+          description: Http status code
+          example: 406
+        detail:
+          type: string
+          description: Explanation of the problem
+          example: Resource does not support the representation requested.
+      required:
+        - type
+        - title
+        - status
+        - detail
+
+  examples:
+    notAcceptable:
+      summary: Not acceptable
+      description: Requested representation not supported
+      value:
+        type: "https://docs.payroc.com/api/errors#not-acceptable"
+        title: "Not acceptable"
+        status: 406
+        detail: "Resource does not support the representation requested"

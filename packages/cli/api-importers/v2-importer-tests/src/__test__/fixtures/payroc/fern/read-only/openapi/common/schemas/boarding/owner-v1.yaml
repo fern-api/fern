@@ -1,0 +1,83 @@
+openapi: 3.0.3
+
+paths: {}
+
+info:
+  title: Common Domain Models
+  description: Common domain models that are shared across the Payroc API
+  version: '1'
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+
+tags:
+  - name: Common schemas
+    description: Common schemas that can be resued
+
+components:
+  schemas:
+    owner:
+      type: object
+      title: owner
+      required:
+        - firstName
+        - lastName
+        - dateOfBirth
+        - identifiers
+        - contactMethods
+        - relationship
+        - address
+      properties:
+        ownerId:
+          type: integer
+          description: Unique identifier of the owner.
+          readOnly: true
+          example: 4564
+        firstName:
+          type: string
+          description: Owner's first name.
+          example: Jane
+          maxLength: 50
+        middleName:
+          type: string
+          description: Owner's middle name.
+          example: Helen
+          maxLength: 50
+        lastName:
+          type: string
+          description: Owner's last name.
+          example: Doe
+          maxLength: 50
+        dateOfBirth:
+          type: string
+          format: date
+          description: Owner's date of birth. The format of this value is **YYYY-MM-DD**.
+          example: '1964-03-22'
+        address:
+          $ref: '../common/address-v1.yaml#/components/schemas/address'
+        identifiers:
+          minItems: 1
+          type: array
+          xml:
+            wrapped: true
+          description: Array of identifier objects.
+          example:
+          - type: nationalId
+            value: xxxxx4320
+          items:
+            $ref: './identifier-v1.yaml#/components/schemas/identifier'
+        contactMethods:
+          type: array
+          minItems: 1
+          maxItems: 4
+          uniqueItems: true
+          description: |
+            Array of contactMethod objects.  
+            **Note:** If you are adding information about an owner, you must provide at least an email address. If you are adding information about a contact, you must provide at least a contact number.   
+          items:
+            $ref: '../common/contact-method-v1.yaml#/components/schemas/contactMethod'
+        relationship:
+          description: Object that contains information about the owner's relationship to the business.
+          allOf:
+          - $ref: './owner-relationship-v1.yaml#/components/schemas/ownerRelationship'

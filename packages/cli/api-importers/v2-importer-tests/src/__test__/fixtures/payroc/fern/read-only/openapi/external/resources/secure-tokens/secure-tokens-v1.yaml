@@ -1,0 +1,483 @@
+openapi: 3.0.1
+info:
+  title: Transaction API
+  version: '1'
+  termsOfService: https://www.payroc.com/terms
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+servers:
+  - url: https://api.payroc.com/v1
+    description: Production
+  - url: https://api.uat.payroc.com/v1
+    description: UAT
+tags:
+- name: Secure tokens
+
+paths:
+  /processing-terminals/{processingTerminalId}/secure-tokens:
+    post:
+      tags:
+        - Secure tokens
+      summary: Create secure token
+      description: Save the customer's payment details to use in future transactions.
+      operationId: createSecureToken
+      parameters:
+        - $ref: '../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey'
+        - $ref: ../../../common/parameters/processing-terminal-id-v1.yaml#/components/parameters/processingTerminalIdPath
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tokenizationRequest'
+            examples:
+              createSecureToken:
+                $ref: './example-requests-v1.yaml#/components/examples/secureTokenRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful request. We created a secure token that represents your customer's payment details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/secureToken'
+              examples:
+                createdSecureToken:
+                  $ref: './example-responses-v1.yaml#/components/examples/secureTokenResponse'
+          headers:
+            location:
+              $ref: '../../../common/headers/location-v1.yaml#/components/headers/location'
+        '400':
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '409':
+          $ref: ../../../common/responses/errors/409-v1.yaml#/components/responses/409
+        '415':
+          $ref: ../../../common/responses/errors/415-v1.yaml#/components/responses/415
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+    get:
+      tags:
+        - Secure tokens
+      summary: List secure tokens
+      description: Return a list of secure tokens that are currently saved on the terminal.
+      operationId: listSecureTokens
+      parameters:
+        - $ref: ../../../common/parameters/processing-terminal-id-v1.yaml#/components/parameters/processingTerminalIdPath
+        - $ref: './parameters-v1.yaml#/components/parameters/secureTokenIdInQuery'
+        - $ref: './parameters-v1.yaml#/components/parameters/customerName'
+        - $ref: './parameters-v1.yaml#/components/parameters/phone'
+        - $ref: './parameters-v1.yaml#/components/parameters/email'
+        - $ref: './parameters-v1.yaml#/components/parameters/token'
+        - $ref: './parameters-v1.yaml#/components/parameters/first6'
+        - $ref: './parameters-v1.yaml#/components/parameters/last4'
+        - $ref: '../../../common/parameters/before-v1.yaml#/components/parameters/before'
+        - $ref: '../../../common/parameters/after-v1.yaml#/components/parameters/after'
+        - $ref: '../../../common/parameters/limit-v1.yaml#/components/parameters/limit'
+      responses:
+        '200':
+          description: Successful request. Returns a list of secure tokens that are currently saved on the terminal.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/secureTokenPaginatedList'
+              examples:
+                paginatedResults:
+                  $ref: './example-responses-v1.yaml#/components/examples/paginatedSecureToken'
+                noActivity:
+                  $ref: '../../../common/responses/no-activity-v1.yaml#/components/examples/noActivity'
+        '400':
+          $ref: ../../../common/responses/errors/400-v1.yaml#/components/responses/400
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+  /processing-terminals/{processingTerminalId}/secure-tokens/{secureTokenId}:
+    get:
+      tags:
+        - Secure tokens
+      summary: Retrieve secure token
+      description: Return a secure token and its related payment details.
+      operationId: getSecureToken
+      parameters:
+        - $ref: ../../../common/parameters/processing-terminal-id-v1.yaml#/components/parameters/processingTerminalIdPath
+        - $ref: './parameters-v1.yaml#/components/parameters/secureTokenIdInPath'
+      responses:
+        '200':
+          description: Successful request. Returns the secure token and its related payment details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/secureToken'
+              examples:
+                secureToken:
+                  $ref: './example-responses-v1.yaml#/components/examples/secureTokenResponse'
+        '400':
+          $ref: ../../../common/responses/errors/400-v1.yaml#/components/responses/400
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '404':
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+    patch:
+      tags:
+        - Secure tokens
+      summary: Update secure token
+      description: | 
+        Update the customer's payment details that are represented by the secure token.  
+
+        Structure your request to follow the RFC 6902 standard.
+      operationId: updateSecureToken
+      parameters:
+        - $ref: ../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey
+        - $ref: ../../../common/parameters/processing-terminal-id-v1.yaml#/components/parameters/processingTerminalIdPath
+        - $ref: './parameters-v1.yaml#/components/parameters/secureTokenIdInPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../../../common/schemas/common/patch-request-v1.yaml#/components/schemas/patchRequest
+            examples:
+              patchSecureTokenRealistic:
+                $ref: './example-requests-v1.yaml#/components/examples/patchSecureTokenRealistic'
+              patchOperations:
+                $ref: '../../../common/requests/patch-v1.yaml#/components/examples/patchOperations'              
+      responses:
+        '200':
+          description: Successful request. We updated the customer's payment details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/secureToken'
+              examples:
+                secureToken:
+                  $ref: './example-responses-v1.yaml#/components/examples/secureTokenResponse'
+        '400':
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '404':
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '409':
+          $ref: ../../../common/responses/errors/409-v1.yaml#/components/responses/409
+        '415':
+          $ref: ../../../common/responses/errors/415-v1.yaml#/components/responses/415
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+    delete:
+      tags:
+        - Secure tokens
+      summary: Delete secure token
+      description: |
+        Delete a secure token and its represented payment details.  
+        **Note:** If you delete a token, you can't reuse its identifier.
+      operationId: deleteSecureToken
+      parameters:
+        - $ref: ../../../common/parameters/processing-terminal-id-v1.yaml#/components/parameters/processingTerminalIdPath
+        - $ref: './parameters-v1.yaml#/components/parameters/secureTokenIdInPath'
+      responses:
+        '204':
+          description: Successful request. We deleted the secure token.
+        '400':
+          $ref: ../../../common/responses/errors/400-v1.yaml#/components/responses/400
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '404':
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+  /processing-terminals/{processingTerminalId}/secure-tokens/{secureTokenId}/update-account:
+    post:
+      tags:
+        - Secure tokens
+      summary: Update account details
+      description: | 
+        If you have a single-use token, use this method to update payment details that are represented by a secure token.
+        
+        If you don’t have a single-use token, and you want to update payment details represented by a secure token, go to 
+        [updateSecureToken](https://docs.payroc.com/api/resources#updateSecureToken).
+        
+        **Note:** For more information about tokenization, go to [tokenization](https://docs.payroc.com/knowledge/basic-concepts/tokenization).
+      operationId: accountUpdate
+      parameters:
+        - $ref: ../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey
+        - $ref: ../../../common/parameters/processing-terminal-id-v1.yaml#/components/parameters/processingTerminalIdPath
+        - $ref: './parameters-v1.yaml#/components/parameters/secureTokenIdInPath'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/accountUpdate'
+            examples:
+              accountUpdate:
+                $ref: './example-requests-v1.yaml#/components/examples/accountUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful request. We updated the payment details represented by the secure token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/secureToken'
+              examples:
+                accountUpdateResponse:
+                  $ref: './example-responses-v1.yaml#/components/examples/secureTokenResponse'
+        '400':
+          $ref: ../../../common/responses/errors/400-v1.yaml#/components/responses/400
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '404':
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '409':
+          $ref: ../../../common/responses/errors/409-v1.yaml#/components/responses/409
+        '413':
+          $ref: ../../../common/responses/errors/413-v1.yaml#/components/responses/413
+        '415':
+          $ref: ../../../common/responses/errors/415-v1.yaml#/components/responses/415
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+
+components:
+  schemas:
+    tokenizationRequest:
+      required:
+        - source
+      type: object
+      properties:
+        secureTokenId:
+          maxLength: 200
+          minLength: 1
+          type: string
+          description: |
+            Unique identifier that the merchant created for the secure token that represents the customer's payment details. 
+            If the merchant doesn't create a secureTokenId, the gateway generates one and returns it in the response.
+          example: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+        operator:
+          maxLength: 50
+          minLength: 1
+          type: string
+          description: Operator who saved the customer's payment details.
+          example: Jane
+        mitAgreement:
+          type: string
+          description: |
+            Indicates how the merchant can use the customer's card details, as agreed by the customer:  
+            
+            - `unscheduled` - Transactions for a fixed or variable amount that are run at a certain pre-defined event.  
+            - `recurring` - Transactions for a fixed amount that are run at regular intervals, for example, monthly. Recurring transactions don't have a fixed duration and run until the customer cancels the agreement.  
+            - `installment` - Transactions for a fixed amount that are run at regular intervals, for example, monthly. Installment transactions have a fixed duration.
+          enum:
+            - unscheduled
+            - recurring
+            - installment
+          example: recurring
+        customer:
+          $ref: "../../../common/schemas/transaction/customer-v1.yaml#/components/schemas/customer"
+        ipAddress:
+          $ref: "../../../common/schemas/common/ip-address-v1.yaml#/components/schemas/ipAddress"
+        source:
+          description: Object that contains information about the payment method to tokenize.
+          type: object
+          discriminator:
+            propertyName: type
+            mapping:
+              ach: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/achPayload'
+              pad: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/padPayload'
+              card: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/cardPayload'
+              singleUseToken: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/singleUseTokenPayload'
+          oneOf:
+            - $ref: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/achPayload'
+            - $ref: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/padPayload'
+            - $ref: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/cardPayload'
+            - $ref: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/singleUseTokenPayload'
+        threeDSecure:
+          type: object
+          description: Object that contains information for an authentication check on the customer's payment details using the 3-D Secure protocol.
+          discriminator:
+            propertyName: type
+            mapping:
+              gatewayThreeDSecure: '../../../common/schemas/transaction/three-d-secure-v1.yaml#/components/schemas/gatewayThreeDSecure'
+              thirdPartyThreeDSecure: '../../../common/schemas/transaction/three-d-secure-v1.yaml#/components/schemas/thirdPartyThreeDSecure'
+          oneOf:
+            - $ref: '../../../common/schemas/transaction/three-d-secure-v1.yaml#/components/schemas/gatewayThreeDSecure'
+            - $ref: '../../../common/schemas/transaction/three-d-secure-v1.yaml#/components/schemas/thirdPartyThreeDSecure'
+        customFields:
+          type: array
+          description: |
+            Array of customField objects.
+          items:
+            $ref: '../../../common/schemas/common/custom-field-v1.yaml#/components/schemas/customField'
+
+    secureTokenPaginatedList:
+      required:
+        - count
+        - data
+        - hasMore
+        - limit
+      type: object
+      allOf:
+        - $ref: '../../../common/schemas/common/paginated-list-v1.yaml#/components/schemas/paginatedList'
+        - type: object
+          properties:
+            data:
+              type: array
+              description: Array of saved payment details.
+              items:
+                $ref: '#/components/schemas/secureToken'
+
+    secureToken:
+      required:
+        - processingTerminalId
+        - secureTokenId
+        - source
+        - status
+        - token
+      type: object
+      description: Object that contains information about the secure token.
+      properties:
+        secureTokenId:
+          maxLength: 200
+          minLength: 0
+          type: string
+          description: Unique identifier that the merchant created for the secure token that represents the customer's payment details.
+          example: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+        processingTerminalId:
+          maxLength: 50
+          minLength: 4
+          type: string
+          description: Unique identifier that we assigned to the terminal.
+          example: '1234001'
+        mitAgreement:
+          type: string
+          description: |
+            Indicates how the merchant can use the customer's card details, as agreed by the customer:
+
+            - `unscheduled` - Transactions for a fixed or variable amount that are run at a certain pre-defined event.
+            - `recurring` - Transactions for a fixed amount that are run at regular intervals, for example, monthly. Recurring transactions don't have a fixed duration and run until the customer cancels the agreement.
+            - `installment` - Transactions for a fixed amount that are run at regular intervals, for example, monthly. Installment transactions have a fixed duration.
+          enum:
+            - unscheduled
+            - recurring
+            - installment
+          example: recurring
+        customer:
+          $ref: '../../../common/schemas/transaction/customer-v1.yaml#/components/schemas/customer'
+        source:
+          description: Object that contains information about the payment method that we tokenized.
+          type: object
+          discriminator:
+            propertyName: type
+            mapping:
+              ach: '../../../common/schemas/transaction/bank-account-v1.yaml#/components/schemas/achSource'
+              pad: '../../../common/schemas/transaction/bank-account-v1.yaml#/components/schemas/padSource'
+              card: '../../../common/schemas/transaction/card-v1.yaml#/components/schemas/cardSource'
+          oneOf:
+            - $ref: '../../../common/schemas/transaction/bank-account-v1.yaml#/components/schemas/achSource'
+            - $ref: '../../../common/schemas/transaction/bank-account-v1.yaml#/components/schemas/padSource'
+            - $ref: '../../../common/schemas/transaction/card-v1.yaml#/components/schemas/cardSource'
+        token:
+          maxLength: 19
+          minLength: 12
+          type: string
+          description: |
+            Token that the merchant can use in future transactions to represent the customer's payment details. The token:  
+            - Begins with the six-digit identification number **296753**.
+            - Contains up to 12 digits.  
+            - Contains a single check digit that we calculate using the Luhn algorithm.
+          example: '296753123456'
+        status:
+          type: string
+          description: |
+            Status of the customer's bank account. The processor performs a security check on the customer's bank account and returns the status of the account.  
+            **Note:** Depending on the merchant's account settings, this feature may be unavailable.
+          enum:
+            - notValidated
+            - cvvValidated
+            - validationFailed
+            - issueNumberValidated
+            - cardNumberValidated
+            - bankAccountValidated
+          example: cvvValidated
+        customFields:
+          type: array
+          description: |
+            Array of customField objects.
+          items:
+            $ref: '../../../common/schemas/common/custom-field-v1.yaml#/components/schemas/customField'
+
+    accountUpdate:
+      description: Object that contains information about the token.
+      discriminator:
+        propertyName: type
+        mapping:
+          singleUseToken: '#/components/schemas/singleUseTokenAccountUpdate'
+      oneOf: 
+        - $ref: '#/components/schemas/singleUseTokenAccountUpdate'
+    
+    singleUseTokenAccountUpdate:
+      required:
+        - type
+        - token
+      type: object
+      description: Object that contains the token.
+      properties:
+        type:
+          type: string
+          enum: 
+            - singleUseToken
+          example: singleUseToken
+          description: Type of token.
+        token:
+          description: Single-use token that the gateway assigned to the payment details.
+          maxLength: 128
+          minLength: 128
+          type: string
+          example: abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890

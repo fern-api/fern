@@ -1,0 +1,165 @@
+openapi: 3.0.3
+
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  examples:
+    paginatedFundRecipients:
+      summary: Paginated funding recipients.
+      description: Paginated list of funding recipients.
+      value:
+        limit: 10
+        count: 1
+        hasMore: false
+        links: 
+          - rel: previous
+            method: get
+            href: https://api.payroc.com/v1/funding-recipients?before=234&limit=10
+        data:
+          - recipientId: 234
+            status: approved
+            createdDate: '2024-07-02T15:30:00Z'
+            lastModifiedDate: '2024-07-02T15:30:00Z'
+            recipientType: privateCorporation
+            taxId: '12-3456789'
+            doingBuinessAs: Pizza Doe
+            address: 
+              address1: 1 Example Ave.
+              city: Chicago
+              state: Illinois
+              country: US
+              postalCode: '60056'
+            contactMethods: 
+              - type: phone
+                value: '2025550164'
+            metadata: 
+              yourCustomField: abc123
+            owners:
+              - ownerId: 4564
+                link: 
+                  rel: owner
+                  method: get
+                  href: https://api.payroc.com/v1/owners/4564
+            fundingAccounts: 
+              - fundingAccountId: 123
+                status: approved
+                link: 
+                  rel: fundingAccount
+                  method: get
+                  href: https://api.payroc.com/v1/funding-accounts/123
+              - fundingAccountId: 124
+                status: hold
+                link: 
+                  rel: fundingAccount
+                  method: get
+                  href: https://api.payroc.com/v1/funding-accounts/124
+
+    fundingRecipient:
+      summary: Funding recipient.
+      description: Funding recipients.
+      value:
+        recipientId: 234
+        status: approved
+        createdDate: '2024-07-02T15:30:00Z'
+        lastModifiedDate: '2024-07-02T15:30:00Z'
+        recipientType: privateCorporation
+        taxId: '12-3456789'
+        doingBuinessAs: Pizza Doe
+        address: 
+          address1: 1 Example Ave.
+          city: Chicago
+          state: Illinois
+          country: US
+          postalCode: '60056'
+        contactMethods: 
+          - type: phone
+            value: '2025550164'
+        metadata: 
+          yourCustomField: abc123
+        owners:
+          - ownerId: 4564
+            link: 
+              rel: owner
+              method: get
+              href: https://api.payroc.com/v1/owners/4564
+        fundingAccounts: 
+          - fundingAccountId: 123
+            status: approved
+            link: 
+              rel: fundingAccount
+              method: get
+              href: https://api.payroc.com/v1/funding-accounts/123
+          - fundingAccountId: 124
+            status: hold
+            link: 
+              rel: fundingAccount
+              method: get
+              href: https://api.payroc.com/v1/funding-accounts/124
+
+    fundingAccounts:
+      summary: List of funding accounts
+      description: List of funding accounts.
+      value:
+        - fundingAccountId: 123
+          createdDate: '2024-07-02T15:30:00Z'
+          lastModifiedDate: '2024-07-02T15:30:00Z'
+          status: approved
+          type: checking
+          use: credit
+          nameOnAccount: Jane Doe
+          paymentMethods:
+            - type: ach
+              value:
+                routingNumber: '*****6789'
+                accountNumber: '******7890'
+          metadata:
+            yourCustomField: abc123
+          links: 
+            - rel: parent
+              href: https://api.payroc.com/v1/funding-recipient/234
+              method: get
+        - fundingAccountId: 124
+          createdDate: '2024-07-02T15:30:00Z'
+          lastModifiedDate: '2024-07-02T15:30:00Z'
+          status: pending
+          type: checking
+          use: debit
+          nameOnAccount: Jane Doe
+          paymentMethods:
+            - type: ach
+              value:
+                routingNumber: '*****8725'
+                accountNumber: '******3491'
+          metadata:
+            yourCustomField: abc123
+          links: 
+            - rel: parent
+              href: https://api.payroc.com/v1/funding-recipient/235
+              method: get
+
+    fundingAccount:
+      summary: Funding account
+      description: Funding accounts.
+      value:
+        fundingAccountId: 123
+        createdDate: '2024-07-02T15:30:00Z'
+        lastModifiedDate: '2024-07-02T15:30:00Z'
+        status: approved
+        type: checking
+        use: credit
+        nameOnAccount: Jane Doe
+        paymentMethods:
+          - type: ach
+            value:
+              routingNumber: '*****6789'
+              accountNumber: '******7890'
+        metadata:
+          yourCustomField: abc123
+        links: 
+          - rel: parent
+            href: https://api.payroc.com/v1/funding-recipient/234
+            method: get
+  

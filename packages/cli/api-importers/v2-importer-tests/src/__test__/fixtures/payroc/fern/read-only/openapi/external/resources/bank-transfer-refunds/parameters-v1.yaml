@@ -1,0 +1,129 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  parameters:
+    bankTransferRefundProcessingTerminalId:
+      name: processingTerminalId
+      in: query
+      required: true
+      description: Filter by the unique identifier that our gateway assigned to the terminal.
+      schema:
+        maxLength: 50
+        minLength: 4
+        type: string
+      example: '1234001'
+
+    bankTransferRefundOrderId:
+      name: orderId
+      in: query
+      description: Filter by the order ID.
+      schema:
+        maxLength: 24
+        minLength: 1
+        type: string
+      example: OrderRef6543
+
+    bankTransferRefundNameOnAccount:
+      name: nameOnAccount
+      in: query
+      description: Filter by the account holder's name.
+      schema:
+        maxLength: 50
+        minLength: 1
+        type: string
+      example: Sarah%20Hazel%20Hopper
+
+    bankTransferRefundLast4:
+      name: last4
+      in: query
+      description: Filter by the last four digits of the account number.
+      schema:
+        pattern: '[0-9]{4}'
+        type: string
+      example: '7062'
+
+    bankTransferRefundType:
+      name: type
+      description: Filter refunds by transaction type.
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - refund
+            - unreferencedRefund
+      example:
+        - refund
+
+    bankTransferRefundStatus:
+      name: status
+      in: query
+      description: Filter by the status of the refund.
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - ready
+            - pending
+            - declined
+            - complete
+            - admin
+            - reversal
+            - returned
+      example:
+        - ready
+
+    bankTransferRefundDateFrom:
+      name: dateFrom
+      in: query
+      description: Filter by refunds that the merchant ran after a specific date. The date format follows the ISO-8601 standard.
+      schema:
+        type: string
+        format: date-time
+      example: '2024-07-01T00:00:00Z'
+
+    bankTransferRefundDateTo:
+      name: dateTo
+      in: query
+      description: Filter by the refunds that the merchant ran before a specific date. The date format follows the ISO-8601 standard.
+      schema:
+        type: string
+        format: date-time
+      example: '2024-07-31T23:59:59Z'
+
+    bankTransferRefundSettlementState:
+      name: settlementState
+      in: query
+      description: Filter by the settlement status of the refund.
+      schema:
+        type: string
+        enum:
+          - settled
+          - unsettled
+      example: settled
+
+    bankTransferRefundSettlementDate:
+      name: settlementDate
+      in: query
+      description: Filter by refund transactions settled on a specific date. The date format is **YYYY-MM-DD**.
+      schema:
+        type: string
+        format: date
+      example: '2024-07-15'
+
+    bankTransferRefundRefundId:
+      name: refundId
+      description: Unique identifier that our gateway assigned to the refund.
+      in: path
+      required: true
+      schema:
+        maxLength: 10
+        minLength: 10
+        type: string
+      example: CD3HN88U9F

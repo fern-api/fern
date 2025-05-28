@@ -1,0 +1,86 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:             
+  parameters:
+    secureTokenIdInPath:
+      name: secureTokenId
+      in: path
+      required: true
+      description: Unique identifier that the merchant assigned to the secure token.
+      schema:
+        maxLength: 200
+        minLength: 1
+        type: string
+      example: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+
+    secureTokenIdInQuery:
+      name: secureTokenId
+      in: query
+      description: Filter by the unique secure token.
+      schema:
+        maxLength: 200
+        minLength: 1
+        type: string
+      example: MREF_abc1de23-f4a5-6789-bcd0-12e345678901fa
+
+    customerName:
+      name: customerName
+      in: query
+      description: Filter by the customer's name.
+      schema:
+        maxLength: 50
+        minLength: 1
+        type: string
+      example: Sarah%20Hazel%20Hopper
+
+    phone:
+      name: phone
+      in: query
+      description: Filter by the customer's phone number.
+      schema:
+        maxLength: 15
+        minLength: 1
+        type: string
+      example: '2025550165'
+
+    email:
+      name: email
+      in: query
+      description: Filter by the customer's email address.
+      schema:
+        maxLength: 100
+        minLength: 1
+        type: string
+      example: 'sarah.hopper@example.com'
+
+    token:
+      name: token
+      in: query
+      description: Filter by the token that the merchant used in a transaction to represent the customer's payment details.
+      schema:
+        maxLength: 19
+        minLength: 12
+        type: string
+      example: '296753123456'
+
+    first6:
+      name: first6
+      in: query
+      description: Filter by the first six digits of the card number.
+      schema:
+        pattern: '[0-9]{6}'
+        type: string
+      example: '453985'
+
+    last4:
+      name: last4
+      in: query
+      description: Filter by the last four digits of the card or account number.
+      schema:
+        pattern: '[0-9]{4}'
+        type: string
+      example: '7062'

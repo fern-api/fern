@@ -1,0 +1,180 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  schemas:
+    achBankAccount:
+      required:
+        - accountNumber
+        - nameOnAccount
+        - routingNumber
+        - type
+      type: object
+      title: ACH account
+      description: Object that contains the customer's account details.
+      properties:
+        type:
+          type: string
+          enum:
+            - ach
+          example: ach
+        secCode:
+          type: string
+          description: |
+            SEC code for the transaction.
+            - `web` - Online transaction.
+            - `tel` - Telephone transaction.
+            - `ccd` - Corporate credit or debit transaction.
+            - `ppd` - Pre-arranged transaction.
+          enum:
+            - web
+            - tel
+            - ccd
+            - ppd
+          example: web
+        nameOnAccount:
+          maxLength: 50
+          minLength: 1
+          type: string
+          description: Customer's name.
+          example: Sarah Hazel Hopper
+        accountNumber:
+          maxLength: 17
+          minLength: 4
+          type: string
+          description: Customer's bank account number. We mask all digits except the last four digits.
+          example: '123456789'
+        routingNumber:
+          maxLength: 9
+          minLength: 9
+          type: string
+          description: Routing number of the customer’s account.
+          example: '123456789'
+        secureToken:
+          $ref: "./summary-v1.yaml#/components/schemas/secureTokenSummary"
+  
+    achSource:
+      required:
+        - type
+        - nameOnAccount
+        - accountNumber
+        - routingNumber
+      type: object
+      title: ACH account
+      description: Object that contains the customer's account details.
+      properties:
+        type:
+          type: string
+          enum:
+            - ach
+          example: ach
+        nameOnAccount:
+          maxLength: 50
+          minLength: 1
+          type: string
+          description: Customer's name.
+          example: Sarah Hazel Hopper
+        accountNumber:
+          maxLength: 17
+          minLength: 4
+          pattern: ^[0-9]*$
+          type: string
+          description: Customer's account number.
+          example: '123456789'
+        routingNumber:
+          maxLength: 9
+          minLength: 9
+          pattern: ^[0-9]*$
+          type: string
+          description: Routing number of the customer's account.
+          example: '123456789'
+
+    padBankAccount:
+      required:
+        - accountNumber
+        - institutionNumber
+        - nameOnAccount
+        - transitNumber
+        - type
+      type: object
+      title: PAD account
+      description: Object that contains the customer's account details.
+      properties:
+        type:
+          type: string
+          enum:
+            - pad
+          example: pad
+        nameOnAccount:
+          maxLength: 29
+          minLength: 1
+          type: string
+          description: Customer's name.
+          example: Sarah Hazel Hopper
+        accountNumber:
+          maxLength: 12
+          minLength: 7
+          type: string
+          description: Customer's bank account number. We mask all digits except the last four digits.
+          example: '1234567890'
+        transitNumber:
+          maxLength: 5
+          minLength: 5
+          type: string
+          description: Five-digit code that represents the customer's banking branch.
+          example: '76543'
+        institutionNumber:
+          maxLength: 3
+          minLength: 3
+          type: string
+          description: Three-digit code that represents the customer's bank.
+          example: '543'
+        secureToken:
+          $ref: "./summary-v1.yaml#/components/schemas/secureTokenSummary"
+
+    padSource:
+      required:
+        - type
+        - nameOnAccount
+        - accountNumber
+        - transitNumber
+        - institutionNumber
+      type: object
+      title: PAD account
+      description: Object that contains the customer's account details.
+      properties:
+        type:
+          type: string
+          enum:
+            - pad
+          example: pad
+        nameOnAccount:
+          maxLength: 29
+          minLength: 1
+          type: string
+          description: Customer's name.
+          example: Sarah Hazel Hopper
+        accountNumber:
+          maxLength: 12
+          minLength: 7
+          pattern: ^[0-9]*$
+          type: string
+          description: Customer's account number.
+          example: '1234567890'
+        transitNumber:
+          maxLength: 5
+          minLength: 5
+          pattern: ^[0-9]*$
+          type: string
+          description: Five-digit code that represents the customer's banking branch.
+          example: '76543'
+        institutionNumber:
+          maxLength: 3
+          minLength: 3
+          pattern: ^[0-9]*$
+          type: string
+          description: Three-digit code that represents the customer's bank.
+          example: '543'

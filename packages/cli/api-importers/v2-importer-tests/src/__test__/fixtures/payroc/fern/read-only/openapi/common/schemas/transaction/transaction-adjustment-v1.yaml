@@ -1,0 +1,134 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  schemas:
+    paymentAdjustment:
+      required:
+        - adjustments
+      type: object
+      description: Object that contains the transaction adjustment object.
+      properties:
+        operator:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Operator who adjusted the payment.
+          example: Jane
+        adjustments:
+          type: array
+          description: Array of objects that contain information about the adjustments to the payment.
+          uniqueItems: true
+          items:
+            discriminator:
+              propertyName: type
+              mapping:
+                order: '#/components/schemas/orderAdjustment'
+                status: '#/components/schemas/statusAdjustment'
+                customer: '#/components/schemas/customerAdjustment'
+                signature: '#/components/schemas/signatureAdjustment'
+            oneOf:
+              - $ref: '#/components/schemas/orderAdjustment'
+              - $ref: '#/components/schemas/statusAdjustment'
+              - $ref: '#/components/schemas/customerAdjustment'
+              - $ref: '#/components/schemas/signatureAdjustment'
+
+    orderAdjustment:
+      required:
+        - type
+        - amount
+      type: object
+      title: Order
+      description: Object that contains information about the adjustment to the transaction. Send this object if the merchant is adjusting the order details.
+      properties:
+        type:
+          type: string
+          description: Type of adjustment.
+          enum:
+            - order
+          example: order
+        amount:
+          minimum: 0
+          exclusiveMinimum: true
+          type: integer
+          format: int64
+          description: Total amount of the transaction.
+          #example: 4999 # Linting won't allow explicit value due to ReDocly getting confused with exclusiveMinimum
+        breakdown:
+          $ref: '#/components/schemas/breakdownAdjustment'
+
+    breakdownAdjustment:
+      type: object
+      description: Object that contains information about the tip amount of a transaction.
+      properties:
+        tip:
+          $ref: './order-v1.yaml#/components/schemas/tip'
+
+    statusAdjustment:
+      required:
+        - type
+        - toStatus
+      type: object
+      title: Status
+      description: Object that contains information about the adjustment to the transaction. Send this object if the merchant is adjusting the status of the transaction.
+      properties:
+        type:
+          type: string
+          description: Type of adjustment.
+          enum:
+            - status
+          example: status
+        toStatus:
+          type: string
+          description: Status of the transaction.
+          enum:
+            - ready
+            - pending
+            - declined
+          example: ready
+
+    customerAdjustment:
+      required:
+        - type
+      type: object
+      title: Customer
+      description: Object that contains information about the adjustment to the transaction. Send this object if the merchant is adjusting the customer’s contact details.
+      properties:
+        type:
+          type: string
+          description: Type of adjustment.
+          enum:
+            - customer
+          example: customer
+        shippingAddress:
+          $ref: './customer-v1.yaml#/components/schemas/shipping'
+        contactMethods:
+          uniqueItems: true
+          description: Customer's contact information.
+          type: array
+          items:
+            $ref: ../../../common/schemas/common/contact-method-v1.yaml#/components/schemas/contactMethod
+
+    signatureAdjustment:
+      required:
+        - type
+        - cardholderSignature
+      type: object
+      title: Signature
+      description: |
+        Object that contains the signature for the transaction.  
+        **Note:** If the merchant previously added a signature to the transaction, they can’t adjust or delete the signature.
+      properties:
+        type:
+          type: string
+          description: Type of adjustment.
+          enum:
+            - signature
+          example: signature
+        cardholderSignature:
+          type: string
+          description: Cardholder’s signature. For more information about the format of the signature, see Special Fields and Parameters.
+          example: a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000

@@ -1,0 +1,159 @@
+openapi: 3.0.3
+info:
+  title: Funding Accounts
+  description: Create and manage funding accounts.
+  version: '1'
+  termsOfService: https://www.payroc.com/terms
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+
+tags:
+  - name: Funding accounts
+    description: Create and manage funding accounts.
+
+paths:
+  /funding-accounts:
+    get:
+      tags:
+      - Funding accounts
+      summary: List funding accounts
+      description: Retrieve a list of all funding accounts associated with the ISV.
+      operationId: listFundingAccount
+      parameters:
+        - $ref: '../../../common/parameters/before-v1.yaml#/components/parameters/before'
+        - $ref: '../../../common/parameters/after-v1.yaml#/components/parameters/after'
+        - $ref: '../../../common/parameters/limit-v1.yaml#/components/parameters/limit'
+      responses:
+        '200':
+          description: Successful request. Returns a paginated list of all funding accounts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listFundingAccounts'
+              examples:
+                fundingAccountExample:
+                  $ref: './example-responses-v1.yaml#/components/examples/listFundingAccountExample'
+                noResults:
+                  $ref: './example-responses-v1.yaml#/components/examples/noResults'
+        '400':
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+          
+  /funding-accounts/{fundingAccountId}:
+    get:
+      tags:
+      - Funding accounts
+      summary: Retrieve funding account
+      description: Retrieve a specific funding account.
+      operationId: getFundingAccount
+      parameters:
+        - $ref: './parameters-v1.yaml#/components/parameters/fundingAccountId'
+      responses:
+        '200':
+          description: Successful request. Returns the requested funding account.
+          content:
+            application/json:
+              schema:
+                $ref: '../../../common/schemas/boarding/funding-account-v1.yaml#/components/schemas/fundingAccount'
+              examples:
+                fundingAccountExample:
+                  $ref: './example-responses-v1.yaml#/components/examples/fundingAccountExample'
+        '400':
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+
+    put:
+      tags:
+        - Funding accounts
+      summary: Update funding account
+      description: Update a funding account.
+      operationId: updateFundingAccount
+      parameters:
+        - $ref: './parameters-v1.yaml#/components/parameters/fundingAccountId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../../../common/schemas/boarding/funding-account-v1.yaml#/components/schemas/fundingAccount'
+      responses:
+        '204':
+          description: Successful request. We updated the funding account.
+        '400':
+          description: Validation errors
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                kycCheckFailed:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/kycCheckFailed'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+
+    delete:
+      tags:
+        - Funding accounts
+      summary: Delete funding account
+      description: Delete a funding account.
+      operationId: deleteFundingAccount
+      parameters:
+        - $ref: './parameters-v1.yaml#/components/parameters/fundingAccountId'
+      responses:
+        '204':
+          description: Successful request. We deleted the funding account.
+        '400':
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500' 
+
+components:
+  schemas:
+    listFundingAccounts:
+      type: object
+      title: paginated funding accounts
+      allOf:
+        - $ref: '../../../common/schemas/common/paginated-list-v1.yaml#/components/schemas/paginatedList'
+        - type: object
+          properties:
+            data:
+              type: array
+              description: Array of fundingAccount objects.
+              items:
+                $ref: '../../../common/schemas/boarding/funding-account-v1.yaml#/components/schemas/fundingAccount'
+          required: [data]
+
+  securitySchemes:
+    bearerAuth:
+      $ref: '../../../common/security/bearer-auth.yaml#/components/securitySchemes/bearerAuth'

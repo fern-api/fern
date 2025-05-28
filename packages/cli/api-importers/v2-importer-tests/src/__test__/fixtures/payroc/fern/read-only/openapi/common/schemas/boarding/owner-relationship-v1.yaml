@@ -1,0 +1,44 @@
+openapi: 3.0.3
+
+paths: {}
+
+info:
+  title: Common Domain Models
+  description: Common domain models that are shared across the Payroc API
+  version: '1'
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+
+tags:
+  - name: Common schemas
+    description: Common schemas that can be resued
+
+components:
+  schemas:
+    ownerRelationship:
+      required:
+      - isControlProng
+      type: object
+      title: Owner relationship
+      description: Object that contains information about the owner's relationship to the business.
+      properties:
+        equityPercentage:
+          type: number
+          description: Percentage of the business that the owner holds.
+          format: percentage
+          example: 48.5
+          default: 0.0
+        title:
+          type: string
+          description: Owner's job title within the business.
+          example: CFO
+        isControlProng:
+          type: boolean
+          description: Indicates if the owner is a control prong within the business. Only one control prong should be identified.
+          example: true
+        isAuthorizedSignatory:
+          type: boolean
+          description: Indicates if the owner is an authorized signatory within the business.
+          example: false

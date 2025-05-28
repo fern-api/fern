@@ -1,0 +1,55 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  examples:
+    paymentPlanRequest:
+      summary: Payment Plan
+      description: Payment Plan
+      value:
+        paymentPlanId: PlanRef8765
+        name: Premium Club
+        description: Monthly Premium Club subscription
+        currency: USD
+        setupOrder:
+          amount: 4999
+          description: Initial setup fee for Premium Club subscription
+          breakdown:
+            subtotal: 4347
+            taxes:
+              - name: Sales Tax
+                rate: 5.0
+        recurringOrder:
+          amount: 4999
+          description: Monthly Premium Club subscription
+          breakdown:
+            subtotal: 4347
+            taxes:
+              - name: Sales Tax
+                rate: 5.0
+        length: 12
+        type: automatic
+        frequency: monthly
+        onUpdate: continue
+        onDelete: complete
+        customFieldNames:
+          - yourCustomField
+    patchPaymentPlanRealistic:
+      summary: Partially update payment plan
+      description: | 
+        Partially update an existing payment plan.
+
+        Structure your request to follow the RFC 6902 standard.
+      value:
+        - op: replace
+          path: /currency
+          value: USD
+        - op: replace
+          path: /setupOrder/amount
+          value: 2999
+        - op: replace
+          path: /frequency
+          value: yearly

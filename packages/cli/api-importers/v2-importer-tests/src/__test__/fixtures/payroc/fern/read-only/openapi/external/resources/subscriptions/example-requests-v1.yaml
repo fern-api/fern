@@ -1,0 +1,79 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  examples:
+    subscriptionRequest:
+      summary: Subscription
+      description: Subscription
+      value:
+        subscriptionId: SubRef7654
+        paymentPlanId: PlanRef8765
+        paymentMethod:
+          type: secureToken
+          token: '296753123456'
+        name: Premium Club
+        description: Premium Club subscription
+        setupOrder:
+          amount: 4999
+          description: Initial setup fee for Premium Club subscription
+          breakdown:
+            subtotal: 4347
+            taxes:
+              - name: Sales Tax
+                rate: 5.0
+          orderId: OrderRef6543
+        recurringOrder:
+          amount: 4999
+          description: Monthly Premium Club subscription
+          breakdown:
+            subtotal: 4347
+            taxes:
+              - name: Sales Tax
+                rate: 5.0
+        startDate: '2024-07-02'
+        endDate: '2025-07-01'
+        length: 12
+        pauseCollectionFor: 0
+        customFields:
+          - name: yourCustomField
+            value: abc123
+
+
+    subscriptionPaymentRequest:
+      summary: Subscription manual payment
+      description: Subscription manual payment
+      value:
+        operator: Jane
+        order:
+          amount: 4999
+          description: Monthly Premium Club subscription
+          breakdown:
+            subtotal: 4999
+            taxes:
+              - name: Sales Tax
+                rate: 5.0
+          orderId: OrderRef6543
+        customFields:
+          - name: yourCustomField
+            value: abc123
+  
+    patchSubscriptionRealistic:
+      summary: Partially update subscription
+      description: | 
+        Partially update an existing subscription.
+
+        Structure your request to follow the RFC 6902 standard.
+      value:
+        - op: replace
+          path: /setupOrder/amount
+          value: 2999
+        - op: replace
+          path: /recurringOrder/amount
+          value: 2999
+        - op: replace
+          path: /frequency
+          value: yearly

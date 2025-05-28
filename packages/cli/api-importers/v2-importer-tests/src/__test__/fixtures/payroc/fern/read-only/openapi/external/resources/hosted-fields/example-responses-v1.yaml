@@ -1,0 +1,15 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  examples:
+    createSessionResponse:
+      summary: Create session response
+      description: Create session response.
+      value:
+        processingTerminalId: '1234001'
+        token: abcdef1234567890abcdef1234567890
+        expiresAt: '2025-07-02T15:30:00.000+02:00'

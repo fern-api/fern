@@ -1,0 +1,47 @@
+openapi: 3.0.3
+
+paths: {}
+
+info:
+  title: Common Domain Models
+  description: Common domain models that are shared across the Payroc API
+  version: '1'
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+
+tags:
+  - name: Common schemas
+    description: Common schemas that can be resued
+
+components:
+  schemas:
+    paginatedList:
+      type: object
+      description: Contains the pagination properties that you use to navigate through a list of results.
+      properties:
+        limit: 
+          type: number
+          description: Maximum number of results that we return for each page.
+          example: 25
+        count:
+          type: number
+          description: Number of results that we returned.
+          example: 23
+        hasMore:
+          type: boolean
+          description: Indicates that further results are available.
+          example: false
+        links:
+          type: array
+          description: Reference links to navigate to the previous page of results, or to the next page of results.
+          example:
+          - rel: previous
+            method: get
+            href: '<uri>'
+          - rel: next
+            method: get
+            href: '<uri>'
+          items:
+            $ref: './link/link-v1.yaml#/components/schemas/link'

@@ -1,0 +1,23 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  examples:
+
+    updateContact:
+      summary: Update contact
+      description: Update a specific contact.
+      value:    
+        type: manager
+        firstName: Jane
+        middleName: Helen
+        lastName: Doe
+        identifiers:
+          - type: nationalId
+            value: 000-00-4320
+        contactMethods:
+          - type: email
+            value: jane.doe@example.com

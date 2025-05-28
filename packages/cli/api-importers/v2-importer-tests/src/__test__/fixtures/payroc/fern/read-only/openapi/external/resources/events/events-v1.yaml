@@ -1,0 +1,187 @@
+openapi: 3.0.3
+info:
+  version: '1'
+  title: Events
+  description: An event is a record of an activity on your account, for example, a change to a funding recipient. Use the Events resource to view a list of all your events, or to retrieve and view the details of a single event.
+  contact:
+    name: Payroc Helpdesk
+    url: https://docs.payroc.com/api
+    email: helpdesk@payroc.com
+
+tags:
+  - name: Events
+    description: Events resource.
+
+paths:
+  /events: 
+    get:
+      tags: [Events]
+      summary: List events
+      description: Request a list of all events that you have subscribed to.
+      operationId: listEvents
+      responses:
+        '200':
+          description: Successful request. Returns a paginated list of events.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listEvents'
+        '400':
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+  
+  /events/{eventId}:
+    parameters:
+      - $ref: './parameters-v1.yaml#/components/parameters/eventId'
+        
+    get:
+      tags: [Events]
+      summary: Retrieve event
+      description: Retrieve a specific event.
+      operationId: getEvent
+      responses:
+        '200':
+          description: Successful request. Returns the requested event.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/event'
+        '400':
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+
+components:
+  schemas:
+
+    event:
+      type: object
+      title: Event
+      properties:
+        id:
+          type: number
+          description: Unique identifier of the event.
+          readOnly: true
+          example: 2565435189324
+        type:
+          type: string
+          description: Type of the event.
+          example: processingAccount.status.changed
+        occurred:
+          type: string
+          format: date-time
+          description: ISO8601 compliant timestamp that indicates when the event occurred.
+        version:
+          type: string
+          description: Version number of the event data.
+          example: '1.0'
+        data:
+          oneOf: 
+            - $ref: '#/components/schemas/eventProcessingAccountStatusChanged'
+          discriminator:
+            propertyName: type
+            mapping:
+              eventProcessingAccountStatusChanged: '#/components/schemas/eventProcessingAccountStatusChanged'
+        deliveries:
+          type: array
+          description: Array of delivery objects. The array includes successful deliveries and unsuccessful deliveries.
+          items:
+            $ref: '#/components/schemas/delivery'
+      required:
+        - type
+        - occurred
+        - version
+        - data
+    
+    listEvents:
+      type: object
+      title: paginated events
+      allOf:
+      - $ref: '../../../common/schemas/common/paginated-list-v1.yaml#/components/schemas/paginatedList'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              allOf:
+              - $ref: '#/components/schemas/event'
+              - type: object
+                properties:
+                  links:
+                    type: array
+                    items:
+                      $ref: '../../../common/schemas/common/link/link-v1.yaml#/components/schemas/link'
+            minItems: 0
+        required:
+          - data
+    delivery:
+      type: object
+      title: delivery
+      properties:
+        id:
+          type: number
+          description: Unique identifier of the delivery attempt.
+          readOnly: true
+        status:
+          type: string
+          description: Status of the delivery attempt. 
+          enum:
+            - success
+            - failed
+            - pending
+          example: success
+        timestamp:
+          type: string
+          description: ISO8601 compliant timestamp that indicates when we attempted the delivery.
+          format: date-time
+        duration:
+          type: number
+          description: Duration of the request in milliseconds.
+          format: duration
+        request:
+          type: object
+          description: Body of the request that we attempted to deliver to the webhook endpoint.
+          properties:
+            headers:
+              type: object
+              description: Map of HTTP headers that we sent to the webhook endpoint.
+            body:
+              type: object
+              description: JSON payload of the event that we sent to the webhook endpoint.
+        response:
+          type: object
+          properties:
+            statusCode:
+              type: number
+              description: HTTP status code that the webhook endpoint returned. If you receive no status code and a status of 'failed', the response has timed out.
+            headers:
+              type: object
+              description: HTTP headers that the webhook endpoint returned.
+            body:
+              type: object
+              description: JSON response payload that the webhook endpoint returned.
+              
+    eventProcessingAccountStatusChanged:
+      type: object
+      description: Notification emitted in the event a processing accounts status changes
+      properties: 
+        processingAccountId:
+          type: string
+          example: '38765'
+        status:
+          type: string
+          example: entered
+

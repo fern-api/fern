@@ -1,0 +1,324 @@
+openapi: 3.0.3
+info:
+  version: '1'
+  title: Payroc API
+  description: Api for accessing Payroc services
+  contact:
+    name: Payroc Helpdesk
+    url: https://docs.payroc.com/api
+    email: helpdesk@payroc.com
+
+tags:
+  - name: Apple Pay session
+    description: An Apple Pay session authenticates the merchant's domain with Apple. After you start an Apple Pay session, you can use the Apple Pay JS API to retrieve the cardholder's encrypted payment details. 
+  - name: Bank accounts
+    description: Validate bank account information.
+  - name: Bank transfer payments
+    description: Take bank-transfer payments.
+  - name: Bank transfer refunds
+    description: Return payments to customers' bank accounts.
+  - name: Cards
+    description: Validate card information.
+  - name: Contacts
+    description: Individuals who serve as points of contact for the business.
+  - name: Currency conversion
+    description: Offer dynamic currency conversion to customers.
+  - name: Event Subscriptions
+    description: |
+      Create an event subscription so that we notify you when certain events occur, for example, when we change the status of a processing account.  
+      When you subscribe to an event, provide the following information:  
+        - **Event type** - The events that we should notify you about. You can subscribe to more than one event within the same request. For a list of events that you can subscribe to, go to [Events](https://docs.payroc.com/knowledge/basic-concepts/events).  
+        - **Notification method** - The endpoint that we send a notification to if an event occurs. We send notifications by webhook request.  
+        - **Event status** - The status of the event subscription.  
+        - **Support email address** - Email address that we contact if we can't deliver notifications.  
+      <br/>  
+      Use our event subscriptions endpoint to do the following:  
+      - [**Create event subscription**](#createEventSubscription) - Subscribe to receive notifications when events occur.  
+      - [**Update event subscription**](#updateEventSubscription) - Change the details of an event subscription, for example, to receive notifications for an additional event.  
+      - [**Partially update an event subscription**](#patchEventSubscription) - Change values of an existing event subscription.  
+      - [**Retrieve an event subscription**](#getEventSubscription) - Retrieve all the information that we stored in an event subscription. 
+      - [**List event subscriptions**](#listEventSubscriptions) - Retrieve a list of all event subscriptions associated with the ISV's account.  
+      - [**Delete event subscription**](#deleteEventSubscription)
+  - name: Funding accounts
+    description: Financial accounts associated with entities.
+  - name: Funding activity
+    description: Activity associated with a payfac account.
+  - name: Funding instructions
+    description: Instructions on how to split fund between recipients.
+  - name: Funding recipients
+    description: Entities that can receive funding but not take payments
+  - name: Hosted Fields
+    description: Create a Hosted Fields session.
+  - name: Merchant platforms
+    description: |
+      A merchant platform is an entity that represents a business and includes its legal information and all processing accounts.<br/><br/>
+      After you create a merchant platform for a business, you can do the following:  
+        - [Create and add an additional processing account to a merchant platform.](#createProcessingAccount)  
+        - [Retrieve a merchant platform.](#getMerchantAcccounts)  
+        - [Retrieve a list of merchant platforms.](#listMerchantPlatforms)  
+        - [Retrieve a list of open processing accounts that are linked to a merchant platform.](#listMerchantLocations)  
+          
+          
+      For more information about boarding a merchant, go to our [Board a merchant](/guides/integrate/boarding) guide. 
+  - name: Owners
+    description: Individuals who own or control the business.
+  - name: Payment instructions
+    description: Submit instructions for initiating payments on physical devices running semi-integrated apps.
+  - name: Payment links
+    description: Create and share payment links.
+  - name: Payment plans
+    description: Create and manage payment plans.
+  - name: Payments
+    description: Take card payments.
+  - name: Pricing intents
+    description: Create and manage pricing intents.
+  - name: Processing accounts
+    description: Create and manage processing accounts.
+  - name: Processing terminals
+    description: Retrieve processing terminals
+  - name: Refund instructions
+    description: Submit instructions for initiating refunds on physical devices running semi-integrated apps.
+  - name: Refunds
+    description: Return payments to customers.
+  - name: Secure tokens
+    description: Save customers' payment details.
+  - name: Settlement
+    description: Settlement information
+  - name: Single use tokens
+    description: Create temporary single-use tokens.
+  - name: Subscriptions
+    description: Subscribe customers to payment plans.
+  - name: Terminal orders
+    description: Place and retrieve terminal orders.
+
+x-tagGroups:
+  - name: Boarding
+    tags:
+      - Contacts
+      - Merchant platforms
+      - Owners
+      - Pricing intents
+      - Processing accounts
+      - Processing terminals
+      - Terminal orders
+  - name: Payroc Cloud
+    tags:
+      - Payment instructions
+      - Refund instructions
+  - name: Payments
+    tags:
+      - Apple Pay session
+      - Bank accounts
+      - Bank transfer payments
+      - Bank transfer refunds
+      - Cards
+      - Currency conversion
+      - Hosted Fields
+      - Payments
+      - Payment links
+      - Payment plans
+      - Refunds
+      - Secure tokens
+      - Single use tokens
+      - Subscriptions
+  - name: Funding
+    tags:
+      - Funding accounts
+      - Funding instructions
+      - Funding recipients
+      - Funding activity
+  - name: Reporting
+    tags:
+      - Settlement
+  - name: Notifications
+    tags:
+      - Event Subscriptions
+
+servers:
+  - url: https://api.payroc.com/v1
+    description: Production
+  - url: https://api.uat.payroc.com/v1
+    description: UAT
+
+security:
+- bearerAuth: []
+
+paths:
+  /funding-recipients:
+    $ref: ./resources/funding-recipient/funding-recipient-v1.yaml#/paths/~1funding-recipients
+  /funding-recipients/{recipientId}:
+    $ref: ./resources/funding-recipient/funding-recipient-v1.yaml#/paths/~1funding-recipients~1{recipientId}
+  /funding-recipients/{recipientId}/funding-accounts:
+    $ref: ./resources/funding-recipient/funding-recipient-v1.yaml#/paths/~1funding-recipients~1{recipientId}~1funding-accounts
+  /funding-recipients/{recipientId}/owners:
+    $ref: ./resources/funding-recipient/funding-recipient-v1.yaml#/paths/~1funding-recipients~1{recipientId}~1owners
+  /funding-accounts:
+    $ref: ./resources/funding-accounts/funding-accounts-v1.yaml#/paths/~1funding-accounts
+  /funding-accounts/{fundingAccountId}:
+    $ref: ./resources/funding-accounts/funding-accounts-v1.yaml#/paths/~1funding-accounts~1{fundingAccountId}
+  /owners/{ownerId}:
+    $ref: ./resources/owners/owners-v1.yaml#/paths/~1owners~1{ownerId}
+  /pricing-intents:
+    $ref: ./resources/pricing-intents/pricing-intents-v1.yaml#/paths/~1pricing-intents
+  /pricing-intents/{pricingIntentId}:
+    $ref: ./resources/pricing-intents/pricing-intents-v1.yaml#/paths/~1pricing-intents~1{pricingIntentId}
+  /funding-instructions:
+    $ref: ./resources/funding-instructions/funding-instructions-v1.yaml#/paths/~1funding-instructions
+  /funding-instructions/{instructionId}:
+    $ref: ./resources/funding-instructions/funding-instructions-v1.yaml#/paths/~1funding-instructions~1{instructionId}
+  /funding-balance:
+    $ref: ./resources/funding-balance/funding-balance-v1.yaml#/paths/~1funding-balance
+  /funding-activity:
+    $ref: ./resources/funding-activity/funding-activity-v1.yaml#/paths/~1funding-activity
+  /batches:
+    $ref: ./resources/batches/batches-v1.yaml#/paths/~1batches
+  /batches/{batchId}:
+    $ref: ./resources/batches/batches-v1.yaml#/paths/~1batches~1{batchId}
+  /transactions:
+    $ref: ./resources/transactions/transactions-v1.yaml#/paths/~1transactions
+  /transactions/{transactionId}:
+    $ref: ./resources/transactions/transactions-v1.yaml#/paths/~1transactions~1{transactionId}
+  /authorizations:
+    $ref: ./resources/authorizations/authorizations-v1.yaml#/paths/~1authorizations
+  /authorizations/{authorizationId}:
+    $ref: ./resources/authorizations/authorizations-v1.yaml#/paths/~1authorizations~1{authorizationId}
+  /disputes:
+    $ref: ./resources/disputes/disputes-v1.yaml#/paths/~1disputes
+  /disputes/{disputeId}/statuses:
+    $ref: ./resources/disputes/disputes-v1.yaml#/paths/~1disputes~1{disputeId}~1statuses
+  /processing-terminals/{processingTerminalId}/payment-links:
+    $ref: ./resources/payment-links/payment-links-v1.yaml#/paths/~1processing-terminals~1{processingTerminalId}~1payment-links
+  /payment-links/{paymentLinkId}:
+    $ref: ./resources/payment-links/payment-links-v1.yaml#/paths/~1payment-links~1{paymentLinkId}
+  /payment-links/{paymentLinkId}/deactivate:
+    $ref: ./resources/payment-links/payment-links-v1.yaml#/paths/~1payment-links~1{paymentLinkId}~1deactivate
+  /payment-links/{paymentLinkId}/sharing-events:
+    $ref: ./resources/payment-links/payment-links-v1.yaml#/paths/~1payment-links~1{paymentLinkId}~1sharing-events
+  /processing-terminals/{processingTerminalId}/payment-plans:
+    $ref: ./resources/payment-plans/payment-plans-v1.yaml#/paths/~1processing-terminals~1{processingTerminalId}~1payment-plans
+  /processing-terminals/{processingTerminalId}/payment-plans/{paymentPlanId}:
+    $ref: ./resources/payment-plans/payment-plans-v1.yaml#/paths/~1processing-terminals~1{processingTerminalId}~1payment-plans~1{paymentPlanId}
+  /processing-terminals/{processingTerminalId}/subscriptions:
+    $ref: ./resources/subscriptions/subscriptions-v1.yaml#/paths/~1processing-terminals~1{processingTerminalId}~1subscriptions
+  /processing-terminals/{processingTerminalId}/subscriptions/{subscriptionId}:
+    $ref: ./resources/subscriptions/subscriptions-v1.yaml#/paths/~1processing-terminals~1{processingTerminalId}~1subscriptions~1{subscriptionId}
+  /processing-terminals/{processingTerminalId}/subscriptions/{subscriptionId}/deactivate:
+    $ref: ./resources/subscriptions/subscriptions-v1.yaml#/paths/~1processing-terminals~1{processingTerminalId}~1subscriptions~1{subscriptionId}~1deactivate
+  /processing-terminals/{processingTerminalId}/subscriptions/{subscriptionId}/reactivate:
+    $ref: ./resources/subscriptions/subscriptions-v1.yaml#/paths/~1processing-terminals~1{processingTerminalId}~1subscriptions~1{subscriptionId}~1reactivate
+  /processing-terminals/{processingTerminalId}/subscriptions/{subscriptionId}/pay:
+    $ref: ./resources/subscriptions/subscriptions-v1.yaml#/paths/~1processing-terminals~1{processingTerminalId}~1subscriptions~1{subscriptionId}~1pay
+  /processing-terminals/{processingTerminalId}/secure-tokens:
+    $ref: ./resources/secure-tokens/secure-tokens-v1.yaml#/paths/~1processing-terminals~1{processingTerminalId}~1secure-tokens
+  /processing-terminals/{processingTerminalId}/secure-tokens/{secureTokenId}:
+    $ref: ./resources/secure-tokens/secure-tokens-v1.yaml#/paths/~1processing-terminals~1{processingTerminalId}~1secure-tokens~1{secureTokenId}
+  /processing-terminals/{processingTerminalId}/secure-tokens/{secureTokenId}/update-account:
+    $ref: ./resources/secure-tokens/secure-tokens-v1.yaml#/paths/~1processing-terminals~1{processingTerminalId}~1secure-tokens~1{secureTokenId}~1update-account
+  /processing-terminals/{processingTerminalId}/single-use-tokens:
+    $ref: ./resources/single-use-tokens/single-use-tokens-v1.yaml#/paths/~1processing-terminals~1{processingTerminalId}~1single-use-tokens
+  /processing-terminals/{processingTerminalId}/hosted-fields-sessions:
+      $ref: ./resources/hosted-fields/hosted-fields-v1.yaml#/paths/~1processing-terminals~1{processingTerminalId}~1hosted-fields-sessions
+  /processing-terminals/{processingTerminalId}/apple-pay-sessions:
+    $ref: ./resources/apple-pay-sessions/apple-pay-sessions-v1.yaml#/paths/~1processing-terminals~1{processingTerminalId}~1apple-pay-sessions
+  /payments:
+    $ref: ./resources/payments/payments-v1.yaml#/paths/~1payments
+  /payments/{paymentId}:
+    $ref: ./resources/payments/payments-v1.yaml#/paths/~1payments~1{paymentId}
+  /payments/{paymentId}/adjust:
+    $ref: ./resources/payments/payments-v1.yaml#/paths/~1payments~1{paymentId}~1adjust
+  /payments/{paymentId}/capture:
+    $ref: ./resources/payments/payments-v1.yaml#/paths/~1payments~1{paymentId}~1capture
+  /payments/{paymentId}/reverse:
+    $ref: ./resources/payments/payments-v1.yaml#/paths/~1payments~1{paymentId}~1reverse
+  /payments/{paymentId}/refund:
+    $ref: ./resources/payments/payments-v1.yaml#/paths/~1payments~1{paymentId}~1refund
+  /devices/{serialNumber}/payment-instructions:
+    $ref: ./resources/payment-instructions/payment-instructions-v1.yaml#/paths/~1devices~1{serialNumber}~1payment-instructions
+  /payment-instructions/{paymentInstructionId}:
+    $ref: ./resources/payment-instructions/payment-instructions-v1.yaml#/paths/~1payment-instructions~1{paymentInstructionId}
+  /refunds:
+    $ref: ./resources/refunds/refunds-v1.yaml#/paths/~1refunds
+  /refunds/{refundId}:
+    $ref: ./resources/refunds/refunds-v1.yaml#/paths/~1refunds~1{refundId}
+  /refunds/{refundId}/adjust:
+    $ref: ./resources/refunds/refunds-v1.yaml#/paths/~1refunds~1{refundId}~1adjust
+  /refunds/{refundId}/reverse:
+    $ref: ./resources/refunds/refunds-v1.yaml#/paths/~1refunds~1{refundId}~1reverse
+  /devices/{serialNumber}/refund-instructions:
+    $ref: ./resources/refund-instructions/refund-instructions-v1.yaml#/paths/~1devices~1{serialNumber}~1refund-instructions
+  /refund-instructions/{refundInstructionId}:
+    $ref: ./resources/refund-instructions/refund-instructions-v1.yaml#/paths/~1refund-instructions~1{refundInstructionId}
+  /cards/verify:
+    $ref: ./resources/cards/cards-v1.yaml#/paths/~1cards~1verify
+  /cards/balance:
+    $ref: ./resources/cards/cards-v1.yaml#/paths/~1cards~1balance
+  /cards/bin-lookup:
+    $ref: ./resources/cards/cards-v1.yaml#/paths/~1cards~1bin-lookup
+  /fx-rates:
+    $ref: ./resources/fx-rates/fx-rates-v1.yaml#/paths/~1fx-rates
+  /bank-transfer-payments:
+    $ref: ./resources/bank-transfer-payments/bank-transfer-payments-v1.yaml#/paths/~1bank-transfer-payments
+  /bank-transfer-payments/{paymentId}:
+    $ref: ./resources/bank-transfer-payments/bank-transfer-payments-v1.yaml#/paths/~1bank-transfer-payments~1{paymentId}
+  /bank-transfer-payments/{paymentId}/reverse:
+    $ref: ./resources/bank-transfer-payments/bank-transfer-payments-v1.yaml#/paths/~1bank-transfer-payments~1{paymentId}~1reverse
+  /bank-transfer-payments/{paymentId}/refund:
+    $ref: ./resources/bank-transfer-payments/bank-transfer-payments-v1.yaml#/paths/~1bank-transfer-payments~1{paymentId}~1refund
+  /bank-transfer-payments/{paymentId}/represent:
+    $ref: ./resources/bank-transfer-payments/bank-transfer-payments-v1.yaml#/paths/~1bank-transfer-payments~1{paymentId}~1represent
+  /bank-transfer-refunds:
+    $ref: ./resources/bank-transfer-refunds/bank-transfer-refunds-v1.yaml#/paths/~1bank-transfer-refunds
+  /bank-transfer-refunds/{refundId}:
+    $ref: ./resources/bank-transfer-refunds/bank-transfer-refunds-v1.yaml#/paths/~1bank-transfer-refunds~1{refundId}
+  /bank-transfer-refunds/{refundId}/reverse:
+    $ref: ./resources/bank-transfer-refunds/bank-transfer-refunds-v1.yaml#/paths/~1bank-transfer-refunds~1{refundId}~1reverse
+  /bank-accounts/verify:
+    $ref: ./resources/bank-accounts/bank-accounts-v1.yaml#/paths/~1bank-accounts~1verify
+  /merchant-platforms:
+    $ref: ./resources/merchant-platforms//merchant-platforms-v1.yaml#/paths/~1merchant-platforms
+  /merchant-platforms/{merchantPlatformId}:
+    $ref: ./resources/merchant-platforms/merchant-platforms-v1.yaml#/paths/~1merchant-platforms~1{merchantPlatformId}
+  /merchant-platforms/{merchantPlatformId}/processing-accounts:
+    $ref: ./resources/merchant-platforms//merchant-platforms-v1.yaml#/paths/~1merchant-platforms~1{merchantPlatformId}~1processing-accounts
+  /processing-accounts/{processingAccountId}:
+    $ref: ./resources/processing-accounts/processing-accounts-v1.yaml#/paths/~1processing-accounts~1{processingAccountId}
+  /processing-accounts/{processingAccountId}/funding-accounts:
+    $ref: ./resources/processing-accounts/processing-accounts-v1.yaml#/paths/~1processing-accounts~1{processingAccountId}~1funding-accounts
+  /processing-accounts/{processingAccountId}/contacts:
+    $ref: ./resources/processing-accounts/processing-accounts-v1.yaml#/paths/~1processing-accounts~1{processingAccountId}~1contacts
+  /processing-accounts/{processingAccountId}/pricing:
+    $ref: ./resources/processing-accounts/processing-accounts-v1.yaml#/paths/~1processing-accounts~1{processingAccountId}~1pricing
+  /processing-accounts/{processingAccountId}/owners:
+    $ref: ./resources/processing-accounts/processing-accounts-v1.yaml#/paths/~1processing-accounts~1{processingAccountId}~1owners
+  /processing-accounts/{processingAccountId}/reminders:
+    $ref: ./resources/processing-accounts/processing-accounts-v1.yaml#/paths/~1processing-accounts~1{processingAccountId}~1reminders
+  /processing-accounts/{processingAccountId}/terminal-orders:
+    $ref: ./resources/processing-accounts/processing-accounts-v1.yaml#/paths/~1processing-accounts~1{processingAccountId}~1terminal-orders
+  /processing-accounts/{processingAccountId}/processing-terminals:
+    $ref: ./resources/processing-accounts/processing-accounts-v1.yaml#/paths/~1processing-accounts~1{processingAccountId}~1processing-terminals
+  /processing-terminals/{processingTerminalId}:
+    $ref: ./resources/processing-terminals/processing-terminals-v1.yaml#/paths/~1processing-terminals~1{processingTerminalId}
+  /processing-terminals/{processingTerminalId}/host-configurations:
+    $ref: ./resources/processing-terminals/processing-terminals-v1.yaml#/paths/~1processing-terminals~1{processingTerminalId}~1host-configurations
+  /contacts/{contactId}:
+    $ref: ./resources/contacts/contacts-v1.yaml#/paths/~1contacts~1{contactId}
+  /event-subscriptions:
+    $ref: ./resources/event-subscriptions/event-subscriptions-v1.yaml#/paths/~1event-subscriptions
+  /event-subscriptions/{subscriptionId}:
+    $ref: ./resources/event-subscriptions/event-subscriptions-v1.yaml#/paths/~1event-subscriptions~1{subscriptionId}
+  /terminal-orders/{terminalOrderId}:
+    $ref: ./resources/terminal-orders/terminal-orders-v1.yaml#/paths/~1terminal-orders~1{terminalOrderId}
+  /ach-deposits:
+    $ref: ./resources/ach-deposits/ach-deposits-v1.yaml#/paths/~1ach-deposits
+  /ach-deposits/{achDepositId}:
+    $ref: ./resources/ach-deposits/ach-deposits-v1.yaml#/paths/~1ach-deposits~1{achDepositId}
+  /ach-deposit-fees:
+    $ref: ./resources/ach-deposits/ach-deposits-v1.yaml#/paths/~1ach-deposit-fees
+  
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      description: 'Example: Authorization: Bearer <token>'
+      scheme: bearer
+      bearerFormat: JWT

@@ -1,0 +1,35 @@
+openapi: 3.0.3
+
+paths: {}
+
+info:
+  title: Common Domain Models
+  description: Common domain models that are shared across the Payroc API
+  version: '1'
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+
+tags:
+  - name: Common schemas
+    description: Common schemas that can be resued
+
+components:
+  schemas:
+    paymentMethods:
+      uniqueItems: true
+      type: array
+      description: Array of PaymentMethodAch objects.
+      xml:
+        wrapped: true
+      items:
+        title: payment method
+        xml:
+          name: paymentMethod
+        discriminator:
+          propertyName: type
+          mapping:
+            ach: './payment-method-ach-v1.yaml#/components/schemas/PaymentMethodAch'
+        oneOf:
+          - $ref: './payment-method-ach-v1.yaml#/components/schemas/PaymentMethodAch'

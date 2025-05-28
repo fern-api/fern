@@ -1,0 +1,281 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  examples:
+    createMerchantPlatform:
+      summary: Create merchant platform
+      description: Create a merchant platform.
+      value:    
+        business:
+          name: Example Corp
+          taxId: 12-3456789
+          organizationType: privateCorporation
+          countryOfOperation: US
+          addresses:
+            - type: legalAddress
+              address1: 1 Example Ave.
+              address2: Example Address Line 2
+              address3: Example Address Line 3
+              city: Chicago
+              state: Illinois
+              country: US
+              postalCode: '60056'
+          contactMethods:
+            - type: email
+              value: jane.doe@example.com
+        processingAccounts:
+          - doingBusinessAs: Pizza Doe
+            owners:
+              - firstName: Jane
+                middleName: Helen
+                lastName: Doe
+                dateOfBirth: '1964-03-22'
+                address:
+                  address1: 1 Example Ave.
+                  address2: Example Address Line 2
+                  address3: Example Address Line 3
+                  city: Chicago
+                  state: Illinois
+                  country: US
+                  postalCode: '60056'
+                identifiers:
+                  - type: nationalId
+                    value: 000-00-4320
+                contactMethods:
+                  - type: email
+                    value: jane.doe@example.com
+                relationship:
+                  equityPercentage: 48.5
+                  title: CFO
+                  isControlProng: true
+                  isAuthorizedSignatory: false
+            website: www.example.com
+            businessType: restaurant
+            categoryCode: 5999
+            merchandiseOrServiceSold: Pizza
+            businessStartDate: '2020-01-01'
+            timezone: America/Chicago
+            address:
+              address1: 1 Example Ave.
+              address2: Example Address Line 2
+              address3: Example Address Line 3
+              city: Chicago
+              state: Illinois
+              country: US
+              postalCode: '60056'
+            contactMethods:
+              - type: email
+                value: jane.doe@example.com
+            processing:
+              transactionAmounts:
+                average: 5000
+                highest: 10000
+              monthlyAmounts:
+                average: 50000
+                highest: 100000
+              volumeBreakdown:
+                cardPresentKeyed: 47
+                cardPresentSwiped: 30
+                mailOrTelephone: 3
+                ecommerce: 20
+              isSeasonal: true
+              monthsOfOperation:
+                - jan
+                - feb
+              ach:
+                naics: '5812'
+                previouslyTerminatedForAch: false
+                refunds:
+                  writtenRefundPolicy: true
+                  refundPolicyUrl: www.example.com/refund-poilcy-url
+                estimatedMonthlyTransactions: 3000
+                limits:
+                  singleTransaction: 10000
+                  dailyDeposit: 200000
+                  monthlyDeposit: 6000000
+                transactionTypes:
+                  - prearrangedPayment
+                  - other
+                transactionTypesOther: anotherTransactionType
+              cardAcceptance:
+                debitOnly: false
+                hsaFsa: false
+                cardsAccepted:
+                  - visa
+                  - mastercard
+                specialityCards:
+                  americanExpressDirect:
+                    enabled: true
+                    merchantNumber: abc1234567
+                  electronicBenefitsTransfer:
+                    enabled: true
+                    fnsNumber: '6789012'
+                  other:
+                    wexMerchantNumber: abc1234567
+                    voyagerMerchantId: abc1234567
+                    fleetMerchantId: abc1234567
+            funding:
+              fundingSchedule: nextday
+              acceleratedFundingFee: 1999
+              dailyDiscount: false
+              fundingAccounts:
+                - type: checking
+                  use: creditAndDebit
+                  nameOnAccount: Jane Doe
+                  paymentMethods:
+                    - type: ach
+                      value:
+                        routingNumber: '123456789'
+                        accountNumber: '1234567890'
+                  metadata:
+                    yourCustomField: abc123
+            pricing:
+              type: intent
+              pricingIntentId: 6123
+            signature: requestedViaDirectLink
+            contacts:
+              - type: manager
+                firstName: Jane
+                middleName: Helen
+                lastName: Doe
+                identifiers:
+                  - type: nationalId
+                    value: 000-00-4320
+                contactMethods:
+                  - type: email
+                    value: jane.doe@example.com
+            metadata:
+              customerId: '2345'
+        metadata:
+          customerId: '2345'
+
+    createProcessingAccount:
+      summary: Create merchant platform
+      description: Create a merchant platform.
+      value:    
+        doingBusinessAs: Pizza Doe
+        owners:
+          - firstName: Jane
+            middleName: Helen
+            lastName: Doe
+            dateOfBirth: '1964-03-22'
+            address:
+              address1: 1 Example Ave.
+              address2: Example Address Line 2
+              address3: Example Address Line 3
+              city: Chicago
+              state: Illinois
+              country: US
+              postalCode: '60056'
+            identifiers:
+              - type: nationalId
+                value: 000-00-4320
+            contactMethods:
+              - type: email
+                value: jane.doe@example.com
+            relationship:
+              equityPercentage: 51.5
+              title: CFO
+              isControlProng: true
+              isAuthorizedSignatory: false
+        website: www.example.com
+        businessType: restaurant
+        categoryCode: 5999
+        merchandiseOrServiceSold: Pizza
+        businessStartDate: '2020-01-01'
+        timezone: America/Chicago
+        address:
+          address1: 1 Example Ave.
+          address2: Example Address Line 2
+          address3: Example Address Line 3
+          city: Chicago
+          state: Illinois
+          country: US
+          postalCode: '60056'
+        contactMethods:
+          - type: email
+            value: jane.doe@example.com
+        processing:
+          transactionAmounts:
+            average: 5000
+            highest: 10000
+          monthlyAmounts:
+            average: 50000
+            highest: 100000
+          volumeBreakdown:
+            cardPresentKeyed: 47
+            cardPresentSwiped: 30
+            mailOrTelephone: 3
+            ecommerce: 20
+          isSeasonal: true
+          monthsOfOperation:
+            - jan
+            - feb
+          ach:
+            naics: '5812'
+            previouslyTerminatedForAch: false
+            refunds:
+              writtenRefundPolicy: true
+              refundPolicyUrl: www.example.com/refund-poilcy-url
+            estimatedMonthlyTransactions: 3000
+            limits:
+              singleTransaction: 10000
+              dailyDeposit: 200000
+              monthlyDeposit: 6000000
+            transactionTypes:
+              - prearrangedPayment
+              - other
+            transactionTypesOther: anotherTransactionType
+          cardAcceptance:
+            debitOnly: false
+            hsaFsa: false
+            cardsAccepted:
+              - visa
+              - mastercard
+            specialityCards:
+              americanExpressDirect:
+                enabled: true
+                merchantNumber: abc1234567
+              electronicBenefitsTransfer:
+                enabled: true
+                fnsNumber: '6789012'
+              other:
+                wexMerchantNumber: abc1234567
+                voyagerMerchantId: abc1234567
+                fleetMerchantId: abc1234567
+        funding:
+          fundingSchedule: nextday
+          acceleratedFundingFee: 1999
+          dailyDiscount: false
+          fundingAccounts:
+            - type: checking
+              use: creditAndDebit
+              nameOnAccount: Jane Doe
+              paymentMethods:
+                - type: ach
+                  value:
+                    routingNumber: '123456789'
+                    accountNumber: '1234567890'
+              metadata:
+                yourCustomField: abc123
+        pricing:
+          type: intent
+          pricingIntentId: 6123
+        signature: requestedViaDirectLink
+        contacts:
+          - type: manager
+            firstName: Jane
+            middleName: Helen
+            lastName: Doe
+            identifiers:
+              - type: nationalId
+                value: 000-00-4320
+            contactMethods:
+              - type: email
+                value: jane.doe@example.com
+        metadata:
+          customerId: '2345'

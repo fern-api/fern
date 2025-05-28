@@ -1,0 +1,337 @@
+openapi: 3.0.1
+info:
+  title: Transaction API
+  version: '1'
+  termsOfService: https://www.payroc.com/terms
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+servers:
+  - url: https://api.payroc.com/v1
+    description: Production
+  - url: https://api.uat.payroc.com/v1
+    description: UAT
+tags:
+- name: Bank transfer refunds
+
+paths:
+  /bank-transfer-refunds:
+    post:
+      tags:
+        - Bank transfer refunds
+      summary: Create refund
+      operationId: bankTransferUnreferencedRefund
+      parameters:
+        - $ref: ../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey
+      description: |
+        Send a refund to a customer's bank account. The refund transaction is not linked to the previous transaction.  
+        **Note:** This function is available to only certain merchant accounts.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/bankTransferUnreferencedRefund"
+            examples:
+              bankTransferUnreferencedRefundRequest:
+                $ref: './example-requests-v1.yaml#/components/examples/bankTransferUnreferencedRefundRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful request. We sent the refund to the customer's bank account.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/bankTransferRefund"
+              examples:
+                bankTransferUnreferencedRefundResponse:
+                  $ref: './example-responses-v1.yaml#/components/examples/bankTransferUnreferencedRefundResponse'
+          headers:
+            location:
+              $ref: '../../../common/headers/location-v1.yaml#/components/headers/location'
+        '400':
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '409':
+          $ref: ../../../common/responses/errors/409-v1.yaml#/components/responses/409
+        '415':
+          $ref: ../../../common/responses/errors/415-v1.yaml#/components/responses/415
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+    get:
+      tags:
+        - Bank transfer refunds
+      summary: List refunds
+      description: Return a list of refund transactions.
+      operationId: listBankTransferRefunds
+      parameters:
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferRefundProcessingTerminalId'
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferRefundOrderId'
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferRefundNameOnAccount'
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferRefundLast4'
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferRefundType'
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferRefundStatus'
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferRefundDateFrom'
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferRefundDateTo'
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferRefundSettlementState'
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferRefundSettlementDate'
+        - $ref: '../../../common/parameters/before-v1.yaml#/components/parameters/before'
+        - $ref: '../../../common/parameters/after-v1.yaml#/components/parameters/after'
+        - $ref: '../../../common/parameters/limit-v1.yaml#/components/parameters/limit'
+      responses:
+        '200':
+          description: Successful request. Returns a list of refund transactions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bankTransferRefundPaginatedList'
+              examples:
+                paginatedResults:
+                  $ref: './example-responses-v1.yaml#/components/examples/paginatedBankTransferUnreferencedRefundResponse'
+                noActivity:
+                  $ref: '../../../common/responses/no-activity-v1.yaml#/components/examples/noActivity'
+        '400':
+          $ref: ../../../common/responses/errors/400-v1.yaml#/components/responses/400
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+  /bank-transfer-refunds/{refundId}:
+    get:
+      tags:
+        - Bank transfer refunds
+      summary: Retrieve refund
+      operationId: getBankTransferRefund
+      description: Return a specific refund transaction.
+      parameters:
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferRefundRefundId'
+      responses:
+        '200':
+          description: Successful request. Returns the specific refund.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/bankTransferRefund"
+              examples:
+                bankTransferUnreferencedRefund:
+                  $ref: './example-responses-v1.yaml#/components/examples/bankTransferUnreferencedRefundResponse'
+        '400':
+          $ref: ../../../common/responses/errors/400-v1.yaml#/components/responses/400
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '404':
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+  /bank-transfer-refunds/{refundId}/reverse:
+    post:
+      tags:
+        - Bank transfer refunds
+      summary: Reverse refund
+      operationId: reverseBankTransferRefund
+      description: Void a refund transaction.
+      parameters:
+        - $ref: ../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferRefundRefundId'
+      responses:
+        '200':
+          description: Successful request. We reversed the refund transaction.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/bankTransferRefund"
+              examples:
+                bankTransferUnreferencedRefund:
+                  $ref: './example-responses-v1.yaml#/components/examples/reverseBankTransferUnreferencedRefundResponse'
+        '400':
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '404':
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '409':
+          $ref: ../../../common/responses/errors/409-v1.yaml#/components/responses/409
+        '415':
+          $ref: ../../../common/responses/errors/415-v1.yaml#/components/responses/415
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+
+components:
+  schemas:
+    bankTransferRefund:
+      required:
+        - bankAccount
+        - order
+        - processingTerminalId
+        - refundId
+        - transactionResult
+      type: object
+      properties:
+        refundId:
+          maxLength: 10
+          minLength: 10
+          type: string
+          description: Unique identifier that our gateway assigned to the refund.
+          example: CD3HN88U9F
+        processingTerminalId:
+          maxLength: 50
+          minLength: 4
+          type: string
+          description: Unique identifier that we assigned to the terminal.
+          example: '1234001'
+        order:
+          $ref: "#/components/schemas/bankTransferRefundOrder"
+        customer:
+          $ref: "../bank-transfer-payments/bank-transfer-payments-v1.yaml#/components/schemas/bankTransferCustomer"
+        bankAccount:
+          description: Object that contains information about the bank account.
+          type: object
+          discriminator:
+            propertyName: type
+            mapping:
+              ach: '../../../common/schemas/transaction/bank-account-v1.yaml#/components/schemas/achBankAccount'
+              pad: '../../../common/schemas/transaction/bank-account-v1.yaml#/components/schemas/padBankAccount'
+          oneOf:
+            - $ref: '../../../common/schemas/transaction/bank-account-v1.yaml#/components/schemas/achBankAccount'
+            - $ref: '../../../common/schemas/transaction/bank-account-v1.yaml#/components/schemas/padBankAccount'
+        payment:
+          $ref: "../../../common/schemas/transaction/summary-v1.yaml#/components/schemas/paymentSummary"
+        transactionResult:
+          $ref: "../../../common/schemas/transaction/bank-transfer-v1.yaml#/components/schemas/bankTransferResult"
+        customFields:
+          type: array
+          description: |
+            Array of customField objects.
+          items:
+            $ref: '../../../common/schemas/common/custom-field-v1.yaml#/components/schemas/customField'
+    contactMethod:
+      $ref: ../../../common/schemas/common/contact-method-v1.yaml#/components/schemas/contactMethod
+    bankTransferRefundPaginatedList:
+      required:
+        - count
+        - data
+        - hasMore
+        - limit
+      type: object
+      allOf:
+        - $ref: '../../../common/schemas/common/paginated-list-v1.yaml#/components/schemas/paginatedList'
+        - type: object
+          properties:
+            data:
+              type: array
+              description: Array of refund transactions.
+              items:
+                $ref: '#/components/schemas/bankTransferRefund'
+
+    bankTransferRefundOrder:
+      description: Object that contains information about the order. 
+      required:
+        - amount
+        - currency
+        - description
+        - orderId
+      type: object
+      allOf:
+        - $ref: '../../../common/schemas/transaction/order-v1.yaml#/components/schemas/order'
+        - type: object
+          description: Object that contains information about the transaction.
+          properties:
+            orderId:
+              maxLength: 24
+              minLength: 1
+              type: string
+              description: Unique identifier that the merchant assigned to the transaction.
+              example: OrderRef6543
+            dateTime:
+              type: string
+              format: date-time
+              readOnly: true
+              description: Date and time that we processed the transaction. We return this value in the ISO 8601 format.
+              example: 2024-07-02T15:30:00Z
+            description:
+              maxLength: 256
+              minLength: 0
+              type: string
+              description: Description of the transaction.
+              example: 'Pizza Doe #1234 - Dinner'
+            amount:
+              type: integer
+              format: int64
+              description: Total amount of the transaction. The value is in the currency's lowest denomination, for example, cents.
+              example: 2899
+            currency:
+              $ref: '../../../common/schemas/common/currency-v1.yaml#/components/schemas/currency'
+              example: USD
+
+    # TODO: Missing description
+    bankTransferUnreferencedRefund:
+      required:
+        - order
+        - processingTerminalId
+        - refundMethod
+      type: object
+      properties:
+        processingTerminalId:
+          maxLength: 50
+          minLength: 4
+          type: string
+          description: Unique identifier that we assigned to the terminal.
+          example: 52d9b7f7-3b39-4cd6-9acb-1050f8593ec6
+        order:
+          $ref: "#/components/schemas/bankTransferRefundOrder"
+        refundMethod:
+          description: Object that contains information about how the merchant refunds the customer. 
+          type: object
+          discriminator:
+            propertyName: type
+            mapping:
+              ach: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/achPayload'
+              secureToken: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/secureTokenPayload'
+          oneOf:
+            - $ref: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/achPayload'
+            - $ref: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/secureTokenPayload'
+        customFields:
+          type: array
+          description: |
+            Array of customField objects.
+          items:
+            $ref: '../../../common/schemas/common/custom-field-v1.yaml#/components/schemas/customField'

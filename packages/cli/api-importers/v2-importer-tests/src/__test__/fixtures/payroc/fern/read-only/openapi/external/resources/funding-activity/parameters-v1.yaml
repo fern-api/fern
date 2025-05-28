@@ -1,0 +1,26 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  parameters:
+    dateFrom:
+      name: dateFrom
+      in: query
+      description: Retrieve activity that occured since `dateFrom`. We can return activity from only the last two years.
+      required: true
+      schema:
+        type: string
+        format: date
+      example: '2024-07-02'
+    dateTo:
+      name: dateTo
+      in: query
+      required: true
+      description: Retrieve activity that occured before `dateTo`.
+      schema:
+        type: string
+        format: date
+      example: '2024-07-03'

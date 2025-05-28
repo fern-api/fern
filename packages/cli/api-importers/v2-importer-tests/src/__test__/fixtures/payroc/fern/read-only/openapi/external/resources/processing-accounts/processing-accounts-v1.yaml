@@ -1,0 +1,1309 @@
+openapi: 3.0.3
+info:
+  title: Processing accounts
+  description: Create and manage processing accounts
+  version: '1'
+  termsOfService: https://www.payroc.com/terms
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+security:
+- bearerAuth: []
+
+tags:
+  - name: Processing accounts
+    description: Accounts that can process transactions and receive funding.
+
+paths:
+  /processing-accounts/{processingAccountId}:
+    get:
+      tags:
+      - Processing accounts
+      summary: Retrieve processing account
+      description: Retrieve a specific processing account.
+      operationId: getProcessingAcccounts
+      parameters:
+      - $ref: './parameters-v1.yaml#/components/parameters/processingAccountId'
+      responses:
+        '200':
+          description: Successful request. Returns the processing account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/processingAccount'
+              examples:
+                processingAccount:
+                  $ref: './example-responses-v1.yaml#/components/examples/retrieveProcessingAccount'
+        '400':
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+  
+  /processing-accounts/{processingAccountId}/funding-accounts:
+    get:
+      tags:
+      - Processing accounts
+      summary: List processing account's funding accounts
+      description: Retrieve a list of funding accounts associated with a processing account.
+      operationId: listProcessingAccountsFundingAccounts
+      parameters:
+      - $ref: './parameters-v1.yaml#/components/parameters/processingAccountId'
+      responses:
+        '200':
+          description: Successful request. Returns a list of funding accounts associated with the processing account.
+          content:
+            application/json:
+              schema:
+                type: array
+                description: Array of fundingAccount objects.
+                items:
+                  $ref: '../../../common/schemas/boarding/funding-account-v1.yaml#/components/schemas/fundingAccount'
+              examples:
+                fundingAccounts: 
+                  $ref: './example-responses-v1.yaml#/components/examples/listProcessingAccountFundingAccounts'
+        '400':
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+  
+  /processing-accounts/{processingAccountId}/contacts:
+    get:
+      tags:
+      - Processing accounts
+      summary: List contacts
+      description: Retrieve a list of contacts associated with a processing account.
+      operationId: listProcessingAccountContacts
+      parameters:
+        - $ref: './parameters-v1.yaml#/components/parameters/processingAccountId'
+        - $ref: '../../../common/parameters/before-v1.yaml#/components/parameters/before'
+        - $ref: '../../../common/parameters/after-v1.yaml#/components/parameters/after'
+        - $ref: '../../../common/parameters/limit-v1.yaml#/components/parameters/limit'
+      responses:
+        '200':
+          description: Successful request. Returns a list of contacts associated with the processing account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/paginatedContacts'
+              examples:
+                paginatedContacts:
+                  $ref: './example-responses-v1.yaml#/components/examples/listContactsPaginated'
+                noActivity:
+                  $ref: '../../../common/responses/no-activity-v1.yaml#/components/examples/noActivity'
+        '400':
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'   
+
+  /processing-accounts/{processingAccountId}/pricing:
+    get: 
+      summary: Get processing account pricing agreement 
+      description: Retrieve a pricing agreement for a processing account.
+      operationId: retrieveProcessingAccountPricing
+      tags:
+      - Processing accounts
+      parameters:
+      - $ref: './parameters-v1.yaml#/components/parameters/processingAccountId'
+      responses:
+        '200': 
+          description: Successful request. Returns the pricing agreement for the processing account.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '../pricing-intents/pricing-intents-v1.yaml#/components/schemas/pricingAgreementUs4.0'
+                  - $ref: '../pricing-intents/pricing-intents-v1.yaml#/components/schemas/pricingAgreementUs5.0'
+              examples:
+                paginatedContacts:
+                  $ref: './example-responses-v1.yaml#/components/examples/retrieveProcessingAccountPricingAgreement'
+        '400':
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+  
+  /processing-accounts/{processingAccountId}/owners:
+    get:
+      tags:
+      - Processing accounts
+      summary: List owners
+      description: Retrieve owners associated with a processing account.
+      operationId: listMerchantOwners
+      parameters:
+        - $ref: './parameters-v1.yaml#/components/parameters/processingAccountId'
+        - $ref: '../../../common/parameters/before-v1.yaml#/components/parameters/before'
+        - $ref: '../../../common/parameters/after-v1.yaml#/components/parameters/after'
+        - $ref: '../../../common/parameters/limit-v1.yaml#/components/parameters/limit'
+      responses:
+        '200':
+          description: Successful request. Returns a list of owners associated with the processing account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/paginatedOwners'
+              examples:
+                listProcessingAccountOwners:
+                  $ref: './example-responses-v1.yaml#/components/examples/listProcessingAccountOwners'
+                noActivity:
+                  $ref: '../../../common/responses/no-activity-v1.yaml#/components/examples/noActivity'
+        '400':
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'   
+
+  /processing-accounts/{processingAccountId}/terminal-orders:
+    post:
+      summary: Create terminal order
+      description: |
+       Use this method to order and configure terminals for a processing account. When you create an order, you specify the gateway settings, device settings, and application settings for the terminals. 
+       **Note**: You need the ID of the merchant's processing account before you can create an order. If you don't know the processingAccountId, go to [Retrieve a Merchant Platform.](#getMerchantAcccounts)
+      operationId: createTerminalOrder
+      tags:
+        - Processing accounts
+      parameters:
+        - $ref: '../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey'
+        - $ref: './parameters-v1.yaml#/components/parameters/processingAccountId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../../../common/schemas/boarding/terminal-orders-v1.yaml#/components/schemas/createTerminalOrder'
+            examples:
+              terminalOrder:
+                $ref: './example-requests-v1.yaml#/components/examples/createTerminalOrder'
+      responses:
+        201:
+          description: Successful request. We created the terminal order.
+          content:
+            application/json:
+              schema:
+                $ref: '../../../common/schemas/boarding/terminal-orders-v1.yaml#/components/schemas/terminalOrder'
+              examples:
+                terminalOrder:
+                  $ref: './example-responses-v1.yaml#/components/examples/terminalOrderCreated'
+        400:
+          description: Bad request
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        401:
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        403:
+            $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403' 
+        404:
+          description: Not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/404-v1.yaml#/components/schemas/404'
+              examples:
+                notFound:
+                  $ref: '../../../common/responses/errors/404-v1.yaml#/components/examples/notFound'
+        500:
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500' 
+    get:
+      summary: List terminal orders
+      description: |
+        Use this method to retrieve a list of terminal orders associated with a processing account.  
+        Send the processingAccountId in the path parameter of your request.
+        > **Note**: If you don't know the processingAccountId, go to [List merchant platform's processing accounts](#listMerchantLocations).
+      operationId: listProcessingAccountsTerminalOrders
+      tags:
+      - Processing accounts
+      parameters:
+      - $ref: './parameters-v1.yaml#/components/parameters/processingAccountId'
+      - $ref: '#/components/parameters/status'
+      - $ref: '#/components/parameters/fromDateTime'
+      - $ref: '#/components/parameters/toDateTime'
+      responses:
+        200:
+          description: Successful request. Returns a list of terminal orders associated with the processing account.
+          content:
+            application/json:
+              schema:
+                type: array
+                description: Array of terminal order objects.
+                items:
+                  $ref: '../../../common/schemas/boarding/terminal-orders-v1.yaml#/components/schemas/terminalOrder'
+              examples:
+                terminalOrders:
+                  $ref: './example-responses-v1.yaml#/components/examples/listTerminalOrders'
+        400:
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        401:
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        403:
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        404:
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        406:
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        500:
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+  # This is intentionally not indexed by universal-api-v1.yaml. This is not something consumable by the customer.  This is the postback URL that AEX will use to send us back a merchant agreement.  Its locked down to only be called by AEX.  Its in the spec as its still an API we built and need to maintain, but not referenced in UAPI spec as its not for public consumption.
+  /processing-accounts/{processingAccountId}/processing-agreement:
+    post:
+      summary: Handle MPA
+      description: Handles signed merchant processsing agreements
+      operationId: submitSignedProcessingAgreement
+      tags:
+        - Processing accounts
+      parameters:
+        - $ref: './parameters-v1.yaml#/components/parameters/processingAccountId'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/createProcessingAgreement'
+      responses:
+        '200':
+          description: Successful response
+        '400':
+          description: Bad request
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        '404':
+          description: Not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/404-v1.yaml#/components/schemas/404'
+              examples:
+                notFound:
+                  $ref: '../../../common/responses/errors/404-v1.yaml#/components/examples/notFound'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'  
+  
+  /processing-accounts/{processingAccountId}/processing-terminals:
+    get:
+      summary: List processing terminals
+      description: |
+        Use this method to retrieve a [paginated](/api/pagination) list of processing terminals associated with a processing account.  
+        Send the processingAccountId in the path parameter of your request.  
+        > **Note**: If you don't know the processingAccountId, go to [List merchant platform's processing accounts](#listMerchantLocations).
+      operationId: listProcessingAccountsProcessingTerminals
+      tags:
+      - Processing accounts
+      parameters:
+      - $ref: './parameters-v1.yaml#/components/parameters/processingAccountId'
+      - $ref: '../../../common/parameters/before-v1.yaml#/components/parameters/before'
+      - $ref: '../../../common/parameters/after-v1.yaml#/components/parameters/after'
+      - $ref: '../../../common/parameters/limit-v1.yaml#/components/parameters/limit'
+      responses:
+        200:
+          description: Successful request. Returns a list of processing terminals associated with the processing account.
+          content:
+            application/json:
+              schema:
+                $ref: '../../../common/schemas/boarding/processing-terminals-v1.yaml#/components/schemas/paginatedProcessingTerminals'
+              examples:
+                processingTerminals:
+                  $ref: '../processing-terminals/example-responses-v1.yaml#/components/examples/listProcessingTemrinalsPaginated'
+        400:
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        401:
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        403:
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        404:
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        406:
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        500:
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'   
+  
+  /processing-accounts/{processingAccountId}/reminders:
+    post:
+      tags:
+        - Processing accounts
+      summary: Create reminder for processing account
+      description: | 
+        When you create a processing account, we send a copy of the pricing agreement to the merchant to sign. You can choose to send them a copy of the pricing agreement by email, or you can generate a link to the pricing agreement.<br/>  
+        If you requested the merchant's signature by email and they don't respond, use our Reminders endpoint to create a reminder and to send another email.<br/>  
+        **Note:** You can use the Reminders endpoint only if you request the merchant's signature by email. If you generate a link to the pricing agreement, you can't use the Reminders endpoint.  
+ 
+      operationId: createReminder
+      parameters:
+        - $ref: './parameters-v1.yaml#/components/parameters/processingAccountId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              discriminator:
+                propertyName: type
+                mapping:
+                  pricingAgreement: '#/components/schemas/pricingAgreementReminder'
+              oneOf: 
+                - $ref: '#/components/schemas/pricingAgreementReminder'
+            examples:
+              createReminderForProcessingAccount:
+                $ref: './example-requests-v1.yaml#/components/examples/createReminderForProcessingAccount'
+      responses:
+        '201':
+          description: Successful request. We sent the email to the merchant.
+          content:
+            application/json:
+              schema:
+                discriminator:
+                  propertyName: type
+                  mapping:
+                    pricingAgreement: '#/components/schemas/pricingAgreementReminder'
+                oneOf: 
+                  - $ref: '#/components/schemas/pricingAgreementReminder'
+              examples:
+                reminderCreated:
+                  $ref: '../processing-accounts/example-responses-v1.yaml#/components/examples/reminderCreated'
+        '400':
+          description: Bad request
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                badRequest:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                notRequestedByEmail:
+                  $ref: '../processing-accounts/example-responses-v1.yaml#/components/examples/notRequestedByEmail'
+                contractAlreadySigned:
+                  $ref: '../processing-accounts/example-responses-v1.yaml#/components/examples/contractAlreadySigned'
+                noPricingAgreementExistsForTheProcessingAccount:
+                  $ref: '../processing-accounts/example-responses-v1.yaml#/components/examples/noPricingAgreementExistsForTheProcessingAccount'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'   
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'   
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'   
+
+components:
+  schemas:
+    processing:
+      type: object
+      title: processing
+      required:
+        - transactionAmounts
+        - monthlyAmounts
+        - volumeBreakdown
+      properties:
+        merchantId:
+          type: string
+          description: Unique identifier that the acquiring platform assigns to the merchant.
+          maxLength: 15
+          example: '4525644354'
+          readOnly: true
+        transactionAmounts:
+          description: Object that contains information about transaction amounts for the processing account.
+          type: object
+          required:
+            - average
+            - highest
+          properties:
+            average:
+              type: integer
+              format: int32
+              description: Estimated average transaction amount. The value is in the currency's lowest denomination, for example, cents. You must provide an amount that is greater than zero.
+              example: 5000 # TODO: Confirm if this is actually a Count
+            highest:
+              type: integer
+              format: int32
+              description: Estimated maximum transaction amount. The value is in the currency's lowest denomination, for example, cents. You must provide an amount that is greater than zero.
+              example: 10000 # TODO: Confirm if this is actually a Count
+        monthlyAmounts:
+          description: Object that contains information about the monthly processing amounts for the processing account.
+          type: object
+          required:
+            - average
+            - highest
+          properties:
+            average:
+              type: integer
+              format: int32
+              description: Estimated average transaction amount each month. The value is in the currency's lowest denomination, for example, cents. You must provide an amount that is greater than zero.
+              example: 50000 # TODO: Confirm if this is actually a Count
+            highest:
+              type: integer
+              format: int32
+              description: Estimated maximum transaction amount each month. The value is in the currency's lowest denomination, for example, cents. You must provide an amount that is greater than zero.
+              example: 100000 # TODO: Confirm if this is actually a Count
+        volumeBreakdown:
+          type: object
+          description: Object that contains information about the types of transactions ran by the processing account. The percentages for transaction types must total 100%.
+          required:
+            - cardPresentKeyed
+            - cardPresentSwiped
+            - mailOrTelephone
+            - ecommerce
+          properties:
+            cardPresentKeyed:
+              description: Estimated percentage of keyed card-present transactions.
+              type: integer
+              format: int32
+              example: 47
+            cardPresentSwiped:
+              description: Estimated percentage of swiped card-present transactions.
+              type: integer
+              format: int32
+              example: 30
+            mailOrTelephone:
+              description: Estimated percentage of mail order or telephone transactions.
+              type: integer
+              format: int32
+              example: 3
+            ecommerce:
+              description: Esimated percentage of e-Commerce transactions.
+              type: integer
+              format: int32
+              example: 20
+        isSeasonal:
+          type: boolean
+          description: Indicates if the processing account runs transactions on a seasonal basis. For example, if the processing account runs transactions during only the winter months, send a value of `true`.
+          example: false
+        monthsOfOperation:
+          type: array
+          description: Months of the year that the processing account runs transactions.
+          maxItems: 12
+          items:
+            type: string
+            enum:
+              - jan
+              - feb
+              - mar
+              - apr
+              - may
+              - jun
+              - jul
+              - aug
+              - sep
+              - oct
+              - nov
+              - dec
+          example: [jan, feb]
+        ach: 
+          type: object
+          required:
+            - refunds
+            - estimatedMonthlyTransactions
+            - limits
+          properties:
+            naics:
+              type: string
+              description: North American Industry Classification System (NAICS) code.
+              maxLength: 6
+              example: '5812'
+            previouslyTerminatedForAch:
+              type: boolean
+              default: false
+              description: Indicates if the business or its principals were previously turned down for ACH processing.
+              example: false
+            refunds:
+              type: object
+              required:
+                - writtenRefundPolicy
+              properties:
+                writtenRefundPolicy:
+                  type: boolean
+                  description: Indicates if the business has a written refund policy.
+                  default: false
+                  example: true
+                refundPolicyUrl: 
+                  type: string
+                  description: URL of the written refund policy.
+                  maxLength: 2000
+                  example: www.example.com/refund-poilcy-url
+            estimatedMonthlyTransactions: 
+              type: integer
+              description: Estimated maximum number of transactions that the merchant will process in a month.
+              example: 3000
+            limits:
+              type: object
+              required:
+                - singleTransaction
+                - dailyDeposit
+                - monthlyDeposit
+              properties:
+                singleTransaction:
+                  type: integer
+                  description: Maximum amount allowed for a single debit or credit transaction. The value is in the currency's lowest denomination, for example, cents.
+                  example: 10000 # TODO: Confirm if this is actually a Count
+                dailyDeposit:
+                  type: integer
+                  description: Maximum amount of total transactions allowed per day. The value is in the currency's lowest denomination, for example, cents.
+                  example: 200000 # TODO: Confirm if this is actually a Count
+                monthlyDeposit:
+                  type: integer
+                  description: Maximum amount of total transactions allowed per month. The value is in the currency's lowest denomination, for example, cents.
+                  example: 6000000 # TODO: Confirm if this is actually a Count
+            transactionTypes:
+              type: array
+              description: List of supported transaction types.
+              uniqueItems: true
+              items: 
+                type: string
+                enum:
+                  - prearrangedPayment
+                  - corpCashDisbursement
+                  - telephoneInitiatedPayment
+                  - webInitiatedPayment
+                  - other
+              example:
+                - prearrangedPayment
+                - other
+            transactionTypesOther:
+              type: string
+              description: If you send a value of `other` for transactionTypes, provide a list of the supported transaction types.
+              maxLength: 100
+              example: anotherTransactionType
+        cardAcceptance:
+          type: object
+          description: Information around the type of cards that will be accepted.
+          properties:
+            debitOnly:
+              type: boolean
+              default: false
+              description: Indicates if the merchant accepts only debit cards.
+              example: false
+            hsaFsa:
+              type: boolean
+              default: false
+              description: Indicates if the merchant accepts health savings account (HSA) and flexible spending account (FSA) cards.
+              example: false
+            cardsAccepted: 
+              type: array
+              description: List of card types the merchant accepts.
+              uniqueItems: true
+              default: [visa, mastercard, discover, amexOptBlue]
+              items: 
+                type: string
+                enum:
+                  - visa 
+                  - mastercard
+                  - discover
+                  - amexOptBlue
+              example: [visa, mastercard]
+            specialityCards:
+              type: object
+              description: Information about the speciality cards that the merchant accepts.
+              properties:
+                americanExpressDirect:
+                  type: object
+                  properties:
+                    enabled:
+                      type:  boolean
+                      default: false
+                      description: Indicates if the merchant accepts American Express Direct.
+                      example: true
+                    merchantNumber:
+                      type: string
+                      description: If the merchant accepts American Express Direct, provide their American Express merchant number.
+                      maxLength: 100
+                      example: 'abc1234567'
+                electronicBenefitsTransfer:
+                  type: object
+                  properties:
+                    enabled:
+                      type:  boolean
+                      default: false
+                      description: Indicates if the merchant accepts EBT.
+                      example: true
+                    fnsNumber:
+                      type: string
+                      description: If the merchant accepts EBT, provide their FNS number.
+                      maxLength: 7
+                      example: 'abc1234'
+                other: 
+                  type: object
+                  properties:
+                    wexMerchantNumber:
+                      type: string
+                      description: If the merchant accepts WEX, provide their WEX merchant number.
+                      maxLength: 50
+                      example: 'abc1234567'
+                    voyagerMerchantId:
+                      type: string
+                      description: If the merchant accepts Voyager, provide their Voyager merchant ID.
+                      maxLength: 50
+                      example: 'abc1234567'
+                    fleetMerchantId:
+                      type: string
+                      description: If the merchant accepts Fleet, provide their Fleet merchant ID.
+                      maxLength: 50
+                      example: 'abc1234567'
+    createProcessingAccount:
+      required:
+        - doingBusinessAs
+        - owners
+        - businessType
+        - merchandiseOrServiceSold
+        - businessStartDate
+        - timezone
+        - address
+        - contactMethods
+        - processing
+        - funding
+        - pricing
+        - signature
+        - categoryCode
+      type: object
+      properties:
+        processingAccountId:
+          type: integer
+          description: Unique identifier of the processing account.
+          readOnly: true
+          example: 38765
+        doingBusinessAs:
+          type: string
+          description: Trading name of the business.
+          maxLength: 100
+          example: Pizza Doe
+        owners:
+          description: |
+            Collection of individuals that are responsible for a processing account. When you create a processing account, you must indicate at least one owner as either of the following:
+            - Control prong - An individual who has a significant equity stake in the business and can make decisions for the processing account. You can add only one control prong to a processing account.
+            - Authorized signatory - An individual who doesn't have an equity stake in the business but can make decisions for the processing account.
+          minItems: 1
+          type: array
+          items:
+            $ref: '../../../common/schemas/boarding/owner-v1.yaml#/components/schemas/owner'
+        website:
+          type: string
+          description: Website address of the business.
+          maxLength: 128
+          example: www.example.com
+        businessType:
+          type: string
+          description: Type of business.
+          enum:
+            - retail
+            - restaurant
+            - internet
+            - moto
+            - lodging
+            - notForProfit
+          example: restaurant
+        categoryCode:
+          type: integer
+          format: int32
+          description: Category code for the type of business.
+          maxLength: 4
+          example: 5999
+        merchandiseOrServiceSold:
+          type: string
+          description: Description of the services or merchandise sold by the business.
+          maxLength: 125
+          example: Pizza
+        businessStartDate:
+          type: string
+          format: date
+          description: Date that the business was established. The format of the value is **YYYY-MM-DD**.
+          example: '2020-01-01'
+        timezone:
+          $ref: '#/components/schemas/timezone'
+        address:
+          type: object
+          oneOf:
+          - $ref: '../../../common/schemas/common/address-v1.yaml#/components/schemas/address'
+        contactMethods:
+          type: array
+          minItems: 1
+          description: Array of contactMethod objects. One contact method must be an email address.
+          items:
+            $ref: '../../../common/schemas/common/contact-method-v1.yaml#/components/schemas/contactMethod'
+        processing:
+          $ref: '#/components/schemas/processing'
+        funding:
+          $ref: '#/components/schemas/createFunding'
+        pricing: 
+          $ref: '#/components/schemas/pricing'
+        signature:
+          type: string
+          description: | 
+            Method used to capture the owner's signature.  
+
+            **Note:** If you request the owner’s signature by email and they don’t respond, use our Reminders endpoint to create a reminder and to send another email.
+          enum:
+            - requestedViaEmail
+            - requestedViaDirectLink
+          example: requestedViaEmail
+        contacts:
+          type: array
+          description: Array of contact objects.
+          items:
+            $ref: '../../../common/schemas/boarding/contact-v1.yaml#/components/schemas/contact'
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Object that you can send to include custom data in the request.
+          example:
+            customerId: '2345'
+    processingAccount:
+      required:
+        - doingBusinessAs
+        - owners
+        - businessType
+        - merchandiseOrServiceSold
+        - timezone
+        - address
+        - contactMethods
+        - processing
+        - funding
+        - pricing
+        - signature
+        - categoryCode
+      type: object
+      properties:
+        processingAccountId:
+          type: string
+          readOnly: true
+          description: Unique identifier of the processing account.
+          example: '38765'
+        createdDate:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Date and time that we received your request to create the processing account in our system.
+          example: '2024-07-02T12:00:00.000Z'
+        lastModifiedDate:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Date and time that the processing account was last modified.
+          example: '2024-07-02T12:00:00.000Z'
+        # NOTES for technical writting team on what the status mean
+        # Open - Not approved
+        #   entered - Merchant information received but not yet reviewed
+        #   pending - Merchant information received and reviewed but yet to be approved
+        # Open - Approved
+        #   approved - Approved for both processing and funding
+        #   fullSuspense - Approved for processing, funding is fully on hold 
+        #   nonFullSuspense - Approved for processing, funding is partially (not fully) on hold
+        #   seasonal - Processing is ok but only for certain months
+        #   subjectTo - Approved but waiting on information
+        #   dormant - The merchant is closed for a period
+        #   nonProcessing - Open and approved but has had no recent processing (configurable time period)
+        # Closed
+        #   rejected - Never processed, underwriting declined the account
+        #   terminated - Was processing but now closed by Payroc or the merchant
+        #   cancelled - Never processed, merchant withdrew the application
+        status: 
+          type: string
+          description: |
+            Status of the processing account.  
+            - `entered` - We have received information about the account, but we have not yet reviewed it.  
+            - `pending` - We have reviewed the information about the account, but we have not yet approved it.  
+            - `approved` - We have approved the account for processing transactions and funding.  
+            - `subjectTo` - We have approved the account, but we are waiting on further information.  
+            - `dormant` - Account is closed for a period.  
+            - `nonProcessing` - We have approved the account, but the merchant has not yet run a transaction.  
+            - `rejected` - We rejected the application for the processing account.  
+            - `terminated` - Processing account is closed.  
+            - `cancelled` - Merchant withdrew the application for the processing account.  
+          readOnly: true
+          enum:
+            - entered
+            - pending
+            - approved
+            - subjectTo
+            - dormant
+            - nonProcessing
+            - rejected
+            - terminated
+            - cancelled 
+          example: entered
+        doingBusinessAs:
+          type: string
+          description: Trading name of the business.
+          maxLength: 100
+          example: Pizza Doe
+        owners:
+          readOnly: true
+          description: Object that contains information about the owners of the business.
+          type: array
+          items:
+            type: object 
+            title: owner
+            properties:
+              ownerId:
+                type: integer
+                example: 4564
+              firstName: 
+                type: string
+                example: Jane
+              lastName:
+                type: string
+                example: Doe
+              link:
+                type: object
+                properties:
+                  rel:
+                    type: string
+                    description: The relationship to the parent resource.
+                    example: owner
+                  href:
+                    type: string
+                    description: The link to the resource.
+                    example: 'https://api.payroc.com/v1/owners/1543'
+                  method:
+                    type: string
+                    description: HTTP method for retrieving the resource.
+                    example: get
+        website:
+          type: string
+          description: Website address of the business.
+          maxLength: 128
+          example: www.example.com
+        businessType:
+          type: string
+          description: Type of business.
+          enum:
+            - retail 
+            - restaurant
+            - internet 
+            - moto 
+            - lodging
+            - notForProfit
+          example: restaurant
+        categoryCode:
+          type: integer
+          format: int32
+          example: 5999
+          description: Category code for the type of business.
+          maxLength: 4
+        merchandiseOrServiceSold:
+          type: string
+          description: Description of the services or merchandise sold by the business.
+          maxLength: 125
+          example: Pizza
+        businessStartDate:
+          type: string
+          format: date
+          description: Date that the business was established. The format of the value is **YYYY-MM-DD**.
+          example: '2020-01-01'
+        timezone:
+          $ref: '#/components/schemas/timezone'
+        address:
+          type: object
+          oneOf:
+          - $ref: '../../../common/schemas/common/address-v1.yaml#/components/schemas/address'
+        contactMethods:
+          type: array
+          minItems: 1
+          description: Array of contactMethods objects for the processing account. Atleast one contactMethod must be an email address.
+          items:
+            $ref: '../../../common/schemas/common/contact-method-v1.yaml#/components/schemas/contactMethod'
+        processing:
+          $ref: '#/components/schemas/processing'
+        funding:
+          $ref: '#/components/schemas/funding'
+        pricing:
+          type: object
+          description: Object that contains pricing information. 
+          properties:
+            link:
+              type: object
+              description: HATEOAS link for pricing information. 
+              properties:
+                rel:
+                  type: string
+                  example: pricing
+                  description: Relationship to the parent resource.
+                href:
+                  type: string
+                  example: 'https://api.payroc.com/v1/processing-accounts/38765/pricing'
+                  description: Link to the resource.
+                method:
+                  type: string
+                  example: get
+                  description: HTTP method you can use to retrieve the resource.
+        contacts:
+          readOnly: true
+          description: Array of contact objects.
+          type: array
+          items:
+            type: object
+            title: contact
+            properties:
+              contactId:
+                type: integer
+                description: Unique identifier of the contact.
+                example: 1543
+              firstName: 
+                type: string
+                description: Contact's first name.
+                example: Jane
+              lastName: 
+                type: string
+                description: Contact's last name.
+                example: Doe
+              link:
+                type: object
+                description: Object that contains HATEOAS links for the contact.
+                properties:
+                  rel:
+                    type: string
+                    example: contact
+                    description: Relationship to the parent resource.
+                  href:
+                    type: string
+                    example: 'https://api.payroc.com/v1/contacts/1543'
+                    description: Link to the resource.
+                  method:
+                    type: string
+                    example: get
+                    description: HTTP method you can use to retrieve the resource.
+        signature:
+          $ref: '#/components/schemas/signature'
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Object that you can send to include custom data in the request.
+          example:
+            customerId: '2345'
+        links:
+          type: array
+          description: Array of useful links related to your request.
+          items:
+            $ref: '../../../common/schemas/common/link/link-v1.yaml#/components/schemas/link'
+          example: []
+
+    pricing:
+      type: object
+      description: Object that contains pricing information.
+      discriminator: 
+        propertyName: type
+        mapping: 
+          intent: '#/components/schemas/pricingTemplate'
+          agreement: '#/components/schemas/pricingAgreement'
+      oneOf:
+        - $ref: '#/components/schemas/pricingTemplate'
+        - $ref: '#/components/schemas/pricingAgreement'
+
+    funding:
+      type: object
+      description: Object that contains funding information.
+      allOf:
+        - $ref: '#/components/schemas/commonFunding'
+        - type: object
+          properties:
+            fundingAccounts:
+              minItems: 1
+              maxItems: 2
+              readOnly: true
+              type: array
+              items:
+                $ref: '../../../common/schemas/boarding/funding-account-summary-v1.yaml#/components/schemas/fundingAccountSummary'    
+    createFunding:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/commonFunding'
+        - type: object
+          properties:
+            fundingAccounts:
+              description: Array of fundingAccounts objects.
+              minItems: 1
+              maxItems: 2
+              writeOnly: true
+              type: array
+              items:
+                $ref: '../../../common/schemas/boarding/funding-account-v1.yaml#/components/schemas/fundingAccount'
+    commonFunding:
+      type: object
+      description: Object that contains information about the funding schedule of the processing account.
+      properties:
+        status:
+          type: string
+          readOnly: true
+          description:  Indicates if the processing account can receive funds. 
+          enum:
+            - enabled
+            - disabled
+          example: enabled
+        fundingSchedule:
+          type: string
+          description: |
+            Indicates when funds are sent to the funding account.  
+            **Note:** If you send a value of `sameday`, funding includes all transactions the merchant ran before the ACH cut-off time.
+          enum:
+            - standard
+            - nextday
+            - sameday
+          example: nextday
+          default: standard
+        acceleratedFundingFee:
+          type: integer
+          description: Monthly fee in cents for accelerated funding. We apply this fee if the value for fundingSchedule is `sameday` or `nextday`.
+          example: 1999
+          default: 0
+        dailyDiscount:
+          type: boolean
+          description: Indicator if fees should be taken on a daily basis.
+          example: false
+    paginatedContacts:
+      type: object
+      title: paginated Contacts
+      allOf:
+      - $ref: '../../../common/schemas/common/paginated-list-v1.yaml#/components/schemas/paginatedList'
+      - type: object
+        properties:
+          data:
+            type: array
+            description: Array of contact objects.
+            items:
+              $ref: '../../../common/schemas/boarding/contact-v1.yaml#/components/schemas/contact'
+
+    pricingTemplate:
+      type: object
+      title: Pricing intent
+      required:
+        - type
+        - pricingIntentId
+      properties:
+        type: 
+          type: string
+          enum: 
+            - intent
+          example: intent
+        pricingIntentId:
+          type: integer
+          description: Unique identifier of the pricing intent.
+          example: 6123
+    pricingAgreement:
+      type: object
+      title: Pricing agreement
+      allOf: 
+      -  type: object 
+         properties: 
+           type: 
+             type: string
+             enum: 
+               - agreement
+             example: agreement
+         required: 
+           -  type
+      - oneOf:
+        - $ref: '../pricing-intents/pricing-intents-v1.yaml#/components/schemas/pricingAgreementUs5.0'
+    signature:
+      type: object
+      description: Object containing the method we used to capture the owner's signature.
+      discriminator: 
+        propertyName: type
+        mapping: 
+          requestedViaDirectLink: '#/components/schemas/signatureByDirectLink'
+          requestedViaEmail: '#/components/schemas/signatureByEmail'
+      oneOf:
+        - $ref: '#/components/schemas/signatureByDirectLink'
+        - $ref: '#/components/schemas/signatureByEmail'
+    signatureByEmail:
+      title: Signature by email
+      description: Owner's signature by email.
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          description: Method used to capture the owner's signature.
+          enum:
+            - requestedViaEmail
+          example: requestedViaEmail
+    signatureByDirectLink:
+      title: Signature by direct link
+      description: We return a link to the pricing agreement in the response.
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          description: Method used to capture the owner's signature.
+          enum:
+            - requestedViaDirectLink
+          example: requestedViaDirectLink
+        link:
+          allOf:
+            - type: object
+              readOnly: true
+              description: Link to sign agreement
+            - $ref: '../../../common/schemas/common/link/link-v1.yaml#/components/schemas/link'
+          example: 
+            rel: agreement
+            href: 'https://us.agreementexpress.net/mv2/viewer2.jsp?docId=00000000-0000-0000-0000-000000000000'
+            method: get        
+    signatureByCallback:
+      description: Link to the pricing agreement should be submitted to the supplied URL to be signed.
+      type: object
+      required:
+        - type
+        - callbackUrl
+        - secret
+      properties:
+        type:
+          type: string
+          description: Method used to capture the owner's signature.
+          enum:
+            - requestViaCallBack
+          example: requestViaCallBack
+        callbackUrl:
+          description: callback URL to be used if pricing agreement URL should be submitted back to invoking system. The URI must be unauthenticated and must use HTTPS.
+          type: string
+          example: 'https://example.com/pricing-agreement-callback'
+        secret:
+          description: used to validate the authenticity of the caller.
+          type: string
+          minLength: 8
+          example: a3da4yda 
+    signatureElectronicallySigned:
+      description: Pricing agreement has already been signed with signature details below.
+      type: object
+      required:
+        - type
+        - ipAddress
+        - timestamp
+      properties:
+        type:
+          type: string
+          description: Method used to capture the owner's signature.
+          enum:
+            - electronic
+          example: electronic
+        signedWith:
+          description: Service or company which captured the signature 
+          type: string
+        ipAddress:
+          description: IP address the document was signed from
+          type: string
+          example: 123.123.123.123
+        timestamp:
+          description: Date and time the document was electrocially signed
+          type: string
+          example: '2024-07-02T12:00:00.000Z'
+    paginatedOwners:
+      type: object
+      title: paginated Owners
+      allOf:
+      - $ref: '../../../common/schemas/common/paginated-list-v1.yaml#/components/schemas/paginatedList'
+      - type: object
+        properties:
+          data:
+            type: array
+            description: Array of owner objects.
+            items:
+              $ref: '../../../common/schemas/boarding/owner-v1.yaml#/components/schemas/owner'
+
+    timezone:
+      description: The timezone for the processing account
+      enum:
+        - Pacific/Midway
+        - Pacific/Honolulu
+        - America/Anchorage
+        - America/Los_Angeles
+        - America/Denver
+        - America/Phoenix
+        - America/Chicago
+        - America/Indiana/Indianapolis
+        - America/New_York
+      example: America/Chicago
+      maxLength: 28
+    
+    createProcessingAgreement:
+      type: object
+      properties:
+        transactionCount:
+          type: string
+        transactionRefId_0:
+          type: string
+        transactionShortId_0:
+          type: string
+        inputFormData_0:
+          type: string
+        completedAgreement_0:
+          type: string
+          format: binary
+
+    # Deliberately duplicated from internal version, for internal/external separation
+    pricingAgreementReminder:
+      type: object
+      required: 
+        - type
+      properties: 
+        reminderId:
+          type: string
+          description: Unique ID of the reminder.
+          readOnly: true
+          example: '1234567'
+        type:
+          type: string
+          description: Type of reminder.
+          enum: 
+            - pricingAgreement
+          example: pricingAgreement
+           
+  parameters:
+    status:
+      name: status   
+      in: query 
+      schema:
+        type: string    
+        description: Filter terminal orders by status.
+        enum:
+          - open
+          - held
+          - dispatched
+          - fulfilled
+          - cancelled
+    fromDateTime:
+      name: fromDateTime   
+      in: query 
+      schema:    
+        type: string
+        format: date-time   
+        description: Filter by terminal orders created after a specific date. The date format follows the [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) standard.
+        example: 2024-09-08T12:00:00.000Z
+    toDateTime:
+      name: toDateTime   
+      in: query
+      schema:  
+        type: string
+        format: date-time   
+        description: Filter by terminal orders created before a specific date. The date format follows the [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html).
+        example: 2024-12-08T11:00:00.000Z
+
+
+
+  securitySchemes:
+    bearerAuth:
+      $ref: '../../../common/security/bearer-auth.yaml#/components/securitySchemes/bearerAuth'

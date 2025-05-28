@@ -1,0 +1,127 @@
+openapi: 3.0.3
+info:
+  title: Funding
+  description: Actions available to payfac accounts.
+  version: '1'
+  termsOfService: https://www.payroc.com/terms
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+tags:
+  - name: Funding activity
+    description: Activity associated with a payfac account.
+
+paths:
+  /funding-activity:
+    get:
+      tags: [Funding activity]
+      summary: List funding activity
+      description: Retrieve funding activity for a specific date range.
+      operationId: getFundingActivity
+      parameters:
+        - $ref: '../../../common/parameters/before-v1.yaml#/components/parameters/before'
+        - $ref: '../../../common/parameters/after-v1.yaml#/components/parameters/after'
+        - $ref: '../../../common/parameters/limit-v1.yaml#/components/parameters/limit'
+        - $ref: './parameters-v1.yaml#/components/parameters/dateFrom'
+        - $ref: './parameters-v1.yaml#/components/parameters/dateTo'
+        - $ref: '../../../common/parameters/merchant-id-v1.yaml#/components/parameters/merchantId'
+      responses:
+        '200':
+          description: Successful request. Returns all available funding activity for the date range.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - $ref: '../../../common/schemas/common/paginated-list-v1.yaml#/components/schemas/paginatedList'
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      description: Array of activityRecord objects.
+                      items:
+                        $ref: '#/components/schemas/activityRecord'
+                  required: [data]
+              examples:
+                paginatedList:
+                  $ref: './example-responses-v1.yaml#/components/examples/paginatedList'
+                noActivity:
+                  $ref: '../../../common/responses/no-activity-v1.yaml#/components/examples/noActivity'
+        '400':
+          description: Validation error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples: 
+                parameterError:
+                  $ref: './example-responses-v1.yaml#/components/examples/parameterError'
+                paginationError:
+                  $ref: './example-responses-v1.yaml#/components/examples/paginationError'
+                outsideRecordRange:
+                  $ref: './example-responses-v1.yaml#/components/examples/outsideRecordRange'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+
+components:
+  schemas:
+    activityRecord:
+      type: object
+      description: Array of activityRecord objects.
+      title: activity record
+      properties:
+        id:
+          type: integer
+          description: Unique identifier of the activity record.
+          example: 12345
+        date:
+          type: string
+          format: datetime
+          example: '2024-07-02T15:30:00Z'
+          description: Date of the transaction.
+        merchant:
+            type: string
+            description: Name of the merchant that the activity applies to.
+            example: Pizza Doe
+        recipient:
+          type: string
+          description: Recipient of the debit.
+          example: Pizza Doe
+        description:
+          type: string
+          example: payment
+          description: Description of the activity.
+        amount:
+          type: number
+          example: 4999
+          description: Total fund amount of the transaction. This is returned in the lowest unit of currency.
+        type:
+          type: string
+          description: Payment type.
+          enum:
+            - credit
+            - debit
+          example: credit
+        currency:
+          type: string
+          description: Currency of all values.
+          example: USD
+      required:
+        - id
+        - date
+        - merchant
+        - description
+        - amount
+        - type
+        - currency
+
+  securitySchemes:
+    bearerAuth:
+      $ref: '../../../common/security/bearer-auth.yaml#/components/securitySchemes/bearerAuth'

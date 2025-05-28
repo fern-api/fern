@@ -1,0 +1,116 @@
+openapi: 3.0.3
+info:
+  title: Owners API
+  description: Create and manage owners.
+  version: '1'
+  termsOfService: https://www.payroc.com/terms
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+servers:
+  - url: https://api.payroc.com/v1
+    description: Production
+  - url: https://api.uat.payroc.com/v1
+    description: UAT
+security:
+- bearerAuth: []
+tags:
+  - name: Owners
+    description: Individuals who own or control the business.
+
+paths:
+  /owners/{ownerId}:
+    get:
+      tags:
+      - Owners
+      summary: Retrieve owner
+      description: Retrieve a specific owner.
+      operationId: getOwner
+      parameters:
+      - $ref: './parameters-v1.yaml#/components/parameters/ownerId'
+      responses:
+        "200":
+          description: Successful request. Returns the requested owner.
+          content:
+            application/json:
+              schema:
+                $ref: '../../../common/schemas/boarding/owner-v1.yaml#/components/schemas/owner'
+              examples:
+                retrievedOwner:
+                  $ref: './example-responses-v1.yaml#/components/examples/retrievedOwner'
+        "400":
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        "401":
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        "403":
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        "404":
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        "500":
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+    put:
+      tags:
+      - Owners
+      summary: Update owner
+      description: Update a specific owner.
+      operationId: updateOwner
+      parameters:
+      - $ref: './parameters-v1.yaml#/components/parameters/ownerId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../../../common/schemas/boarding/owner-v1.yaml#/components/schemas/owner'
+            examples:
+              updateOwner:
+                $ref: './example-requests-v1.yaml#/components/examples/updateOwner'
+      responses:
+        "204":
+          description: Successful request. We updated the owner.
+        "400":
+          description: Validation errors.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                kycCheckFailed:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/kycCheckFailed'
+        "401":
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        "403":
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        "404":
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        "406":
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        "500":
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+    delete:
+      tags:
+      - Owners
+      summary: Delete owner
+      description: Delete a owner.
+      operationId: deleteOwner
+      parameters:
+      - $ref: './parameters-v1.yaml#/components/parameters/ownerId'
+      responses:
+        "204":
+          description: Successful request. We deleted the owner.
+        "400":
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        "401":
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        "403":
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        "404":
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        "500":
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: '../../../common/security/bearer-auth.yaml#/components/securitySchemes/bearerAuth'

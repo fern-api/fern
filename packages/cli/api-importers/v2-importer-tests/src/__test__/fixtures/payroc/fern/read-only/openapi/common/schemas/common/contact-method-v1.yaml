@@ -1,0 +1,100 @@
+openapi: 3.0.3
+
+paths: {}
+
+info:
+  title: Common Domain Models
+  description: Common domain models that are shared across the Payroc API
+  version: '1'
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+
+tags:
+  - name: Common schemas
+    description: Common schemas that can be resued
+
+components:
+  schemas:
+    contactMethod:
+      discriminator:
+        propertyName: type
+        mapping:
+          email: '#/components/schemas/contactMethodEmail'
+          phone: '#/components/schemas/contactMethodPhone'
+          mobile: '#/components/schemas/contactMethodMobile'
+          fax: '#/components/schemas/contactMethodFax'
+      oneOf:
+        - $ref: '#/components/schemas/contactMethodEmail'
+        - $ref: '#/components/schemas/contactMethodPhone'
+        - $ref: '#/components/schemas/contactMethodMobile'
+        - $ref: '#/components/schemas/contactMethodFax'
+    contactMethodEmail:
+      required:
+      - type
+      - value
+      type: object
+      title: Email contact method
+      properties:
+        type:
+          type: string
+          description: Type of contact method.
+          enum:
+          - email
+        value:
+          type: string
+          description: Email address.
+          maxLength: 50
+          example: 'jane.doe@example.com'
+    contactMethodPhone:
+      required:
+      - type
+      - value
+      type: object
+      title: Phone number contact method
+      properties:
+        type:
+          type: string
+          description: Type of contact method.
+          enum:
+          - phone
+        value:
+          type: string
+          description: Phone Number.
+          maxLength: 15
+          example: '2025550164'
+    contactMethodMobile:
+      required:
+      - type
+      - value
+      type: object
+      title: Mobile number contact method
+      properties:
+        type:
+          type: string
+          description: Type of contact method.
+          enum:
+          - mobile
+        value:
+          type: string
+          description: Mobile Number.
+          maxLength: 15
+          example: '8445557624'
+    contactMethodFax:
+      required:
+      - type
+      - value
+      type: object
+      title: Fax number contact method
+      properties:
+        type:
+          type: string
+          description: Type of contact method.
+          enum:
+          - fax
+        value:
+          type: string
+          description: Fax Number.
+          maxLength: 15
+          example: '2025550110'

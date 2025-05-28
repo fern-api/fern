@@ -1,0 +1,103 @@
+openapi: 3.0.3
+info:
+  title: Funding
+  description: Actions available to payfac accounts.
+  version: '1'
+  termsOfService: https://www.payroc.com/terms
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Funding activity
+    description: Activity associated with a payfac account.
+  - name: Funding instructions
+    description: Instructions about how to divide funds between funding recipients.
+
+paths:
+  /funding-balance:
+    get: 
+      tags: [Funding activity]
+      summary: Retrieve funding balance
+      operationId: getFundingBalance
+      description: Retrieve the balance of funds that are available for each merchant.
+      parameters:
+        - $ref: '../../../common/parameters/before-v1.yaml#/components/parameters/before'
+        - $ref: '../../../common/parameters/after-v1.yaml#/components/parameters/after'
+        - $ref: '../../../common/parameters/limit-v1.yaml#/components/parameters/limit'
+        - $ref: '../../../common/parameters/merchant-id-v1.yaml#/components/parameters/merchantId'
+      responses:
+        '200':
+          description: Successful request. Returns the balance available for each merchant.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - $ref: '../../../common/schemas/common/paginated-list-v1.yaml#/components/schemas/paginatedList'
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      description: Array of merchantBalance objects.
+                      items:
+                        $ref: '#/components/schemas/merchantBalance'
+                  required: [data]
+              examples:
+                listSplitsExample:
+                  $ref: './example-responses-v1.yaml#/components/examples/listBalancesExample'
+                noActivity:
+                  $ref: '../../../common/responses/no-activity-v1.yaml#/components/examples/noActivity'
+        '400':
+          description: Validation error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples: 
+                paginationError:
+                  $ref: './example-responses-v1.yaml#/components/examples/paginationError'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500' 
+
+components:
+  schemas:
+    merchantBalance:
+      type: object
+      description: Object that contains information about the total funds available to the merchant.
+      title: merchant balance
+      properties:
+        merchantId:
+          type: string
+          description: Unique Identifier of the merchant.
+          example: '4525644354'
+        funds:
+          type: integer
+          description: Value of funds in the currency's lowest denomination, for example, cents.
+          example: 120000
+        pending:
+          type: number
+          description: Value of funds that we have not yet sent to funding recipients. We return this value in the currency's lowest denomination, for example, cents.
+          example: 50050
+        available:
+          type: number
+          description: Value of funds available for funding instructions. We return this value in the currency's lowest denomination, for example, cents.
+          example: 69950
+        currency:
+          type: string
+          description: Currency of the values. The default value is USD.
+          example: USD
+    
+  securitySchemes:
+    bearerAuth:
+      $ref: '../../../common/security/bearer-auth.yaml#/components/securitySchemes/bearerAuth'

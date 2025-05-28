@@ -1,0 +1,176 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  examples:
+    paymentLinkResponse:
+      summary: Payment Link
+      description: Active multi-use payment link.
+      value:
+        type: multiUse
+        paymentLinkId: JZURRJBUPS
+        merchantReference: LinkRef6543
+        order:
+          description: Pie It Forward charitable trust donation
+          charge:
+            type: prompt
+            currency: USD
+        authType: sale
+        paymentMethods:
+          - card
+          - bankTransfer
+        customLabels:
+          - element: paymentButton
+            label: SUPPORT US
+        assets:
+          paymentUrl: https://payments.payroc.com/merchant/pay-by-link?token=02ada211-ff51-4845-b0b5-e685aeb4b19d
+          paymentButton: |
+            <a href="https://payments.payroc.com/merchant/pay-by-link?token=02ada211-ff51-4845-b0b5-e685aeb4b19d" 
+            target="_blank" style="color: #ffffff; background-color: #6C7A89; font-size: 18px; font-family: Helvetica, Arial, sans-serif; 
+            text-decoration: none; border-radius: 30px; padding: 14px 28px; display: inline-block;">SUPPORT US</a>
+        status: active
+        createdOn: '2024-09-24'
+
+    deactivatedPaymentLink:
+      summary: Payment link
+      description: Deactivated multi-use payment link.
+      value:
+        type: multiUse
+        paymentLinkId: JZURRJBUPS
+        merchantReference: LinkRef6543
+        order:
+          description: Pie It Forward charitable trust donation
+          charge:
+            type: prompt
+            currency: USD
+        authType: sale
+        paymentMethods:
+          - card
+          - bankTransfer
+        customLabels:
+          - element: paymentButton
+            label: SUPPORT US
+        assets:
+          paymentUrl: https://payments.payroc.com/merchant/pay-by-link?token=02ada211-ff51-4845-b0b5-e685aeb4b19d
+          paymentButton: |
+            <a href="https://payments.payroc.com/merchant/pay-by-link?token=02ada211-ff51-4845-b0b5-e685aeb4b19d" 
+            target="_blank" style="color: #ffffff; background-color: #6C7A89; font-size: 18px; font-family: Helvetica, Arial, sans-serif; 
+            text-decoration: none; border-radius: 30px; padding: 14px 28px; display: inline-block;">SUPPORT US</a>
+        status: deactivated
+        createdOn: '2024-07-24'
+
+    paginatedPaymentLinks:
+      summary: Payment links
+      description: Paginated list of payment links
+      value:
+        limit: 2
+        count: 2
+        hasMore: true
+        data:
+          - type: multiUse
+            paymentLinkId: JZURRJBUPS
+            merchantReference: LinkRef6543
+            order:
+              description: Pie It Forward charitable trust donation
+              charge:
+                type: prompt
+                currency: USD
+            authType: sale
+            paymentMethods:
+              - card
+              - bankTransfer
+            customLabels:
+              - element: paymentButton
+                label: SUPPORT US
+            assets:
+              paymentUrl: https://payments.payroc.com/merchant/pay-by-link?token=02ada211-ff51-4845-b0b5-e685aeb4b19d
+              paymentButton: |
+                <a href="https://payments.payroc.com/merchant/pay-by-link?token=02ada211-ff51-4845-b0b5-e685aeb4b19d" 
+                target="_blank" style="color: #ffffff; background-color: #6C7A89; font-size: 18px; font-family: Helvetica, Arial, sans-serif; 
+                text-decoration: none; border-radius: 30px; padding: 14px 28px; display: inline-block;">SUPPORT US</a>
+            status: active
+            createdOn: '2024-07-02'
+          - type: singleUse
+            paymentLinkId: CKHP6VVWYT
+            merchantReference: LinkRef7654
+            order:
+              orderId: OrderRef7654
+              description: Large Pepperoni Pizza
+              charge:
+                type: preset
+                amount: 4999
+                currency: USD
+            authType: sale
+            paymentMethods:
+              - card
+            assets:
+              paymentUrl: https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206
+              paymentButton: |
+                <a href="https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206" 
+                target="_blank" style="color: #ffffff; background-color: #6C7A89; font-size: 18px; font-family: Helvetica, Arial, sans-serif; 
+                text-decoration: none; border-radius: 30px; padding: 14px 28px; display: inline-block;">Pay Now</a>
+            status: active
+            createdOn: '2024-09-24'
+            expiresOn: '2024-10-24'
+        links:
+          - rel: next
+            method: get
+            href: https://api.payroc.com/v1/processing-terminals/1001/payment-links?limit=2&after=CKHP6VVWYT
+          - rel: previous
+            method: get
+            href: https://api.payroc.com/v1/processing-terminals/1001/payment-links?limit=2&before=JZURRJBUPS
+
+    paymentLinkShareEvent:
+      summary: Payment link sharing event.
+      description: Payment link sharing event
+      value:
+        sharingMethod: email
+        sharingEventId: GTZH5WVXK9
+        dateTime: '2024-07-02T15:30:00Z'
+        message: |
+          Dear Sarah,
+          
+          You can pay for your order via the link below.
+        recipients:
+          - name: Sarah Hazel Hopper
+            email: sarah.hopper@example.com
+    
+    paginatedSharingEvents:
+      summary: Sharing events
+      description: Paginated list of payment link sharing events
+      value:
+        limit: 2
+        count: 2
+        hasMore: true
+        data:
+          - sharingMethod: email
+            sharingEventId: GKB49GZ6DL
+            dateTime: '2024-07-02T15:30:00Z'
+            message: |
+              Dear Sarah,
+
+              You can pay for your order via the link below.
+            recipients:
+              - name: Sarah Hazel Hopper
+                email: sarah.hopper@example.com
+          - sharingMethod: email
+            sharingEventId: GTZH5WVXK9
+            dateTime: '2024-07-02T15:30:00Z'
+            message: |
+              Dear Sarah,
+
+              Thank you for continuing to support our Pie It Forward charitable trust.
+              You can make your payment via the link below.
+            recipients:
+              - name: Sarah Hazel Hopper
+                email: sarah.hopper@example.com
+        links:
+          - rel: next
+            method: get
+            href: https://api.payroc.com/v1/payment-links/CKHP6VVWYT/sharing-events?limit=2&after=GTZH5WVXK9
+          - rel: previous
+            method: get
+            href: https://api.payroc.com/v1/payment-links/CKHP6VVWYT/sharing-events?limit=2&before=GKB49GZ6DL

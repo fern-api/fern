@@ -1,0 +1,136 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  examples:  
+    parameterError:
+     summary: Bad request 
+     description: One or more validation errors occurred.
+     value:
+      type: 'https://docs.payroc.com/api/errors#bad-request'
+      title: Bad request
+      status: 400
+      detail: One or more validation errors occurred, see error section for more info.
+      errors:
+        - parameter: datefrom
+          detail: invalid date
+          message: 'Expected date, got "abc"'
+
+    paginationError:
+     summary: Bad request 
+     description: One or more validation errors occurred
+     value:
+      type: 'https://docs.payroc.com/api/errors#bad-request'
+      title: Bad request
+      status: 400
+      detail: One or more validation errors occurred, see error section for more info
+      errors:
+        - parameter: before
+          detail: invalid value
+          message: Expected integer, got abc
+
+    outsideRecordRange:
+     summary: Bad request
+     description: Requested data outside allowed range.
+     value:
+      type: 'https://docs.payroc.com/api/errors#bad-request'
+      title: Bad request
+      status: 400
+      detail: One or more validation errors occurred, see error section for more info
+      errors:
+        - parameter: datefrom
+          detail: invalid date
+          message: datefrom cannot be longer than two years ago.
+
+    paginatedList:
+      summary: Paginated activity records
+      description: Valid payfac account with activity for date range.
+      value: 
+        limit: 10
+        count: 10
+        hasMore: true
+        links:
+          - rel: previous
+            method: get
+            href: https://api.payroc.com/v1/funding-activity?before=11&limit=10&datefrom=2024-07-01&dateto=2024-07-03
+          - rel: next
+            method: get
+            href: https://api.payroc.com/v1/funding-activity?after=20&limit=10&datefrom=2024-07-01&dateto=2024-07-03
+        data:
+        - id: 11
+          date: '2024-07-02T17:00:00.000Z'
+          merchant: Pizza Doe
+          description: sales
+          type: credit
+          amount: 4999
+          currency: USD
+        - id: 12
+          date: '2024-07-02T19:32:00.000Z'
+          merchant: Pizza Doe
+          description: sales
+          type: credit
+          amount: 3999
+          currency: USD
+        - id: 13
+          date: '2024-07-02T17:00:00.000Z'
+          merchant: Pizza Doe
+          description: sales
+          type: credit
+          amount: 3299
+          currency: USD
+        - id: 14
+          date: '2024-07-02T17:00:00.000Z'
+          merchant: Pizza Doe
+          recipient: Payroc
+          description: Interchange Fees
+          type: debit
+          amount: 50
+          currency: USD
+        - id: 15
+          date: '2024-07-02T09:10:00.000Z'
+          merchant: Pizza Doe
+          description: sales
+          type: credit
+          amount: 4999
+          currency: USD
+        - id: 16
+          date: '2024-07-02T17:00:00.000Z'
+          merchant: Doe Hot Dogs
+          description: Adjustment
+          type: credit
+          amount: 750
+          currency: USD
+        - id: 17
+          date: '2024-07-02T17:00:00.000Z'
+          merchant: Doe Hot Dogs
+          recipient: Payroc
+          description: Interchange Fees
+          type: debit
+          amount: 5
+          currency: USD
+        - id: 18
+          date: '2024-07-02T17:00:00.000Z'
+          merchant: Pizza Doe
+          recipient: Payroc
+          description: Charge back
+          type: debit
+          amount: 1000
+          currency: USD
+        - id: 19
+          date: '2024-07-02T17:00:00.000Z'
+          merchant: Pizza Doe
+          description: sales
+          type: credit
+          amount: 5999
+          currency: USD
+        - id: 20
+          date: '2024-07-02T17:00:00.000Z'
+          merchant: Pizza Doe
+          recipient: Pizza Doe
+          description: payment
+          type: debit
+          amount: 1000
+          currency: USD

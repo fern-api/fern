@@ -1,0 +1,347 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  schemas:
+    order:
+      required:
+        - amount
+        - currency
+        - orderId
+      type: object
+      description: Object that contains details about the transaction.
+      properties:
+        orderId:
+          maxLength: 24
+          minLength: 1
+          type: string
+          description: A unique identifier assigned by the merchant.
+          example: OrderRef6543
+        dateTime:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Date and time that the processor processed the transaction. Our gateway returns this value in the ISO 8601 format.
+          example: 2024-07-02T15:30:00Z
+        description:
+          maxLength: 1024
+          minLength: 0
+          type: string
+          description: Description of the transaction.
+          example: 'Pizza Doe #1234 - Dinner'
+        amount:
+          type: integer
+          format: int64
+          description: Total amount of the transaction. The value is in the currency’s lowest denomination, for example, cents.
+          example: 2899
+        currency:
+          $ref: '../../../common/schemas/common/currency-v1.yaml#/components/schemas/currency'
+  
+    breakdown:
+      required:
+        - subtotal
+      type: object
+      description: Object that contains information about the breakdown of the transaction.
+      properties:
+        subtotal:
+          type: integer
+          format: int64
+          description: |
+            Total amount of the transaction before tax and fees.
+            The value is in the currency’s lowest denomination, for example, cents.
+          example: 2899
+        cashbackAmount:
+          type: integer
+          format: int64
+          description: Value of cashback for the transaction.
+          example: 0
+        tip:
+          $ref: '#/components/schemas/tip'
+          description: Object that contains tip information for the transaction.
+        taxes:
+          type: array
+          description: List of taxes.
+          items:
+            $ref: '#/components/schemas/tax'
+        surcharge:
+          $ref: '#/components/schemas/surcharge'
+          description: Object that contains surcharge information for the transaction.
+        dualPricing:
+          $ref: '#/components/schemas/dualPricing'
+          description: Object that contains dual pricing information for the transaction.
+  
+    itemizedBreakdown:
+      required:
+        - subtotal
+      type: object
+      description: Object that contains information about the breakdown of the transaction.
+      allOf:
+        - $ref: '#/components/schemas/breakdown'
+        - type: object
+          properties:
+            dutyAmount:
+              type: integer
+              format: int64
+              description: |
+                Value of duties or fees for the transaction in the currency's
+                lowest denomination, for example, cents.
+              example: 0
+            freightAmount:
+              type: integer
+              format: int64
+              description: |
+                Amount for shipping in the currency's lowest denomination, for example, cents.
+              example: 0
+            convenienceFee:
+              $ref: '#/components/schemas/convenienceFee'
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/lineItem'
+                description: Array of 'lineItem' objects. Each object contains information about the items in the transaction.
+  
+    convenienceFee:
+      required:
+        - amount
+      type: object
+      readOnly: true
+      description: Object that contains convenience fee information for the transaction.
+      properties:
+        amount:
+          minimum: 0
+          exclusiveMinimum: true
+          type: integer
+          format: int64
+          description: |
+            If the merchant added a convenience fee, this value indicates the amount of the convenience fee
+            in the currency’s lowest denomination, for example, cents.
+          example: 25
+  
+    lineItem:
+      required:
+        - quantity
+        - unitPrice
+      type: object
+      description: List of line items.
+      properties:
+        commodityCode:
+          maxLength: 45
+          minLength: 0
+          type: string
+          description: Commodity code of the item.
+          example: '5812-0111'
+        productCode:
+          maxLength: 45
+          minLength: 0
+          type: string
+          description: Product code of the item.
+          example: PZA-001-LG
+        description:
+          maxLength: 250
+          minLength: 0
+          type: string
+          description: Description of the item.
+          example: Large Pepperoni Pizza
+        unitOfMeasure:
+          $ref: '../../../common/schemas/common/unit-of-measure-v1.yaml#/components/schemas/unitOfMeasure'
+        unitPrice:
+          type: number
+          description: Price of each unit.
+          minimum: 0
+          exclusiveMinimum: true
+          example: 2709
+        quantity:
+          type: number
+          format: double
+          minimum: 0.0
+          exclusiveMinimum: true
+          description: Number of units.
+          example: 1.0
+        discountRate:
+          type: number
+          format: double
+          description: Discount rate that the merchant applies to the item.
+          minimum: 0.0
+          exclusiveMinimum: true
+          example: 5.0
+        taxes:
+          type: array
+          description: List of taxes to be applied to the item.
+          items:
+            $ref: '#/components/schemas/tax'
+    
+    tax:
+      required:
+        - name
+        - rate
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the tax.
+          maxLength: 64
+          minLength: 1
+          example: Sales Tax
+        rate:
+          type: number
+          format: double
+          description: Tax percentage for the transaction.  
+          maximum: 99.99999
+          exclusiveMaximum: false
+          minimum: 0.0
+          exclusiveMinimum: false
+          example: 7.0
+        amount:
+          type: integer
+          format: int64
+          readOnly: true
+          description: Amount of tax that was applied to the transaction. The value is in the currency's lowest denomination, for example, cents.
+          minimum: 0
+          exclusiveMinimum: true
+          example: 190
+  
+    dualPricing:
+      required:
+        - offered
+      type: object
+      description: Object that contains information about dual pricing.
+      properties:
+        offered:
+          type: boolean
+          description: Indicates if the merchant offers dual pricing to the customer.
+          example: false
+        choiceRate:
+          $ref: '#/components/schemas/choiceRate'
+          description: |
+            Object that contains information about the choice rate.  
+            **Note:** For requests, if the value for **offered** is `true`, you must send this object in the request.
+        alternativeTender:
+          type: string
+          description: |
+            Payment method that the merchant presented to the customer as an alternative to their chosen method.  
+            **Note:** For requests, if the value for **offered** is `true`, you must send a value for **alternativeTender** in the request.
+          enum:
+            - card
+            - cash
+            - bankTransfer
+          example: card
+  
+    surcharge:
+      type: object
+      description: |
+        Object that contains information about the surcharge.
+      properties:
+        bypass:
+          type: boolean
+          description: |
+            Indicates if the merchant wants to remove the surcharge fee from the transaction.  
+            `true` - The gateway removes the surcharge fee from the transaction.  
+            `false` - The gateway adds the fee to the transaction.   
+          example: false
+        amount:
+          minimum: 0
+          exclusiveMinimum: true
+          type: integer
+          format: int64
+          readOnly: true
+          description: | 
+            If the merchant added a surcharge fee, this value indicates the amount of the surcharge fee
+            in the currency’s lowest denomination, for example, cents.
+          example: 50
+        percentage:
+          maximum: 100.0
+          exclusiveMaximum: false
+          minimum: 0.0
+          exclusiveMinimum: true
+          type: number
+          format: double
+          readOnly: true
+          description: If the merchant added a surcharge fee, this value indicates the surcharge percentage.
+          example: 2.0
+  
+    choiceRate:
+      required:
+        - applied
+        - rate
+        - amount
+      type: object
+      description: |
+        The choice rate.  
+        **Note:** This field is required if dual pricing was offered.
+      readOnly: true
+      properties:
+        applied:
+          type: boolean
+          description: |
+            Indicates if the merchant applies a choice rate to the transaction amount. 
+
+            Our gateway adds a choice rate to the transaction when the merchant offers an alternative payment type, but the customer chooses to pay by card.
+          default: false
+          example: true
+        rate:
+          type: number
+          format: double
+          description: |
+            If the customer used a card to pay for the transaction, this value indicates the percentage that our gateway added to the transaction amount.  
+            **Note:** Our gateway returns a value for **rate** only if the value for **applied** in the request is `true`.
+          maximum: 100.0
+          exclusiveMaximum: false
+          minimum: 0.0
+          exclusiveMinimum: true
+          example: 2.5
+        amount:
+          type: integer
+          format: int64
+          description: |
+            If the customer used a card to pay for the transaction, this value indicates the amount that our gateway added to the transaction amount. This value is in the currency’s lowest denomination, for example, cents.  
+            **Note:** Our gateway returns a value for **amount** only if the value for **applied** in the request is `true`.
+          minimum: 0
+          exclusiveMinimum: true
+          example: 75
+
+    tip:
+      required:
+        - type
+      type: object
+      description: Object that contains information about the tip.
+      properties:
+        type:
+          type: string
+          description: |
+            Indicates if the tip is a fixed amount or a percentage.  
+            **Note:** Our gateway applies the percentage tip to the total amount of the transaction after tax.
+          enum:
+            - percentage
+            - fixedAmount
+          example: percentage
+        mode:
+          type: string
+          readOnly: true
+          description: |
+            Indicates how the tip was added to the transaction.
+            - `prompted` – The customer was prompted to add a tip during payment.
+            - `adjusted` – The customer added a tip on the receipt for the merchant to adjust post-transaction.
+          enum:
+            - prompted
+            - adjusted
+          example: prompted
+        amount:
+          minimum: 0
+          exclusiveMinimum: true
+          type: integer
+          format: int64
+          description: |
+            If the value for **type** is `fixedAmount`, the value indicates the tip amount in the currency's lowest denomination, for example, cents.            
+          #example: 500 # Linting won't allow explicit value due to ReDocly getting confused with exclusiveMinimum
+        percentage:
+          maximum: 100
+          exclusiveMaximum: false
+          minimum: 0
+          exclusiveMinimum: true
+          type: number
+          format: double
+          description: If the value for **type** is `percentage`, the value indicates the tip as a percentage.
+          #example: 10 # Linting won't allow explicit value due to ReDocly getting confused with exclusiveMinimum

@@ -1,0 +1,28 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:             
+  parameters:
+    merchantPlatformId:
+      name: merchantPlatformId
+      in: path
+      description: Unique identifier of the merchant platform that we sent to you when you created the merchant platform.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+      example: '12345'
+
+    includeClosed:
+      name: includeClosed
+      in: query          
+      description: Indicates if you want to return closed processing accounts. This includes processing accounts that have a status of `terminated`, `cancelled`, or `rejected`.
+      required: false
+      schema:
+        type: boolean
+        default: false
+      example: false

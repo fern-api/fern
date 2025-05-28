@@ -1,0 +1,98 @@
+openapi: 3.0.3
+
+paths: {}
+
+info:
+  title: Common Domain Models
+  description: Common domain models that are shared across the Payroc API
+  version: '1'
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+
+tags:
+  - name: Common schemas
+    description: Common schemas that can be resued
+
+components:
+  schemas:
+    fundingAccount:
+      required:
+      - nameOnAccount
+      - paymentMethods
+      - type
+      - use
+      type: object
+      title: funding account
+      properties:
+        fundingAccountId:
+          type: integer
+          description: Unique identifier of the funding account.
+          readOnly: true
+          example: 123
+        createdDate:
+          type: string
+          description: Date and time that we received your request to create the funding account in our system.
+          format: date-time
+          example: '2024-07-02T12:00:00.000Z'
+          readOnly: true
+        lastModifiedDate:
+          type: string
+          description: Date and time that the funding account was last modified.
+          format: date-time
+          example: '2024-07-02T12:00:00.000Z'
+          readOnly: true
+        status:
+          type: string
+          description: |
+            Status of the funding account. The value is one of the following:
+            - `approved` - We approved the funding account.
+            - `rejected` - We rejected the funding account.
+            - `pending` - We have not yet approved the funding account.
+            - `hold` - Our Risk team have temporarily placed a hold on the funding account.
+          readOnly: true
+          example: pending
+          enum:
+          - approved
+          - rejected
+          - pending
+          - hold
+        type:
+          type: string
+          description: Type of funding account.
+          enum:
+          - checking
+          - savings
+          - generalLedger
+        use:
+          type: string
+          description: |
+            Indicates if we send funds or withdraw funds from the account.  
+            - `credit` - Send funds to the account.  
+            - `debit` - Withdraw funds from the account.  
+            - `creditAndDebit` - Send funds and withdraw funds from the account.
+          enum:
+          - credit
+          - debit
+          - creditAndDebit
+        nameOnAccount:
+          type: string
+          description: Name of the account holder.
+          example: Jane Doe
+        paymentMethods:
+          description: Array of paymentMethod objects.
+          $ref: './payment-methods-v1.yaml#/components/schemas/paymentMethods'
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: '[Metadata](/api/metadata) object you can use to include custom data with your request.'
+          example:
+            yourCustomField: abc123
+        links:
+          readOnly: true
+          type: array
+          description: Array of HATEOAS links.
+          items:
+            $ref: '../common/link/link-v1.yaml#/components/schemas/link'

@@ -1,0 +1,75 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  schemas:
+    dccOffer:
+      required:
+        - fxAmount
+        - fxCurrency
+        - fxRate
+        - markup
+      type: object
+      description: Object that contains the exchange rates offer for a foreign card.
+      properties:
+        accepted:
+          type: boolean
+          writeOnly: true
+          description: Indicates if the cardholder accepted the dynamic currency conversion (DCC) offer.
+          example: true
+        offerReference:
+          type: string
+          description: Identifier of the DCC offer.
+          example: DCC123456789
+        fxAmount:
+          type: integer
+          format: int64
+          description: Amount in the cardholder’s currency in the currency’s lowest denomination, for example, cents.
+          example: 3955
+        fxCurrency:
+          $ref: '../../../common/schemas/common/currency-v1.yaml#/components/schemas/currency'
+        fxCurrencyCode:
+          maxLength: 3
+          minLength: 3
+          type: string
+          readOnly: true
+          description: Three-digit currency code for the cardholder’s account. This code follows the ISO 4217 standard.
+          example: CAD
+        fxCurrencyExponent:
+          type: integer
+          readOnly: true
+          description: |
+            Number of decimal places between the smallest currency unit and a whole currency unit. 
+            
+            For example, for GBP, the smallest currency unit is 1p and it is equal to £0.01. 
+            If you use GBP, the value for **fxCurrencyExponent** is 2.
+          format: int32
+          example: 2
+        fxRate:
+          type: number
+          description: Foreign exchange rate for the currency.
+          format: double
+          example: 1.37
+        markup:
+          type: number
+          description: Mark-up percentage rate that the DCC provider applies to the foreign exchange rate.
+          format: double
+          example: 3.5
+        markupText:
+          type: string
+          readOnly: true
+          description: Supporting text for the mark-up rate.
+          example: '3.5% mark-up applied.'
+        provider:
+          type: string
+          readOnly: true
+          description: Name of the DCC provider.
+          example: DCC Provider Inc.
+        source:
+          type: string
+          readOnly: true
+          description: Source that the DCC provider uses to get the foreign exchange rates.
+          example: European Central Bank

@@ -1,0 +1,18 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  parameters:
+    processingAccountId:
+      name: processingAccountId
+      in: path
+      description: Unique identifier of the processing account.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+      example: '38765'

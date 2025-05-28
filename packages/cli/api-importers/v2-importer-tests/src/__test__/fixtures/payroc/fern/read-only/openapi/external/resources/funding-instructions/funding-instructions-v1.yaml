@@ -1,0 +1,375 @@
+openapi: 3.0.3
+info:
+  title: Funding
+  description: Actions available to payfac accounts.
+  version: '1'
+  termsOfService: https://www.payroc.com/terms
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+security:
+- bearerAuth: []
+tags:
+  - name: Funding activity
+    description: Activity associated with a payfac account.
+  - name: Funding instructions
+    description: Instructions about how to divide funds between funding recipients.
+
+paths:
+  /funding-instructions:
+    post:
+      tags: [Funding instructions]
+      summary: Create funding instruction
+      description: Create funding instructions to tell us how to divide funds between your funding recipients.
+      operationId: createInstruction
+      parameters:
+        - $ref: '../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/instruction'
+      responses:
+        '201':
+          description: Successful request. We accepted the instructions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instruction'
+              examples:
+                newInstructions:
+                  $ref: './example-responses-v1.yaml#/components/examples/newInstructionAccepted'
+          headers:
+            location:
+              $ref: '../../../common/headers/location-v1.yaml#/components/headers/location'
+        '400':
+          description: Validation error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                insufficientFunds:
+                  $ref: './example-responses-v1.yaml#/components/examples/insufficientFunds'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+                fundingAccountsRestrcited:
+                  $ref: './example-responses-v1.yaml#/components/examples/fundingAccountsRestricted'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '409':
+          description: Conflict
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/409-v1.yaml#/components/schemas/409'
+              examples:
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+    get:
+      tags: [Funding instructions]
+      summary: List funding instructions
+      description: Retrieve a list of funding instructions for a specific date range.
+      operationId: listInstructions
+      parameters:
+        - $ref: '../../../common/parameters/before-v1.yaml#/components/parameters/before'
+        - $ref: '../../../common/parameters/after-v1.yaml#/components/parameters/after'
+        - $ref: '../../../common/parameters/limit-v1.yaml#/components/parameters/limit'
+        - $ref: './parameters-v1.yaml#/components/parameters/dateFrom'
+        - $ref: './parameters-v1.yaml#/components/parameters/dateTo'
+      responses:
+        '200':
+          description: Successful request. Returns a list of funding instructions.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - $ref: '../../../common/schemas/common/paginated-list-v1.yaml#/components/schemas/paginatedList'
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      description: Array of fundingInstruction objects.
+                      items:
+                        allOf:
+                          - $ref: '#/components/schemas/instruction'
+                          - type: object
+                            properties:
+                              link:
+                                $ref: '../../../common/schemas/common/link/link-v1.yaml#/components/schemas/link'
+                  required: [data]
+              examples:
+                listSplitsExample:
+                  $ref: './example-responses-v1.yaml#/components/examples/listInstructionsExample'
+                noActivity:
+                  $ref: '../../../common/responses/no-activity-v1.yaml#/components/examples/noActivity'  
+        '400':
+          description: Validation error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples: 
+                parameterError:
+                  $ref: './example-responses-v1.yaml#/components/examples/parameterError'
+                paginationError:
+                  $ref: './example-responses-v1.yaml#/components/examples/paginationError'
+                outsideRecordRange:
+                  $ref: './example-responses-v1.yaml#/components/examples/outsideRecordRange'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+  /funding-instructions/{instructionId}:
+    parameters:
+      - $ref: './parameters-v1.yaml#/components/parameters/instructionId'
+    get:
+      tags: [Funding instructions]
+      summary: Retrieve funding instruction
+      operationId: getInstruction
+      description: Retrieve a specific funding instruction.
+      responses:
+        '200':
+          description: Successful request. Returns the requested funding instruction.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/instruction'
+        '400':
+          description: Validation error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples: 
+                instructionIdError:
+                  $ref: './example-responses-v1.yaml#/components/examples/instructionIdError'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500' 
+    put: 
+      tags: [Funding instructions]
+      summary: Update funding instruction
+      operationId: updateInstructions
+      description: Update an existing funding instruction.
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/instruction'
+      responses:
+        '204':
+          description: Successful request. We updated the funding instruction.
+        '400':
+          description: Validation error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                insufficientFunds:
+                  $ref: './example-responses-v1.yaml#/components/examples/insufficientFunds'
+                canNotBeModified:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/canNotBeModified'
+                instructionIdError:
+                  $ref: './example-responses-v1.yaml#/components/examples/instructionIdError'
+                fundingAccountsRestrcited:
+                  $ref: './example-responses-v1.yaml#/components/examples/fundingAccountsRestricted'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'  
+    delete:
+      summary: Delete funding instruction
+      description: Delete an existing funding instruction.
+
+      operationId: deleteInstructions
+      tags: [ Funding instructions ]
+      responses:
+        '204':
+          description: Successful request. We deleted the funding instruction.
+        '400':
+          description: Validation error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                canNotBeModified:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/canNotBeModified'
+                instructionIdError:
+                  $ref: './example-responses-v1.yaml#/components/examples/instructionIdError'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+  
+components:
+  schemas:
+    instruction:
+      type: object
+      description: Inform the payfac what to do with the specified funds. **
+      title: funding instruction
+      properties:
+        instructionId:
+          type: integer
+          description: Unique identifier of the funding instruction.
+          example: 64643131
+          readOnly: true
+        createdDate:
+          type: string
+          description: Date that we created the funding instruction.
+          format: datetime
+          example: '2024-07-02T15:30:00Z'
+          readOnly: true
+        lastModifiedDate:
+          type: string
+          description: Date of the most recent change to the funding instruction.
+          format: datetime
+          example: '2024-07-02T15:30:00Z'
+          readOnly: true
+        status:
+          type: string
+          description: Status of the funding instruction.
+          enum: [accepted, pending, completed]
+          readOnly: true
+          example: accepted
+        merchants:
+          type: array
+          description: Array of merchantInstruction objects.
+          items:
+            type: object
+            title: merchant instruction
+            description: Instruction indicating which recipients should receive funding from the specific merchant balance.
+            properties:
+              merchantId:
+                type: string
+                description: Unique identifier of the merchant.
+                example: '4525644354'
+              recipients:
+                type: array
+                description: Array of target fundingAccount objects.
+                minItems: 1
+                items:
+                  type: object
+                  title: target funding account
+                  description: Object that contains information about the target funding account.
+                  required:
+                    - fundingAccountId
+                    - paymentMethod
+                    - amount
+                  properties:
+                    fundingAccountId:
+                      type: integer
+                      description: Unique identifier of the funding account that we pay the funds into.
+                      example: 123
+                    paymentMethod:
+                      type: string
+                      description: Method of payment.
+                      enum:
+                        - ACH
+                      example: ACH
+                    amount:
+                      type: object
+                      description: Object that contains details about the funds.
+                      required:
+                        - value
+                      properties:
+                        value:
+                          type: number
+                          description: Value of funds in the currency's lowest denomination, for example, cents.
+                          example: 120000
+                        currency:
+                          description: Currency of the values. The default value is USD.
+                          type: string
+                          default: USD
+                          enum: 
+                            - USD
+                          example: USD
+                    status:
+                      readOnly: true
+                      type: string
+                      description: Status of the funding instruction.
+                      enum: [accepted, pending, released, funded, failed, rejected, onHold]
+                      example: accepted
+                    metadata:
+                      type: object
+                      additionalProperties:
+                         type: string
+                      description: '[Metadata](/api/metadata) object you can use to include custom data with your request.'
+                      example:
+                        yourCustomField: abc123
+                    link:
+                      readOnly: true
+                      description: Array of HATEOAS links for viewing a funding account.
+                      type: object
+                      properties:
+                        rel:
+                          type: string
+                          example: fundingAccount
+                        method: 
+                          type: string
+                          example: get
+                        href: 
+                          type: string
+                          example: https://api.payroc.com/v1/funding-accounts/123
+              link:
+                readOnly: true
+                description: Array of HATEOAS links to view the merchant.
+                type: object
+                properties:
+                  rel:
+                    type: string
+                    example: merchant
+                  method: 
+                    type: string
+                    example: get
+                  href: 
+                    type: string
+                    example: https://api.payroc.com/v1/merchants/4525644354
+            required:
+              - merchantId
+              - recipients
+            
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: '[Metadata](/api/metadata) object you can use to include custom data with your request.'
+          example:
+            yourCustomField: abc123
+
+  securitySchemes:
+    bearerAuth:
+      $ref: '../../../common/security/bearer-auth.yaml#/components/securitySchemes/bearerAuth'

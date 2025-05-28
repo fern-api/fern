@@ -1,0 +1,88 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  examples:
+    fundingAccountExample:
+      summary: Masked funding account example.
+      value:
+        fundingAccountId: 123
+        createdDate: '2024-07-02T15:30:00Z'
+        lastModifiedDate: '2024-07-02T15:30:00Z'
+        status: pending
+        type: checking
+        use: credit
+        nameOnAccount: Jane Doe
+        paymentMethods:
+          - type: ach
+            value:
+              routingNumber: '*****6789'
+              accountNumber: '******7890'
+        metadata:
+          yourCustomField: abc123
+        links: 
+        - rel: parent
+          href: https://api.payroc.com/v1/merchants/4525644354
+          method: get
+    noResults:
+      summary: No results found
+      description: No results found
+      value:
+        limit: 10
+        count: 0
+        hasMore: false
+        links: []
+        data: []
+    listFundingAccountExample:
+      summary: Paginated funding accounts
+      value: 
+        limit: 2
+        count: 2
+        hasMore: true
+        links:
+          - rel: previous
+            method: get
+            href: https://api.payroc.com/v1/funding-accounts?before=123&limit=2
+          - rel: next
+            method: get
+            href: https://api.payroc.com/v1/funding-accounts?after=124&limit=2
+        data:
+          - fundingAccountId: 123
+            createdDate: '2024-07-02T15:30:00Z'
+            lastModifiedDate: '2024-07-02T15:30:00Z'
+            status: approved
+            type: checking
+            use: credit
+            nameOnAccount: Jane Doe
+            paymentMethods:
+              - type: ach
+                value:
+                  routingNumber: '*****6789'
+                  accountNumber: '******7890'
+            metadata:
+              yourCustomField: abc123
+            links: 
+              - rel: parent
+                href: https://api.payroc.com/v1/merchants/4525644354
+                method: get
+          - fundingAccountId: 124
+            createdDate: '2024-07-02T15:30:00Z'
+            lastModifiedDate: '2024-07-02T15:30:00Z'
+            status: pending
+            type: checking
+            use: debit
+            nameOnAccount: Jane Doe
+            paymentMethods:
+              - type: ach
+                value:
+                  routingNumber: '*****8725'
+                  accountNumber: '******3491'
+            metadata:
+              yourCustomField: abc123
+            links: 
+              - rel: parent
+                href: https://api.payroc.com/v1/funding-recipient/234
+                method: get

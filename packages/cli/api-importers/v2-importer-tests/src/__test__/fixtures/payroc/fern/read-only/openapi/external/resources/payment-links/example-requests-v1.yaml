@@ -1,0 +1,72 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  examples:
+    multiUsePaymentLinkRequest:
+      summary: Multi-use payment link.
+      description: Create a multi-use payment link.
+      value:
+        type: multiUse
+        merchantReference: LinkRef6543
+        order:
+          description: Pie It Forward charitable trust donation
+          charge:
+            type: prompt
+            currency: USD
+        authType: sale
+        paymentMethods:
+          - card
+          - bankTransfer
+        customLabels:
+          - element: paymentButton
+            label: SUPPORT US
+
+    singleUsePaymentLinkRequest:
+      summary: Single-use payment link.
+      description: Create a single-use payment link.
+      value:
+        type: singleUse
+        merchantReference: LinkRef7654
+        order:
+          orderId: OrderRef7654
+          description: Large Pepperoni Pizza
+          charge:
+            type: preset
+            amount: 4999
+            currency: USD
+        authType: sale
+        paymentMethods:
+          - card
+        customLabels:
+          - element: paymentButton
+            label: PAY NOW
+        expiresOn: '2024-08-02'
+
+    sharePaymentLinkRequest:
+      summary: Share a payment link.
+      description: Share a payment link.
+      value:
+        sharingMethod: email
+        merchantCopy: true
+        message: |
+          Dear Sarah,
+          
+          Your insurance is expiring this month.
+          Please, pay the renewal fee by the end of the month to renew it.
+        recipients:
+          - name: Sarah Hazel Hopper
+            email: sarah.hopper@example.com
+    
+    patchPaymentLinkRealistic:
+      summary: Partially update payment link
+      description: | 
+        Partially update an existing payment link.  
+        Structure your request to follow the RFC 6902 standard.
+      value:
+        - op: replace
+          path: /expiresOn
+          value: '2024-10-25'

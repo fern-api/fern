@@ -1,0 +1,66 @@
+openapi: 3.0.3
+
+paths: {}
+
+info:
+  title: Common Domain Models
+  description: Common domain models that are shared across the Payroc API
+  version: '1'
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+
+tags:
+  - name: Common schemas
+    description: Common schemas that can be resued
+
+components:
+  schemas:
+    address:
+      required:
+      - city
+      - country
+      - address1
+      - postalCode
+      - state
+      type: object
+      title: address
+      description: Object that contains information about the address.
+      properties:
+        address1:
+          type: string
+          description: Address Line.
+          example: 1 Example Ave.
+          maxLength: 150
+        address2:
+          type: string
+          description: Address Line.
+          example: Example Address Line 2
+          maxLength: 150
+        address3:
+          type: string
+          description: Address Line.
+          example:  Example Address Line 3
+          maxLength: 150
+        city:
+          type: string
+          description: City.
+          example: Chicago
+          maxLength: 50
+        state:
+          type: string
+          description: Name or postal abbreviation of the state.
+          example: Illinois
+          maxLength: 50
+        country:
+          maxLength: 2
+          minLength: 2
+          type: string
+          description: Two letter ISO 3166-1 country code.
+          example: US
+        postalCode:
+          type: string
+          description: Zip Code or Postcode.
+          example: '60056'
+          maxLength: 10

@@ -1,0 +1,46 @@
+openapi: 3.0.3
+
+paths: {}
+
+info:
+  title: Common Domain Models
+  description: Common domain models that are shared across the Payroc API
+  version: '1'
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+
+tags:
+  - name: Common parameters
+    description: Common parameters that can be resued
+
+components:
+  parameters:
+    batchId:
+      name: batchId
+      description: Unique identifier of the batch.
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: integer
+      example: 12345
+    batchIdQuery:   
+      name: batchId
+      in: query
+      required: true
+      description: Unique identifier of the batch. You must provide either the 'batchId' or the 'date'.
+      schema:
+        type: integer
+      example: 12345
+    keyDate:
+      name: date
+      in: query
+      required: true
+      description: Date to retrieve results from. The format of this value is **YYYY-MM-DD**. You must provide either the 'batchId' or the 'date'.
+      schema:
+        type: string
+        format: date
+      example: '2024-07-01'
+    

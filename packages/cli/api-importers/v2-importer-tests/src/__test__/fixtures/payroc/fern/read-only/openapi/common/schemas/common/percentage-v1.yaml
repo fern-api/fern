@@ -1,0 +1,29 @@
+openapi: 3.0.3
+
+paths: {}
+
+info:
+  title: Common Domain Models
+  description: Common domain models that are shared across the Payroc API
+  version: '1'
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+
+tags:
+  - name: Common schemas
+    description: Common schemas that can be reused
+
+components:
+  schemas:
+    percentage:
+      type: object
+      title: percentage
+      properties:
+        percentage:
+          type: integer
+          description: Percentage amount.
+          format: int32
+      required:
+      - percentage

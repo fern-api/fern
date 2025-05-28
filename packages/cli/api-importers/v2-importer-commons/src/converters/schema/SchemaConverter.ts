@@ -11,6 +11,7 @@ import { MapSchemaConverter } from "./MapSchemaConverter";
 import { ObjectSchemaConverter } from "./ObjectSchemaConverter";
 import { OneOfSchemaConverter } from "./OneOfSchemaConverter";
 import { PrimitiveSchemaConverter } from "./PrimitiveSchemaConverter";
+import { mergeWith } from "lodash-es";
 
 const TYPE_INVARIANT_KEYS = [
     "description",
@@ -184,6 +185,47 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 }
             }
         }
+        if (
+            this.schemaOnlyHasAllowedKeys(["allOf"]) && 
+            Array.isArray(this.schema.allOf) &&
+            this.schema.allOf.length >= 1
+        ) {
+            this.context.logger.debug("Converting schema with allOf");
+
+            let mergedSchema: Record<string, unknown> = {};
+            for (const allOfSchema of this.schema.allOf ?? []) {
+                this.context.logger.debug("Processing allOf schema:", JSON.stringify(allOfSchema, null, 2));
+                
+                if (this.context.isReferenceObject(allOfSchema)) {
+                    this.context.logger.debug("Found reference object in allOf, skipping merge");
+                    return undefined;
+                }
+                mergedSchema = mergeWith(mergedSchema, allOfSchema, (objValue, srcValue) => {
+                    // Skip merging if we've already processed this schema to prevent infinite loops
+                    if (srcValue === allOfSchema) {
+                        return objValue;
+                    }
+                    // If both values are arrays, concatenate them
+                    if (Array.isArray(objValue) && Array.isArray(srcValue)) {
+                        return [...objValue, ...srcValue];
+                    }
+                    // Let lodash handle the rest of the merging
+                    return undefined;
+                });
+            }
+
+            this.context.logger.debug("Merged schema completed");
+
+            const mergedConverter = new SchemaConverter({
+                context: this.context,
+                breadcrumbs: this.breadcrumbs,
+                schema: mergedSchema,
+                id: this.id,
+                inlined: true
+            });
+            return mergedConverter.convert();
+        }
+
         return undefined;
     }
 

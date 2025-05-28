@@ -1,0 +1,24 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  examples:
+    singleUseTokenRequest:
+      summary: Single Use Token
+      description: Single Use Token
+      value:
+        channel: web
+        operator: Jane
+        source:
+          type: card
+          cardDetails:
+            entryMethod: keyed
+            cardholderName: Sarah Hazel Hopper
+            keyedData:
+              dataFormat: plainText
+              cardNumber: '4539858876047062'
+              expiryDate: '1225'
+              cvv: '234'

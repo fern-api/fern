@@ -1,0 +1,733 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  schemas:
+    digitalWalletPayload:
+      required:
+        - type
+        - encryptedData
+        - serviceProvider
+      type: object
+      writeOnly: true
+      title: Digital wallet
+      description: Object that contains information about the payment details in the customer’s digital wallet.
+      properties:
+        type:
+          type: string
+          description: Method that the terminal used to take the payment.
+          enum:
+            - digitalWallet
+        accountType:
+          type: string
+          description: |
+            Indicates the customer’s account type.  
+            **Note:** Credit card transactions don't require **accountType**.
+          enum:
+            - checking
+            - savings
+        serviceProvider:
+          type: string
+          description: Provider of the digital wallet.
+          enum:
+          - apple
+          - google
+        cardholderName:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Cardholder’s name.
+        encryptedData:
+          maxLength: 20480
+          minLength: 128
+          type: string
+          description: Encrypted data of the digital wallet.
+
+    cardPayload:
+      required:
+        - type
+        - cardDetails
+      type: object
+      writeOnly: true
+      title: Card
+      description: Object that contains information about the customer’s payment card.
+      properties:
+        type:
+          type: string
+          description: Method that the terminal used to take the payment.
+          enum:
+            - card
+          example: card
+        accountType:
+          type: string
+          description: |
+            Indicates the customer’s account type.  
+            **Note:** Credit card transactions don't require **accountType**.
+          enum:
+            - checking
+            - savings
+          example: checking
+        cardDetails:
+          type: object
+          discriminator:
+            propertyName: entryMethod
+            mapping:
+              raw: '#/components/schemas/rawCardDetails'
+              icc: '#/components/schemas/iccCardDetails'
+              keyed: '#/components/schemas/keyedCardDetails'
+              swiped: '#/components/schemas/swipedCardDetails'
+          oneOf:
+            - $ref: '#/components/schemas/rawCardDetails'
+            - $ref: '#/components/schemas/iccCardDetails'
+            - $ref: '#/components/schemas/keyedCardDetails'
+            - $ref: '#/components/schemas/swipedCardDetails'
+
+    cardBinPayload:
+      required:
+        - type
+        - bin
+      type: object
+      writeOnly: true
+      title: Card BIN
+      description: Object that contains information about the card's bank identification number (BIN).
+      properties:
+        type:
+          type: string
+          description: Method that the terminal used to take the payment.
+          enum:
+            - cardBin
+          example: cardBin
+        bin:
+          maxLength: 12
+          minLength: 6
+          type: string
+          example: '123456789012'
+
+    secureTokenPayload:
+      required:
+        - type
+        - token
+      type: object
+      writeOnly: true
+      title: Secure token
+      description: Object that contains information about the secure token that represents the customer’s payment details.
+      properties:
+        type:
+          type: string
+          description: Method that the payment device used to take the payment.
+          enum:
+            - secureToken
+          example: secureToken
+        accountType:
+          type: string
+          description: |
+            Indicates the customer’s account type.  
+            **Note:** Credit card transactions don't require **accountType**.
+          enum:
+            - checking
+            - savings
+          example: checking
+        token:
+          maxLength: 19
+          minLength: 12
+          type: string
+          description: Unique token that the gateway assigned to the payment details.
+          example: '1234567890123456789'
+        secCode:
+          type: string
+          description: |
+            Indicates the type of authorization for the transaction. The field is mandatory for ACH secure token.  
+            - `web` – Online transaction.  
+            - `tel` – Telephone transaction.  
+            - `ccd` – Corporate credit card or debit card transaction.  
+            - `ppd` – Pre-arranged transaction.
+            
+          enum:
+            - web
+            - tel
+            - ccd
+            - ppd
+          example: web
+
+    singleUseTokenPayload:
+      required:
+        - type
+        - token
+      type: object
+      writeOnly: true
+      title: Single-use token
+      description: Object that contains information about the single-use token, which represents the customer’s payment details.
+      properties:
+        type:
+          type: string
+          description: Method that the payment device used to take the payment.
+          enum:
+            - singleUseToken
+          example: singleUseToken
+        accountType:
+          type: string
+          description: |
+            Indicates the customer’s account type.  
+            **Note:** Credit card transactions don't require **accountType**.
+          enum:
+            - checking
+            - savings
+          example: checking
+        token:
+          maxLength: 128
+          minLength: 128
+          type: string
+          description: Unique token that the gateway assigned to the payment details.
+          example: abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890
+        pinDetails:
+          type: object
+          discriminator:
+            propertyName: dataFormat
+            mapping:
+              dukpt: './pin-v1.yaml#/components/schemas/dukptPinDetails' 
+              raw: './pin-v1.yaml#/components/schemas/rawPinDetails'
+          oneOf:
+            - $ref: './pin-v1.yaml#/components/schemas/dukptPinDetails'
+            - $ref: './pin-v1.yaml#/components/schemas/rawPinDetails'
+        ebtDetails:
+          $ref: "./ebt-v1.yaml#/components/schemas/ebtDetailsWithVoucher"
+        secCode:
+          type: string
+          description: |
+            Indicates the type of authorization for the transaction. The field is mandatory for ACH secure token. 
+            - `web` – Online transaction.  
+            - `tel` – Telephone transaction.  
+            - `ccd` – Corporate credit card or debit card transaction.  
+            - `ppd` – Pre-arranged transaction.
+            
+          enum:
+            - web
+            - tel
+            - ccd
+            - ppd
+          example: web
+
+    rawCardDetails:
+      required:
+        - entryMethod
+        - device
+        - rawData
+      type: object
+      title: Raw
+      description: Object that contains information about the unencrypted card details.
+      properties:
+        entryMethod:
+          type: string
+          description: Method that the device used to capture the card details.
+          enum:
+            - raw
+          example: raw
+        downgradeTo:
+          type: string
+          description: |
+           If an offline transaction is not approved using the initial entry method, reprocess the transaction using a downgraded entry method.
+           For example, an Integrated Circuit Card (ICC) transaction can be downgraded to a swiped transaction or to a keyed transaction.
+          enum:
+            - keyed
+            - swiped
+          example: swiped
+        device:
+          $ref: "./device-v1.yaml#/components/schemas/device"
+        rawData:
+          maxLength: 2147483647
+          minLength: 1
+          type: string
+          format: hexadecimal
+          description: Unencrypted data from the POS terminal.
+          example: A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF
+        cardholderSignature:
+          type: string
+          description: Cardholder's signature in the format described in the [Special Fields and Parameters](https://worldnet.payroc.com/selfcare:api_specification:special_fields_and_parameters#the_signature_field_format) section.
+          example: a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+
+    iccCardDetails:
+      required:
+        - entryMethod
+        - device
+        - iccData
+      type: object
+      title: Chip
+      description: Object that contains information about the Integrated Circuit Card (ICC).
+      properties:
+        entryMethod:
+          type: string
+          description: Method that the device used to capture the card details.
+          enum:
+            - icc
+          example: icc
+        downgradeTo:
+          type: string
+          description: |
+            If an offline transaction is not approved using the initial entry method, reprocess the transaction using a downgraded entry method. 
+            For example, an Integrated Circuit Card (ICC) transaction can be downgraded to a swiped transaction or a keyed transaction.
+          enum:
+            - keyed
+            - swiped
+          example: swiped
+        device:
+          $ref: "./device-v1.yaml#/components/schemas/encryptionCapableDevice"
+        iccData:
+          type: string
+          format: hexadecimal
+          description: EMV tags in Tag-Length-Value (TLV) format.
+          example: '5A08476173921001010F'
+        firstDigitOfPan:
+          maxLength: 1
+          minLength: 1
+          type: string
+          description: First digit of the card number.
+          example: '4'
+        cardholderSignature:
+          type: string
+          description: Cardholder’s signature. For more information about the format of the signature, see Special Fields and Parameters.
+          example: '012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k1a1b1c0000'
+
+    keyedCardDetails:
+      required:
+        - entryMethod
+        - keyedData
+      type: object
+      title: Keyed
+      description: Object that contains information about the keyed card details.
+      properties:
+        entryMethod:
+          type: string
+          description: Method that the device used to capture the card details.
+          enum:
+            - keyed
+          example: keyed
+        keyedData:
+          type: object
+          discriminator:
+            propertyName: dataFormat
+            mapping:
+              fullyEncrypted: '#/components/schemas/fullyEncryptedKeyedDataFormat'
+              partiallyEncrypted: '#/components/schemas/partiallyEncryptedKeyedDataFormat'
+              plainText: '#/components/schemas/plainTextKeyedDataFormat'
+          oneOf:
+            - $ref: '#/components/schemas/fullyEncryptedKeyedDataFormat'
+            - $ref: '#/components/schemas/partiallyEncryptedKeyedDataFormat'
+            - $ref: '#/components/schemas/plainTextKeyedDataFormat'
+        cardholderName:
+          maxLength: 50
+          minLength: 1
+          type: string
+          description: Cardholder’s name.
+          example: Sarah Hazel Hopper
+        cardholderSignature:
+          type: string
+          description: Cardholder’s signature. For more information about the format of the signature, see Special Fields and Parameters.
+          example: a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+        pinDetails:
+          type: object
+          discriminator:
+            propertyName: dataFormat
+            mapping:
+              dukpt: './pin-v1.yaml#/components/schemas/dukptPinDetails'
+          oneOf:
+            - $ref: './pin-v1.yaml#/components/schemas/dukptPinDetails'
+        ebtDetails:
+          $ref: "./ebt-v1.yaml#/components/schemas/ebtDetailsWithVoucher"
+
+    swipedCardDetails:
+      required:
+        - entryMethod
+        - swipedData
+      type: object
+      title: Swiped
+      description: Object that contains information about the customer’s card details for swiped transactions.
+      properties:
+        entryMethod:
+          type: string
+          description: Method that the device used to capture the card details.
+          enum:
+            - swiped
+          example: swiped
+        downgradeTo:
+          type: string
+          description: |
+            If an offline transaction is not approved using the initial entry method, reprocess the transaction using a downgraded entry method. 
+            For example, a swiped transaction can be downgraded to a keyed transaction.
+          enum:
+            - keyed
+            - swiped
+          example: swiped
+        swipedData:
+          type: object
+          discriminator:
+            propertyName: dataFormat
+            mapping:
+              encrypted: '#/components/schemas/encryptedSwipedDataFormat'
+              plainText: '#/components/schemas/plainTextSwipedDataFormat'
+          oneOf:
+            - $ref: '#/components/schemas/encryptedSwipedDataFormat'
+            - $ref: '#/components/schemas/plainTextSwipedDataFormat'
+        cardholderName:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Cardholder’s name.
+          example: Sarah Hazel Hopper
+        cardholderSignature:
+          type: string
+          description: Cardholder’s signature. For more information about the format of the signature, see Special Fields and Parameters.
+          example: a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+        pinDetails:
+          type: object
+          discriminator:
+            propertyName: dataFormat
+            mapping:
+              dukpt: './pin-v1.yaml#/components/schemas/dukptPinDetails'
+          oneOf:
+            - $ref: "./pin-v1.yaml#/components/schemas/dukptPinDetails"
+        ebtDetails:
+          $ref: "./ebt-v1.yaml#/components/schemas/ebtDetailsWithVoucher"
+
+    plainTextKeyedDataFormat:
+      required:
+        - dataFormat
+        - cardNumber
+      type: object
+      title: Unencrypted
+      description: Object that contains information about the plain-text card data for keyed transactions.
+      properties:
+        dataFormat:
+          type: string
+          description: |
+            Indicates the data format of the customer’s card data.
+            -	`plainText` – Data is not truncated and shows the raw data.
+            -	`fullyEncrypted` – Data is truncated to show only the first digit of the customer’s account number.
+            -	`partiallyEncrypted` – Data is truncated to show only the first six digits and the last four digits of the customer’s card number.
+          enum:
+            - plainText
+          example: plainText
+        device:
+          $ref: "./device-v1.yaml#/components/schemas/device"
+        cardNumber:
+          maxLength: 19
+          minLength: 12
+          type: string
+          description: Customer’s card number.
+          example: '4539858876047062'
+        expiryDate:
+          pattern: "[0-9]{4}"
+          type: string
+          description: | 
+            Expiry date of the customer’s card.  
+            **Note:** This field is required for most BIN lookups or electronic voucher transactions.
+          example: '1225'          
+        cvv:
+          pattern: "[0-9]{3,4}"
+          type: string
+          description: Security code of the customer’s card.
+          example: '234'
+        issueNumber:
+          pattern: "[0-9]{1,2}"
+          type: string
+          description: Issue number of the customer’s card.
+          example: '78'
+  
+    fullyEncryptedKeyedDataFormat:
+      required:
+        - dataFormat
+        - device
+        - encryptedData
+      type: object
+      title: Encrypted
+      description: Object that contains information about the encrypted card data for keyed transactions.
+      properties:
+        dataFormat:
+          type: string
+          description: |
+            Indicates the data format of the customer’s card data.
+            -	`plainText` – Data is not truncated and shows the raw data.
+            -	`fullyEncrypted` – Data is truncated to show only the first digit of the customer’s account number.
+            -	`partiallyEncrypted` – Data is truncated to show only the first six digits and the last four digits of the customer’s card number.
+          enum:
+            - fullyEncrypted
+          example: fullyEncrypted
+        device:
+          $ref: "./device-v1.yaml#/components/schemas/encryptionCapableDevice"
+        encryptedData:
+          maxLength: 2147483647
+          minLength: 1
+          type: string
+          description: Encrypted card data.
+          format: hexadecimal
+          example: A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF
+        firstDigitOfPan:
+          maxLength: 1
+          minLength: 1
+          type: string
+          description: First digit of the customer’s card number.
+          example: '4'
+    
+    partiallyEncryptedKeyedDataFormat:
+      required:
+        - dataFormat
+        - device
+        - encryptedPan
+        - expiryDate
+        - maskedPan
+      type: object
+      title: Partially encrypted
+      description: Object that contains information about the partially-encrypted card data for keyed transactions.
+      properties:
+        dataFormat:
+          type: string
+          description: |
+            Indicates the data format of the customer’s card data.
+            -	`plainText` – Data is not truncated and shows the raw data.
+            -	`fullyEncrypted` – Data is truncated to show only the first digit of the customer’s account number.
+            -	`partiallyEncrypted` – Data is truncated to show only the first six digits and the last four digits of the customer’s card number.
+          enum:
+            - partiallyEncrypted
+          example: partiallyEncrypted
+        device:
+          $ref: "./device-v1.yaml#/components/schemas/encryptionCapableDevice"
+        encryptedPan:
+          maxLength: 2147483647
+          minLength: 1
+          type: string
+          format: hexadecimal
+          description: Encrypted card number.
+          example: A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF
+        maskedPan:
+          maxLength: 19
+          minLength: 12
+          type: string
+          description: |
+            Masked card number. 
+            The gateway shows only the first six digits and the last four digits of the account number. For example, `453985******7062`.
+          example: '453985******7062'
+        expiryDate:
+          pattern: "[0-9]{4}"
+          type: string
+          description: Expiry date of the customer’s card.
+          example: '1225'
+        cvv:
+          pattern: "[0-9]{3,4}"
+          type: string
+          description: Security code of the customer’s card.
+          example: '234'
+        cvvEncrypted:
+          type: string
+          format: hexadecimal
+          description: Encrypted security code data.
+        issueNumber:
+          pattern: "[0-9]{1,2}"
+          type: string
+          description: Issue number of the customer’s card.
+          example: '78'
+  
+    encryptedSwipedDataFormat:
+      required:
+        - dataFormat
+        - device
+        - encryptedData
+      type: object
+      title: Encrypted
+      description: Object that contains information about the encrypted swiped card data.
+      properties:
+        dataFormat:
+          type: string
+          description: |
+            Indicates the method the customer’s card data is encrypted.
+            Send swiped card data in encrypted format or `plainText` format.
+          enum:
+            - encrypted
+          example: encrypted
+        device:
+          $ref: "./device-v1.yaml#/components/schemas/encryptionCapableDevice"
+        encryptedData:
+          maxLength: 2147483647
+          minLength: 1
+          type: string
+          format: hexadecimal
+          description: Encrypted data received from the magnetic stripe reader.
+          example: 'A1B2C3D4E5F67890ABCD1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF'
+        firstDigitOfPan:
+          maxLength: 1
+          minLength: 1
+          type: string
+          description: First digit of the of the card number.
+          example: '4'
+        fallback:
+          type: boolean
+          description: Indicates a technical issue with the ICC transaction that resulted in the terminal falling back to a magnetic stripe transaction.
+          example: true
+        fallbackReason:
+          type: string
+          description: Explains the reason for the fallback.
+          enum:
+            - technical
+            - repeatFallback
+            - emptyCandidateList
+          example: technical
+  
+    plainTextSwipedDataFormat:
+      required:
+        - dataFormat
+        - device
+        - trackData
+      type: object
+      title: Unencrypted
+      description: Object that contains information about plain-text swiped card data.
+      properties:
+        dataFormat:
+          type: string
+          description: |
+            Indicates the method the customer’s card data is encrypted.
+            Send swiped card data in encrypted format or `plainText` format.
+          enum:
+            - plainText
+          example: plainText
+        device:
+          $ref: "./device-v1.yaml#/components/schemas/device"
+        trackData:
+          maxLength: 256
+          minLength: 16
+          type: string
+          description: Customer’s card data from the swiped transaction.
+          example: '1234567890123456789012345678901234567890'
+        fallback:
+          type: boolean
+          description: Indicates a technical issue with the ICC transaction that resulted in the terminal falling back to a magnetic stripe transaction.
+          example: true
+        fallbackReason:
+          type: string
+          description: Explains the reason for the fallback.
+          enum:
+            - technical
+            - repeatFallback
+            - emptyCandidateList
+          example: technical
+  
+    achPayload:
+      required:
+        - type
+        - accountNumber
+        - nameOnAccount
+        - routingNumber
+      type: object
+      writeOnly: true
+      title: ACH
+      description: Object that contains information about the payment details for the customer’s automated clearing house (ACH) transactions.
+      properties:
+        type:
+          type: string
+          description: Method that the terminal used to take the payment.
+          enum:
+            - ach
+          example: ach
+        accountType:
+          type: string
+          description: |
+            Indicates the customer’s account type.  
+            **Note:** Credit card transactions don't require **accountType**.
+          enum:
+            - checking
+            - savings
+          example: checking
+        secCode:
+          type: string
+          description: |
+           Indicates the type of authorization for the transaction.  
+           - `web` – Online transaction.  
+           - `tel` – Telephone transaction.  
+           - `ccd` – Corporate credit card or debit card transaction.  
+           - `ppd` – Pre-arranged transaction.
+          enum:
+          - web
+          - tel
+          - ccd
+          - ppd
+          example: web
+        nameOnAccount:
+          maxLength: 50
+          minLength: 1
+          type: string
+          description: Customer's name.
+          example: Shara Hazel Hopper
+        accountNumber:
+          maxLength: 17
+          minLength: 4
+          pattern: ^[0-9]*$
+          type: string
+          description: |
+           Customer’s bank account number.  
+           **Note:** In responses, our gateway shows only the last four digits of the account number. For example, `*****5929`.
+          example: '1234567890'
+        routingNumber:
+          maxLength: 9
+          minLength: 9
+          pattern: ^[0-9]*$
+          type: string
+          description: Routing number of the customer’s account.
+          example: '123456789'
+
+    padPayload:
+      required:
+        - type
+        - nameOnAccount
+        - accountNumber
+        - transitNumber
+        - institutionNumber
+      type: object
+      writeOnly: true
+      title: PAD
+      description: Object that contains information about the payment details for the customer’s preauthorized electronic debit (PAD) transactions.
+      properties:
+        type:
+          type: string
+          description: Method that the payment device used to take the payment.
+          enum:
+            - pad
+          example: pad
+        accountType:
+          type: string
+          description: |
+            Indicates the customer’s account type.  
+            **Note:** Credit card transactions don't require **accountType**.
+          enum:
+            - checking
+            - savings
+          example: checking
+        nameOnAccount:
+          maxLength: 29
+          minLength: 1
+          type: string
+          description: Customer's name.
+          example: Sarah Hazel Hopper
+        accountNumber:
+          maxLength: 12
+          minLength: 7
+          pattern: ^[0-9]*$
+          type: string
+          description: |
+           Customer’s account number.  
+           **Note:** In responses, our gateway shows only the last four digits of the account number. For example, `*****5929`.
+          example: '1234567890'
+        transitNumber:
+          maxLength: 5
+          minLength: 5
+          pattern: ^[0-9]*$
+          type: string
+          description: Five-digit code that represents the customer’s bank branch.
+          example: '76543'
+        institutionNumber:
+          maxLength: 3
+          minLength: 3
+          pattern: ^[0-9]*$
+          type: string
+          description: Three-digit code that represents the customer’s bank.
+          example: '543'
+  

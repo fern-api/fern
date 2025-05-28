@@ -1,0 +1,28 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  parameters:
+    processingTerminalIdPath:
+      name: processingTerminalId
+      in: path
+      required: true
+      description: Unique identifier that we assigned to the terminal.
+      schema:
+        maxLength: 50
+        minLength: 4
+        type: string
+      example: '1234001'
+
+    processingTerminalIdQuery:
+      name: processingTerminalId
+      in: query
+      description: Filter by terminal ID.
+      schema:
+        maxLength: 50
+        minLength: 4
+        type: string
+        example: '1234001'

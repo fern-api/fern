@@ -1,0 +1,26 @@
+openapi: 3.0.3
+
+paths: {}
+
+info:
+  title: Common Domain Models
+  description: Common domain models that are shared across the Payroc API
+  version: '1'
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+
+tags:
+  - name: Common headers
+    description: Common headers that can be resued
+
+components:
+  headers:
+    location:
+      description: URI reference to created resource.
+      style: simple
+      explode: false
+      schema:
+        type: string
+      example: '<uri>'

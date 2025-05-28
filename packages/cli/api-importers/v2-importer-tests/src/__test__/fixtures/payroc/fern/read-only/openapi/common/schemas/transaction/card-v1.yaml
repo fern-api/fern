@@ -1,0 +1,284 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  schemas:
+    card:
+      required:
+        - cardNumber
+        - entryMethod
+        - expiryDate
+        - type
+      type: object
+      description: Object that contains information about the card.
+      properties:
+        type:
+          type: string
+          description: Card brand that the card is linked to. For example, Visa.
+          example: Visa
+        entryMethod:
+          type: string
+          description: Method that the device used to capture the card details.
+          enum:
+            - icc
+            - keyed
+            - swiped
+            - swipedFallback
+            - contactlessIcc
+            - contactlessMsr
+          example: contactlessIcc
+        cardholderName:
+          maxLength: 50
+          minLength: 1
+          type: string
+          description: Cardholder’s name.
+          example: Sarah Hazel Hopper
+        cardholderSignature:
+          type: string
+          description: Cardholder’s signature.
+          example: a1b1c012345678a000b000c0012345d0e0f010g10061a031i001j071k0a1b0c1d0e1234567890120f1g0h1i0j1k0a1b0123451c012d0e1f0g1h0i1j123k1a1b1c1d1e1f1g123h1i1j1k1a1b1c1d1e1f1g123h123i1j123k12340a120a12345b012c0123012d0d1e0f1g0h1i123j123k10000
+        cardNumber:
+          maxLength: 19
+          minLength: 12
+          type: string
+          description: |
+            Masked card number. Our gateway shows only the first six digits and the last four digits of the card number, for example, 548010******5929.
+          example: '4539858876047062'
+        expiryDate:
+          pattern: "[0-9]{4}"
+          type: string
+          description: Expiration date of the card. The format of this value is **MMYY**.
+          example: '0725'
+        secureToken:
+          $ref: "../../../common/schemas/transaction/summary-v1.yaml#/components/schemas/secureTokenSummary"
+        securityChecks:
+          $ref: '#/components/schemas/securityCheck'
+        emvTags:
+          type: array
+          uniqueItems: true
+          description: Array of emvTag objects.
+          items:
+            $ref: "#/components/schemas/emvTag"
+          example:
+            - hex: 9F36
+              value: '001234'
+            - hex: 5F2A
+              value: '0840'
+        balances:
+          type: array
+          description: |
+            Array of cardBalance objects.  
+            Our gateway returns this array only when the customer uses an Electronic Benefit Transfer (EBT) card.  
+            **Note:** This field reflects the remaining balance on the card after deducting the amount of this transaction.
+          items:
+            $ref: "#/components/schemas/cardBalance"
+          example:
+            - benefitCategory: cash
+              amount: 50000
+              currency: USD
+            - benefitCategory: foodStamp
+              amount: 10000
+              currency: USD
+
+    cardBalance:
+      required:
+        - amount
+        - benefitCategory
+        - currency
+      type: object
+      description: Object that contains information about the total funds available in the card.
+      properties:
+        benefitCategory:
+          type: string
+          description: |
+            Indicates if the balance relates to an EBT Cash account or EBT SNAP account.  
+            - `cash` – EBT Cash  
+            - `foodStamp` – EBT SNAP
+          enum:
+            - cash
+            - foodStamp
+          example: cash
+        amount:
+          type: integer
+          format: int64
+          description: Current balance of the account. This value is in the currency's lowest denomination, for example, cents.
+          example: 50000
+        currency:
+          $ref: '../../../common/schemas/common/currency-v1.yaml#/components/schemas/currency'
+
+    securityCheck:
+      type: object
+      description: Object that contains information about card verification and security checks. 
+      properties:
+        cvvResult:
+          type: string
+          description: |
+            Indicates if the card verification value (CVV) that the customer provided in the request matches the CVV on the card.  
+            - `M` – The CVV matches the card’s CVV.  
+            - `N` – The CVV doesn’t match the card’s CVV.  
+            - `P` – The CVV wasn’t processed.  
+            - `U` – The CVV isn’t registered.  
+            
+            **Note:** Our gateway doesn’t automatically decline transactions when the CVV doesn’t match the card’s CVV, unless the merchant selects this setting in their account.
+          enum:
+            - M
+            - N
+            - P
+            - U
+          example: M
+        avsResult:
+          type: string
+          description: |
+            Indicates if the address that the customer provided in the request matches the address linked to the card.
+            
+            - `Y` – The address in the request matches the address linked to the card.  
+            - `N` – The address in the request doesn’t match the address linked to the card.  
+            - `A` – The street address matches, but ZIP code or postal code doesn’t match.  
+            - `Z` - The ZIP code or postal code matches, but street address doesn’t match.  
+            - `U` – The address information is unavailable.  
+            - `G` – The issuer or card brand doesn’t support the Address Verification Service (AVS).  
+            - `R` – The AVS is currently unavailable. Try again later.  
+            - `S` – There was no AVS data in the request, or it was sent in the wrong format.  
+            - `F` - For UK addresses, the address in the request matches the address linked to the card.  
+            - `W` – For US addresses, the nine-digit ZIP code or postal code in the request matches the address linked to the card but the street address doesn’t.  
+            - `X` – For US addresses, the nine-digit ZIP code or postal code and the street address matches the address linked to the card.  
+              
+            **Note:** Our gateway doesn’t automatically decline transactions when the address doesn’t match the address linked to the card, 
+            unless the merchant selects this setting in their account.
+
+          enum:
+            - Y
+            - A
+            - Z
+            - N
+            - U
+            - R
+            - G
+            - S
+            - F
+            - W
+            - X
+          example: Y
+
+    emvTag:
+      required:
+        - hex
+        - value
+      type: object
+      description: Object that contains information about the EMV tag.
+      properties:
+        hex:
+          type: string
+          description: Hex code of the EMV tag.
+          example: 9F36
+        value:
+          type: string
+          description: Value of the EMV tag.
+          example: '001234'
+
+    cardInfo:
+      required:
+        - type
+        - cardNumber
+      type: object
+      readOnly: true
+      properties:
+        type:
+          type: string
+          description: Card brand, for example, Visa.
+        cardNumber:
+          maxLength: 19
+          minLength: 12
+          type: string
+          description: Masked card number. Our gateway shows only the first six digits and the last four digits of the card number, for example, 548010******5929.
+        country:
+          type: string
+          format: iso-3166-1
+          description: Country of the issuing bank.
+        currency:
+          $ref: '../../../common/schemas/common/currency-v1.yaml#/components/schemas/currency'
+        debit:
+          type: boolean
+          description: Indicates if the card is a debit card.
+        surcharging:
+          $ref: "#/components/schemas/surcharging"
+      description: Object that contains information about the card.
+
+    cardSource:
+      required:
+        - type
+        - cardholderName
+        - cardNumber
+      type: object
+      title: Card
+      description: Object that contains the customer's card details.
+      properties:
+        type:
+          description: Type of payment.
+          type: string
+          enum:
+            - card
+          example: card
+        cardholderName:
+          maxLength: 50
+          minLength: 1
+          type: string
+          description: Cardholder's name.
+          example: Sarah Hazel Hopper
+        cardNumber:
+          maxLength: 19
+          minLength: 12
+          type: string
+          description: Primary account number of the customer's card.
+          example: '4539858876047062'
+        expiryDate:
+          pattern: "[0-9]{4}"
+          type: string
+          description: Expiry date of the customer's card.
+          example: '1225'
+        cardType:
+          type: string
+          description: The card type.
+        currency:
+          $ref: '../../../common/schemas/common/currency-v1.yaml#/components/schemas/currency'
+        debit:
+          type: boolean
+          description: Indicates if the card is a debit card.
+        surcharging:
+          $ref: '#/components/schemas/surcharging'
+
+    surcharging:
+      required:
+        - allowed
+      type: object
+      description: Object that contains surcharge information. Our gateway returns this object only if the merchant adds a surcharge to transactions.
+      properties:
+        allowed:
+          type: boolean
+          description: Indicates if the merchant can add a surcharge when the customer uses this card.
+          example: true
+        amount:
+          minimum: 0
+          exclusiveMinimum: true
+          type: integer
+          format: int64
+          description: |
+            Surcharge amount to add to the transaction.  
+            **Note:** Our gateway returns **amount** only if the request contained an example transaction amount.
+          example: 87
+        percentage:
+          maximum: 100
+          exclusiveMaximum: false
+          minimum: 0
+          exclusiveMinimum: true
+          type: number
+          format: double
+          description: Surcharge rate that the merchant configures on their account.
+          example: 3.0
+        disclosure:
+          type: string
+          description: Statement used to disclose the surcharge fee to the customer.
+          example: "A 3% surcharge is applied to cover processing fees."

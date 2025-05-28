@@ -1,0 +1,809 @@
+openapi: 3.0.3
+info:
+  title: Transaction API
+  version: '1'
+  termsOfService: https://www.payroc.com/terms
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+servers:
+  - url: https://api.payroc.com/v1
+    description: Production
+  - url: https://api.uat.payroc.com/v1
+    description: UAT
+
+security:
+- bearerAuth: []
+
+tags: 
+  - name: Payment links
+    description: Create and manage payment links.
+
+paths:
+  /processing-terminals/{processingTerminalId}/payment-links:
+    post:
+      tags:
+        - Payment links
+      summary: Create payment link
+      description: |  
+        Use this method to create a payment link that a customer can use to make a payment for goods or services. The request contains the following settings for the payment link:
+        - **type** - Indicates whether the link can be used only once or if it can be used multiple times.
+        - **authType** - Indicates whether the transaction is a sale or a pre-authorization.
+        - **paymentMethod** - Indicates the payment methods that the merchant accepts.
+        - **charge** - Indicates whether the merchant or the customer enters the amount for the transaction.
+        The response contains a paymentLinkId that you can use to [share the payment link](#sharePaymentLink) or to [retrieve information about the link](#retrievePaymentLink).
+      operationId: createPaymentLink
+      parameters:
+        - $ref: ../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey
+        - $ref: ../../../common/parameters/processing-terminal-id-v1.yaml#/components/parameters/processingTerminalIdPath
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              oneOf:
+                - $ref: '#/components/schemas/multiUsePaymentLink'
+                - $ref: '#/components/schemas/singleUsePaymentLink'
+            examples:
+              multiUsePaymentLinkRequest:
+                $ref: './example-requests-v1.yaml#/components/examples/multiUsePaymentLinkRequest'
+              singleUsePaymentLinkRequest:
+                $ref: './example-requests-v1.yaml#/components/examples/singleUsePaymentLinkRequest'
+        required: true
+      responses:
+        201:
+          description: Successful request. We created the payment link.
+          content:
+            application/json:
+              schema:
+                type: object
+                oneOf:
+                  - $ref: '#/components/schemas/multiUsePaymentLink'
+                  - $ref: '#/components/schemas/singleUsePaymentLink'
+              examples:
+                createdPaymentLink:
+                  $ref: './example-responses-v1.yaml#/components/examples/paymentLinkResponse'
+          headers:
+            location:
+              $ref: '../../../common/headers/location-v1.yaml#/components/headers/location'
+        400:
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+        401:
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        403:
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        404:
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        406:
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        409:
+          $ref: ../../../common/responses/errors/409-v1.yaml#/components/responses/409
+        415:
+          $ref: ../../../common/responses/errors/415-v1.yaml#/components/responses/415
+        500:
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+    get:
+      tags:
+        - Payment links
+      summary: List payment links
+      description: Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of payment links for a processing terminal.
+      operationId: listPaymentLinks
+      parameters:
+        - $ref: ../../../common/parameters/processing-terminal-id-v1.yaml#/components/parameters/processingTerminalIdPath
+        - $ref: './parameters-v1.yaml#/components/parameters/merchantReference'
+        - $ref: './parameters-v1.yaml#/components/parameters/linkType'
+        - $ref: './parameters-v1.yaml#/components/parameters/chargeType'
+        - $ref: './parameters-v1.yaml#/components/parameters/payment-link-status'
+        - $ref: './parameters-v1.yaml#/components/parameters/recipientName'
+        - $ref: './parameters-v1.yaml#/components/parameters/recipientEmail'
+        - $ref: './parameters-v1.yaml#/components/parameters/createdOn'
+        - $ref: './parameters-v1.yaml#/components/parameters/expiresOn'
+        - $ref: '../../../common/parameters/before-v1.yaml#/components/parameters/before'
+        - $ref: '../../../common/parameters/after-v1.yaml#/components/parameters/after'
+        - $ref: '../../../common/parameters/limit-v1.yaml#/components/parameters/limit'
+      responses:
+        200:
+          description: Successful request. Returns a [paginated](https://docs.payroc.com/api/pagination) list of payment links.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/paymentLinkPaginatedList'
+              examples:
+                paginatedResults:
+                  $ref: './example-responses-v1.yaml#/components/examples/paginatedPaymentLinks'
+                noActivity:
+                  $ref: '../../../common/responses/no-activity-v1.yaml#/components/examples/noActivity'
+        400:
+          $ref: ../../../common/responses/errors/400-v1.yaml#/components/responses/400
+        401:
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        403:
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        404:
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        406:
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        500:
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+  /payment-links/{paymentLinkId}:
+    get:
+      tags:
+        - Payment links
+      summary: Retrieve payment link
+      description: |  
+        Use this method to retrieve information about a payment link.
+        You need the paymentLinkId that we sent to you when you created the payment link.
+      operationId: retrievePaymentLink
+      parameters:
+        - $ref: './parameters-v1.yaml#/components/parameters/paymentLinkId'
+      responses:
+        200:
+          description: Successful request. Returns the payment link.
+          content:
+            application/json:
+              schema:
+                type: object
+                oneOf:
+                  - $ref: '#/components/schemas/multiUsePaymentLink'
+                  - $ref: '#/components/schemas/singleUsePaymentLink'
+              examples:
+                paymentLink:
+                  $ref: './example-responses-v1.yaml#/components/examples/paymentLinkResponse'
+        400:
+          $ref: ../../../common/responses/errors/400-v1.yaml#/components/responses/400
+        401:
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        403:
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        404:
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        406:
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        500:
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+    patch:
+      tags:
+        - Payment links
+      summary: Update payment link
+      description: | 
+        Use this method to partially update a payment link. Structure your request to follow the [RFC 6902](https://datatracker.ietf.org/doc/html/rfc6902) standard.
+        
+        You can update the following properties of a multi-use link:
+        - **expiresOn parameter** - Expiration date of the link.
+        - **customLabels object** - Label for the payment button.
+        - **credentialOnFile object** - Settings for saving the customer's payment details.
+        
+        You can update the following properties of a single-use link:
+        - **expiresOn parameter** - Expiration date of the link.
+        - **authType parameter** - Transaction type of the payment link.
+        - **amount parameter** - Total amount of the transaction.
+        - **currency parameter** - Currency of the transaction.
+        - **description parameter** - Brief description of the transaction.
+        - **customLabels object** - Label for the payment button.
+        - **credentialOnFile object** - Settings for saving the customer's payment details.
+
+        **Note:** When a merchant updates a single-use link, we update the payment URL and HTML code in the assets object. The customer can't use the original link to make a payment.
+      operationId: updatePaymentLink
+      parameters:
+        - $ref: ../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey
+        - $ref: './parameters-v1.yaml#/components/parameters/paymentLinkId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../../../common/schemas/common/patch-request-v1.yaml#/components/schemas/patchRequest
+            examples:
+              patchPaymentLinkRealistic:
+                $ref: './example-requests-v1.yaml#/components/examples/patchPaymentLinkRealistic'
+              patchOperations:
+                $ref: '../../../common/requests/patch-v1.yaml#/components/examples/patchOperations'  
+        required: true
+      responses:
+        200:
+          description: Successful request. We updated the payment link.
+          content:
+            application/json:
+              schema:
+                type: object
+                oneOf:
+                  - $ref: '#/components/schemas/multiUsePaymentLink'
+                  - $ref: '#/components/schemas/singleUsePaymentLink'
+              examples:
+                paymentLink:
+                  $ref: './example-responses-v1.yaml#/components/examples/paymentLinkResponse'
+        400:
+          $ref: ../../../common/responses/errors/400-v1.yaml#/components/responses/400
+        401:
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        403:
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        404:
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        406:
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        409:
+          $ref: ../../../common/responses/errors/409-v1.yaml#/components/responses/409
+        415:
+          $ref: ../../../common/responses/errors/415-v1.yaml#/components/responses/415
+        500:
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+  /payment-links/{paymentLinkId}/sharing-events:
+    post:
+      tags:
+        - Payment links
+      summary: Share payment link
+      description: |  
+        Use this method to email a payment link that the merchant has already created.
+        **Note:** To create a payment link, go to [Create payment link](#createPaymentLink).
+      operationId: sharePaymentLink
+      parameters:
+        - $ref: '../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey'
+        - $ref: './parameters-v1.yaml#/components/parameters/paymentLinkId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              oneOf:
+                - $ref: '#/components/schemas/paymentLinkEmailShareEvent'
+            examples:
+              sharePaymentLinkRequest:
+                $ref: './example-requests-v1.yaml#/components/examples/sharePaymentLinkRequest'
+      responses:
+        201:
+          description: Successful request. We shared the payment link.
+          content:
+            application/json:
+              schema:
+                type: object
+                oneOf:
+                  - $ref: '#/components/schemas/paymentLinkEmailShareEvent'
+              examples:
+                paymentLinkShareEvent:
+                  $ref: './example-responses-v1.yaml#/components/examples/paymentLinkShareEvent'
+        400:
+          $ref: ../../../common/responses/errors/400-v1.yaml#/components/responses/400
+        401:
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        403:
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        404:
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        406:
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        409:
+          $ref: ../../../common/responses/errors/409-v1.yaml#/components/responses/409
+        415:
+          $ref: ../../../common/responses/errors/415-v1.yaml#/components/responses/415
+        500:
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+    get:
+      tags:
+        - Payment links
+      summary: List payment link sharing events.
+      description: Use this method to retrieve a [paginated](https://docs.payroc.com/api/pagination) list of sharing events for a payment link. A sharing event occurs when a merchant shares a payment link with a customer.
+      operationId: listPaymentLinkShareEvents
+      parameters:
+        - $ref: './parameters-v1.yaml#/components/parameters/paymentLinkId'
+        - $ref: './parameters-v1.yaml#/components/parameters/recipientName'
+        - $ref: './parameters-v1.yaml#/components/parameters/recipientEmail'
+        - $ref: '../../../common/parameters/before-v1.yaml#/components/parameters/before'
+        - $ref: '../../../common/parameters/after-v1.yaml#/components/parameters/after'
+        - $ref: '../../../common/parameters/limit-v1.yaml#/components/parameters/limit'
+      responses:
+        200:
+          description: Successful request. Returns a [paginated](https://docs.payroc.com/api/pagination) list of sharing events for the payment link.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/sharingEventPaginatedList'
+              examples:
+                paginatedResults:
+                  $ref: './example-responses-v1.yaml#/components/examples/paginatedSharingEvents'
+                noActivity:
+                  $ref: '../../../common/responses/no-activity-v1.yaml#/components/examples/noActivity'
+        400:
+          $ref: ../../../common/responses/errors/400-v1.yaml#/components/responses/400
+        401:
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        403:
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        404:
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        406:
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        500:
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+  /payment-links/{paymentLinkId}/deactivate:
+    post:
+      tags:
+        - Payment links
+      summary: Deactivate payment link
+      description: |  
+        Use this method to deactivate a payment link. If the merchant deactivates a payment link, they can't reactivate it. To take payment, the merchant must create a new payment link.
+        **Note:** After the merchant deactivates a payment link, a customer can't use the link to make a payment. 
+      operationId: deactivatePaymentLink
+      parameters:
+        - $ref: './parameters-v1.yaml#/components/parameters/paymentLinkId'
+      responses:
+        200:
+          description: Successful request. We deactivated the payment link.
+          content:
+            application/json:
+              schema:
+                type: object
+                oneOf:
+                  - $ref: '#/components/schemas/multiUsePaymentLink'
+                  - $ref: '#/components/schemas/singleUsePaymentLink'
+              examples:
+                deactivatedPaymentLink:
+                  $ref: './example-responses-v1.yaml#/components/examples/deactivatedPaymentLink'
+        400:
+          $ref: ../../../common/responses/errors/400-v1.yaml#/components/responses/400
+        401:
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        403:
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        404:
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        406:
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        409:
+          $ref: ../../../common/responses/errors/409-v1.yaml#/components/responses/409
+        500:
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+
+components:
+  schemas:
+    multiUsePaymentLink:
+      required:
+        - type
+        - order
+        - authType
+        - paymentMethods
+        - merchantReference
+      type: object
+      title: Multi-use link
+      description: Object that contains information about a multi-use payment link.
+      properties:
+        type:
+          type: string
+          description: |  
+            Type of link. The merchant can use a multi-use link to take multiple payments.
+          enum:
+            - multiUse
+          example: multiUse
+        paymentLinkId:
+          type: string
+          minLength: 10
+          maxLength: 10
+          readOnly: true
+          description: Unique identifier that we assigned to the payment link.
+          example: JZURRJBUPS
+        merchantReference:
+          type: string
+          minLength: 1
+          maxLength: 48
+          description: Unique identifier that the merchant assigned to the payment.
+          example: LinkRef6543
+        order:
+          $ref: '#/components/schemas/multiUsePaymentLinkOrder'
+        authType:
+          type: string
+          description: Type of transaction.
+          enum:
+            - sale
+            - preAuthorization
+          example: sale
+        paymentMethods:
+          type: array
+          uniqueItems: true
+          description: |  
+            Payment methods that the merchant accepts.
+            **Note:** If a payment is a pre-authorization, the customer must pay by card.
+          items:
+            type: string
+            enum:
+              - card
+              - bankTransfer
+          example:
+            - card
+        customLabels:
+          type: array
+          uniqueItems: true
+          description: |  
+            Array of customLabel objects.
+            **Note:** You can change the label of the payment button only.
+          items:
+            $ref: '#/components/schemas/customLabel'
+        assets:
+          $ref: '#/components/schemas/paymentLinkAssets'
+        status:
+          type: string
+          readOnly: true
+          description: |
+            Status of the payment link. The value is one of the following:
+            - `active` - Payment link is active.
+            - `completed` - Customer has paid.
+            - `deactivated` - Merchant has deactivated the link.
+            - `expired` - Payment link has expired.
+          enum:
+            - active
+            - completed
+            - deactivated
+            - expired
+          example: active
+        createdOn:
+          type: string
+          format: date
+          readOnly: true
+          description: Date that the merchant created the link. The format of this value is **YYYY-MM-DD**.
+          example: '2024-07-02'
+        expiresOn:
+          type: string
+          format: date
+          description: Last date that the customer can use the payment link. The format of this value is **YYYY-MM-DD**.
+          example: '2024-08-02'
+        credentialOnFile:
+          $ref: '#/components/schemas/credentialOnFile'
+
+    singleUsePaymentLink:
+      required:
+        - type
+        - order
+        - authType
+        - expiresOn
+        - paymentMethods
+        - merchantReference
+      type: object
+      title: Single-use link
+      description: Object that contains information about a single-use payment link.
+      properties:
+        type:
+          type: string
+          description: Type of link. The merchant can use this link for only one payment. 
+          enum:
+            - singleUse
+          example: singleUse
+        paymentLinkId:
+          type: string
+          minLength: 10
+          maxLength: 10
+          readOnly: true
+          description: Unique identifier that we assigned to the payment link.
+          example: CKHP6VVWYT
+        merchantReference:
+          type: string
+          minLength: 1
+          maxLength: 48
+          description: Unique identifier that the merchant assigned to the payment.
+          example: LinkRef7654
+        order:
+          $ref: '#/components/schemas/singleUsePaymentLinkOrder'
+        authType:
+          type: string
+          description: Type of transaction.
+          enum:
+            - sale
+            - preAuthorization
+          example: sale
+        paymentMethods:
+          type: array
+          uniqueItems: true
+          description: |  
+            Payment methods that the merchant accepts.
+            **Note:** If the payment is a pre-authorization, the customer must pay by card.
+          items:
+            type: string
+            enum:
+              - card
+              - bankTransfer
+          example:
+            - card
+        customLabels:
+          type: array
+          uniqueItems: true
+          description: |  
+            Array of customLabel objects.
+            **Note:** You can change the label of the payment button only.
+          items:
+            $ref: '#/components/schemas/customLabel'
+        assets:
+          $ref: '#/components/schemas/paymentLinkAssets'
+        status:
+          type: string
+          readOnly: true
+          description: |
+            Status of the payment link. The value is one of the following:
+            - `active` - Payment link is active.
+            - `completed` - Customer has paid.
+            - `deactivated` - Merchant has deactivated the link.
+            - `expired` - Payment link has expired.
+          enum:
+            - active
+            - completed
+            - deactivated
+            - expired
+          example: active
+        createdOn:
+          type: string
+          format: date
+          readOnly: true
+          description: Date that the merchant created the link. The format of this value is **YYYY-MM-DD**.
+          example: '2024-07-02'
+        expiresOn:
+          type: string
+          format: date
+          description: Last date that the customer can use the payment link. The format of this value is **YYYY-MM-DD**.
+          example: '2024-08-02'
+        credentialOnFile:
+          $ref: '#/components/schemas/credentialOnFile'
+
+    paymentLinkEmailShareEvent:
+      required:
+        - sharingMethod
+        - recipients
+      type: object
+      title: Share via email
+      description: Object that contains the information to email a payment link.
+      properties:
+        sharingMethod:
+          type: string
+          description: Method that the merchant uses to share the payment link.
+          enum:
+            - email
+          example: email
+        sharingEventId:
+          maxLength: 10
+          minLength: 10
+          type: string
+          readOnly: true
+          description: Unique identifier that we assigned to the sharing event.
+          example: GTZH5WVXK9
+        dateTime:
+          type: string
+          readOnly: true
+          format: date-time
+          description: Date and time that the merchant shared the link. Our gateway returns this value in the [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) format.
+          example: '2024-07-02T15:30:00Z'
+        merchantCopy:
+          type: boolean
+          default: false
+          writeOnly: true
+          description: Indicates if we send a copy of the email to the merchant. By default, we don't send a copy to the merchant.
+          example: true
+        message:
+          type: string
+          description: Message that the merchant sends with the payment link.
+          maxLength: 1024
+          example: |
+              Dear Sarah,
+              Your insurance is expiring this month.
+              Please pay the renewal fee by the end of the month to renew your insurance.
+        recipients:
+          type: array
+          uniqueItems: true
+          description: Array that contains the recipients of the payment link.
+          items:
+            $ref: '#/components/schemas/paymentLinkEmailRecipient'
+
+    multiUsePaymentLinkOrder:
+      required:
+        - charge
+      type: object
+      description: Object that contains information about the order.
+      properties:
+        description:
+          type: string
+          maxLength: 1024
+          description: A brief description of the transaction.
+          example: Pie It Forward charitable trust donation
+        charge:
+          type: object
+          oneOf:
+            - $ref: '#/components/schemas/promptPaymentLinkCharge'
+            - $ref: '#/components/schemas/presetPaymentLinkCharge'
+
+    singleUsePaymentLinkOrder:
+      required:
+        - orderId
+        - charge
+      type: object
+      description: Object that contains information about the order.
+      properties:
+        orderId:
+          maxLength: 24
+          minLength: 1
+          type: string
+          description: Unique identifier that the merchant assigned to the order.
+          example: OrderRef7654
+        description:
+          type: string
+          maxLength: 1024
+          description: A brief description of the transaction.
+          example: Large Pepperoni Pizza
+        charge:
+          type: object
+          oneOf:
+            - $ref: '#/components/schemas/promptPaymentLinkCharge'
+            - $ref: '#/components/schemas/presetPaymentLinkCharge'
+
+    paymentLinkAssets:
+      required:
+        - paymentUrl
+        - paymentButton
+      type: object
+      readOnly: true
+      description: Object that contains shareable assets for the payment link.
+      properties:
+        paymentUrl:
+          type: string
+          description: URL of the payment link.
+          example: https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206
+        paymentButton:
+          type: string
+          format: html
+          description: HTML code for the payment link. You can embed the HTML code in the merchant's website.
+          example: |
+            <a href="https://payments.payroc.com/merchant/pay-by-link?token=7c2fc08c-cb0e-44ba-8bcd-cf6de6eb3206" 
+            target="_blank" style="color: #ffffff; background-color: #6C7A89; font-size: 18px; font-family: Helvetica, Arial, sans-serif; 
+            text-decoration: none; border-radius: 30px; padding: 14px 28px; display: inline-block;">Pay Now</a>
+
+    paymentLinkEmailRecipient:
+      required:
+        - name
+        - email
+      type: object
+      description: Object that contains the contact details of the recipient.
+      properties:
+        name:
+          maxLength: 48
+          minLength: 1
+          type: string
+          description: Recipient's name.
+          example: Sarah Hazel Hopper
+        email:
+          maxLength: 128
+          minLength: 6
+          type: string
+          description: Recipient's email address.
+          example: sarah.hopper@example.com
+
+    customLabel:
+      type: object
+      description: Object that contains the information for the custom label.
+      properties:
+        element:
+          type: string
+          description: Element that you want to provide a custom label for.
+          enum:
+            - paymentButton
+          example: paymentButton
+        label:
+          type: string
+          minLength: 1
+          maxLength: 24
+          description: Custom label to display on the element.
+          example: SUPPORT US
+    
+    credentialOnFile:
+      type: object
+      description: Object that contains information about saving the customer’s payment details.
+      properties:
+        tokenize:
+          type: boolean
+          description: Indicates if our gateway should tokenize the customer’s payment details as part of the transaction.
+          example: true
+        mitAgreement:
+          type: string
+          default: unscheduled
+          description: |
+            Indicates how the merchant can use the customer’s card details, as agreed by the customer:  
+            
+            - `unscheduled` - Transactions for a fixed or variable amount that are run at a certain pre-defined event.  
+            - `recurring` - Transactions for a fixed amount that are run at regular intervals, for example, monthly. Recurring transactions don’t have a fixed duration and run until the customer cancels the agreement.  
+            - `installment` - Transactions for a fixed amount that are run at regular intervals, for example, monthly. Installment transactions have a fixed duration.  
+              
+            **Note:** If you send a value for **mitAgreement**, you must send the **standingInstructions** object in the **paymentOrder** object.
+          enum:
+          - unscheduled
+          - recurring
+          - installment
+          example: recurring
+        
+
+    paymentLinkPaginatedList:
+      required:
+        - count
+        - data
+        - hasMore
+        - limit
+      type: object
+      allOf:
+        - $ref: '../../../common/schemas/common/paginated-list-v1.yaml#/components/schemas/paginatedList'
+        - type: object
+          properties:
+            data:
+              type: array
+              description: Array of payment links.
+              items:
+                type: object
+                oneOf:
+                  - $ref: '#/components/schemas/multiUsePaymentLink'
+                  - $ref: '#/components/schemas/singleUsePaymentLink'
+
+    sharingEventPaginatedList:
+      required:
+        - count
+        - data
+        - hasMore
+        - limit
+      type: object
+      allOf:
+        - $ref: '../../../common/schemas/common/paginated-list-v1.yaml#/components/schemas/paginatedList'
+        - type: object
+          properties:
+            data:
+              type: array
+              description: Array of payment link sharing events.
+              items:
+                type: object
+                oneOf:
+                  - $ref: '#/components/schemas/paymentLinkEmailShareEvent'
+
+    promptPaymentLinkCharge:
+      required:
+        - type
+        - currency
+      type: object
+      title: Prompt amount
+      description: Object that contains information about the charge when the customer enters the amount of the transaction.
+      properties:
+        type:
+          type: string
+          enum:
+            - prompt
+          example: prompt
+        currency:
+          $ref: ../../../common/schemas/common/currency-v1.yaml#/components/schemas/currency
+          example: USD
+
+    presetPaymentLinkCharge:
+      required:
+        - type
+        - amount
+        - currency
+      type: object
+      title: Preset amount
+      description: Object that contains information about the charge when the merchant enters the amount of the transaction.
+      properties:
+        type:
+          type: string
+          enum:
+            - preset
+          example: preset
+        amount:
+          type: integer
+          format: int64
+          description: Total amount of the transaction in the currency's lowest denomination, for example, cents.
+          example: 4999
+        currency:
+          $ref: ../../../common/schemas/common/currency-v1.yaml#/components/schemas/currency
+          example: USD
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      description: 'Example: Authorization: Bearer <token>'
+      scheme: bearer
+      bearerFormat: JWT

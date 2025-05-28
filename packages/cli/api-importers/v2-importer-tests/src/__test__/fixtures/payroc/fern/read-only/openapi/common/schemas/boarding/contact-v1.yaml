@@ -1,0 +1,98 @@
+openapi: 3.0.3
+
+paths: {}
+
+info:
+  title: Common Domain Models
+  description: Common domain models that are shared across the Payroc API
+  version: '1'
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+
+tags:
+  - name: Common schemas
+    description: Common schemas that can be resued
+
+components:
+  schemas:
+    contact:
+      type: object
+      title: contact
+      required:
+        - type
+        - firstName
+        - lastName
+        - identifiers
+        - contactMethods
+      properties:
+        contactId:
+          type: integer
+          description: Unique identifier of the contact.
+          readOnly: true
+          example: 1543
+        type:
+          type: string
+          description: Type of contact.
+          enum:
+            - manager
+            - representative
+            - others 
+          example: manager
+        firstName:
+          type: string
+          description: Contact's first name.
+          example: Jane
+          maxLength: 50
+        middleName:
+          type: string
+          description: Contact's middle name.
+          example: Helen
+          maxLength: 50
+        lastName:
+          type: string
+          description: Contact's last name.
+          example: Doe
+          maxLength: 50
+        identifiers:
+          minItems: 1
+          type: array
+          description: Array of identifier objects.
+          example:
+          - type: nationalId
+            value: 000-00-4320
+          items:
+            $ref: './identifier-v1.yaml#/components/schemas/identifier'
+        contactMethods:
+          type: array
+          minItems: 1
+          maxItems: 4
+          uniqueItems: true
+          description: |
+            Array of contactMethod objects.  
+            **Note:** If you are adding information about an owner, you must provide at least an email address. If you are adding information about a contact, you must provide at least a contact number.   
+          items:
+            $ref: '../common/contact-method-v1.yaml#/components/schemas/contactMethod'
+  examples:
+    contact:
+      summary: Contact object
+      description: Contact object
+      value:
+        contactId: 1543
+        type: manager
+        firstName: Jane
+        middleName: Helen
+        lastName: Doe
+        identifiers:
+          - type: nationalId
+            value: xxxxx4320
+        contactMethods:
+          - type: email
+            value: jane.doe@example.com
+          - type: phone
+            value: '2025550164'
+          - type: mobile
+            value: '8445557624'
+          - type: fax
+            value: '2025550110'

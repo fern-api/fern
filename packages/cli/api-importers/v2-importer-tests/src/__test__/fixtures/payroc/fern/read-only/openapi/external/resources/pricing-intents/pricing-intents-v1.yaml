@@ -1,0 +1,1529 @@
+openapi: 3.0.3
+info:
+  version: '1'
+  title: Pricing intents
+  description: Create and manage pricing intents
+  contact:
+    name: Payroc Helpdesk
+    url: https://docs.payroc.com/api
+    email: helpdesk@payroc.com
+
+tags:
+  - name: Pricing intents
+    description: Create and manage pricing intents.
+
+paths:
+  /pricing-intents:
+    summary: Provides capabilities to list and create pricing intents.
+    get:
+      summary: List pricing intents
+      description: Retrieve a list of pricing intents.
+      operationId: listPricingIntents
+      tags: [ Pricing intents ]
+      parameters:
+        - $ref: '../../../common/parameters/before-v1.yaml#/components/parameters/before'
+        - $ref: '../../../common/parameters/after-v1.yaml#/components/parameters/after'
+        - $ref: '../../../common/parameters/limit-v1.yaml#/components/parameters/limit'
+      responses:
+        '200':
+          description: Successful response. Returns a list of pricing intents.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/paginatedPricingIntent'
+              examples:
+                paginatedResults:
+                  $ref: './example-responses-v1.yaml#/components/examples/paginatedPricingIntent'
+                noActivity:
+                  $ref: '../../../common/responses/no-activity-v1.yaml#/components/examples/noActivity'
+        '400':
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+    post:
+      summary: Create pricing intent
+      description: Create a pricing intent.
+      tags: [ Pricing intents ]
+      operationId: createPricingIntent
+      parameters:
+        - $ref: '../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pricingIntent'
+            examples:
+              interchangePlus:
+                $ref: './example-requests-v1.yaml#/components/examples/interchangePlus'
+              interchangePlusTiered3:
+                $ref: './example-requests-v1.yaml#/components/examples/interchangePlusPlus'
+              tiered3:
+                $ref: './example-requests-v1.yaml#/components/examples/tiered3'
+              tiered4:
+                $ref: './example-requests-v1.yaml#/components/examples/tiered4'
+              tiered6:
+                $ref: './example-requests-v1.yaml#/components/examples/tiered6'
+              flatRate:
+                $ref: './example-requests-v1.yaml#/components/examples/flatRate'
+              consumerChoice:
+                $ref: './example-requests-v1.yaml#/components/examples/consumerChoice'
+              rewardPayChoice:
+                $ref: './example-requests-v1.yaml#/components/examples/rewardPayChoice'
+      responses:
+        '201':
+          description: Successful response. We created the pricing intent and it is waiting for approval.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pricingIntent'
+              examples:
+                createdPricingIntent:
+                  $ref: './example-responses-v1.yaml#/components/examples/pricingIntent'
+          headers:
+            location:
+              $ref: '../../../common/headers/location-v1.yaml#/components/headers/location'
+        '400':
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '409':
+          description: Conflict
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/409-v1.yaml#/components/schemas/409'
+              examples:
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'         
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+
+  /pricing-intents/{pricingIntentId}:
+    summary: Provides create/read/updated/delete capabilities for specific pricing intents
+    parameters:
+      - $ref: './parameters-v1.yaml#/components/parameters/pricingIntentId'
+    get:
+      summary: Retrieve pricing intent
+      description: Retrieve a specific pricing intent.
+      operationId: getPricingIntent
+      tags: [ Pricing intents ]
+      responses:
+        '200':
+          description: Successful response. Returns the requested pricing intent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pricingIntent'
+              examples:
+                pricingIntent:
+                  $ref: './example-responses-v1.yaml#/components/examples/pricingIntent'
+        '400':
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'     
+    put:
+      summary: Update pricing intent
+      description: Update a pricing intent.
+      operationId: updatePricingIntent
+      tags: [ Pricing intents ]
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/pricingIntent'
+            examples:
+              pricingIntent:
+                $ref: './example-requests-v1.yaml#/components/examples/modifyPricingIntent'
+      responses:
+        '204':
+          description: Resource successfully updated
+        '400':
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'    
+    patch:
+      summary: Partially update pricing intent
+      description: | 
+        Partially update an existing pricing intent.  
+
+        Structure your request to follow the RFC 6902 standard.
+      operationId: patchPricingIntent
+      tags: [ Pricing intents ]
+      parameters:
+        - $ref: '../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../../../common/schemas/common/patch-request-v1.yaml#/components/schemas/patchRequest'
+            examples:
+              patchPricingIntentRealistic:
+                $ref: './example-requests-v1.yaml#/components/examples/patchPricingIntentRealistic'
+              patchOperations:
+                $ref: '../../../common/requests/patch-v1.yaml#/components/examples/patchOperations'
+      responses:
+        '200':
+          description: Successful request. We updated the pricing intent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pricingIntent'
+              examples:
+                pricingIntent:
+                  $ref: './example-responses-v1.yaml#/components/examples/pricingIntent'
+        '400':
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'       
+    delete:
+      summary: Delete pricing intent
+      description: Delete a pricing intent.
+      operationId: deletePricingIntent
+      tags: [ Pricing intents ]
+      responses:
+        '204':
+          description: Successful request. We deleted the pricing intent.
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+
+components:
+  schemas:
+    paginatedPricingIntent:
+      type: object
+      title: paginated pricing intents
+      description: Object that contains information about your pricing intents.
+      allOf:
+      - $ref: '../../../common/schemas/common/paginated-list-v1.yaml#/components/schemas/paginatedList'
+      - type: object
+        properties:
+          data:
+            type: array
+            description: Array of pricing intent objects.
+            items:
+              $ref: '#/components/schemas/pricingIntent'  
+    
+    pricingIntent:
+      type: object
+      title: pricing intent
+      description: Object that contains information about a pricing intent.
+      oneOf:
+        - $ref: '#/components/schemas/pricingIntent5.0'
+  
+    baseIntent:
+      type: object
+      title: base pricing intent
+      description: Object that contains information about the base fees.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the pricing intent.
+          readOnly: True
+        createdDate:
+          type: string
+          example: '2024-07-02T09:00:00'
+          format: date-time
+          description: Date and time that we received your request to create the pricing intent in our system.
+          readOnly: True
+        lastUpdatedDate:
+          type: string
+          example: '2024-07-02T09:00:00'
+          format: date-time
+          description: Date and time that the pricing intent was last modified.
+          readOnly: True
+        status: 
+          type: string
+          description: |
+            Status of the pricing intent. The value can be one of the following:
+            - `active` - We have approved the pricing intent.
+            - `pendingReview` - We have not yet reviewed the pricing intent.
+            - `rejected` - We have rejected the pricing intent.
+          readOnly: true
+          enum:
+            - active
+            - pendingReview
+            - rejected
+        key:
+          type: string
+          description: Unique identifier that you use to connect a merchant to the pricing intent.
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: '[Metadata](/api/metadata) object that contains your custom data.'
+          example:
+            yourCustomField: abc123
+      required:
+       - key
+    
+    pricingIntent4.0:
+      type: object
+      title: pricing intent version 4.0
+      description: Object that contains information about a pricing intent for Merchant Processing Agreement (MPA) 4.0.
+      allOf:
+        - $ref: '#/components/schemas/baseIntent'
+        - $ref: '#/components/schemas/pricingAgreementUs4.0'
+    
+    pricingIntent5.0:
+      type: object
+      title: pricing intent version 5.0
+      description: Object that contains information about a pricing intent for Merchant Processing Agreement (MPA) 5.0.
+      allOf:
+        - $ref: '#/components/schemas/baseIntent'
+        - $ref: '#/components/schemas/pricingAgreementUs5.0'
+       
+    pricingAgreementUs4.0:
+      type: object
+      title: US pricing agreement version 4.0
+      description: Object that contains information about U.S. pricing intents for Merchant Processing Agreement (MPA) 4.0.
+      required:
+        - country
+        - version
+        - base
+      properties:
+        country:
+          type: string
+          description: Indicates the country that the pricing intent applies to.
+          enum:
+            - US
+        version:
+          type: string
+          description: Version of the MPA.
+          enum:
+            - '4.0'
+        base:
+          $ref: '#/components/schemas/baseUs'
+        processor:
+          type: object
+          title: US processor fees
+          description: Object that contains information about U.S. processor fees.
+          properties:
+            card:
+              type: object
+              description: Object that contains information about card fees.
+              discriminator:
+                propertyName: planType
+                mapping:
+                  interchangePlus: '#/components/schemas/interchangePlus'
+                  interchangePlusTiered3: '#/components/schemas/interchangePlusTiered3'
+                  tiered3: '#/components/schemas/tiered3'
+                  tiered4: '#/components/schemas/tiered4'
+                  tiered6: '#/components/schemas/tiered6'
+                  flatRate: '#/components/schemas/flatRate'
+                  consumerChoice: '#/components/schemas/consumerChoice'
+                  rewardPay: '#/components/schemas/rewardPay'
+                  rewardPayChoice: '#/components/schemas/rewardPayChoice'
+              oneOf:
+                - $ref: '#/components/schemas/interchangePlus'
+                - $ref: '#/components/schemas/interchangePlusTiered3'
+                - $ref: '#/components/schemas/tiered3'
+                - $ref: '#/components/schemas/tiered4'
+                - $ref: '#/components/schemas/tiered6'
+                - $ref: '#/components/schemas/flatRate'
+                - $ref: '#/components/schemas/consumerChoice'
+                - $ref: '#/components/schemas/rewardPay'
+                - $ref: '#/components/schemas/rewardPayChoice'
+            ach:
+              $ref: '#/components/schemas/ach'
+        gateway:
+          $ref: '#/components/schemas/gatewayUs'
+       
+    pricingAgreementUs5.0:
+      type: object
+      title: US pricing agreement version 5.0
+      description: Object that contains information about U.S. pricing intents for Merchant Processing Agreement (MPA) 5.0.
+      required:
+        - country
+        - version
+        - base
+      properties:
+        country:
+          type: string
+          description: Indicates the country that the pricing intent applies to.
+          enum:
+            - US
+        version:
+          type: string
+          description: Version of the MPA.
+          enum:
+            - '5.0'
+        base:
+          $ref: '#/components/schemas/baseUs'
+        processor:
+          type: object
+          title: US processor fees
+          description: Object that contains information about U.S. processor fees.
+          properties:
+            card:
+              type: object
+              description: Object that contains information about card fees.
+              discriminator:
+                propertyName: planType
+                mapping:
+                  interchangePlus: '#/components/schemas/interchangePlus'
+                  interchangePlusPlus: '#/components/schemas/interchangePlusPlus'
+                  tiered3: '#/components/schemas/tiered3'
+                  tiered4: '#/components/schemas/tiered4'
+                  tiered6: '#/components/schemas/tiered6'
+                  flatRate: '#/components/schemas/flatRate'
+                  consumerChoice: '#/components/schemas/consumerChoice'
+                  rewardPayChoice: '#/components/schemas/rewardPayChoice'
+              oneOf:
+                - $ref: '#/components/schemas/interchangePlus'
+                - $ref: '#/components/schemas/interchangePlusPlus'
+                - $ref: '#/components/schemas/tiered3'
+                - $ref: '#/components/schemas/tiered4'
+                - $ref: '#/components/schemas/tiered6'
+                - $ref: '#/components/schemas/flatRate'
+                - $ref: '#/components/schemas/consumerChoice'
+                - $ref: '#/components/schemas/rewardPayChoice'
+            ach:
+              $ref: '#/components/schemas/ach'
+        gateway:
+          $ref: '#/components/schemas/gatewayUs5.0'
+        services:
+          $ref: '#/components/schemas/servicesUs5.0'
+
+    baseUsMonthly:
+      type: object
+      title: Monthly platinum security
+      required:
+      - billingFrequency
+      properties:
+        billingFrequency:
+          type: string
+          description: Indicates whether we bill your account monthly or annually.
+          enum:
+            - monthly
+        amount:
+          readOnly: true
+          description: Fee for Platinum Security. The value is in the currency's lowest denomination, for example, cents.
+          type: integer
+          example: 1295
+          default: 1295
+
+    baseUsAnnual:
+      type: object
+      title: Annual platinum security
+      required:
+      - billingFrequency
+      properties:
+        billingFrequency:
+          type: string
+          description: Indicates whether we bill your account monthly or annually.
+          enum:
+            - annual
+        amount:
+          readOnly: true
+          description: Fee for the Platinum Security, this is returned in the lowest unit of currency. For example, cents.
+          type: integer
+          example: 15540
+          default: 15540
+
+    baseUs:
+      type: object
+      title: US base fees
+      description: Object that contains information about U.S. base fees.
+      properties:
+        addressVerification:
+          description: Fee for each address verification request. The value is in the currency's lowest denomination, for example, cents.
+          type: integer
+          example: 5
+          minimum: 0
+          nullable: true
+        annualFee:
+          type: object
+          description: Object that contains information about the annual fee.
+          properties:
+            billInMonth:
+              type: string
+              description: Indicates the month in which we collect the annual fee.
+              default: december
+              enum:
+                - june
+                - december
+              example: june
+            amount:
+              description: Annual fee. The value is in the currency's lowest denomination, for example, cents.
+              type: integer
+              minimum: 0
+              example: 100
+          required:
+            - amount
+        regulatoryAssistanceProgram:
+          type: integer
+          description: Annual fee for the regulatory assistance program. The value is in the currency's lowest denomination, for example, cents.
+          minimum: 0
+          example: 15
+          nullable: true
+        pciNonCompliance:
+          type: integer
+          description: Monthly fee for PCI noncompliance. The value is in the currency's lowest denomination, for example, cents.
+          minimum: 0
+          example: 7495
+          default: 7495
+        merchantAdvantage:
+          type: integer
+          description: Monthly fee for Payroc Advantage. The value is in the currency's lowest denomination, for example, cents.
+          minimum: 0
+          example: 10
+          nullable: true
+        platinumSecurity:
+          description: Object that contains information about the Platinum Security fee.
+          type: object
+          discriminator:
+            propertyName: billingFrequency
+            mapping:
+              monthly: '#/components/schemas/baseUsMonthly'
+              annual: '#/components/schemas/baseUsAnnual'
+          oneOf:          
+            - $ref: '#/components/schemas/baseUsMonthly'
+            - $ref: '#/components/schemas/baseUsAnnual'
+        maintenance:
+          type: integer
+          description: Monthly fee for maintenance. The value is in the currency's lowest denomination, for example, cents.
+          minimum: 500
+          example: 1995
+        minimum:
+          type: integer
+          description: Monthly fee that we charge when the merchant doesn't meet the minimum fee amount. This monthly fee is in the currency's lowest denomination, for example, cents.
+          minimum: 0
+          example: 100
+        voiceAuthorization:
+          type: integer
+          description: Fee for each voice authorization. The value is in the currency's lowest denomination, for example, cents.
+          minimum: 0
+          example: 95
+          default: 95
+        chargeback:
+          type: integer
+          description: Fee for each chargeback. The value is in the currency's lowest denomination, for example, cents.
+          minimum: 0
+          example: 2500
+          default: 2500
+        retrieval:
+          type: integer
+          description: Fee for each retrieval. The value is in the currency's lowest denomination, for example, cents.
+          minimum: 0
+          example: 1500
+          default: 1500
+        batch:
+          type: integer
+          description: Fee for each batch. The value is in the currency's lowest denomination, for example, cents.
+          minimum: 0
+          example: 5
+        earlyTermination:
+          type: integer
+          description: Fee for early termination. The value is in the currency's lowest denomination, for example, cents.
+          minimum: 0
+          example: 57500
+          default: 57500
+      required:
+        - addressVerification
+        - annualFee
+        - regulatoryAssistanceProgram
+        - merchantAdvantage
+        - batch
+        - maintenance
+        - minimum
+
+    percentage:
+      description: Percentage value up to 2 decimal places.
+      title: percentage
+      type: number
+      format: double
+      minimum: 0
+      maximum: 100
+      example: 1.25
+
+    amount:
+      type: integer
+      minimum: 0
+
+    gatewayUs:
+      type: object
+      description: Object that contains information about the gateway fees.
+      title: gateway fees
+      properties:
+        fees:
+          type: object
+          description: Object that contains information about the gateway fees.
+          properties:
+            monthly:
+              description: Monthly fee for the gateway. The value is in the currency's lowest denomination, for example, cents.
+              allOf:
+                - $ref: '#/components/schemas/amount'
+            setup:
+              description: Fee for setting up your account with the gateway. The value is in the currency's lowest denomination, for example, cents.
+              allOf:
+                - $ref: '#/components/schemas/amount'
+            perTransaction:
+              description: Fee for each transaction. The value is in the currency's lowest denomination, for example, cents.
+              allOf:
+                - $ref: '#/components/schemas/amount'
+            perDeviceMonthly:
+              description: Monthly fee for each device. The value is in the currency's lowest denomination, for example, cents.
+              allOf:
+                - $ref: '#/components/schemas/amount'
+            additionalServiceMonthly:
+              description: Monthly fee for additional service. The value is in the currency's lowest denomination, for example, cents.
+              allOf:
+                - $ref: '#/components/schemas/amount'
+          required:
+            - monthly
+            - setup
+            - perTransaction
+            - perDeviceMonthly
+            - additionalServiceMonthly
+      required:
+        - fees
+
+    gatewayUs5.0:
+      type: object
+      description: Object that contains information about the gateway fees for MPA 5.0.
+      title: gateway fees
+      properties:
+        fees:
+          type: object
+          description: Object that contains information about the gateway fees.
+          properties:
+            monthly:
+              description: Monthly fee for the gateway. The value is in the currency's lowest denomination, for example, cents.
+              allOf:
+                - $ref: '#/components/schemas/amount'
+            setup:
+              description: Fee for setting up your account with the gateway. The value is in the currency's lowest denomination, for example, cents.
+              allOf:
+                - $ref: '#/components/schemas/amount'
+            perTransaction:
+              description: Fee for each transaction. The value is in the currency's lowest denomination, for example, cents.
+              allOf:
+                - $ref: '#/components/schemas/amount'
+            perDeviceMonthly:
+              description: Monthly fee for each device. The value is in the currency's lowest denomination, for example, cents.
+              allOf:
+                - $ref: '#/components/schemas/amount'
+          required:
+            - monthly
+            - setup
+            - perTransaction
+            - perDeviceMonthly
+      required:
+        - fees
+
+    interchangePlusAmexOptBlue:
+      type: object
+      title: American Express OptBlue
+      required:
+        - type
+        - volume
+        - transaction
+      properties:
+        type:
+          type: string
+          enum:
+            - optBlue
+        volume:
+          description: Percentage of the total transaction amount that the processor charges the merchant.
+          allOf:
+            - $ref: '#/components/schemas/percentage'
+        transaction:
+          description: Fee for each transaction. The value is in the currency's lowest denomination, for example, cents.
+          allOf:
+            - $ref: '#/components/schemas/amount'
+
+    interchangePlusAmexDirect:
+      type: object
+      title: American Express Direct
+      required:
+        - type
+        - transaction
+      properties:
+        type:
+          type: string
+          enum:
+            - direct
+        transaction:
+          description: Fee for each transaction. The value is in the currency's lowest denomination, for example, cents.
+          allOf:
+            - $ref: '#/components/schemas/amount'
+
+    interchangePlus:
+      type: object
+      title: 'Interchange Plus Plan'
+      description: Object that contains information about Interchange Plus.
+      properties:
+        planType:
+          type: string
+          description: Type of processing plan.
+          enum:
+            - interchangePlus
+        fees:
+          description: Object that contains information about the fees.
+          type: object
+          properties:
+            mastercardVisaDiscover:
+              $ref: '#/components/schemas/processorFee'
+            amex:
+              discriminator:
+                propertyName: type
+                mapping:
+                  optBlue: '#/components/schemas/interchangePlusAmexOptBlue'
+                  direct: '#/components/schemas/interchangePlusAmexDirect'
+              oneOf:
+                - $ref: '#/components/schemas/interchangePlusAmexOptBlue'
+                - $ref: '#/components/schemas/interchangePlusAmexDirect'
+            pinDebit:
+              $ref: '#/components/schemas/pinDebit'
+            electronicBenefitsTransfer:
+              $ref: '#/components/schemas/electronicBenefitsTransfer'
+            enhancedInterchange:
+              $ref: '#/components/schemas/enhancedInterchange'
+            specialityCards:
+              $ref: '#/components/schemas/specialityCards'
+          required:
+            - mastercardVisaDiscover
+      required:
+        - planType
+        - fees
+
+    interchangePlusTiered3AmexOptBlue:
+      type: object
+      title: American Express OptBlue
+      required:
+        - type
+        - qualifiedRate
+        - midQualRate
+        - nonQualRate
+      properties:
+        type:
+          type: string
+          enum:
+            - optBlue
+        qualifiedRate:
+          $ref: '#/components/schemas/processorFee'
+        midQualRate:
+          $ref: '#/components/schemas/processorFee'
+        nonQualRate:
+          $ref: '#/components/schemas/processorFee'
+
+    interchangePlusTiered3AmexDirect:
+      type: object
+      title: American Express Direct
+      required:
+        - type
+        - transaction
+      properties:
+        type:
+          type: string
+          enum:
+            - direct
+        transaction:
+          description: Fee for each transaction. The value is in the currency's lowest denomination, for example, cents.
+          allOf:
+            - $ref: '#/components/schemas/amount'
+
+    interchangePlusTiered3:
+      type: object
+      title: Interchange Plus with three tiers
+      description: Object that contains information about Interchange Plus with three tiers.
+      properties:
+        planType:
+          type: string
+          description: Type of processing plan.
+          enum:
+            - interchangePlusTiered3
+        fees:
+          type: object
+          description: Object that contains information about the fees.
+          properties:
+            mastercardVisaDiscover:
+              $ref: '#/components/schemas/qualRates'
+            amex:
+              discriminator:
+                propertyName: type
+                mapping:
+                  optBlue: '#/components/schemas/interchangePlusTiered3AmexOptBlue'
+                  direct: '#/components/schemas/interchangePlusTiered3AmexDirect'
+              oneOf:
+                - $ref: '#/components/schemas/interchangePlusTiered3AmexOptBlue'
+                - $ref: '#/components/schemas/interchangePlusTiered3AmexDirect'
+            pinDebit:
+              $ref: '#/components/schemas/pinDebit'
+            electronicBenefitsTransfer:
+              $ref: '#/components/schemas/electronicBenefitsTransfer'
+            enhancedInterchange:
+              $ref: '#/components/schemas/enhancedInterchange'
+            specialityCards:
+              $ref: '#/components/schemas/specialityCards'  
+          required:
+            - mastercardVisaDiscover
+      required:
+        - planType
+        - fees
+
+
+
+
+    interchangePlusPlusAmexOptBlue:
+      type: object
+      title: American Express OptBlue
+      required:
+        - type
+        - qualifiedRate
+        - midQualRate
+        - nonQualRate
+      properties:
+        type:
+          type: string
+          enum:
+            - optBlue
+        qualifiedRate:
+          $ref: '#/components/schemas/processorFee'
+        midQualRate:
+          $ref: '#/components/schemas/processorFee'
+        nonQualRate:
+          $ref: '#/components/schemas/processorFee'
+
+    interchangePlusPlusAmexDirect:
+      type: object
+      title: American Express Direct
+      required:
+        - type
+        - transaction
+      properties:
+        type:
+          type: string
+          enum:
+            - direct
+        transaction:
+          description: Fee for each transaction. The value is in the currency's lowest denomination, for example, cents.
+          allOf:
+            - $ref: '#/components/schemas/amount'        
+    
+    interchangePlusPlus:
+      type: object
+      title: Interchange Plus Plus
+      description: Object that contains information about Interchange Plus Plus.
+      properties:
+        planType:
+          type: string
+          description: Type of processing plan.
+          enum:
+            - interchangePlusPlus
+        fees:
+          type: object
+          description: Object that contains information about the fees.
+          properties:
+            mastercardVisaDiscover:
+              $ref: '#/components/schemas/qualRates'
+            amex:
+              discriminator:
+                propertyName: type
+                mapping:
+                  optBlue: '#/components/schemas/interchangePlusPlusAmexOptBlue'
+                  direct: '#/components/schemas/interchangePlusPlusAmexDirect'
+              oneOf:              
+                - $ref: '#/components/schemas/interchangePlusPlusAmexOptBlue'
+                - $ref: '#/components/schemas/interchangePlusPlusAmexDirect'
+            pinDebit:
+              $ref: '#/components/schemas/pinDebit'
+            electronicBenefitsTransfer:
+              $ref: '#/components/schemas/electronicBenefitsTransfer'
+            enhancedInterchange:
+              $ref: '#/components/schemas/enhancedInterchange'
+            specialityCards:
+              $ref: '#/components/schemas/specialityCards'  
+          required:
+            - mastercardVisaDiscover
+      required:
+        - planType
+        - fees
+
+    tiered3AmexOptBlue:
+      type: object
+      title: American Express OptBlue
+      required:
+        - type
+        - qualifiedRate
+        - midQualRate
+        - nonQualRate
+      properties:
+        type:
+          type: string
+          enum:
+            - optBlue
+        qualifiedRate:
+          $ref: '#/components/schemas/processorFee'
+        midQualRate:
+          $ref: '#/components/schemas/processorFee'
+        nonQualRate:
+          $ref: '#/components/schemas/processorFee' 
+
+    tiered3AmexDirect:
+      type: object
+      title: American Express Direct
+      required:
+        - type
+        - transaction
+      properties:
+        type:
+          type: string
+          enum:
+            - direct
+        transaction:
+          description: Fee for each transaction. The value is in the currency's lowest denomination, for example, cents.
+          allOf:
+            - $ref: '#/components/schemas/amount'
+
+    tiered3:
+      type: object
+      title: Tiered pricing with three tiers
+      description: Object that contains information about tiered pricing with three tiers.
+      properties:
+        planType:
+          type: string
+          description: Type of processing plan.
+          enum:
+            - tiered3
+        fees:
+          type: object
+          description: Object that contains information about the fees.
+          properties:
+            mastercardVisaDiscover:
+              $ref: '#/components/schemas/qualRates'
+            amex:
+              discriminator:
+                propertyName: type
+                mapping:
+                  optBlue: '#/components/schemas/tiered3AmexOptBlue'
+                  direct: '#/components/schemas/tiered3AmexDirect'
+              oneOf:
+                - $ref: '#/components/schemas/tiered3AmexOptBlue'
+                - $ref: '#/components/schemas/tiered3AmexDirect'
+            pinDebit:
+              $ref: '#/components/schemas/pinDebit'
+            electronicBenefitsTransfer:
+              $ref: '#/components/schemas/electronicBenefitsTransfer'
+            specialityCards:
+              $ref: '#/components/schemas/specialityCards'  
+          required:
+            - mastercardVisaDiscover
+      required:
+        - planType
+        - fees
+
+    tiered4AmexOptBlue:
+      type: object
+      title: American Express OptBlue
+      required:
+        - type
+        - qualifiedRate
+        - midQualRate
+        - nonQualRate
+      properties:
+        type:
+          type: string
+          enum:
+            - optBlue
+        qualifiedRate:
+          $ref: '#/components/schemas/processorFee'
+        midQualRate:
+          $ref: '#/components/schemas/processorFee'
+        nonQualRate:
+          $ref: '#/components/schemas/processorFee'
+
+    tiered4AmexDirect:
+      type: object
+      title: American Express Direct
+      required:
+        - type
+        - transaction
+      properties:
+        type:
+          type: string
+          enum:
+            - direct
+        transaction:
+          description: Fee for each transaction. The value is in the currency's lowest denomination, for example, cents.
+          allOf:
+            - $ref: '#/components/schemas/amount'
+
+    tiered4:
+      type: object
+      title: Tiered pricing with four tiers
+      description: Object that contains information about tiered pricing with four tiers.
+      properties:
+        planType:
+          type: string
+          description: Type of processing plan.
+          enum:
+            - tiered4
+        fees:
+          type: object
+          description: Object that contains information about the fees.
+          properties:
+            mastercardVisaDiscover:
+              $ref: '#/components/schemas/qualRatesWithPremium'
+            amex:
+              discriminator:
+                propertyName: type
+                mapping:
+                  optBlue: '#/components/schemas/tiered4AmexOptBlue'
+                  direct: '#/components/schemas/tiered4AmexDirect'
+              oneOf:
+                - $ref: '#/components/schemas/tiered4AmexOptBlue'
+                - $ref: '#/components/schemas/tiered4AmexDirect'
+            pinDebit:
+              $ref: '#/components/schemas/pinDebit'
+            electronicBenefitsTransfer:
+              $ref: '#/components/schemas/electronicBenefitsTransfer'
+            specialityCards:
+              $ref: '#/components/schemas/specialityCards' 
+          required:
+            - mastercardVisaDiscover
+      required:
+        - planType
+        - fees
+
+    tiered6AmexOptBlue:
+      type: object
+      title: American Express OptBlue
+      required:
+        - type
+        - qualifiedRate
+        - midQualRate
+        - nonQualRate
+      properties:
+        type:
+          type: string
+          enum:
+            - optBlue
+        qualifiedRate:
+          $ref: '#/components/schemas/processorFee'
+        midQualRate:
+          $ref: '#/components/schemas/processorFee'
+        nonQualRate:
+          $ref: '#/components/schemas/processorFee'
+
+    tiered6AmexDirect:
+      type: object
+      title: American Express Direct
+      required:
+        - type
+        - transaction
+      properties:
+        type:
+          type: string
+          enum:
+            - direct
+        transaction:
+          description: Fee for each transaction. The value is in the currency's lowest denomination, for example, cents.
+          allOf:
+            - $ref: '#/components/schemas/amount'
+
+    tiered6:
+      type: object
+      title: Tiered pricing with six tiers
+      description: Object that contains information about tiered pricing with six tiers.
+      properties:
+        planType:
+          type: string
+          description: Type of processing plan.
+          enum:
+            - tiered6
+        fees:
+          type: object
+          description: Object that contains information about the fees.
+          properties:
+            mastercardVisaDiscover:
+              $ref: '#/components/schemas/qualRatesWithPremiumAndRegulated'
+            amex:
+              discriminator:
+                propertyName: type
+                mapping:
+                  optBlue: '#/components/schemas/tiered6AmexOptBlue'
+                  direct: '#/components/schemas/tiered6AmexDirect'
+              oneOf:
+                - $ref: '#/components/schemas/tiered6AmexOptBlue'
+                - $ref: '#/components/schemas/tiered6AmexDirect'
+            pinDebit:
+              $ref: '#/components/schemas/pinDebit'
+            electronicBenefitsTransfer:
+              $ref: '#/components/schemas/electronicBenefitsTransfer'
+            specialityCards:
+              $ref: '#/components/schemas/specialityCards' 
+          required:
+            - mastercardVisaDiscover
+      required:
+        - planType
+        - fees
+
+    consumerChoice:
+      type: object
+      title: Consumer Choice Plan
+      description: Object that contains information about ConsumerChoice.
+      properties:
+        planType:
+          type: string
+          description: Type of processing plan.
+          enum:
+            - consumerChoice
+        fees:
+          type: object
+          description: Object that contains information about the fees.
+          properties:
+            monthlySubscription:
+              description: Fee for the monthly subscription. The value is in the currency's lowest denomination, for example, cents.
+              allOf:
+                - $ref: '#/components/schemas/amount'
+            volume:
+              description: Merchant-authorized percentage on non-cash transactions.
+              allOf:
+                - $ref: '#/components/schemas/percentage'
+            pinDebit:
+              $ref: '#/components/schemas/pinDebit'
+            electronicBenefitsTransfer:
+              $ref: '#/components/schemas/electronicBenefitsTransfer'
+            specialityCards:
+              $ref: '#/components/schemas/specialityCards' 
+          required:
+            - monthlySubscription
+            - volume
+      required:
+        - planType
+        - fees
+
+    rewardPay:
+      type: object
+      title: RewardPay Plan
+      description: Object that contains information about RewardPay.
+      properties:
+        planType:
+          description: Type of processing plan.
+          type: string
+          enum:
+            - rewardPay
+        fees:
+          type: object
+          description: Object that contains information about the fees.
+          properties:
+            monthlySubscription:
+              description: Fee for the monthly subscription. The value is in the currency's lowest denomination, for example, cents.
+              allOf:
+                - $ref: '#/components/schemas/amount' 
+            cardChargePercentage:
+              description: Percentage of the total transaction amount that the processor charges the cardholder.
+              type: number
+              readOnly: true
+              default: 3.0
+              allOf:
+                - $ref: '#/components/schemas/percentage'
+            merchantChargePercentage:
+              description: Percentage of the total transaction amount that the processor charges the merchant.
+              type: number
+              readOnly: true
+              default: 0.90
+              allOf:
+                - $ref: '#/components/schemas/percentage'
+            transaction:
+              description: Fee for each transaction. The value is in the currency's lowest denomination, for example, cents.
+              type: integer
+              readOnly: true
+              default: 15
+            tips:
+              description: Indicates how the merchant manages tips.
+              type: string
+              enum:
+                - noTips
+                - prompt
+                - tipAdjust
+            specialityCards:
+              $ref: '#/components/schemas/specialityCards'
+          required:
+            - monthlySubscription
+            - tips
+      required:
+        - planType
+        - fees
+    
+    rewardPayChoice:
+      type: object
+      title: RewardPayChoice Plan
+      description: Object that contains information about RewardPayChoice.
+      properties:
+        planType:
+          description: Type of processing plan.
+          type: string
+          enum:
+            - rewardPayChoice
+        fees:
+          type: object
+          description: Object that contains information about the fees.
+          properties:
+            monthlySubscription:
+              description: Fee for the monthly subscription. The value is in the currency's lowest denomination, for example, cents.
+              allOf:
+                - $ref: '#/components/schemas/amount' 
+            debit:
+              description: Object that contains information about fees for debit transactions.
+              properties:
+                option:
+                  type: string
+                  enum:
+                    - interchangePlus
+                    - flatRate
+                volume:
+                  description: Percentage of the total transaction that the processor charges the merchant.
+                  allOf:
+                    - $ref: '#/components/schemas/percentage'
+                transaction:
+                  description: Fee for each transaction. The value is in the currency's lowest denomination, for example, cents.
+                  allOf:
+                    - $ref: '#/components/schemas/amount'
+              required:
+                - volume
+                - transaction
+            credit: 
+              type: object
+              description: Object that contains information about fees for credit transactions.
+              properties:
+                tips:
+                  description: Indicates how the merchant manages tips.
+                  type: string
+                  enum:
+                    - noTips
+                    - prompt
+                    - tipAdjust
+                cardChargePercentage:
+                  description: Percentage of the total transaction amount that the processor charges the cardholder.
+                  type: number
+                  readOnly: true
+                  default: 3.0
+                  allOf:
+                    - $ref: '#/components/schemas/percentage'
+                merchantChargePercentage:
+                  description: Percentage of the total transaction amount that the processor charges the merchant.
+                  type: number
+                  readOnly: true
+                  default: 0.90
+                  allOf:
+                    - $ref: '#/components/schemas/percentage'
+                merchantChargePerTransaction:
+                  description: Fee for each transaction. The value is in the currency's lowest denomination, for example, cents.
+                  allOf:
+                    - $ref: '#/components/schemas/amount'  
+            specialityCards:
+              $ref: '#/components/schemas/specialityCards'
+          required:
+            - monthlySubscription
+            - debit
+            - credit
+      required:
+        - planType
+        - fees
+    
+    flatRateAmexDirect:
+      type: object
+      title: American Express Direct
+      required:
+        - type
+        - transaction
+      properties:
+        type:
+          type: string
+          enum:
+            - direct
+        transaction:
+          description: Fee for each transaction. The value is in the currency's lowest denomination, for example, cents.
+          allOf:
+            - $ref: '#/components/schemas/amount'
+
+    flatRate:
+      type: object
+      title: Flat Rate Plan
+      description: Object that contains information about Flat Rate.
+      properties:
+        planType:
+          type: string
+          description: Type of processing plan.
+          enum:
+            - flatRate
+        fees:
+          description: Object that contains information about the Flat Rate fees.
+          type: object
+          properties:
+            standardCards:
+              $ref: '#/components/schemas/processorFee'
+            amex:
+              discriminator:
+                propertyName: type
+                mapping:
+                  direct: '#/components/schemas/flatRateAmexDirect'
+              oneOf:
+                - $ref: '#/components/schemas/flatRateAmexDirect'
+            pinDebit:
+              $ref: '#/components/schemas/pinDebit'
+            electronicBenefitsTransfer:
+              $ref: '#/components/schemas/electronicBenefitsTransfer'
+            specialityCards:
+              $ref: '#/components/schemas/specialityCards'
+          required:
+            - standardCards
+      required:
+        - planType
+        - fees
+
+    pinDebit:
+      type: object
+      required:
+        - additionalDiscount 
+        - transaction
+        - monthlyAccess
+      properties:
+        additionalDiscount:
+          description: Percentage of additional discount.
+          allOf:
+            - $ref: '#/components/schemas/percentage'
+        transaction:
+          description: Fee for each transaction. The value is in the currency's lowest denomination, for example, cents.
+          allOf:
+            - $ref: '#/components/schemas/amount'
+        monthlyAccess:
+          description: Monthly access fee for using PIN-debit services. The value is in the currency's lowest denomination, for example, cents.
+          allOf:
+            - $ref: '#/components/schemas/amount'
+
+    electronicBenefitsTransfer:
+      type: object
+      required:
+        - transaction
+      properties:
+        transaction:
+          description: Fee for each transaction. The value is in the currency's lowest denomination, for example, cents.
+          allOf:
+            - $ref: '#/components/schemas/amount'
+
+    enhancedInterchange:
+      type: object
+      required:
+        - enrollment
+        - creditToMerchant
+      properties:
+        enrollment:
+          description: Enrollment fee for the enhanced interchange services. The value is in the currency's lowest denomination, for example, cents.
+          allOf:
+            - $ref: '#/components/schemas/amount'
+        creditToMerchant:
+          description: Percentage of additional discount.
+          allOf:
+            - $ref: '#/components/schemas/percentage'
+    
+    specialityCards:
+      type: object
+      required:
+        - transaction
+      properties:
+        transaction:
+          description: Fee for each transaction. The value is in the currency's lowest denomination, for example, cents.
+          allOf:
+            - $ref: '#/components/schemas/amount'
+    
+    qualRates:
+      type: object
+      required:
+        - qualifiedRate
+        - midQualRate
+        - nonQualRate
+      properties:
+        qualifiedRate:
+          $ref: '#/components/schemas/processorFee'
+        midQualRate:
+          $ref: '#/components/schemas/processorFee'
+        nonQualRate:
+          $ref: '#/components/schemas/processorFee'
+
+    qualRatesWithPremium:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/qualRates'
+        - type: object
+          required:
+            - premiumRate
+          properties:
+            premiumRate:
+              $ref: '#/components/schemas/processorFee'
+    
+    qualRatesWithPremiumAndRegulated:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/qualRatesWithPremium'
+        - type: object
+          required:
+            - regulatedCheckCard
+            - unregulatedCheckCard
+          properties:
+            regulatedCheckCard:
+              $ref: '#/components/schemas/processorFee'
+            unregulatedCheckCard:
+              $ref: '#/components/schemas/processorFee'
+  
+    processorFee:
+      type: object
+      title: Processor Fee
+      description: Object that contains information about the processor fees.
+      properties:
+        volume:
+          description: Percentage of total transaction amount that the processor charges the merchant.
+          allOf:
+            - $ref: '#/components/schemas/percentage'
+        transaction:
+          description: Fee for each transaction. The value is in the currency's lowest denomination, for example, cents.
+          allOf:
+            - $ref: '#/components/schemas/amount'
+
+    ach:
+      type: object
+      properties:
+        fees:
+          type: object
+          properties:
+            transaction: 
+              description: Fee for each transaction. The value is in the currency's lowest denomination, for example, cents.
+              type: integer
+              minimum: 0
+              example: 50
+            batch:
+              description: Fee for each batch. The value is in the currency's lowest denomination, for example, cents.
+              type: integer
+              minimum: 0
+              example: 1000
+            returns:
+              description: Fee for each return. The value is in the currency's lowest denomination, for example, cents.
+              type: integer
+              minimum: 0
+              example: 400
+            unauthorizedReturn:
+              description: Fee for each unauthorized return. The value is in the currency's lowest denomination, for example, cents.
+              type: integer
+              minimum: 0
+              example: 1999
+            statement:
+              description: Fee for each statement. The value is in the currency's lowest denomination, for example, cents.
+              type: integer
+              minimum: 0
+              example: 800
+            monthlyMinimum:
+              description: Minimum monthly value of transactions. The value is in the currency's lowest denomination, for example, cents.
+              type: integer
+              minimum: 0
+              example: 20000 
+            accountVerification:
+              description: Fee for each account verification. The value is in the currency's lowest denomination, for example, cents.
+              type: integer
+              minimum: 0
+              example: 100
+            discountRateUnder10000:
+              description: Percentage discount for ACH transfers less than $10,000.
+              allOf:
+                - $ref: '#/components/schemas/percentage'
+            discountRateAbove10000:
+              description: Percentage discount for ACH transfers equal to or more than $10,000.
+              allOf:
+                - $ref: '#/components/schemas/percentage'
+          required:
+            - transaction
+            - batch
+            - returns
+            - unauthorizedReturn
+            - statement
+            - monthlyMinimum
+            - accountVerification
+            - discountRateUnder10000
+            - discountRateAbove10000
+
+    servicesUs5.0:
+      title: US version 5.0 services array
+      description: Services version 5.0
+      type: array
+      items: 
+        $ref: '#/components/schemas/serviceUs5.0'
+      uniqueItems: true
+    
+    serviceUs5.0:
+      title: US version 5.0 service
+      type: object
+      discriminator:
+        propertyName: name
+        mapping:
+          hardwareAdvantagePlan: '#/components/schemas/hardwareAdvantagePlan'
+      oneOf:
+        - $ref: '#/components/schemas/hardwareAdvantagePlan'
+
+    hardwareAdvantagePlan:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+            - hardwareAdvantagePlan
+          example: hardwareAdvantagePlan
+        enabled:
+          description: Indicates if the pricing agreement includes the hardware advantage plan.
+          type: boolean
+          default: true
+          example: true
+      required:
+        - name
+        - enabled
+
+        
+  securitySchemes:
+    bearerAuth:
+      $ref: '../../../common/security/bearer-auth.yaml#/components/securitySchemes/bearerAuth'

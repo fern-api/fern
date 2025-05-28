@@ -1,0 +1,17 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  parameters:
+    date:
+      name: date
+      in: query
+      required: true
+      description: Date that the merchant submitted the batch. The format of this value is **YYYY-MM-DD**.
+      schema:
+        type: string
+        format: date
+      example: '2027-07-02'

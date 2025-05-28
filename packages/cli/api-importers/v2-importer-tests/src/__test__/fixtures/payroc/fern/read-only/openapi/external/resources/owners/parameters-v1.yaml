@@ -1,0 +1,18 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  parameters:
+    ownerId:
+      name: ownerId
+      in: path
+      description: Unique identifier for the owner.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: integer
+      example: 4564

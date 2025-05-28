@@ -1,0 +1,64 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  schemas:    
+    ebtDetails:
+      type: object
+      required:
+        - benefitCategory
+      description: Object that contains information about the Electronic Benefit Transfer (EBT) transaction.
+      properties:
+        benefitCategory:
+          type: string
+          description: |
+            Indicates if the balance relates to an EBT Cash account or an EBT SNAP account.  
+             - `cash` – EBT Cash  
+             - `foodStamp` – EBT SNAP
+          enum:
+            - cash
+            - foodStamp
+          example: cash
+        withdrawal:
+          type: boolean
+          description: |
+            Indicates a request to withdraw cash.  
+            **Note:** Cash withdrawal is available only for EBT Cash benefit accounts.
+          example: false
+  
+    ebtDetailsWithVoucher:
+      type: object
+      required:
+        - benefitCategory
+      description: Object that contains information about the Electronic Benefit Transfer (EBT) transaction.
+      allOf:
+        - $ref: '#/components/schemas/ebtDetails'
+        - type: object
+          properties:
+            voucher:
+              $ref: "#/components/schemas/voucher"
+  
+    voucher:
+      required:
+        - approvalCode
+        - serialNumber
+      type: object
+      description: |
+        Object that contains information about the EBT voucher.  
+        **Note:** Voucher is available only for EBT Cash benefit accounts.
+      properties:
+        approvalCode:
+          maxLength: 6
+          minLength: 6
+          type: string
+          description: Authorization code that the processor issued for the transaction.
+          example: '123456'
+        serialNumber:
+          maxLength: 15
+          minLength: 7
+          type: string
+          description: Serial number of the voucher.
+          example: SN123456789

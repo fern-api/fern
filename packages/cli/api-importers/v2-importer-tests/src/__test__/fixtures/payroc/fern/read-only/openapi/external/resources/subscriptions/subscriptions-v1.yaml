@@ -1,0 +1,723 @@
+openapi: 3.0.1
+info:
+  title: Transaction API
+  version: '1'
+  termsOfService: https://www.payroc.com/terms
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+servers:
+  - url: https://api.payroc.com/v1
+    description: Production
+  - url: https://api.uat.payroc.com/v1
+    description: UAT
+tags:
+- name: Subscriptions
+
+paths:
+  /processing-terminals/{processingTerminalId}/subscriptions:
+    post:
+      tags:
+        - Subscriptions
+      summary: Create subscription
+      description: Create a new subscription.
+      operationId: createSubscription
+      parameters:
+        - $ref: '../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey'
+        - $ref: ../../../common/parameters/processing-terminal-id-v1.yaml#/components/parameters/processingTerminalIdPath
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/subscriptionRequest'
+            examples:
+              createSubscription:
+                $ref: './example-requests-v1.yaml#/components/examples/subscriptionRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful request. We created the subscription.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/subscription'
+              examples:
+                createdSubscription:
+                  $ref: './example-responses-v1.yaml#/components/examples/subscriptionResponse'
+          headers:
+            location:
+              $ref: '../../../common/headers/location-v1.yaml#/components/headers/location'
+        '400':
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '409':
+          $ref: '../../../common/responses/errors/409-v1.yaml#/components/responses/409'
+        '415':
+          $ref: '../../../common/responses/errors/415-v1.yaml#/components/responses/415'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+    get:
+      tags:
+        - Subscriptions
+      summary: List subscriptions
+      description: |
+        List subscriptions linked to a terminal.  
+        To filter your results, use the query parameters.
+      operationId: listSubscriptions
+      parameters:
+        - $ref: '../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey'
+        - $ref: ../../../common/parameters/processing-terminal-id-v1.yaml#/components/parameters/processingTerminalIdPath
+        - $ref: './parameters-v1.yaml#/components/parameters/customerName'
+        - $ref: './parameters-v1.yaml#/components/parameters/last4'
+        - $ref: './parameters-v1.yaml#/components/parameters/paymentPlan'
+        - $ref: './parameters-v1.yaml#/components/parameters/frequency'
+        - $ref: './parameters-v1.yaml#/components/parameters/status'
+        - $ref: './parameters-v1.yaml#/components/parameters/endDate'
+        - $ref: './parameters-v1.yaml#/components/parameters/nextDueDate'
+        - $ref: '../../../common/parameters/before-v1.yaml#/components/parameters/before'
+        - $ref: '../../../common/parameters/after-v1.yaml#/components/parameters/after'
+        - $ref: '../../../common/parameters/limit-v1.yaml#/components/parameters/limit'
+      responses:
+        '200':
+          description: Successful request. Returns a paginated list of subscriptions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/subscriptionPaginatedList'
+              examples:
+                paginatedResults:
+                  $ref: './example-responses-v1.yaml#/components/examples/paginatedSubscription'
+                noActivity:
+                  $ref: '../../../common/responses/no-activity-v1.yaml#/components/examples/noActivity'
+        '400':
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+  /processing-terminals/{processingTerminalId}/subscriptions/{subscriptionId}:
+    get:
+      tags:
+        - Subscriptions
+      summary: Retrieve subscription
+      description: Retrieve a specific subscription.
+      operationId: getSubscription
+      parameters:
+        - $ref: ../../../common/parameters/processing-terminal-id-v1.yaml#/components/parameters/processingTerminalIdPath
+        - $ref: './parameters-v1.yaml#/components/parameters/subscriptionId'
+      responses:
+        '200':
+          description: Successful request. Returns the requested subscription.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/subscription'
+              examples:
+                subscription:
+                  $ref: './example-responses-v1.yaml#/components/examples/subscriptionResponse'
+        '400':
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+    patch:
+      tags:
+        - Subscriptions
+      summary: Update subscription
+      description: | 
+        Make changes to a subscription.  
+
+        Structure your request to follow the RFC 6902 standard.
+      operationId: updateSubscription
+      parameters:
+        - $ref: ../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey
+        - $ref: ../../../common/parameters/processing-terminal-id-v1.yaml#/components/parameters/processingTerminalIdPath
+        - $ref: './parameters-v1.yaml#/components/parameters/subscriptionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../../../common/schemas/common/patch-request-v1.yaml#/components/schemas/patchRequest'
+            examples:
+              patchSubscriptionRealistic:
+                $ref: './example-requests-v1.yaml#/components/examples/patchSubscriptionRealistic'
+              patchOperations:
+                $ref: '../../../common/requests/patch-v1.yaml#/components/examples/patchOperations'
+      responses:
+        '200':
+          description: Successful request. We have updated the subscription.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/subscription'
+              examples:
+                subscription:
+                  $ref: './example-responses-v1.yaml#/components/examples/subscriptionResponse'
+        '400':
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '409':
+          $ref: '../../../common/responses/errors/409-v1.yaml#/components/responses/409'
+        '415':
+          $ref: '../../../common/responses/errors/415-v1.yaml#/components/responses/415'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+  /processing-terminals/{processingTerminalId}/subscriptions/{subscriptionId}/deactivate:
+    post:
+      tags:
+        - Subscriptions
+      summary: Deactivate subscription
+      description: Deactivate a subscription.
+      operationId: deactivateSubscription
+      parameters:
+        - $ref: ../../../common/parameters/processing-terminal-id-v1.yaml#/components/parameters/processingTerminalIdPath
+        - $ref: './parameters-v1.yaml#/components/parameters/subscriptionId'
+      responses:
+        '200':
+          description: Successful request. We deactivated the subscription.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/subscription'
+              examples:
+                deactivateSubscription:
+                  $ref: './example-responses-v1.yaml#/components/examples/deactivateSubscription'
+        '400':
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '409':
+          $ref: '../../../common/responses/errors/409-v1.yaml#/components/responses/409'
+        '415':
+          $ref: '../../../common/responses/errors/415-v1.yaml#/components/responses/415'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+  /processing-terminals/{processingTerminalId}/subscriptions/{subscriptionId}/reactivate:
+    post:
+      tags:
+        - Subscriptions
+      summary: Re-activate subscription
+      description: Re-activate an existing subscription.
+      operationId: reactivateSubscription
+      parameters:
+        - $ref: ../../../common/parameters/processing-terminal-id-v1.yaml#/components/parameters/processingTerminalIdPath
+        - $ref: './parameters-v1.yaml#/components/parameters/subscriptionId'
+      responses:
+        '200':
+          description: Successful request. We re-activated the subscription.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/subscription'
+              examples:
+                subscription:
+                  $ref: './example-responses-v1.yaml#/components/examples/subscriptionResponse'
+        '400':
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '409':
+          $ref: '../../../common/responses/errors/409-v1.yaml#/components/responses/409'
+        '415':
+          $ref: '../../../common/responses/errors/415-v1.yaml#/components/responses/415'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+  /processing-terminals/{processingTerminalId}/subscriptions/{subscriptionId}/pay:
+    post:
+      tags:
+        - Subscriptions
+      summary: Pay manual subscription
+      description: Process payment for a manual subscription.
+      operationId: paySubscription
+      parameters:
+        - $ref: '../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey'
+        - $ref: ../../../common/parameters/processing-terminal-id-v1.yaml#/components/parameters/processingTerminalIdPath
+        - $ref: './parameters-v1.yaml#/components/parameters/subscriptionId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/subscriptionPaymentRequest'
+            examples:
+              subscriptionPaymentRequest:
+                $ref: './example-requests-v1.yaml#/components/examples/subscriptionPaymentRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful request. We have processed the payment for the subscription.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/subscriptionPayment'
+              examples:
+                subscriptionPaymentResponse:
+                  $ref: './example-responses-v1.yaml#/components/examples/subscriptionPaymentResponse'
+          headers:
+            location:
+              $ref: '../../../common/headers/location-v1.yaml#/components/headers/location'
+        '400':
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '409':
+          $ref: '../../../common/responses/errors/409-v1.yaml#/components/responses/409'
+        '415':
+          $ref: '../../../common/responses/errors/415-v1.yaml#/components/responses/415'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+
+components:
+  schemas:
+    subscriptionOrderBreakdown:
+      required:
+        - subtotal
+      type: object
+      description: |
+        Object that contains information about the surcharge and taxes that apply to the transaction.
+      properties:
+        subtotal:
+          type: integer
+          format: int64
+          description: Total amount for the transaction before tax. The value is in the currency's lowest denomination, for example, cents.
+          example: 4500
+        taxes:
+          type: array
+          description: Array of tax objects.
+          items:
+            $ref: '../../../common/schemas/transaction/order-v1.yaml#/components/schemas/tax'
+        surcharge:
+          description: Object that contains information about the [surcharge](https://docs.payroc.com/knowledge/card-payments/surcharging) that we applied to the transaction.        
+          allOf:
+            - readOnly: true # We do not want the surcharge to appear in the subscriptionRequest
+            - $ref: '../../../common/schemas/transaction/order-v1.yaml#/components/schemas/surcharge'
+
+    subscriptionPaymentOrder:
+      description: Object that contains information about the initial cost that a customer pays to set up the subscription.
+      type: object
+      properties:
+        orderId:
+          maxLength: 24
+          minLength: 1
+          type: string
+          description: A unique identifier assigned by the merchant.
+          example: OrderRef6543
+        amount:
+          type: integer
+          format: int64
+          description: | 
+            Total amount for the transaction. The value is in the currency's lowest denomination, for example, cents.<br/>
+            <br/>**Important:** Do not add the surcharge to the amount parameter in the request. If the transaction is eligible for surcharging, our gateway adds the surcharge to the amount in the request, and then returns the updated amount in the response.
+          example: 4999
+        description:
+          maxLength: 1024
+          minLength: 1
+          type: string
+          description: Description of the transaction.
+          example: Monthly Premium Club subscription
+        breakdown:
+          $ref: '#/components/schemas/subscriptionOrderBreakdown'
+
+    subscriptionRecurringOrder:
+      type: object
+      description: |
+        Object that contains information about the cost of each payment.  
+        **Note:** Send this object only if the value for **type** is `automatic`.
+      properties:
+        amount:
+          type: integer
+          format: int64
+          description: | 
+            Total amount for the transaction. The value is in the currency's lowest denomination, for example, cents.<br/>
+            <br/>**Important:** Do not add the surcharge to the amount parameter in the request. If the transaction is eligible for surcharging, our gateway adds the surcharge to the amount in the request, and then returns the updated amount in the response.
+          example: 4999
+        description:
+          maxLength: 1024
+          minLength: 1
+          type: string
+          description: Description of the transaction.
+          example: Monthly Premium Club subscription
+        breakdown:
+          $ref: '#/components/schemas/subscriptionOrderBreakdown'
+
+    subscriptionPaginatedList:
+      required:
+        - count
+        - data
+        - hasMore
+        - limit
+      type: object
+      allOf:
+        - $ref: '../../../common/schemas/common/paginated-list-v1.yaml#/components/schemas/paginatedList'
+        - type: object
+          properties:
+            data:
+              type: array
+              description: Array of subscriptions.
+              items:
+                $ref: '#/components/schemas/subscription'
+    
+    subscriptionPaymentRequest:
+      required:
+        - order
+      properties:
+        operator:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Operator who initiated the request.
+        order:
+          $ref: '#/components/schemas/subscriptionPaymentOrder'
+        customFields:
+          type: array
+          description: |
+            Array of customField objects.
+          items:
+            $ref: '../../../common/schemas/common/custom-field-v1.yaml#/components/schemas/customField'
+      
+    subscriptionRequest:
+      required:
+        - paymentMethod
+        - paymentPlanId
+        - startDate
+        - subscriptionId
+      type: object
+      properties:
+        subscriptionId:
+          maxLength: 48
+          minLength: 1
+          type: string
+          description: Unique identifier that the merchant assigned to the subscription.
+          example: SubRef7654
+        paymentPlanId:
+          maxLength: 48
+          minLength: 1
+          type: string
+          description: Unique identifier that the merchant assigned to the payment plan.
+          example: PlanRef8765
+        paymentMethod:
+          type: object
+          description: Object that contains information about the customer's payment details.
+          discriminator:
+            propertyName: type
+            mapping:
+              secureToken: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/secureTokenPayload'
+          oneOf:
+            - $ref: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/secureTokenPayload'
+        name:
+          maxLength: 128
+          minLength: 5
+          type: string
+          description: |
+            Name of the subscription. 
+            This value replaces the name inherited from the payment plan.
+          example: Premium Club
+        description:
+          maxLength: 128
+          minLength: 1
+          type: string
+          description: |
+            Description of the subscription. 
+            This value replaces the description inherited from the payment plan.
+          example: Monthly Premium Club subscription. Two large pizzas free per month, and exclusive member discounts.
+        setupOrder:
+          $ref: '#/components/schemas/subscriptionPaymentOrder'
+        recurringOrder:
+          $ref: '#/components/schemas/subscriptionRecurringOrder'
+        startDate:
+          type: string
+          format: date
+          description: |
+            Format: **YYYY-MM-DD**  
+            Subscription's start date.
+          example: '2024-05-02'
+        endDate:
+          type: string
+          format: date
+          description: |
+            Format: **YYYY-MM-DD**  
+            Subscription's end date.  
+            **Note:** If you provide values for both **length** and **endDate**, 
+            our gateway uses the value for **endDate** to determine when the subscription should end.
+          example: '2025-05-02'
+        length:
+          minimum: 0
+          type: integer
+          format: int32
+          description: |
+            Total number of billing cycles. To indicate that the subscription should run indefinitely, send a value of `0`.
+            This value replaces the **length** inherited from the payment plan.  
+            **Note:** If you provide values for both **length** and **endDate**, 
+            our gateway uses the value for **endDate** to determine when the subscription should end.
+          example: 12
+        pauseCollectionFor:
+          type: integer
+          format: int32
+          description: |
+            Number of billing cycles that the merchant wants to pause payments for. 
+            For example, if the merchant wants to offer a free trial period.
+          example: 0
+        customFields:
+          type: array
+          description: |
+            Array of customField objects.
+          items:
+            $ref: '../../../common/schemas/common/custom-field-v1.yaml#/components/schemas/customField'
+    
+    subscription:
+      required:
+        - subscriptionId
+        - processingTerminalId
+        - paymentPlan
+        - secureToken
+        - name
+        - currency
+        - currentState
+        - startDate
+        - type
+        - frequency
+      type: object
+      properties:
+        subscriptionId:
+          maxLength: 48
+          minLength: 1
+          type: string
+          description: Unique identifier that the merchant assigned to the subscription.
+          example: SubRef7654
+        processingTerminalId:
+          maxLength: 50
+          minLength: 4
+          type: string
+          description: Unique identifier of the terminal that the subscription is linked to.
+          example: '1234001'
+        paymentPlan:
+          $ref: '../../../common/schemas/transaction/summary-v1.yaml#/components/schemas/paymentPlanSummary'
+        secureToken:
+          $ref: '../../../common/schemas/transaction/summary-v1.yaml#/components/schemas/secureTokenSummary'
+        name:
+          maxLength: 128
+          minLength: 5
+          type: string
+          description: Name of the subscription.
+          example: Premium Club
+        description:
+          maxLength: 128
+          minLength: 1
+          type: string
+          description: Description of the subscription.
+          example: Monthly Premium Club subscription. Two large pizzas free per month, and exclusive member discounts.
+        currency:
+          $ref: '../../../common/schemas/common/currency-v1.yaml#/components/schemas/currency'
+        setupOrder:
+          $ref: '#/components/schemas/subscriptionPaymentOrder'
+        recurringOrder:
+          $ref: '#/components/schemas/subscriptionRecurringOrder'
+        currentState:
+          $ref: '#/components/schemas/subscriptionState'
+        startDate:
+          type: string
+          format: date
+          description: |
+            Format: **YYYY-MM-DD**  
+            Subscription's start date.
+          example: '2024-05-02'
+        endDate:
+          type: string
+          format: date
+          description: |
+            Format: **YYYY-MM-DD** 
+            Subscription's end date.  
+            **Note:** If you provide values for both **length** and **endDate**, 
+            our gateway uses the value for **endDate** to determine when the subscription should end. 
+          example: '2025-05-02'
+        length:
+          minimum: 0
+          type: integer
+          format: int32
+          description: |
+            Total number of billing cycles. To indicate that the subscription should run indefinitely, send a value of `0`. This value replaces the **length** inherited from the payment plan.  
+            **Note:** If you provide values for both **length** and **endDate**, our gateway uses the value for **endDate** to determine when the subscription should end.
+          example: 12
+        type:
+          type: string
+          description: |
+            How the merchant takes the payment from the customer’s account.  
+            - `manual` – The merchant manually collects payments from the customer.  
+            - `automatic` – The terminal automatically collects payments from the customer.
+          enum:
+            - manual
+            - automatic
+          example: automatic
+        frequency:
+          type: string
+          description: Indicates how often the merchant or the terminal collects a payment from the customer.
+          enum:
+            - weekly
+            - fortnightly
+            - monthly
+            - quarterly
+            - yearly
+          example: monthly
+        pauseCollectionFor:
+          minimum: 0
+          type: integer
+          format: int32
+          description: |
+            Number of billing cycles that the merchant wants to pause payments for. 
+            For example, if the merchant wants to offer a free trial period.
+          example: 0
+        customFields:
+          type: array
+          description: |
+            Array of customField objects.
+          items:
+            $ref: '../../../common/schemas/common/custom-field-v1.yaml#/components/schemas/customField'
+    
+    subscriptionState:
+      required:
+        - paidInvoices
+        - status
+      type: object
+      description: A snapshot of the subscription's current state.
+      properties:
+        status:
+          type: string
+          description: |
+            Status of the Subscription.
+            
+            - 'active' - Subscription is active.
+            - 'completed' - Subscription has reached the end date or the total number of billing cycles.
+            - 'cancelled' - Merchant deactivated the subscription.
+            - 'suspended' - Subscription is suspended. For example, if the customer misses payments.
+          enum:
+            - active
+            - completed
+            - suspended
+            - cancelled
+          example: active
+        nextDueDate:
+          type: string
+          description: Date that the merchant collects the next payment.
+          format: date
+          example: '2024-08-02'
+        paidInvoices:
+          minimum: 0
+          type: integer
+          description: Number of payments that the merchant has collected.
+          format: int32
+          example: 3
+        outstandingInvoices:
+          minimum: 0
+          type: integer
+          description: |
+            Number of payments until the end of the subscription. 
+            Our gateway returns a value for **outstandingInvoices** only if the subscription 
+            has an end date or a fixed number of billing cycles.
+          format: int32
+          example: 9
+    
+    subscriptionPayment:
+      required:
+        - subscriptionId
+        - processingTerminalId
+        - payment
+        - secureToken
+        - currentState
+      type: object
+      properties:
+        subscriptionId:
+          type: string
+          description: Unique identifier that the merchant assigned to the subscription.
+          example: SubRef7654
+        processingTerminalId:
+          type: string
+          description: Unique identifier of the terminal that the subscription is linked to.
+          example: '1234001'
+        payment:
+          $ref: '../../../common/schemas/transaction/summary-v1.yaml#/components/schemas/paymentSummary'
+        secureToken:
+          $ref: '../../../common/schemas/transaction/summary-v1.yaml#/components/schemas/secureTokenSummary'
+        currentState:
+          $ref: '#/components/schemas/subscriptionState'
+        customFields:
+          type: array
+          description: |
+            Array of customField objects.
+          items:
+            $ref: '../../../common/schemas/common/custom-field-v1.yaml#/components/schemas/customField'
+  

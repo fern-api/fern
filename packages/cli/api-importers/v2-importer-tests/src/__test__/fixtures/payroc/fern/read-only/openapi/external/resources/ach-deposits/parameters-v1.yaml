@@ -1,0 +1,28 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components: 
+  parameters:
+    achDepositId:
+      name: achDepositId
+      description: Unique identifier of the ACH deposit.
+      in: path
+      required: true
+      schema:
+        type: integer
+        example: 99
+    achDepositIdQuery:
+      name: achDepositId
+      description: Unique identifier of the ACH deposit. You must provide either the 'achDepositId' or the 'date'.
+      in: query
+      required: true
+      schema:
+        type: integer
+        example: 99
+
+  securitySchemes:
+    bearerAuth:
+      $ref: '../../../common/security/bearer-auth.yaml#/components/securitySchemes/bearerAuth'

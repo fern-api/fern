@@ -1,0 +1,74 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  schemas:
+    customer:
+      type: object
+      description: Customer contact and address details.
+      properties:
+        firstName:
+          type: string
+          description: Customer's first name.
+          maxLength: 60
+          minLength: 0
+          example: Sarah
+        lastName:
+          type: string
+          description: Customer's last name.
+          maxLength: 60
+          minLength: 0
+          example: Hopper
+        dateOfBirth:
+          type: string
+          format: date
+          description: Customer's date of birth. The format for this value is **YYYY-MM-DD**.
+          example: '1990-07-15'
+        referenceNumber:
+          type: string
+          description: |
+            Identifier of the transaction, also known as a customer code. 
+
+            For requests, you must send a value for **referenceNumber** if the customer provides one. 
+          maxLength: 48
+          minLength: 0
+          example: CustomerCode234567
+        billingAddress:
+          $ref: ../common/address-v1.yaml#/components/schemas/address
+        shippingAddress:
+          $ref: "#/components/schemas/shipping"
+        contactMethods:
+          type: array
+          uniqueItems: true
+          description: Customer's contact information.
+          items:
+            $ref: ../../../common/schemas/common/contact-method-v1.yaml#/components/schemas/contactMethod
+        notificationLanguage:
+          type: string
+          format: iso-639-1
+          description: |
+            Language that the customer uses for notifications. 
+
+            This code follows the ISO 639-1 alpha-2 standard.
+          enum:
+            - en
+            - fr
+          maxLength: 2
+          minLength: 2
+          example: en
+
+    shipping:
+      description: Object that contains information about the customer and their shipping address.
+      type: object
+      properties:
+        recipientName:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Recipient's name.
+          example: Sarah Hopper
+        address:
+          $ref: ../../../common/schemas/common/address-v1.yaml#/components/schemas/address

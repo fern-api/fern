@@ -1,0 +1,554 @@
+openapi: 3.0.3
+
+paths: {}
+
+info:
+  title: Common Domain Models
+  description: Common domain models that are shared across the Payroc API
+  version: '1'
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+
+tags:
+  - name: Common schemas
+    description: Common schemas that can be resued
+
+components:
+  schemas:
+    processingTerminalSummary:
+      type: object
+      properties:
+        processingTerminalId:
+          type: string
+          description: Unique identifier of the processing terminal.
+        link:
+          required:
+          - href
+          - rel
+          - method
+          type: object
+          properties:
+            href:
+              type: string
+            rel:
+              type: string
+            method:
+              type: string
+          description: Array of links related to your request. For more information about HATEOAS, go to [Hypermedia as the engine of application state.](https://docs.payroc.com/knowledge/basic-concepts/HATEOAS).
+      required:
+        - processingTerminalId
+        - link
+
+    paginatedProcessingTerminals:
+      type: object
+      title: paginated Processing Terminals
+      allOf:
+      - $ref: '../../../common/schemas/common/paginated-list-v1.yaml#/components/schemas/paginatedList'
+      - type: object
+        properties:
+          data:
+            type: array
+            description: An array of processing terminal objects.
+            items:
+              $ref: '#/components/schemas/processingTerminal'
+
+    processingTerminal:
+      type: object
+      properties:
+        processingTerminalId:
+          type: string
+          description: Unique identifier that our gateway assigned to the terminal.
+          example: '011234001'
+        status:
+          type: string
+          description: Indicates if the processing terminal is active.
+          enum:
+            - active
+            - inactive
+          maxLength: 8
+        timezone:
+          type: string
+          description: Time zone of the processing terminal.
+          maxLength: 28
+          enum: 
+            - Pacific/Midway
+            - Pacific/Honolulu
+            - America/Anchorage
+            - America/Los_Angeles
+            - America/Denver
+            - America/Phoenix
+            - America/Chicago
+            - America/Indiana/Indianapolis
+            - America/New_York     
+          example: America/Chicago
+        program:
+          type: string
+          description: Name of the product and its setup.
+          maxLength: 50
+        gateway:
+          description: Object that contains the gateway settings for the solution.
+          discriminator:
+            propertyName: gateway
+            mapping:
+              payroc: '#/components/schemas/payrocGateway'
+          anyOf:
+            - $ref: '#/components/schemas/payrocGateway'
+        batchClosure:
+          description: Object that contains information about when and how the terminal closes the batch.
+          discriminator:
+            propertyName: batchCloseType
+            mapping:
+              automatic: '#/components/schemas/automaticBatchClose'
+              manual: '#/components/schemas/manualBatchClose'
+          oneOf:
+            - $ref: '#/components/schemas/automaticBatchClose'
+            - $ref: '#/components/schemas/manualBatchClose'  
+        applicationSettings:
+          type: object
+          description: Object that contains the application settings for the solution.
+          properties:
+            invoiceNumberPrompt:
+              type: boolean
+              description: Indicates if the terminal should prompt the clerk to provide an invoice number with a sale.
+            clerkPrompt:
+              type: boolean
+              description: Indicates if the terminal should prompt the clerk, for example, if the terminal should prompt when the clerk needs to enter an amount on the terminal.
+        features:
+          type: object
+          description: Object that contains the feature settings for the terminal.
+          properties:
+            tips:
+              discriminator:
+                propertyName: enabled
+                mapping:
+                  true: '#/components/schemas/tipProcessingEnabled'
+                  false: '#/components/schemas/tipProcessingDisabled'
+              oneOf:
+                - $ref: '#/components/schemas/tipProcessingEnabled'
+                - $ref: '#/components/schemas/tipProcessingDisabled'  
+            enhancedProcessing:
+              type: object
+              description: Object that contains details about level two and level three transactions.
+              properties:
+                enabled:
+                  type: boolean
+                  description: Indicates if the terminal can run level two and level three transactions.
+                transactionDataLevel:
+                  type: string
+                  description: Indicates if the terminal supports level two or level three transactions.
+                  enum:
+                    - level2
+                    - level3
+                  maxLength: 6
+                shippingAddressMode:
+                  type: string
+                  description: |
+                    Indicates the address information that the clerk must provide to qualify for level two or level three data. The value is one of the following:
+                    - `fullAddress` - The clerk must provide the full address for the transaction to qualify.
+                    - `postalCode` - The clerk must provide a postal code for the transaction to qualify.
+                  enum:
+                    - fullAddress
+                    - postalCode
+                  maxLength: 11
+              required:
+                - enabled
+            ebt:
+              description: Object that contains details about EBT transactions.
+              discriminator:
+                propertyName: enabled
+                mapping:
+                  true: '#/components/schemas/ebtEnabled'
+                  false: '#/components/schemas/ebtDisabled'
+              anyOf:
+                - $ref: '#/components/schemas/ebtEnabled'
+                - $ref: '#/components/schemas/ebtDisabled'                 
+            pinDebitCashback:
+              type: boolean
+              description: Indicates if the terminal prompts for cashback on PIN debit transactions.
+            recurringPayments:
+              type: boolean
+              description: Indicates if the terminal can run repeat payments. For more information about repeat payments, go to [Payment Plans](/guides/integrate/repeat-payments).
+            paymentLinks:
+              type: object
+              description: Object that contains details about payment links.
+              properties:
+                enabled:
+                  type: boolean
+                  description: Indicates if the terminal supports payment links.
+                logoUrl:
+                  type: string  
+                  description: URL of the logo image that the merchant wants to display in their payment link email.
+                  maxLength: 200
+                footerNotes:
+                  type: string
+                  description: String that the merchant wants to display on the footer of their payment link email.
+                  maxLength: 2000
+              required:
+                - enabled
+            preAuthorizations:
+              type: boolean
+              description: Indicates if the terminal can run pre-authorizations.
+            offlinePayments:
+              type: boolean
+              description: Indicates if the terminal can accept payments when it can't connect to the gateway. For more information about offline processing, go to [Offline Processing](/knowledge/card-payments/offline-processing).
+          required:
+            - enhancedProcessing
+            - pinDebitCashback
+            - ebt
+        taxes:
+          type: array
+          description: Array of tax objects that contains the taxes that apply to the merchant's transactions.
+          items:
+            type: object
+            description: Object that contains a tax rate with a short description of the tax rate.
+            properties:
+              taxRate:
+                description: Rate of tax that the terminal applies to each transaction.
+                type: number
+                format: decimal
+                minimum: 0
+                maximum: 99.999
+              taxLabel:
+                type: string
+                description: Short description of the tax rate, for example, "Sales Tax".
+                maxLength: 10
+            required:
+              - taxRate
+              - taxLabel
+          maxItems: 3
+          minItems: 0
+        security:
+          type: object
+          description: Object that contains the tokenization settings and AVS settings for the terminal.
+          properties:
+            tokenization:
+              type: boolean
+              description: Indicates if the terminal can tokenize customer's payment details. For more information about tokenization, go to [Tokenization](/knowledge/basic-concepts/tokenization).
+            avsPrompt:
+              type: boolean
+              description: Indicates if the terminal should prompt for Address Verification Service (AVS) details when running a transaction. 
+            avsLevel:
+              type: string
+              description: Indicates the level of AVS details that the terminal should prompt for.
+              enum:
+                - fullAddress
+                - postalCode
+              maxLength: 11
+            cvvPrompt:
+              type: boolean
+              description: Indicates if the terminal should prompt for a Card Verfication Value (CVV) when running a transaction.
+          required:
+            - tokenization
+            - avsPrompt
+            - cvvPrompt
+        receiptNotifications:
+          type: object
+          description: Object that indicates if the terminal can send email receipts or text receipts.
+          properties:
+            emailReceipt:
+              type: boolean
+              description: Indicates if the terminal can send receipts by email.
+            smsReceipt:
+              type: boolean
+              description: Indicates if the terminal can send receipts by text message.
+        devices:
+          type: array
+          items:
+            type: object
+            description: Object that contains the details of the device.
+            properties:
+              manufacturer:
+                type: string
+                description: Manufacturer of the terminal.
+                maxLength: 100
+              model:
+                type: string
+                description: Model of the terminal.
+                maxLength: 100
+              serialNumber:
+                type: string
+                description: Serial number of the terminal.
+                maxLength: 45
+              communicationType:
+                $ref: '#/components/schemas/communicationType'
+            required:
+              - manufacturer
+              - model
+              - serialNumber
+          maxItems: 1
+          minItems: 0
+      required:
+        - processingTerminalId
+        - status
+        - timezone
+        - application
+        - batchClosure
+        - features
+
+    payrocGateway:
+      type: object
+      description: Object that contains the gateway settings for the solution.
+      properties:
+        gateway:
+          type: string
+          description: Name of the gateway that processes the transactions.
+          enum:
+            - payroc
+        terminalTemplateId:
+          type: string
+          description: Unique identifier of the gateway terminal template.
+          maxLength: 50
+      required:
+        - gateway
+        - terminalTemplateId  
+
+    hostConfiguration:
+      type: object
+      description: Object that contains the terminal's host configuration.
+      properties:
+        processingTerminalId:
+          type: string
+          description: Unique identifier that our gateway assigned to the terminal.
+          example: '0123451001'
+        processingAccountId:
+          type: string
+          description: Unique identifier of the processing account.
+          example: '23451'
+        configuration:    
+          discriminator:
+            propertyName: processor
+            mapping:
+              processor: '#/components/schemas/tsys'
+          oneOf:
+            - $ref: '#/components/schemas/tsys'      
+      required:
+        - processingTerminalId
+        - configuration
+    tsys:      
+      type: object
+      properties:
+        processor:
+          type: string
+          description: Name of the host processor.
+          example: 'tsys'
+          enum: 
+            - tsys
+          maxLength: 50
+        merchant:
+          type: object
+          description: Object that contains the configuration settings for the merchant.
+          properties:
+            posMid:
+              type: string
+              description: Unique identifier that the host processor assigned to the merchant.
+              maxLength: 12
+              example: '123456789101'
+            chainNumber:
+              type: string
+              description: Number that represents the merchant's chain of locations or stores.
+              maxLength: 6
+              example: '222222'
+            settlementAgent:
+              type: string
+              description: Unique identifier of the merchant's settlement agent.
+              maxLength: 4
+              example: '0001'
+            abaNumber:
+              type: string
+              description: Number that identifies the merchant in direct debit requests.
+              maxLength: 12
+              example: '967854108'
+            binNumber:
+              type: string
+              description: Unique identifier of the merchant's bank.
+              maxLength: 6
+              example: '888888'
+            agentBankNumber:
+              type: string
+              description: Number of the merchant's bank if it processes transactions on behalf of another entity.
+              maxLength: 6
+              example: '000001'
+            reimbursementAttribute:
+              type: string
+              description: Indicates if the merchant can accept interlink debit cards.
+              maxLength: 1
+              example: 'Z'
+            locationNumber:
+              type: string
+              description: Location of the merchant's information.
+              maxLength: 6
+              example: '000001'
+          required:
+            - posMid
+            - chainNumber
+            - binNumber
+        terminal:
+          type: object
+          description: Object that contains the configuration settings for the terminal.
+          properties:
+            terminalId:
+              type: string
+              description: Unique identifier that the host processor assigned to the terminal.
+              maxLength: 8
+              example: 'V500000'
+            terminalNumber:
+              type: string
+              description: Unique identifier of the terminal at the merchant's site.
+              maxLength: 4
+              example: '1111'
+            authenticationCode:
+              type: string
+              description: Authenticates the terminal's identity with the host processor.
+              minLength: 6
+              maxLength: 10
+            sharingGroups:
+              type: string
+              description: Indicates the direct debit networks and EBT networks that the terminal can use.
+              maxLength: 26
+              example: '3E7HULY8NQWZG'
+            motoAllowed:
+              type: boolean
+              description: Indicates if the terminal can run Mail Order/Telephone Order (MOTO) transactions.
+            internetAllowed:
+              type: boolean
+              description: Indicates if the terminal can run e-Commerce transactions.
+            cardPresentAllowed:
+              type: boolean
+              description: Indicates if the terminal can run card present transactions.   
+          required:
+            - terminalId
+            - terminalNumber
+      required:
+        - processor
+        - merchant
+        - terminal
+
+    automaticBatchClose:
+      type: object
+      title: Automatic Batch Close
+      description: Indicates how authorized transactions will be batched for settlement
+      properties:
+        batchCloseType:
+          type: string
+          description: Indicates whether batch settlement of authorized transactions are automatically or manually closed
+          enum:
+            - automatic
+        batchCloseTime:
+          type: string
+          description: The time, within the specified timezone, at which the batch automatically closes
+          example: '23:40'
+          maxLength: 5
+      required:
+        - batchCloseType
+        - batchCloseTime
+    manualBatchClose:
+      type: object
+      title: Manual Batch Close
+      description: Indicates how authorized transactions will be batched for settlement
+      properties:
+        batchCloseType:
+          type: string
+          description: Indicates whether batch settlement of authorized transactions are automatically or manually closed
+          enum:
+            - manual
+      required:
+        - batchCloseType
+
+    tipProcessingDisabled:
+      type: object
+      description: Tip settings
+      properties:
+        enabled:
+          type: boolean
+          description: Indicates if the terminal can accept tips.
+      required:
+        - enabled
+    tipProcessingEnabled:
+      type: object
+      description: Tip settings
+      properties:
+        enabled:
+          type: boolean
+          description: Indicates if the terminal can accept tips.
+          default: false
+        tipPrompt:
+          type: boolean
+          description: Indicates if the terminal prompts for tips.
+        tipAdjust:
+          type: boolean
+          description: Indicates if a clerk can adjust a tip after the customer completes the sale.
+        suggestedTips:
+          type: object
+          description: Object that contains up to three tip amounts that the terminal displays during a sale.
+          properties:
+            enabled:
+              type: boolean
+              description: Indicates if the terminal displays tip amounts during a sale.
+            tipPercentages:
+              type: array
+              description: Array of the tip amounts that the terminal displays during a sale.
+              items:
+                type: string
+              maxItems: 3
+      required:
+        - enabled
+
+    ebtEnabled:
+      type: object
+      description: Object that contains details about EBT transactions.
+      properties:
+        enabled:
+          type: boolean
+          description: Indicates if the terminal accepts Electronic Benefit Transfer (EBT) transactions. 
+        ebtType:
+          type: string
+          description: Indicates the type of EBT that the terminal supports.
+          enum:
+            - foodStamp
+            - cash
+            - both
+          maxLength: 9
+        fnsNumber:
+          type: string
+          description: Food and Nutritional Service (FNS) number that the government assigns to the merchant to allow them to accept Supplemental Nutrition Assistance Program (SNAP) transactions.
+          maxLength: 7
+      required:
+        - enabled
+        - ebtType
+    ebtDisabled:
+      type: object
+      description: Object that contains details about EBT transactions.
+      properties:
+        enabled:
+          type: boolean
+          description: Indicates if the terminal accepts Electronic Benefit Transfer (EBT) transactions.
+      required:
+        - enabled 
+
+    communicationType:
+      type: string
+      description: Indicates how the device communicates with its host.
+      enum:
+        - bluetooth
+        - cellular
+        - ethernet
+        - wifi
+      maxLength: 9  
+
+    timezone:
+      type: string
+      description: Indicates the timezone within which transactions will be processed for this terminal
+      maxLength: 28
+      enum: 
+        - Pacific/Midway
+        - Pacific/Honolulu
+        - America/Anchorage
+        - America/Los_Angeles
+        - America/Denver
+        - America/Phoenix
+        - America/Chicago
+        - America/Indiana/Indianapolis
+        - America/New_York     
+      example: America/Chicago

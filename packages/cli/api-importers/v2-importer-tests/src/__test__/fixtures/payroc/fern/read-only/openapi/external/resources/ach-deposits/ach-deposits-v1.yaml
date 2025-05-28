@@ -1,0 +1,303 @@
+openapi: 3.0.3
+info:
+  title: Settlement
+  description: Settlement
+  version: '1'
+  termsOfService: https://www.payroc.com/terms
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+security:
+- bearerAuth: []
+tags:
+  - name: Settlement
+    description: Settlement information.
+
+paths:
+  /ach-deposits:
+    get:
+      tags: [Settlement]
+      summary: List ACH deposits
+      description: Retrieve a list of ACH deposits.
+      operationId: getAchDeposits
+      parameters:
+        - $ref: '../../../common/parameters/before-v1.yaml#/components/parameters/before'
+        - $ref: '../../../common/parameters/after-v1.yaml#/components/parameters/after'
+        - $ref: '../../../common/parameters/limit-v1.yaml#/components/parameters/limit'
+        - name: date
+          in: query
+          required: true
+          description: Date to retrieve results from.
+          schema:
+            type: string
+            format: date
+            example: '2024-07-02'
+        - $ref: '../../../common/parameters/merchant-id-v1.yaml#/components/parameters/merchantId'
+      responses:
+        200:
+          description: Successful request. Returns a paginated list of ACH deposits.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - $ref: '../../../common/schemas/common/paginated-list-v1.yaml#/components/schemas/paginatedList'
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      description: Array of ACH deposit objects.
+                      items:
+                        $ref: '#/components/schemas/achDeposit'
+                  required: [data] 
+              examples:
+                paginatedList:
+                  $ref: './example-responses-v1.yaml#/components/examples/paginatedAchDeposits'
+                noActivity:
+                  $ref: '../../../common/responses/no-activity-v1.yaml#/components/examples/noActivity'
+        400:
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples: 
+                parameterError:
+                  $ref: '../../../common/responses/rfc-errors/400-v1.yaml#/components/examples/parameterError'
+                paginationError:
+                  $ref: '../../../common/responses/rfc-errors/400-v1.yaml#/components/examples/paginationError'
+        401:
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        403:
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        406:
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        500:
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+
+  /ach-deposits/{achDepositId}:
+    get:
+      tags: [Settlement]
+      summary: Retrieve ACH deposit
+      description: Retrieve a specific ACH deposit.
+      operationId: getAchDeposit
+      parameters:
+        - $ref: './parameters-v1.yaml#/components/parameters/achDepositId'
+      responses:
+        200:
+          description: Successful request. Returns the requested ACH deposit.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/achDeposit'
+        400:
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples: 
+                idError:
+                  $ref: './example-responses-v1.yaml#/components/examples/achDepositIdError'
+        401:
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        403:
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        404:
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        406:
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        500:
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+
+  /ach-deposit-fees:
+    get:
+      tags: [Settlement]
+      summary: List ACH deposit fees
+      description: Retrieve a list of ACH deposit fees.
+      operationId: getAchDepositFees
+      parameters:
+        - $ref: '../../../common/parameters/before-v1.yaml#/components/parameters/before'
+        - $ref: '../../../common/parameters/after-v1.yaml#/components/parameters/after'
+        - $ref: '../../../common/parameters/limit-v1.yaml#/components/parameters/limit'
+        - name: date
+          in: query
+          required: true
+          description: Date to retrieve results from. You must provide either the 'achDepositId' or the 'date'.
+          schema:
+            type: string
+            format: date
+            example: '2024-07-02'
+        - $ref: './parameters-v1.yaml#/components/parameters/achDepositIdQuery'
+        - $ref: '../../../common/parameters/merchant-id-v1.yaml#/components/parameters/merchantId'
+      responses:
+        200:
+          description: Successful request. Returns a paginated list of ACH deposit fees.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - $ref: '../../../common/schemas/common/paginated-list-v1.yaml#/components/schemas/paginatedList'
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      description: Array of ACH deposit objects.
+                      items:
+                        $ref: '#/components/schemas/achDepositFee'
+                  required: [data]
+              examples:
+                paginatedList:
+                  $ref: './example-responses-v1.yaml#/components/examples/paginatedAchDepositFees'
+                noActivity:
+                  $ref: '../../../common/responses/no-activity-v1.yaml#/components/examples/noActivity'
+        400:
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples: 
+                parameterError:
+                  $ref: '../../../common/responses/rfc-errors/400-v1.yaml#/components/examples/parameterError'
+                paginationError:
+                  $ref: '../../../common/responses/rfc-errors/400-v1.yaml#/components/examples/paginationError'
+        401:
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        403:
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        406:
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        500:
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+
+components:
+  schemas:
+    achDeposit:
+      type: object
+      title: ACH deposit
+      description: Object that contains information about the ACH deposit.
+      properties:
+        achDepositId:
+          type: integer
+          description: Unique identifier of the ACH deposit.
+          example: 99
+        associationDate:
+          type: string
+          format: date
+          description: Date that we sent the transaction to the cards brands for clearing. The format of this value is **YYYY-MM-DD**.
+          example: '2024-07-02'
+        achDate:
+          type: string
+          format: date
+          description: Date that the ACH deposit was processed. The format of this value is **YYYY-MM-DD**.
+          example: '2024-07-02'
+        paymentDate:
+          type: string
+          format: date
+          description: Date that the payment was made. The format of this value is **YYYY-MM-DD**.
+          example: '2024-07-02'
+        transactions:
+          type: integer
+          description: Number of transactions included in the ACH deposit.
+          example: 20
+        sales:
+          type: integer
+          description: Total value of sales. We return the value in the currency's lowest denomination, for example, cents.
+          example: 5000
+        returns:
+          type: integer
+          description: Total value of returns.
+          example: 100
+        dailyFees:
+          type: integer
+          description: Total value of daily Fees.
+          example: 100
+        heldSales:
+          type: integer
+          description: Total value of sales held for risk investigation.
+          example: 100
+        achAdjustment:
+          type: integer
+          description: Total value of adjustments made to the ACH deposit.
+          example: 100
+        holdback:
+          type: integer
+          description: Total value of funds witheld from the settled batch.
+          example: 100
+        reserveRelease:
+          type: integer
+          description: Total value of funds released from a hold.
+          example: 100
+        netAmount:
+          type: integer
+          description: Net ACH deposit value.
+          example: 5000
+        merchant:
+          $ref: '../../../common/schemas/settlement/merchant-summary-v1.yaml#/components/schemas/merchantSummary'
+        links:
+          type: array
+          items:
+            $ref: '../../../common/schemas/common/link/link-v1.yaml#/components/schemas/link'
+          example:
+          - rel: achDepositFees
+            method: get
+            href: 'https://api.payroc.com/v1/ach-deposit-fees?achDepositId=99&merchantId=4525644354'
+   
+    achDepositSummary:
+      type: object
+      title: ACH deposit summary
+      description: Object that contains information about the ACH deposit.
+      properties:
+        achDepositId:
+          type: integer
+          description: Unique identifier of the ACH deposit.
+          example: 99
+        link:
+          $ref: '../../../common/schemas/common/link/link-v1.yaml#/components/schemas/link'
+      example:
+        achDepositId: 99
+        link: 
+          rel: achDeposit
+          method: get
+          href: 'https://api.payroc.com/v1/ach-deposits/99?merchantId=4525644354'
+
+    achDepositFee:
+      type: object
+      title: ACH deposit fee
+      description: Object that contains information about the ACH deposit fee.
+      properties:
+        achDepositId:
+          type: integer
+          description: Unique identifier of the ACH deposit.
+          example: 99
+        associationDate:
+          type: string
+          format: date
+          description: Date that we sent the transaction to the cards brands for clearing. The format of this value is **YYYY-MM-DD**.
+          example: '2024-07-02'
+        adjustmentDate:
+          type: string
+          format: date
+          description: Date of the adjustment. The format of this value is **YYYY-MM-DD**.
+          example: '2024-07-02'
+        description:
+          type: string
+          description: Description of the ACH deposit fee.
+          example: 'Month-End Fees Credit Processing'
+        amount:
+          type: integer
+          description: Total value of ACH deposit fee.
+          example: 100
+        merchant:
+          $ref: '../../../common/schemas/settlement/merchant-summary-v1.yaml#/components/schemas/merchantSummary'
+        achDeposit:
+          $ref: '#/components/schemas/achDepositSummary'
+
+  securitySchemes:
+    bearerAuth:
+      $ref: '../../../common/security/bearer-auth.yaml#/components/securitySchemes/bearerAuth'
+
+    

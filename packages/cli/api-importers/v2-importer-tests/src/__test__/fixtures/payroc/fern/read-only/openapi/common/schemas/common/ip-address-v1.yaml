@@ -1,0 +1,25 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  schemas:
+    ipAddress:
+      required:
+        - type
+        - value
+      type: object
+      writeOnly: true
+      description: Object that contains information about the IP address of the device that sent the request.
+      properties:
+        type:
+          type: string
+          description: Internet protocol version of the IP address.
+          enum:
+            - ipv4
+            - ipv6
+        value:
+          type: string
+          description: IP address of the device.

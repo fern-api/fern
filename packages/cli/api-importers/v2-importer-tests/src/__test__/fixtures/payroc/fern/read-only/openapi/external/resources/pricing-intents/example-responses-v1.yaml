@@ -1,0 +1,238 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  examples:
+    paginatedPricingIntent:
+      summary: Paginated pricing intent
+      description: Example of a paginated pricing intent.
+      value: 
+        limit: 1
+        count: 1
+        hasMore: true
+        links:
+          - rel: previous
+            method: get
+            href: https://api.payroc.com/v1/pricing-intents?before=5&limit=1
+          - rel: next
+            method: get
+            href: https://api.payroc.com/v1/pricing-intents?after=5&limit=1
+        data:
+        - id: '5'
+          createdDate: '2024-07-02T09:00:00'  
+          lastUpdatedDate: '2024-07-02T09:00:00'
+          status: pendingReview
+          key: base
+          country: US
+          version: '5.0'
+          base: 
+            addressVerification: 5
+            annualFee: 
+              billInMonth: june
+              amount: 100
+            regulatoryAssistanceProgram: 15
+            pciNonCompliance: 4995
+            merchantAdvantage: 10
+            platinumSecurity: 
+              billingFrequency: monthly
+              amount: 1295
+            maintenance: 500
+            minimum: 100
+            voiceAuthorization: 95
+            chargeback: 2500
+            retrieval: 1500
+            batch: 1000
+            earlyTermination: 57500
+          processor: 
+            card: 
+              planType: interchangePlus
+              fees: 
+                mastercardVisaDiscover: 
+                  volume: 1.25
+                  transaction: 5
+                amex:
+                  type: optBlue
+                  volume: 1.25
+                  transaction: 10  
+                pinDebit:
+                  additionalDiscount: 1.25
+                  transaction: 10 
+                  monthlyAccess: 1200
+                electronicBenefitsTransfer:
+                  transaction: 10 
+                enhancedInterchange:
+                  enrollment: 1000
+                  creditToMerchant: 5.25
+                specialityCards:
+                  transaction: 10 
+            ach:
+              fees:
+                transaction: 50
+                batch: 1000
+                returns: 400
+                unauthorizedReturn: 1999
+                statement: 800
+                monthlyMinimum: 20000
+                accountVerification: 100
+                discountRateUnder10000: 5.25
+                discountRateAbove10000: 10.00
+          gateway: 
+            fees: 
+              monthly: 1000
+              setup: 25000
+              perTransaction: 0
+              perDeviceMonthly: 0
+          services:
+            - name: hardwareAdvantagePlan
+              enabled: true
+
+    createdPricingIntent:
+      summary: Created pricing intent
+      description: Successful response. We created the pricing intent and it is waiting for approval.
+      value: 
+        id: '5'
+        createdDate: '2024-07-02T09:00:00'
+        lastUpdatedDate: '2024-07-02T09:00:00'
+        status: pendingReview
+        key: Your-Unique-Identifier
+        metadata:
+          yourCustomField: abc123
+        country: US
+        version: '5.0'
+        base:
+          addressVerification: 5
+          annualFee:
+            billInMonth: june
+            amount: 100
+          regulatoryAssistanceProgram: 15
+          pciNonCompliance: 4995
+          merchantAdvantage: 10
+          platinumSecurity:
+            billingFrequency: monthly
+            amount: 1295
+          maintenance: 500
+          minimum: 100
+          voiceAuthorization: 95
+          chargeback: 2500
+          retrieval: 1500
+          batch: 1000
+          earlyTermination: 57500
+        processor:
+          card:
+            planType: interchangePlus
+            fees:
+              mastercardVisaDiscover:
+                volume: 1.25
+                transaction: 5
+              amex:
+                type: optBlue
+                volume: 1.25
+                transaction: 5
+              pinDebit:
+                additionalDiscount: 1.25
+                transaction: 10
+                monthlyAccess: 1200
+              electronicBenefitsTransfer:
+                transaction: 10
+              enhancedInterchange:
+                enrollment: 1000
+                creditToMerchant: 5.25
+              specialityCards:
+                transaction: 10
+          ach:
+            fees:
+              transaction: 50
+              batch: 1000
+              returns: 400
+              unauthorizedReturn: 1999
+              statement: 800
+              monthlyMinimum: 20000
+              accountVerification: 100
+              discountRateUnder10000: 5.25
+              discountRateAbove10000: 10
+        gateway:
+          fees:
+            monthly: 2000
+            setup: 5000
+            perTransaction: 2000
+            perDeviceMonthly: 10
+        services:
+          - name: hardwareAdvantagePlan
+            enabled: true
+
+    pricingIntent:
+      summary: Pricing intent
+      description: Pricing intent
+      value:
+        id: '5'
+        createdDate: '2024-07-02T09:00:00'  
+        lastUpdatedDate: '2024-07-02T09:00:00'
+        status: pendingReview
+        key: string
+        metadata: 
+          yourCustomField: abc123
+        country: US
+        version: '5.0'
+        base: 
+          addressVerification: 5
+          annualFee: 
+            billInMonth: june
+            amount: 100
+          regulatoryAssistanceProgram: 15
+          pciNonCompliance: 4995
+          merchantAdvantage: 10
+          platinumSecurity: 
+            billingFrequency: monthly
+            amount: 1295
+          maintenance: 500
+          minimum: 100
+          voiceAuthorization: 95
+          chargeback: 2500
+          retrieval: 1500
+          batch: 1000
+          earlyTermination: 57500
+        processor: 
+          card: 
+            planType: interchangePlus
+            fees: 
+              mastercardVisaDiscover: 
+                volume: 1.25
+                transaction: 5
+              amex:
+                type: optBlue
+                volume: 1.25
+                transaction: 10  
+              pinDebit:
+                additionalDiscount: 1.25
+                transaction: 10 
+                monthlyAccess: 1200
+              electronicBenefitsTransfer:
+                transaction: 10 
+              enhancedInterchange:
+                enrollment: 1000
+                creditToMerchant: 5.25
+              specialityCards:
+                transaction: 10 
+          ach:
+            fees:
+              transaction: 50
+              batch: 1000
+              returns: 400
+              unauthorizedReturn: 1999
+              statement: 800
+              monthlyMinimum: 20000
+              accountVerification: 100
+              discountRateUnder10000: 5.25
+              discountRateAbove10000: 10.00
+        gateway: 
+          fees: 
+            monthly: 1000
+            setup: 25000
+            perTransaction: 0
+            perDeviceMonthly: 0
+        services:
+          - name: hardwareAdvantagePlan
+            enabled: true

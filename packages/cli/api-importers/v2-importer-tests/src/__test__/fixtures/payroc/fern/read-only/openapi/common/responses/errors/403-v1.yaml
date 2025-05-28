@@ -1,0 +1,74 @@
+openapi: 3.0.3
+
+paths: {}
+
+info:
+  title: Common Domain Models
+  description: Common domain models that are shared across the Payroc API
+  version: '1'
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+
+tags:
+  - name: Common responses
+    description: Common responses that can be resued
+
+components:
+  responses:
+    '403':
+      description: Do not have permissions to perform this action
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/403'
+          examples:
+            forbidden:
+              $ref: '#/components/examples/forbidden'
+    
+  schemas:
+    '403':
+      type: object
+      properties:
+        type: 
+          type: string
+          description: URI reference identifying the problem type
+          example: https://docs.payroc.com/api/errors#forbidden
+        title:
+          type: string
+          description: Short description of the issue.
+          example: Forbidden
+        status:
+          type: integer
+          description: Http status code
+          example: 403
+        detail:
+          type: string
+          description: Explanation of the problem
+          example: You do not have the required permissions to perform this action
+        instance:
+          type: string
+          description: Resource path the action was attempted on
+          example: "https://api.payroc.com/v1/webhook/3"
+        resource:
+          type: string
+          description: Resource the action was attempted on
+          example: "webhook"
+      required:
+        - type
+        - title
+        - status
+        - detail
+
+  examples:
+    forbidden:
+      summary: Forbidden
+      description: You do not have the required permission
+      value:
+        type: "https://docs.payroc.com/api/errors#forbidden"
+        title: "Forbidden"
+        status: 403
+        detail: "You do not have the required permissions to perform this action"
+        instance: "https://api.payroc.com/v1/webhook/3"
+        resource: webhook

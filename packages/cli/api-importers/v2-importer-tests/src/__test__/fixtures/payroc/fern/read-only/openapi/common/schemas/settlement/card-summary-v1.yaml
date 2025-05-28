@@ -1,0 +1,58 @@
+openapi: 3.0.3
+
+paths: {}
+
+info:
+  title: Common Domain Models
+  description: Common domain models that are shared across the Payroc Universal API
+  version: '1'
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+
+tags:
+  - name: Common schemas
+    description: Common schemas that can be resued
+
+components:
+  schemas:
+    cardSummary:
+      type: object
+      title: card summary
+      description: Object that contains information about the card.
+      properties:
+        cardNumber:
+          type: string
+          description: Card number. We mask the number except for the first six digits and the last four digits.
+          example: 123456**********4124
+        type:
+          type: string
+          description: Card type. If we can't match a dispute to a transaction, we don't return a 'type' object.
+          nullable: true
+          enum:
+            - visa 
+            - masterCard
+            - discover
+            - debit
+            - ebt 
+            - wrightExpress
+            - voyager
+            - amex
+            - privateLabel
+            - storedValue
+            - discoverRetained
+            - jcbNonSettled
+            - dinersClub
+            - amexOptBlue
+            - fuelman
+            - unknown
+        cvvPresenceIndicator:
+          type: boolean
+          description: Indicates if the cardholder provided the CVV.
+        avsRequest:
+          type: boolean
+          description: Indicates if the AVS was used to verify the cardholder's address.
+        avsResponse:
+          type: string
+          description: Response from the AVS.

@@ -1,0 +1,26 @@
+openapi: 3.0.3
+
+paths: {}
+
+info:
+  title: Common Domain Models
+  description: Common domain models that are shared across the Payroc API
+  version: '1'
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+
+tags:
+  - name: Common parameters
+    description: Common parameters that can be resued
+
+components:
+    parameters:
+      merchantId:
+        name: merchantId
+        in: query
+        description: Unique identifier of the merchant.
+        schema:
+          type: string
+        example: '4525644354'

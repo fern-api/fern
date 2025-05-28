@@ -1,0 +1,29 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:             
+  parameters:
+    paymentInstructionId:
+      name: paymentInstructionId
+      description: Unique identifier of the payment instruction.
+      in: path
+      required: true
+      schema:
+        maxLength: 36
+        minLength: 1
+        type: string
+      example: 'e743a9165d134678a9100ebba3b29597'
+
+    serialNumber:
+      name: serialNumber
+      description: Serial number that identifies the merchant’s payment device.
+      in: path
+      required: true
+      schema:
+        maxLength: 45
+        minLength: 1
+        type: string
+      example: '1850010868'

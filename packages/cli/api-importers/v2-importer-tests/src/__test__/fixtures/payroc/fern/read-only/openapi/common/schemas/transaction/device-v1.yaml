@@ -1,0 +1,110 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  schemas:
+    device:
+      required:
+        - model
+        - serialNumber
+      type: object
+      description: Object that contains information about the physical device the merchant used to capture the customer’s card details.
+      properties:
+        model:
+          type: string
+          description: Model of the device that the merchant used to process the transaction.
+          enum:
+            - bbposChp
+            - bbposChp2x
+            - bbposChp3x
+            - bbposRambler
+            - bbposWp
+            - bbposWp2
+            - bbposWp3
+            - genericCtlsMsr
+            - genericMsr
+            - idtechAugusta
+            - idtechMinismart
+            - idtechSredkey
+            - idtechVp3300
+            - idtechVp5300
+            - idtechVp6300
+            - idtechVp6800
+            - ingenicoAxiumDx4000
+            - ingenicoAxiumDx8000
+            - ingenicoAxiumEx8000
+            - ingenicoIct220
+            - ingenicoIpp320
+            - ingenicoIpp350
+            - ingenicoIuc285
+            - ingenicoL3000
+            - ingenicoL7000
+            - ingenicoS2000
+            - ingenicoS3000
+            - ingenicoS4000
+            - ingenicoS5000
+            - ingenicoS7000
+            - paxA80
+            - paxA920
+            - paxA920Pro
+            - paxE500
+            - paxE700
+            - paxE800
+            - paxIm30
+            - uic680
+            - uicBezel8
+          example: paxA920
+        category:
+          type: string
+          description: Indicates if the device is attended or unattended.
+          enum:
+            - attended
+            - unattended
+          default: attended
+          example: attended
+        serialNumber:
+          maxLength: 45
+          minLength: 1
+          type: string
+          description: Serial number of the physical device.
+          example: '1850010868'
+        firmwareVersion:
+          type: string
+          description: Firmware version of the physical device.
+          example: 'v1.2.3'
+        config:
+          $ref: '#/components/schemas/deviceConfig'
+
+    deviceConfig:
+      required:
+        - quickChip
+      type: object
+      description: Object that contains information about the configuration of the POS terminal.
+      properties:
+        quickChip:
+          type: boolean
+          default: false
+          description: Indicates if Quick Chip mode is active on a merchant’s POS terminal.
+          example: false
+
+    encryptionCapableDevice:
+      required:
+        - model
+        - dataKsn
+        - serialNumber
+      type: object
+      description: Object that contains information about the encryption details of the POS terminal.
+      allOf:
+        - $ref: "#/components/schemas/device"
+        - type: object
+          properties:
+            dataKsn:
+              maxLength: 20
+              minLength: 20
+              type: string
+              format: hexadecimal
+              description: Key serial number.
+              example: A1B2C3D4E5F67890ABCD

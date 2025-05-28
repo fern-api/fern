@@ -1,0 +1,25 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  parameters:
+    binNumber:
+      name: binNumber
+      in: path
+      description: Card's BIN.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+      example: '123456789012'
+    dateTime:
+      in: query
+      name: dateTime
+      description: Retrieve BIN information for a specific date. 
+      schema:
+        type: string
+      example: '2024-07-02T15:30:00Z'

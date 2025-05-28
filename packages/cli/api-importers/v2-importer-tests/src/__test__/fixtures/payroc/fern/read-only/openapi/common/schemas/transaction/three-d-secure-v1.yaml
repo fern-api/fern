@@ -1,0 +1,69 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  schemas:
+    gatewayThreeDSecure:
+      required:
+        - serviceProvider
+        - mpiReference
+      type: object
+      title: Gateway
+      description: Object that contains the 3-D Secure information from our gateway.
+      properties:
+        serviceProvider:
+          type: string
+          description: Provider of your 3-D Secure protocol.
+          enum:
+            - gateway
+          example: gateway
+        mpiReference:
+          maxLength: 20
+          minLength: 20
+          type: string
+          description: Reference that our gateway assigned to the 3-D Secure authentication response.
+          example: MPI45678901234567890
+
+    thirdPartyThreeDSecure:
+      required:
+        - eci
+        - serviceProvider
+      type: object
+      title: Third party
+      description: Object that contains the 3-D Secure information from a third party.
+      properties:
+        serviceProvider:
+          type: string
+          description: Provider of your 3-D Secure protocol.
+          enum:
+            - thirdParty
+          example: thirdParty
+        eci:
+          type: string
+          description: E-commerce indicator (ECI) is the result of the authentication check on the payment by the 3-D Secure service.
+          enum:
+          - fullyAuthenticated
+          - attemptedAuthentication
+          example: fullyAuthenticated
+        xid:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Unique transaction identifier that the merchant assigned to the transaction and sent in the authentication request.
+          example: VGhpcyBpcyBhbiBleGFtcGxlIFhJRA==
+        cavv:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: Cardholder Authentication Value is a cryptographic value that the card issuer sends to prove an online transaction was authorized.
+          example: QWxhZGRpbjpvcGVuIHNlc2FtZQ==
+        dsTransactionId:
+          maxLength: 36
+          minLength: 0
+          type: string
+          description: Directory Server Transaction ID is a unique identifier that the processor assigned to the request.
+          example: '123e4567-e89b-12d3-a456-426614174000'
+  

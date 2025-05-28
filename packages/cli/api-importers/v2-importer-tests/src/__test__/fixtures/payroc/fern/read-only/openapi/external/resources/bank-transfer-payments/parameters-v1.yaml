@@ -1,0 +1,139 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  parameters:
+    bankTransferPaymentsProcessingTerminalId:
+      name: processingTerminalId
+      in: query
+      required: true
+      description: Filter payments by the unique identifier that our gateway assigned to the terminal.
+      schema:
+        maxLength: 50
+        minLength: 4
+        type: string
+      example: '1234001'
+
+    bankTransferPaymentsOrderId:
+      name: orderId
+      in: query
+      description: Filter payments by the order ID.
+      schema:
+        maxLength: 24
+        minLength: 1
+        type: string
+      example: OrderRef6543
+
+    bankTransferPaymentsNameOnAccount:
+      name: nameOnAccount
+      in: query
+      description: Filter payments by the account holder's name.
+      schema:
+        maxLength: 50
+        minLength: 1
+        type: string
+      example: Sarah%20Hazel%20Hopper
+
+    bankTransferPaymentsLast4:
+      name: last4
+      in: query
+      description: Filter payments by the last four digits of the account number.
+      schema:
+        pattern: '[0-9]{4}'
+        type: string
+      example: '7890'
+
+    bankTransferPaymentsType:
+      name: type
+      in: query
+      description: Filter payments by transaction type.
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - payment
+            - accountVerification
+      example:
+        - payment
+
+    bankTransferPaymentsStatus:
+      name: status
+      in: query
+      description: Filter by the status of the payment.
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - ready
+            - pending
+            - declined
+            - complete
+            - admin
+            - reversal
+            - returned
+      example:
+        - ready
+
+    bankTransferPaymentsDateFrom:
+      name: dateFrom
+      in: query
+      description: Filter by payments that the merchant ran after a specific date. The date follows the ISO 8601 standard.
+      schema:
+        type: string
+        format: date-time
+      example: '2024-07-01T00:00:00Z'
+
+    bankTransferPaymentsDateTo:
+      name: dateTo
+      in: query
+      description: Filter by payments that the merchant ran before a specific date. The date follows the ISO 8601 standard.
+      schema:
+        type: string
+        format: date-time
+      example: '2024-07-31T23:59:59Z'
+
+    bankTransferPaymentsSettlementState:
+      name: settlementState
+      in: query
+      description: Filter by the settlement status of the payment.
+      schema:
+        type: string
+        enum:
+          - settled
+          - unsettled
+      example: settled
+
+    bankTransferPaymentsSettlementDate:
+      name: settlementDate
+      in: query
+      description: Filter by payments settled on a specific date. The format is in **YYYY-MM-DD**.
+      schema:
+        type: string
+        format: date
+      example: '2024-07-15'
+
+    bankTransferPaymentsPaymentId:
+      name: paymentId
+      description: Unique identifier that our gateway assigned to the payment.
+      in: path
+      required: true
+      schema:
+        maxLength: 10
+        minLength: 10
+        type: string
+      example: M2MJOG6O2Y
+
+    paymentLinkId:
+      name: paymentLinkId
+      in: query
+      description: Unique identifier that our gateway assigned to the payment link.
+      schema:
+        maxLength: 10
+        minLength: 10
+        type: string
+        example: JZURRJBUPS

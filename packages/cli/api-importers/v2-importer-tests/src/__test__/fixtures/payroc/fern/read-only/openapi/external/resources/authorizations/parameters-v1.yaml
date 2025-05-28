@@ -1,0 +1,17 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  parameters:
+    authorizationId:
+      name: authorizationId
+      description: Unique identifier of the authorization.
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: integer
+      example: 12345

@@ -1,0 +1,785 @@
+# This file manages overrides for various [Fern](https://buildwithfern.com) generators
+x-fern-pagination:
+  type: custom
+  results: $response.data
+
+paths:
+# boarding
+# boarding - contacts
+  /contacts/{contactId}:
+    get:
+      x-fern-sdk-group-name:
+        - boarding
+        - contacts
+      x-fern-sdk-method-name: get
+    put:
+      x-fern-sdk-group-name:
+        - boarding
+        - contacts
+      x-fern-sdk-method-name: update
+    delete:
+      x-fern-sdk-group-name:
+        - boarding
+        - contacts
+      x-fern-sdk-method-name: delete
+
+# boarding - merchant platforms
+  /merchant-platforms:
+    get:
+      x-fern-sdk-group-name:
+        - boarding
+        - merchantPlatforms
+      x-fern-sdk-method-name: list
+      x-fern-pagination: true
+    post:
+      x-fern-sdk-group-name:
+        - boarding
+        - merchantPlatforms
+      x-fern-sdk-method-name: create
+  /merchant-platforms/{merchantPlatformId}:
+    get:
+      x-fern-sdk-group-name:
+        - boarding
+        - merchantPlatforms
+      x-fern-sdk-method-name: get
+  /merchant-platforms/{merchantPlatformId}/processing-accounts:
+    get:
+      x-fern-sdk-group-name:
+        - boarding
+        - merchantPlatforms
+      x-fern-sdk-method-name: listProcessingAccounts
+      x-fern-pagination: true
+      x-fern-request-name: ListBoardingMerchantPlatformProcessingAccountsRequest
+    post:
+      x-fern-sdk-group-name:
+        - boarding
+        - merchantPlatforms
+      x-fern-sdk-method-name: createProcessingAccount
+
+# boarding - owners
+  /owners/{ownerId}:
+    get:
+      x-fern-sdk-group-name:
+        - boarding
+        - owners
+      x-fern-sdk-method-name: get
+    put:
+      x-fern-sdk-group-name:
+        - boarding
+        - owners
+      x-fern-sdk-method-name: update
+    delete:
+      x-fern-sdk-group-name:
+        - boarding
+        - owners
+      x-fern-sdk-method-name: delete
+
+# boarding - pricing intents
+  /pricing-intents:
+    get:
+      x-fern-sdk-group-name:
+        - boarding
+        - pricingIntents
+      x-fern-sdk-method-name: list
+      x-fern-pagination: true
+    post:
+      x-fern-sdk-group-name:
+        - boarding
+        - pricingIntents
+      x-fern-sdk-method-name: create
+  /pricing-intents/{pricingIntentId}:
+    get:
+      x-fern-sdk-group-name:
+        - boarding
+        - pricingIntents
+      x-fern-sdk-method-name: get
+    put:
+      x-fern-sdk-group-name:
+        - boarding
+        - pricingIntents
+      x-fern-sdk-method-name: update
+    delete:
+      x-fern-sdk-group-name:
+        - boarding
+        - pricingIntents
+      x-fern-sdk-method-name: delete
+    patch:
+      x-fern-sdk-group-name:
+        - boarding
+        - pricingIntents
+      x-fern-sdk-method-name: patch
+
+# boarding - processing accounts
+  /processing-accounts/{processingAccountId}:
+    get:
+      x-fern-sdk-group-name:
+        - boarding
+        - processingAccounts
+      x-fern-sdk-method-name: get
+  /processing-accounts/{processingAccountId}/funding-accounts:
+    get:
+      x-fern-sdk-group-name:
+        - boarding
+        - processingAccounts
+      x-fern-sdk-method-name: listFundingAccounts
+      x-fern-request-name: ListProcessingAccountFundingAccountsRequest
+  /processing-accounts/{processingAccountId}/contacts:
+    get:
+      x-fern-sdk-group-name:
+        - boarding
+        - processingAccounts
+      x-fern-sdk-method-name: contacts
+  /processing-accounts/{processingAccountId}/pricing:
+    get:
+      x-fern-sdk-group-name:
+        - boarding
+        - processingAccounts
+      x-fern-sdk-method-name: pricing
+  /processing-accounts/{processingAccountId}/owners:
+    get:
+      x-fern-sdk-group-name:
+        - boarding
+        - processingAccounts
+      x-fern-sdk-method-name: listOwners
+      x-fern-request-name: ListProcessingAccountOwnersRequest
+      x-fern-pagination: true
+  /processing-accounts/{processingAccountId}/reminders:
+    post:
+      x-fern-sdk-group-name:
+        - boarding
+        - processingAccounts
+      x-fern-sdk-method-name: createReminder
+  /processing-accounts/{processingAccountId}/terminal-orders:
+    post:
+      x-fern-sdk-group-name:
+        - boarding
+        - processingAccounts
+      x-fern-sdk-method-name: createTerminalOrder
+    get:
+      x-fern-sdk-group-name:
+        - boarding
+        - processingAccounts
+      x-fern-sdk-method-name: listTerminalOrders
+      # x-fern-pagination: true # Doesn't work as field is called `orderItems` rather than `data`
+      #Add once Fern bug is fixed, and CLI can be updated
+      #x-fern-pagination:
+      #  type: custom
+      #  results: $response.orderItems      
+  /processing-accounts/{processingAccountId}/processing-terminals:
+    get:
+      x-fern-sdk-group-name:
+        - boarding
+        - processingAccounts
+      x-fern-sdk-method-name: listProcessingTerminals
+      x-fern-pagination: true
+
+# boarding - processing terminals
+  /processing-terminals/{processingTerminalId}:
+    get:
+      x-fern-sdk-group-name:
+        - boarding
+        - processingTerminals
+      x-fern-sdk-method-name: get
+  /processing-terminals/{processingTerminalId}/host-configurations:
+    get:
+      x-fern-sdk-group-name:
+        - boarding
+        - processingTerminals
+      x-fern-sdk-method-name: getHostConfiguration
+
+# boarding - terminal orders
+  /terminal-orders/{terminalOrderId}:
+    get:
+      x-fern-sdk-group-name:
+        - boarding
+        - terminalOrders
+      x-fern-sdk-method-name: get
+
+# funding
+# funding - funding accounts
+  /funding-accounts:
+    get:
+      x-fern-sdk-group-name:
+        - funding
+        - fundingAccounts
+      x-fern-sdk-method-name: list
+      x-fern-pagination: true
+  /funding-accounts/{fundingAccountId}:
+    get:
+      x-fern-sdk-group-name:
+        - funding
+        - fundingAccounts
+      x-fern-sdk-method-name: get
+    put:
+      x-fern-sdk-group-name:
+        - funding
+        - fundingAccounts
+      x-fern-sdk-method-name: update
+    delete:
+      x-fern-sdk-group-name:
+        - funding
+        - fundingAccounts
+      x-fern-sdk-method-name: delete
+
+# funding - funding activity
+  /funding-activity:
+    get:
+      x-fern-sdk-group-name:
+        - funding
+        - fundingActivity
+      x-fern-sdk-method-name: get
+  /funding-balance:
+    get:
+      x-fern-sdk-group-name:
+        - funding
+        - fundingActivity
+      x-fern-sdk-method-name: getBalance
+
+# funding - funding instructions
+  /funding-instructions:
+    get:
+      x-fern-sdk-group-name:
+        - funding
+        - fundingInstructions
+      x-fern-sdk-method-name: list
+      x-fern-pagination: true
+    post:
+      x-fern-sdk-group-name:
+        - funding
+        - fundingInstructions
+      x-fern-sdk-method-name: create
+  /funding-instructions/{instructionId}:
+    get:
+      x-fern-sdk-group-name:
+        - funding
+        - fundingInstructions
+      x-fern-sdk-method-name: get
+    put:
+      x-fern-sdk-group-name:
+        - funding
+        - fundingInstructions
+      x-fern-sdk-method-name: update
+    delete:
+      x-fern-sdk-group-name:
+        - funding
+        - fundingInstructions
+      x-fern-sdk-method-name: delete
+
+# funding - funding recipients
+  /funding-recipients:
+    get:
+      x-fern-sdk-group-name:
+        - funding
+        - fundingRecipients
+      x-fern-sdk-method-name: list
+      x-fern-pagination: true
+    post:
+      x-fern-sdk-group-name:
+        - funding
+        - fundingRecipients
+      x-fern-sdk-method-name: create
+  /funding-recipients/{recipientId}:
+    get:
+      x-fern-sdk-group-name:
+        - funding
+        - fundingRecipients
+      x-fern-sdk-method-name: get
+    put:
+      x-fern-sdk-group-name:
+        - funding
+        - fundingRecipients
+      x-fern-sdk-method-name: update
+    delete:
+      x-fern-sdk-group-name:
+        - funding
+        - fundingRecipients
+      x-fern-sdk-method-name: delete
+  /funding-recipients/{recipientId}/funding-accounts:
+    get:
+      x-fern-sdk-group-name:
+        - funding
+        - fundingRecipients
+      x-fern-sdk-method-name: listAccounts
+      x-fern-request-name: ListFundingRecipientFundingAccountsRequest
+    post:
+      x-fern-sdk-group-name:
+        - funding
+        - fundingRecipients
+      x-fern-sdk-method-name: createAccount
+  /funding-recipients/{recipientId}/owners:
+    get:
+      x-fern-sdk-group-name:
+        - funding
+        - fundingRecipients
+      x-fern-sdk-method-name: listOwners
+      x-fern-request-name: ListFundingRecipientOwnersRequest
+    post:
+      x-fern-sdk-group-name:
+        - funding
+        - fundingRecipients
+      x-fern-sdk-method-name: createOwner
+
+
+# payments
+# payments - bank accounts
+  /bank-accounts/verify:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - bankAccounts
+      x-fern-sdk-method-name: verify
+
+# payments - bank transfer payments
+  /bank-transfer-payments:
+    get:
+      x-fern-sdk-group-name:
+        - payments
+        - bankTransferPayments
+      x-fern-sdk-method-name: list
+      x-fern-pagination: true
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - bankTransferPayments
+      x-fern-sdk-method-name: create
+  /bank-transfer-payments/{paymentId}:
+    get:
+      x-fern-sdk-group-name:
+        - payments
+        - bankTransferPayments
+      x-fern-sdk-method-name: get
+  /bank-transfer-payments/{paymentId}/reverse:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - bankTransferPayments
+      x-fern-sdk-method-name: reverse
+  /bank-transfer-payments/{paymentId}/refund:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - bankTransferPayments
+      x-fern-sdk-method-name: refund
+  /bank-transfer-payments/{paymentId}/represent:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - bankTransferPayments
+      x-fern-sdk-method-name: represent
+
+# payments - bank transfer refunds
+  /bank-transfer-refunds:
+    get:
+      x-fern-sdk-group-name:
+        - payments
+        - bankTransferRefunds
+      x-fern-sdk-method-name: list
+      x-fern-pagination: true
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - bankTransferRefunds
+      x-fern-sdk-method-name: create
+  /bank-transfer-refunds/{refundId}:
+    get:
+      x-fern-sdk-group-name:
+        - payments
+        - bankTransferRefunds
+      x-fern-sdk-method-name: get
+  /bank-transfer-refunds/{refundId}/reverse:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - bankTransferRefunds
+      x-fern-sdk-method-name: reverse
+
+# payments - cards
+  /cards/verify:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - cards
+      x-fern-sdk-method-name: verify
+  /cards/balance:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - cards
+      x-fern-sdk-method-name: balance
+  /cards/bin-lookup:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - cards
+      x-fern-sdk-method-name: binLookup
+
+# payments - currency conversion
+  /fx-rates:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - currencyConversion
+      x-fern-sdk-method-name: getFxRates
+
+# payments - hosted fields
+  /processing-terminals/{processingTerminalId}/hosted-fields-sessions:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - hostedFields
+      x-fern-sdk-method-name: create
+
+# payments - payment links
+  /processing-terminals/{processingTerminalId}/payment-links:
+    get:
+      x-fern-sdk-group-name:
+        - payments
+        - paymentLinks
+      x-fern-sdk-method-name: list
+      x-fern-pagination: true
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - paymentLinks
+      x-fern-sdk-method-name: create
+  /payment-links/{paymentLinkId}:
+    get:
+      x-fern-sdk-group-name:
+        - payments
+        - paymentLinks
+      x-fern-sdk-method-name: get
+    patch:
+      x-fern-sdk-group-name:
+        - payments
+        - paymentLinks
+      x-fern-sdk-method-name: update
+  /payment-links/{paymentLinkId}/deactivate:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - paymentLinks
+      x-fern-sdk-method-name: deactivate
+  /payment-links/{paymentLinkId}/sharing-events:
+    get:
+      x-fern-sdk-group-name:
+        - payments
+        - paymentLinks
+        - sharingEvents
+      x-fern-sdk-method-name: list
+      x-fern-pagination: true
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - paymentLinks
+        - sharingEvents
+      x-fern-sdk-method-name: share
+
+# payments - payment plans
+  /processing-terminals/{processingTerminalId}/apple-pay-sessions:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - applePaySessions
+      x-fern-sdk-method-name: create
+  /processing-terminals/{processingTerminalId}/payment-plans:
+    get:
+      x-fern-sdk-group-name:
+        - payments
+        - paymentPlans
+      x-fern-sdk-method-name: list
+      x-fern-pagination: true
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - paymentPlans
+      x-fern-sdk-method-name: create
+  /processing-terminals/{processingTerminalId}/payment-plans/{paymentPlanId}:
+    get:
+      x-fern-sdk-group-name:
+        - payments
+        - paymentPlans
+      x-fern-sdk-method-name: get
+    delete:
+      x-fern-sdk-group-name:
+        - payments
+        - paymentPlans
+      x-fern-sdk-method-name: delete
+    patch:
+      x-fern-sdk-group-name:
+        - payments
+        - paymentPlans
+      x-fern-sdk-method-name: update
+
+# payments - payments
+  /payments:
+    get:
+      x-fern-sdk-group-name:
+        - payments
+      x-fern-sdk-method-name: list
+      x-fern-pagination: true
+    post:
+      x-fern-sdk-group-name:
+        - payments
+      x-fern-sdk-method-name: create
+  /payments/{paymentId}:
+    get:
+      x-fern-sdk-group-name:
+        - payments
+      x-fern-sdk-method-name: get
+  /payments/{paymentId}/adjust:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+      x-fern-sdk-method-name: adjust
+  /payments/{paymentId}/capture:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+      x-fern-sdk-method-name: capture
+  /payments/{paymentId}/reverse:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+      x-fern-sdk-method-name: reverse
+  /payments/{paymentId}/refund:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+      x-fern-sdk-method-name: refund
+
+# payments - refunds
+  /refunds:
+    get:
+      x-fern-sdk-group-name:
+        - payments
+        - refunds
+      x-fern-sdk-method-name: list
+      x-fern-pagination: true
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - refunds
+      x-fern-sdk-method-name: create
+  /refunds/{refundId}:
+    get:
+      x-fern-sdk-group-name:
+        - payments
+        - refunds
+      x-fern-sdk-method-name: get
+  /refunds/{refundId}/adjust:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - refunds
+      x-fern-sdk-method-name: adjust
+  /refunds/{refundId}/reverse:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - refunds
+      x-fern-sdk-method-name: reverse
+
+# payments - secure tokens
+  /processing-terminals/{processingTerminalId}/secure-tokens:
+    get:
+      x-fern-sdk-group-name:
+        - payments
+        - secureTokens
+      x-fern-sdk-method-name: list
+      x-fern-pagination: true
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - secureTokens
+      x-fern-sdk-method-name: create
+  /processing-terminals/{processingTerminalId}/secure-tokens/{secureTokenId}:
+    get:
+      x-fern-sdk-group-name:
+        - payments
+        - secureTokens
+      x-fern-sdk-method-name: get
+    delete:
+      x-fern-sdk-group-name:
+        - payments
+        - secureTokens
+      x-fern-sdk-method-name: delete
+    patch:
+      x-fern-sdk-group-name:
+        - payments
+        - secureTokens
+      x-fern-sdk-method-name: update
+  /processing-terminals/{processingTerminalId}/secure-tokens/{secureTokenId}/update-account:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - secureTokens
+      x-fern-sdk-method-name: accountUpdate
+
+# payments - single use tokens
+  /processing-terminals/{processingTerminalId}/single-use-tokens:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - singleUseTokens
+      x-fern-sdk-method-name: create
+
+# payments - subscriptions
+  /processing-terminals/{processingTerminalId}/subscriptions:
+    get:
+      x-fern-sdk-group-name:
+        - payments
+        - subscriptions
+      x-fern-sdk-method-name: list
+      x-fern-pagination: true
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - subscriptions
+      x-fern-sdk-method-name: create
+  /processing-terminals/{processingTerminalId}/subscriptions/{subscriptionId}:
+    get:
+      x-fern-sdk-group-name:
+        - payments
+        - subscriptions
+      x-fern-sdk-method-name: get
+    patch:
+      x-fern-sdk-group-name:
+        - payments
+        - subscriptions
+      x-fern-sdk-method-name: update
+  /processing-terminals/{processingTerminalId}/subscriptions/{subscriptionId}/deactivate:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - subscriptions
+      x-fern-sdk-method-name: deactivate
+  /processing-terminals/{processingTerminalId}/subscriptions/{subscriptionId}/reactivate:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - subscriptions
+      x-fern-sdk-method-name: reactivate
+  /processing-terminals/{processingTerminalId}/subscriptions/{subscriptionId}/pay:
+    post:
+      x-fern-sdk-group-name:
+        - payments
+        - subscriptions
+      x-fern-sdk-method-name: pay
+
+# payroc cloud
+# payroc cloud - payment instructions
+  /devices/{serialNumber}/payment-instructions:
+    post:
+      x-fern-sdk-group-name:
+        - payroc cloud
+        - paymentInstructions
+      x-fern-sdk-method-name: send
+  /payment-instructions/{paymentInstructionId}:
+    get:
+      x-fern-sdk-group-name:
+        - payroc cloud
+        - paymentInstructions
+      x-fern-sdk-method-name: get
+
+# payroc cloud - refund instructions
+  /devices/{serialNumber}/refund-instructions:
+    post:
+      x-fern-sdk-group-name:
+        - payroc cloud
+        - refundInstructions
+      x-fern-sdk-method-name: send
+  /refund-instructions/{refundInstructionId}:
+    get:
+      x-fern-sdk-group-name:
+        - payroc cloud
+        - refundInstructions
+      x-fern-sdk-method-name: get
+
+# reporting - settlement
+  /batches:
+    get:
+      x-fern-sdk-group-name:
+        - reporting
+        - settlement
+      x-fern-sdk-method-name: listBatches
+      x-fern-request-name: ListReportingSettlementBatchesRequest
+      x-fern-pagination: true
+  /batches/{batchId}:
+    get:
+      x-fern-sdk-group-name:
+        - reporting
+        - settlement
+      x-fern-sdk-method-name: getBatch
+  /transactions:
+    get:
+      x-fern-sdk-group-name:
+        - reporting
+        - settlement
+      x-fern-sdk-method-name: listTransactions
+      x-fern-request-name: ListReportingSettlementTransactionsRequest
+      x-fern-pagination: true
+  /transactions/{transactionId}:
+    get:
+      x-fern-sdk-group-name:
+        - reporting
+        - settlement
+      x-fern-sdk-method-name: getTransaction
+  /authorizations:
+    get:
+      x-fern-sdk-group-name:
+        - reporting
+        - settlement
+      x-fern-sdk-method-name: listAuthorizations
+      x-fern-request-name: ListReportingSettlementAuthorizationsRequest
+      x-fern-pagination: true
+  /authorizations/{authorizationId}:
+    get:
+      x-fern-sdk-group-name:
+        - reporting
+        - settlement
+      x-fern-sdk-method-name: getAuthorization
+  /disputes:
+    get:
+      x-fern-sdk-group-name:
+        - reporting
+        - settlement
+      x-fern-sdk-method-name: listDisputes
+      x-fern-request-name: ListReportingSettlementDisputesRequest
+      x-fern-pagination: true
+  /disputes/{disputeId}/statuses:
+    get:
+      x-fern-sdk-group-name:
+        - reporting
+        - settlement
+      x-fern-sdk-method-name: getDisputesStatuses
+  /ach-deposits:
+    get:
+      x-fern-sdk-group-name:
+        - reporting
+        - settlement
+      x-fern-sdk-method-name: listAchDeposits
+      x-fern-request-name: ListReportingSettlementAchDepositsRequest
+      x-fern-pagination: true
+  /ach-deposits/{achDepositId}:
+    get:
+      x-fern-sdk-group-name:
+        - reporting
+        - settlement
+      x-fern-sdk-method-name: getAchDeposit
+  /ach-deposit-fees:
+    get:
+      x-fern-sdk-group-name:
+        - reporting
+        - settlement
+      x-fern-sdk-method-name: listAchDepositFees
+      x-fern-request-name: ListReportingSettlementAchDepositFeesRequest
+      x-fern-pagination: true
+
+components:
+  schemas:
+    funding:
+      x-fern-sdk-group-name:
+        - funding
+servers:
+  - url: https://api.payroc.com/v1
+    x-fern-server-name: Production

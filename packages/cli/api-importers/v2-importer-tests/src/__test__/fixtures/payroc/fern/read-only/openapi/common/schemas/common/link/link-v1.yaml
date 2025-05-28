@@ -1,0 +1,37 @@
+openapi: 3.0.3
+
+paths: {}
+
+info:
+  title: Common Domain Models
+  description: Common domain models that are shared across the Payroc API
+  version: '1'
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+
+tags:
+  - name: Common schemas
+    description: Common schemas that can be resued
+
+components:
+  schemas:
+    link:
+      type: object
+      description: Object that contains information about a HATEOAS link. If we can't match a dispute to a transaction, we don't return a 'link' object.
+      properties:
+        rel:
+          type: string
+        method:
+          type: string
+        href:
+          type: string
+      required:
+      - href
+      - method
+      - rel
+      example:
+        rel: "previous"
+        method: "get"
+        href: "<uri>"

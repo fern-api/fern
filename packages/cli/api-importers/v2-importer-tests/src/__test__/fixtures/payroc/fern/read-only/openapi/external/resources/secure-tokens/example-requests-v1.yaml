@@ -1,0 +1,81 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  examples:
+    secureTokenRequest:
+      summary: Secure Token
+      description: Secure Token
+      value:
+        operator: Jane
+        mitAgreement: unscheduled
+        customer:
+          firstName: Sarah
+          lastName: Hopper
+          dateOfBirth: '1990-07-15'
+          referenceNumber: Customer-12
+          billingAddress:
+            address1: 1 Example Ave.
+            address2: Example Address Line 2
+            address3: Example Address Line 3
+            city: Chicago
+            state: Illinois
+            country: US
+            postalCode: '60056'
+          shippingAddress:
+            recipientName: Sarah Hopper
+            address:
+              address1: 1 Example Ave.
+              address2: Example Address Line 2
+              address3: Example Address Line 3
+              city: Chicago
+              state: Illinois
+              country: US
+              postalCode: '60056'
+          contactMethods:
+            - type: email
+              value: sarah.hopper@example.com
+          notificationLanguage: en
+        ipAddress:
+          type: ipv4
+          value: '104.18.24.203'
+        source:
+          type: card
+          cardDetails:
+            entryMethod: keyed
+            cardholderName: Sarah Hazel Hopper
+            keyedData:
+              dataFormat: plainText
+              cardNumber: '4539858876047062'
+              expiryDate: '1225'
+              cvv: '234'
+        customFields:
+          - name: yourCustomField
+            value: abc123
+      
+    patchSecureTokenRealistic:
+      summary: Partially update secure token
+      description: | 
+        Partially update an existing secure token.
+
+        Structure your request to follow the RFC 6902 standard.
+      value:
+        - op: replace
+          path: /customer/lastName
+          value: Reed
+        - op: replace
+          path: /shippingAddress/recipientName
+          value: Sarah Reed
+        - op: replace
+          path: /source/cardDetails/cardholderName
+          value: Sarah Reed
+
+    accountUpdateRequest:
+      summary: Account update request
+      description: Account update request by single use token
+      value:
+        type: singleUseToken
+        token: abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890

@@ -1,0 +1,25 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  examples:
+
+    singleUseTokenResponse:
+      summary: Single Use Token Response
+      description: Single Use Token Response
+      value:
+        processingTerminalId: '1234001'
+        token: fa2e9e51bc5265a33a5ca41449524d53d1def596ffd8c0904f222183a71a65cdb58835120a65196a48a6375abc4deafe2b7e948689ab9d6aba919e860f32e247
+        expiresAt: '2024-08-05T19:50:05.723+02:00'
+        source:
+          type: card
+          cardholderName: Sarah Hazel Hopper
+          cardNumber: 453985******7062
+          expiryDate: '1225'
+          cardType: Visa Credit
+          country: US
+          currency: USD
+          debit: false

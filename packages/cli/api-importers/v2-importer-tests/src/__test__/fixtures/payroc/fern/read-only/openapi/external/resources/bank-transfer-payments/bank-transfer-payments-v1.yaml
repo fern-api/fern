@@ -1,0 +1,570 @@
+openapi: 3.0.1
+info:
+  title: Transaction API
+  version: '1'
+  termsOfService: https://www.payroc.com/terms
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+servers:
+  - url: https://api.payroc.com/v1
+    description: Production
+  - url: https://api.uat.payroc.com/v1
+    description: UAT
+tags:
+- name: Bank transfer payments
+
+paths:
+  /bank-transfer-payments:
+    post:
+      tags:
+        - Bank transfer payments
+      summary: Create payment
+      operationId: bankTransferPayment
+      description: Run a sale with a customer's bank account details.
+      parameters:
+        - $ref: ../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bankTransferPaymentRequest'
+            examples:
+              createdBankTransferPaymentStoreToken:
+                $ref: './example-requests-v1.yaml#/components/examples/bankTransferPaymentRequestStoreTokenRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful request. We processed the sale.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bankTransferPayment'
+              examples:
+                createdBankTransferPaymentStoreToken:
+                  $ref: './example-responses-v1.yaml#/components/examples/bankTransferPaymentResponseStoreToken'
+          headers:
+            location:
+              $ref: '../../../common/headers/location-v1.yaml#/components/headers/location'
+        '400':
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '409':
+          $ref: ../../../common/responses/errors/409-v1.yaml#/components/responses/409
+        '415':
+          $ref: ../../../common/responses/errors/415-v1.yaml#/components/responses/415
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+    get:
+      tags:
+        - Bank transfer payments
+      summary: List payments
+      description: Retrieve a list of payments.
+      operationId: listBankTransferPayments
+      parameters:
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferPaymentsProcessingTerminalId'
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferPaymentsOrderId'
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferPaymentsNameOnAccount'
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferPaymentsLast4'
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferPaymentsType'
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferPaymentsStatus'
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferPaymentsDateFrom'
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferPaymentsDateTo'
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferPaymentsSettlementState'
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferPaymentsSettlementDate'
+        - $ref: './parameters-v1.yaml#/components/parameters/paymentLinkId'
+        - $ref: '../../../common/parameters/before-v1.yaml#/components/parameters/before'
+        - $ref: '../../../common/parameters/after-v1.yaml#/components/parameters/after'
+        - $ref: '../../../common/parameters/limit-v1.yaml#/components/parameters/limit'
+      responses:
+        '200':
+          description: Successful request. Returns a list of payments.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bankTransferPaymentPaginatedList'
+              examples:
+                paginatedResults:
+                  $ref: './example-responses-v1.yaml#/components/examples/paginatedBankTransferPayment'
+                noActivity:
+                  $ref: '../../../common/responses/no-activity-v1.yaml#/components/examples/noActivity'
+        '400':
+          $ref: ../../../common/responses/errors/400-v1.yaml#/components/responses/400
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+  /bank-transfer-payments/{paymentId}:
+    get:
+      tags:
+        - Bank transfer payments
+      summary: Retrieve payment
+      description: Retrieve a specific payment.
+      operationId: getBankTransferPayment
+      parameters:
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferPaymentsPaymentId'
+      responses:
+        '200':
+          description: Successful request. Returns the specific payment.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/bankTransferPayment"
+              examples:
+                bankTransferPayment:
+                  $ref: './example-responses-v1.yaml#/components/examples/bankTransferPaymentResponseStoreToken'
+        '400':
+          $ref: ../../../common/responses/errors/400-v1.yaml#/components/responses/400
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '404':
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+  /bank-transfer-payments/{paymentId}/reverse:
+    post:
+      tags:
+        - Bank transfer payments
+      summary: Reverse payment
+      description: Cancel a payment in an open batch.
+      operationId: reverseBankTransferPayment
+      parameters:
+        - $ref: ../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferPaymentsPaymentId'
+      responses:
+        '200':
+          description: Successful request. We voided the payment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bankTransferPayment'
+              examples:
+                reverseBankTransferPayment:
+                  $ref: './example-responses-v1.yaml#/components/examples/reverseBankTransferPayment'
+        '400':
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '404':
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '409':
+          $ref: ../../../common/responses/errors/409-v1.yaml#/components/responses/409
+        '415':
+          $ref: ../../../common/responses/errors/415-v1.yaml#/components/responses/415
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+  /bank-transfer-payments/{paymentId}/refund:
+    post:
+      tags:
+        - Bank transfer payments
+      summary: Refund payment
+      description: Refund a payment.
+      operationId: refundBankTransferPayment
+      parameters:
+        - $ref: ../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferPaymentsPaymentId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/bankTransferReferencedRefund"
+            examples:
+              refundBankTransferPayment:
+                $ref: './example-requests-v1.yaml#/components/examples/refundBankTransferPaymentRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful request. We refunded the payment.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/bankTransferPayment"
+              examples:
+                bankTransferPayment:
+                  $ref: './example-responses-v1.yaml#/components/examples/refundBankTransferPaymentResponse'
+        '400':
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '404':
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '409':
+          $ref: ../../../common/responses/errors/409-v1.yaml#/components/responses/409
+        '415':
+          $ref: ../../../common/responses/errors/415-v1.yaml#/components/responses/415
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+  /bank-transfer-payments/{paymentId}/represent:
+    post:
+      tags:
+        - Bank transfer payments
+      summary: Re-present payment
+      description: Re-present a customer's bank account details if the first payment was declined.
+      operationId: representBankTransferPayment
+      parameters:
+        - $ref: ../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey
+        - $ref: './parameters-v1.yaml#/components/parameters/bankTransferPaymentsPaymentId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/representment"
+            examples:
+              representBankTransferPayment:
+                $ref: './example-requests-v1.yaml#/components/examples/representmentBankTransferPaymentRequest'
+      responses:
+        '200':
+          description: Successful request. We processed the payment. 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/bankTransferPayment"
+              examples:
+                bankTransferPayment:
+                  $ref: './example-responses-v1.yaml#/components/examples/bankTransferPaymentResponseStoreToken'
+        '400':
+          description: Validation error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'
+        '401':
+          $ref: ../../../common/responses/errors/401-v1.yaml#/components/responses/401
+        '403':
+          $ref: ../../../common/responses/errors/403-v1.yaml#/components/responses/403
+        '404':
+          $ref: ../../../common/responses/errors/404-v1.yaml#/components/responses/404
+        '406':
+          $ref: ../../../common/responses/errors/406-v1.yaml#/components/responses/406
+        '409':
+          $ref: ../../../common/responses/errors/409-v1.yaml#/components/responses/409
+        '415':
+          $ref: ../../../common/responses/errors/415-v1.yaml#/components/responses/415
+        '500':
+          $ref: ../../../common/responses/errors/500-v1.yaml#/components/responses/500
+
+components:
+  schemas:
+    bankTransferPaymentRequest:
+      required:
+        - order
+        - paymentMethod
+        - processingTerminalId
+      type: object
+      description: Object that contains information about the sale and the customer's bank details.
+      properties:
+        processingTerminalId:
+          maxLength: 50
+          minLength: 4
+          type: string
+          description: Unique identifier that we assigned to the terminal. 
+          example: ready
+        order:
+          $ref: "#/components/schemas/bankTransferPaymentOrder"
+        customer:
+          $ref: "#/components/schemas/bankTransferCustomer"
+        credentialOnFile:
+          $ref: '../../../common/schemas/transaction/credential-on-file-v1.yaml#/components/schemas/credentialOnFile'
+        paymentMethod:
+          type: object
+          description: Object that contains information about the customer's payment details.
+          discriminator:
+            propertyName: type
+            mapping:
+              ach: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/achPayload'
+              pad: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/padPayload'
+              secureToken: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/secureTokenPayload'
+              singleUseToken: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/singleUseTokenPayload'
+          oneOf:
+            - $ref: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/achPayload'
+            - $ref: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/padPayload'
+            - $ref: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/secureTokenPayload'
+            - $ref: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/singleUseTokenPayload'
+        customFields:
+          type: array
+          description: |
+            Array of customField objects.
+          items:
+            $ref: '../../../common/schemas/common/custom-field-v1.yaml#/components/schemas/customField'
+    bankTransferPayment:
+      required:
+        - bankAccount
+        - order
+        - paymentId
+        - processingTerminalId
+        - transactionResult
+      type: object
+      description: Object that contains information about the sale and the customer's bank details.
+      properties:
+        paymentId:
+          maxLength: 10
+          minLength: 10
+          type: string
+          description: Unique identifier that we assigned to the payment.
+          example: M2MJOG6O2Y
+        processingTerminalId:
+          maxLength: 50
+          minLength: 4
+          type: string
+          description: Unique identifier that we assigned to the terminal.
+          example: '1234001'
+        order:
+          $ref: "#/components/schemas/bankTransferPaymentOrder"
+        customer:
+          $ref: "#/components/schemas/bankTransferCustomer"
+        bankAccount:
+          description: Object that contains information about the bank account.
+          type: object
+          discriminator:
+            propertyName: type
+            mapping:
+              ach: '../../../common/schemas/transaction/bank-account-v1.yaml#/components/schemas/achBankAccount'
+              pad: '../../../common/schemas/transaction/bank-account-v1.yaml#/components/schemas/padBankAccount'
+          oneOf:
+            - $ref: '../../../common/schemas/transaction/bank-account-v1.yaml#/components/schemas/achBankAccount'
+            - $ref: '../../../common/schemas/transaction/bank-account-v1.yaml#/components/schemas/padBankAccount'
+        refunds:
+          type: array
+          uniqueItems: true
+          description: List of refunds issued against the payment
+          items:
+            $ref: "../../../common/schemas/transaction/summary-v1.yaml#/components/schemas/refundSummary"
+        returns:
+          type: array
+          uniqueItems: true
+          description: List of returns issued against the payment
+          items:
+            $ref: "#/components/schemas/bankTransferReturnSummary"
+        representment:
+          $ref: "../../../common/schemas/transaction/summary-v1.yaml#/components/schemas/paymentSummary"
+        transactionResult:
+          $ref: "../../../common/schemas/transaction/bank-transfer-v1.yaml#/components/schemas/bankTransferResult"
+        customFields:
+          type: array
+          description: |
+            Array of customField objects.
+          items:
+            $ref: '../../../common/schemas/common/custom-field-v1.yaml#/components/schemas/customField'
+    bankTransferPaymentPaginatedList:
+      required:
+        - count
+        - data
+        - hasMore
+        - limit
+      type: object
+      allOf:
+        - $ref: '../../../common/schemas/common/paginated-list-v1.yaml#/components/schemas/paginatedList'
+        - type: object
+          properties:
+            data:
+              type: array
+              description: Array of payments.
+              items:
+                $ref: '#/components/schemas/bankTransferPayment'
+    bankTransferReferencedRefund:
+      required:
+        - amount
+        - description
+      type: object
+      description: Object that contains information about the payment that you want to refund.
+      properties:
+        amount:
+          type: integer
+          format: int64
+          description: Total amount of the refund. The value is in the currency's lowest denomination, for example, cents.
+          example: 4999
+        description:
+          maxLength: 100
+          minLength: 1
+          type: string
+          description: Description of the refund.
+          example: Refund for order OrderRef6543
+    representment:
+      required:
+        - paymentMethod
+      type: object
+      description: Object that contains the paymentMethod object.
+      properties:
+        paymentMethod:
+          type: object
+          description: Object that contains information about the customer's payment details.
+          discriminator:
+            propertyName: type
+            mapping:
+              ach: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/achPayload'
+          oneOf:
+            - $ref: '../../../common/schemas/transaction/payment-method-v1.yaml#/components/schemas/achPayload'
+    bankTransferPaymentOrder:
+      required:
+        - amount
+        - currency
+        - orderId
+      type: object
+      allOf:
+        - $ref: "../../../common/schemas/transaction/order-v1.yaml#/components/schemas/order"
+        - type: object
+          properties:
+            orderId:
+              maxLength: 24
+              minLength: 1
+              type: string
+              description: A unique identifier assigned by the merchant.
+              example: OrderRef6543
+            dateTime:
+              type: string
+              format: date-time
+              readOnly: true
+              description: The processing date and time of the transaction represented as per [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) standard.
+              example: '2024-07-02T15:30:00Z'
+            description:
+              maxLength: 256
+              minLength: 1
+              type: string
+              description: A brief description of the transaction.
+              example: 'Pizza Doe #1234 - Dinner'
+            amount:
+              type: integer
+              format: int64
+              description: The total amount in the currency's lowest denomination. For example, cents.
+              example: 4999
+            currency:
+              $ref: '../../../common/schemas/common/currency-v1.yaml#/components/schemas/currency'
+            breakdown:
+              $ref: "#/components/schemas/bankTransferBreakdown"
+      description: Object that contains information about the transaction.
+    bankTransferReturnSummary:
+      required:
+        - date
+        - paymentId
+        - represented
+        - returnCode
+        - returnReason
+      type: object
+      description: Object that contains information about a return.
+      properties:
+        paymentId:
+          maxLength: 10
+          minLength: 10
+          type: string
+          description: Unique identifier that our gateway assigned to the payment.
+          example: M2MJOG6O2Y
+        date:
+          type: string
+          format: date
+          description: The date that the check was returned.
+          example: '2024-07-02'
+        returnCode:
+          type: string
+          description: The NACHA return code.
+          example: R11
+        returnReason:
+          type: string
+          description: The reason why the check was returned.
+          example: Customer advises not authorized
+        represented:
+          type: boolean
+          description: Indicates whether the return has been re-presented.
+          example: false
+        link:
+          $ref: ../../../common/schemas/common/link/link-v1.yaml#/components/schemas/link
+    bankTransferBreakdown:
+      required:
+        - subtotal
+      type: object
+      description: Object that contains information about the taxes and tip amount on the transaction.
+      properties:
+        subtotal:
+          type: integer
+          format: int64
+          description: Total amount of the transaction before tax and tip. The value is in the currency's lowest denomination, for example, cents.
+          example: 4500
+        tip:
+          $ref: '../../../common/schemas/transaction/order-v1.yaml#/components/schemas/tip'
+          description: Object that contains tip information for the transaction.
+        taxes:
+          type: array
+          description: Array of tax objects.
+          items:
+            $ref: '../../../common/schemas/transaction/order-v1.yaml#/components/schemas/tax'
+    bankTransferCustomer:
+      type: object
+      description: Object that contains information about the customer.
+      properties:
+        notificationLanguage:
+          maxLength: 2
+          minLength: 2
+          type: string
+          format: iso-639-1
+          description: Customer's preferred notification language. This code follows the ISO 639-1 standard.
+          enum:
+            - en
+            - fr
+          example: en
+        contactMethods:
+          uniqueItems: true
+          description: Customer's contact information.
+          type: array
+          items:
+            $ref: ../../../common/schemas/common/contact-method-v1.yaml#/components/schemas/contactMethod

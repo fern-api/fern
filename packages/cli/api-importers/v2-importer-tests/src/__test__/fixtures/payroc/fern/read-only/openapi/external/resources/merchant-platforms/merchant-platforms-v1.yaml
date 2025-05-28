@@ -1,0 +1,512 @@
+openapi: 3.0.3
+info:
+  title: Merchant platforms
+  description: Create and manage merchant plaforms
+  version: '1'
+  termsOfService: https://www.payroc.com/terms
+  contact:
+    name: Payroc Helpdesk
+    url: https://www.payroc.com/help
+    email: helpdesk@payroc.com
+security:
+- bearerAuth: []
+
+tags:
+  - name: Merchant platforms
+    description: |
+      A merchant platform is an entity that represents a business and includes its legal information and all processing accounts.<br/><br/>
+      After you create a merchant platform for a business, you can do the following:  
+        - [Create and add an additional processing account to a merchant platform.](#createProcessingAccount)  
+        - [Retrieve a merchant platform.](#getMerchantAcccounts)  
+        - [Retrieve a list of merchant platforms.](#listMerchantPlatforms)  
+        - [Retrieve a list of open processing accounts that are linked to a merchant platform.](#listMerchantLocations)  
+          
+          
+      For more information about boarding a merchant, go to our [Board a merchant](/guides/integrate/boarding) guide.
+
+paths:
+  /merchant-platforms:
+    summary: Provide capabilities to manage a merchant platform.
+    post:
+      tags:
+      - Merchant platforms
+      summary: Create merchant platform
+      description: |
+        Use this method to create the entity that represents a business, including its legal information and all its processing accounts.  
+
+        > **Note:** To add a processing account to an existing merchant platform, go to [Create a processing account](/api/schema/boarding/merchant-platforms/create-processing-account).  
+          
+        The response contains some fields that we require for other methods:  
+        - **merchantPlatformId** - Unique identifier that we assign to the merchant platform. Use the merchantPlatformId to retrieve and update information about the merchant platform.  
+          
+        - **processingAccountId**- Unique identifier that we assign to each processing account. Use the processingAccountId to retrieve and update information about the processing account.  
+          <br/>
+        For more information about how to create a merchant platform, go to [Create a merchant platform.](/guides/integrate/boarding/merchant-platform)
+
+      operationId: createMerchant
+      parameters:
+        - $ref: '../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createMerchantAccount'
+            examples:
+              createMerchantPlatform:
+                $ref: './example-requests-v1.yaml#/components/examples/createMerchantPlatform'
+      responses:
+        '201':
+          description: Successful request. We created the merchant platform.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/merchantPlatform'
+              examples:
+                created: 
+                  $ref: './example-responses-v1.yaml#/components/examples/merchantPlatformCreated'
+                partialSuccess:
+                  $ref: './example-responses-v1.yaml#/components/examples/processingAccountFailed'
+          headers:
+            location:
+              description: URI reference to the resource.
+              style: simple
+              explode: false
+              schema:
+                type: string
+        '400':
+          description: Validation error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+                fundingAccountsLimitReached:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/fundingAccountsLimitReached'
+                tooManyControlProngs:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/tooManyControlProngs'
+                noControlProng:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/noControlProng'
+                dailyDiscountAndRewardPayConflict:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/dailyDiscountAndRewardPayConflict'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '409':
+          description: Conflict
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/409-v1.yaml#/components/schemas/409'
+              examples:
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'
+                taxIdInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/taxIdInUse'
+                nationalIdInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/nationalIdInUse'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+    get:
+      tags:
+      - Merchant platforms
+      summary: List merchant platforms
+      description: Use this method to retrieve a [paginated](/api/pagination) list of the merchant platforms that are linked to the ISV's account.
+      operationId: listMerchantPlatforms
+      parameters:
+        - $ref: '../../../common/parameters/before-v1.yaml#/components/parameters/before'
+        - $ref: '../../../common/parameters/after-v1.yaml#/components/parameters/after'
+        - $ref: '../../../common/parameters/limit-v1.yaml#/components/parameters/limit'
+      responses:
+        '200':
+          description: Successful request. Returns a list of merchant platforms associated with the ISV's account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/paginatedMerchants'
+              examples:
+                listMerchantPlatforms:
+                  $ref: './example-responses-v1.yaml#/components/examples/listMerchantPlatforms'
+                noActivity:
+                  $ref: '../../../common/responses/no-activity-v1.yaml#/components/examples/noActivity'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+  /merchant-platforms/{merchantPlatformId}:
+    get:
+      tags:
+      - Merchant platforms
+      summary: Retrieve merchant platform
+      description: |
+        Use this method to retrieve information about a merchant platform, including its legal information and processing accounts.  
+          
+        Include the merchantPlatformId that we sent you when you created the merchant platform.  
+      operationId: getMerchantAcccounts
+      parameters:
+      - $ref: './parameters-v1.yaml#/components/parameters/merchantPlatformId'
+      responses:
+        '200':
+          description: Successful request. Returns the merchant platform.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/merchantPlatform'
+              examples:
+                retrievedMerchantPlatforms:
+                  $ref: './example-responses-v1.yaml#/components/examples/retrievedMerchantPlatforms'
+        '400':
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+  /merchant-platforms/{merchantPlatformId}/processing-accounts:
+    get:
+      tags:
+      - Merchant platforms
+      summary: List merchant platform's processing accounts
+      description: |  
+        Use this method to retrieve a paginated list of processing accounts associated with a merchant platform.  
+          
+        When you created the merchant platform, we sent you its merchantPlatformId in the response. Send this merchantPlatformId as a path parameter in your endpoint.  
+          
+        > **Note:** By default, we return only open processing accounts. To include closed processing accounts, send a value of `true` for the includeClosed query parameter.  
+      operationId: listMerchantLocations
+      parameters:
+        - $ref: './parameters-v1.yaml#/components/parameters/merchantPlatformId' 
+        - $ref: '../../../common/parameters/before-v1.yaml#/components/parameters/before'
+        - $ref: '../../../common/parameters/after-v1.yaml#/components/parameters/after'
+        - $ref: '../../../common/parameters/limit-v1.yaml#/components/parameters/limit'
+        - $ref: './parameters-v1.yaml#/components/parameters/includeClosed' 
+      responses:
+        '200':
+          description: Successful request. Returns a list of processing accounts associated with the merchant platform.
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/paginatedProcessingAccounts'
+              examples:
+                listProcessingAccounts:
+                  $ref: './example-responses-v1.yaml#/components/examples/listProcessingAccounts'
+                noActivity:
+                  $ref: '../../../common/responses/no-activity-v1.yaml#/components/examples/noActivity'
+        '400':
+          $ref: '../../../common/responses/errors/400-v1.yaml#/components/responses/400'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '403':
+          $ref: '../../../common/responses/errors/403-v1.yaml#/components/responses/403'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+    post:
+      tags:
+      - Merchant platforms
+      summary: Create processing account
+      description: |
+        Use this method to create a processing account and add it to a merchant platform.  
+            > **Note:** You can create and add a processing account only to an existing merchant platform. If you have not already created a merchant platform, go to [Create a merchant platform.](/api/schema/boarding/merchant-platforms/create)  
+          
+        In the response we return a processingAccountId for the processing account, which you need for the following methods.  
+        - [Retrieve processing account](/api/schema/boarding/processing-accounts/get)  
+        - [List processing account's funding accounts](/api/schema/boarding/processing-accounts/list-funding-accounts)  
+        - [List contacts](/api/schema/boarding/processing-accounts/contacts)  
+        - [Get a processing account pricing agreement](/api/schema/boarding/processing-accounts/pricing)  
+        - [List owners](/api/schema/boarding/processing-accounts/list-owners)  
+        - [Create reminder for processing account](/api/schema/boarding/processing-accounts/create-reminder)  
+      operationId: createProcessingAccount
+      parameters:
+      - $ref: './parameters-v1.yaml#/components/parameters/merchantPlatformId'
+      - $ref: '../../../common/parameters/idempotency-key-v1.yaml#/components/parameters/idempotencyKey'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../processing-accounts/processing-accounts-v1.yaml#/components/schemas/createProcessingAccount'
+            examples:
+              retrievedMerchantPlatforms:
+                $ref: './example-requests-v1.yaml#/components/examples/createProcessingAccount'
+      responses:
+        '201':
+          description: Successful request. We created the processing account.
+          content:
+            application/json:
+              schema:
+                $ref: '../processing-accounts/processing-accounts-v1.yaml#/components/schemas/processingAccount'
+              examples:
+                retrievedMerchantPlatforms:
+                  $ref: './example-responses-v1.yaml#/components/examples/processingAccountCreated'
+          headers:
+            location:
+              description: URI reference to the resource.
+              style: simple
+              explode: false
+              schema:
+                type: string
+        '400':
+          description: Validation error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/400-v1.yaml#/components/schemas/400'
+              examples:
+                validationError:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/validatorError'
+                idempotentKeyMissing:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/idempotentKeyMissing'
+                fundingAccountsLimitReached:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/fundingAccountsLimitReached'
+                tooManyControlProngs:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/tooManyControlProngs'
+                noControlProng:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/noControlProng'
+                dailyDiscountAndRewardPayConflict:
+                  $ref: '../../../common/responses/errors/400-v1.yaml#/components/examples/dailyDiscountAndRewardPayConflict'
+        '401':
+          $ref: '../../../common/responses/errors/401-v1.yaml#/components/responses/401'
+        '404':
+          $ref: '../../../common/responses/errors/404-v1.yaml#/components/responses/404'
+        '406':
+          $ref: '../../../common/responses/errors/406-v1.yaml#/components/responses/406'
+        '409':
+          description: Conflict
+          content:
+            application/problem+json:
+              schema:
+                $ref: '../../../common/responses/errors/409-v1.yaml#/components/schemas/409'
+              examples:
+                idempotentKeyInUse:
+                  $ref: '../../../common/responses/errors/409-v1.yaml#/components/examples/idempotentKeyInUse'
+        '500':
+          $ref: '../../../common/responses/errors/500-v1.yaml#/components/responses/500'
+
+components:
+  schemas:
+    business:
+      type: object
+      description: Object that contains information about the business.
+      title: business
+      required:
+        - name
+        - taxId
+        - contactMethods
+        - addresses
+        - organizationType
+      properties:
+        name:
+          type: string
+          description: Legal name of the business.
+          maxLength: 100
+          example: Pizza Doe
+        taxId:
+          type: string
+          description: Tax ID of the business.
+          maxLength: 20
+          example: 12-3456789
+        organizationType:
+          type: string
+          description: Type of organization.
+          enum:
+            - privateCorporation
+            - publicCorporation
+            - nonProfit
+            - privateLlc
+            - publicLlc
+            - privatePartnership
+            - publicPartnership
+            - soleProprietor
+          example: privateCorporation
+        countryOfOperation:
+          type: string
+          description: Two-digit country code for the country that the business operates in. The format follows the ISO-3166 standard.
+          enum:
+            - US    
+          example: US
+        addresses:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          description: Array of address objects. 
+          items:
+            oneOf:
+              - $ref: '../../../common/schemas/boarding/legal-address-v1.yaml#/components/schemas/legalAddress'
+        contactMethods:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          description: An array of contactMethod objects. Email should always be provided.
+          items:
+            $ref: '../../../common/schemas/common/contact-method-v1.yaml#/components/schemas/contactMethod'
+    createMerchantAccount:
+      type: object
+      title: create merchant platform
+      required:
+        - business
+        - processingAccounts
+      properties: 
+        business:
+          $ref: '#/components/schemas/business'
+        processingAccounts:
+          description: Array of processingAccounts objects.
+          type: array
+          minItems: 1
+          items:
+            $ref: '../processing-accounts/processing-accounts-v1.yaml#/components/schemas/createProcessingAccount'
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Object that you can send to include custom data in the request.
+          example:
+            customerId: '2345'
+    merchantPlatform:
+      type: object
+      title: merchant
+      required:
+        - business
+        - processingAccounts
+      properties:
+        merchantPlatformId:
+          type: string
+          readOnly: true
+          description: Unique identifier of the merchant platform.
+          example: '12345'
+        createdDate:
+          type: string
+          format: date-time
+          example: '2024-07-02T12:00:00.000Z'
+          readOnly: true
+          description: Date that the merchant platform was created.
+        lastModifiedDate:
+          type: string
+          format: date-time
+          example: '2024-07-02T12:00:00.000Z'
+          readOnly: true
+          description: Date that the merchant platform was last modified.
+        business:
+          $ref: '#/components/schemas/business'
+        processingAccounts:
+          readOnly: true
+          description: Array of processingAccount objects
+          required:
+          #  - processingAccountId
+           - doingBusinessAs
+           - status
+          type: array
+          items:
+            type: object
+            title: processingAccount
+            properties:
+              processingAccountId:
+                type: string
+                description: Unique identifier of the processing account.
+                example: '38765'
+              doingBusinessAs:
+                type: string
+                description: Trading name of the business.
+                example: Pizza Doe
+              status:
+                type: string
+                description: |
+                  Status of the processing account.
+                  - `entered` - We have received information about the account, but we have not yet reviewed it.  
+                  - `pending` - We have reviewed the information about the account, but we have not yet approved it.  
+                  - `approved` - We have approved the account for processing transactions and funding.  
+                  - `subjectTo` - We have approved the account, but we are waiting on further information.  
+                  - `dormant` - Account is closed for a period.  
+                  - `nonProcessing` - We have approved the account, but the merchant has not yet run a transaction.  
+                  - `rejected` - We rejected the application for the processing account.  
+                  - `terminated` - Processing account is closed.  
+                  - `cancelled` - Merchant withdrew the application for the processing account.
+                  - `failed` - An error occurred while we were setting up the processing account.
+                readOnly: true
+                enum:
+                  - entered
+                  - pending
+                  - approved
+                  - subjectTo
+                  - dormant
+                  - nonProcessing
+                  - rejected
+                  - terminated
+                  - cancelled 
+                  - failed
+                example: entered
+              link:
+                type: object
+                description: Object that contains HATEOAS links for the processing account.
+                properties:
+                  rel:
+                    type: string
+                    description: Relationship to the parent resource.
+                    example: processingAccount
+                  href:
+                    type: string
+                    description: Link to the resource.
+                    example: 'https://api.payroc.com/v1/processing-accounts/38765'
+                  method:
+                    type: string
+                    description: HTTP method you can use to retrieve the resource.
+                    example: get
+              signature:
+                $ref: '../processing-accounts/processing-accounts-v1.yaml#/components/schemas/signature'
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+          description: Object that you can send to include custom metadata in the request.
+          example:
+            customerId: '2345'
+        links:
+          readOnly: true
+          type: array
+          description: Array of useful links related to your request
+          items:
+            $ref: '../../../common/schemas/common/link/link-v1.yaml#/components/schemas/link'
+
+    paginatedMerchants:
+      type: object
+      title: paginated merchant platforms
+      allOf:
+      - $ref: '../../../common/schemas/common/paginated-list-v1.yaml#/components/schemas/paginatedList'
+      - type: object
+        properties:
+          data:
+            type: array
+            description: Array of merchantPlatform objects.
+            items:
+              $ref: '#/components/schemas/merchantPlatform'
+    paginatedProcessingAccounts:
+      type: object
+      title: paginated processing accounts
+      allOf:
+      - $ref: '../../../common/schemas/common/paginated-list-v1.yaml#/components/schemas/paginatedList'
+      - type: object
+        properties:
+          data:
+            type: array
+            description: Array of processingAccount objects.
+            items:
+              $ref: '../processing-accounts/processing-accounts-v1.yaml#/components/schemas/processingAccount'
+
+  securitySchemes:
+    bearerAuth:
+      $ref: '../../../common/security/bearer-auth.yaml#/components/securitySchemes/bearerAuth'

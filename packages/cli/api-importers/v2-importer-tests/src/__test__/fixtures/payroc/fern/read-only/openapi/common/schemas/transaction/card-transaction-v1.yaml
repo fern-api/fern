@@ -1,0 +1,137 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  schemas:
+    supportedOperations:
+      type: array
+      items:
+        type: string
+        enum:
+          - capture
+          - refund
+          - fullyReverse
+          - partiallyReverse
+          - incrementAuthorization
+          - adjustTip
+          - addSignature
+          - setAsReady
+          - setAsPending
+          - setAsDeclined
+      description: |
+        Array of operations that you can perform on the transaction.
+        - `capture`                - Capture the payment.
+        - `refund`                 - Refund the payment.
+        - `fullyReverse`           - Fully reverse the transaction.
+        - `partiallyReverse`       - Partially reverse the payment.
+        - `incrementAuthorization` - Increase the amount of the authorization.
+        - `adjustTip`              - Adjust the tip post-payment.
+        - `addSignature`           - Add a signature to the payment.
+        - `setAsReady`             - Set the transaction’s status to `ready`.
+        - `setAsPending`           - Set the transaction’s status to `pending`.
+        - `setAsDeclined`          - Set the transaction’s status to `declined`.
+      example:
+        - capture
+        - refund
+        - fullyReverse
+        - partiallyReverse
+        - incrementAuthorization
+        - adjustTip
+        - addSignature
+        - setAsReady
+        - setAsPending
+        - setAsDeclined        
+
+    transactionResult:
+      required:
+        - type
+        - status
+        - responseCode
+        - responseMessage
+      type: object
+      properties:
+        type:
+          type: string
+          description: Transaction type.
+          enum:
+            - sale
+            - refund
+            - preAuthorization
+            - preAuthorizationCompletion
+        ebtType:
+          type: string
+          description: Sub-type for EBT transactions
+          enum:
+            - cashPurchase
+            - cashPurchaseWithCashback
+            - foodStampPurchase
+            - foodStampVoucherPurchase
+            - foodStampReturn
+            - foodStampVoucherReturn
+            - cashBalanceInquiry
+            - foodStampBalanceInquiry
+            - cashWithdrawal
+        status:
+          type: string
+          description: Current status of the transaction.
+          enum:
+            - ready
+            - pending
+            - declined
+            - complete
+            - referral
+            - pickup
+            - reversal
+            - admin
+            - expired
+            - accepted
+        approvalCode:
+          maxLength: 48
+          minLength: 1
+          type: string
+          description: Authorization code that the processor assigned to the transaction. 
+        authorizedAmount:
+          type: integer
+          format: int64
+          description: |
+            Amount that the processor authorized for the transaction. This value is in the currency’s lowest denomination, for example, cents.  
+
+            **Notes:**  
+            - For partial authorizations, this amount is lower than the amount in the request.
+            - If the value for **authorizedAmount** is negative, this indicates that the merchant sent funds to the customer.
+        currency:
+          $ref: '../../../common/schemas/common/currency-v1.yaml#/components/schemas/currency'
+        responseCode:
+          type: string
+          description: |
+            Response from the processor.  
+            - `A` - The processor approved the transaction.  
+            - `D` - The processor declined the transaction.  
+            - `E` - The processor received the transaction but will process the transaction later.  
+            - `P` - The processor authorized a portion of the original amount of the transaction.  
+            - `R` - The issuer declined the transaction and indicated that the customer should contact their bank.  
+            - `C` - The issuer declined the transaction and indicated that the merchant should keep the card as it was reported lost or stolen.
+          enum:
+            - A
+            - D
+            - E
+            - P
+            - R
+            - C
+        responseMessage:
+          maxLength: 48
+          minLength: 1
+          type: string
+          description: Description of the response from the processor. 
+        processorResponseCode:
+          type: string
+          description: Original response code that the processor sent.
+        cardSchemeReferenceId:
+          maxLength: 64
+          minLength: 1
+          type: string
+          description: Identifier that the card brand assigns to the payment instruction.
+      description: Object that contains information about the transaction response details.

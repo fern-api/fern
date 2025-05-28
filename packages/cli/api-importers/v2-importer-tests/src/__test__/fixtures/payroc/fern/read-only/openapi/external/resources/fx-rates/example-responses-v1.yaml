@@ -1,0 +1,32 @@
+openapi: 3.0.3
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  examples:
+    fxRateResponse:
+      summary: Fx-Rate
+      description: Fx-Rate
+      value:
+        processingTerminalId: '1234001'
+        operator: Jane
+        baseAmount: 10000
+        baseCurrency: USD
+        inquiryResult:
+          dccOffered: true
+        dccOffer:
+          accepted: true
+          reference: 3396977e-40b9-4b26-8a3f-c25bc1280ee2
+          fxAmount: 13612
+          fxCurrency: JPY
+          fxCurrencyCode: '392'
+          fxCurrencyExponent: 0
+          fxRate: 136.1248
+          markup: 3
+          provider: FEXCO
+          source: REUTERS WHOLESALE INTERBANK
+        cardInfo:
+          type: MASTERCARD
+          cardNumber: 453985******7062        

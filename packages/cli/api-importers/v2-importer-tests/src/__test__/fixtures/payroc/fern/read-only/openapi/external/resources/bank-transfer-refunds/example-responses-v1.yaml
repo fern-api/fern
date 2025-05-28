@@ -1,0 +1,155 @@
+openapi: 3.0.3 
+info:
+  title: Payroc API
+  version: '1'
+paths: {}
+
+components:
+  examples:
+    bankTransferUnreferencedRefundResponse:
+      summary: Bank Transfer Unreferenced Refund
+      description: Bank Transfer Unreferenced Refund
+      value:
+        refundId: CD3HN88U9F
+        processingTerminalId: '1234001'
+        order:
+          orderId: OrderRef6543
+          dateTime: '2024-07-02T15:30:00Z'
+          description: Refund for order OrderRef6543
+          amount: 4999
+          currency: USD
+        customer:
+          contactMethods:
+            - type: email
+              value: sarah.hopper@example.com
+          notificationLanguage: en
+        bankAccount:
+          type: ach
+          secCode: web
+          accountType: checking
+          nameOnAccount: Sarah Hazel Hopper
+          accountNumber: '****7890'
+          routingNumber: '*****6789'
+        transactionResult:
+          type: unreferencedRefund
+          status: ready
+          authorizedAmount: -4999
+          currency: USD
+          responseCode: A
+          responseMessage: NoError
+          processorResponseCode: '0'
+        customFields:
+          - name: yourCustomField
+            value: abc123
+  
+    paginatedBankTransferUnreferencedRefundResponse:
+      summary: Paginated Bank Transfer Unreferenced Refund
+      description: Paginated Bank Transfer Unreferenced Refund
+      value:
+        limit: 2
+        count: 2
+        hasMore: true
+        data:
+          - refundId: CD3HN88U9F
+            processingTerminalId: '1234001'
+            order:
+              orderId: 'OrderRef6543'
+              dateTime: '2024-07-02T15:30:00Z'
+              description: refund example
+              amount: 4999
+              currency: USD
+            customer:
+              contactMethods:
+                - type: email
+                  value: sarah.hopper@example.com
+              notificationLanguage: en
+            bankAccount:
+              type: ach
+              secCode: web
+              accountType: checking
+              nameOnAccount: Sarah Hazel Hopper
+              accountNumber: '****3159'
+              routingNumber: '*****0277'
+            transactionResult:
+              type: unreferencedRefund
+              status: ready
+              authorizedAmount: -4999
+              currency: USD
+              responseCode: A
+              responseMessage: NoError
+              processorResponseCode: '0'
+          - refundId: B6ZOFZNVOP
+            processingTerminalId: '1234001'
+            order:
+              orderId: 'OrderRef7654'
+              dateTime: '2024-07-02T15:30:00Z'
+              description: Refund for order OrderRef7654
+              amount: 3999
+              currency: USD
+            customer:
+              contactMethods:
+                - type: email
+                  value: sarah.hopper@example.com
+              notificationLanguage: en
+            bankAccount:
+              type: ach
+              secCode: web
+              accountType: checking
+              nameOnAccount: Sarah Hazel Hopper
+              accountNumber: '****3159'
+              routingNumber: '*****0277'
+            transactionResult:
+              type: unreferencedRefund
+              status: ready
+              authorizedAmount: -3999
+              currency: USD
+              responseCode: A
+              responseMessage: NoError
+              processorResponseCode: '0'
+            customFields:
+              - name: yourCustomField
+                value: abc123
+        links:
+          - rel: next
+            method: get
+            href: https://api.payroc.com/v1/bank-transfer-refunds?limit=2&processingTerminalId=1234001&after=B6ZOFZNVOP
+          - rel: previous
+            method: get
+            href: https://api.payroc.com/v1/bank-transfer-refunds?processingTerminalId=1234001&limit=2&before=CD3HN88U9F
+
+    reverseBankTransferUnreferencedRefundResponse:
+      summary: Bank Transfer Unreferenced Refund
+      description: Bank Transfer Unreferenced Refund
+      value:
+        refundId: CD3HN88U9F
+        processingTerminalId: '1234001'
+        order:
+          orderId: 'OrderRef6543'
+          dateTime: '2024-07-02T15:30:00Z'
+          description: Refund for order OrderRef6543
+          amount: 4999
+          currency: USD
+        customer:
+          contactMethods:
+            - type: email
+              value: sarah.hopper@example.com
+          notificationLanguage: en
+        bankAccount:
+          type: ach
+          secCode: web
+          accountType: checking
+          nameOnAccount: Sarah Hazel Hopper
+          accountNumber: '****3159'
+          routingNumber: '*****0277'
+        transactionResult:
+          type: unreferencedRefund
+          status: reversal
+          authorizedAmount: -4999
+          currency: USD
+          responseCode: A
+          responseMessage: NoError
+          processorResponseCode: '0'
+        customFields:
+          - name: yourCustomField
+            value: abc123
+  
