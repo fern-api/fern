@@ -333,7 +333,12 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         isStreaming: boolean;
         contentType: string;
         mediaTypeObject: OpenAPIV3_1.MediaTypeObject;
-    }): RequestBodyConverter.Output | undefined {
+    }):
+        | {
+              requestBody: HttpRequestBody.InlinedRequestBody;
+              inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>;
+          }
+        | undefined {
         if (this.streamingExtension == null || this.streamingExtension.type !== "streamCondition") {
             return undefined;
         }
@@ -364,16 +369,12 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         if (convertedSchema == null) {
             return undefined;
         }
-
-        const docs = isStreaming
-            ? (this.streamingExtension.streamDescription ?? this.requestBody.description)
-            : this.requestBody.description;
         const requestBodyTypeShape = convertedSchema.schema?.typeDeclaration.shape;
         if (requestBodyTypeShape?.type === "object") {
             return {
                 requestBody: HttpRequestBody.inlinedRequestBody({
                     contentType,
-                    docs,
+                    docs: undefined,
                     name: this.context.casingsGenerator.generateName(
                         isStreaming ? `${this.schemaId}_streaming` : this.schemaId
                     ),
@@ -386,7 +387,6 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                         exampleGenerationStrategy: "request"
                     })
                 }),
-                streamRequestBody: undefined,
                 inlinedTypes: convertedSchema.inlinedTypes
             };
         }
