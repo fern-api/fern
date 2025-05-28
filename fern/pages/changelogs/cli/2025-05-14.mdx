@@ -20,6 +20,11 @@ Skip certain headers from being added to the IR.
 **`(fix):`** Support text/plain content type responses in the v3 parser.
 
 
+## 0.61.5
+**`(fix):`** Fix a bug where the CLI upgrade message was written to stdout. This made it difficult to write shell
+scripts that act upon the output of the CLI. The upgrade message is now written to stderr.
+
+
 ## 0.61.4
 **`(fix):`** Support application/octet-stream content type requests in the OpenAPI parser.
 
