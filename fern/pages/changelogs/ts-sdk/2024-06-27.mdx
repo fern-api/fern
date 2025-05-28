@@ -1,9 +1,32 @@
-## 0.26.0
-**`(fix):`** Fix FormData headers in TypeScript generator
+## 0.26.0-rc2
+**`(feat):`** `RequestOptions` now supports overriding global headers like authentication and version.
 
-**`(feat):`** Support overriding global headers in RequestOptions
 
-**`(fix):`** Fix auto pagination for optional item arrays
+## 0.26.0-rc1
+**`(fix):`** The generator was skipping auto pagination for item arrays that were optional. Now, those are safely handled as well.
 
-**`(feat):`** Add cursor-based auto pagination support
+## 0.26.0-rc0
+**`(feat):`** The TypeScript generator now supports cursor-based auto pagination. With auto pagination, a user can simply iterate over the results automatically:
+
+```ts
+for (const user of client.users.list()) {
+  consoler.log(user);
+}
+```
+
+Users can also paginate over data manually
+
+```ts
+const page = client.users.list();
+for (const user of page.data) {
+  consoler.log(user);
+}
+
+// Helper methods for manually paginating:
+while (page.hasNextPage()) {
+  page = page.getNextPage();
+  // ...
+}
+```
+
 
