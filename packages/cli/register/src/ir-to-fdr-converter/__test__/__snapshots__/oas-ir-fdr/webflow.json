@@ -9023,8 +9023,60 @@
         ]
       }
     },
-    "CollectionsCollectionIdItemsGetParametersSchema": {
-      "name": "CollectionsCollectionIdItemsGetParametersSchema",
+    "CollectionsCollectionIdItemsGetParametersLastPublished": {
+      "name": "CollectionsCollectionIdItemsGetParametersLastPublished",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "lte",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "gte",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "CollectionsCollectionIdItemsGetParametersSortBy": {
+      "name": "CollectionsCollectionIdItemsGetParametersSortBy",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "lastPublished"
+          },
+          {
+            "value": "name"
+          },
+          {
+            "value": "slug"
+          }
+        ]
+      }
+    },
+    "CollectionsCollectionIdItemsGetParametersSortOrder": {
+      "name": "CollectionsCollectionIdItemsGetParametersSortOrder",
       "shape": {
         "type": "enum",
         "values": [
@@ -9583,8 +9635,60 @@
         ]
       }
     },
-    "CollectionsCollectionIdItemsLiveGetParametersSchema": {
-      "name": "CollectionsCollectionIdItemsLiveGetParametersSchema",
+    "CollectionsCollectionIdItemsLiveGetParametersLastPublished": {
+      "name": "CollectionsCollectionIdItemsLiveGetParametersLastPublished",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "lte",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "gte",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "CollectionsCollectionIdItemsLiveGetParametersSortBy": {
+      "name": "CollectionsCollectionIdItemsLiveGetParametersSortBy",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "lastPublished"
+          },
+          {
+            "value": "name"
+          },
+          {
+            "value": "slug"
+          }
+        ]
+      }
+    },
+    "CollectionsCollectionIdItemsLiveGetParametersSortOrder": {
+      "name": "CollectionsCollectionIdItemsLiveGetParametersSortOrder",
       "shape": {
         "type": "enum",
         "values": [
@@ -19607,8 +19711,8 @@
         ]
       }
     },
-    "SitesSiteIdUsersGetParametersSchema": {
-      "name": "SitesSiteIdUsersGetParametersSchema",
+    "SitesSiteIdUsersGetParametersSort": {
+      "name": "SitesSiteIdUsersGetParametersSort",
       "shape": {
         "type": "enum",
         "values": [
@@ -22682,8 +22786,8 @@
         ]
       }
     },
-    "SitesSiteIdAccessgroupsGetParametersSchema": {
-      "name": "SitesSiteIdAccessgroupsGetParametersSchema",
+    "SitesSiteIdAccessgroupsGetParametersSort": {
+      "name": "SitesSiteIdAccessgroupsGetParametersSort",
       "shape": {
         "type": "enum",
         "values": [
@@ -31588,8 +31692,8 @@
         ]
       }
     },
-    "SitesSiteIdOrdersGetParametersSchema": {
-      "name": "SitesSiteIdOrdersGetParametersSchema",
+    "SitesSiteIdOrdersGetParametersStatus": {
+      "name": "SitesSiteIdOrdersGetParametersStatus",
       "shape": {
         "type": "enum",
         "values": [
@@ -50735,7 +50839,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "SitesSiteIdOrdersGetParametersSchema"
+                  "value": "SitesSiteIdOrdersGetParametersStatus"
                 }
               }
             },
@@ -56365,7 +56469,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "SitesSiteIdUsersGetParametersSchema"
+                  "value": "SitesSiteIdUsersGetParametersSort"
                 }
               }
             }
@@ -61548,7 +61652,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "CollectionsCollectionIdItemsGetParametersSchema"
+                  "value": "CollectionsCollectionIdItemsGetParametersLastPublished"
                 }
               }
             },
@@ -61559,7 +61663,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "CollectionsCollectionIdItemsGetParametersSchema"
+                  "value": "CollectionsCollectionIdItemsGetParametersSortBy"
                 }
               }
             },
@@ -61570,7 +61674,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "CollectionsCollectionIdItemsGetParametersSchema"
+                  "value": "CollectionsCollectionIdItemsGetParametersSortOrder"
                 }
               }
             }
@@ -62169,7 +62273,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "CollectionsCollectionIdItemsLiveGetParametersSchema"
+                  "value": "CollectionsCollectionIdItemsLiveGetParametersLastPublished"
                 }
               }
             },
@@ -62180,7 +62284,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "CollectionsCollectionIdItemsLiveGetParametersSchema"
+                  "value": "CollectionsCollectionIdItemsLiveGetParametersSortBy"
                 }
               }
             },
@@ -62191,7 +62295,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "CollectionsCollectionIdItemsLiveGetParametersSchema"
+                  "value": "CollectionsCollectionIdItemsLiveGetParametersSortOrder"
                 }
               }
             }
@@ -69140,7 +69244,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "SitesSiteIdAccessgroupsGetParametersSchema"
+                  "value": "SitesSiteIdAccessgroupsGetParametersSort"
                 }
               }
             }

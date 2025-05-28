@@ -18,11 +18,14 @@ export class ParameterConverter extends Converters.AbstractConverters
         let inlinedTypes: Record<TypeId, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
 
         if (this.parameter.schema != null) {
+            const schemaIdOverride = this.context.convertBreadcrumbsToName([...this.breadcrumbs, this.parameter.name]);
+
             const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
                 context: this.context,
                 breadcrumbs: [...this.breadcrumbs, "schema"],
                 schemaOrReference: this.parameter.schema,
-                wrapAsOptional: this.parameter.required == null || !this.parameter.required
+                wrapAsOptional: this.parameter.required == null || !this.parameter.required,
+                schemaIdOverride
             });
             const converted = schemaOrReferenceConverter.convert();
             if (converted != null) {

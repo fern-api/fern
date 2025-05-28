@@ -26149,9 +26149,9 @@
         ]
       }
     },
-    "ApiTransactionsPostParametersSchema": {
+    "ApiTransactionsPostParametersXBelvoRequestMode": {
       "description": "Recommended header parameter to make your POST request to retrieve transactions asynchronous (thus preventing timeouts).\n\nWhen you make a asynchronous request, Belvo responds with a `202 - Accepted` payload, including the `request_id`. Once we have retrieved the transaction information, you will receive a `new_transactions_available` webhook with the link and request IDs.\n\n\n**Note**: This parameter is case sensitive (in other words, if you write `ASYNC`, then Belvo will default to a synchronous call).\n",
-      "name": "ApiTransactionsPostParametersSchema",
+      "name": "ApiTransactionsPostParametersXBelvoRequestMode",
       "shape": {
         "type": "enum",
         "values": [
@@ -29313,8 +29313,22 @@
         ]
       }
     },
-    "PaymentsPaymentLinksGetParametersSchema": {
-      "name": "PaymentsPaymentLinksGetParametersSchema",
+    "PaymentsPaymentLinksGetParametersStatus": {
+      "name": "PaymentsPaymentLinksGetParametersStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ACTIVE"
+          },
+          {
+            "value": "INACTIVE"
+          }
+        ]
+      }
+    },
+    "PaymentsPaymentLinksGetParametersOrdering": {
+      "name": "PaymentsPaymentLinksGetParametersOrdering",
       "shape": {
         "type": "enum",
         "values": [
@@ -35682,7 +35696,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "ApiTransactionsPostParametersSchema"
+                  "value": "ApiTransactionsPostParametersXBelvoRequestMode"
                 }
               }
             }
@@ -63507,7 +63521,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PaymentsPaymentLinksGetParametersSchema"
+                  "value": "PaymentsPaymentLinksGetParametersStatus"
                 }
               }
             },
@@ -63518,7 +63532,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PaymentsPaymentLinksGetParametersSchema"
+                  "value": "PaymentsPaymentLinksGetParametersOrdering"
                 }
               }
             },

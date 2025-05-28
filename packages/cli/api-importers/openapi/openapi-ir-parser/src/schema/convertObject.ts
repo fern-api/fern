@@ -177,12 +177,13 @@ export function convertObject({
 
     const convertedProperties: ObjectPropertyWithExample[] = Object.entries(propertiesToConvert).map(
         ([propertyName, propertySchema]) => {
-            const isRequired = allRequired.includes(propertyName);
             const audiences = getExtension<string[]>(propertySchema, FernOpenAPIExtension.AUDIENCES) ?? [];
             const availability = convertAvailability(propertySchema);
 
             const readonly = isReferenceObject(propertySchema) ? false : propertySchema.readOnly;
             const writeonly = isReferenceObject(propertySchema) ? false : propertySchema.writeOnly;
+
+            const isRequired = allRequired.includes(propertyName) && !readonly;
 
             const propertyNameOverride = getExtension<string | undefined>(
                 propertySchema,

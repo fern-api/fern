@@ -1745,9 +1745,9 @@
         ]
       }
     },
-    "SessionsGetParametersSchema": {
+    "SessionsGetParametersStatus": {
       "description": "status of the session to get",
-      "name": "SessionsGetParametersSchema",
+      "name": "SessionsGetParametersStatus",
       "shape": {
         "type": "enum",
         "values": [
@@ -3098,7 +3098,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "SessionsGetParametersSchema"
+                  "value": "SessionsGetParametersStatus"
                 }
               }
             },

@@ -12783,13 +12783,6 @@
                                 "type": "string"
                               },
                               "type": "primitive"
-                            },
-                            "id": {
-                              "value": {
-                                "value": "id",
-                                "type": "string"
-                              },
-                              "type": "primitive"
                             }
                           },
                           "type": "object"
@@ -18140,15 +18133,20 @@
             "generatedName": "accountAllows",
             "key": "allows",
             "schema": {
-              "description": "Flags which indicate the permissions the current authorized user has on this account resource.",
-              "generatedName": "AccountAllows",
-              "schema": "fullAccountPermissions",
-              "groupName": [],
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "generatedName": "accountAllows",
+              "value": {
+                "description": "Flags which indicate the permissions the current authorized user has on this account resource.",
+                "generatedName": "AccountAllows",
+                "schema": "fullAccountPermissions",
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "groupName": [],
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -18307,14 +18305,19 @@
             "generatedName": "eligibleOverdraftAccountsMaximumOverdraftAccounts",
             "key": "maximumOverdraftAccounts",
             "schema": {
-              "description": "The maximum number of overdraft protection accounts that may be linked to the account.",
-              "schema": {
-                "maximum": 4,
-                "type": "int"
+              "generatedName": "eligibleOverdraftAccountsMaximumOverdraftAccounts",
+              "value": {
+                "description": "The maximum number of overdraft protection accounts that may be linked to the account.",
+                "schema": {
+                  "maximum": 4,
+                  "type": "int"
+                },
+                "generatedName": "EligibleOverdraftAccountsMaximumOverdraftAccounts",
+                "groupName": [],
+                "type": "primitive"
               },
-              "generatedName": "EligibleOverdraftAccountsMaximumOverdraftAccounts",
               "groupName": [],
-              "type": "primitive"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -18430,14 +18433,19 @@
             "generatedName": "overdraftProtectionMaximumOverdraftAccounts",
             "key": "maximumOverdraftAccounts",
             "schema": {
-              "description": "The maximum number of overdraft protection accounts that may be linked to the account.",
-              "schema": {
-                "maximum": 4,
-                "type": "int"
+              "generatedName": "overdraftProtectionMaximumOverdraftAccounts",
+              "value": {
+                "description": "The maximum number of overdraft protection accounts that may be linked to the account.",
+                "schema": {
+                  "maximum": 4,
+                  "type": "int"
+                },
+                "generatedName": "OverdraftProtectionMaximumOverdraftAccounts",
+                "groupName": [],
+                "type": "primitive"
               },
-              "generatedName": "OverdraftProtectionMaximumOverdraftAccounts",
               "groupName": [],
-              "type": "primitive"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -18507,19 +18515,24 @@
             "generatedName": "accountsItems",
             "key": "items",
             "schema": {
-              "description": "The array of items in this page of accounts. This array may be empty.",
+              "generatedName": "accountsItems",
               "value": {
-                "generatedName": "AccountsItemsItem",
-                "schema": "accountItem",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "The array of items in this page of accounts. This array may be empty.",
+                "value": {
+                  "generatedName": "AccountsItemsItem",
+                  "schema": "accountItem",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "generatedName": "AccountsItems",
+                "groupName": [],
+                "type": "array"
               },
-              "generatedName": "AccountsItems",
               "groupName": [],
-              "type": "array"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -18662,15 +18675,21 @@
             "generatedName": "accountFieldsLabel",
             "key": "label",
             "schema": {
-              "description": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`.",
-              "schema": {
-                "maxLength": 80,
-                "example": "Checking *1008",
-                "type": "string"
+              "generatedName": "accountFieldsLabel",
+              "title": "Account Fields (v1.0.1)",
+              "value": {
+                "description": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`.",
+                "schema": {
+                  "maxLength": 80,
+                  "example": "Checking *1008",
+                  "type": "string"
+                },
+                "generatedName": "AccountFieldsLabel",
+                "groupName": [],
+                "type": "primitive"
               },
-              "generatedName": "AccountFieldsLabel",
               "groupName": [],
-              "type": "primitive"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -20462,16 +20481,22 @@
             "generatedName": "transactionFieldsId",
             "key": "id",
             "schema": {
-              "description": "This transaction's unique identifier.",
-              "schema": {
-                "pattern": "^[-_:,.~$a-zA-Z0-9]{6,128}$",
-                "minLength": 6,
-                "maxLength": 128,
-                "type": "string"
+              "generatedName": "transactionFieldsId",
+              "title": "Transaction Fields (v2.1.1)",
+              "value": {
+                "description": "This transaction's unique identifier.",
+                "schema": {
+                  "pattern": "^[-_:,.~$a-zA-Z0-9]{6,128}$",
+                  "minLength": 6,
+                  "maxLength": 128,
+                  "type": "string"
+                },
+                "generatedName": "TransactionFieldsId",
+                "groupName": [],
+                "type": "primitive"
               },
-              "generatedName": "TransactionFieldsId",
               "groupName": [],
-              "type": "primitive"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -20517,15 +20542,21 @@
             "generatedName": "transactionFieldsOccurredOn",
             "key": "occurredOn",
             "schema": {
-              "description": "The date of the transaction in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.",
-              "schema": {
-                "format": "date",
-                "example": "2023-05-18",
-                "type": "string"
+              "generatedName": "transactionFieldsOccurredOn",
+              "title": "Transaction Fields (v2.1.1)",
+              "value": {
+                "description": "The date of the transaction in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.",
+                "schema": {
+                  "format": "date",
+                  "example": "2023-05-18",
+                  "type": "string"
+                },
+                "generatedName": "TransactionFieldsOccurredOn",
+                "groupName": [],
+                "type": "primitive"
               },
-              "generatedName": "TransactionFieldsOccurredOn",
               "groupName": [],
-              "type": "primitive"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -20961,16 +20992,22 @@
             "generatedName": "transactionCategorizationId",
             "key": "id",
             "schema": {
-              "description": "The unique ID of this transaction's category.",
-              "schema": {
-                "pattern": "^[-_:.~$a-zA-Z0-9]{1,32}$",
-                "minLength": 1,
-                "maxLength": 32,
-                "type": "string"
+              "generatedName": "transactionCategorizationId",
+              "title": "Transaction Categorization (v1.2.1)",
+              "value": {
+                "description": "The unique ID of this transaction's category.",
+                "schema": {
+                  "pattern": "^[-_:.~$a-zA-Z0-9]{1,32}$",
+                  "minLength": 1,
+                  "maxLength": 32,
+                  "type": "string"
+                },
+                "generatedName": "TransactionCategorizationId",
+                "groupName": [],
+                "type": "primitive"
               },
-              "generatedName": "TransactionCategorizationId",
               "groupName": [],
-              "type": "primitive"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -21969,15 +22006,20 @@
             "generatedName": "transferItemState",
             "key": "state",
             "schema": {
-              "description": "The state of this transfer resource.",
-              "generatedName": "TransferItemState",
-              "schema": "transferState",
-              "groupName": [],
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "generatedName": "transferItemState",
+              "value": {
+                "description": "The state of this transfer resource.",
+                "generatedName": "TransferItemState",
+                "schema": "transferState",
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "groupName": [],
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true

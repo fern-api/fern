@@ -1,3 +1,16 @@
 ## 0.18.1
-**`(fix):`** Make clientId and clientSecret parameters optional with OAuth environment variables
+**`(fix):`** If OAuth environment variables are specified, the `clientId` and `clientSecret` parameters
+are optional.
+
+```ts
+export declare namespace Client {
+  interface Options {
+      ...
+      clientId?: core.Supplier<string>;
+      clientSecret?: core.Supplier<string>;
+  }
+  ...
+}
+```
+
 

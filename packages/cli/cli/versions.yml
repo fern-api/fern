@@ -1,4 +1,33 @@
 - changelogEntry:
+    - summary: Fix duplicate properties in example IR generation.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-28"
+  version: 0.63.14
+
+- changelogEntry:
+    - summary: Make nullable properties optional in examples in the Fern Definition.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-28"
+  version: 0.63.13
+
+- changelogEntry:
+    - summary: Fix parameter name collisions for enums
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-28"
+  version: 0.63.12
+  
+- changelogEntry:
+    - summary: |
+        Mark readonly fields as optional in the IR.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-28"
+  version: 0.63.11-rc0
+
+- changelogEntry:
     - summary: Fix missing properties from base schemas in example generation.
       type: fix
   irVersion: 58
@@ -11,6 +40,14 @@
   irVersion: 58
   createdAt: "2025-05-27"
   version: 0.63.9
+
+- changelogEntry:
+    - summary: |
+        Fix a bug where `additionalProperties: false` would lead to objects still being converted as maps.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-27"
+  version: 0.63.8-rc3
 
 - changelogEntry:
     - summary: |

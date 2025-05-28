@@ -16317,8 +16317,8 @@
         }
       }
     },
-    "ContractsContractIdFinalPaymentsGetParametersSchema": {
-      "name": "ContractsContractIdFinalPaymentsGetParametersSchema",
+    "ContractsContractIdFinalPaymentsGetParametersCalculationType": {
+      "name": "ContractsContractIdFinalPaymentsGetParametersCalculationType",
       "shape": {
         "type": "enum",
         "values": [
@@ -22767,7 +22767,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "ContractsContractIdFinalPaymentsGetParametersSchema"
+                  "value": "ContractsContractIdFinalPaymentsGetParametersCalculationType"
                 }
               }
             },
