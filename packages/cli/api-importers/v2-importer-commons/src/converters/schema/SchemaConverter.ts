@@ -67,53 +67,67 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
     }
 
     public convert(): SchemaConverter.Output | undefined {
+        this.context.logger.debug(`Converting schema with breadcrumbs: ${this.breadcrumbs}`);
+
         const maybeConvertedFernTypeDeclaration = this.tryConvertFernTypeDeclaration();
         if (maybeConvertedFernTypeDeclaration != null) {
+            this.context.logger.debug(`Schema ${this.id} converted to Fern type declaration`);
             return maybeConvertedFernTypeDeclaration;
         }
 
         const maybeConvertedEnumSchema = this.tryConvertEnumSchema();
         if (maybeConvertedEnumSchema != null) {
+            this.context.logger.debug(`Schema ${this.id} converted to enum schema`);
             return maybeConvertedEnumSchema;
         }
 
         const maybeConvertedSingularAllOfSchema = this.tryConvertSingularAllOfSchema();
         if (maybeConvertedSingularAllOfSchema != null) {
+            this.context.logger.debug(`Schema ${this.id} converted to singular allOf schema`);
+
+            this.context.logger.debug(`Converted singular allOf schema: ${JSON.stringify(maybeConvertedSingularAllOfSchema, null, 2)}`);
             return maybeConvertedSingularAllOfSchema;
         }
 
         const maybeConvertedPrimitiveSchema = this.tryConvertPrimitiveSchema();
         if (maybeConvertedPrimitiveSchema != null) {
+            this.context.logger.debug(`Schema ${this.id} converted to primitive schema`);
             return maybeConvertedPrimitiveSchema;
         }
 
         const maybeConvertedArraySchema = this.tryConvertArraySchema();
         if (maybeConvertedArraySchema != null) {
+            this.context.logger.debug(`Schema ${this.id} converted to array schema`);
             return maybeConvertedArraySchema;
         }
 
         const maybeConvertedTypeArraySchema = this.tryConvertTypeArraySchema();
         if (maybeConvertedTypeArraySchema != null) {
+            this.context.logger.debug(`Schema ${this.id} converted to type array schema`);
             return maybeConvertedTypeArraySchema;
         }
 
         const maybeConvertedOneOfAnyOfSchema = this.tryConvertOneOfAnyOfSchema();
         if (maybeConvertedOneOfAnyOfSchema != null) {
+            this.context.logger.debug(`Schema ${this.id} converted to oneOf/anyOf schema`);
             return maybeConvertedOneOfAnyOfSchema;
         }
 
         const maybeConvertedMapSchema = this.tryConvertMapSchema();
         if (maybeConvertedMapSchema != null) {
+            this.context.logger.debug(`Schema ${this.id} converted to map schema`);
             return maybeConvertedMapSchema;
         }
 
         const maybeConvertedObjectAllOfSchema = this.tryConvertObjectAllOfSchema();
         if (maybeConvertedObjectAllOfSchema != null) {
+            this.context.logger.debug(`Schema ${this.id} converted to object allOf schema`);
             return maybeConvertedObjectAllOfSchema;
         }
 
         const maybeConvertedUntypedSchema = this.tryConvertUntypedSchema();
         if (maybeConvertedUntypedSchema != null) {
+            this.context.logger.debug(`Schema ${this.id} converted to untyped schema`);
             return maybeConvertedUntypedSchema;
         }
 
@@ -185,12 +199,15 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 }
             }
         }
-        if (
-            this.schemaOnlyHasAllowedKeys(["allOf"]) && 
+
+        const shouldMergeAllOf = 
+            this.schemaOnlyHasAllowedKeys(["allOf", "type", "title"]) && 
             Array.isArray(this.schema.allOf) &&
-            this.schema.allOf.length >= 1
-        ) {
-            this.context.logger.debug("Converting schema with allOf");
+            this.schema.allOf.length >= 1;
+        if (!shouldMergeAllOf) {
+            this.context.logger.debug(`Schema has keys: ${Object.keys(this.schema).join(", ")} for breadcrumbs: ${this.breadcrumbs.join(" -> ")}`);
+        } else {
+            this.context.logger.debug(`Converting schema with allOf for schemaId: ${this.id}`);
 
             let mergedSchema: Record<string, unknown> = {};
             for (const allOfSchema of this.schema.allOf ?? []) {
@@ -215,6 +232,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             }
 
             this.context.logger.debug("Merged schema completed");
+            this.context.logger.debug("Merged schema:", JSON.stringify(mergedSchema, null, 2));
 
             const mergedConverter = new SchemaConverter({
                 context: this.context,
@@ -486,7 +504,6 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         if (
             this.schema &&
             typeof this.schema === "object" &&
-            !("type" in this.schema) &&
             !("oneOf" in this.schema) &&
             !("anyOf" in this.schema) &&
             !("allOf" in this.schema) &&
