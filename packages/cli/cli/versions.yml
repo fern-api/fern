@@ -1,4 +1,11 @@
 - changelogEntry:
+    - summary: Fix parameter name collisions for enums
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-28"
+  version: 0.63.11
+
+- changelogEntry:
     - summary: Fix missing properties from base schemas in example generation.
       type: fix
   irVersion: 58
