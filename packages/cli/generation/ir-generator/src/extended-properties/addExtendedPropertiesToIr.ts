@@ -12,27 +12,25 @@ import { getTypeDeclaration } from "../utils/getTypeDeclaration";
 
 type TypesAndServices = Pick<IntermediateRepresentation, "types" | "services">;
 
-export function addExtendedPropertiesToIr(ir: TypesAndServices): TypesAndServices {
-    return {
-        types: Object.fromEntries(
-            Object.entries(ir.types).map(([typeId, typeDeclaration]) => {
-                return [typeId, addExtendedPropertiesToType({ typeDeclaration, ir })];
-            })
-        ),
-        services: Object.fromEntries(
-            Object.entries(ir.services).map(([serviceId, serviceDeclration]) => {
-                return [
-                    serviceId,
-                    {
-                        ...serviceDeclration,
-                        endpoints: serviceDeclration.endpoints.map((endpoint) => {
-                            return addExtendedPropertiesToEndpoint({ endpoint, ir });
-                        })
-                    }
-                ];
-            })
-        )
-    };
+export function addExtendedPropertiesToIr(ir: TypesAndServices): void {
+    ir.types = Object.fromEntries(
+        Object.entries(ir.types).map(([typeId, typeDeclaration]) => {
+            return [typeId, addExtendedPropertiesToType({ typeDeclaration, ir })];
+        })
+    );
+    ir.services = Object.fromEntries(
+        Object.entries(ir.services).map(([serviceId, serviceDeclaration]) => {
+            return [
+                serviceId,
+                {
+                    ...serviceDeclaration,
+                    endpoints: serviceDeclaration.endpoints.map((endpoint) => {
+                        return addExtendedPropertiesToEndpoint({ endpoint, ir });
+                    })
+                }
+            ];
+        })
+    );
 }
 
 function addExtendedPropertiesToEndpoint({

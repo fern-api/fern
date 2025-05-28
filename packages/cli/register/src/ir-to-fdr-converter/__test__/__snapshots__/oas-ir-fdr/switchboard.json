@@ -1765,6 +1765,139 @@
           }
         ]
       }
+    },
+    "SessionsEventsResponse2000": {
+      "name": "SessionsEventsResponse2000",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "data",
+            "valueType": {
+              "type": "id",
+              "value": "StatusMessage"
+            }
+          },
+          {
+            "description": "The event name.",
+            "key": "event",
+            "valueType": {
+              "type": "literal",
+              "value": {
+                "type": "stringLiteral",
+                "value": "status"
+              }
+            }
+          },
+          {
+            "description": "The event ID.",
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "description": "The retry time in milliseconds.",
+            "key": "retry",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "displayName": "Event status"
+    },
+    "SessionsEventsResponse2001": {
+      "name": "SessionsEventsResponse2001",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "data",
+            "valueType": {
+              "type": "id",
+              "value": "ErrorMessage"
+            }
+          },
+          {
+            "description": "The event name.",
+            "key": "event",
+            "valueType": {
+              "type": "literal",
+              "value": {
+                "type": "stringLiteral",
+                "value": "error"
+              }
+            }
+          },
+          {
+            "description": "The event ID.",
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "description": "The retry time in milliseconds.",
+            "key": "retry",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "displayName": "Event error"
+    },
+    "Sessions_events_Response_200": {
+      "description": "Each oneOf object in the array represents one possible Server Sent Events (SSE) message, serialized as UTF-8 text according to the SSE specification.",
+      "name": "Sessions_events_Response_200",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "SessionsEventsResponse2000",
+            "type": {
+              "type": "id",
+              "value": "SessionsEventsResponse2000"
+            },
+            "displayName": "Event status"
+          },
+          {
+            "typeName": "SessionsEventsResponse2001",
+            "type": {
+              "type": "id",
+              "value": "SessionsEventsResponse2001"
+            },
+            "displayName": "Event error"
+          }
+        ]
+      }
     }
   },
   "subpackages": {
@@ -1784,7 +1917,7 @@
             }
           ],
           "id": "andRedirect",
-          "originalEndpointId": "Auth.andRedirect",
+          "originalEndpointId": "endpoint_auth.andRedirect",
           "name": "Auth and redirect sessions",
           "path": {
             "pathParameters": [],
@@ -1867,7 +2000,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "Extensions.get",
+          "originalEndpointId": "endpoint_extensions.get",
           "name": "Get extensions",
           "path": {
             "pathParameters": [],
@@ -1995,7 +2128,7 @@
             }
           ],
           "id": "post",
-          "originalEndpointId": "Extensions.post",
+          "originalEndpointId": "endpoint_extensions.post",
           "name": "Create an extension",
           "path": {
             "pathParameters": [],
@@ -2126,7 +2259,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "Extensions.delete",
+          "originalEndpointId": "endpoint_extensions.delete",
           "name": "Delete extensions matching name query",
           "path": {
             "pathParameters": [],
@@ -2187,7 +2320,7 @@
             }
           ],
           "id": "getById",
-          "originalEndpointId": "Extensions.getById",
+          "originalEndpointId": "endpoint_extensions.getById",
           "name": "Get an extension",
           "path": {
             "pathParameters": [
@@ -2368,7 +2501,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "Profiles.get",
+          "originalEndpointId": "endpoint_profiles.get",
           "name": "Get profiles",
           "path": {
             "pathParameters": [],
@@ -2448,7 +2581,8 @@
                     "name": "Acme corp login",
                     "status": "foo",
                     "tags": [
-                      "foo"
+                      "blue",
+                      "red"
                     ],
                     "upload_uri": "foo"
                   }
@@ -2479,7 +2613,8 @@
                       "name": "Acme corp login",
                       "status": "foo",
                       "tags": [
-                        "foo"
+                        "blue",
+                        "red"
                       ],
                       "upload_uri": "foo"
                     }
@@ -2520,7 +2655,7 @@
             }
           ],
           "id": "post",
-          "originalEndpointId": "Profiles.post",
+          "originalEndpointId": "endpoint_profiles.post",
           "name": "Create a profile",
           "path": {
             "pathParameters": [],
@@ -2585,7 +2720,8 @@
                   "name": "Acme corp login",
                   "status": "foo",
                   "tags": [
-                    "foo"
+                    "blue",
+                    "red"
                   ],
                   "upload_uri": "foo"
                 },
@@ -2614,7 +2750,8 @@
                     "name": "Acme corp login",
                     "status": "foo",
                     "tags": [
-                      "foo"
+                      "blue",
+                      "red"
                     ],
                     "upload_uri": "foo"
                   },
@@ -2655,7 +2792,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "Profiles.delete",
+          "originalEndpointId": "endpoint_profiles.delete",
           "name": "Delete profiles matching query",
           "path": {
             "pathParameters": [],
@@ -2736,7 +2873,7 @@
             }
           ],
           "id": "getById",
-          "originalEndpointId": "Profiles.getById",
+          "originalEndpointId": "endpoint_profiles.getById",
           "name": "Get a profile",
           "path": {
             "pathParameters": [
@@ -2840,7 +2977,8 @@
                   "name": "Acme corp login",
                   "status": "foo",
                   "tags": [
-                    "foo"
+                    "blue",
+                    "red"
                   ],
                   "upload_uri": "foo"
                 },
@@ -2869,7 +3007,8 @@
                     "name": "Acme corp login",
                     "status": "foo",
                     "tags": [
-                      "foo"
+                      "blue",
+                      "red"
                     ],
                     "upload_uri": "foo"
                   },
@@ -2920,7 +3059,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "Sessions.list",
+          "originalEndpointId": "endpoint_sessions.list",
           "name": "Get a list of sessions",
           "path": {
             "pathParameters": [],
@@ -3196,7 +3335,7 @@
             }
           ],
           "id": "post",
-          "originalEndpointId": "Sessions.post",
+          "originalEndpointId": "endpoint_sessions.post",
           "name": "Create a session",
           "path": {
             "pathParameters": [],
@@ -3359,7 +3498,7 @@
             }
           ],
           "id": "getinfo",
-          "originalEndpointId": "Sessions.getinfo",
+          "originalEndpointId": "endpoint_sessions.getinfo",
           "name": "Get info for a session",
           "path": {
             "pathParameters": [
@@ -3566,7 +3705,7 @@
             }
           ],
           "id": "terminate",
-          "originalEndpointId": "Sessions.terminate",
+          "originalEndpointId": "endpoint_sessions.terminate",
           "name": "Ends a session",
           "path": {
             "pathParameters": [
@@ -3632,7 +3771,7 @@
             }
           ],
           "id": "events",
-          "originalEndpointId": "Sessions.events",
+          "originalEndpointId": "endpoint_sessions.events",
           "name": "Get a session event stream",
           "path": {
             "pathParameters": [
@@ -3669,12 +3808,18 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "statusCode": 200,
             "type": {
-              "type": "object",
-              "extends": [],
-              "properties": []
-            }
+              "type": "stream",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "Sessions_events_Response_200"
+                }
+              }
+            },
+            "statusCode": 200,
+            "description": "OK"
           },
           "errorsV2": [
             {
@@ -3727,32 +3872,7 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200,
-              "responseBody": {
-                "data": {
-                  "event": "foo",
-                  "eventTimeMillis": 42,
-                  "id": "foo",
-                  "status": "awaiting_capacity"
-                },
-                "event": "foo",
-                "id": 42,
-                "retry": 42
-              },
-              "responseBodyV3": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "event": "foo",
-                    "eventTimeMillis": 42,
-                    "id": "foo",
-                    "status": "awaiting_capacity"
-                  },
-                  "event": "foo",
-                  "id": 42,
-                  "retry": 42
-                }
-              }
+              "responseStatusCode": 200
             }
           ],
           "protocol": {
@@ -3780,7 +3900,7 @@
             }
           ],
           "id": "get-window-info",
-          "originalEndpointId": "Windows.get-window-info",
+          "originalEndpointId": "endpoint_windows.get-window-info",
           "name": "Get information about a browser window in a session",
           "path": {
             "pathParameters": [
@@ -3969,7 +4089,7 @@
             }
           ],
           "id": "prompt-content",
-          "originalEndpointId": "Windows.prompt-content",
+          "originalEndpointId": "endpoint_windows.prompt-content",
           "name": "Submit a prompt about the content in a specific browser window.",
           "path": {
             "pathParameters": [
@@ -4153,7 +4273,7 @@
             }
           ],
           "id": "scrape-content",
-          "originalEndpointId": "Windows.scrape-content",
+          "originalEndpointId": "endpoint_windows.scrape-content",
           "name": "Scrape a window",
           "path": {
             "pathParameters": [
@@ -4329,7 +4449,7 @@
             }
           ],
           "id": "summarize-content",
-          "originalEndpointId": "Windows.summarize-content",
+          "originalEndpointId": "endpoint_windows.summarize-content",
           "name": "Get a summary of content in a browser window",
           "path": {
             "pathParameters": [

@@ -617,7 +617,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 0,
                   "maximum": 1,
                   "default": 0.5
@@ -755,7 +755,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 0,
                   "maximum": 1,
                   "default": 0.5
@@ -1184,7 +1184,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -4001,24 +4001,23 @@
         ]
       }
     },
-    "KratosWebhookResponseIdentity0": {
-      "name": "KratosWebhookResponseIdentity0",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "KratosWebhookResponseIdentity": {
       "name": "KratosWebhookResponseIdentity",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "KratosWebhookResponseIdentity0",
             "type": {
-              "type": "id",
-              "value": "KratosWebhookResponseIdentity0"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
@@ -4026,7 +4025,8 @@
             "type": {
               "type": "id",
               "value": "KratosIdentity"
-            }
+            },
+            "displayName": "KratosIdentity"
           }
         ]
       }
@@ -5901,7 +5901,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 0,
                   "maximum": 1,
                   "default": 0.5
@@ -6038,7 +6038,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 0,
                   "maximum": 1,
                   "default": 0.5
@@ -7333,7 +7333,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 0,
                   "maximum": 1,
                   "default": 0.2
@@ -8100,14 +8100,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8122,14 +8124,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8144,35 +8148,40 @@
             "type": {
               "type": "id",
               "value": "MultipleRolesNotAllowedErrorResponse"
-            }
+            },
+            "displayName": "MultipleRolesNotAllowedErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "InvalidSubjectTypeErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           }
         ]
       }
@@ -8187,14 +8196,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8209,28 +8220,32 @@
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           }
         ]
       }
@@ -8245,14 +8260,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8267,14 +8284,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8289,14 +8308,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8311,14 +8332,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8333,14 +8356,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8355,21 +8380,24 @@
             "type": {
               "type": "id",
               "value": "OrganizationInviteAlreadyExistsErrorResponse"
-            }
+            },
+            "displayName": "OrganizationInviteAlreadyExistsErrorResponse"
           },
           {
             "typeName": "OrganizationMemberAlreadyExistsErrorResponse",
             "type": {
               "type": "id",
               "value": "OrganizationMemberAlreadyExistsErrorResponse"
-            }
+            },
+            "displayName": "OrganizationMemberAlreadyExistsErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           }
         ]
       }
@@ -8384,14 +8412,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8406,14 +8436,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8428,14 +8460,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8450,14 +8484,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8472,14 +8508,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8494,14 +8532,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8516,14 +8556,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8538,14 +8580,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8560,14 +8604,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8582,14 +8628,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8604,14 +8652,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8626,14 +8676,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8665,14 +8717,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8687,14 +8741,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8709,35 +8765,40 @@
             "type": {
               "type": "id",
               "value": "MultipleRolesNotAllowedErrorResponse"
-            }
+            },
+            "displayName": "MultipleRolesNotAllowedErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "InvalidSubjectTypeErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           }
         ]
       }
@@ -8752,14 +8813,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8774,28 +8837,32 @@
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           }
         ]
       }
@@ -8810,14 +8877,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8832,14 +8901,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8854,14 +8925,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8876,14 +8949,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8898,14 +8973,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8920,14 +8997,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8942,14 +9021,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8964,14 +9045,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -8986,14 +9069,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9008,14 +9093,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9030,14 +9117,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9069,14 +9158,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9091,14 +9182,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9113,35 +9206,40 @@
             "type": {
               "type": "id",
               "value": "MultipleRolesNotAllowedErrorResponse"
-            }
+            },
+            "displayName": "MultipleRolesNotAllowedErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "InvalidSubjectTypeErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           }
         ]
       }
@@ -9156,14 +9254,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9178,28 +9278,32 @@
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           }
         ]
       }
@@ -9214,14 +9318,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9271,14 +9377,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9293,14 +9401,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9315,14 +9425,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9337,14 +9449,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9359,14 +9473,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9381,14 +9497,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9403,14 +9521,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9425,14 +9545,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9447,14 +9569,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9486,14 +9610,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9508,14 +9634,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9530,35 +9658,40 @@
             "type": {
               "type": "id",
               "value": "MultipleRolesNotAllowedErrorResponse"
-            }
+            },
+            "displayName": "MultipleRolesNotAllowedErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "InvalidSubjectTypeErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           }
         ]
       }
@@ -9573,14 +9706,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9595,28 +9730,32 @@
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           }
         ]
       }
@@ -9631,14 +9770,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9653,14 +9794,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9675,14 +9818,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9697,14 +9842,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9719,14 +9866,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9741,14 +9890,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9763,14 +9914,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9802,14 +9955,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9824,14 +9979,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9846,35 +10003,40 @@
             "type": {
               "type": "id",
               "value": "MultipleRolesNotAllowedErrorResponse"
-            }
+            },
+            "displayName": "MultipleRolesNotAllowedErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "InvalidSubjectTypeErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           }
         ]
       }
@@ -9889,14 +10051,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9911,28 +10075,32 @@
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           }
         ]
       }
@@ -9947,14 +10115,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9969,14 +10139,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -9991,14 +10163,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10013,14 +10187,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10035,14 +10211,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10057,14 +10235,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10079,14 +10259,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10101,14 +10283,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10123,14 +10307,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10145,14 +10331,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10167,14 +10355,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10189,14 +10379,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10211,14 +10403,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10233,14 +10427,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10255,14 +10451,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10277,14 +10475,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10299,14 +10499,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10321,14 +10523,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10343,14 +10547,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10365,14 +10571,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10387,14 +10595,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10409,14 +10619,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10431,14 +10643,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10453,14 +10667,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10475,14 +10691,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10497,14 +10715,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10519,14 +10739,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10541,14 +10763,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10563,14 +10787,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10585,14 +10811,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10607,14 +10835,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10629,14 +10859,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10651,14 +10883,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10673,14 +10907,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10695,14 +10931,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10717,14 +10955,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10739,14 +10979,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10761,14 +11003,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10783,14 +11027,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10805,14 +11051,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10827,14 +11075,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10849,14 +11099,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10871,14 +11123,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10893,14 +11147,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10915,14 +11171,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10937,14 +11195,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10959,14 +11219,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -10981,14 +11243,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11003,14 +11267,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11025,14 +11291,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11047,14 +11315,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11069,14 +11339,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11091,14 +11363,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11113,14 +11387,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11135,14 +11411,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11157,14 +11435,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11179,14 +11459,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11201,14 +11483,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11223,14 +11507,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11245,14 +11531,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11267,14 +11555,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11298,14 +11588,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11337,14 +11629,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11359,14 +11653,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11381,35 +11677,40 @@
             "type": {
               "type": "id",
               "value": "MultipleRolesNotAllowedErrorResponse"
-            }
+            },
+            "displayName": "MultipleRolesNotAllowedErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "InvalidSubjectTypeErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           }
         ]
       }
@@ -11424,14 +11725,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11446,28 +11749,32 @@
             "type": {
               "type": "id",
               "value": "InvalidSubjectTypeErrorResponse"
-            }
+            },
+            "displayName": "InvalidSubjectTypeErrorResponse"
           },
           {
             "typeName": "InvalidMemberErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidMemberErrorResponse"
-            }
+            },
+            "displayName": "InvalidMemberErrorResponse"
           },
           {
             "typeName": "InvalidRoleErrorResponse",
             "type": {
               "type": "id",
               "value": "InvalidRoleErrorResponse"
-            }
+            },
+            "displayName": "InvalidRoleErrorResponse"
           },
           {
             "typeName": "MalformedResourceIdentifierErrorResponse",
             "type": {
               "type": "id",
               "value": "MalformedResourceIdentifierErrorResponse"
-            }
+            },
+            "displayName": "MalformedResourceIdentifierErrorResponse"
           }
         ]
       }
@@ -11482,14 +11789,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11504,14 +11813,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11526,14 +11837,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11548,14 +11861,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11570,14 +11885,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11592,14 +11909,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11614,14 +11933,16 @@
             "type": {
               "type": "id",
               "value": "MissingAuthenticationErrorResponse"
-            }
+            },
+            "displayName": "MissingAuthenticationErrorResponse"
           },
           {
             "typeName": "PermissionCheckFailedErrorResponse",
             "type": {
               "type": "id",
               "value": "PermissionCheckFailedErrorResponse"
-            }
+            },
+            "displayName": "PermissionCheckFailedErrorResponse"
           }
         ]
       }
@@ -11637,7 +11958,7 @@
           "description": "Lists all members that have been granted direct access to the organization.",
           "method": "GET",
           "id": "organization_iam_list_members",
-          "originalEndpointId": "org.organization_iam_list_members",
+          "originalEndpointId": "endpoint_org.organization_iam_list_members",
           "name": "IAM - List Organization Members",
           "path": {
             "pathParameters": [
@@ -11800,7 +12121,7 @@
           "description": "Retrieve a specific member that has been granted direct access to the organization.",
           "method": "GET",
           "id": "organization_get_member",
-          "originalEndpointId": "org.organization_get_member",
+          "originalEndpointId": "endpoint_org.organization_get_member",
           "name": "IAM - Lookup Organization Member",
           "path": {
             "pathParameters": [
@@ -11949,7 +12270,7 @@
           "description": "Update the roles that a member holds on the organization.",
           "method": "POST",
           "id": "organization_iam_update_member_roles",
-          "originalEndpointId": "org.organization_iam_update_member_roles",
+          "originalEndpointId": "endpoint_org.organization_iam_update_member_roles",
           "name": "IAM - Update Organization Member",
           "path": {
             "pathParameters": [
@@ -12129,7 +12450,7 @@
           "description": "Test the permissions that the caller (or another subject) holds on the organization.",
           "method": "POST",
           "id": "organization_iam_test_permissions",
-          "originalEndpointId": "org.organization_iam_test_permissions",
+          "originalEndpointId": "endpoint_org.organization_iam_test_permissions",
           "name": "IAM - Test Organization Permissions",
           "path": {
             "pathParameters": [
@@ -12292,7 +12613,7 @@
           "auth": true,
           "method": "GET",
           "id": "listOrgGet",
-          "originalEndpointId": "org.listOrgGet",
+          "originalEndpointId": "endpoint_org.listOrgGet",
           "name": "Org List",
           "path": {
             "pathParameters": [],
@@ -12393,7 +12714,7 @@
           "auth": true,
           "method": "POST",
           "id": "createOrgPost",
-          "originalEndpointId": "org.createOrgPost",
+          "originalEndpointId": "endpoint_org.createOrgPost",
           "name": "Org Create",
           "path": {
             "pathParameters": [],
@@ -12494,7 +12815,7 @@
           "auth": true,
           "method": "GET",
           "id": "getOrgOrgIdGet",
-          "originalEndpointId": "org.getOrgOrgIdGet",
+          "originalEndpointId": "endpoint_org.getOrgOrgIdGet",
           "name": "Org Get",
           "path": {
             "pathParameters": [
@@ -12618,7 +12939,7 @@
           "auth": true,
           "method": "POST",
           "id": "updateOrgOrgIdPost",
-          "originalEndpointId": "org.updateOrgOrgIdPost",
+          "originalEndpointId": "endpoint_org.updateOrgOrgIdPost",
           "name": "Org Update",
           "path": {
             "pathParameters": [
@@ -12760,7 +13081,7 @@
           "auth": true,
           "method": "POST",
           "id": "joinOrgOrgIdJoinPost",
-          "originalEndpointId": "org.joinOrgOrgIdJoinPost",
+          "originalEndpointId": "endpoint_org.joinOrgOrgIdJoinPost",
           "name": "Org Join",
           "path": {
             "pathParameters": [
@@ -12889,7 +13210,7 @@
           "auth": true,
           "method": "GET",
           "id": "invitesListOrgOrgIdInviteGet",
-          "originalEndpointId": "org.invitesListOrgOrgIdInviteGet",
+          "originalEndpointId": "endpoint_org.invitesListOrgOrgIdInviteGet",
           "name": "Org Invites List",
           "path": {
             "pathParameters": [
@@ -13072,7 +13393,7 @@
           "auth": true,
           "method": "POST",
           "id": "invitesCreateOrgOrgIdInvitePost",
-          "originalEndpointId": "org.invitesCreateOrgOrgIdInvitePost",
+          "originalEndpointId": "endpoint_org.invitesCreateOrgOrgIdInvitePost",
           "name": "Org Invites Create",
           "path": {
             "pathParameters": [
@@ -13219,7 +13540,7 @@
           "auth": true,
           "method": "DELETE",
           "id": "invitesDeleteOrgOrgIdInviteOrgInviteIdDelete",
-          "originalEndpointId": "org.invitesDeleteOrgOrgIdInviteOrgInviteIdDelete",
+          "originalEndpointId": "endpoint_org.invitesDeleteOrgOrgIdInviteOrgInviteIdDelete",
           "name": "Org Invites Delete",
           "path": {
             "pathParameters": [
@@ -13336,7 +13657,7 @@
           "auth": true,
           "method": "GET",
           "id": "domainsListOrgOrgIdDomainsGet",
-          "originalEndpointId": "org.domainsListOrgOrgIdDomainsGet",
+          "originalEndpointId": "endpoint_org.domainsListOrgOrgIdDomainsGet",
           "name": "Org Domains List",
           "path": {
             "pathParameters": [
@@ -13475,7 +13796,7 @@
           "auth": true,
           "method": "POST",
           "id": "domainsPostOrgOrgIdDomainsPost",
-          "originalEndpointId": "org.domainsPostOrgOrgIdDomainsPost",
+          "originalEndpointId": "endpoint_org.domainsPostOrgOrgIdDomainsPost",
           "name": "Org Domains Post",
           "path": {
             "pathParameters": [
@@ -13618,7 +13939,7 @@
           "auth": true,
           "method": "DELETE",
           "id": "domainDeleteOrgOrgIdDomainsDomainIdDelete",
-          "originalEndpointId": "org.domainDeleteOrgOrgIdDomainsDomainIdDelete",
+          "originalEndpointId": "endpoint_org.domainDeleteOrgOrgIdDomainsDomainIdDelete",
           "name": "Org Domain Delete",
           "path": {
             "pathParameters": [
@@ -13757,7 +14078,7 @@
           "auth": true,
           "method": "POST",
           "id": "updateAvatarOrgOrgIdAvatarPost",
-          "originalEndpointId": "org.updateAvatarOrgOrgIdAvatarPost",
+          "originalEndpointId": "endpoint_org.updateAvatarOrgOrgIdAvatarPost",
           "name": "Org Update Avatar",
           "path": {
             "pathParameters": [
@@ -13924,7 +14245,7 @@
           "description": "Retrieve the profile of the current user.",
           "method": "GET",
           "id": "getUserGet",
-          "originalEndpointId": "user.getUserGet",
+          "originalEndpointId": "endpoint_user.getUserGet",
           "name": "User Get",
           "path": {
             "pathParameters": [],
@@ -14004,7 +14325,7 @@
           "description": "Update the profile of the current user.",
           "method": "POST",
           "id": "postUserPost",
-          "originalEndpointId": "user.postUserPost",
+          "originalEndpointId": "endpoint_user.postUserPost",
           "name": "User Post",
           "path": {
             "pathParameters": [],
@@ -14101,7 +14422,7 @@
           "auth": true,
           "method": "POST",
           "id": "updateAvatarUserAvatarPost",
-          "originalEndpointId": "user.updateAvatarUserAvatarPost",
+          "originalEndpointId": "endpoint_user.updateAvatarUserAvatarPost",
           "name": "User Update Avatar",
           "path": {
             "pathParameters": [],
@@ -14222,7 +14543,7 @@
           "auth": true,
           "method": "GET",
           "id": "list_project_org__org_id__project_get",
-          "originalEndpointId": "project.list_project_org__org_id__project_get",
+          "originalEndpointId": "endpoint_project.list_project_org__org_id__project_get",
           "name": "List Project",
           "path": {
             "pathParameters": [
@@ -14395,7 +14716,7 @@
           "auth": true,
           "method": "POST",
           "id": "create_project_org__org_id__project_post",
-          "originalEndpointId": "project.create_project_org__org_id__project_post",
+          "originalEndpointId": "endpoint_project.create_project_org__org_id__project_post",
           "name": "Create Project",
           "path": {
             "pathParameters": [
@@ -14543,7 +14864,7 @@
           "auth": true,
           "method": "GET",
           "id": "get_project_org__org_id__project__project_id__get",
-          "originalEndpointId": "project.get_project_org__org_id__project__project_id__get",
+          "originalEndpointId": "endpoint_project.get_project_org__org_id__project__project_id__get",
           "name": "Get Project",
           "path": {
             "pathParameters": [
@@ -14720,7 +15041,7 @@
           "auth": true,
           "method": "POST",
           "id": "update_project_org__org_id__project__project_id__post",
-          "originalEndpointId": "project.update_project_org__org_id__project__project_id__post",
+          "originalEndpointId": "endpoint_project.update_project_org__org_id__project__project_id__post",
           "name": "Update Project",
           "path": {
             "pathParameters": [
@@ -14883,7 +15204,7 @@
           "auth": false,
           "method": "GET",
           "id": "get_project_config_org__org_id__project__project_id__config_get",
-          "originalEndpointId": "project.get_project_config_org__org_id__project__project_id__config_get",
+          "originalEndpointId": "endpoint_project.get_project_config_org__org_id__project__project_id__config_get",
           "name": "Get Project Config",
           "path": {
             "pathParameters": [
@@ -15030,7 +15351,7 @@
           "auth": true,
           "method": "POST",
           "id": "set_project_config_org__org_id__project__project_id__config_post",
-          "originalEndpointId": "project.set_project_config_org__org_id__project__project_id__config_post",
+          "originalEndpointId": "endpoint_project.set_project_config_org__org_id__project__project_id__config_post",
           "name": "Set Project Config",
           "path": {
             "pathParameters": [
@@ -15221,7 +15542,7 @@
           "auth": true,
           "method": "POST",
           "id": "updateAvatarOrgOrgIdProjectProjectIdAvatarPost",
-          "originalEndpointId": "project.updateAvatarOrgOrgIdProjectProjectIdAvatarPost",
+          "originalEndpointId": "endpoint_project.updateAvatarOrgOrgIdProjectProjectIdAvatarPost",
           "name": "Project Update Avatar",
           "path": {
             "pathParameters": [
@@ -15399,7 +15720,7 @@
           "description": "Lists all members that have been granted direct access to the project.",
           "method": "GET",
           "id": "iamListMembers",
-          "originalEndpointId": "project.iamListMembers",
+          "originalEndpointId": "endpoint_project.iamListMembers",
           "name": "IAM - List Project Members",
           "path": {
             "pathParameters": [
@@ -15580,7 +15901,7 @@
           "description": "Retrieve a specific member that has been granted direct access to the project.",
           "method": "GET",
           "id": "getMember",
-          "originalEndpointId": "project.getMember",
+          "originalEndpointId": "endpoint_project.getMember",
           "name": "IAM - Lookup Project Member",
           "path": {
             "pathParameters": [
@@ -15747,7 +16068,7 @@
           "description": "Update the roles that a member holds on the project.",
           "method": "POST",
           "id": "iamUpdateMemberRoles",
-          "originalEndpointId": "project.iamUpdateMemberRoles",
+          "originalEndpointId": "endpoint_project.iamUpdateMemberRoles",
           "name": "IAM - Update Project Member",
           "path": {
             "pathParameters": [
@@ -15945,7 +16266,7 @@
           "description": "Test the permissions that the caller (or another subject) holds on the project.",
           "method": "POST",
           "id": "iamTestPermissions",
-          "originalEndpointId": "project.iamTestPermissions",
+          "originalEndpointId": "endpoint_project.iamTestPermissions",
           "name": "IAM - Test Project Permissions",
           "path": {
             "pathParameters": [
@@ -16136,7 +16457,7 @@
           "auth": true,
           "method": "GET",
           "id": "list_collections_org__org_id__project__project_id__collection_get",
-          "originalEndpointId": "collection.list_collections_org__org_id__project__project_id__collection_get",
+          "originalEndpointId": "endpoint_collection.list_collections_org__org_id__project__project_id__collection_get",
           "name": "List Collections",
           "path": {
             "pathParameters": [
@@ -16360,7 +16681,7 @@
           "auth": true,
           "method": "POST",
           "id": "create_collection_org__org_id__project__project_id__collection_post",
-          "originalEndpointId": "collection.create_collection_org__org_id__project__project_id__collection_post",
+          "originalEndpointId": "endpoint_collection.create_collection_org__org_id__project__project_id__collection_post",
           "name": "Create Collection",
           "path": {
             "pathParameters": [
@@ -16544,7 +16865,7 @@
           "auth": true,
           "method": "GET",
           "id": "get_collection_org__org_id__project__project_id__collection__collection_id__get",
-          "originalEndpointId": "collection.get_collection_org__org_id__project__project_id__collection__collection_id__get",
+          "originalEndpointId": "endpoint_collection.get_collection_org__org_id__project__project_id__collection__collection_id__get",
           "name": "Get Collection",
           "path": {
             "pathParameters": [
@@ -16726,7 +17047,7 @@
           "description": "Edit collection details",
           "method": "POST",
           "id": "editOrgOrgIdProjectProjectIdCollectionCollectionIdPost",
-          "originalEndpointId": "collection.editOrgOrgIdProjectProjectIdCollectionCollectionIdPost",
+          "originalEndpointId": "endpoint_collection.editOrgOrgIdProjectProjectIdCollectionCollectionIdPost",
           "name": "Collection Edit",
           "path": {
             "pathParameters": [
@@ -16929,7 +17250,7 @@
           "auth": true,
           "method": "GET",
           "id": "statsOrgOrgIdProjectProjectIdCollectionCollectionIdStatsGet",
-          "originalEndpointId": "collection.statsOrgOrgIdProjectProjectIdCollectionCollectionIdStatsGet",
+          "originalEndpointId": "endpoint_collection.statsOrgOrgIdProjectProjectIdCollectionCollectionIdStatsGet",
           "name": "Collection Stats",
           "path": {
             "pathParameters": [
@@ -17094,7 +17415,7 @@
           "auth": true,
           "method": "GET",
           "id": "list_chats_org__org_id__project__project_id__collection__collection_id__chat_get",
-          "originalEndpointId": "collection.list_chats_org__org_id__project__project_id__collection__collection_id__chat_get",
+          "originalEndpointId": "endpoint_collection.list_chats_org__org_id__project__project_id__collection__collection_id__chat_get",
           "name": "List Chats",
           "path": {
             "pathParameters": [
@@ -17323,7 +17644,7 @@
           "auth": true,
           "method": "POST",
           "id": "query_collection_org__org_id__project__project_id__collection__collection_id__query_post",
-          "originalEndpointId": "collection.query_collection_org__org_id__project__project_id__collection__collection_id__query_post",
+          "originalEndpointId": "endpoint_collection.query_collection_org__org_id__project__project_id__collection__collection_id__query_post",
           "name": "Query Collection",
           "path": {
             "pathParameters": [
@@ -17491,7 +17812,7 @@
           "description": "Generate and update the summary for a collection",
           "method": "POST",
           "id": "update_summary_org__org_id__project__project_id__collection__collection_id__update_summary_post",
-          "originalEndpointId": "collection.update_summary_org__org_id__project__project_id__collection__collection_id__update_summary_post",
+          "originalEndpointId": "endpoint_collection.update_summary_org__org_id__project__project_id__collection__collection_id__update_summary_post",
           "name": "Update Summary",
           "path": {
             "pathParameters": [
@@ -17653,7 +17974,7 @@
           "description": "Add an embedding instance to the collection",
           "method": "POST",
           "id": "addOrgOrgIdProjectProjectIdCollectionCollectionIdAddPost",
-          "originalEndpointId": "collection.addOrgOrgIdProjectProjectIdCollectionCollectionIdAddPost",
+          "originalEndpointId": "endpoint_collection.addOrgOrgIdProjectProjectIdCollectionCollectionIdAddPost",
           "name": "Collection Add",
           "path": {
             "pathParameters": [
@@ -17861,7 +18182,7 @@
           "description": "Remove an embedding instance from the collection",
           "method": "POST",
           "id": "removeOrgOrgIdProjectProjectIdCollectionCollectionIdRemovePost",
-          "originalEndpointId": "collection.removeOrgOrgIdProjectProjectIdCollectionCollectionIdRemovePost",
+          "originalEndpointId": "endpoint_collection.removeOrgOrgIdProjectProjectIdCollectionCollectionIdRemovePost",
           "name": "Collection Remove",
           "path": {
             "pathParameters": [
@@ -18070,7 +18391,7 @@
           "description": "Lists all members that have been granted direct access to the collection.",
           "method": "GET",
           "id": "iamListMembers",
-          "originalEndpointId": "collection.iamListMembers",
+          "originalEndpointId": "endpoint_collection.iamListMembers",
           "name": "IAM - List Collection Members",
           "path": {
             "pathParameters": [
@@ -18269,7 +18590,7 @@
           "description": "Retrieve a specific member that has been granted direct access to the collection.",
           "method": "GET",
           "id": "getMember",
-          "originalEndpointId": "collection.getMember",
+          "originalEndpointId": "endpoint_collection.getMember",
           "name": "IAM - Lookup Collection Member",
           "path": {
             "pathParameters": [
@@ -18454,7 +18775,7 @@
           "description": "Update the roles that a member holds on the collection.",
           "method": "POST",
           "id": "iamUpdateMemberRoles",
-          "originalEndpointId": "collection.iamUpdateMemberRoles",
+          "originalEndpointId": "endpoint_collection.iamUpdateMemberRoles",
           "name": "IAM - Update Collection Member",
           "path": {
             "pathParameters": [
@@ -18670,7 +18991,7 @@
           "description": "Test the permissions that the caller (or another subject) holds on the collection.",
           "method": "POST",
           "id": "iamTestPermissions",
-          "originalEndpointId": "collection.iamTestPermissions",
+          "originalEndpointId": "endpoint_collection.iamTestPermissions",
           "name": "IAM - Test Collection Permissions",
           "path": {
             "pathParameters": [
@@ -18879,7 +19200,7 @@
           "auth": true,
           "method": "GET",
           "id": "listOrgOrgIdProjectProjectIdDocumentGet",
-          "originalEndpointId": "document.listOrgOrgIdProjectProjectIdDocumentGet",
+          "originalEndpointId": "endpoint_document.listOrgOrgIdProjectProjectIdDocumentGet",
           "name": "Document List",
           "path": {
             "pathParameters": [
@@ -19173,7 +19494,7 @@
           "auth": true,
           "method": "POST",
           "id": "createOrgOrgIdProjectProjectIdDocumentPost",
-          "originalEndpointId": "document.createOrgOrgIdProjectProjectIdDocumentPost",
+          "originalEndpointId": "endpoint_document.createOrgOrgIdProjectProjectIdDocumentPost",
           "name": "Document Create",
           "path": {
             "pathParameters": [
@@ -19375,7 +19696,7 @@
           "auth": true,
           "method": "POST",
           "id": "uploadOrgOrgIdProjectProjectIdDocumentUploadPost",
-          "originalEndpointId": "document.uploadOrgOrgIdProjectProjectIdDocumentUploadPost",
+          "originalEndpointId": "endpoint_document.uploadOrgOrgIdProjectProjectIdDocumentUploadPost",
           "name": "Document Upload",
           "path": {
             "pathParameters": [
@@ -19601,7 +19922,7 @@
           "auth": true,
           "method": "GET",
           "id": "task_status_org__org_id__project__project_id__document_create_status__group_id__get",
-          "originalEndpointId": "document.task_status_org__org_id__project__project_id__document_create_status__group_id__get",
+          "originalEndpointId": "endpoint_document.task_status_org__org_id__project__project_id__document_create_status__group_id__get",
           "name": "Task Status",
           "path": {
             "pathParameters": [
@@ -19770,7 +20091,7 @@
           "auth": true,
           "method": "GET",
           "id": "queryOrgOrgIdProjectProjectIdDocumentDocumentIdQueryGet",
-          "originalEndpointId": "document.queryOrgOrgIdProjectProjectIdDocumentDocumentIdQueryGet",
+          "originalEndpointId": "endpoint_document.queryOrgOrgIdProjectProjectIdDocumentDocumentIdQueryGet",
           "name": "Document Query",
           "path": {
             "pathParameters": [
@@ -19947,7 +20268,7 @@
           "auth": true,
           "method": "GET",
           "id": "fetchOrgOrgIdProjectProjectIdDocumentDocumentIdGet",
-          "originalEndpointId": "document.fetchOrgOrgIdProjectProjectIdDocumentDocumentIdGet",
+          "originalEndpointId": "endpoint_document.fetchOrgOrgIdProjectProjectIdDocumentDocumentIdGet",
           "name": "Document Fetch",
           "path": {
             "pathParameters": [
@@ -20135,7 +20456,7 @@
           "auth": true,
           "method": "POST",
           "id": "updateOrgOrgIdProjectProjectIdDocumentDocumentIdPost",
-          "originalEndpointId": "document.updateOrgOrgIdProjectProjectIdDocumentDocumentIdPost",
+          "originalEndpointId": "endpoint_document.updateOrgOrgIdProjectProjectIdDocumentDocumentIdPost",
           "name": "Document Update",
           "path": {
             "pathParameters": [
@@ -20345,7 +20666,7 @@
           "auth": true,
           "method": "DELETE",
           "id": "deleteOrgOrgIdProjectProjectIdDocumentDocumentIdDelete",
-          "originalEndpointId": "document.deleteOrgOrgIdProjectProjectIdDocumentDocumentIdDelete",
+          "originalEndpointId": "endpoint_document.deleteOrgOrgIdProjectProjectIdDocumentDocumentIdDelete",
           "name": "Document Delete",
           "path": {
             "pathParameters": [
@@ -20489,7 +20810,7 @@
           "auth": true,
           "method": "GET",
           "id": "embeddingQueryOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingsGet",
-          "originalEndpointId": "document.embeddingQueryOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingsGet",
+          "originalEndpointId": "endpoint_document.embeddingQueryOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingsGet",
           "name": "Document Embedding Query",
           "path": {
             "pathParameters": [
@@ -20693,7 +21014,7 @@
           "description": "Fetch an individual embedding record by its ID. Useful for examining the source submitted to an LLM",
           "method": "GET",
           "id": "embeddingGetOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingEmbeddingIdGet",
-          "originalEndpointId": "document.embeddingGetOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingEmbeddingIdGet",
+          "originalEndpointId": "endpoint_document.embeddingGetOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingEmbeddingIdGet",
           "name": "Document Embedding Get",
           "path": {
             "pathParameters": [
@@ -20843,7 +21164,7 @@
           "description": "Lists all members that have been granted direct access to the document.",
           "method": "GET",
           "id": "iamListMembers",
-          "originalEndpointId": "document.iamListMembers",
+          "originalEndpointId": "endpoint_document.iamListMembers",
           "name": "IAM - List Document Members",
           "path": {
             "pathParameters": [
@@ -21042,7 +21363,7 @@
           "description": "Retrieve a specific member that has been granted direct access to the document.",
           "method": "GET",
           "id": "getMember",
-          "originalEndpointId": "document.getMember",
+          "originalEndpointId": "endpoint_document.getMember",
           "name": "IAM - Lookup Document Member",
           "path": {
             "pathParameters": [
@@ -21227,7 +21548,7 @@
           "description": "Update the roles that a member holds on the document.",
           "method": "POST",
           "id": "iamUpdateMemberRoles",
-          "originalEndpointId": "document.iamUpdateMemberRoles",
+          "originalEndpointId": "endpoint_document.iamUpdateMemberRoles",
           "name": "IAM - Update Document Member",
           "path": {
             "pathParameters": [
@@ -21443,7 +21764,7 @@
           "description": "Test the permissions that the caller (or another subject) holds on the document.",
           "method": "POST",
           "id": "iamTestPermissions",
-          "originalEndpointId": "document.iamTestPermissions",
+          "originalEndpointId": "endpoint_document.iamTestPermissions",
           "name": "IAM - Test Document Permissions",
           "path": {
             "pathParameters": [
@@ -21652,7 +21973,7 @@
           "auth": true,
           "method": "GET",
           "id": "get_recent_chats_for_user_chat_recent_get",
-          "originalEndpointId": "chat.get_recent_chats_for_user_chat_recent_get",
+          "originalEndpointId": "endpoint_chat.get_recent_chats_for_user_chat_recent_get",
           "name": "Get Recent Chats For User",
           "path": {
             "pathParameters": [],
@@ -21763,7 +22084,7 @@
           "auth": true,
           "method": "GET",
           "id": "get_chat_chat__chat_id__get",
-          "originalEndpointId": "chat.get_chat_chat__chat_id__get",
+          "originalEndpointId": "endpoint_chat.get_chat_chat__chat_id__get",
           "name": "Get Chat",
           "path": {
             "pathParameters": [
@@ -21897,7 +22218,7 @@
           "auth": true,
           "method": "POST",
           "id": "update_chat_chat__chat_id__post",
-          "originalEndpointId": "chat.update_chat_chat__chat_id__post",
+          "originalEndpointId": "endpoint_chat.update_chat_chat__chat_id__post",
           "name": "Update Chat",
           "path": {
             "pathParameters": [
@@ -22053,7 +22374,7 @@
           "auth": true,
           "method": "GET",
           "id": "get_chat_config_chat__chat_id__config_get",
-          "originalEndpointId": "chat.get_chat_config_chat__chat_id__config_get",
+          "originalEndpointId": "endpoint_chat.get_chat_config_chat__chat_id__config_get",
           "name": "Get Chat Config",
           "path": {
             "pathParameters": [
@@ -22207,7 +22528,7 @@
           "auth": true,
           "method": "POST",
           "id": "set_chat_config_chat__chat_id__config_post",
-          "originalEndpointId": "chat.set_chat_config_chat__chat_id__config_post",
+          "originalEndpointId": "endpoint_chat.set_chat_config_chat__chat_id__config_post",
           "name": "Set Chat Config",
           "path": {
             "pathParameters": [
@@ -22379,7 +22700,7 @@
           "auth": true,
           "method": "POST",
           "id": "create_chat_chat_post",
-          "originalEndpointId": "chat.create_chat_chat_post",
+          "originalEndpointId": "endpoint_chat.create_chat_chat_post",
           "name": "Create Chat",
           "path": {
             "pathParameters": [],
@@ -22514,7 +22835,7 @@
           "auth": true,
           "method": "GET",
           "id": "query_chat_chat__chat_id__query_get",
-          "originalEndpointId": "chat.query_chat_chat__chat_id__query_get",
+          "originalEndpointId": "endpoint_chat.query_chat_chat__chat_id__query_get",
           "name": "Query Chat",
           "path": {
             "pathParameters": [
@@ -22656,7 +22977,7 @@
           "description": "Lists all members that have been granted direct access to the chat.",
           "method": "GET",
           "id": "iamListMembers",
-          "originalEndpointId": "chat.iamListMembers",
+          "originalEndpointId": "endpoint_chat.iamListMembers",
           "name": "IAM - List Chat Members",
           "path": {
             "pathParameters": [
@@ -22819,7 +23140,7 @@
           "description": "Retrieve a specific member that has been granted direct access to the chat.",
           "method": "GET",
           "id": "getMember",
-          "originalEndpointId": "chat.getMember",
+          "originalEndpointId": "endpoint_chat.getMember",
           "name": "IAM - Lookup Chat Member",
           "path": {
             "pathParameters": [
@@ -22968,7 +23289,7 @@
           "description": "Update the roles that a member holds on the chat.",
           "method": "POST",
           "id": "iamUpdateMemberRoles",
-          "originalEndpointId": "chat.iamUpdateMemberRoles",
+          "originalEndpointId": "endpoint_chat.iamUpdateMemberRoles",
           "name": "IAM - Update Chat Member",
           "path": {
             "pathParameters": [
@@ -23148,7 +23469,7 @@
           "description": "Test the permissions that the caller (or another subject) holds on the chat.",
           "method": "POST",
           "id": "iamTestPermissions",
-          "originalEndpointId": "chat.iamTestPermissions",
+          "originalEndpointId": "endpoint_chat.iamTestPermissions",
           "name": "IAM - Test Chat Permissions",
           "path": {
             "pathParameters": [
@@ -23321,7 +23642,7 @@
           "auth": true,
           "method": "GET",
           "id": "list_files_org__org_id__project__project_id__datasource_box__connection_id__list_files_get",
-          "originalEndpointId": "datasource - box.list_files_org__org_id__project__project_id__datasource_box__connection_id__list_files_get",
+          "originalEndpointId": "endpoint_datasourceBox.list_files_org__org_id__project__project_id__datasource_box__connection_id__list_files_get",
           "name": "List Files",
           "path": {
             "pathParameters": [
@@ -23489,7 +23810,7 @@
           "auth": true,
           "method": "POST",
           "id": "fetch_org__org_id__project__project_id__datasource_box__connection_id__fetch_post",
-          "originalEndpointId": "datasource - box.fetch_org__org_id__project__project_id__datasource_box__connection_id__fetch_post",
+          "originalEndpointId": "endpoint_datasourceBox.fetch_org__org_id__project__project_id__datasource_box__connection_id__fetch_post",
           "name": "Fetch",
           "path": {
             "pathParameters": [
@@ -23673,7 +23994,7 @@
           "auth": true,
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_box_authorize_get",
-          "originalEndpointId": "datasource - box.authorize_org__org_id__project__project_id__datasource_box_authorize_get",
+          "originalEndpointId": "endpoint_datasourceBox.authorize_org__org_id__project__project_id__datasource_box_authorize_get",
           "name": "Authorize",
           "path": {
             "pathParameters": [
@@ -23822,7 +24143,7 @@
           "auth": true,
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_box__connection_id__authorize_get",
-          "originalEndpointId": "datasource - box.authorize_org__org_id__project__project_id__datasource_box__connection_id__authorize_get",
+          "originalEndpointId": "endpoint_datasourceBox.authorize_org__org_id__project__project_id__datasource_box__connection_id__authorize_get",
           "name": "Authorize",
           "path": {
             "pathParameters": [
@@ -23977,7 +24298,7 @@
           "auth": true,
           "method": "DELETE",
           "id": "delete_org__org_id__project__project_id__datasource_box__connection_id__delete",
-          "originalEndpointId": "datasource - box.delete_org__org_id__project__project_id__datasource_box__connection_id__delete",
+          "originalEndpointId": "endpoint_datasourceBox.delete_org__org_id__project__project_id__datasource_box__connection_id__delete",
           "name": "Delete",
           "path": {
             "pathParameters": [
@@ -24123,7 +24444,7 @@
           "auth": true,
           "method": "GET",
           "id": "list_runs_org__org_id__project__project_id__datasource_box__connection_id__runs_get",
-          "originalEndpointId": "datasource - box.list_runs_org__org_id__project__project_id__datasource_box__connection_id__runs_get",
+          "originalEndpointId": "endpoint_datasourceBox.list_runs_org__org_id__project__project_id__datasource_box__connection_id__runs_get",
           "name": "List Runs",
           "path": {
             "pathParameters": [
@@ -24354,7 +24675,7 @@
           "auth": true,
           "method": "GET",
           "id": "check_status_org__org_id__project__project_id__datasource_box__connection_id__run_get",
-          "originalEndpointId": "datasource - box.check_status_org__org_id__project__project_id__datasource_box__connection_id__run_get",
+          "originalEndpointId": "endpoint_datasourceBox.check_status_org__org_id__project__project_id__datasource_box__connection_id__run_get",
           "name": "Check Status",
           "path": {
             "pathParameters": [
@@ -24549,7 +24870,7 @@
           "auth": true,
           "method": "GET",
           "id": "get_configuration_org__org_id__project__project_id__datasource_box__connection_id__config_get",
-          "originalEndpointId": "datasource - box.get_configuration_org__org_id__project__project_id__datasource_box__connection_id__config_get",
+          "originalEndpointId": "endpoint_datasourceBox.get_configuration_org__org_id__project__project_id__datasource_box__connection_id__config_get",
           "name": "Get Configuration",
           "path": {
             "pathParameters": [
@@ -24708,7 +25029,7 @@
           "auth": true,
           "method": "POST",
           "id": "set_configuration_org__org_id__project__project_id__datasource_box__connection_id__config_post",
-          "originalEndpointId": "datasource - box.set_configuration_org__org_id__project__project_id__datasource_box__connection_id__config_post",
+          "originalEndpointId": "endpoint_datasourceBox.set_configuration_org__org_id__project__project_id__datasource_box__connection_id__config_post",
           "name": "Set Configuration",
           "path": {
             "pathParameters": [
@@ -24879,7 +25200,7 @@
           "auth": true,
           "method": "GET",
           "id": "callback_datasource_box_callback_get",
-          "originalEndpointId": "datasource - box.callback_datasource_box_callback_get",
+          "originalEndpointId": "endpoint_datasourceBox.callback_datasource_box_callback_get",
           "name": "Callback",
           "path": {
             "pathParameters": [],
@@ -24981,7 +25302,7 @@
           "auth": true,
           "method": "GET",
           "id": "list_files_org__org_id__project__project_id__datasource_confluence__connection_id__list_files_get",
-          "originalEndpointId": "datasource - confluence.list_files_org__org_id__project__project_id__datasource_confluence__connection_id__list_files_get",
+          "originalEndpointId": "endpoint_datasourceConfluence.list_files_org__org_id__project__project_id__datasource_confluence__connection_id__list_files_get",
           "name": "List Files",
           "path": {
             "pathParameters": [
@@ -25149,7 +25470,7 @@
           "auth": true,
           "method": "POST",
           "id": "fetch_org__org_id__project__project_id__datasource_confluence__connection_id__fetch_post",
-          "originalEndpointId": "datasource - confluence.fetch_org__org_id__project__project_id__datasource_confluence__connection_id__fetch_post",
+          "originalEndpointId": "endpoint_datasourceConfluence.fetch_org__org_id__project__project_id__datasource_confluence__connection_id__fetch_post",
           "name": "Fetch",
           "path": {
             "pathParameters": [
@@ -25333,7 +25654,7 @@
           "auth": true,
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_confluence_authorize_get",
-          "originalEndpointId": "datasource - confluence.authorize_org__org_id__project__project_id__datasource_confluence_authorize_get",
+          "originalEndpointId": "endpoint_datasourceConfluence.authorize_org__org_id__project__project_id__datasource_confluence_authorize_get",
           "name": "Authorize",
           "path": {
             "pathParameters": [
@@ -25482,7 +25803,7 @@
           "auth": true,
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_confluence__connection_id__authorize_get",
-          "originalEndpointId": "datasource - confluence.authorize_org__org_id__project__project_id__datasource_confluence__connection_id__authorize_get",
+          "originalEndpointId": "endpoint_datasourceConfluence.authorize_org__org_id__project__project_id__datasource_confluence__connection_id__authorize_get",
           "name": "Authorize",
           "path": {
             "pathParameters": [
@@ -25637,7 +25958,7 @@
           "auth": true,
           "method": "DELETE",
           "id": "delete_org__org_id__project__project_id__datasource_confluence__connection_id__delete",
-          "originalEndpointId": "datasource - confluence.delete_org__org_id__project__project_id__datasource_confluence__connection_id__delete",
+          "originalEndpointId": "endpoint_datasourceConfluence.delete_org__org_id__project__project_id__datasource_confluence__connection_id__delete",
           "name": "Delete",
           "path": {
             "pathParameters": [
@@ -25783,7 +26104,7 @@
           "auth": true,
           "method": "GET",
           "id": "list_runs_org__org_id__project__project_id__datasource_confluence__connection_id__runs_get",
-          "originalEndpointId": "datasource - confluence.list_runs_org__org_id__project__project_id__datasource_confluence__connection_id__runs_get",
+          "originalEndpointId": "endpoint_datasourceConfluence.list_runs_org__org_id__project__project_id__datasource_confluence__connection_id__runs_get",
           "name": "List Runs",
           "path": {
             "pathParameters": [
@@ -26014,7 +26335,7 @@
           "auth": true,
           "method": "GET",
           "id": "check_status_org__org_id__project__project_id__datasource_confluence__connection_id__run_get",
-          "originalEndpointId": "datasource - confluence.check_status_org__org_id__project__project_id__datasource_confluence__connection_id__run_get",
+          "originalEndpointId": "endpoint_datasourceConfluence.check_status_org__org_id__project__project_id__datasource_confluence__connection_id__run_get",
           "name": "Check Status",
           "path": {
             "pathParameters": [
@@ -26209,7 +26530,7 @@
           "auth": true,
           "method": "GET",
           "id": "get_configuration_org__org_id__project__project_id__datasource_confluence__connection_id__config_get",
-          "originalEndpointId": "datasource - confluence.get_configuration_org__org_id__project__project_id__datasource_confluence__connection_id__config_get",
+          "originalEndpointId": "endpoint_datasourceConfluence.get_configuration_org__org_id__project__project_id__datasource_confluence__connection_id__config_get",
           "name": "Get Configuration",
           "path": {
             "pathParameters": [
@@ -26368,7 +26689,7 @@
           "auth": true,
           "method": "POST",
           "id": "set_configuration_org__org_id__project__project_id__datasource_confluence__connection_id__config_post",
-          "originalEndpointId": "datasource - confluence.set_configuration_org__org_id__project__project_id__datasource_confluence__connection_id__config_post",
+          "originalEndpointId": "endpoint_datasourceConfluence.set_configuration_org__org_id__project__project_id__datasource_confluence__connection_id__config_post",
           "name": "Set Configuration",
           "path": {
             "pathParameters": [
@@ -26539,7 +26860,7 @@
           "auth": true,
           "method": "GET",
           "id": "callback_datasource_confluence_callback_get",
-          "originalEndpointId": "datasource - confluence.callback_datasource_confluence_callback_get",
+          "originalEndpointId": "endpoint_datasourceConfluence.callback_datasource_confluence_callback_get",
           "name": "Callback",
           "path": {
             "pathParameters": [],
@@ -26641,7 +26962,7 @@
           "auth": true,
           "method": "GET",
           "id": "list_files_org__org_id__project__project_id__datasource_dropbox__connection_id__list_files_get",
-          "originalEndpointId": "datasource - dropbox.list_files_org__org_id__project__project_id__datasource_dropbox__connection_id__list_files_get",
+          "originalEndpointId": "endpoint_datasourceDropbox.list_files_org__org_id__project__project_id__datasource_dropbox__connection_id__list_files_get",
           "name": "List Files",
           "path": {
             "pathParameters": [
@@ -26809,7 +27130,7 @@
           "auth": true,
           "method": "POST",
           "id": "fetch_org__org_id__project__project_id__datasource_dropbox__connection_id__fetch_post",
-          "originalEndpointId": "datasource - dropbox.fetch_org__org_id__project__project_id__datasource_dropbox__connection_id__fetch_post",
+          "originalEndpointId": "endpoint_datasourceDropbox.fetch_org__org_id__project__project_id__datasource_dropbox__connection_id__fetch_post",
           "name": "Fetch",
           "path": {
             "pathParameters": [
@@ -26993,7 +27314,7 @@
           "auth": true,
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_dropbox_authorize_get",
-          "originalEndpointId": "datasource - dropbox.authorize_org__org_id__project__project_id__datasource_dropbox_authorize_get",
+          "originalEndpointId": "endpoint_datasourceDropbox.authorize_org__org_id__project__project_id__datasource_dropbox_authorize_get",
           "name": "Authorize",
           "path": {
             "pathParameters": [
@@ -27142,7 +27463,7 @@
           "auth": true,
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_dropbox__connection_id__authorize_get",
-          "originalEndpointId": "datasource - dropbox.authorize_org__org_id__project__project_id__datasource_dropbox__connection_id__authorize_get",
+          "originalEndpointId": "endpoint_datasourceDropbox.authorize_org__org_id__project__project_id__datasource_dropbox__connection_id__authorize_get",
           "name": "Authorize",
           "path": {
             "pathParameters": [
@@ -27297,7 +27618,7 @@
           "auth": true,
           "method": "DELETE",
           "id": "delete_org__org_id__project__project_id__datasource_dropbox__connection_id__delete",
-          "originalEndpointId": "datasource - dropbox.delete_org__org_id__project__project_id__datasource_dropbox__connection_id__delete",
+          "originalEndpointId": "endpoint_datasourceDropbox.delete_org__org_id__project__project_id__datasource_dropbox__connection_id__delete",
           "name": "Delete",
           "path": {
             "pathParameters": [
@@ -27443,7 +27764,7 @@
           "auth": true,
           "method": "GET",
           "id": "list_runs_org__org_id__project__project_id__datasource_dropbox__connection_id__runs_get",
-          "originalEndpointId": "datasource - dropbox.list_runs_org__org_id__project__project_id__datasource_dropbox__connection_id__runs_get",
+          "originalEndpointId": "endpoint_datasourceDropbox.list_runs_org__org_id__project__project_id__datasource_dropbox__connection_id__runs_get",
           "name": "List Runs",
           "path": {
             "pathParameters": [
@@ -27674,7 +27995,7 @@
           "auth": true,
           "method": "GET",
           "id": "check_status_org__org_id__project__project_id__datasource_dropbox__connection_id__run_get",
-          "originalEndpointId": "datasource - dropbox.check_status_org__org_id__project__project_id__datasource_dropbox__connection_id__run_get",
+          "originalEndpointId": "endpoint_datasourceDropbox.check_status_org__org_id__project__project_id__datasource_dropbox__connection_id__run_get",
           "name": "Check Status",
           "path": {
             "pathParameters": [
@@ -27869,7 +28190,7 @@
           "auth": true,
           "method": "GET",
           "id": "get_configuration_org__org_id__project__project_id__datasource_dropbox__connection_id__config_get",
-          "originalEndpointId": "datasource - dropbox.get_configuration_org__org_id__project__project_id__datasource_dropbox__connection_id__config_get",
+          "originalEndpointId": "endpoint_datasourceDropbox.get_configuration_org__org_id__project__project_id__datasource_dropbox__connection_id__config_get",
           "name": "Get Configuration",
           "path": {
             "pathParameters": [
@@ -28028,7 +28349,7 @@
           "auth": true,
           "method": "POST",
           "id": "set_configuration_org__org_id__project__project_id__datasource_dropbox__connection_id__config_post",
-          "originalEndpointId": "datasource - dropbox.set_configuration_org__org_id__project__project_id__datasource_dropbox__connection_id__config_post",
+          "originalEndpointId": "endpoint_datasourceDropbox.set_configuration_org__org_id__project__project_id__datasource_dropbox__connection_id__config_post",
           "name": "Set Configuration",
           "path": {
             "pathParameters": [
@@ -28199,7 +28520,7 @@
           "auth": true,
           "method": "GET",
           "id": "callback_datasource_dropbox_callback_get",
-          "originalEndpointId": "datasource - dropbox.callback_datasource_dropbox_callback_get",
+          "originalEndpointId": "endpoint_datasourceDropbox.callback_datasource_dropbox_callback_get",
           "name": "Callback",
           "path": {
             "pathParameters": [],
@@ -28301,7 +28622,7 @@
           "auth": true,
           "method": "GET",
           "id": "list_files_org__org_id__project__project_id__datasource_gdrive__connection_id__list_files_get",
-          "originalEndpointId": "datasource - gdrive.list_files_org__org_id__project__project_id__datasource_gdrive__connection_id__list_files_get",
+          "originalEndpointId": "endpoint_datasourceGdrive.list_files_org__org_id__project__project_id__datasource_gdrive__connection_id__list_files_get",
           "name": "List Files",
           "path": {
             "pathParameters": [
@@ -28469,7 +28790,7 @@
           "auth": true,
           "method": "POST",
           "id": "fetch_org__org_id__project__project_id__datasource_gdrive__connection_id__fetch_post",
-          "originalEndpointId": "datasource - gdrive.fetch_org__org_id__project__project_id__datasource_gdrive__connection_id__fetch_post",
+          "originalEndpointId": "endpoint_datasourceGdrive.fetch_org__org_id__project__project_id__datasource_gdrive__connection_id__fetch_post",
           "name": "Fetch",
           "path": {
             "pathParameters": [
@@ -28653,7 +28974,7 @@
           "auth": true,
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_gdrive_authorize_get",
-          "originalEndpointId": "datasource - gdrive.authorize_org__org_id__project__project_id__datasource_gdrive_authorize_get",
+          "originalEndpointId": "endpoint_datasourceGdrive.authorize_org__org_id__project__project_id__datasource_gdrive_authorize_get",
           "name": "Authorize",
           "path": {
             "pathParameters": [
@@ -28802,7 +29123,7 @@
           "auth": true,
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_gdrive__connection_id__authorize_get",
-          "originalEndpointId": "datasource - gdrive.authorize_org__org_id__project__project_id__datasource_gdrive__connection_id__authorize_get",
+          "originalEndpointId": "endpoint_datasourceGdrive.authorize_org__org_id__project__project_id__datasource_gdrive__connection_id__authorize_get",
           "name": "Authorize",
           "path": {
             "pathParameters": [
@@ -28957,7 +29278,7 @@
           "auth": true,
           "method": "DELETE",
           "id": "delete_org__org_id__project__project_id__datasource_gdrive__connection_id__delete",
-          "originalEndpointId": "datasource - gdrive.delete_org__org_id__project__project_id__datasource_gdrive__connection_id__delete",
+          "originalEndpointId": "endpoint_datasourceGdrive.delete_org__org_id__project__project_id__datasource_gdrive__connection_id__delete",
           "name": "Delete",
           "path": {
             "pathParameters": [
@@ -29103,7 +29424,7 @@
           "auth": true,
           "method": "GET",
           "id": "list_runs_org__org_id__project__project_id__datasource_gdrive__connection_id__runs_get",
-          "originalEndpointId": "datasource - gdrive.list_runs_org__org_id__project__project_id__datasource_gdrive__connection_id__runs_get",
+          "originalEndpointId": "endpoint_datasourceGdrive.list_runs_org__org_id__project__project_id__datasource_gdrive__connection_id__runs_get",
           "name": "List Runs",
           "path": {
             "pathParameters": [
@@ -29334,7 +29655,7 @@
           "auth": true,
           "method": "GET",
           "id": "check_status_org__org_id__project__project_id__datasource_gdrive__connection_id__run_get",
-          "originalEndpointId": "datasource - gdrive.check_status_org__org_id__project__project_id__datasource_gdrive__connection_id__run_get",
+          "originalEndpointId": "endpoint_datasourceGdrive.check_status_org__org_id__project__project_id__datasource_gdrive__connection_id__run_get",
           "name": "Check Status",
           "path": {
             "pathParameters": [
@@ -29529,7 +29850,7 @@
           "auth": true,
           "method": "GET",
           "id": "get_configuration_org__org_id__project__project_id__datasource_gdrive__connection_id__config_get",
-          "originalEndpointId": "datasource - gdrive.get_configuration_org__org_id__project__project_id__datasource_gdrive__connection_id__config_get",
+          "originalEndpointId": "endpoint_datasourceGdrive.get_configuration_org__org_id__project__project_id__datasource_gdrive__connection_id__config_get",
           "name": "Get Configuration",
           "path": {
             "pathParameters": [
@@ -29688,7 +30009,7 @@
           "auth": true,
           "method": "POST",
           "id": "set_configuration_org__org_id__project__project_id__datasource_gdrive__connection_id__config_post",
-          "originalEndpointId": "datasource - gdrive.set_configuration_org__org_id__project__project_id__datasource_gdrive__connection_id__config_post",
+          "originalEndpointId": "endpoint_datasourceGdrive.set_configuration_org__org_id__project__project_id__datasource_gdrive__connection_id__config_post",
           "name": "Set Configuration",
           "path": {
             "pathParameters": [
@@ -29859,7 +30180,7 @@
           "auth": true,
           "method": "GET",
           "id": "callback_datasource_gdrive_callback_get",
-          "originalEndpointId": "datasource - gdrive.callback_datasource_gdrive_callback_get",
+          "originalEndpointId": "endpoint_datasourceGdrive.callback_datasource_gdrive_callback_get",
           "name": "Callback",
           "path": {
             "pathParameters": [],
@@ -29961,7 +30282,7 @@
           "auth": true,
           "method": "GET",
           "id": "list_files_org__org_id__project__project_id__datasource_notion__connection_id__list_files_get",
-          "originalEndpointId": "datasource - notion.list_files_org__org_id__project__project_id__datasource_notion__connection_id__list_files_get",
+          "originalEndpointId": "endpoint_datasourceNotion.list_files_org__org_id__project__project_id__datasource_notion__connection_id__list_files_get",
           "name": "List Files",
           "path": {
             "pathParameters": [
@@ -30129,7 +30450,7 @@
           "auth": true,
           "method": "POST",
           "id": "fetch_org__org_id__project__project_id__datasource_notion__connection_id__fetch_post",
-          "originalEndpointId": "datasource - notion.fetch_org__org_id__project__project_id__datasource_notion__connection_id__fetch_post",
+          "originalEndpointId": "endpoint_datasourceNotion.fetch_org__org_id__project__project_id__datasource_notion__connection_id__fetch_post",
           "name": "Fetch",
           "path": {
             "pathParameters": [
@@ -30313,7 +30634,7 @@
           "auth": true,
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_notion_authorize_get",
-          "originalEndpointId": "datasource - notion.authorize_org__org_id__project__project_id__datasource_notion_authorize_get",
+          "originalEndpointId": "endpoint_datasourceNotion.authorize_org__org_id__project__project_id__datasource_notion_authorize_get",
           "name": "Authorize",
           "path": {
             "pathParameters": [
@@ -30462,7 +30783,7 @@
           "auth": true,
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_notion__connection_id__authorize_get",
-          "originalEndpointId": "datasource - notion.authorize_org__org_id__project__project_id__datasource_notion__connection_id__authorize_get",
+          "originalEndpointId": "endpoint_datasourceNotion.authorize_org__org_id__project__project_id__datasource_notion__connection_id__authorize_get",
           "name": "Authorize",
           "path": {
             "pathParameters": [
@@ -30617,7 +30938,7 @@
           "auth": true,
           "method": "DELETE",
           "id": "delete_org__org_id__project__project_id__datasource_notion__connection_id__delete",
-          "originalEndpointId": "datasource - notion.delete_org__org_id__project__project_id__datasource_notion__connection_id__delete",
+          "originalEndpointId": "endpoint_datasourceNotion.delete_org__org_id__project__project_id__datasource_notion__connection_id__delete",
           "name": "Delete",
           "path": {
             "pathParameters": [
@@ -30763,7 +31084,7 @@
           "auth": true,
           "method": "GET",
           "id": "list_runs_org__org_id__project__project_id__datasource_notion__connection_id__runs_get",
-          "originalEndpointId": "datasource - notion.list_runs_org__org_id__project__project_id__datasource_notion__connection_id__runs_get",
+          "originalEndpointId": "endpoint_datasourceNotion.list_runs_org__org_id__project__project_id__datasource_notion__connection_id__runs_get",
           "name": "List Runs",
           "path": {
             "pathParameters": [
@@ -30994,7 +31315,7 @@
           "auth": true,
           "method": "GET",
           "id": "check_status_org__org_id__project__project_id__datasource_notion__connection_id__run_get",
-          "originalEndpointId": "datasource - notion.check_status_org__org_id__project__project_id__datasource_notion__connection_id__run_get",
+          "originalEndpointId": "endpoint_datasourceNotion.check_status_org__org_id__project__project_id__datasource_notion__connection_id__run_get",
           "name": "Check Status",
           "path": {
             "pathParameters": [
@@ -31189,7 +31510,7 @@
           "auth": true,
           "method": "GET",
           "id": "get_configuration_org__org_id__project__project_id__datasource_notion__connection_id__config_get",
-          "originalEndpointId": "datasource - notion.get_configuration_org__org_id__project__project_id__datasource_notion__connection_id__config_get",
+          "originalEndpointId": "endpoint_datasourceNotion.get_configuration_org__org_id__project__project_id__datasource_notion__connection_id__config_get",
           "name": "Get Configuration",
           "path": {
             "pathParameters": [
@@ -31348,7 +31669,7 @@
           "auth": true,
           "method": "POST",
           "id": "set_configuration_org__org_id__project__project_id__datasource_notion__connection_id__config_post",
-          "originalEndpointId": "datasource - notion.set_configuration_org__org_id__project__project_id__datasource_notion__connection_id__config_post",
+          "originalEndpointId": "endpoint_datasourceNotion.set_configuration_org__org_id__project__project_id__datasource_notion__connection_id__config_post",
           "name": "Set Configuration",
           "path": {
             "pathParameters": [
@@ -31519,7 +31840,7 @@
           "auth": true,
           "method": "GET",
           "id": "callback_datasource_notion_callback_get",
-          "originalEndpointId": "datasource - notion.callback_datasource_notion_callback_get",
+          "originalEndpointId": "endpoint_datasourceNotion.callback_datasource_notion_callback_get",
           "name": "Callback",
           "path": {
             "pathParameters": [],
@@ -31621,7 +31942,7 @@
           "auth": true,
           "method": "GET",
           "id": "list_files_org__org_id__project__project_id__datasource_onedrive__connection_id__list_files_get",
-          "originalEndpointId": "datasource - onedrive.list_files_org__org_id__project__project_id__datasource_onedrive__connection_id__list_files_get",
+          "originalEndpointId": "endpoint_datasourceOnedrive.list_files_org__org_id__project__project_id__datasource_onedrive__connection_id__list_files_get",
           "name": "List Files",
           "path": {
             "pathParameters": [
@@ -31789,7 +32110,7 @@
           "auth": true,
           "method": "POST",
           "id": "fetch_org__org_id__project__project_id__datasource_onedrive__connection_id__fetch_post",
-          "originalEndpointId": "datasource - onedrive.fetch_org__org_id__project__project_id__datasource_onedrive__connection_id__fetch_post",
+          "originalEndpointId": "endpoint_datasourceOnedrive.fetch_org__org_id__project__project_id__datasource_onedrive__connection_id__fetch_post",
           "name": "Fetch",
           "path": {
             "pathParameters": [
@@ -31973,7 +32294,7 @@
           "auth": true,
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_onedrive_authorize_get",
-          "originalEndpointId": "datasource - onedrive.authorize_org__org_id__project__project_id__datasource_onedrive_authorize_get",
+          "originalEndpointId": "endpoint_datasourceOnedrive.authorize_org__org_id__project__project_id__datasource_onedrive_authorize_get",
           "name": "Authorize",
           "path": {
             "pathParameters": [
@@ -32122,7 +32443,7 @@
           "auth": true,
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_onedrive__connection_id__authorize_get",
-          "originalEndpointId": "datasource - onedrive.authorize_org__org_id__project__project_id__datasource_onedrive__connection_id__authorize_get",
+          "originalEndpointId": "endpoint_datasourceOnedrive.authorize_org__org_id__project__project_id__datasource_onedrive__connection_id__authorize_get",
           "name": "Authorize",
           "path": {
             "pathParameters": [
@@ -32277,7 +32598,7 @@
           "auth": true,
           "method": "DELETE",
           "id": "delete_org__org_id__project__project_id__datasource_onedrive__connection_id__delete",
-          "originalEndpointId": "datasource - onedrive.delete_org__org_id__project__project_id__datasource_onedrive__connection_id__delete",
+          "originalEndpointId": "endpoint_datasourceOnedrive.delete_org__org_id__project__project_id__datasource_onedrive__connection_id__delete",
           "name": "Delete",
           "path": {
             "pathParameters": [
@@ -32423,7 +32744,7 @@
           "auth": true,
           "method": "GET",
           "id": "list_runs_org__org_id__project__project_id__datasource_onedrive__connection_id__runs_get",
-          "originalEndpointId": "datasource - onedrive.list_runs_org__org_id__project__project_id__datasource_onedrive__connection_id__runs_get",
+          "originalEndpointId": "endpoint_datasourceOnedrive.list_runs_org__org_id__project__project_id__datasource_onedrive__connection_id__runs_get",
           "name": "List Runs",
           "path": {
             "pathParameters": [
@@ -32654,7 +32975,7 @@
           "auth": true,
           "method": "GET",
           "id": "check_status_org__org_id__project__project_id__datasource_onedrive__connection_id__run_get",
-          "originalEndpointId": "datasource - onedrive.check_status_org__org_id__project__project_id__datasource_onedrive__connection_id__run_get",
+          "originalEndpointId": "endpoint_datasourceOnedrive.check_status_org__org_id__project__project_id__datasource_onedrive__connection_id__run_get",
           "name": "Check Status",
           "path": {
             "pathParameters": [
@@ -32849,7 +33170,7 @@
           "auth": true,
           "method": "GET",
           "id": "get_configuration_org__org_id__project__project_id__datasource_onedrive__connection_id__config_get",
-          "originalEndpointId": "datasource - onedrive.get_configuration_org__org_id__project__project_id__datasource_onedrive__connection_id__config_get",
+          "originalEndpointId": "endpoint_datasourceOnedrive.get_configuration_org__org_id__project__project_id__datasource_onedrive__connection_id__config_get",
           "name": "Get Configuration",
           "path": {
             "pathParameters": [
@@ -33008,7 +33329,7 @@
           "auth": true,
           "method": "POST",
           "id": "set_configuration_org__org_id__project__project_id__datasource_onedrive__connection_id__config_post",
-          "originalEndpointId": "datasource - onedrive.set_configuration_org__org_id__project__project_id__datasource_onedrive__connection_id__config_post",
+          "originalEndpointId": "endpoint_datasourceOnedrive.set_configuration_org__org_id__project__project_id__datasource_onedrive__connection_id__config_post",
           "name": "Set Configuration",
           "path": {
             "pathParameters": [
@@ -33179,7 +33500,7 @@
           "auth": true,
           "method": "GET",
           "id": "callback_datasource_onedrive_callback_get",
-          "originalEndpointId": "datasource - onedrive.callback_datasource_onedrive_callback_get",
+          "originalEndpointId": "endpoint_datasourceOnedrive.callback_datasource_onedrive_callback_get",
           "name": "Callback",
           "path": {
             "pathParameters": [],
@@ -33281,7 +33602,7 @@
           "auth": true,
           "method": "GET",
           "id": "list_files_org__org_id__project__project_id__datasource_sharepoint__connection_id__list_files_get",
-          "originalEndpointId": "datasource - sharepoint.list_files_org__org_id__project__project_id__datasource_sharepoint__connection_id__list_files_get",
+          "originalEndpointId": "endpoint_datasourceSharepoint.list_files_org__org_id__project__project_id__datasource_sharepoint__connection_id__list_files_get",
           "name": "List Files",
           "path": {
             "pathParameters": [
@@ -33449,7 +33770,7 @@
           "auth": true,
           "method": "POST",
           "id": "fetch_org__org_id__project__project_id__datasource_sharepoint__connection_id__fetch_post",
-          "originalEndpointId": "datasource - sharepoint.fetch_org__org_id__project__project_id__datasource_sharepoint__connection_id__fetch_post",
+          "originalEndpointId": "endpoint_datasourceSharepoint.fetch_org__org_id__project__project_id__datasource_sharepoint__connection_id__fetch_post",
           "name": "Fetch",
           "path": {
             "pathParameters": [
@@ -33633,7 +33954,7 @@
           "auth": true,
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_sharepoint_authorize_get",
-          "originalEndpointId": "datasource - sharepoint.authorize_org__org_id__project__project_id__datasource_sharepoint_authorize_get",
+          "originalEndpointId": "endpoint_datasourceSharepoint.authorize_org__org_id__project__project_id__datasource_sharepoint_authorize_get",
           "name": "Authorize",
           "path": {
             "pathParameters": [
@@ -33782,7 +34103,7 @@
           "auth": true,
           "method": "GET",
           "id": "authorize_org__org_id__project__project_id__datasource_sharepoint__connection_id__authorize_get",
-          "originalEndpointId": "datasource - sharepoint.authorize_org__org_id__project__project_id__datasource_sharepoint__connection_id__authorize_get",
+          "originalEndpointId": "endpoint_datasourceSharepoint.authorize_org__org_id__project__project_id__datasource_sharepoint__connection_id__authorize_get",
           "name": "Authorize",
           "path": {
             "pathParameters": [
@@ -33937,7 +34258,7 @@
           "auth": true,
           "method": "DELETE",
           "id": "delete_org__org_id__project__project_id__datasource_sharepoint__connection_id__delete",
-          "originalEndpointId": "datasource - sharepoint.delete_org__org_id__project__project_id__datasource_sharepoint__connection_id__delete",
+          "originalEndpointId": "endpoint_datasourceSharepoint.delete_org__org_id__project__project_id__datasource_sharepoint__connection_id__delete",
           "name": "Delete",
           "path": {
             "pathParameters": [
@@ -34083,7 +34404,7 @@
           "auth": true,
           "method": "GET",
           "id": "list_runs_org__org_id__project__project_id__datasource_sharepoint__connection_id__runs_get",
-          "originalEndpointId": "datasource - sharepoint.list_runs_org__org_id__project__project_id__datasource_sharepoint__connection_id__runs_get",
+          "originalEndpointId": "endpoint_datasourceSharepoint.list_runs_org__org_id__project__project_id__datasource_sharepoint__connection_id__runs_get",
           "name": "List Runs",
           "path": {
             "pathParameters": [
@@ -34314,7 +34635,7 @@
           "auth": true,
           "method": "GET",
           "id": "check_status_org__org_id__project__project_id__datasource_sharepoint__connection_id__run_get",
-          "originalEndpointId": "datasource - sharepoint.check_status_org__org_id__project__project_id__datasource_sharepoint__connection_id__run_get",
+          "originalEndpointId": "endpoint_datasourceSharepoint.check_status_org__org_id__project__project_id__datasource_sharepoint__connection_id__run_get",
           "name": "Check Status",
           "path": {
             "pathParameters": [
@@ -34509,7 +34830,7 @@
           "auth": true,
           "method": "GET",
           "id": "get_configuration_org__org_id__project__project_id__datasource_sharepoint__connection_id__config_get",
-          "originalEndpointId": "datasource - sharepoint.get_configuration_org__org_id__project__project_id__datasource_sharepoint__connection_id__config_get",
+          "originalEndpointId": "endpoint_datasourceSharepoint.get_configuration_org__org_id__project__project_id__datasource_sharepoint__connection_id__config_get",
           "name": "Get Configuration",
           "path": {
             "pathParameters": [
@@ -34668,7 +34989,7 @@
           "auth": true,
           "method": "POST",
           "id": "set_configuration_org__org_id__project__project_id__datasource_sharepoint__connection_id__config_post",
-          "originalEndpointId": "datasource - sharepoint.set_configuration_org__org_id__project__project_id__datasource_sharepoint__connection_id__config_post",
+          "originalEndpointId": "endpoint_datasourceSharepoint.set_configuration_org__org_id__project__project_id__datasource_sharepoint__connection_id__config_post",
           "name": "Set Configuration",
           "path": {
             "pathParameters": [
@@ -34839,7 +35160,7 @@
           "auth": true,
           "method": "GET",
           "id": "callback_datasource_sharepoint_callback_get",
-          "originalEndpointId": "datasource - sharepoint.callback_datasource_sharepoint_callback_get",
+          "originalEndpointId": "endpoint_datasourceSharepoint.callback_datasource_sharepoint_callback_get",
           "name": "Callback",
           "path": {
             "pathParameters": [],
@@ -34941,7 +35262,7 @@
           "auth": false,
           "method": "POST",
           "id": "webhook_hydra_token_hook_internal_webhook_hydra_token_hook_post",
-          "originalEndpointId": "internal.webhook_hydra_token_hook_internal_webhook_hydra_token_hook_post",
+          "originalEndpointId": "endpoint_internal.webhook_hydra_token_hook_internal_webhook_hydra_token_hook_post",
           "name": "Webhook Hydra Token Hook",
           "path": {
             "pathParameters": [],
@@ -35034,7 +35355,7 @@
           "auth": true,
           "method": "POST",
           "id": "register_oauth_client_internal_project__project_id__register_oauth_client_post",
-          "originalEndpointId": "internal.register_oauth_client_internal_project__project_id__register_oauth_client_post",
+          "originalEndpointId": "endpoint_internal.register_oauth_client_internal_project__project_id__register_oauth_client_post",
           "name": "Register Oauth Client",
           "path": {
             "pathParameters": [
@@ -35186,7 +35507,7 @@
           "auth": false,
           "method": "POST",
           "id": "webhook_kratos_signup_check_internal_webhook_kratos_signup_check_post",
-          "originalEndpointId": "internal.webhook_kratos_signup_check_internal_webhook_kratos_signup_check_post",
+          "originalEndpointId": "endpoint_internal.webhook_kratos_signup_check_internal_webhook_kratos_signup_check_post",
           "name": "Webhook Kratos Signup Check",
           "path": {
             "pathParameters": [],
@@ -35303,7 +35624,7 @@
           "auth": false,
           "method": "POST",
           "id": "webhook_kratos_signup_commit_internal_webhook_kratos_signup_commit_post",
-          "originalEndpointId": "internal.webhook_kratos_signup_commit_internal_webhook_kratos_signup_commit_post",
+          "originalEndpointId": "endpoint_internal.webhook_kratos_signup_commit_internal_webhook_kratos_signup_commit_post",
           "name": "Webhook Kratos Signup Commit",
           "path": {
             "pathParameters": [],
@@ -35430,7 +35751,7 @@
           "auth": true,
           "method": "POST",
           "id": "enable_org__org_id__project__project_id__scrape_post",
-          "originalEndpointId": "scrape.enable_org__org_id__project__project_id__scrape_post",
+          "originalEndpointId": "endpoint_scrape.enable_org__org_id__project__project_id__scrape_post",
           "name": "Enable Web Scrape",
           "path": {
             "pathParameters": [
@@ -35530,7 +35851,7 @@
           "auth": true,
           "method": "POST",
           "id": "fetch_org__org_id__project__project_id__scrape_start_post",
-          "originalEndpointId": "scrape.fetch_org__org_id__project__project_id__scrape_start_post",
+          "originalEndpointId": "endpoint_scrape.fetch_org__org_id__project__project_id__scrape_start_post",
           "name": "Initialise Web Scrape",
           "path": {
             "pathParameters": [
@@ -35694,7 +36015,7 @@
           "auth": false,
           "method": "GET",
           "id": "check_status_org__org_id__project__project_id__scrape_run__sync_run_id__get",
-          "originalEndpointId": "scrape.check_status_org__org_id__project__project_id__scrape_run__sync_run_id__get",
+          "originalEndpointId": "endpoint_scrape.check_status_org__org_id__project__project_id__scrape_run__sync_run_id__get",
           "name": "Check Status",
           "path": {
             "pathParameters": [
@@ -35849,7 +36170,7 @@
           "auth": true,
           "method": "GET",
           "id": "list_runs_org__org_id__project__project_id__scrape_runs_get",
-          "originalEndpointId": "scrape.list_runs_org__org_id__project__project_id__scrape_runs_get",
+          "originalEndpointId": "endpoint_scrape.list_runs_org__org_id__project__project_id__scrape_runs_get",
           "name": "List Runs",
           "path": {
             "pathParameters": [
@@ -36044,7 +36365,7 @@
           "auth": true,
           "method": "POST",
           "id": "initialise_org__org_id__project__project_id__compose_post",
-          "originalEndpointId": "compose.initialise_org__org_id__project__project_id__compose_post",
+          "originalEndpointId": "endpoint_compose.initialise_org__org_id__project__project_id__compose_post",
           "name": "Initialise",
           "path": {
             "pathParameters": [
@@ -36191,7 +36512,7 @@
           "auth": true,
           "method": "POST",
           "id": "generate_org__org_id__project__project_id__compose_generate_post",
-          "originalEndpointId": "compose.generate_org__org_id__project__project_id__compose_generate_post",
+          "originalEndpointId": "endpoint_compose.generate_org__org_id__project__project_id__compose_generate_post",
           "name": "Generate",
           "path": {
             "pathParameters": [
@@ -36358,7 +36679,7 @@
           "auth": true,
           "method": "POST",
           "id": "update_section_org__org_id__project__project_id__compose_update_section_post",
-          "originalEndpointId": "compose.update_section_org__org_id__project__project_id__compose_update_section_post",
+          "originalEndpointId": "endpoint_compose.update_section_org__org_id__project__project_id__compose_update_section_post",
           "name": "Update Section",
           "path": {
             "pathParameters": [
@@ -36529,7 +36850,7 @@
           "auth": true,
           "method": "POST",
           "id": "section_talking_points_org__org_id__project__project_id__compose_section_talking_points_post",
-          "originalEndpointId": "compose.section_talking_points_org__org_id__project__project_id__compose_section_talking_points_post",
+          "originalEndpointId": "endpoint_compose.section_talking_points_org__org_id__project__project_id__compose_section_talking_points_post",
           "name": "Section Talking Points",
           "path": {
             "pathParameters": [
@@ -36692,7 +37013,7 @@
           "auth": true,
           "method": "POST",
           "id": "topic_org__org_id__project__project_id__compose_topic_post",
-          "originalEndpointId": "compose.topic_org__org_id__project__project_id__compose_topic_post",
+          "originalEndpointId": "endpoint_compose.topic_org__org_id__project__project_id__compose_topic_post",
           "name": "Topic",
           "path": {
             "pathParameters": [
@@ -36849,7 +37170,7 @@
           "auth": true,
           "method": "GET",
           "id": "getAllTasks",
-          "originalEndpointId": "tasks.getAllTasks",
+          "originalEndpointId": "endpoint_tasks.getAllTasks",
           "name": "List all Tasks",
           "path": {
             "pathParameters": [
@@ -37114,7 +37435,7 @@
           "description": "Tasks are the core of the platform and define the prompts and models used to generate responses.",
           "method": "POST",
           "id": "createTask",
-          "originalEndpointId": "tasks.createTask",
+          "originalEndpointId": "endpoint_tasks.createTask",
           "name": "Create a Task",
           "path": {
             "pathParameters": [
@@ -37363,7 +37684,7 @@
           "auth": true,
           "method": "GET",
           "id": "getTask",
-          "originalEndpointId": "tasks.getTask",
+          "originalEndpointId": "endpoint_tasks.getTask",
           "name": "Fetch a Task",
           "path": {
             "pathParameters": [
@@ -37576,7 +37897,7 @@
           "auth": true,
           "method": "POST",
           "id": "editTask",
-          "originalEndpointId": "tasks.editTask",
+          "originalEndpointId": "endpoint_tasks.editTask",
           "name": "Update a Task",
           "path": {
             "pathParameters": [
@@ -37808,7 +38129,7 @@
           "description": "Individual Task Runs provide an audit trail for all Task executions.",
           "method": "GET",
           "id": "getTaskRuns",
-          "originalEndpointId": "tasks.getTaskRuns",
+          "originalEndpointId": "endpoint_tasks.getTaskRuns",
           "name": "Fetch Task Runs",
           "path": {
             "pathParameters": [
@@ -38050,7 +38371,7 @@
           "description": "Run a specified Task against provided text and/or image input. The response is controlled by the `output_format` of the Task. Note that a Task must be `enabled` to be run.",
           "method": "POST",
           "id": "runTask",
-          "originalEndpointId": "tasks.runTask",
+          "originalEndpointId": "endpoint_tasks.runTask",
           "name": "Run a Task",
           "path": {
             "pathParameters": [
@@ -38211,7 +38532,7 @@
           ],
           "examples": [
             {
-              "name": "0",
+              "name": "Example_0",
               "description": "",
               "path": "/org/org_id/project/project_id/task/task_id/run",
               "pathParameters": {
@@ -38300,7 +38621,7 @@
           "description": "Lists all members that have been granted direct access to the task.",
           "method": "GET",
           "id": "task_iam_list_members",
-          "originalEndpointId": "tasks.task_iam_list_members",
+          "originalEndpointId": "endpoint_tasks.task_iam_list_members",
           "name": "IAM - List Task Members",
           "path": {
             "pathParameters": [
@@ -38499,7 +38820,7 @@
           "description": "Retrieve a specific member that has been granted direct access to the task.",
           "method": "GET",
           "id": "task_get_member",
-          "originalEndpointId": "tasks.task_get_member",
+          "originalEndpointId": "endpoint_tasks.task_get_member",
           "name": "IAM - Lookup Task Member",
           "path": {
             "pathParameters": [
@@ -38684,7 +39005,7 @@
           "description": "Update the roles that a member holds on the task.",
           "method": "POST",
           "id": "task_iam_update_member_roles",
-          "originalEndpointId": "tasks.task_iam_update_member_roles",
+          "originalEndpointId": "endpoint_tasks.task_iam_update_member_roles",
           "name": "IAM - Update Task Member",
           "path": {
             "pathParameters": [
@@ -38900,7 +39221,7 @@
           "description": "Test the permissions that the caller (or another subject) holds on the task.",
           "method": "POST",
           "id": "task_iam_test_permissions",
-          "originalEndpointId": "tasks.task_iam_test_permissions",
+          "originalEndpointId": "endpoint_tasks.task_iam_test_permissions",
           "name": "IAM - Test Task Permissions",
           "path": {
             "pathParameters": [
@@ -39100,7 +39421,7 @@
           "description": "Fetch an individual Task Run.",
           "method": "GET",
           "id": "getTaskRun",
-          "originalEndpointId": "tasks.getTaskRun",
+          "originalEndpointId": "endpoint_tasks.getTaskRun",
           "name": "Fetch Task Run",
           "path": {
             "pathParameters": [
@@ -39323,7 +39644,7 @@
           "auth": true,
           "method": "GET",
           "id": "getAllTaskForwarders",
-          "originalEndpointId": "task forwarders.getAllTaskForwarders",
+          "originalEndpointId": "endpoint_taskForwarders.getAllTaskForwarders",
           "name": "List all Task Forwarders",
           "path": {
             "pathParameters": [
@@ -39540,7 +39861,7 @@
           "description": "A Task Forwarder will receive the output of a Task and forward it to the specified destination. This can be used to send data to external systems, or to trigger other actions based on the output of a Task.",
           "method": "POST",
           "id": "createTaskForwarder",
-          "originalEndpointId": "task forwarders.createTaskForwarder",
+          "originalEndpointId": "endpoint_taskForwarders.createTaskForwarder",
           "name": "Create a Task Forwarder",
           "path": {
             "pathParameters": [
@@ -39737,7 +40058,7 @@
           "auth": true,
           "method": "GET",
           "id": "getTaskForwarder",
-          "originalEndpointId": "task forwarders.getTaskForwarder",
+          "originalEndpointId": "endpoint_taskForwarders.getTaskForwarder",
           "name": "Fetch a Task Forwarder",
           "path": {
             "pathParameters": [
@@ -39918,7 +40239,7 @@
           "auth": true,
           "method": "POST",
           "id": "updateTaskForwarder",
-          "originalEndpointId": "task forwarders.updateTaskForwarder",
+          "originalEndpointId": "endpoint_taskForwarders.updateTaskForwarder",
           "name": "Update a Task Forwarder",
           "path": {
             "pathParameters": [
@@ -40128,7 +40449,7 @@
           "description": "All supported LLM providers and models. Not all models have the same functionality.",
           "method": "GET",
           "id": "getAllModels",
-          "originalEndpointId": "listings.getAllModels",
+          "originalEndpointId": "endpoint_listings.getAllModels",
           "name": "List available LLM's",
           "path": {
             "pathParameters": [
@@ -40241,13 +40562,10 @@
           ],
           "examples": [
             {
-              "name": "0",
+              "name": "Example_0",
               "description": "",
-              "path": "/org/01902fbf-6de7-a1cc-fb86-b1230a7af301/project/01902fc0-a119-26bc-827d-4138841301db/model",
-              "pathParameters": {
-                "org_id": "01902fbf-6de7-a1cc-fb86-b1230a7af301",
-                "project_id": "01902fc0-a119-26bc-827d-4138841301db"
-              },
+              "path": "",
+              "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
@@ -40426,7 +40744,7 @@
           "auth": false,
           "method": "GET",
           "id": "list_available_guardrails_org__org_id__project__project_id__guardrail_get",
-          "originalEndpointId": "listings.list_available_guardrails_org__org_id__project__project_id__guardrail_get",
+          "originalEndpointId": "endpoint_listings.list_available_guardrails_org__org_id__project__project_id__guardrail_get",
           "name": "List Available Guardrails",
           "path": {
             "pathParameters": [
@@ -40558,7 +40876,7 @@
         "description": "Root endpoint that returns a \"Hello World\" message.",
         "method": "GET",
         "id": "root_ping_get",
-        "originalEndpointId": "root_ping_get",
+        "originalEndpointId": "endpoint_.root_ping_get",
         "name": "Root",
         "path": {
           "pathParameters": [],
@@ -40605,7 +40923,7 @@
         "auth": true,
         "method": "GET",
         "id": "whoami_whoami_get",
-        "originalEndpointId": "whoami_whoami_get",
+        "originalEndpointId": "endpoint_.whoami_whoami_get",
         "name": "Whoami",
         "path": {
           "pathParameters": [],

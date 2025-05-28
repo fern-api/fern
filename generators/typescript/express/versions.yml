@@ -1,5 +1,21 @@
 - changelogEntry:
   - summary: | 
+      Re-release `0.18.0-rc1`
+    type: fix
+  irVersion: 55
+  createdAt: '2025-05-22'
+  version: 0.18.0-rc2
+
+- changelogEntry:
+  - summary: | 
+      Re-release `0.18.0-rc1`
+    type: fix
+  irVersion: 55
+  createdAt: '2025-05-22'
+  version: 0.18.0-rc1
+
+- changelogEntry:
+  - summary: | 
       Remove extraneous `next` in the generated service.
     type: fix
   irVersion: 55

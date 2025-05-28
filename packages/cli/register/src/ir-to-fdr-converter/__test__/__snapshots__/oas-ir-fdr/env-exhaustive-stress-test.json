@@ -16,7 +16,7 @@
             }
           ],
           "id": "getAlpha",
-          "originalEndpointId": "alpha.getAlpha",
+          "originalEndpointId": "endpoint_alpha.getAlpha",
           "name": "Get Alpha",
           "path": {
             "pathParameters": [],
@@ -88,7 +88,7 @@
             }
           ],
           "id": "getBeta",
-          "originalEndpointId": "beta.getBeta",
+          "originalEndpointId": "endpoint_beta.getBeta",
           "name": "Get Beta",
           "path": {
             "pathParameters": [],
@@ -160,7 +160,7 @@
             }
           ],
           "id": "getGamma",
-          "originalEndpointId": "gamma.getGamma",
+          "originalEndpointId": "endpoint_gamma.getGamma",
           "name": "Get Gamma",
           "path": {
             "pathParameters": [],
@@ -232,7 +232,7 @@
             }
           ],
           "id": "getDelta",
-          "originalEndpointId": "delta.getDelta",
+          "originalEndpointId": "endpoint_delta.getDelta",
           "name": "Get Delta",
           "path": {
             "pathParameters": [],
@@ -304,7 +304,7 @@
             }
           ],
           "id": "getMu",
-          "originalEndpointId": "mu.getMu",
+          "originalEndpointId": "endpoint_mu.getMu",
           "name": "Get Mu",
           "path": {
             "pathParameters": [],
@@ -376,7 +376,7 @@
             }
           ],
           "id": "getOmega",
-          "originalEndpointId": "omega.getOmega",
+          "originalEndpointId": "endpoint_omega.getOmega",
           "name": "Get Omega",
           "path": {
             "pathParameters": [],
@@ -448,7 +448,7 @@
             }
           ],
           "id": "getZeta",
-          "originalEndpointId": "zeta.getZeta",
+          "originalEndpointId": "endpoint_zeta.getZeta",
           "name": "Get Zeta",
           "path": {
             "pathParameters": [],
@@ -520,7 +520,7 @@
             }
           ],
           "id": "getEta",
-          "originalEndpointId": "eta.getEta",
+          "originalEndpointId": "endpoint_eta.getEta",
           "name": "Get Eta",
           "path": {
             "pathParameters": [],

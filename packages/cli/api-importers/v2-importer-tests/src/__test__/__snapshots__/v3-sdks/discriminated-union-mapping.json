@@ -405,7 +405,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Get",
+          "id": "endpoint_.Get",
           "method": "GET",
           "name": {
             "originalName": "Get",
@@ -462,7 +462,6 @@
               },
               "typeId": "RequestOne",
               "inline": false,
-              "displayName": "A simple request title",
               "type": "named"
             },
             "v2Examples": {
@@ -743,7 +742,7 @@
           }
         },
         {
-          "id": "Post",
+          "id": "endpoint_.Post",
           "method": "POST",
           "name": {
             "originalName": "Post",

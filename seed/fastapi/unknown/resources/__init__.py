@@ -4,5 +4,4 @@
 
 from . import unknown
 from .unknown import MyAlias, MyObject
-
 __all__ = ["MyAlias", "MyObject", "unknown"]

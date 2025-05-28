@@ -144,10 +144,13 @@
                   "description": "How many items to return at one time (max 100)",
                   "key": "limit",
                   "valueType": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "integer",
-                      "minimum": 1
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "integer",
+                        "minimum": 1
+                      }
                     }
                   }
                 }
@@ -267,9 +270,12 @@
                   "description": "Pet tag to create",
                   "key": "newPetTag",
                   "valueType": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
                   }
                 }

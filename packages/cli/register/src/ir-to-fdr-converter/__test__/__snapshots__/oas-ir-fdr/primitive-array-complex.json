@@ -25,7 +25,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -41,7 +41,7 @@
         "auth": false,
         "method": "GET",
         "id": "getSearchWithArrayUnion",
-        "originalEndpointId": "getSearchWithArrayUnion",
+        "originalEndpointId": "endpoint_.getSearchWithArrayUnion",
         "name": "Get Search With Array Union",
         "path": {
           "pathParameters": [],
@@ -126,7 +126,7 @@
         "auth": false,
         "method": "GET",
         "id": "getSearchWithObjectUnion",
-        "originalEndpointId": "getSearchWithObjectUnion",
+        "originalEndpointId": "endpoint_.getSearchWithObjectUnion",
         "name": "Get Search With Object Union",
         "path": {
           "pathParameters": [],

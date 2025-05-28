@@ -28,8 +28,8 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
     private readonly operations: Record<string, AsyncAPIV3.Operation>;
     protected inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
 
-    constructor({ context, breadcrumbs, channel, channelPath, operations, group }: ChannelConverter3_0.Args) {
-        super({ context, breadcrumbs, channel, channelPath, group });
+    constructor({ context, breadcrumbs, websocketGroup, channel, channelPath, operations }: ChannelConverter3_0.Args) {
+        super({ context, breadcrumbs, websocketGroup, channel, channelPath });
         this.operations = operations;
     }
 
@@ -43,7 +43,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             channel: this.channel,
             context: this.context
         });
-        const displayName = displayNameExtension.convert() ?? this.channelPath;
+        const displayName = displayNameExtension.convert() ?? this.websocketGroup?.join(".") ?? this.channelPath;
 
         if (this.channel.parameters) {
             this.convertChannelParameters({

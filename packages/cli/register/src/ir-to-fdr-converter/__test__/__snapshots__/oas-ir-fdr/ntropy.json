@@ -37,7 +37,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -49,7 +49,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -451,7 +451,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -464,7 +464,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -518,7 +518,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -531,7 +531,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -706,7 +706,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 0
               }
             }
@@ -735,7 +735,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -2855,7 +2855,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -2868,7 +2868,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3148,7 +3148,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -3158,7 +3158,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -3168,7 +3168,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -3570,7 +3570,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 0
               }
             }
@@ -3755,7 +3755,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 0
               }
             }
@@ -4172,7 +4172,8 @@
             "type": {
               "type": "id",
               "value": "FnCall"
-            }
+            },
+            "displayName": "function"
           }
         ]
       }
@@ -4636,147 +4637,168 @@
             "type": {
               "type": "id",
               "value": "FnCall0"
-            }
+            },
+            "displayName": "&&"
           },
           {
             "typeName": "FnCall1",
             "type": {
               "type": "id",
               "value": "FnCall1"
-            }
+            },
+            "displayName": "||"
           },
           {
             "typeName": "FnCall2",
             "type": {
               "type": "id",
               "value": "FnCall2"
-            }
+            },
+            "displayName": "=="
           },
           {
             "typeName": "FnCall3",
             "type": {
               "type": "id",
               "value": "FnCall3"
-            }
+            },
+            "displayName": "+"
           },
           {
             "typeName": "FnCall4",
             "type": {
               "type": "id",
               "value": "FnCall4"
-            }
+            },
+            "displayName": "-"
           },
           {
             "typeName": "FnCall5",
             "type": {
               "type": "id",
               "value": "FnCall5"
-            }
+            },
+            "displayName": "*"
           },
           {
             "typeName": "FnCall6",
             "type": {
               "type": "id",
               "value": "FnCall6"
-            }
+            },
+            "displayName": "/"
           },
           {
             "typeName": "FnCall7",
             "type": {
               "type": "id",
               "value": "FnCall7"
-            }
+            },
+            "displayName": "//"
           },
           {
             "typeName": "FnCall8",
             "type": {
               "type": "id",
               "value": "FnCall8"
-            }
+            },
+            "displayName": "<"
           },
           {
             "typeName": "FnCall9",
             "type": {
               "type": "id",
               "value": "FnCall9"
-            }
+            },
+            "displayName": "<="
           },
           {
             "typeName": "FnCall10",
             "type": {
               "type": "id",
               "value": "FnCall10"
-            }
+            },
+            "displayName": ">"
           },
           {
             "typeName": "FnCall11",
             "type": {
               "type": "id",
               "value": "FnCall11"
-            }
+            },
+            "displayName": ">="
           },
           {
             "typeName": "FnCall12",
             "type": {
               "type": "id",
               "value": "FnCall12"
-            }
+            },
+            "displayName": "!"
           },
           {
             "typeName": "FnCall13",
             "type": {
               "type": "id",
               "value": "FnCall13"
-            }
+            },
+            "displayName": "is_substring"
           },
           {
             "typeName": "FnCall14",
             "type": {
               "type": "id",
               "value": "FnCall14"
-            }
+            },
+            "displayName": "starts_with"
           },
           {
             "typeName": "FnCall15",
             "type": {
               "type": "id",
               "value": "FnCall15"
-            }
+            },
+            "displayName": "ends_with"
           },
           {
             "typeName": "FnCall16",
             "type": {
               "type": "id",
               "value": "FnCall16"
-            }
+            },
+            "displayName": "to_lower"
           },
           {
             "typeName": "FnCall17",
             "type": {
               "type": "id",
               "value": "FnCall17"
-            }
+            },
+            "displayName": "to_upper"
           },
           {
             "typeName": "FnCall18",
             "type": {
               "type": "id",
               "value": "FnCall18"
-            }
+            },
+            "displayName": "has_label"
           },
           {
             "typeName": "FnCall19",
             "type": {
               "type": "id",
               "value": "FnCall19"
-            }
+            },
+            "displayName": "has_mcc"
           },
           {
             "typeName": "FnCall20",
             "type": {
               "type": "id",
               "value": "FnCall20"
-            }
+            },
+            "displayName": "get property"
           }
         ]
       }
@@ -4791,21 +4813,24 @@
             "type": {
               "type": "id",
               "value": "If"
-            }
+            },
+            "displayName": "if"
           },
           {
             "typeName": "ModifyLabels",
             "type": {
               "type": "id",
               "value": "ModifyLabels"
-            }
+            },
+            "displayName": "modify labels"
           },
           {
             "typeName": "Setter",
             "type": {
               "type": "id",
               "value": "Setter"
-            }
+            },
+            "displayName": "set"
           }
         ]
       }
@@ -4970,42 +4995,48 @@
             "type": {
               "type": "id",
               "value": "ModifyLabels0"
-            }
+            },
+            "displayName": "add_label"
           },
           {
             "typeName": "ModifyLabels1",
             "type": {
               "type": "id",
               "value": "ModifyLabels1"
-            }
+            },
+            "displayName": "remove_label"
           },
           {
             "typeName": "ModifyLabels2",
             "type": {
               "type": "id",
               "value": "ModifyLabels2"
-            }
+            },
+            "displayName": "set_labels"
           },
           {
             "typeName": "ModifyLabels3",
             "type": {
               "type": "id",
               "value": "ModifyLabels3"
-            }
+            },
+            "displayName": "add_mcc"
           },
           {
             "typeName": "ModifyLabels4",
             "type": {
               "type": "id",
               "value": "ModifyLabels4"
-            }
+            },
+            "displayName": "remove_mcc"
           },
           {
             "typeName": "ModifyLabels5",
             "type": {
               "type": "id",
               "value": "ModifyLabels5"
-            }
+            },
+            "displayName": "set_mcc"
           }
         ]
       }
@@ -5092,7 +5123,7 @@
             }
           ],
           "id": "get_transaction_v3_transactions__id__get",
-          "originalEndpointId": "Transactions.get_transaction_v3_transactions__id__get",
+          "originalEndpointId": "endpoint_transactions.get_transaction_v3_transactions__id__get",
           "name": "Retrieve a transaction",
           "path": {
             "pathParameters": [
@@ -5303,7 +5334,7 @@
             }
           ],
           "id": "delete_transaction_v3_transactions__id__delete",
-          "originalEndpointId": "Transactions.delete_transaction_v3_transactions__id__delete",
+          "originalEndpointId": "endpoint_transactions.delete_transaction_v3_transactions__id__delete",
           "name": "Deletes a transaction",
           "path": {
             "pathParameters": [
@@ -5394,7 +5425,7 @@
             }
           ],
           "id": "list_transactions_v3_transactions_get",
-          "originalEndpointId": "Transactions.list_transactions_v3_transactions_get",
+          "originalEndpointId": "endpoint_transactions.list_transactions_v3_transactions_get",
           "name": "List all transactions",
           "path": {
             "pathParameters": [],
@@ -5654,7 +5685,7 @@
             }
           ],
           "id": "post_transactions_v3_transactions_post",
-          "originalEndpointId": "Transactions.post_transactions_v3_transactions_post",
+          "originalEndpointId": "endpoint_transactions.post_transactions_v3_transactions_post",
           "name": "Synchronously enrich transactions",
           "path": {
             "pathParameters": [],
@@ -5881,7 +5912,7 @@
             }
           ],
           "id": "set_transaction_ah_v3_transactions__id__assign_post",
-          "originalEndpointId": "Transactions.set_transaction_ah_v3_transactions__id__assign_post",
+          "originalEndpointId": "endpoint_transactions.set_transaction_ah_v3_transactions__id__assign_post",
           "name": "Assign a transaction to an account holder",
           "path": {
             "pathParameters": [
@@ -6124,7 +6155,7 @@
             }
           ],
           "id": "get_batches_v3_batches_get",
-          "originalEndpointId": "Batches.get_batches_v3_batches_get",
+          "originalEndpointId": "endpoint_batches.get_batches_v3_batches_get",
           "name": "List all batches",
           "path": {
             "pathParameters": [],
@@ -6292,7 +6323,7 @@
             }
           ],
           "id": "post_batch_v3_batches_post",
-          "originalEndpointId": "Batches.post_batch_v3_batches_post",
+          "originalEndpointId": "endpoint_batches.post_batch_v3_batches_post",
           "name": "Submit a batch of transactions",
           "path": {
             "pathParameters": [],
@@ -6422,7 +6453,7 @@
             }
           ],
           "id": "get_single_batch_v3_batches__id__get",
-          "originalEndpointId": "Batches.get_single_batch_v3_batches__id__get",
+          "originalEndpointId": "endpoint_batches.get_single_batch_v3_batches__id__get",
           "name": "Retrieve a batch",
           "path": {
             "pathParameters": [
@@ -6543,7 +6574,7 @@
             }
           ],
           "id": "get_batch_results_v3_batches__id__results_get",
-          "originalEndpointId": "Batches.get_batch_results_v3_batches__id__results_get",
+          "originalEndpointId": "endpoint_batches.get_batch_results_v3_batches__id__results_get",
           "name": "Retrieve the results of a batch",
           "path": {
             "pathParameters": [
@@ -6780,7 +6811,7 @@
             }
           ],
           "id": "get_bank_statements_v3_bank_statements_get",
-          "originalEndpointId": "Bank statements.get_bank_statements_v3_bank_statements_get",
+          "originalEndpointId": "endpoint_bankStatements.get_bank_statements_v3_bank_statements_get",
           "name": "List all bank statements",
           "path": {
             "pathParameters": [],
@@ -6952,7 +6983,7 @@
             }
           ],
           "id": "post_bank_statement_v3_bank_statements_post",
-          "originalEndpointId": "Bank statements.post_bank_statement_v3_bank_statements_post",
+          "originalEndpointId": "endpoint_bankStatements.post_bank_statement_v3_bank_statements_post",
           "name": "Submit a bank statement PDF",
           "path": {
             "pathParameters": [],
@@ -7076,7 +7107,7 @@
             }
           ],
           "id": "get_bank_statement_v3_bank_statements__id__get",
-          "originalEndpointId": "Bank statements.get_bank_statement_v3_bank_statements__id__get",
+          "originalEndpointId": "endpoint_bankStatements.get_bank_statement_v3_bank_statements__id__get",
           "name": "Retrieve a bank statement",
           "path": {
             "pathParameters": [
@@ -7200,7 +7231,7 @@
             }
           ],
           "id": "delete_bank_statement_v3_bank_statements__id__delete",
-          "originalEndpointId": "Bank statements.delete_bank_statement_v3_bank_statements__id__delete",
+          "originalEndpointId": "endpoint_bankStatements.delete_bank_statement_v3_bank_statements__id__delete",
           "name": "Deletes a bank statement",
           "path": {
             "pathParameters": [
@@ -7291,7 +7322,7 @@
             }
           ],
           "id": "get_bank_statement_statement_info_v3_bank_statements__id__overview_post",
-          "originalEndpointId": "Bank statements.get_bank_statement_statement_info_v3_bank_statements__id__overview_post",
+          "originalEndpointId": "endpoint_bankStatements.get_bank_statement_statement_info_v3_bank_statements__id__overview_post",
           "name": "Quickly extract account holder, institution and first account",
           "path": {
             "pathParameters": [
@@ -7446,7 +7477,7 @@
             }
           ],
           "id": "get_bank_statement_result_v3_bank_statements__id__results_get",
-          "originalEndpointId": "Bank statements.get_bank_statement_result_v3_bank_statements__id__results_get",
+          "originalEndpointId": "endpoint_bankStatements.get_bank_statement_result_v3_bank_statements__id__results_get",
           "name": "Retrieve the extraction results",
           "path": {
             "pathParameters": [
@@ -7610,7 +7641,7 @@
             }
           ],
           "id": "get_account_holder_v3_account_holders__id__get",
-          "originalEndpointId": "Account Holders.get_account_holder_v3_account_holders__id__get",
+          "originalEndpointId": "endpoint_accountHolders.get_account_holder_v3_account_holders__id__get",
           "name": "Retrieve an account holder.",
           "path": {
             "pathParameters": [
@@ -7727,7 +7758,7 @@
             }
           ],
           "id": "delete_account_holder_v3_account_holders__id__delete",
-          "originalEndpointId": "Account Holders.delete_account_holder_v3_account_holders__id__delete",
+          "originalEndpointId": "endpoint_accountHolders.delete_account_holder_v3_account_holders__id__delete",
           "name": "Deletes an account holder and their transactions",
           "path": {
             "pathParameters": [
@@ -7817,7 +7848,7 @@
             }
           ],
           "id": "get_account_holders_v3_account_holders_get",
-          "originalEndpointId": "Account Holders.get_account_holders_v3_account_holders_get",
+          "originalEndpointId": "endpoint_accountHolders.get_account_holders_v3_account_holders_get",
           "name": "List all account holders.",
           "path": {
             "pathParameters": [],
@@ -7969,7 +8000,7 @@
             }
           ],
           "id": "create_account_holder_v3_account_holders_post",
-          "originalEndpointId": "Account Holders.create_account_holder_v3_account_holders_post",
+          "originalEndpointId": "endpoint_accountHolders.create_account_holder_v3_account_holders_post",
           "name": "Create an account holder.",
           "path": {
             "pathParameters": [],
@@ -8100,7 +8131,7 @@
             }
           ],
           "id": "get_account_holder_recurring_payments_v3_account_holders__id__recurring_groups_post",
-          "originalEndpointId": "Recurrence.get_account_holder_recurring_payments_v3_account_holders__id__recurring_groups_post",
+          "originalEndpointId": "endpoint_recurrence.get_account_holder_recurring_payments_v3_account_holders__id__recurring_groups_post",
           "name": "Find recurring groups in a transaction history",
           "path": {
             "pathParameters": [
@@ -8274,7 +8305,7 @@
             }
           ],
           "id": "get_webhooks_v3_webhooks_get",
-          "originalEndpointId": "Webhooks.get_webhooks_v3_webhooks_get",
+          "originalEndpointId": "endpoint_webhooks.get_webhooks_v3_webhooks_get",
           "name": "List all webhooks",
           "path": {
             "pathParameters": [],
@@ -8379,7 +8410,7 @@
             }
           ],
           "id": "post_webhook_v3_webhooks_post",
-          "originalEndpointId": "Webhooks.post_webhook_v3_webhooks_post",
+          "originalEndpointId": "endpoint_webhooks.post_webhook_v3_webhooks_post",
           "name": "Create a webhook",
           "path": {
             "pathParameters": [],
@@ -8502,7 +8533,7 @@
             }
           ],
           "id": "get_webhook_v3_webhooks__id__get",
-          "originalEndpointId": "Webhooks.get_webhook_v3_webhooks__id__get",
+          "originalEndpointId": "endpoint_webhooks.get_webhook_v3_webhooks__id__get",
           "name": "Retrieve a webhook",
           "path": {
             "pathParameters": [
@@ -8617,7 +8648,7 @@
             }
           ],
           "id": "delete_webhook_v3_webhooks__id__delete",
-          "originalEndpointId": "Webhooks.delete_webhook_v3_webhooks__id__delete",
+          "originalEndpointId": "endpoint_webhooks.delete_webhook_v3_webhooks__id__delete",
           "name": "Delete a webhook",
           "path": {
             "pathParameters": [
@@ -8708,7 +8739,7 @@
             }
           ],
           "id": "patch_webhook_v3_webhooks__id__patch",
-          "originalEndpointId": "Webhooks.patch_webhook_v3_webhooks__id__patch",
+          "originalEndpointId": "endpoint_webhooks.patch_webhook_v3_webhooks__id__patch",
           "name": "Update a webhook",
           "path": {
             "pathParameters": [
@@ -8851,7 +8882,7 @@
             }
           ],
           "id": "filter_get_v3_rules_get",
-          "originalEndpointId": "Personalization.filter_get_v3_rules_get",
+          "originalEndpointId": "endpoint_personalization.filter_get_v3_rules_get",
           "name": "Get the current personalization ruleset.",
           "path": {
             "pathParameters": [],
@@ -8906,29 +8937,21 @@
               "responseBody": [
                 {
                   "if": {
-                    "&&": [
-                      {
-                        "&&": [
-                          null
-                        ]
-                      }
-                    ]
+                    "!": {
+                      "!": {}
+                    }
                   },
                   "then": [
                     {
                       "if": {
-                        "&&": [
-                          {}
-                        ]
+                        "!": {}
                       }
                     }
                   ],
                   "else": [
                     {
                       "if": {
-                        "&&": [
-                          {}
-                        ]
+                        "!": {}
                       }
                     }
                   ]
@@ -8939,29 +8962,21 @@
                 "value": [
                   {
                     "if": {
-                      "&&": [
-                        {
-                          "&&": [
-                            null
-                          ]
-                        }
-                      ]
+                      "!": {
+                        "!": {}
+                      }
                     },
                     "then": [
                       {
                         "if": {
-                          "&&": [
-                            {}
-                          ]
+                          "!": {}
                         }
                       }
                     ],
                     "else": [
                       {
                         "if": {
-                          "&&": [
-                            {}
-                          ]
+                          "!": {}
                         }
                       }
                     ]
@@ -8986,7 +9001,7 @@
             }
           ],
           "id": "filter_post_v3_rules_post",
-          "originalEndpointId": "Personalization.filter_post_v3_rules_post",
+          "originalEndpointId": "endpoint_personalization.filter_post_v3_rules_post",
           "name": "Set the personalization ruleset.",
           "path": {
             "pathParameters": [],
@@ -9076,29 +9091,21 @@
               "requestBody": [
                 {
                   "if": {
-                    "&&": [
-                      {
-                        "&&": [
-                          null
-                        ]
-                      }
-                    ]
+                    "!": {
+                      "!": {}
+                    }
                   },
                   "then": [
                     {
                       "if": {
-                        "&&": [
-                          {}
-                        ]
+                        "!": {}
                       }
                     }
                   ],
                   "else": [
                     {
                       "if": {
-                        "&&": [
-                          {}
-                        ]
+                        "!": {}
                       }
                     }
                   ]
@@ -9109,29 +9116,21 @@
                 "value": [
                   {
                     "if": {
-                      "&&": [
-                        {
-                          "&&": [
-                            null
-                          ]
-                        }
-                      ]
+                      "!": {
+                        "!": {}
+                      }
                     },
                     "then": [
                       {
                         "if": {
-                          "&&": [
-                            {}
-                          ]
+                          "!": {}
                         }
                       }
                     ],
                     "else": [
                       {
                         "if": {
-                          "&&": [
-                            {}
-                          ]
+                          "!": {}
                         }
                       }
                     ]
@@ -9157,7 +9156,7 @@
             }
           ],
           "id": "filter_append_v3_rules_append_post",
-          "originalEndpointId": "Personalization.filter_append_v3_rules_append_post",
+          "originalEndpointId": "endpoint_personalization.filter_append_v3_rules_append_post",
           "name": "Append a rule.",
           "path": {
             "pathParameters": [],
@@ -9246,26 +9245,18 @@
               "headers": {},
               "requestBody": {
                 "if": {
-                  "&&": [
-                    {
-                      "&&": [
-                        {}
-                      ]
-                    }
-                  ]
+                  "!": {
+                    "!": {}
+                  }
                 }
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "if": {
-                    "&&": [
-                      {
-                        "&&": [
-                          {}
-                        ]
-                      }
-                    ]
+                    "!": {
+                      "!": {}
+                    }
                   }
                 }
               },
@@ -9288,7 +9279,7 @@
             }
           ],
           "id": "filter_delete_v3_rules__index__delete",
-          "originalEndpointId": "Personalization.filter_delete_v3_rules__index__delete",
+          "originalEndpointId": "endpoint_personalization.filter_delete_v3_rules__index__delete",
           "name": "Delete a rule.",
           "path": {
             "pathParameters": [
@@ -9389,7 +9380,7 @@
             }
           ],
           "id": "filter_patch_v3_rules__index__patch",
-          "originalEndpointId": "Personalization.filter_patch_v3_rules__index__patch",
+          "originalEndpointId": "endpoint_personalization.filter_patch_v3_rules__index__patch",
           "name": "Modify an existing rule.",
           "path": {
             "pathParameters": [
@@ -9486,26 +9477,18 @@
               "headers": {},
               "requestBody": {
                 "if": {
-                  "&&": [
-                    {
-                      "&&": [
-                        {}
-                      ]
-                    }
-                  ]
+                  "!": {
+                    "!": {}
+                  }
                 }
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "if": {
-                    "&&": [
-                      {
-                        "&&": [
-                          {}
-                        ]
-                      }
-                    ]
+                    "!": {
+                      "!": {}
+                    }
                   }
                 }
               },
@@ -9538,7 +9521,7 @@
             }
           ],
           "id": "get_reports_v3_reports_get",
-          "originalEndpointId": "Reports.get_reports_v3_reports_get",
+          "originalEndpointId": "endpoint_reports.get_reports_v3_reports_get",
           "name": "List all reports",
           "path": {
             "pathParameters": [],
@@ -9712,7 +9695,7 @@
             }
           ],
           "id": "post_report_v3_reports_post",
-          "originalEndpointId": "Reports.post_report_v3_reports_post",
+          "originalEndpointId": "endpoint_reports.post_report_v3_reports_post",
           "name": "Create a report",
           "path": {
             "pathParameters": [],
@@ -9835,7 +9818,7 @@
             }
           ],
           "id": "get_report_v3_reports__id__get",
-          "originalEndpointId": "Reports.get_report_v3_reports__id__get",
+          "originalEndpointId": "endpoint_reports.get_report_v3_reports__id__get",
           "name": "Retrieve a report",
           "path": {
             "pathParameters": [
@@ -9960,7 +9943,7 @@
             }
           ],
           "id": "delete_report_v3_reports__id__delete",
-          "originalEndpointId": "Reports.delete_report_v3_reports__id__delete",
+          "originalEndpointId": "endpoint_reports.delete_report_v3_reports__id__delete",
           "name": "Delete a report",
           "path": {
             "pathParameters": [
@@ -10061,7 +10044,7 @@
             }
           ],
           "id": "get_category_set_v3_categories__account_holder_type__get",
-          "originalEndpointId": "Categories.get_category_set_v3_categories__account_holder_type__get",
+          "originalEndpointId": "endpoint_categories.get_category_set_v3_categories__account_holder_type__get",
           "name": "Retrieve category set",
           "path": {
             "pathParameters": [
@@ -10210,7 +10193,7 @@
             }
           ],
           "id": "custom_categories_post_v3_categories__account_holder_type__post",
-          "originalEndpointId": "Categories.custom_categories_post_v3_categories__account_holder_type__post",
+          "originalEndpointId": "endpoint_categories.custom_categories_post_v3_categories__account_holder_type__post",
           "name": "Set a custom set of categories",
           "path": {
             "pathParameters": [
@@ -10369,7 +10352,7 @@
             }
           ],
           "id": "delete_custom_category_set_v3_categories__account_holder_type__reset_post",
-          "originalEndpointId": "Categories.delete_custom_category_set_v3_categories__account_holder_type__reset_post",
+          "originalEndpointId": "endpoint_categories.delete_custom_category_set_v3_categories__account_holder_type__reset_post",
           "name": "Reset category set to original values",
           "path": {
             "pathParameters": [
@@ -10528,7 +10511,7 @@
             }
           ],
           "id": "search_entity_v3_entities_lookup_get",
-          "originalEndpointId": "Entities.search_entity_v3_entities_lookup_get",
+          "originalEndpointId": "endpoint_entities.search_entity_v3_entities_lookup_get",
           "name": "Searches for an entity",
           "path": {
             "pathParameters": [],
@@ -10683,7 +10666,7 @@
             }
           ],
           "id": "get_entity_by_id_v3_entities__id__get",
-          "originalEndpointId": "Entities.get_entity_by_id_v3_entities__id__get",
+          "originalEndpointId": "endpoint_entities.get_entity_by_id_v3_entities__id__get",
           "name": "Retrieve an entity",
           "path": {
             "pathParameters": [

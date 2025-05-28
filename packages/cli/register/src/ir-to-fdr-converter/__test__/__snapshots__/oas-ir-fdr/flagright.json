@@ -115,7 +115,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 1262300400000,
                 "maximum": 4133890801000
               }
@@ -391,7 +391,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -404,7 +404,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -497,63 +497,72 @@
             "type": {
               "type": "id",
               "value": "CardDetails"
-            }
+            },
+            "displayName": "CardDetails"
           },
           {
             "typeName": "GenericBankAccountDetails",
             "type": {
               "type": "id",
               "value": "GenericBankAccountDetails"
-            }
+            },
+            "displayName": "GenericBankAccountDetails"
           },
           {
             "typeName": "IBANDetails",
             "type": {
               "type": "id",
               "value": "IBANDetails"
-            }
+            },
+            "displayName": "IBANDetails"
           },
           {
             "typeName": "ACHDetails",
             "type": {
               "type": "id",
               "value": "ACHDetails"
-            }
+            },
+            "displayName": "ACHDetails"
           },
           {
             "typeName": "SWIFTDetails",
             "type": {
               "type": "id",
               "value": "SWIFTDetails"
-            }
+            },
+            "displayName": "SWIFTDetails"
           },
           {
             "typeName": "MpesaDetails",
             "type": {
               "type": "id",
               "value": "MpesaDetails"
-            }
+            },
+            "displayName": "MpesaDetails"
           },
           {
             "typeName": "UPIDetails",
             "type": {
               "type": "id",
               "value": "UPIDetails"
-            }
+            },
+            "displayName": "UPIDetails"
           },
           {
             "typeName": "WalletDetails",
             "type": {
               "type": "id",
               "value": "WalletDetails"
-            }
+            },
+            "displayName": "WalletDetails"
           },
           {
             "typeName": "CheckDetails",
             "type": {
               "type": "id",
               "value": "CheckDetails"
-            }
+            },
+            "displayName": "CheckDetails"
           }
         ]
       }
@@ -569,63 +578,72 @@
             "type": {
               "type": "id",
               "value": "CardDetails"
-            }
+            },
+            "displayName": "CardDetails"
           },
           {
             "typeName": "GenericBankAccountDetails",
             "type": {
               "type": "id",
               "value": "GenericBankAccountDetails"
-            }
+            },
+            "displayName": "GenericBankAccountDetails"
           },
           {
             "typeName": "IBANDetails",
             "type": {
               "type": "id",
               "value": "IBANDetails"
-            }
+            },
+            "displayName": "IBANDetails"
           },
           {
             "typeName": "ACHDetails",
             "type": {
               "type": "id",
               "value": "ACHDetails"
-            }
+            },
+            "displayName": "ACHDetails"
           },
           {
             "typeName": "UPIDetails",
             "type": {
               "type": "id",
               "value": "UPIDetails"
-            }
+            },
+            "displayName": "UPIDetails"
           },
           {
             "typeName": "WalletDetails",
             "type": {
               "type": "id",
               "value": "WalletDetails"
-            }
+            },
+            "displayName": "WalletDetails"
           },
           {
             "typeName": "SWIFTDetails",
             "type": {
               "type": "id",
               "value": "SWIFTDetails"
-            }
+            },
+            "displayName": "SWIFTDetails"
           },
           {
             "typeName": "MpesaDetails",
             "type": {
               "type": "id",
               "value": "MpesaDetails"
-            }
+            },
+            "displayName": "MpesaDetails"
           },
           {
             "typeName": "CheckDetails",
             "type": {
               "type": "id",
               "value": "CheckDetails"
-            }
+            },
+            "displayName": "CheckDetails"
           }
         ]
       }
@@ -806,7 +824,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 1262300400000,
                 "maximum": 4133890801000
               }
@@ -888,7 +906,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -901,7 +919,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -914,7 +932,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -1420,7 +1438,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -1430,7 +1448,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -1442,7 +1460,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -1512,7 +1530,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -1549,7 +1567,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -2083,7 +2101,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 1262300400000,
                 "maximum": 4133890801000
               }
@@ -2102,63 +2120,72 @@
             "type": {
               "type": "id",
               "value": "CardDetails"
-            }
+            },
+            "displayName": "CardDetails"
           },
           {
             "typeName": "GenericBankAccountDetails",
             "type": {
               "type": "id",
               "value": "GenericBankAccountDetails"
-            }
+            },
+            "displayName": "GenericBankAccountDetails"
           },
           {
             "typeName": "IBANDetails",
             "type": {
               "type": "id",
               "value": "IBANDetails"
-            }
+            },
+            "displayName": "IBANDetails"
           },
           {
             "typeName": "ACHDetails",
             "type": {
               "type": "id",
               "value": "ACHDetails"
-            }
+            },
+            "displayName": "ACHDetails"
           },
           {
             "typeName": "SWIFTDetails",
             "type": {
               "type": "id",
               "value": "SWIFTDetails"
-            }
+            },
+            "displayName": "SWIFTDetails"
           },
           {
             "typeName": "MpesaDetails",
             "type": {
               "type": "id",
               "value": "MpesaDetails"
-            }
+            },
+            "displayName": "MpesaDetails"
           },
           {
             "typeName": "UPIDetails",
             "type": {
               "type": "id",
               "value": "UPIDetails"
-            }
+            },
+            "displayName": "UPIDetails"
           },
           {
             "typeName": "WalletDetails",
             "type": {
               "type": "id",
               "value": "WalletDetails"
-            }
+            },
+            "displayName": "WalletDetails"
           },
           {
             "typeName": "CheckDetails",
             "type": {
               "type": "id",
               "value": "CheckDetails"
-            }
+            },
+            "displayName": "CheckDetails"
           }
         ]
       }
@@ -3616,7 +3643,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 1262300400000,
                 "maximum": 4133890801000
               }
@@ -3708,7 +3735,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 1262300400000,
                 "maximum": 4133890801000
               }
@@ -3790,7 +3817,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 1262300400000,
                 "maximum": 4133890801000
               }
@@ -3916,7 +3943,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 1262300400000
               }
             }
@@ -3998,7 +4025,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4008,7 +4035,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -4018,7 +4045,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -4645,7 +4672,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -4657,7 +4684,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -4701,7 +4728,8 @@
             "type": {
               "type": "id",
               "value": "UserStateDetails"
-            }
+            },
+            "displayName": "UserStateDetails"
           }
         ]
       }
@@ -4740,7 +4768,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer",
+                "type": "double",
                 "minimum": 1262300400000
               }
             }
@@ -5043,7 +5071,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -5052,7 +5080,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -5281,7 +5309,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "minimum": 1262300400000
                 }
               }
@@ -6888,7 +6916,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -6921,7 +6949,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -6933,7 +6961,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -6945,7 +6973,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -6957,7 +6985,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -7073,7 +7101,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -7372,7 +7400,7 @@
           }
         ],
         "id": "post-consumer-transaction",
-        "originalEndpointId": "post-consumer-transaction",
+        "originalEndpointId": "endpoint_.post-consumer-transaction",
         "name": "Verify a Transaction",
         "path": {
           "pathParameters": [],
@@ -7622,7 +7650,7 @@
           }
         ],
         "id": "get-consumer-transaction",
-        "originalEndpointId": "get-consumer-transaction",
+        "originalEndpointId": "endpoint_.get-consumer-transaction",
         "name": "Retrieve a Transaction",
         "path": {
           "pathParameters": [
@@ -7842,7 +7870,7 @@
           }
         ],
         "id": "post-transaction-event",
-        "originalEndpointId": "post-transaction-event",
+        "originalEndpointId": "endpoint_.post-transaction-event",
         "name": "Create a Transaction Event",
         "path": {
           "pathParameters": [],
@@ -8105,7 +8133,7 @@
           }
         ],
         "id": "post-consumer-user",
-        "originalEndpointId": "post-consumer-user",
+        "originalEndpointId": "endpoint_.post-consumer-user",
         "name": "Create a Consumer User",
         "path": {
           "pathParameters": [],
@@ -8365,7 +8393,7 @@
           }
         ],
         "id": "get-consumer-user",
-        "originalEndpointId": "get-consumer-user",
+        "originalEndpointId": "endpoint_.get-consumer-user",
         "name": "Retrieve a Consumer User",
         "path": {
           "pathParameters": [
@@ -8571,7 +8599,7 @@
           }
         ],
         "id": "post-business-user",
-        "originalEndpointId": "post-business-user",
+        "originalEndpointId": "endpoint_.post-business-user",
         "name": "Create a Business User",
         "path": {
           "pathParameters": [],
@@ -8713,7 +8741,7 @@
           }
         ],
         "id": "get-business-user-userId",
-        "originalEndpointId": "get-business-user-userId",
+        "originalEndpointId": "endpoint_.get-business-user-userId",
         "name": "Retrieve a Business User",
         "path": {
           "pathParameters": [
@@ -9159,7 +9187,7 @@
           }
         ],
         "id": "post-user-event",
-        "originalEndpointId": "post-user-event",
+        "originalEndpointId": "endpoint_.post-user-event",
         "name": "Create a Consumer User Event",
         "path": {
           "pathParameters": [],
@@ -10409,7 +10437,7 @@
           }
         ],
         "id": "post-business-user-event",
-        "originalEndpointId": "post-business-user-event",
+        "originalEndpointId": "endpoint_.post-business-user-event",
         "name": "Create a Business User Event",
         "path": {
           "pathParameters": [],

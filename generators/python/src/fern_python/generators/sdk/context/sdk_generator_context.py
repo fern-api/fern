@@ -189,6 +189,9 @@ class SdkGeneratorContext(ABC):
     def resolved_schema_is_optional_enum(self, reference: ir_types.TypeReference) -> bool: ...
 
     @abstractmethod
+    def resolved_schema_is_optional_or_unknown(self, reference: ir_types.TypeReference) -> bool: ...
+
+    @abstractmethod
     def get_types(self) -> Dict[ir_types.TypeId, ir_types.TypeDeclaration]: ...
 
     @abstractmethod

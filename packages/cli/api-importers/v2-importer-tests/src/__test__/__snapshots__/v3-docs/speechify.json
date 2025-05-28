@@ -3965,7 +3965,6 @@
                   },
                   "typeId": "SpeechMarks",
                   "inline": false,
-                  "displayName": "SpeechMarks holds the structured data of speech synthesis marks.",
                   "type": "named"
                 },
                 "type": "optional"
@@ -6429,7 +6428,6 @@
                       },
                       "typeId": "NestedChunk",
                       "inline": false,
-                      "displayName": "NestedChunk represents a detailed segment within the synthesized speech.",
                       "type": "named"
                     },
                     "type": "list"
@@ -6913,7 +6911,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "audio.ExperimentalStreamCreate",
+          "id": "endpoint_audio.ExperimentalStreamCreate",
           "method": "POST",
           "name": {
             "originalName": "ExperimentalStreamCreate",
@@ -7476,7 +7474,7 @@
           }
         },
         {
-          "id": "audio.GetSpeech",
+          "id": "endpoint_audio.GetSpeech",
           "method": "POST",
           "name": {
             "originalName": "GetSpeech",
@@ -8211,7 +8209,7 @@
           }
         },
         {
-          "id": "audio.GetStream",
+          "id": "endpoint_audio.GetStream",
           "method": "POST",
           "name": {
             "originalName": "GetStream",
@@ -9058,7 +9056,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "auth.CreateAccessToken",
+          "id": "endpoint_auth.CreateAccessToken",
           "method": "POST",
           "name": {
             "originalName": "CreateAccessToken",
@@ -9471,7 +9469,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "apikey.ListAPIKeys",
+          "id": "endpoint_apikey.ListAPIKeys",
           "method": "GET",
           "name": {
             "originalName": "ListAPIKeys",
@@ -9553,7 +9551,7 @@
           }
         },
         {
-          "id": "apikey.CreateAPIKey",
+          "id": "endpoint_apikey.CreateAPIKey",
           "method": "POST",
           "name": {
             "originalName": "CreateAPIKey",
@@ -9635,7 +9633,7 @@
           }
         },
         {
-          "id": "apikey.DeleteAPIKey",
+          "id": "endpoint_apikey.DeleteAPIKey",
           "method": "DELETE",
           "name": {
             "originalName": "DeleteAPIKey",
@@ -9843,7 +9841,7 @@
           }
         },
         {
-          "id": "apikey.UpdateApiKey",
+          "id": "endpoint_apikey.UpdateApiKey",
           "method": "PATCH",
           "name": {
             "originalName": "UpdateApiKey",
@@ -10140,7 +10138,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "voices.GetVoices",
+          "id": "endpoint_voices.GetVoices",
           "method": "GET",
           "name": {
             "originalName": "GetVoices",
@@ -10281,7 +10279,7 @@
           }
         },
         {
-          "id": "voices.CreateVoice",
+          "id": "endpoint_voices.CreateVoice",
           "method": "POST",
           "name": {
             "originalName": "CreateVoice",
@@ -10589,7 +10587,7 @@
           }
         },
         {
-          "id": "voices.DeleteVoice",
+          "id": "endpoint_voices.DeleteVoice",
           "method": "DELETE",
           "name": {
             "originalName": "DeleteVoice",

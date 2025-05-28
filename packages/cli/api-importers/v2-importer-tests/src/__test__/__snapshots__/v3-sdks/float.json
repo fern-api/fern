@@ -254,7 +254,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Post",
+          "id": "endpoint_.Post",
           "method": "POST",
           "name": {
             "originalName": "Post",

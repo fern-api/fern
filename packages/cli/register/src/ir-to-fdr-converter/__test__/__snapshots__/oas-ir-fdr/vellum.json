@@ -822,28 +822,32 @@
             "type": {
               "type": "id",
               "value": "InitiatedExecutePromptEvent"
-            }
+            },
+            "displayName": "INITIATED"
           },
           {
             "typeName": "StreamingExecutePromptEvent",
             "type": {
               "type": "id",
               "value": "StreamingExecutePromptEvent"
-            }
+            },
+            "displayName": "STREAMING"
           },
           {
             "typeName": "FulfilledExecutePromptEvent",
             "type": {
               "type": "id",
               "value": "FulfilledExecutePromptEvent"
-            }
+            },
+            "displayName": "FULFILLED"
           },
           {
             "typeName": "RejectedExecutePromptEvent",
             "type": {
               "type": "id",
               "value": "RejectedExecutePromptEvent"
-            }
+            },
+            "displayName": "REJECTED"
           }
         ]
       }
@@ -1117,28 +1121,32 @@
             "type": {
               "type": "id",
               "value": "StringVellumValue"
-            }
+            },
+            "displayName": "STRING"
           },
           {
             "typeName": "JsonVellumValue",
             "type": {
               "type": "id",
               "value": "JsonVellumValue"
-            }
+            },
+            "displayName": "JSON"
           },
           {
             "typeName": "ErrorVellumValue",
             "type": {
               "type": "id",
               "value": "ErrorVellumValue"
-            }
+            },
+            "displayName": "ERROR"
           },
           {
             "typeName": "FunctionCallVellumValue",
             "type": {
               "type": "id",
               "value": "FunctionCallVellumValue"
-            }
+            },
+            "displayName": "FUNCTION_CALL"
           }
         ]
       }
@@ -5094,21 +5102,24 @@
             "type": {
               "type": "id",
               "value": "TerminalNodeStringResult"
-            }
+            },
+            "displayName": "STRING"
           },
           {
             "typeName": "TerminalNodeJsonResult",
             "type": {
               "type": "id",
               "value": "TerminalNodeJsonResult"
-            }
+            },
+            "displayName": "JSON"
           },
           {
             "typeName": "TerminalNodeChatHistoryResult",
             "type": {
               "type": "id",
               "value": "TerminalNodeChatHistoryResult"
-            }
+            },
+            "displayName": "CHAT_HISTORY"
           }
         ]
       }
@@ -5673,42 +5684,48 @@
             "type": {
               "type": "id",
               "value": "PromptNodeResult"
-            }
+            },
+            "displayName": "PROMPT"
           },
           {
             "typeName": "SandboxNodeResult",
             "type": {
               "type": "id",
               "value": "SandboxNodeResult"
-            }
+            },
+            "displayName": "SANDBOX"
           },
           {
             "typeName": "DeploymentNodeResult",
             "type": {
               "type": "id",
               "value": "DeploymentNodeResult"
-            }
+            },
+            "displayName": "DEPLOYMENT"
           },
           {
             "typeName": "SearchNodeResult",
             "type": {
               "type": "id",
               "value": "SearchNodeResult"
-            }
+            },
+            "displayName": "SEARCH"
           },
           {
             "typeName": "ConditionalNodeResult",
             "type": {
               "type": "id",
               "value": "ConditionalNodeResult"
-            }
+            },
+            "displayName": "CONDITIONAL"
           },
           {
             "typeName": "TerminalNodeResult",
             "type": {
               "type": "id",
               "value": "TerminalNodeResult"
-            }
+            },
+            "displayName": "TERMINAL"
           }
         ]
       }
@@ -6017,21 +6034,24 @@
             "type": {
               "type": "id",
               "value": "WorkflowResultEventOutputDataString"
-            }
+            },
+            "displayName": "STRING"
           },
           {
             "typeName": "WorkflowResultEventOutputDataJSON",
             "type": {
               "type": "id",
               "value": "WorkflowResultEventOutputDataJSON"
-            }
+            },
+            "displayName": "JSON"
           },
           {
             "typeName": "WorkflowResultEventOutputDataChatHistory",
             "type": {
               "type": "id",
               "value": "WorkflowResultEventOutputDataChatHistory"
-            }
+            },
+            "displayName": "CHAT_HISTORY"
           }
         ]
       }
@@ -6266,14 +6286,16 @@
             "type": {
               "type": "id",
               "value": "WorkflowExecutionWorkflowResultEvent"
-            }
+            },
+            "displayName": "WORKFLOW"
           },
           {
             "typeName": "WorkflowExecutionNodeResultEvent",
             "type": {
               "type": "id",
               "value": "WorkflowExecutionNodeResultEvent"
-            }
+            },
+            "displayName": "NODE"
           }
         ]
       }
@@ -6296,7 +6318,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "deployments.retrieve",
+          "originalEndpointId": "endpoint_deployments.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -6412,7 +6434,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "document-indexes.create",
+          "originalEndpointId": "endpoint_documentIndexes.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -6695,7 +6717,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "documents.list",
+          "originalEndpointId": "endpoint_documents.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -6855,12 +6877,12 @@
           "defaultEnvironment": "Default",
           "environments": [
             {
-              "id": "Default",
+              "id": "Documents",
               "baseUrl": "https://documents.vellum.ai"
             }
           ],
           "id": "upload",
-          "originalEndpointId": "documents.upload",
+          "originalEndpointId": "endpoint_documents.upload",
           "name": "Upload",
           "path": {
             "pathParameters": [],
@@ -6999,7 +7021,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "model-versions.retrieve",
+          "originalEndpointId": "endpoint_modelVersions.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -7238,7 +7260,7 @@
             }
           ],
           "id": "model_version_compile_prompt",
-          "originalEndpointId": "model-versions.model_version_compile_prompt",
+          "originalEndpointId": "endpoint_modelVersions.model_version_compile_prompt",
           "name": "Model Version Compile Prompt",
           "path": {
             "pathParameters": [
@@ -7363,7 +7385,7 @@
             }
           ],
           "id": "register_prompt",
-          "originalEndpointId": "registered-prompts.register_prompt",
+          "originalEndpointId": "endpoint_registeredPrompts.register_prompt",
           "name": "Register Prompt",
           "path": {
             "pathParameters": [],
@@ -7572,7 +7594,7 @@
             }
           ],
           "id": "upsert_sandbox_scenario",
-          "originalEndpointId": "sandboxes.upsert_sandbox_scenario",
+          "originalEndpointId": "endpoint_sandboxes.upsert_sandbox_scenario",
           "name": "Upsert Sandbox Scenario",
           "path": {
             "pathParameters": [
@@ -7854,7 +7876,7 @@
             }
           ],
           "id": "delete_sandbox_scenario",
-          "originalEndpointId": "sandboxes.delete_sandbox_scenario",
+          "originalEndpointId": "endpoint_sandboxes.delete_sandbox_scenario",
           "name": "Delete Sandbox Scenario",
           "path": {
             "pathParameters": [
@@ -7950,7 +7972,7 @@
             }
           ],
           "id": "upsert_test_suite_test_case",
-          "originalEndpointId": "test-suites.upsert_test_suite_test_case",
+          "originalEndpointId": "endpoint_testSuites.upsert_test_suite_test_case",
           "name": "Upsert Test Suite Test Case",
           "path": {
             "pathParameters": [
@@ -8071,7 +8093,7 @@
             }
           ],
           "id": "delete_test_suite_test_case",
-          "originalEndpointId": "test-suites.delete_test_suite_test_case",
+          "originalEndpointId": "endpoint_testSuites.delete_test_suite_test_case",
           "name": "Delete Test Suite Test Case",
           "path": {
             "pathParameters": [
@@ -8161,12 +8183,12 @@
         "defaultEnvironment": "Default",
         "environments": [
           {
-            "id": "Default",
+            "id": "Predict",
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
         "id": "execute-prompt-stream",
-        "originalEndpointId": "execute-prompt-stream",
+        "originalEndpointId": "endpoint_.execute-prompt-stream",
         "name": "Execute Prompt Stream",
         "path": {
           "pathParameters": [],
@@ -8329,12 +8351,12 @@
         "defaultEnvironment": "Default",
         "environments": [
           {
-            "id": "Default",
+            "id": "Predict",
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
         "id": "execute-workflow-stream",
-        "originalEndpointId": "execute-workflow-stream",
+        "originalEndpointId": "endpoint_.execute-workflow-stream",
         "name": "Execute Workflow Stream",
         "path": {
           "pathParameters": [],
@@ -8474,12 +8496,12 @@
         "defaultEnvironment": "Default",
         "environments": [
           {
-            "id": "Default",
+            "id": "Predict",
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
         "id": "generate",
-        "originalEndpointId": "generate",
+        "originalEndpointId": "endpoint_.generate",
         "name": "Generate",
         "path": {
           "pathParameters": [],
@@ -8680,12 +8702,12 @@
         "defaultEnvironment": "Default",
         "environments": [
           {
-            "id": "Default",
+            "id": "Predict",
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
         "id": "generate-stream",
-        "originalEndpointId": "generate-stream",
+        "originalEndpointId": "endpoint_.generate-stream",
         "name": "Generate Stream",
         "path": {
           "pathParameters": [],
@@ -8892,12 +8914,12 @@
         "defaultEnvironment": "Default",
         "environments": [
           {
-            "id": "Default",
+            "id": "Predict",
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
         "id": "search",
-        "originalEndpointId": "search",
+        "originalEndpointId": "endpoint_.search",
         "name": "Search",
         "path": {
           "pathParameters": [],
@@ -9045,12 +9067,12 @@
         "defaultEnvironment": "Default",
         "environments": [
           {
-            "id": "Default",
+            "id": "Predict",
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
         "id": "submit-completion-actuals",
-        "originalEndpointId": "submit-completion-actuals",
+        "originalEndpointId": "endpoint_.submit-completion-actuals",
         "name": "Submit Completion Actuals",
         "path": {
           "pathParameters": [],

@@ -6716,6 +6716,7 @@
                   }
                 }
               },
+              "displayName": "Parameterized Query",
               "typeId": "type_sqlite:ParameterizedQuery",
               "type": "named"
             },
@@ -6876,6 +6877,7 @@
                   }
                 }
               },
+              "displayName": "Parameterized Query",
               "typeId": "type_sqlite:ParameterizedQuery",
               "type": "named"
             },
@@ -9148,6 +9150,7 @@
                   }
                 }
               },
+              "displayName": "Email Name and Address",
               "typeId": "type_emails:EmailNameAndAddress",
               "type": "named"
             },
@@ -9297,6 +9300,7 @@
                   }
                 }
               },
+              "displayName": "EmailData",
               "typeId": "type_emails:EmailData",
               "type": "named"
             }
@@ -9804,6 +9808,7 @@
                   }
                 }
               },
+              "displayName": "Email Name and Address",
               "typeId": "type_emails:EmailNameAndAddress",
               "type": "named"
             },

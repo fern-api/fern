@@ -21,7 +21,7 @@
         "value": {
           "type": "primitive",
           "value": {
-            "type": "integer"
+            "type": "double"
           }
         }
       }
@@ -297,7 +297,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -311,7 +311,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -583,7 +583,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -1504,7 +1504,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -1514,7 +1514,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -1626,7 +1626,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -1652,7 +1652,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -1684,7 +1684,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -1724,7 +1724,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -1737,7 +1737,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -1750,7 +1750,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -1763,7 +1763,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -1799,7 +1799,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -1825,7 +1825,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -1919,7 +1919,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -1929,7 +1929,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -2041,7 +2041,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -2145,7 +2145,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -2513,7 +2513,7 @@
             }
           ],
           "id": "baseUpload",
-          "originalEndpointId": "Upload.baseUpload",
+          "originalEndpointId": "endpoint_upload.baseUpload",
           "name": "Direct uploads",
           "path": {
             "pathParameters": [],
@@ -2741,7 +2741,7 @@
             }
           ],
           "id": "multipartFileUploadStart",
-          "originalEndpointId": "Upload.multipartFileUploadStart",
+          "originalEndpointId": "endpoint_upload.multipartFileUploadStart",
           "name": "Start multipart upload",
           "path": {
             "pathParameters": [],
@@ -2995,7 +2995,7 @@
             }
           ],
           "id": "multipartFileUploadPart",
-          "originalEndpointId": "Upload.multipartFileUploadPart",
+          "originalEndpointId": "endpoint_upload.multipartFileUploadPart",
           "name": "Upload individual file parts",
           "path": {
             "pathParameters": [],
@@ -3047,7 +3047,7 @@
             }
           ],
           "id": "multipartFileUploadComplete",
-          "originalEndpointId": "Upload.multipartFileUploadComplete",
+          "originalEndpointId": "endpoint_upload.multipartFileUploadComplete",
           "name": "Complete multipart upload",
           "path": {
             "pathParameters": [],
@@ -3276,7 +3276,7 @@
             }
           ],
           "id": "fromURLUpload",
-          "originalEndpointId": "Upload.fromURLUpload",
+          "originalEndpointId": "endpoint_upload.fromURLUpload",
           "name": "Upload files from URLs",
           "path": {
             "pathParameters": [],
@@ -3547,7 +3547,7 @@
             }
           ],
           "id": "fromURLUploadStatus",
-          "originalEndpointId": "Upload.fromURLUploadStatus",
+          "originalEndpointId": "endpoint_upload.fromURLUploadStatus",
           "name": "Check the status of a task to fetch/upload a file from a URL",
           "path": {
             "pathParameters": [],
@@ -3706,7 +3706,7 @@
             }
           ],
           "id": "fileUploadInfo",
-          "originalEndpointId": "Upload.fileUploadInfo",
+          "originalEndpointId": "endpoint_upload.fileUploadInfo",
           "name": "Get information about an uploaded file",
           "path": {
             "pathParameters": [],
@@ -3915,7 +3915,7 @@
             }
           ],
           "id": "createFilesGroup",
-          "originalEndpointId": "Groups.createFilesGroup",
+          "originalEndpointId": "endpoint_groups.createFilesGroup",
           "name": "Create a file group",
           "path": {
             "pathParameters": [],
@@ -4088,7 +4088,7 @@
             }
           ],
           "id": "filesGroupInfo",
-          "originalEndpointId": "Groups.filesGroupInfo",
+          "originalEndpointId": "endpoint_groups.filesGroupInfo",
           "name": "Get information about a file group",
           "path": {
             "pathParameters": [],

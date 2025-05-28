@@ -284,7 +284,8 @@
             "type": {
               "type": "id",
               "value": "Mammal0"
-            }
+            },
+            "displayName": "a Pet"
           },
           {
             "typeName": "Mammal1",
@@ -292,7 +293,8 @@
             "type": {
               "type": "id",
               "value": "Mammal1"
-            }
+            },
+            "displayName": "a User"
           }
         ]
       }
@@ -1227,7 +1229,7 @@
             }
           ],
           "id": "updateAnExistingPet",
-          "originalEndpointId": "pet.updateAnExistingPet",
+          "originalEndpointId": "endpoint_pet.updateAnExistingPet",
           "name": "Update an existing pet",
           "path": {
             "pathParameters": [],
@@ -1475,7 +1477,7 @@
             }
           ],
           "id": "getAnOrder",
-          "originalEndpointId": "order.getAnOrder",
+          "originalEndpointId": "endpoint_order.getAnOrder",
           "name": "Get an order",
           "path": {
             "pathParameters": [],

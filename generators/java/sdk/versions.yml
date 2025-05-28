@@ -1,4 +1,18 @@
-
+- changelogEntry:
+    - summary: |
+        Generates docs for method types.
+      type: fix
+  createdAt: '2025-05-21'
+  irVersion: 57
+  version: 2.36.4
+- changelogEntry:
+    - summary: |
+        Updates the generator to always commit changes, even if there are none, in self-hosted mode. This 
+        allows users to make sure that the generator actually ran and attempted to make a commit.
+      type: fix
+  createdAt: '2025-05-20'
+  irVersion: 57
+  version: 2.36.3
 - changelogEntry:
     - summary: |
         Fix the generated README.md for the `maxRetries` configuration option, which is now
@@ -374,21 +388,21 @@
     - summary: |
         Don't add a semicolon twice when rendering accept header
       type: fix
-  createdAt: '2025-2-4'
+  createdAt: '2025-02-04'
   irVersion: 53
   version: 2.11.3
 - changelogEntry:
     - summary: |
         Add accept header if endpoint has errors
       type: fix
-  createdAt: '2025-2-3'
+  createdAt: '2025-02-03'
   irVersion: 53
   version: 2.11.2
 - changelogEntry:
     - summary: |
         Send only request body reference for body-only wrapped request
       type: fix
-  createdAt: '2025-2-3'
+  createdAt: '2025-02-03'
   irVersion: 53
   version: 2.11.1
 - changelogEntry:

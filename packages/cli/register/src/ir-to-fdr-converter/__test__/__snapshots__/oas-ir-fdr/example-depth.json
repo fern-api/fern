@@ -52,7 +52,7 @@
         "auth": false,
         "method": "GET",
         "id": "getTree",
-        "originalEndpointId": "getTree",
+        "originalEndpointId": "endpoint_.getTree",
         "name": "Get tree",
         "path": {
           "pathParameters": [],

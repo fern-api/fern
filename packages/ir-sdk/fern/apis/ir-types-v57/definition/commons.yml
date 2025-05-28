@@ -1,0 +1,98 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  WithDocs:
+    properties:
+      docs: optional<string>
+  WithDocsAndAvailability:
+    extends: WithDocs
+    properties:
+      availability: optional<Availability>
+  FernFilepath:
+    properties:
+      allParts: list<Name>
+      packagePath: list<Name>
+      file: optional<Name>
+
+  # names
+
+  Name:
+    properties:
+      originalName: string
+      camelCase: SafeAndUnsafeString
+      pascalCase: SafeAndUnsafeString
+      snakeCase: SafeAndUnsafeString
+      screamingSnakeCase: SafeAndUnsafeString
+  DisplayName: string
+  NameAndWireValue:
+    properties:
+      wireValue: string
+      name: Name
+  SafeAndUnsafeString:
+    properties:
+      unsafeName:
+        docs: this name might overlap with reserved keywords of the language being
+          generated
+        type: string
+      safeName:
+        docs: this name will NOT overlap with reserved keywords of the language being
+          generated
+        type: string
+  EscapedString:
+    docs: |
+      Defines the original string, and its escaped-equivalent (depending on the target programming language).
+      This is particularly relevant to example string literals.
+
+      For example, in Python we escape strings that contain single or double quotes by using triple quotes,
+      in Go we use backticks, etc.
+    properties:
+      original: string
+
+  WithJsonExample:
+    properties:
+      jsonExample: unknown
+  
+  WithContentType: 
+    properties: 
+      contentType: optional<string>
+
+  # ids
+
+  SubpackageId: string
+  ServiceId: string
+  EndpointId: string
+  TypeId: string
+  ErrorId: string
+  WebhookGroupId: string
+  WebhookId: string
+  WebSocketChannelId: string
+  FeatureId: string
+
+  # declarations
+
+  Declaration:
+    extends: WithDocs
+    properties:
+      availability: optional<Availability>
+  Availability:
+    properties:
+      status: AvailabilityStatus
+      message: optional<string>
+  AvailabilityStatus:
+    enum:
+      - IN_DEVELOPMENT
+      - PRE_RELEASE
+      - GENERAL_AVAILABILITY
+      - DEPRECATED
+
+  # references
+
+  EndpointReference:
+    properties:
+      endpointId: EndpointId
+      serviceId: ServiceId
+      subpackageId:
+        type: optional<SubpackageId>
+        docs: |
+          The subpackage that defines the endpoint. If empty, the endpoint is
+          defined in the root package.

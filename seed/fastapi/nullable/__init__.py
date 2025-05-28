@@ -2,26 +2,5 @@
 
 # isort: skip_file
 
-from .resources import (
-    CreateUserRequest,
-    DeleteUserRequest,
-    Email,
-    Metadata,
-    Status,
-    User,
-    UserId,
-    WeirdNumber,
-    nullable,
-)
-
-__all__ = [
-    "CreateUserRequest",
-    "DeleteUserRequest",
-    "Email",
-    "Metadata",
-    "Status",
-    "User",
-    "UserId",
-    "WeirdNumber",
-    "nullable",
-]
+from .resources import Email, Metadata, Status, User, UserId, WeirdNumber, nullable
+__all__ = ["Email", "Metadata", "Status", "User", "UserId", "WeirdNumber", "nullable"]

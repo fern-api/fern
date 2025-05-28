@@ -26,6 +26,12 @@ describe("no-get-request-body", () => {
                 nodePath: ["service", "endpoints", "bing"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
                 severity: "fatal"
+            },
+            {
+                message: "Endpoint is a HEAD, so it cannot have a request body.",
+                nodePath: ["service", "endpoints", "qux"],
+                relativeFilepath: RelativeFilePath.of("a.yml"),
+                severity: "fatal"
             }
         ]);
     });

@@ -1277,14 +1277,6 @@
         ]
       }
     },
-    "ShortEventDataParsedQuery1": {
-      "name": "ShortEventDataParsedQuery1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "ShortEventDataParsedQuery": {
       "name": "ShortEventDataParsedQuery",
       "shape": {
@@ -1299,21 +1291,20 @@
             }
           },
           {
-            "typeName": "ShortEventDataParsedQuery1",
             "type": {
-              "type": "id",
-              "value": "ShortEventDataParsedQuery1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
-      }
-    },
-    "ShortEventDataHeaders1": {
-      "name": "ShortEventDataHeaders1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "ShortEventDataHeaders": {
@@ -1330,33 +1321,20 @@
             }
           },
           {
-            "typeName": "ShortEventDataHeaders1",
             "type": {
-              "type": "id",
-              "value": "ShortEventDataHeaders1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
-      }
-    },
-    "ShortEventDataBody1": {
-      "name": "ShortEventDataBody1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
-    "ShortEventDataBody2": {
-      "name": "ShortEventDataBody2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "unknown"
-          }
-        }
       }
     },
     "ShortEventDataBody": {
@@ -1373,17 +1351,25 @@
             }
           },
           {
-            "typeName": "ShortEventDataBody1",
             "type": {
-              "type": "id",
-              "value": "ShortEventDataBody1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
-            "typeName": "ShortEventDataBody2",
             "type": {
-              "type": "id",
-              "value": "ShortEventDataBody2"
+              "type": "list",
+              "itemType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -1667,14 +1653,6 @@
         ]
       }
     },
-    "EventDataParsedQuery1": {
-      "name": "EventDataParsedQuery1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "EventDataParsedQuery": {
       "name": "EventDataParsedQuery",
       "shape": {
@@ -1689,21 +1667,20 @@
             }
           },
           {
-            "typeName": "EventDataParsedQuery1",
             "type": {
-              "type": "id",
-              "value": "EventDataParsedQuery1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
-      }
-    },
-    "EventDataHeaders1": {
-      "name": "EventDataHeaders1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "EventDataHeaders": {
@@ -1720,33 +1697,20 @@
             }
           },
           {
-            "typeName": "EventDataHeaders1",
             "type": {
-              "type": "id",
-              "value": "EventDataHeaders1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
-      }
-    },
-    "EventDataBody1": {
-      "name": "EventDataBody1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
-    "EventDataBody2": {
-      "name": "EventDataBody2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "unknown"
-          }
-        }
       }
     },
     "EventDataBody": {
@@ -1763,17 +1727,25 @@
             }
           },
           {
-            "typeName": "EventDataBody1",
             "type": {
-              "type": "id",
-              "value": "EventDataBody1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
-            "typeName": "EventDataBody2",
             "type": {
-              "type": "id",
-              "value": "EventDataBody2"
+              "type": "list",
+              "itemType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -2437,14 +2409,6 @@
         ]
       }
     },
-    "BatchOperationQuery0": {
-      "name": "BatchOperationQuery0",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "BatchOperationQuery": {
       "description": "Query object to filter records",
       "name": "BatchOperationQuery",
@@ -2452,10 +2416,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BatchOperationQuery0",
             "type": {
-              "type": "id",
-              "value": "BatchOperationQuery0"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
@@ -4688,14 +4659,6 @@
         ]
       }
     },
-    "RequestDataParsedQuery1": {
-      "name": "RequestDataParsedQuery1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "RequestDataParsedQuery": {
       "name": "RequestDataParsedQuery",
       "shape": {
@@ -4710,21 +4673,20 @@
             }
           },
           {
-            "typeName": "RequestDataParsedQuery1",
             "type": {
-              "type": "id",
-              "value": "RequestDataParsedQuery1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
-      }
-    },
-    "RequestDataHeaders1": {
-      "name": "RequestDataHeaders1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "RequestDataHeaders": {
@@ -4741,33 +4703,20 @@
             }
           },
           {
-            "typeName": "RequestDataHeaders1",
             "type": {
-              "type": "id",
-              "value": "RequestDataHeaders1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
-      }
-    },
-    "RequestDataBody1": {
-      "name": "RequestDataBody1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
-    "RequestDataBody2": {
-      "name": "RequestDataBody2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "unknown"
-          }
-        }
       }
     },
     "RequestDataBody": {
@@ -4784,17 +4733,25 @@
             }
           },
           {
-            "typeName": "RequestDataBody1",
             "type": {
-              "type": "id",
-              "value": "RequestDataBody1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
-            "typeName": "RequestDataBody2",
             "type": {
-              "type": "id",
-              "value": "RequestDataBody2"
+              "type": "list",
+              "itemType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -5544,14 +5501,6 @@
         ]
       }
     },
-    "ConnectionFilterProperty3": {
-      "name": "ConnectionFilterProperty3",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "ConnectionFilterProperty": {
       "description": "JSON using our filter syntax to filter on request headers",
       "name": "ConnectionFilterProperty",
@@ -5583,10 +5532,17 @@
             }
           },
           {
-            "typeName": "ConnectionFilterProperty3",
             "type": {
-              "type": "id",
-              "value": "ConnectionFilterProperty3"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -6501,14 +6457,6 @@
         ]
       }
     },
-    "TransformationExecutorOutputRequestHeaders1": {
-      "name": "TransformationExecutorOutputRequestHeaders1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "TransformationExecutorOutputRequestHeaders": {
       "name": "TransformationExecutorOutputRequestHeaders",
       "shape": {
@@ -6523,21 +6471,20 @@
             }
           },
           {
-            "typeName": "TransformationExecutorOutputRequestHeaders1",
             "type": {
-              "type": "id",
-              "value": "TransformationExecutorOutputRequestHeaders1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
-      }
-    },
-    "TransformationExecutorOutputRequestQuery0": {
-      "name": "TransformationExecutorOutputRequestQuery0",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "TransformationExecutorOutputRequestQuery": {
@@ -6546,10 +6493,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "TransformationExecutorOutputRequestQuery0",
             "type": {
-              "type": "id",
-              "value": "TransformationExecutorOutputRequestQuery0"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
@@ -6561,14 +6515,6 @@
             }
           }
         ]
-      }
-    },
-    "TransformationExecutorOutputRequestParsedQuery1": {
-      "name": "TransformationExecutorOutputRequestParsedQuery1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "TransformationExecutorOutputRequestParsedQuery": {
@@ -6585,21 +6531,20 @@
             }
           },
           {
-            "typeName": "TransformationExecutorOutputRequestParsedQuery1",
             "type": {
-              "type": "id",
-              "value": "TransformationExecutorOutputRequestParsedQuery1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
-      }
-    },
-    "TransformationExecutorOutputRequestBody1": {
-      "name": "TransformationExecutorOutputRequestBody1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "TransformationExecutorOutputRequestBody": {
@@ -6616,10 +6561,17 @@
             }
           },
           {
-            "typeName": "TransformationExecutorOutputRequestBody1",
             "type": {
-              "type": "id",
-              "value": "TransformationExecutorOutputRequestBody1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -8406,14 +8358,6 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaHeaders1": {
-      "name": "BulkEventsRetryGetParametersSchemaHeaders1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "BulkEventsRetryGetParametersSchemaHeaders": {
       "description": "URL Encoded string of the JSON to match to the data headers",
       "name": "BulkEventsRetryGetParametersSchemaHeaders",
@@ -8429,21 +8373,20 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaHeaders1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaHeaders1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryGetParametersSchemaBody1": {
-      "name": "BulkEventsRetryGetParametersSchemaBody1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "BulkEventsRetryGetParametersSchemaBody": {
@@ -8461,21 +8404,20 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaBody1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaBody1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryGetParametersSchemaParsedQuery1": {
-      "name": "BulkEventsRetryGetParametersSchemaParsedQuery1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "BulkEventsRetryGetParametersSchemaParsedQuery": {
@@ -8493,10 +8435,17 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaParsedQuery1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaParsedQuery1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -9570,14 +9519,6 @@
         ]
       }
     },
-    "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryHeaders1": {
-      "name": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryHeaders1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryHeaders": {
       "description": "URL Encoded string of the JSON to match to the data headers",
       "name": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryHeaders",
@@ -9593,21 +9534,20 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryHeaders1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryHeaders1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryBody1": {
-      "name": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryBody1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryBody": {
@@ -9625,21 +9565,20 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryBody1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryBody1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryParsedQuery1": {
-      "name": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryParsedQuery1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryParsedQuery": {
@@ -9657,10 +9596,17 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryParsedQuery1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryParsedQuery1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -10802,14 +10748,6 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaHeaders1": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaHeaders1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "BulkEventsRetryPlanGetParametersSchemaHeaders": {
       "description": "URL Encoded string of the JSON to match to the data headers",
       "name": "BulkEventsRetryPlanGetParametersSchemaHeaders",
@@ -10825,21 +10763,20 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaHeaders1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaHeaders1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPlanGetParametersSchemaBody1": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaBody1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "BulkEventsRetryPlanGetParametersSchemaBody": {
@@ -10857,21 +10794,20 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaBody1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaBody1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPlanGetParametersSchemaParsedQuery1": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaParsedQuery1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "BulkEventsRetryPlanGetParametersSchemaParsedQuery": {
@@ -10889,10 +10825,17 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaParsedQuery1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaParsedQuery1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -12595,14 +12538,6 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaHeaders1": {
-      "name": "BulkRequestsRetryGetParametersSchemaHeaders1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "BulkRequestsRetryGetParametersSchemaHeaders": {
       "description": "URL Encoded string of the JSON to match to the data headers",
       "name": "BulkRequestsRetryGetParametersSchemaHeaders",
@@ -12618,21 +12553,20 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaHeaders1",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaHeaders1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryGetParametersSchemaBody1": {
-      "name": "BulkRequestsRetryGetParametersSchemaBody1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "BulkRequestsRetryGetParametersSchemaBody": {
@@ -12650,21 +12584,20 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaBody1",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaBody1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryGetParametersSchemaParsedQuery1": {
-      "name": "BulkRequestsRetryGetParametersSchemaParsedQuery1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "BulkRequestsRetryGetParametersSchemaParsedQuery": {
@@ -12682,10 +12615,17 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaParsedQuery1",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaParsedQuery1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -13515,14 +13455,6 @@
         ]
       }
     },
-    "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryHeaders1": {
-      "name": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryHeaders1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryHeaders": {
       "description": "URL Encoded string of the JSON to match to the data headers",
       "name": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryHeaders",
@@ -13538,21 +13470,20 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryHeaders1",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryHeaders1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryBody1": {
-      "name": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryBody1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryBody": {
@@ -13570,21 +13501,20 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryBody1",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryBody1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryParsedQuery1": {
-      "name": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryParsedQuery1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryParsedQuery": {
@@ -13602,10 +13532,17 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryParsedQuery1",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryParsedQuery1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -14433,14 +14370,6 @@
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaHeaders1": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaHeaders1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "BulkRequestsRetryPlanGetParametersSchemaHeaders": {
       "description": "URL Encoded string of the JSON to match to the data headers",
       "name": "BulkRequestsRetryPlanGetParametersSchemaHeaders",
@@ -14456,21 +14385,20 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaHeaders1",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaHeaders1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryPlanGetParametersSchemaBody1": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaBody1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "BulkRequestsRetryPlanGetParametersSchemaBody": {
@@ -14488,21 +14416,20 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaBody1",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaBody1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryPlanGetParametersSchemaParsedQuery1": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaParsedQuery1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "BulkRequestsRetryPlanGetParametersSchemaParsedQuery": {
@@ -14520,10 +14447,17 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaParsedQuery1",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaParsedQuery1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -15309,14 +15243,6 @@
         "properties": []
       }
     },
-    "TransformationsRunPutRequestBodyContentApplicationJsonSchemaRequestBody0": {
-      "name": "TransformationsRunPutRequestBodyContentApplicationJsonSchemaRequestBody0",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "TransformationsRunPutRequestBodyContentApplicationJsonSchemaRequestBody": {
       "description": "Body of the request",
       "name": "TransformationsRunPutRequestBodyContentApplicationJsonSchemaRequestBody",
@@ -15324,10 +15250,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "TransformationsRunPutRequestBodyContentApplicationJsonSchemaRequestBody0",
             "type": {
-              "type": "id",
-              "value": "TransformationsRunPutRequestBodyContentApplicationJsonSchemaRequestBody0"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
@@ -16004,7 +15937,7 @@
             }
           ],
           "id": "getIssueTriggers",
-          "originalEndpointId": "Issue Triggers.getIssueTriggers",
+          "originalEndpointId": "endpoint_issueTriggers.getIssueTriggers",
           "name": "Get issue triggers",
           "path": {
             "pathParameters": [],
@@ -16274,7 +16207,7 @@
             }
           ],
           "id": "createIssueTrigger",
-          "originalEndpointId": "Issue Triggers.createIssueTrigger",
+          "originalEndpointId": "endpoint_issueTriggers.createIssueTrigger",
           "name": "Create an issue trigger",
           "path": {
             "pathParameters": [],
@@ -16488,7 +16421,7 @@
             }
           ],
           "id": "upsertIssueTrigger",
-          "originalEndpointId": "Issue Triggers.upsertIssueTrigger",
+          "originalEndpointId": "endpoint_issueTriggers.upsertIssueTrigger",
           "name": "Create or update an issue trigger",
           "path": {
             "pathParameters": [],
@@ -16701,7 +16634,7 @@
             }
           ],
           "id": "getIssueTrigger",
-          "originalEndpointId": "Issue Triggers.getIssueTrigger",
+          "originalEndpointId": "endpoint_issueTriggers.getIssueTrigger",
           "name": "Get a single issue trigger",
           "path": {
             "pathParameters": [
@@ -16860,7 +16793,7 @@
             }
           ],
           "id": "updateIssueTrigger",
-          "originalEndpointId": "Issue Triggers.updateIssueTrigger",
+          "originalEndpointId": "endpoint_issueTriggers.updateIssueTrigger",
           "name": "Update an issue trigger",
           "path": {
             "pathParameters": [
@@ -17101,7 +17034,7 @@
             }
           ],
           "id": "deleteIssueTrigger",
-          "originalEndpointId": "Issue Triggers.deleteIssueTrigger",
+          "originalEndpointId": "endpoint_issueTriggers.deleteIssueTrigger",
           "name": "Delete an issue trigger",
           "path": {
             "pathParameters": [
@@ -17224,7 +17157,7 @@
             }
           ],
           "id": "disableIssueTrigger",
-          "originalEndpointId": "Issue Triggers.disableIssueTrigger",
+          "originalEndpointId": "endpoint_issueTriggers.disableIssueTrigger",
           "name": "Disable an issue trigger",
           "path": {
             "pathParameters": [
@@ -17383,7 +17316,7 @@
             }
           ],
           "id": "enableIssueTrigger",
-          "originalEndpointId": "Issue Triggers.enableIssueTrigger",
+          "originalEndpointId": "endpoint_issueTriggers.enableIssueTrigger",
           "name": "Enable an issue trigger",
           "path": {
             "pathParameters": [
@@ -17552,7 +17485,7 @@
             }
           ],
           "id": "getAttempts",
-          "originalEndpointId": "Attempts.getAttempts",
+          "originalEndpointId": "endpoint_attempts.getAttempts",
           "name": "Get attempts",
           "path": {
             "pathParameters": [],
@@ -17803,7 +17736,7 @@
             }
           ],
           "id": "getAttempt",
-          "originalEndpointId": "Attempts.getAttempt",
+          "originalEndpointId": "endpoint_attempts.getAttempt",
           "name": "Get a single attempt",
           "path": {
             "pathParameters": [
@@ -17976,7 +17909,7 @@
             }
           ],
           "id": "getBookmarks",
-          "originalEndpointId": "Bookmarks.getBookmarks",
+          "originalEndpointId": "endpoint_bookmarks.getBookmarks",
           "name": "Get bookmarks",
           "path": {
             "pathParameters": [],
@@ -18269,7 +18202,7 @@
             }
           ],
           "id": "createBookmark",
-          "originalEndpointId": "Bookmarks.createBookmark",
+          "originalEndpointId": "endpoint_bookmarks.createBookmark",
           "name": "Create a bookmark",
           "path": {
             "pathParameters": [],
@@ -18490,7 +18423,7 @@
             }
           ],
           "id": "getBookmark",
-          "originalEndpointId": "Bookmarks.getBookmark",
+          "originalEndpointId": "endpoint_bookmarks.getBookmark",
           "name": "Get a single bookmark",
           "path": {
             "pathParameters": [
@@ -18645,7 +18578,7 @@
             }
           ],
           "id": "updateBookmark",
-          "originalEndpointId": "Bookmarks.updateBookmark",
+          "originalEndpointId": "endpoint_bookmarks.updateBookmark",
           "name": "Update a bookmark",
           "path": {
             "pathParameters": [
@@ -18900,7 +18833,7 @@
             }
           ],
           "id": "deleteBookmark",
-          "originalEndpointId": "Bookmarks.deleteBookmark",
+          "originalEndpointId": "endpoint_bookmarks.deleteBookmark",
           "name": "Delete a bookmark",
           "path": {
             "pathParameters": [
@@ -19023,7 +18956,7 @@
             }
           ],
           "id": "triggerBookmark",
-          "originalEndpointId": "Bookmarks.triggerBookmark",
+          "originalEndpointId": "endpoint_bookmarks.triggerBookmark",
           "name": "Trigger a bookmark",
           "path": {
             "pathParameters": [
@@ -19264,7 +19197,7 @@
             }
           ],
           "id": "getDestinations",
-          "originalEndpointId": "Destinations.getDestinations",
+          "originalEndpointId": "endpoint_destinations.getDestinations",
           "name": "Get destinations",
           "path": {
             "pathParameters": [],
@@ -19547,7 +19480,7 @@
             }
           ],
           "id": "createDestination",
-          "originalEndpointId": "Destinations.createDestination",
+          "originalEndpointId": "endpoint_destinations.createDestination",
           "name": "Create a destination",
           "path": {
             "pathParameters": [],
@@ -19788,7 +19721,7 @@
             }
           ],
           "id": "upsertDestination",
-          "originalEndpointId": "Destinations.upsertDestination",
+          "originalEndpointId": "endpoint_destinations.upsertDestination",
           "name": "Update or create a destination",
           "path": {
             "pathParameters": [],
@@ -20029,7 +19962,7 @@
             }
           ],
           "id": "getDestination",
-          "originalEndpointId": "Destinations.getDestination",
+          "originalEndpointId": "endpoint_destinations.getDestination",
           "name": "Get a destination",
           "path": {
             "pathParameters": [
@@ -20172,7 +20105,7 @@
             }
           ],
           "id": "updateDestination",
-          "originalEndpointId": "Destinations.updateDestination",
+          "originalEndpointId": "endpoint_destinations.updateDestination",
           "name": "Update a destination",
           "path": {
             "pathParameters": [
@@ -20463,7 +20396,7 @@
             }
           ],
           "id": "archiveDestination",
-          "originalEndpointId": "Destinations.archiveDestination",
+          "originalEndpointId": "endpoint_destinations.archiveDestination",
           "name": "Archive a destination",
           "path": {
             "pathParameters": [
@@ -20606,7 +20539,7 @@
             }
           ],
           "id": "unarchiveDestination",
-          "originalEndpointId": "Destinations.unarchiveDestination",
+          "originalEndpointId": "endpoint_destinations.unarchiveDestination",
           "name": "Unarchive a destination",
           "path": {
             "pathParameters": [
@@ -20759,7 +20692,7 @@
             }
           ],
           "id": "getEvents",
-          "originalEndpointId": "Events.getEvents",
+          "originalEndpointId": "endpoint_events.getEvents",
           "name": "Get events",
           "path": {
             "pathParameters": [],
@@ -21222,7 +21155,7 @@
             }
           ],
           "id": "getEvent",
-          "originalEndpointId": "Events.getEvent",
+          "originalEndpointId": "endpoint_events.getEvent",
           "name": "Get an event",
           "path": {
             "pathParameters": [
@@ -21395,7 +21328,7 @@
             }
           ],
           "id": "getRequestRawBody",
-          "originalEndpointId": "Events.getRequestRawBody",
+          "originalEndpointId": "endpoint_events.getRequestRawBody",
           "name": "Get a event raw body data",
           "path": {
             "pathParameters": [
@@ -21518,7 +21451,7 @@
             }
           ],
           "id": "retryEvent",
-          "originalEndpointId": "Events.retryEvent",
+          "originalEndpointId": "endpoint_events.retryEvent",
           "name": "Retry an event",
           "path": {
             "pathParameters": [
@@ -21741,7 +21674,7 @@
             }
           ],
           "id": "muteEvent",
-          "originalEndpointId": "Events.muteEvent",
+          "originalEndpointId": "endpoint_events.muteEvent",
           "name": "Mute an event",
           "path": {
             "pathParameters": [
@@ -21924,7 +21857,7 @@
             }
           ],
           "id": "getEventBulkRetries",
-          "originalEndpointId": "Bulk retry events.getEventBulkRetries",
+          "originalEndpointId": "endpoint_bulkRetryEvents.getEventBulkRetries",
           "name": "Get events bulk retries",
           "path": {
             "pathParameters": [],
@@ -22227,7 +22160,7 @@
             }
           ],
           "id": "createEventBulkRetry",
-          "originalEndpointId": "Bulk retry events.createEventBulkRetry",
+          "originalEndpointId": "endpoint_bulkRetryEvents.createEventBulkRetry",
           "name": "Create an events bulk retry",
           "path": {
             "pathParameters": [],
@@ -22399,7 +22332,7 @@
             }
           ],
           "id": "generateEventBulkRetryPlan",
-          "originalEndpointId": "Bulk retry events.generateEventBulkRetryPlan",
+          "originalEndpointId": "endpoint_bulkRetryEvents.generateEventBulkRetryPlan",
           "name": "Generate an events bulk retry plan",
           "path": {
             "pathParameters": [],
@@ -22530,7 +22463,7 @@
             }
           ],
           "id": "getEventBulkRetry",
-          "originalEndpointId": "Bulk retry events.getEventBulkRetry",
+          "originalEndpointId": "endpoint_bulkRetryEvents.getEventBulkRetry",
           "name": "Get an events bulk retry",
           "path": {
             "pathParameters": [
@@ -22681,7 +22614,7 @@
             }
           ],
           "id": "cancelEventBulkRetry",
-          "originalEndpointId": "Bulk retry events.cancelEventBulkRetry",
+          "originalEndpointId": "endpoint_bulkRetryEvents.cancelEventBulkRetry",
           "name": "Cancel an events bulk retry",
           "path": {
             "pathParameters": [
@@ -22842,7 +22775,7 @@
             }
           ],
           "id": "getIgnoredEventBulkRetries",
-          "originalEndpointId": "Bulk retry ignored events.getIgnoredEventBulkRetries",
+          "originalEndpointId": "endpoint_bulkRetryIgnoredEvents.getIgnoredEventBulkRetries",
           "name": "Get ignored events bulk retries",
           "path": {
             "pathParameters": [],
@@ -23145,7 +23078,7 @@
             }
           ],
           "id": "createIgnoredEventBulkRetry",
-          "originalEndpointId": "Bulk retry ignored events.createIgnoredEventBulkRetry",
+          "originalEndpointId": "endpoint_bulkRetryIgnoredEvents.createIgnoredEventBulkRetry",
           "name": "Create an ignored events bulk retry",
           "path": {
             "pathParameters": [],
@@ -23317,7 +23250,7 @@
             }
           ],
           "id": "generateIgnoredEventBulkRetryPlan",
-          "originalEndpointId": "Bulk retry ignored events.generateIgnoredEventBulkRetryPlan",
+          "originalEndpointId": "endpoint_bulkRetryIgnoredEvents.generateIgnoredEventBulkRetryPlan",
           "name": "Generate an ignored events bulk retry plan",
           "path": {
             "pathParameters": [],
@@ -23448,7 +23381,7 @@
             }
           ],
           "id": "getIgnoredEventBulkRetry",
-          "originalEndpointId": "Bulk retry ignored events.getIgnoredEventBulkRetry",
+          "originalEndpointId": "endpoint_bulkRetryIgnoredEvents.getIgnoredEventBulkRetry",
           "name": "Get an ignored events bulk retry",
           "path": {
             "pathParameters": [
@@ -23599,7 +23532,7 @@
             }
           ],
           "id": "cancelIgnoredEventBulkRetry",
-          "originalEndpointId": "Bulk retry ignored events.cancelIgnoredEventBulkRetry",
+          "originalEndpointId": "endpoint_bulkRetryIgnoredEvents.cancelIgnoredEventBulkRetry",
           "name": "Cancel an ignored events bulk retry",
           "path": {
             "pathParameters": [
@@ -23760,7 +23693,7 @@
             }
           ],
           "id": "getIntegrations",
-          "originalEndpointId": "Integrations.getIntegrations",
+          "originalEndpointId": "endpoint_integrations.getIntegrations",
           "name": "Get integrations",
           "path": {
             "pathParameters": [],
@@ -23957,7 +23890,7 @@
             }
           ],
           "id": "createIntegration",
-          "originalEndpointId": "Integrations.createIntegration",
+          "originalEndpointId": "endpoint_integrations.createIntegration",
           "name": "Create an integration",
           "path": {
             "pathParameters": [],
@@ -24184,7 +24117,7 @@
             }
           ],
           "id": "getIntegration",
-          "originalEndpointId": "Integrations.getIntegration",
+          "originalEndpointId": "endpoint_integrations.getIntegration",
           "name": "Get an integration",
           "path": {
             "pathParameters": [
@@ -24341,7 +24274,7 @@
             }
           ],
           "id": "updateIntegration",
-          "originalEndpointId": "Integrations.updateIntegration",
+          "originalEndpointId": "endpoint_integrations.updateIntegration",
           "name": "Update an integration",
           "path": {
             "pathParameters": [
@@ -24589,7 +24522,7 @@
             }
           ],
           "id": "deleteIntegration",
-          "originalEndpointId": "Integrations.deleteIntegration",
+          "originalEndpointId": "endpoint_integrations.deleteIntegration",
           "name": "Delete an integration",
           "path": {
             "pathParameters": [
@@ -24712,7 +24645,7 @@
             }
           ],
           "id": "attachIntegrationToSource",
-          "originalEndpointId": "Integrations.attachIntegrationToSource",
+          "originalEndpointId": "endpoint_integrations.attachIntegrationToSource",
           "name": "Attach an integration to a source",
           "path": {
             "pathParameters": [
@@ -24866,7 +24799,7 @@
             }
           ],
           "id": "detachIntegrationToSource",
-          "originalEndpointId": "Integrations.detachIntegrationToSource",
+          "originalEndpointId": "endpoint_integrations.detachIntegrationToSource",
           "name": "Detach an integration from a source",
           "path": {
             "pathParameters": [
@@ -25026,7 +24959,7 @@
             }
           ],
           "id": "getIssues",
-          "originalEndpointId": "Issues.getIssues",
+          "originalEndpointId": "endpoint_issues.getIssues",
           "name": "Get issues",
           "path": {
             "pathParameters": [],
@@ -25487,7 +25420,7 @@
             }
           ],
           "id": "getIssueCount",
-          "originalEndpointId": "Issues.getIssueCount",
+          "originalEndpointId": "endpoint_issues.getIssueCount",
           "name": "Get the number of issues",
           "path": {
             "pathParameters": [],
@@ -25751,7 +25684,7 @@
             }
           ],
           "id": "getIssue",
-          "originalEndpointId": "Issues.getIssue",
+          "originalEndpointId": "endpoint_issues.getIssue",
           "name": "Get a single issue",
           "path": {
             "pathParameters": [
@@ -26034,7 +25967,7 @@
             }
           ],
           "id": "updateIssue",
-          "originalEndpointId": "Issues.updateIssue",
+          "originalEndpointId": "endpoint_issues.updateIssue",
           "name": "Update issue",
           "path": {
             "pathParameters": [
@@ -26253,7 +26186,7 @@
             }
           ],
           "id": "dismissIssue",
-          "originalEndpointId": "Issues.dismissIssue",
+          "originalEndpointId": "endpoint_issues.dismissIssue",
           "name": "Dismiss an issue",
           "path": {
             "pathParameters": [
@@ -26440,7 +26373,7 @@
             }
           ],
           "id": "getRequests",
-          "originalEndpointId": "Requests.getRequests",
+          "originalEndpointId": "endpoint_requests.getRequests",
           "name": "Get requests",
           "path": {
             "pathParameters": [],
@@ -26841,7 +26774,7 @@
             }
           ],
           "id": "getRequest",
-          "originalEndpointId": "Requests.getRequest",
+          "originalEndpointId": "endpoint_requests.getRequest",
           "name": "Get a request",
           "path": {
             "pathParameters": [
@@ -27010,7 +26943,7 @@
             }
           ],
           "id": "getRequestRawBody",
-          "originalEndpointId": "Requests.getRequestRawBody",
+          "originalEndpointId": "endpoint_requests.getRequestRawBody",
           "name": "Get a request raw body data",
           "path": {
             "pathParameters": [
@@ -27133,7 +27066,7 @@
             }
           ],
           "id": "retryRequest",
-          "originalEndpointId": "Requests.retryRequest",
+          "originalEndpointId": "endpoint_requests.retryRequest",
           "name": "Retry a request",
           "path": {
             "pathParameters": [
@@ -27431,7 +27364,7 @@
             }
           ],
           "id": "getRequestEvents",
-          "originalEndpointId": "Requests.getRequestEvents",
+          "originalEndpointId": "endpoint_requests.getRequestEvents",
           "name": "Get request events",
           "path": {
             "pathParameters": [
@@ -27927,7 +27860,7 @@
             }
           ],
           "id": "getRequestIgnoredEvents",
-          "originalEndpointId": "Requests.getRequestIgnoredEvents",
+          "originalEndpointId": "endpoint_requests.getRequestIgnoredEvents",
           "name": "Get request ignored events",
           "path": {
             "pathParameters": [
@@ -28195,7 +28128,7 @@
             }
           ],
           "id": "getRequestBulkRetries",
-          "originalEndpointId": "Bulk retry requests.getRequestBulkRetries",
+          "originalEndpointId": "endpoint_bulkRetryRequests.getRequestBulkRetries",
           "name": "Get request bulk retries",
           "path": {
             "pathParameters": [],
@@ -28498,7 +28431,7 @@
             }
           ],
           "id": "createRequestBulkRetry",
-          "originalEndpointId": "Bulk retry requests.createRequestBulkRetry",
+          "originalEndpointId": "endpoint_bulkRetryRequests.createRequestBulkRetry",
           "name": "Create a requests bulk retry",
           "path": {
             "pathParameters": [],
@@ -28670,7 +28603,7 @@
             }
           ],
           "id": "generateRequestBulkRetryPlan",
-          "originalEndpointId": "Bulk retry requests.generateRequestBulkRetryPlan",
+          "originalEndpointId": "endpoint_bulkRetryRequests.generateRequestBulkRetryPlan",
           "name": "Generate a requests bulk retry plan",
           "path": {
             "pathParameters": [],
@@ -28801,7 +28734,7 @@
             }
           ],
           "id": "getRequestBulkRetry",
-          "originalEndpointId": "Bulk retry requests.getRequestBulkRetry",
+          "originalEndpointId": "endpoint_bulkRetryRequests.getRequestBulkRetry",
           "name": "Get a requests bulk retry",
           "path": {
             "pathParameters": [
@@ -28952,7 +28885,7 @@
             }
           ],
           "id": "cancelRequestBulkRetry",
-          "originalEndpointId": "Bulk retry requests.cancelRequestBulkRetry",
+          "originalEndpointId": "endpoint_bulkRetryRequests.cancelRequestBulkRetry",
           "name": "Cancel a requests bulk retry",
           "path": {
             "pathParameters": [
@@ -29113,7 +29046,7 @@
             }
           ],
           "id": "getRulesets",
-          "originalEndpointId": "Rulesets.getRulesets",
+          "originalEndpointId": "endpoint_rulesets.getRulesets",
           "name": "Get rulesets",
           "path": {
             "pathParameters": [],
@@ -29384,7 +29317,7 @@
             }
           ],
           "id": "createRuleset",
-          "originalEndpointId": "Rulesets.createRuleset",
+          "originalEndpointId": "endpoint_rulesets.createRuleset",
           "name": "Create a ruleset",
           "path": {
             "pathParameters": [],
@@ -29587,7 +29520,7 @@
             }
           ],
           "id": "upsertRuleset",
-          "originalEndpointId": "Rulesets.upsertRuleset",
+          "originalEndpointId": "endpoint_rulesets.upsertRuleset",
           "name": "Update or create a ruleset",
           "path": {
             "pathParameters": [],
@@ -29790,7 +29723,7 @@
             }
           ],
           "id": "getRuleset",
-          "originalEndpointId": "Rulesets.getRuleset",
+          "originalEndpointId": "endpoint_rulesets.getRuleset",
           "name": "Get a ruleset",
           "path": {
             "pathParameters": [
@@ -29941,7 +29874,7 @@
             }
           ],
           "id": "updateRuleset",
-          "originalEndpointId": "Rulesets.updateRuleset",
+          "originalEndpointId": "endpoint_rulesets.updateRuleset",
           "name": "Update a ruleset",
           "path": {
             "pathParameters": [
@@ -30193,7 +30126,7 @@
             }
           ],
           "id": "archiveRuleset",
-          "originalEndpointId": "Rulesets.archiveRuleset",
+          "originalEndpointId": "endpoint_rulesets.archiveRuleset",
           "name": "Archive a ruleset",
           "path": {
             "pathParameters": [
@@ -30344,7 +30277,7 @@
             }
           ],
           "id": "unarchiveRuleset",
-          "originalEndpointId": "Rulesets.unarchiveRuleset",
+          "originalEndpointId": "endpoint_rulesets.unarchiveRuleset",
           "name": "Unarchive a ruleset",
           "path": {
             "pathParameters": [
@@ -30505,7 +30438,7 @@
             }
           ],
           "id": "getSources",
-          "originalEndpointId": "Sources.getSources",
+          "originalEndpointId": "endpoint_sources.getSources",
           "name": "Get sources",
           "path": {
             "pathParameters": [],
@@ -30788,7 +30721,7 @@
             }
           ],
           "id": "createSource",
-          "originalEndpointId": "Sources.createSource",
+          "originalEndpointId": "endpoint_sources.createSource",
           "name": "Create a source",
           "path": {
             "pathParameters": [],
@@ -30967,7 +30900,7 @@
             }
           ],
           "id": "upsertSource",
-          "originalEndpointId": "Sources.upsertSource",
+          "originalEndpointId": "endpoint_sources.upsertSource",
           "name": "Update or create a source",
           "path": {
             "pathParameters": [],
@@ -31146,7 +31079,7 @@
             }
           ],
           "id": "getSource",
-          "originalEndpointId": "Sources.getSource",
+          "originalEndpointId": "endpoint_sources.getSource",
           "name": "Get a source",
           "path": {
             "pathParameters": [
@@ -31299,7 +31232,7 @@
             }
           ],
           "id": "updateSource",
-          "originalEndpointId": "Sources.updateSource",
+          "originalEndpointId": "endpoint_sources.updateSource",
           "name": "Update a source",
           "path": {
             "pathParameters": [
@@ -31527,7 +31460,7 @@
             }
           ],
           "id": "archiveSource",
-          "originalEndpointId": "Sources.archiveSource",
+          "originalEndpointId": "endpoint_sources.archiveSource",
           "name": "Archive a source",
           "path": {
             "pathParameters": [
@@ -31680,7 +31613,7 @@
             }
           ],
           "id": "unarchiveSource",
-          "originalEndpointId": "Sources.unarchiveSource",
+          "originalEndpointId": "endpoint_sources.unarchiveSource",
           "name": "Unarchive a source",
           "path": {
             "pathParameters": [
@@ -31843,7 +31776,7 @@
             }
           ],
           "id": "toggleWebhookNotifications",
-          "originalEndpointId": "Notifications.toggleWebhookNotifications",
+          "originalEndpointId": "endpoint_notifications.toggleWebhookNotifications",
           "name": "Toggle webhook notifications for the workspace",
           "path": {
             "pathParameters": [],
@@ -32007,7 +31940,7 @@
             }
           ],
           "id": "getTransformations",
-          "originalEndpointId": "Transformations.getTransformations",
+          "originalEndpointId": "endpoint_transformations.getTransformations",
           "name": "Get transformations",
           "path": {
             "pathParameters": [],
@@ -32244,7 +32177,7 @@
             }
           ],
           "id": "createTransformation",
-          "originalEndpointId": "Transformations.createTransformation",
+          "originalEndpointId": "endpoint_transformations.createTransformation",
           "name": "Create a transformation",
           "path": {
             "pathParameters": [],
@@ -32432,7 +32365,7 @@
             }
           ],
           "id": "upsertTransformation",
-          "originalEndpointId": "Transformations.upsertTransformation",
+          "originalEndpointId": "endpoint_transformations.upsertTransformation",
           "name": "Update or create a transformation",
           "path": {
             "pathParameters": [],
@@ -32620,7 +32553,7 @@
             }
           ],
           "id": "getTransformation",
-          "originalEndpointId": "Transformations.getTransformation",
+          "originalEndpointId": "endpoint_transformations.getTransformation",
           "name": "Get a transformation",
           "path": {
             "pathParameters": [
@@ -32759,7 +32692,7 @@
             }
           ],
           "id": "updateTransformation",
-          "originalEndpointId": "Transformations.updateTransformation",
+          "originalEndpointId": "endpoint_transformations.updateTransformation",
           "name": "Update a transformation",
           "path": {
             "pathParameters": [
@@ -32980,7 +32913,7 @@
             }
           ],
           "id": "testTransformation",
-          "originalEndpointId": "Transformations.testTransformation",
+          "originalEndpointId": "endpoint_transformations.testTransformation",
           "name": "Test a transformation code",
           "path": {
             "pathParameters": [],
@@ -33218,7 +33151,7 @@
             }
           ],
           "id": "getTransformationExecutions",
-          "originalEndpointId": "Transformations.getTransformationExecutions",
+          "originalEndpointId": "endpoint_transformations.getTransformationExecutions",
           "name": "Get transformation executions",
           "path": {
             "pathParameters": [
@@ -33541,7 +33474,7 @@
             }
           ],
           "id": "getTransformationExecution",
-          "originalEndpointId": "Transformations.getTransformationExecution",
+          "originalEndpointId": "endpoint_transformations.getTransformationExecution",
           "name": "Get a transformation execution",
           "path": {
             "pathParameters": [
@@ -33754,7 +33687,7 @@
             }
           ],
           "id": "getConnections",
-          "originalEndpointId": "Connections.getConnections",
+          "originalEndpointId": "endpoint_connections.getConnections",
           "name": "Get connections",
           "path": {
             "pathParameters": [],
@@ -34181,7 +34114,7 @@
             }
           ],
           "id": "createConnection",
-          "originalEndpointId": "Connections.createConnection",
+          "originalEndpointId": "endpoint_connections.createConnection",
           "name": "Create a connection",
           "path": {
             "pathParameters": [],
@@ -34568,7 +34501,7 @@
             }
           ],
           "id": "upsertConnection",
-          "originalEndpointId": "Connections.upsertConnection",
+          "originalEndpointId": "endpoint_connections.upsertConnection",
           "name": "Update or create a connection",
           "path": {
             "pathParameters": [],
@@ -34955,7 +34888,7 @@
             }
           ],
           "id": "getConnection",
-          "originalEndpointId": "Connections.getConnection",
+          "originalEndpointId": "endpoint_connections.getConnection",
           "name": "Get a single connection",
           "path": {
             "pathParameters": [
@@ -35218,7 +35151,7 @@
             }
           ],
           "id": "updateConnection",
-          "originalEndpointId": "Connections.updateConnection",
+          "originalEndpointId": "endpoint_connections.updateConnection",
           "name": "Update a connection",
           "path": {
             "pathParameters": [
@@ -35581,7 +35514,7 @@
             }
           ],
           "id": "archiveConnection",
-          "originalEndpointId": "Connections.archiveConnection",
+          "originalEndpointId": "endpoint_connections.archiveConnection",
           "name": "Archive a connection",
           "path": {
             "pathParameters": [
@@ -35844,7 +35777,7 @@
             }
           ],
           "id": "unarchiveConnection",
-          "originalEndpointId": "Connections.unarchiveConnection",
+          "originalEndpointId": "endpoint_connections.unarchiveConnection",
           "name": "Unarchive a connection",
           "path": {
             "pathParameters": [
@@ -36107,7 +36040,7 @@
             }
           ],
           "id": "pauseConnection",
-          "originalEndpointId": "Connections.pauseConnection",
+          "originalEndpointId": "endpoint_connections.pauseConnection",
           "name": "Pause a connection",
           "path": {
             "pathParameters": [
@@ -36370,7 +36303,7 @@
             }
           ],
           "id": "unpauseConnection",
-          "originalEndpointId": "Connections.unpauseConnection",
+          "originalEndpointId": "endpoint_connections.unpauseConnection",
           "name": "Unpause a connection",
           "path": {
             "pathParameters": [
@@ -36730,6 +36663,10 @@
       "subpackage_transformations",
       "subpackage_connections"
     ]
+  },
+  "auth": {
+    "type": "bearerAuth",
+    "tokenName": "token"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

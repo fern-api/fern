@@ -156,6 +156,60 @@
         "extends": [],
         "properties": []
       }
+    },
+    "SucculentsPostRequestBodyContentApplicationJsonSchemaSucculentsItems": {
+      "name": "SucculentsPostRequestBodyContentApplicationJsonSchemaSucculentsItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "createSucculents_Response_201": {
+      "name": "createSucculents_Response_201",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "code",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "subpackages": {},
@@ -165,7 +219,7 @@
         "auth": false,
         "method": "GET",
         "id": "listTrees",
-        "originalEndpointId": "listTrees",
+        "originalEndpointId": "endpoint_.listTrees",
         "name": "List all trees",
         "path": {
           "pathParameters": [],
@@ -267,7 +321,7 @@
         "auth": false,
         "method": "POST",
         "id": "createTree",
-        "originalEndpointId": "createTree",
+        "originalEndpointId": "endpoint_.createTree",
         "name": "Create a new tree",
         "path": {
           "pathParameters": [],
@@ -429,7 +483,7 @@
         "auth": false,
         "method": "GET",
         "id": "getTree",
-        "originalEndpointId": "getTree",
+        "originalEndpointId": "endpoint_.getTree",
         "name": "Get a tree by ID",
         "path": {
           "pathParameters": [
@@ -523,7 +577,7 @@
         "auth": false,
         "method": "POST",
         "id": "createFern",
-        "originalEndpointId": "createFern",
+        "originalEndpointId": "endpoint_.createFern",
         "name": "Create a new fern",
         "path": {
           "pathParameters": [],
@@ -684,7 +738,7 @@
         "auth": false,
         "method": "GET",
         "id": "getFern",
-        "originalEndpointId": "getFern",
+        "originalEndpointId": "endpoint_.getFern",
         "name": "Get a fern by ID",
         "path": {
           "pathParameters": [
@@ -758,7 +812,7 @@
         "auth": false,
         "method": "POST",
         "id": "createGrass",
-        "originalEndpointId": "createGrass",
+        "originalEndpointId": "endpoint_.createGrass",
         "name": "Create a new grass",
         "path": {
           "pathParameters": [],
@@ -814,7 +868,7 @@
                     "itemType": {
                       "type": "primitive",
                       "value": {
-                        "type": "integer"
+                        "type": "double"
                       }
                     }
                   }
@@ -846,6 +900,116 @@
               }
             },
             "responseStatusCode": 200
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "id": "createSucculents",
+        "originalEndpointId": "endpoint_.createSucculents",
+        "name": "Create several new succulents",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/succulents"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "succulents",
+                  "valueType": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "SucculentsPostRequestBodyContentApplicationJsonSchemaSucculentsItems"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "createSucculents_Response_201"
+            }
+          },
+          "statusCode": 201,
+          "description": "Succulents created successfully"
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "createSucculents_example",
+            "description": "",
+            "path": "/succulents",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "succulents": [
+                {
+                  "name": "Aeonium"
+                },
+                {
+                  "name": "Sedum"
+                },
+                {
+                  "name": "Crassula"
+                }
+              ]
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "succulents": [
+                  {
+                    "name": "Aeonium"
+                  },
+                  {
+                    "name": "Sedum"
+                  },
+                  {
+                    "name": "Crassula"
+                  }
+                ]
+              }
+            },
+            "responseStatusCode": 201,
+            "responseBody": {
+              "message": "Succulents created successfully",
+              "code": 201
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "message": "Succulents created successfully",
+                "code": 201
+              }
+            }
           }
         ],
         "protocol": {

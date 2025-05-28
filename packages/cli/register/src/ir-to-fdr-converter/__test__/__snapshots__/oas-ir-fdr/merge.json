@@ -10175,7 +10175,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "account-details.retrieve",
+          "originalEndpointId": "endpoint_accountDetails.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [],
@@ -10285,7 +10285,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "account-token.retrieve",
+          "originalEndpointId": "endpoint_accountToken.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -10408,7 +10408,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "available-actions.retrieve",
+          "originalEndpointId": "endpoint_availableActions.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [],
@@ -10477,13 +10477,17 @@
                   {
                     "model_name": "Candidate",
                     "available_operations": [
-                      "foo"
+                      "FETCH",
+                      "CREATE"
                     ],
                     "required_post_parameters": [
-                      "foo"
+                      "remote_user_id"
                     ],
                     "supported_fields": [
-                      "foo"
+                      "first_name",
+                      "last_name",
+                      "company",
+                      "title"
                     ]
                   }
                 ]
@@ -10508,13 +10512,17 @@
                     {
                       "model_name": "Candidate",
                       "available_operations": [
-                        "foo"
+                        "FETCH",
+                        "CREATE"
                       ],
                       "required_post_parameters": [
-                        "foo"
+                        "remote_user_id"
                       ],
                       "supported_fields": [
-                        "foo"
+                        "first_name",
+                        "last_name",
+                        "company",
+                        "title"
                       ]
                     }
                   ]
@@ -10552,7 +10560,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "bank-info.list",
+          "originalEndpointId": "endpoint_bankInfo.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -10830,8 +10838,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/bank-info",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -10857,8 +10867,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/bank-info",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -10887,7 +10899,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "bank-info.retrieve",
+          "originalEndpointId": "endpoint_bankInfo.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -11024,8 +11036,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/bank-info",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -11045,8 +11059,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/bank-info",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -11083,7 +11099,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "benefits.list",
+          "originalEndpointId": "endpoint_benefits.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -11303,8 +11319,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/benefits",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -11331,8 +11349,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/benefits",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -11361,7 +11381,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "benefits.retrieve",
+          "originalEndpointId": "endpoint_benefits.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -11475,8 +11495,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/benefits",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -11497,8 +11519,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/benefits",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -11535,7 +11559,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "companies.list",
+          "originalEndpointId": "endpoint_companies.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -11720,15 +11744,19 @@
                     "legal_name": "Waystar Royco, Inc.",
                     "display_name": "Waystar Royco",
                     "eins": [
-                      "foo"
+                      "12-3456789",
+                      "12-3451111",
+                      "11-0011000"
                     ],
                     "remote_was_deleted": true,
                     "modified_at": "2021-10-16T00:00:00Z",
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/companies",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -11746,15 +11774,19 @@
                       "legal_name": "Waystar Royco, Inc.",
                       "display_name": "Waystar Royco",
                       "eins": [
-                        "foo"
+                        "12-3456789",
+                        "12-3451111",
+                        "11-0011000"
                       ],
                       "remote_was_deleted": true,
                       "modified_at": "2021-10-16T00:00:00Z",
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/companies",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -11783,7 +11815,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "companies.retrieve",
+          "originalEndpointId": "endpoint_companies.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -11875,15 +11907,19 @@
                 "legal_name": "Waystar Royco, Inc.",
                 "display_name": "Waystar Royco",
                 "eins": [
-                  "foo"
+                  "12-3456789",
+                  "12-3451111",
+                  "11-0011000"
                 ],
                 "remote_was_deleted": true,
                 "modified_at": "2021-10-16T00:00:00Z",
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/companies",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -11895,15 +11931,19 @@
                   "legal_name": "Waystar Royco, Inc.",
                   "display_name": "Waystar Royco",
                   "eins": [
-                    "foo"
+                    "12-3456789",
+                    "12-3451111",
+                    "11-0011000"
                   ],
                   "remote_was_deleted": true,
                   "modified_at": "2021-10-16T00:00:00Z",
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/companies",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -11940,7 +11980,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "delete-account.create",
+          "originalEndpointId": "endpoint_deleteAccount.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -12012,7 +12052,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "employee-payroll-runs.list",
+          "originalEndpointId": "endpoint_employeePayrollRuns.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -12299,58 +12339,30 @@
                     "check_date": "2020-11-10T00:00:00Z",
                     "earnings": [
                       {
-                        "id": "babbced6-3a81-4775-8da2-490dc6385259",
-                        "remote_id": "52802",
                         "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                         "amount": 1002.34,
-                        "type": "SALARY",
-                        "remote_was_deleted": true,
-                        "modified_at": "2021-10-16T00:00:00Z",
-                        "field_mappings": {},
-                        "remote_data": [
-                          {
-                            "path": "foo",
-                            "data": {}
-                          }
-                        ]
+                        "type": "SALARY"
+                      },
+                      {
+                        "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                        "amount": 8342.34,
+                        "type": "OVERTIME"
                       }
                     ],
                     "deductions": [
                       {
-                        "id": "5fd439fc-1b64-4755-b275-64918936c365",
-                        "remote_id": "93478612",
                         "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                         "name": "Social Security",
                         "employee_deduction": 34.54,
-                        "company_deduction": 78.78,
-                        "remote_was_deleted": true,
-                        "modified_at": "2021-10-16T00:00:00Z",
-                        "field_mappings": {},
-                        "remote_data": [
-                          {
-                            "path": "foo",
-                            "data": {}
-                          }
-                        ]
+                        "company_deduction": 78.78
                       }
                     ],
                     "taxes": [
                       {
-                        "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
-                        "remote_id": "26806834",
                         "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                         "name": "California State Income Tax",
                         "amount": 100.25,
-                        "employer_tax": "False",
-                        "remote_was_deleted": true,
-                        "modified_at": "2021-10-16T00:00:00Z",
-                        "field_mappings": {},
-                        "remote_data": [
-                          {
-                            "path": "foo",
-                            "data": {}
-                          }
-                        ]
+                        "employer_tax": "False"
                       }
                     ],
                     "remote_was_deleted": true,
@@ -12358,8 +12370,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/employee-payroll",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -12383,58 +12397,30 @@
                       "check_date": "2020-11-10T00:00:00Z",
                       "earnings": [
                         {
-                          "id": "babbced6-3a81-4775-8da2-490dc6385259",
-                          "remote_id": "52802",
                           "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                           "amount": 1002.34,
-                          "type": "SALARY",
-                          "remote_was_deleted": true,
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "field_mappings": {},
-                          "remote_data": [
-                            {
-                              "path": "foo",
-                              "data": {}
-                            }
-                          ]
+                          "type": "SALARY"
+                        },
+                        {
+                          "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                          "amount": 8342.34,
+                          "type": "OVERTIME"
                         }
                       ],
                       "deductions": [
                         {
-                          "id": "5fd439fc-1b64-4755-b275-64918936c365",
-                          "remote_id": "93478612",
                           "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                           "name": "Social Security",
                           "employee_deduction": 34.54,
-                          "company_deduction": 78.78,
-                          "remote_was_deleted": true,
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "field_mappings": {},
-                          "remote_data": [
-                            {
-                              "path": "foo",
-                              "data": {}
-                            }
-                          ]
+                          "company_deduction": 78.78
                         }
                       ],
                       "taxes": [
                         {
-                          "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
-                          "remote_id": "26806834",
                           "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                           "name": "California State Income Tax",
                           "amount": 100.25,
-                          "employer_tax": "False",
-                          "remote_was_deleted": true,
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "field_mappings": {},
-                          "remote_data": [
-                            {
-                              "path": "foo",
-                              "data": {}
-                            }
-                          ]
+                          "employer_tax": "False"
                         }
                       ],
                       "remote_was_deleted": true,
@@ -12442,8 +12428,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/employee-payroll",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -12472,7 +12460,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "employee-payroll-runs.retrieve",
+          "originalEndpointId": "endpoint_employeePayrollRuns.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -12583,58 +12571,30 @@
                 "check_date": "2020-11-10T00:00:00Z",
                 "earnings": [
                   {
-                    "id": "babbced6-3a81-4775-8da2-490dc6385259",
-                    "remote_id": "52802",
                     "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                     "amount": 1002.34,
-                    "type": "SALARY",
-                    "remote_was_deleted": true,
-                    "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
-                    "remote_data": [
-                      {
-                        "path": "foo",
-                        "data": {}
-                      }
-                    ]
+                    "type": "SALARY"
+                  },
+                  {
+                    "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                    "amount": 8342.34,
+                    "type": "OVERTIME"
                   }
                 ],
                 "deductions": [
                   {
-                    "id": "5fd439fc-1b64-4755-b275-64918936c365",
-                    "remote_id": "93478612",
                     "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                     "name": "Social Security",
                     "employee_deduction": 34.54,
-                    "company_deduction": 78.78,
-                    "remote_was_deleted": true,
-                    "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
-                    "remote_data": [
-                      {
-                        "path": "foo",
-                        "data": {}
-                      }
-                    ]
+                    "company_deduction": 78.78
                   }
                 ],
                 "taxes": [
                   {
-                    "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
-                    "remote_id": "26806834",
                     "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                     "name": "California State Income Tax",
                     "amount": 100.25,
-                    "employer_tax": "False",
-                    "remote_was_deleted": true,
-                    "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
-                    "remote_data": [
-                      {
-                        "path": "foo",
-                        "data": {}
-                      }
-                    ]
+                    "employer_tax": "False"
                   }
                 ],
                 "remote_was_deleted": true,
@@ -12642,8 +12602,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/employee-payroll",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -12661,58 +12623,30 @@
                   "check_date": "2020-11-10T00:00:00Z",
                   "earnings": [
                     {
-                      "id": "babbced6-3a81-4775-8da2-490dc6385259",
-                      "remote_id": "52802",
                       "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                       "amount": 1002.34,
-                      "type": "SALARY",
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
+                      "type": "SALARY"
+                    },
+                    {
+                      "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                      "amount": 8342.34,
+                      "type": "OVERTIME"
                     }
                   ],
                   "deductions": [
                     {
-                      "id": "5fd439fc-1b64-4755-b275-64918936c365",
-                      "remote_id": "93478612",
                       "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                       "name": "Social Security",
                       "employee_deduction": 34.54,
-                      "company_deduction": 78.78,
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
+                      "company_deduction": 78.78
                     }
                   ],
                   "taxes": [
                     {
-                      "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
-                      "remote_id": "26806834",
                       "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                       "name": "California State Income Tax",
                       "amount": 100.25,
-                      "employer_tax": "False",
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
+                      "employer_tax": "False"
                     }
                   ],
                   "remote_was_deleted": true,
@@ -12720,8 +12654,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/employee-payroll",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -12758,7 +12694,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "employees.list",
+          "originalEndpointId": "endpoint_employees.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -13213,13 +13149,13 @@
                     "display_full_name": "Cousin Greg Hirsch",
                     "username": "cousingreg",
                     "groups": [
-                      "foo"
+                      "21a54124-397f-494d-985e-3c5b330b8a68"
                     ],
                     "work_email": "greg@merge.dev",
                     "personal_email": "greg@gmail.com",
                     "mobile_phone_number": "+1234567890",
                     "employments": [
-                      "foo"
+                      "17a54124-287f-494d-965e-3c5b330c9a68"
                     ],
                     "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                     "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
@@ -13243,8 +13179,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/people",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -13266,13 +13204,13 @@
                       "display_full_name": "Cousin Greg Hirsch",
                       "username": "cousingreg",
                       "groups": [
-                        "foo"
+                        "21a54124-397f-494d-985e-3c5b330b8a68"
                       ],
                       "work_email": "greg@merge.dev",
                       "personal_email": "greg@gmail.com",
                       "mobile_phone_number": "+1234567890",
                       "employments": [
-                        "foo"
+                        "17a54124-287f-494d-965e-3c5b330c9a68"
                       ],
                       "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                       "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
@@ -13296,8 +13234,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/people",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -13326,7 +13266,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "employees.create",
+          "originalEndpointId": "endpoint_employees.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -13437,13 +13377,13 @@
                   "display_full_name": "Cousin Greg Hirsch",
                   "username": "cousingreg",
                   "groups": [
-                    "foo"
+                    "21a54124-397f-494d-985e-3c5b330b8a68"
                   ],
                   "work_email": "greg@merge.dev",
                   "personal_email": "greg@gmail.com",
                   "mobile_phone_number": "+1234567890",
                   "employments": [
-                    "foo"
+                    "17a54124-287f-494d-965e-3c5b330c9a68"
                   ],
                   "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                   "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
@@ -13467,8 +13407,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/people",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 },
@@ -13517,13 +13459,13 @@
                     "display_full_name": "Cousin Greg Hirsch",
                     "username": "cousingreg",
                     "groups": [
-                      "foo"
+                      "21a54124-397f-494d-985e-3c5b330b8a68"
                     ],
                     "work_email": "greg@merge.dev",
                     "personal_email": "greg@gmail.com",
                     "mobile_phone_number": "+1234567890",
                     "employments": [
-                      "foo"
+                      "17a54124-287f-494d-965e-3c5b330c9a68"
                     ],
                     "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                     "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
@@ -13547,8 +13489,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/people",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   },
@@ -13607,7 +13551,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "employees.retrieve",
+          "originalEndpointId": "endpoint_employees.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -13753,13 +13697,13 @@
                 "display_full_name": "Cousin Greg Hirsch",
                 "username": "cousingreg",
                 "groups": [
-                  "foo"
+                  "21a54124-397f-494d-985e-3c5b330b8a68"
                 ],
                 "work_email": "greg@merge.dev",
                 "personal_email": "greg@gmail.com",
                 "mobile_phone_number": "+1234567890",
                 "employments": [
-                  "foo"
+                  "17a54124-287f-494d-965e-3c5b330c9a68"
                 ],
                 "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                 "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
@@ -13783,8 +13727,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/people",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -13800,13 +13746,13 @@
                   "display_full_name": "Cousin Greg Hirsch",
                   "username": "cousingreg",
                   "groups": [
-                    "foo"
+                    "21a54124-397f-494d-985e-3c5b330b8a68"
                   ],
                   "work_email": "greg@merge.dev",
                   "personal_email": "greg@gmail.com",
                   "mobile_phone_number": "+1234567890",
                   "employments": [
-                    "foo"
+                    "17a54124-287f-494d-965e-3c5b330c9a68"
                   ],
                   "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                   "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
@@ -13830,8 +13776,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/people",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -13858,7 +13806,7 @@
             }
           ],
           "id": "ignoreCreate",
-          "originalEndpointId": "employees.ignoreCreate",
+          "originalEndpointId": "endpoint_employees.ignoreCreate",
           "name": "Ignore Create",
           "path": {
             "pathParameters": [
@@ -13963,7 +13911,7 @@
             }
           ],
           "id": "metaPostRetrieve",
-          "originalEndpointId": "employees.metaPostRetrieve",
+          "originalEndpointId": "endpoint_employees.metaPostRetrieve",
           "name": "Meta Post Retrieve",
           "path": {
             "pathParameters": [],
@@ -14069,7 +14017,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "employments.list",
+          "originalEndpointId": "endpoint_employments.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -14327,8 +14275,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/jobs",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -14358,8 +14308,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/jobs",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -14388,7 +14340,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "employments.retrieve",
+          "originalEndpointId": "endpoint_employments.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -14529,8 +14481,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/jobs",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -14554,8 +14508,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/jobs",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -14592,7 +14548,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "generate-key.create",
+          "originalEndpointId": "endpoint_generateKey.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -14695,7 +14651,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "groups.list",
+          "originalEndpointId": "endpoint_groups.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -14922,8 +14878,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/group",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -14946,8 +14904,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/group",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -14976,7 +14936,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "groups.retrieve",
+          "originalEndpointId": "endpoint_groups.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -15098,8 +15058,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/group",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -15116,8 +15078,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/group",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -15154,7 +15118,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "issues.list",
+          "originalEndpointId": "endpoint_issues.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -15376,7 +15340,8 @@
                     "last_incident_time": "2022-12-05T16:19:15.161Z",
                     "is_muted": true,
                     "error_details": [
-                      "foo"
+                      "Missing employee permissions.",
+                      "Missing time off permissions."
                     ]
                   }
                 ]
@@ -15396,7 +15361,8 @@
                       "last_incident_time": "2022-12-05T16:19:15.161Z",
                       "is_muted": true,
                       "error_details": [
-                        "foo"
+                        "Missing employee permissions.",
+                        "Missing time off permissions."
                       ]
                     }
                   ]
@@ -15424,7 +15390,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "issues.retrieve",
+          "originalEndpointId": "endpoint_issues.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -15492,7 +15458,8 @@
                 "last_incident_time": "2022-12-05T16:19:15.161Z",
                 "is_muted": true,
                 "error_details": [
-                  "foo"
+                  "Missing employee permissions.",
+                  "Missing time off permissions."
                 ]
               },
               "responseBodyV3": {
@@ -15506,7 +15473,8 @@
                   "last_incident_time": "2022-12-05T16:19:15.161Z",
                   "is_muted": true,
                   "error_details": [
-                    "foo"
+                    "Missing employee permissions.",
+                    "Missing time off permissions."
                   ]
                 }
               }
@@ -15542,7 +15510,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "link-token.create",
+          "originalEndpointId": "endpoint_linkToken.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -15657,7 +15625,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "linked-accounts.list",
+          "originalEndpointId": "endpoint_linkedAccounts.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -15893,13 +15861,17 @@
                         {
                           "model_name": "Candidate",
                           "available_operations": [
-                            "foo"
+                            "FETCH",
+                            "CREATE"
                           ],
                           "required_post_parameters": [
-                            "foo"
+                            "remote_user_id"
                           ],
                           "supported_fields": [
-                            "foo"
+                            "first_name",
+                            "last_name",
+                            "company",
+                            "title"
                           ]
                         }
                       ]
@@ -15937,13 +15909,17 @@
                           {
                             "model_name": "Candidate",
                             "available_operations": [
-                              "foo"
+                              "FETCH",
+                              "CREATE"
                             ],
                             "required_post_parameters": [
-                              "foo"
+                              "remote_user_id"
                             ],
                             "supported_fields": [
-                              "foo"
+                              "first_name",
+                              "last_name",
+                              "company",
+                              "title"
                             ]
                           }
                         ]
@@ -15984,7 +15960,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "locations.list",
+          "originalEndpointId": "endpoint_locations.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -16204,8 +16180,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/locations",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -16234,8 +16212,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/locations",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -16264,7 +16244,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "locations.retrieve",
+          "originalEndpointId": "endpoint_locations.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -16392,8 +16372,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/locations",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -16416,8 +16398,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/locations",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -16454,7 +16438,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "passthrough.create",
+          "originalEndpointId": "endpoint_passthrough.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -16582,7 +16566,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "pay-groups.list",
+          "originalEndpointId": "endpoint_payGroups.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -16770,8 +16754,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/pay-group",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -16792,8 +16778,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/pay-group",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -16822,7 +16810,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "pay-groups.retrieve",
+          "originalEndpointId": "endpoint_payGroups.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -16917,8 +16905,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/pay-group",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -16933,8 +16923,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/pay-group",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -16971,7 +16963,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "payroll-runs.list",
+          "originalEndpointId": "endpoint_payrollRuns.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -17254,8 +17246,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/payroll",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -17280,8 +17274,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/payroll",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -17310,7 +17306,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "payroll-runs.retrieve",
+          "originalEndpointId": "endpoint_payrollRuns.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -17434,8 +17430,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/payroll",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -17454,8 +17452,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/payroll",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -17492,7 +17492,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "regenerate-key.create",
+          "originalEndpointId": "endpoint_regenerateKey.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -17595,7 +17595,7 @@
             }
           ],
           "id": "configurationsList",
-          "originalEndpointId": "selective-sync.configurationsList",
+          "originalEndpointId": "endpoint_selectiveSync.configurationsList",
           "name": "Configurations List",
           "path": {
             "pathParameters": [],
@@ -17702,7 +17702,7 @@
             }
           ],
           "id": "configurationsUpdate",
-          "originalEndpointId": "selective-sync.configurationsUpdate",
+          "originalEndpointId": "endpoint_selectiveSync.configurationsUpdate",
           "name": "Configurations Update",
           "path": {
             "pathParameters": [],
@@ -17851,7 +17851,7 @@
             }
           ],
           "id": "metaList",
-          "originalEndpointId": "selective-sync.metaList",
+          "originalEndpointId": "endpoint_selectiveSync.metaList",
           "name": "Meta List",
           "path": {
             "pathParameters": [],
@@ -18026,7 +18026,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "sync-status.list",
+          "originalEndpointId": "endpoint_syncStatus.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -18171,7 +18171,7 @@
             }
           ],
           "id": "sync_status_resync_create",
-          "originalEndpointId": "force-resync.sync_status_resync_create",
+          "originalEndpointId": "endpoint_forceResync.sync_status_resync_create",
           "name": "Sync Status Resync Create",
           "path": {
             "pathParameters": [],
@@ -18282,7 +18282,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "teams.list",
+          "originalEndpointId": "endpoint_teams.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -18497,8 +18497,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/teams",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -18520,8 +18522,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/teams",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -18550,7 +18554,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "teams.retrieve",
+          "originalEndpointId": "endpoint_teams.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -18659,8 +18663,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/teams",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -18676,8 +18682,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/teams",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -18714,7 +18722,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "time-off.list",
+          "originalEndpointId": "endpoint_timeOff.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -18996,8 +19004,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/leave",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -19026,8 +19036,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/leave",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -19056,7 +19068,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "time-off.create",
+          "originalEndpointId": "endpoint_timeOff.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -19174,8 +19186,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/leave",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 },
@@ -19231,8 +19245,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/leave",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   },
@@ -19291,7 +19307,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "time-off.retrieve",
+          "originalEndpointId": "endpoint_timeOff.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -19431,8 +19447,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/leave",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -19455,8 +19473,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/leave",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -19483,7 +19503,7 @@
             }
           ],
           "id": "metaPostRetrieve",
-          "originalEndpointId": "time-off.metaPostRetrieve",
+          "originalEndpointId": "endpoint_timeOff.metaPostRetrieve",
           "name": "Meta Post Retrieve",
           "path": {
             "pathParameters": [],
@@ -19589,7 +19609,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "time-off-balances.list",
+          "originalEndpointId": "endpoint_timeOffBalances.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -19841,8 +19861,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/leave",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -19866,8 +19888,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/leave",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -19896,7 +19920,7 @@
             }
           ],
           "id": "retrieve",
-          "originalEndpointId": "time-off-balances.retrieve",
+          "originalEndpointId": "endpoint_timeOffBalances.retrieve",
           "name": "Retrieve",
           "path": {
             "pathParameters": [
@@ -20031,8 +20055,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/leave",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -20050,8 +20076,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/leave",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -20088,7 +20116,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "webhook-receivers.list",
+          "originalEndpointId": "endpoint_webhookReceivers.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -20181,7 +20209,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "webhook-receivers.create",
+          "originalEndpointId": "endpoint_webhookReceivers.create",
           "name": "Create",
           "path": {
             "pathParameters": [],

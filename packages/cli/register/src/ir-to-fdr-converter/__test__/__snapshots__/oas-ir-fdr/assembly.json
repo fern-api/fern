@@ -2735,7 +2735,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -2840,7 +2840,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -3340,17 +3340,6 @@
         ]
       }
     },
-    "LemurBaseParametersContext1": {
-      "name": "LemurBaseParametersContext1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [],
-        "extraProperties": {
-          "type": "unknown"
-        }
-      }
-    },
     "LemurBaseParametersContext": {
       "description": "Context to provide the model. This can be a string or a free-form JSON value.",
       "name": "LemurBaseParametersContext",
@@ -3366,10 +3355,17 @@
             }
           },
           {
-            "typeName": "LemurBaseParametersContext1",
             "type": {
-              "type": "id",
-              "value": "LemurBaseParametersContext1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -3490,17 +3486,6 @@
         ]
       }
     },
-    "LemurQuestionContext1": {
-      "name": "LemurQuestionContext1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [],
-        "extraProperties": {
-          "type": "unknown"
-        }
-      }
-    },
     "LemurQuestionContext": {
       "description": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
       "name": "LemurQuestionContext",
@@ -3516,10 +3501,17 @@
             }
           },
           {
-            "typeName": "LemurQuestionContext1",
             "type": {
-              "type": "id",
-              "value": "LemurQuestionContext1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -4116,35 +4108,40 @@
             "type": {
               "type": "id",
               "value": "SessionBegins"
-            }
+            },
+            "displayName": "SessionBegins"
           },
           {
             "typeName": "PartialTranscript",
             "type": {
               "type": "id",
               "value": "PartialTranscript"
-            }
+            },
+            "displayName": "partialTranscript"
           },
           {
             "typeName": "FinalTranscript",
             "type": {
               "type": "id",
               "value": "FinalTranscript"
-            }
+            },
+            "displayName": "finalTranscript"
           },
           {
             "typeName": "SessionTerminated",
             "type": {
               "type": "id",
               "value": "SessionTerminated"
-            }
+            },
+            "displayName": "SessionTerminated"
           },
           {
             "typeName": "RealtimeError",
             "type": {
               "type": "id",
               "value": "RealtimeError"
-            }
+            },
+            "displayName": "RealtimeError"
           }
         ]
       }
@@ -4159,14 +4156,16 @@
             "type": {
               "type": "id",
               "value": "SendAudio"
-            }
+            },
+            "displayName": "sendAudio"
           },
           {
             "typeName": "TerminateSession",
             "type": {
               "type": "id",
               "value": "TerminateSession"
-            }
+            },
+            "displayName": "terminateSession"
           }
         ]
       }
@@ -4189,7 +4188,7 @@
             }
           ],
           "id": "upload",
-          "originalEndpointId": "files.upload",
+          "originalEndpointId": "endpoint_files.upload",
           "name": "Upload an audio or video file which can be transcribed.",
           "path": {
             "pathParameters": [],
@@ -4361,7 +4360,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "transcript.list",
+          "originalEndpointId": "endpoint_transcript.list",
           "name": "List transcripts",
           "path": {
             "pathParameters": [],
@@ -4615,7 +4614,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "transcript.create",
+          "originalEndpointId": "endpoint_transcript.create",
           "name": "Create a transcript from an audio file",
           "path": {
             "pathParameters": [],
@@ -5134,7 +5133,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "transcript.get",
+          "originalEndpointId": "endpoint_transcript.get",
           "name": "Get the transcript",
           "path": {
             "pathParameters": [
@@ -5650,7 +5649,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "transcript.delete",
+          "originalEndpointId": "endpoint_transcript.delete",
           "name": "Delete the transcript",
           "path": {
             "pathParameters": [
@@ -6166,7 +6165,7 @@
             }
           ],
           "id": "getSubtitles",
-          "originalEndpointId": "transcript.getSubtitles",
+          "originalEndpointId": "endpoint_transcript.getSubtitles",
           "name": "Export transcript as SRT or VTT captions.",
           "path": {
             "pathParameters": [
@@ -6366,7 +6365,7 @@
             }
           ],
           "id": "getSentences",
-          "originalEndpointId": "transcript.getSentences",
+          "originalEndpointId": "endpoint_transcript.getSentences",
           "name": "Get the transcript split by sentences",
           "path": {
             "pathParameters": [
@@ -6580,7 +6579,7 @@
             }
           ],
           "id": "getParagraphs",
-          "originalEndpointId": "transcript.getParagraphs",
+          "originalEndpointId": "endpoint_transcript.getParagraphs",
           "name": "Get the transcript split by paragraphs",
           "path": {
             "pathParameters": [
@@ -6794,7 +6793,7 @@
             }
           ],
           "id": "wordSearch",
-          "originalEndpointId": "transcript.wordSearch",
+          "originalEndpointId": "endpoint_transcript.wordSearch",
           "name": "Search the given transcript for words, numbers, or phrases",
           "path": {
             "pathParameters": [
@@ -7018,7 +7017,7 @@
             }
           ],
           "id": "getRedactedAudio",
-          "originalEndpointId": "transcript.getRedactedAudio",
+          "originalEndpointId": "endpoint_transcript.getRedactedAudio",
           "name": "Retrieves the redacted audio object containing the status and URL to the redacted audio.",
           "path": {
             "pathParameters": [
@@ -7206,7 +7205,7 @@
             }
           ],
           "id": "createTemporaryToken",
-          "originalEndpointId": "realtime.createTemporaryToken",
+          "originalEndpointId": "endpoint_realtime.createTemporaryToken",
           "name": "Create a temporary authentication token for real-time transcription",
           "path": {
             "pathParameters": [],
@@ -7395,7 +7394,7 @@
             }
           ],
           "id": "summary",
-          "originalEndpointId": "lemur.summary",
+          "originalEndpointId": "endpoint_lemur.summary",
           "name": "Generate a custom summary from one or more transcripts.",
           "path": {
             "pathParameters": [],
@@ -7580,7 +7579,7 @@
             }
           ],
           "id": "questionAnswer",
-          "originalEndpointId": "lemur.questionAnswer",
+          "originalEndpointId": "endpoint_lemur.questionAnswer",
           "name": "Create answers to one or more questions about one or more transcripts.",
           "path": {
             "pathParameters": [],
@@ -7785,7 +7784,7 @@
             }
           ],
           "id": "actionItems",
-          "originalEndpointId": "lemur.actionItems",
+          "originalEndpointId": "endpoint_lemur.actionItems",
           "name": "Extract action items from one or more meeting transcripts.",
           "path": {
             "pathParameters": [],
@@ -7970,7 +7969,7 @@
             }
           ],
           "id": "task",
-          "originalEndpointId": "lemur.task",
+          "originalEndpointId": "endpoint_lemur.task",
           "name": "Ask LeMUR to use one or more transcripts with a Custom Task to handle your specialized task.",
           "path": {
             "pathParameters": [],
@@ -8157,7 +8156,7 @@
             }
           ],
           "id": "purgeRequestData",
-          "originalEndpointId": "lemur.purgeRequestData",
+          "originalEndpointId": "endpoint_lemur.purgeRequestData",
           "name": "Delete the data for a previously submitted LeMUR request.",
           "path": {
             "pathParameters": [

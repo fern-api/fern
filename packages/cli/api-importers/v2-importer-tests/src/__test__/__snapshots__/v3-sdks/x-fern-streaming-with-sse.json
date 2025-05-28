@@ -378,7 +378,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "chatCompletions.create",
+          "id": "endpoint_chatCompletions.create",
           "method": "POST",
           "name": {
             "originalName": "create",

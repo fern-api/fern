@@ -2,6 +2,7 @@ imports:
   reviewers: ./reviewers.yml
   generators: ./generators.yml
   license: ./license.yml
+  auth: ./fernDefinition/auth.yml
 
 types: 
   GeneratorGroupSchema:
@@ -47,6 +48,7 @@ types:
 
   GeneratorAPISettingsSchema:
     properties:
+      auth: optional<auth.ApiAuthSchema>
       settings: optional<generators.APIDefinitionSettingsSchema>
 
   GeneratorOutputSchema:

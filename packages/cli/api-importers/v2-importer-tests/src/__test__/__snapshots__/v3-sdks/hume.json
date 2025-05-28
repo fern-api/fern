@@ -20,7 +20,7 @@
   },
   "selfHosted": false,
   "auth": {
-    "requirement": "ANY",
+    "requirement": "ALL",
     "schemes": [
       {
         "name": {
@@ -16236,7 +16236,6 @@
                         }
                       },
                       "typeId": "Context",
-                      "displayName": "Context",
                       "inline": false,
                       "type": "named"
                     },
@@ -16310,7 +16309,6 @@
                         }
                       },
                       "typeId": "AudioConfiguration",
-                      "displayName": "AudioConfiguration",
                       "inline": false,
                       "type": "named"
                     },
@@ -16441,7 +16439,6 @@
                             }
                           },
                           "typeId": "Tool",
-                          "displayName": "Tool",
                           "inline": false,
                           "type": "named"
                         },
@@ -16525,7 +16522,6 @@
                             }
                           },
                           "typeId": "BuiltinToolConfig",
-                          "displayName": "BuiltinToolConfig",
                           "inline": false,
                           "type": "named"
                         },
@@ -17395,7 +17391,6 @@
                         }
                       },
                       "typeId": "ToolType",
-                      "displayName": "ToolType",
                       "inline": false,
                       "type": "named"
                     },
@@ -17616,7 +17611,6 @@
                         }
                       },
                       "typeId": "ToolType",
-                      "displayName": "ToolType",
                       "inline": false,
                       "type": "named"
                     },
@@ -17876,7 +17870,6 @@
                         }
                       },
                       "typeId": "ErrorLevel",
-                      "displayName": "ErrorLevel",
                       "inline": false,
                       "type": "named"
                     },
@@ -18572,7 +18565,6 @@
                 }
               },
               "typeId": "ChatMessage",
-              "displayName": "ChatMessage",
               "inline": false,
               "type": "named"
             },
@@ -18630,7 +18622,6 @@
                 }
               },
               "typeId": "Inference",
-              "displayName": "Inference",
               "inline": false,
               "type": "named"
             },
@@ -19699,7 +19690,6 @@
                 }
               },
               "typeId": "ChatMessage",
-              "displayName": "ChatMessage",
               "inline": false,
               "type": "named"
             },
@@ -19757,7 +19747,6 @@
                 }
               },
               "typeId": "Inference",
-              "displayName": "Inference",
               "inline": false,
               "type": "named"
             },
@@ -19815,7 +19804,6 @@
                 }
               },
               "typeId": "MillisecondInterval",
-              "displayName": "MillisecondInterval",
               "inline": false,
               "type": "named"
             },
@@ -20288,7 +20276,6 @@
                 }
               },
               "typeId": "ToolType",
-              "displayName": "ToolType",
               "inline": false,
               "type": "named"
             },
@@ -20439,7 +20426,6 @@
                 }
               },
               "typeId": "Encoding",
-              "displayName": "Encoding",
               "inline": false,
               "type": "named"
             },
@@ -20720,7 +20706,6 @@
                 }
               },
               "typeId": "BuiltInTool",
-              "displayName": "BuiltInTool",
               "inline": false,
               "type": "named"
             },
@@ -20880,7 +20865,6 @@
                     }
                   },
                   "typeId": "ContextType",
-                  "displayName": "ContextType",
                   "inline": false,
                   "type": "named"
                 },
@@ -21325,7 +21309,6 @@
                 }
               },
               "typeId": "ToolType",
-              "displayName": "ToolType",
               "inline": false,
               "type": "named"
             },
@@ -21821,7 +21804,6 @@
                 }
               },
               "typeId": "Role",
-              "displayName": "Role",
               "inline": false,
               "type": "named"
             },
@@ -21936,7 +21918,6 @@
                         }
                       },
                       "typeId": "ToolCallMessage",
-                      "displayName": "ToolCallMessage",
                       "inline": false,
                       "type": "named"
                     },
@@ -22109,10 +22090,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22149,10 +22130,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22189,10 +22170,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22229,10 +22210,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22269,10 +22250,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22309,10 +22290,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22349,10 +22330,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22389,10 +22370,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22429,10 +22410,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22469,10 +22450,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22509,10 +22490,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22549,10 +22530,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22589,10 +22570,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22629,10 +22610,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22669,10 +22650,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22709,10 +22690,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22749,10 +22730,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22789,10 +22770,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22829,10 +22810,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22869,10 +22850,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22909,10 +22890,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22949,10 +22930,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -22989,10 +22970,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23029,10 +23010,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23069,10 +23050,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23109,10 +23090,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23149,10 +23130,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23189,10 +23170,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23229,10 +23210,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23269,10 +23250,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23309,10 +23290,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23349,10 +23330,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23389,10 +23370,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23429,10 +23410,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23469,10 +23450,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23509,10 +23490,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23549,10 +23530,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23589,10 +23570,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23629,10 +23610,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23669,10 +23650,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23709,10 +23690,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23749,10 +23730,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23789,10 +23770,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23829,10 +23810,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23869,10 +23850,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23909,10 +23890,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23949,10 +23930,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -23989,10 +23970,10 @@
             },
             "valueType": {
               "primitive": {
-                "v1": "INTEGER",
+                "v1": "DOUBLE",
                 "v2": {
                   "validation": {},
-                  "type": "integer"
+                  "type": "double"
                 }
               },
               "type": "primitive"
@@ -24149,7 +24130,6 @@
                     }
                   },
                   "typeId": "ProsodyInference",
-                  "displayName": "ProsodyInference",
                   "inline": false,
                   "type": "named"
                 },
@@ -24494,7 +24474,6 @@
                 }
               },
               "typeId": "EmotionScores",
-              "displayName": "EmotionScores",
               "inline": false,
               "type": "named"
             },
@@ -24790,6 +24769,7 @@
                 }
               },
               "typeId": "AssistantEnd",
+              "displayName": "AssistantEnd",
               "inline": false,
               "type": "named"
             }
@@ -24820,6 +24800,7 @@
                 }
               },
               "typeId": "AssistantMessage",
+              "displayName": "AssistantMessage",
               "inline": false,
               "type": "named"
             }
@@ -24850,6 +24831,7 @@
                 }
               },
               "typeId": "AudioOutput",
+              "displayName": "AudioOutput",
               "inline": false,
               "type": "named"
             }
@@ -24880,6 +24862,7 @@
                 }
               },
               "typeId": "ChatMetadata",
+              "displayName": "ChatMetadata",
               "inline": false,
               "type": "named"
             }
@@ -24910,6 +24893,7 @@
                 }
               },
               "typeId": "Error",
+              "displayName": "Error",
               "inline": false,
               "type": "named"
             }
@@ -24940,6 +24924,7 @@
                 }
               },
               "typeId": "UserInterruption",
+              "displayName": "UserInterruption",
               "inline": false,
               "type": "named"
             }
@@ -24970,6 +24955,7 @@
                 }
               },
               "typeId": "UserMessage",
+              "displayName": "UserMessage",
               "inline": false,
               "type": "named"
             }
@@ -25000,6 +24986,7 @@
                 }
               },
               "typeId": "ToolCallMessage",
+              "displayName": "ToolCallMessage",
               "inline": false,
               "type": "named"
             }
@@ -25030,6 +25017,7 @@
                 }
               },
               "typeId": "ToolResponseMessage",
+              "displayName": "ToolResponseMessage",
               "inline": false,
               "type": "named"
             }
@@ -25060,6 +25048,7 @@
                 }
               },
               "typeId": "ToolErrorMessage",
+              "displayName": "ToolErrorMessage",
               "inline": false,
               "type": "named"
             }
@@ -25133,6 +25122,7 @@
                 }
               },
               "typeId": "AudioInput",
+              "displayName": "AudioInput",
               "inline": false,
               "type": "named"
             }
@@ -25163,6 +25153,7 @@
                 }
               },
               "typeId": "SessionSettings",
+              "displayName": "SessionSettings",
               "inline": false,
               "type": "named"
             }
@@ -25193,6 +25184,7 @@
                 }
               },
               "typeId": "UserInput",
+              "displayName": "UserInput",
               "inline": false,
               "type": "named"
             }
@@ -25223,6 +25215,7 @@
                 }
               },
               "typeId": "AssistantInput",
+              "displayName": "AssistantInput",
               "inline": false,
               "type": "named"
             }
@@ -25253,6 +25246,7 @@
                 }
               },
               "typeId": "ToolResponseMessage",
+              "displayName": "ToolResponseMessage",
               "inline": false,
               "type": "named"
             }
@@ -25283,6 +25277,7 @@
                 }
               },
               "typeId": "ToolErrorMessage",
+              "displayName": "ToolErrorMessage",
               "inline": false,
               "type": "named"
             }
@@ -25313,6 +25308,7 @@
                 }
               },
               "typeId": "PauseAssistantMessage",
+              "displayName": "PauseAssistantMessage",
               "inline": false,
               "type": "named"
             }
@@ -25343,6 +25339,7 @@
                 }
               },
               "typeId": "ResumeAssistantMessage",
+              "displayName": "ResumeAssistantMessage",
               "inline": false,
               "type": "named"
             }
@@ -25403,7 +25400,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "List Jobs",
+          "id": "endpoint_.List Jobs",
           "displayName": "List Jobs",
           "method": "GET",
           "name": {
@@ -34673,7 +34670,7 @@
           }
         },
         {
-          "id": "Start Job",
+          "id": "endpoint_.Start Job",
           "displayName": "Start Job",
           "method": "POST",
           "name": {
@@ -35374,7 +35371,7 @@
           }
         },
         {
-          "id": "Get Job Predictions",
+          "id": "endpoint_.Get Job Predictions",
           "displayName": "Get Job Predictions",
           "method": "GET",
           "name": {
@@ -46802,7 +46799,7 @@
         }
       ]
     },
-    "service_Get Job Predictions": {
+    "service_getJobPredictions": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -46856,7 +46853,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Get Job Predictions.get_job_artifacts",
+          "id": "endpoint_getJobPredictions.get_job_artifacts",
           "displayName": "Get Job Artifacts",
           "method": "GET",
           "name": {
@@ -47029,7 +47026,7 @@
           }
         },
         {
-          "id": "Get Job Predictions.get_job",
+          "id": "endpoint_getJobPredictions.get_job",
           "displayName": "Get Job Details",
           "method": "GET",
           "name": {
@@ -51712,7 +51709,7 @@
           }
         }
       },
-      "service": "service_Get Job Predictions",
+      "service": "service_getJobPredictions",
       "types": [],
       "errors": [],
       "subpackages": [],

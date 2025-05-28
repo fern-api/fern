@@ -165,16 +165,12 @@
         "defaultEnvironment": "Prod",
         "environments": [
           {
-            "id": "Prod",
-            "baseUrl": "http://debug.api.com"
-          },
-          {
-            "id": "Dev",
+            "id": "Debug",
             "baseUrl": "http://debug.api.com"
           }
         ],
         "id": "list",
-        "originalEndpointId": "list",
+        "originalEndpointId": "endpoint_.list",
         "name": "List",
         "path": {
           "pathParameters": [],

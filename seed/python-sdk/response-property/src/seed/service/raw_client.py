@@ -197,6 +197,8 @@ class RawServiceClient:
             omit=OMIT,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
                     typing.Optional[Response],
@@ -235,6 +237,8 @@ class RawServiceClient:
             omit=OMIT,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
                     OptionalWithDocs,
@@ -273,6 +277,8 @@ class RawServiceClient:
             omit=OMIT,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
                     OptionalStringResponse,
@@ -468,6 +474,8 @@ class AsyncRawServiceClient:
             omit=OMIT,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
                     typing.Optional[Response],
@@ -506,6 +514,8 @@ class AsyncRawServiceClient:
             omit=OMIT,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
                     OptionalWithDocs,
@@ -544,6 +554,8 @@ class AsyncRawServiceClient:
             omit=OMIT,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
                     OptionalStringResponse,

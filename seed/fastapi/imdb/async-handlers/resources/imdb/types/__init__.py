@@ -5,5 +5,4 @@
 from .create_movie_request import CreateMovieRequest
 from .movie import Movie
 from .movie_id import MovieId
-
 __all__ = ["CreateMovieRequest", "Movie", "MovieId"]

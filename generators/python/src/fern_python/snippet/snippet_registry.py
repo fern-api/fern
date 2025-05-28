@@ -128,7 +128,7 @@ class SnippetRegistry:
     ) -> generator_exec.EndpointMethod:
         if method is ir_types.HttpMethod.GET:
             return generator_exec.EndpointMethod.GET
-        if method is ir_types.HttpMethod.POST:
+        if method is ir_types.HttpMethod.POST or method is ir_types.HttpMethod.HEAD:
             return generator_exec.EndpointMethod.POST
         if method is ir_types.HttpMethod.PUT:
             return generator_exec.EndpointMethod.PUT
@@ -136,7 +136,6 @@ class SnippetRegistry:
             return generator_exec.EndpointMethod.PATCH
         if method is ir_types.HttpMethod.DELETE:
             return generator_exec.EndpointMethod.DELETE
-        assert_never(method)
 
     def _expression_to_snippet_str(
         self,

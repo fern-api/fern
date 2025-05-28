@@ -750,16 +750,20 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, file)
 		}
 	}
-	// Finally, run the go-v2 SDK generator.
-	g.coordinator.Log(
-		generatorexec.LogLevelDebug,
-		"Constructing go-v2 SDK generator...",
-	)
 
-	v2 := gov2.New(g.coordinator)
-	if v2Err := v2.Run(); v2Err != nil {
-		return nil, v2Err
+	if mode == ModeClient {
+		// Finally, run the go-v2 SDK generator.
+		g.coordinator.Log(
+			generatorexec.LogLevelDebug,
+			"Constructing go-v2 SDK generator...",
+		)
+
+		v2 := gov2.New(g.coordinator)
+		if v2Err := v2.Run(); v2Err != nil {
+			return nil, v2Err
+		}
 	}
+
 	return files, nil
 }
 

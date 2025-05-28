@@ -10,6 +10,8 @@ export interface ProductConfig extends FernDocsConfig.WithPermissions, FernDocsC
     path: string;
     subtitle?: string;
     icon?: string;
+    /** The image to display in the product card. This will override the icon field if both are set. */
+    image?: string;
     /** The "slug" is this version's basePath. If not set, the slug will be generated from the display-name. */
     slug?: string;
     versions?: FernDocsConfig.VersionConfig[];

@@ -2796,18 +2796,6 @@
         ]
       }
     },
-    "ApiProblemAttributes": {
-      "description": "Additional optional attributes related to the problem. This data conforms to the schema associated with the error type.",
-      "name": "ApiProblemAttributes",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [],
-        "extraProperties": {
-          "type": "unknown"
-        }
-      }
-    },
     "apiProblem": {
       "description": "API problem or error, as per [RFC 7807 application/problem+json](https://tools.ietf.org/html/rfc7807).",
       "name": "apiProblem",
@@ -2928,8 +2916,16 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "ApiProblemAttributes"
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
               }
             }
           }
@@ -3308,7 +3304,7 @@
             }
           ],
           "id": "listAccounts",
-          "originalEndpointId": "accounts.listAccounts",
+          "originalEndpointId": "endpoint_accounts.listAccounts",
           "name": "List Accounts",
           "path": {
             "pathParameters": [],
@@ -3593,7 +3589,7 @@
             }
           ],
           "id": "getAccount",
-          "originalEndpointId": "accounts.getAccount",
+          "originalEndpointId": "endpoint_accounts.getAccount",
           "name": "Get an Account",
           "path": {
             "pathParameters": [
@@ -3762,7 +3758,7 @@
             }
           ],
           "id": "listAccountBalances",
-          "originalEndpointId": "accounts.listAccountBalances",
+          "originalEndpointId": "endpoint_accounts.listAccountBalances",
           "name": "List Account Balances",
           "path": {
             "pathParameters": [],
@@ -3954,7 +3950,7 @@
             }
           ],
           "id": "listEligibleAchAccounts",
-          "originalEndpointId": "accounts.listEligibleAchAccounts",
+          "originalEndpointId": "endpoint_accounts.listEligibleAchAccounts",
           "name": "List Eligible ACH Accounts",
           "path": {
             "pathParameters": [],
@@ -4245,7 +4241,7 @@
             }
           ],
           "id": "listAccountJointOwners",
-          "originalEndpointId": "accountJointOwners.listAccountJointOwners",
+          "originalEndpointId": "endpoint_accountJointOwners.listAccountJointOwners",
           "name": "Return a collection of account joint owners",
           "path": {
             "pathParameters": [
@@ -4411,7 +4407,7 @@
             }
           ],
           "id": "listEligibleOverdraftAccounts",
-          "originalEndpointId": "overdraftProtection.listEligibleOverdraftAccounts",
+          "originalEndpointId": "endpoint_overdraftProtection.listEligibleOverdraftAccounts",
           "name": "List Eligible Overdraft Accounts",
           "path": {
             "pathParameters": [
@@ -4600,7 +4596,7 @@
             }
           ],
           "id": "getOverdraftProtection",
-          "originalEndpointId": "overdraftProtection.getOverdraftProtection",
+          "originalEndpointId": "endpoint_overdraftProtection.getOverdraftProtection",
           "name": "Fetch a representation of the account's overdraft protection settings",
           "path": {
             "pathParameters": [
@@ -4725,7 +4721,7 @@
             }
           ],
           "id": "patchOverdraftAccounts",
-          "originalEndpointId": "overdraftProtection.patchOverdraftAccounts",
+          "originalEndpointId": "endpoint_overdraftProtection.patchOverdraftAccounts",
           "name": "Update the overdraft accounts",
           "path": {
             "pathParameters": [
@@ -4906,7 +4902,7 @@
             }
           ],
           "id": "createJointOwnerInvitation",
-          "originalEndpointId": "jointOwners.createJointOwnerInvitation",
+          "originalEndpointId": "endpoint_jointOwners.createJointOwnerInvitation",
           "name": "Invite a joint owner",
           "path": {
             "pathParameters": [
@@ -5109,7 +5105,7 @@
             }
           ],
           "id": "lookUpInstitutionByLocator",
-          "originalEndpointId": "institutions.lookUpInstitutionByLocator",
+          "originalEndpointId": "endpoint_institutions.lookUpInstitutionByLocator",
           "name": "Look up institution by routing number, IBAN, or SWIFT/BIC code",
           "path": {
             "pathParameters": [],
@@ -5300,7 +5296,7 @@
             }
           ],
           "id": "listTransferSchedule",
-          "originalEndpointId": "institutions.listTransferSchedule",
+          "originalEndpointId": "endpoint_institutions.listTransferSchedule",
           "name": "Return this institution's list of upcoming transfer schedule dates",
           "path": {
             "pathParameters": [
@@ -5562,7 +5558,7 @@
             }
           ],
           "id": "getCutoffTimes",
-          "originalEndpointId": "institutions.getCutoffTimes",
+          "originalEndpointId": "endpoint_institutions.getCutoffTimes",
           "name": "Return the financial institution's cutoff times for products",
           "path": {
             "pathParameters": [
@@ -5788,7 +5784,7 @@
             }
           ],
           "id": "getTransferDateRestrictions",
-          "originalEndpointId": "institutions.getTransferDateRestrictions",
+          "originalEndpointId": "endpoint_institutions.getTransferDateRestrictions",
           "name": "Return the financial institution's transfer dates restrictions",
           "path": {
             "pathParameters": [
@@ -6131,7 +6127,7 @@
             }
           ],
           "id": "listTransactions",
-          "originalEndpointId": "transactions.listTransactions",
+          "originalEndpointId": "endpoint_transactions.listTransactions",
           "name": "Return a collection of transactions",
           "path": {
             "pathParameters": [
@@ -6556,7 +6552,7 @@
             }
           ],
           "id": "listTransactionCategories",
-          "originalEndpointId": "transactionCategories.listTransactionCategories",
+          "originalEndpointId": "endpoint_transactionCategories.listTransactionCategories",
           "name": "Return a collection of transaction categories",
           "path": {
             "pathParameters": [],
@@ -6731,7 +6727,7 @@
             }
           ],
           "id": "listTransfers",
-          "originalEndpointId": "transfers.listTransfers",
+          "originalEndpointId": "endpoint_transfers.listTransfers",
           "name": "Return a collection of transfers",
           "path": {
             "pathParameters": [],
@@ -7035,7 +7031,7 @@
             }
           ],
           "id": "createTransfer",
-          "originalEndpointId": "transfers.createTransfer",
+          "originalEndpointId": "endpoint_transfers.createTransfer",
           "name": "Create a new transfer",
           "path": {
             "pathParameters": [],
@@ -7257,7 +7253,7 @@
             }
           ],
           "id": "getTransfer",
-          "originalEndpointId": "transfers.getTransfer",
+          "originalEndpointId": "endpoint_transfers.getTransfer",
           "name": "Fetch a representation of this transfer",
           "path": {
             "pathParameters": [
@@ -7424,7 +7420,7 @@
             }
           ],
           "id": "deleteTransfer",
-          "originalEndpointId": "transfers.deleteTransfer",
+          "originalEndpointId": "endpoint_transfers.deleteTransfer",
           "name": "Delete this transfer resource",
           "path": {
             "pathParameters": [
@@ -7542,7 +7538,7 @@
             }
           ],
           "id": "patchTransfer",
-          "originalEndpointId": "transfers.patchTransfer",
+          "originalEndpointId": "endpoint_transfers.patchTransfer",
           "name": "Update this transfer",
           "path": {
             "pathParameters": [

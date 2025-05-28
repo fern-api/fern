@@ -41,7 +41,7 @@
           }
         ],
         "id": "postV1Users",
-        "originalEndpointId": "postV1Users",
+        "originalEndpointId": "endpoint_.postV1Users",
         "name": "Post V 1 Users",
         "path": {
           "pathParameters": [],

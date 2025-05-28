@@ -556,6 +556,7 @@ class EndpointFunctionGenerator:
                 put=lambda: "PUT",
                 patch=lambda: "PATCH",
                 delete=lambda: "DELETE",
+                head=lambda: "HEAD",
             )
 
             json_request_body_var = self._get_request_body(

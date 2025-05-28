@@ -405,7 +405,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "getAuthUser",
+          "id": "endpoint_.getAuthUser",
           "method": "GET",
           "name": {
             "originalName": "getAuthUser",

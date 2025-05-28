@@ -751,22 +751,6 @@
         }
       }
     },
-    "LobbyState": {
-      "name": "LobbyState",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
-    "LobbyInitialConfig": {
-      "name": "LobbyInitialConfig",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "LobbyVisibility": {
       "name": "LobbyVisibility",
       "shape": {
@@ -795,16 +779,32 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "LobbyState"
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
               }
             }
           },
           {
             "key": "initialConfig",
             "valueType": {
-              "type": "id",
-              "value": "LobbyInitialConfig"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
@@ -1559,30 +1559,6 @@
         ]
       }
     },
-    "LobbyV2AppIdCreatePrivatePostRequestBodyContentApplicationJsonSchemaInitialConfig": {
-      "name": "LobbyV2AppIdCreatePrivatePostRequestBodyContentApplicationJsonSchemaInitialConfig",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
-    "LobbyV2AppIdCreatePublicPostRequestBodyContentApplicationJsonSchemaInitialConfig": {
-      "name": "LobbyV2AppIdCreatePublicPostRequestBodyContentApplicationJsonSchemaInitialConfig",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
-    "LobbyV2AppIdCreateLocalPostRequestBodyContentApplicationJsonSchemaInitialConfig": {
-      "name": "LobbyV2AppIdCreateLocalPostRequestBodyContentApplicationJsonSchemaInitialConfig",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "LobbyV2AppIdCreatePostRequestBodyContentApplicationJsonSchemaVisibility": {
       "name": "LobbyV2AppIdCreatePostRequestBodyContentApplicationJsonSchemaVisibility",
       "shape": {
@@ -1598,22 +1574,6 @@
             "value": "local"
           }
         ]
-      }
-    },
-    "LobbyV2AppIdCreatePostRequestBodyContentApplicationJsonSchemaInitialConfig": {
-      "name": "LobbyV2AppIdCreatePostRequestBodyContentApplicationJsonSchemaInitialConfig",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
-    "LobbyV2AppIdSetStateRoomIdPostRequestBodyContentApplicationJsonSchemaState": {
-      "name": "LobbyV2AppIdSetStateRoomIdPostRequestBodyContentApplicationJsonSchemaState",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     }
   },
@@ -1637,7 +1597,7 @@
             }
           ],
           "id": "GetApps",
-          "originalEndpointId": "AppV1.GetApps",
+          "originalEndpointId": "endpoint_appV1.GetApps",
           "name": "Get Apps",
           "path": {
             "pathParameters": [],
@@ -1778,7 +1738,7 @@
             }
           ],
           "id": "CreateApp",
-          "originalEndpointId": "AppV1.CreateApp",
+          "originalEndpointId": "endpoint_appV1.CreateApp",
           "name": "Create App",
           "path": {
             "pathParameters": [],
@@ -1929,7 +1889,7 @@
             }
           ],
           "id": "UpdateApp",
-          "originalEndpointId": "AppV1.UpdateApp",
+          "originalEndpointId": "endpoint_appV1.UpdateApp",
           "name": "Update App",
           "path": {
             "pathParameters": [
@@ -2098,7 +2058,7 @@
             }
           ],
           "id": "GetAppInfo",
-          "originalEndpointId": "AppV1.GetAppInfo",
+          "originalEndpointId": "endpoint_appV1.GetAppInfo",
           "name": "Get App Info",
           "path": {
             "pathParameters": [
@@ -2228,7 +2188,7 @@
             }
           ],
           "id": "DeleteApp",
-          "originalEndpointId": "AppV1.DeleteApp",
+          "originalEndpointId": "endpoint_appV1.DeleteApp",
           "name": "Delete App",
           "path": {
             "pathParameters": [
@@ -2335,7 +2295,7 @@
             }
           ],
           "id": "LoginAnonymous",
-          "originalEndpointId": "AuthV1.LoginAnonymous",
+          "originalEndpointId": "endpoint_authV1.LoginAnonymous",
           "name": "Login Anonymous",
           "path": {
             "pathParameters": [
@@ -2437,7 +2397,7 @@
             }
           ],
           "id": "LoginNickname",
-          "originalEndpointId": "AuthV1.LoginNickname",
+          "originalEndpointId": "endpoint_authV1.LoginNickname",
           "name": "Login Nickname",
           "path": {
             "pathParameters": [
@@ -2569,7 +2529,7 @@
             }
           ],
           "id": "LoginGoogle",
-          "originalEndpointId": "AuthV1.LoginGoogle",
+          "originalEndpointId": "endpoint_authV1.LoginGoogle",
           "name": "Login Google",
           "path": {
             "pathParameters": [
@@ -2726,7 +2686,7 @@
             }
           ],
           "id": "GetBuilds",
-          "originalEndpointId": "BuildV1.GetBuilds",
+          "originalEndpointId": "endpoint_buildV1.GetBuilds",
           "name": "Get Builds",
           "path": {
             "pathParameters": [
@@ -2863,7 +2823,7 @@
             }
           ],
           "id": "GetBuildInfo",
-          "originalEndpointId": "BuildV1.GetBuildInfo",
+          "originalEndpointId": "endpoint_buildV1.GetBuildInfo",
           "name": "Get Build Info",
           "path": {
             "pathParameters": [
@@ -3009,7 +2969,7 @@
             }
           ],
           "id": "CreateBuild",
-          "originalEndpointId": "BuildV1.CreateBuild",
+          "originalEndpointId": "endpoint_buildV1.CreateBuild",
           "name": "Create Build",
           "path": {
             "pathParameters": [
@@ -3169,7 +3129,7 @@
             }
           ],
           "id": "RunBuild",
-          "originalEndpointId": "BuildV1.RunBuild",
+          "originalEndpointId": "endpoint_buildV1.RunBuild",
           "name": "Run Build",
           "path": {
             "pathParameters": [
@@ -3327,7 +3287,7 @@
             }
           ],
           "id": "DeleteBuild",
-          "originalEndpointId": "BuildV1.DeleteBuild",
+          "originalEndpointId": "endpoint_buildV1.DeleteBuild",
           "name": "Delete Build",
           "path": {
             "pathParameters": [
@@ -3465,7 +3425,7 @@
             }
           ],
           "id": "GetDeployments",
-          "originalEndpointId": "DeploymentV1.GetDeployments",
+          "originalEndpointId": "endpoint_deploymentV1.GetDeployments",
           "name": "Get Deployments",
           "path": {
             "pathParameters": [
@@ -3606,7 +3566,7 @@
             }
           ],
           "id": "GetDeploymentInfo",
-          "originalEndpointId": "DeploymentV1.GetDeploymentInfo",
+          "originalEndpointId": "endpoint_deploymentV1.GetDeploymentInfo",
           "name": "Get Deployment Info",
           "path": {
             "pathParameters": [
@@ -3756,7 +3716,7 @@
             }
           ],
           "id": "CreateDeployment",
-          "originalEndpointId": "DeploymentV1.CreateDeployment",
+          "originalEndpointId": "endpoint_deploymentV1.CreateDeployment",
           "name": "Create Deployment",
           "path": {
             "pathParameters": [
@@ -3986,7 +3946,7 @@
             }
           ],
           "id": "GetPingServiceEndpoints",
-          "originalEndpointId": "DiscoveryV1.GetPingServiceEndpoints",
+          "originalEndpointId": "endpoint_discoveryV1.GetPingServiceEndpoints",
           "name": "Get Ping Service Endpoints",
           "path": {
             "pathParameters": [],
@@ -4073,7 +4033,7 @@
             }
           ],
           "id": "CreatePrivateLobbyDeprecated",
-          "originalEndpointId": "LobbyV1.CreatePrivateLobbyDeprecated",
+          "originalEndpointId": "endpoint_lobbyV1.CreatePrivateLobbyDeprecated",
           "name": "Create Private Lobby Deprecated",
           "path": {
             "pathParameters": [
@@ -4268,7 +4228,7 @@
             }
           ],
           "id": "CreatePublicLobbyDeprecated",
-          "originalEndpointId": "LobbyV1.CreatePublicLobbyDeprecated",
+          "originalEndpointId": "endpoint_lobbyV1.CreatePublicLobbyDeprecated",
           "name": "Create Public Lobby Deprecated",
           "path": {
             "pathParameters": [
@@ -4463,7 +4423,7 @@
             }
           ],
           "id": "ListActivePublicLobbiesDeprecated",
-          "originalEndpointId": "LobbyV1.ListActivePublicLobbiesDeprecated",
+          "originalEndpointId": "endpoint_lobbyV1.ListActivePublicLobbiesDeprecated",
           "name": "List Active Public Lobbies Deprecated",
           "path": {
             "pathParameters": [
@@ -4650,7 +4610,7 @@
             }
           ],
           "id": "CreatePrivateLobby",
-          "originalEndpointId": "LobbyV2.CreatePrivateLobby",
+          "originalEndpointId": "endpoint_lobbyV2.CreatePrivateLobby",
           "name": "Create Private Lobby",
           "path": {
             "pathParameters": [
@@ -4715,8 +4675,16 @@
                   {
                     "key": "initialConfig",
                     "valueType": {
-                      "type": "id",
-                      "value": "LobbyV2AppIdCreatePrivatePostRequestBodyContentApplicationJsonSchemaInitialConfig"
+                      "type": "map",
+                      "keyType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "valueType": {
+                        "type": "unknown"
+                      }
                     }
                   },
                   {
@@ -4889,7 +4857,7 @@
             }
           ],
           "id": "CreatePublicLobby",
-          "originalEndpointId": "LobbyV2.CreatePublicLobby",
+          "originalEndpointId": "endpoint_lobbyV2.CreatePublicLobby",
           "name": "Create Public Lobby",
           "path": {
             "pathParameters": [
@@ -4954,8 +4922,16 @@
                   {
                     "key": "initialConfig",
                     "valueType": {
-                      "type": "id",
-                      "value": "LobbyV2AppIdCreatePublicPostRequestBodyContentApplicationJsonSchemaInitialConfig"
+                      "type": "map",
+                      "keyType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "valueType": {
+                        "type": "unknown"
+                      }
                     }
                   },
                   {
@@ -5128,7 +5104,7 @@
             }
           ],
           "id": "CreateLocalLobby",
-          "originalEndpointId": "LobbyV2.CreateLocalLobby",
+          "originalEndpointId": "endpoint_lobbyV2.CreateLocalLobby",
           "name": "Create Local Lobby",
           "path": {
             "pathParameters": [
@@ -5193,8 +5169,16 @@
                   {
                     "key": "initialConfig",
                     "valueType": {
-                      "type": "id",
-                      "value": "LobbyV2AppIdCreateLocalPostRequestBodyContentApplicationJsonSchemaInitialConfig"
+                      "type": "map",
+                      "keyType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "valueType": {
+                        "type": "unknown"
+                      }
                     }
                   },
                   {
@@ -5366,7 +5350,7 @@
             }
           ],
           "id": "CreateLobby",
-          "originalEndpointId": "LobbyV2.CreateLobby",
+          "originalEndpointId": "endpoint_lobbyV2.CreateLobby",
           "name": "Create Lobby",
           "path": {
             "pathParameters": [
@@ -5438,8 +5422,16 @@
                   {
                     "key": "initialConfig",
                     "valueType": {
-                      "type": "id",
-                      "value": "LobbyV2AppIdCreatePostRequestBodyContentApplicationJsonSchemaInitialConfig"
+                      "type": "map",
+                      "keyType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "valueType": {
+                        "type": "unknown"
+                      }
                     }
                   },
                   {
@@ -5613,7 +5605,7 @@
             }
           ],
           "id": "ListActivePublicLobbies",
-          "originalEndpointId": "LobbyV2.ListActivePublicLobbies",
+          "originalEndpointId": "endpoint_lobbyV2.ListActivePublicLobbies",
           "name": "List Active Public Lobbies",
           "path": {
             "pathParameters": [
@@ -5733,7 +5725,7 @@
             }
           ],
           "id": "GetLobbyInfo",
-          "originalEndpointId": "LobbyV2.GetLobbyInfo",
+          "originalEndpointId": "endpoint_lobbyV2.GetLobbyInfo",
           "name": "Get Lobby Info",
           "path": {
             "pathParameters": [
@@ -5867,7 +5859,7 @@
             }
           ],
           "id": "SetLobbyState",
-          "originalEndpointId": "LobbyV2.SetLobbyState",
+          "originalEndpointId": "endpoint_lobbyV2.SetLobbyState",
           "name": "Set Lobby State",
           "path": {
             "pathParameters": [
@@ -5926,8 +5918,16 @@
                   {
                     "key": "state",
                     "valueType": {
-                      "type": "id",
-                      "value": "LobbyV2AppIdSetStateRoomIdPostRequestBodyContentApplicationJsonSchemaState"
+                      "type": "map",
+                      "keyType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "valueType": {
+                        "type": "unknown"
+                      }
                     }
                   }
                 ]
@@ -6054,7 +6054,7 @@
             }
           ],
           "id": "GetLogsForApp",
-          "originalEndpointId": "LogV1.GetLogsForApp",
+          "originalEndpointId": "endpoint_logV1.GetLogsForApp",
           "name": "Get Logs For App",
           "path": {
             "pathParameters": [
@@ -6183,7 +6183,7 @@
             }
           ],
           "id": "GetLogsForProcess",
-          "originalEndpointId": "LogV1.GetLogsForProcess",
+          "originalEndpointId": "endpoint_logV1.GetLogsForProcess",
           "name": "Get Logs For Process",
           "path": {
             "pathParameters": [
@@ -6318,7 +6318,7 @@
             }
           ],
           "id": "GetLogsForDeployment",
-          "originalEndpointId": "LogV1.GetLogsForDeployment",
+          "originalEndpointId": "endpoint_logV1.GetLogsForDeployment",
           "name": "Get Logs For Deployment",
           "path": {
             "pathParameters": [
@@ -6458,7 +6458,7 @@
             }
           ],
           "id": "GetMetrics",
-          "originalEndpointId": "MetricsV1.GetMetrics",
+          "originalEndpointId": "endpoint_metricsV1.GetMetrics",
           "name": "Get Metrics",
           "path": {
             "pathParameters": [
@@ -6698,7 +6698,7 @@
             }
           ],
           "id": "GetRunningProcesses",
-          "originalEndpointId": "ProcessesV1.GetRunningProcesses",
+          "originalEndpointId": "endpoint_processesV1.GetRunningProcesses",
           "name": "Get Running Processes",
           "path": {
             "pathParameters": [
@@ -6856,7 +6856,7 @@
             }
           ],
           "id": "GetStoppedProcesses",
-          "originalEndpointId": "ProcessesV1.GetStoppedProcesses",
+          "originalEndpointId": "endpoint_processesV1.GetStoppedProcesses",
           "name": "Get Stopped Processes",
           "path": {
             "pathParameters": [
@@ -7006,7 +7006,7 @@
             }
           ],
           "id": "GetProcessInfo",
-          "originalEndpointId": "ProcessesV1.GetProcessInfo",
+          "originalEndpointId": "endpoint_processesV1.GetProcessInfo",
           "name": "Get Process Info",
           "path": {
             "pathParameters": [
@@ -7164,7 +7164,7 @@
             }
           ],
           "id": "CreateRoom",
-          "originalEndpointId": "RoomV1.CreateRoom",
+          "originalEndpointId": "endpoint_roomV1.CreateRoom",
           "name": "Create Room",
           "path": {
             "pathParameters": [
@@ -7305,7 +7305,7 @@
             }
           ],
           "id": "GetRoomInfo",
-          "originalEndpointId": "RoomV1.GetRoomInfo",
+          "originalEndpointId": "endpoint_roomV1.GetRoomInfo",
           "name": "Get Room Info",
           "path": {
             "pathParameters": [
@@ -7455,7 +7455,7 @@
             }
           ],
           "id": "GetActiveRoomsForProcess",
-          "originalEndpointId": "RoomV1.GetActiveRoomsForProcess",
+          "originalEndpointId": "endpoint_roomV1.GetActiveRoomsForProcess",
           "name": "Get Active Rooms For Process",
           "path": {
             "pathParameters": [
@@ -7576,7 +7576,7 @@
             }
           ],
           "id": "GetInactiveRoomsForProcess",
-          "originalEndpointId": "RoomV1.GetInactiveRoomsForProcess",
+          "originalEndpointId": "endpoint_roomV1.GetInactiveRoomsForProcess",
           "name": "Get Inactive Rooms For Process",
           "path": {
             "pathParameters": [
@@ -7697,7 +7697,7 @@
             }
           ],
           "id": "DestroyRoom",
-          "originalEndpointId": "RoomV1.DestroyRoom",
+          "originalEndpointId": "endpoint_roomV1.DestroyRoom",
           "name": "Destroy Room",
           "path": {
             "pathParameters": [
@@ -7810,7 +7810,7 @@
             }
           ],
           "id": "SuspendRoom",
-          "originalEndpointId": "RoomV1.SuspendRoom",
+          "originalEndpointId": "endpoint_roomV1.SuspendRoom",
           "name": "Suspend Room",
           "path": {
             "pathParameters": [
@@ -7923,7 +7923,7 @@
             }
           ],
           "id": "GetConnectionInfo",
-          "originalEndpointId": "RoomV1.GetConnectionInfo",
+          "originalEndpointId": "endpoint_roomV1.GetConnectionInfo",
           "name": "Get Connection Info",
           "path": {
             "pathParameters": [

@@ -113,7 +113,8 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                         typeName: variant.type.type === "named" ? variant.type.name.originalName : undefined,
                         description: variant.docs ?? undefined,
                         type: convertTypeReference(variant.type),
-                        availability: undefined
+                        availability: undefined,
+                        displayName: variant.type.type === "named" ? variant.type.displayName : undefined
                     };
                 })
             };

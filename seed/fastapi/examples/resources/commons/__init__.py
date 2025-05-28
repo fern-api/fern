@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .resources import Data, EventInfo, Metadata, Tag, types
-
 __all__ = ["Data", "EventInfo", "Metadata", "Tag", "types"]

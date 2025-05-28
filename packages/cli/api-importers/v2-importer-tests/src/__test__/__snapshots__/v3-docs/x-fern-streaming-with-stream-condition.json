@@ -440,7 +440,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "chat",
+          "id": "endpoint_.chat",
           "displayName": "Start a chat",
           "method": "POST",
           "name": {

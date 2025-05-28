@@ -3330,9 +3330,19 @@
       "description": "A actions definition block, typically contained within a resource type definition block.\nThe actions represents the ways you can interact with a protected resource.",
       "name": "RelationsBlock",
       "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
+        "type": "alias",
+        "value": {
+          "type": "map",
+          "keyType": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          },
+          "valueType": {
+            "type": "unknown"
+          }
+        }
       }
     },
     "RemoveRolePermissions": {
@@ -4868,7 +4878,8 @@
             "type": {
               "type": "id",
               "value": "PaginatedResult_ResourceRoleRead_"
-            }
+            },
+            "displayName": "PaginatedResult[ResourceRoleRead]"
           }
         ]
       }
@@ -5603,7 +5614,8 @@
             "type": {
               "type": "id",
               "value": "PaginatedResult_RoleRead_"
-            }
+            },
+            "displayName": "PaginatedResult[RoleRead]"
           }
         ]
       }
@@ -5875,9 +5887,19 @@
       "description": "Resource roles definition block, defines all the roles on the resource.",
       "name": "RolesBlock",
       "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
+        "type": "alias",
+        "value": {
+          "type": "map",
+          "keyType": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          },
+          "valueType": {
+            "type": "unknown"
+          }
+        }
       }
     },
     "Statistics": {
@@ -6879,7 +6901,8 @@
             "type": {
               "type": "id",
               "value": "PaginatedResult_ResourceRead_"
-            }
+            },
+            "displayName": "PaginatedResult[ResourceRead]"
           },
           {
             "typeName": "ResourcesListResourcesResponse2001",
@@ -6914,7 +6937,8 @@
             "type": {
               "type": "id",
               "value": "PaginatedResult_RoleRead_"
-            }
+            },
+            "displayName": "PaginatedResult[RoleRead]"
           },
           {
             "typeName": "RolesListRolesResponse2001",
@@ -6949,7 +6973,8 @@
             "type": {
               "type": "id",
               "value": "PaginatedResult_ConditionSetRead_"
-            }
+            },
+            "displayName": "PaginatedResult[ConditionSetRead]"
           },
           {
             "typeName": "ConditionSetsListConditionSetsResponse2001",
@@ -6984,7 +7009,8 @@
             "type": {
               "type": "id",
               "value": "PaginatedResult_TenantRead_"
-            }
+            },
+            "displayName": "PaginatedResult[TenantRead]"
           },
           {
             "typeName": "TenantsListTenantsResponse2001",
@@ -7014,7 +7040,7 @@
             }
           ],
           "id": "list_organizations",
-          "originalEndpointId": "Organizations.list_organizations",
+          "originalEndpointId": "endpoint_organizations.list_organizations",
           "name": "List Organizations",
           "path": {
             "pathParameters": [],
@@ -7144,7 +7170,7 @@
             }
           ],
           "id": "create_organization",
-          "originalEndpointId": "Organizations.create_organization",
+          "originalEndpointId": "endpoint_organizations.create_organization",
           "name": "Create Organization",
           "path": {
             "pathParameters": [],
@@ -7263,7 +7289,7 @@
             }
           ],
           "id": "get_organization",
-          "originalEndpointId": "Organizations.get_organization",
+          "originalEndpointId": "endpoint_organizations.get_organization",
           "name": "Get Organization",
           "path": {
             "pathParameters": [
@@ -7375,7 +7401,7 @@
             }
           ],
           "id": "delete_organization",
-          "originalEndpointId": "Organizations.delete_organization",
+          "originalEndpointId": "endpoint_organizations.delete_organization",
           "name": "Delete Organization",
           "path": {
             "pathParameters": [
@@ -7455,7 +7481,7 @@
             }
           ],
           "id": "update_organization",
-          "originalEndpointId": "Organizations.update_organization",
+          "originalEndpointId": "endpoint_organizations.update_organization",
           "name": "Update Organization",
           "path": {
             "pathParameters": [
@@ -7585,7 +7611,7 @@
             }
           ],
           "id": "get_active_organization",
-          "originalEndpointId": "Organizations.get_active_organization",
+          "originalEndpointId": "endpoint_organizations.get_active_organization",
           "name": "Get Active Organization",
           "path": {
             "pathParameters": [],
@@ -7686,7 +7712,7 @@
             }
           ],
           "id": "list_projects",
-          "originalEndpointId": "Projects.list_projects",
+          "originalEndpointId": "endpoint_projects.list_projects",
           "name": "List Projects",
           "path": {
             "pathParameters": [],
@@ -7822,7 +7848,7 @@
             }
           ],
           "id": "create_project",
-          "originalEndpointId": "Projects.create_project",
+          "originalEndpointId": "endpoint_projects.create_project",
           "name": "Create Project",
           "path": {
             "pathParameters": [],
@@ -7943,7 +7969,7 @@
             }
           ],
           "id": "get_project",
-          "originalEndpointId": "Projects.get_project",
+          "originalEndpointId": "endpoint_projects.get_project",
           "name": "Get Project",
           "path": {
             "pathParameters": [
@@ -8061,7 +8087,7 @@
             }
           ],
           "id": "delete_project",
-          "originalEndpointId": "Projects.delete_project",
+          "originalEndpointId": "endpoint_projects.delete_project",
           "name": "Delete Project",
           "path": {
             "pathParameters": [
@@ -8141,7 +8167,7 @@
             }
           ],
           "id": "update_project",
-          "originalEndpointId": "Projects.update_project",
+          "originalEndpointId": "endpoint_projects.update_project",
           "name": "Update Project",
           "path": {
             "pathParameters": [
@@ -8286,7 +8312,7 @@
             }
           ],
           "id": "stats_environments",
-          "originalEndpointId": "Environments.stats_environments",
+          "originalEndpointId": "endpoint_environments.stats_environments",
           "name": "Stats Environments",
           "path": {
             "pathParameters": [
@@ -8579,7 +8605,7 @@
             }
           ],
           "id": "list_environments",
-          "originalEndpointId": "Environments.list_environments",
+          "originalEndpointId": "endpoint_environments.list_environments",
           "name": "List Environments",
           "path": {
             "pathParameters": [
@@ -8746,7 +8772,7 @@
             }
           ],
           "id": "create_environment",
-          "originalEndpointId": "Environments.create_environment",
+          "originalEndpointId": "endpoint_environments.create_environment",
           "name": "Create Environment",
           "path": {
             "pathParameters": [
@@ -8898,7 +8924,7 @@
             }
           ],
           "id": "get_environment",
-          "originalEndpointId": "Environments.get_environment",
+          "originalEndpointId": "endpoint_environments.get_environment",
           "name": "Get Environment",
           "path": {
             "pathParameters": [
@@ -9045,7 +9071,7 @@
             }
           ],
           "id": "delete_environment",
-          "originalEndpointId": "Environments.delete_environment",
+          "originalEndpointId": "endpoint_environments.delete_environment",
           "name": "Delete Environment",
           "path": {
             "pathParameters": [
@@ -9144,7 +9170,7 @@
             }
           ],
           "id": "update_environment",
-          "originalEndpointId": "Environments.update_environment",
+          "originalEndpointId": "endpoint_environments.update_environment",
           "name": "Update Environment",
           "path": {
             "pathParameters": [
@@ -9309,7 +9335,7 @@
             }
           ],
           "id": "copy_environment",
-          "originalEndpointId": "Environments.copy_environment",
+          "originalEndpointId": "endpoint_environments.copy_environment",
           "name": "Copy Environment",
           "path": {
             "pathParameters": [
@@ -9488,7 +9514,7 @@
             }
           ],
           "id": "list_resources",
-          "originalEndpointId": "Resources.list_resources",
+          "originalEndpointId": "endpoint_resources.list_resources",
           "name": "List Resources",
           "path": {
             "pathParameters": [
@@ -9716,7 +9742,7 @@
             }
           ],
           "id": "create_resource",
-          "originalEndpointId": "Resources.create_resource",
+          "originalEndpointId": "endpoint_resources.create_resource",
           "name": "Create Resource",
           "path": {
             "pathParameters": [
@@ -9953,7 +9979,7 @@
             }
           ],
           "id": "get_resource",
-          "originalEndpointId": "Resources.get_resource",
+          "originalEndpointId": "endpoint_resources.get_resource",
           "name": "Get Resource",
           "path": {
             "pathParameters": [
@@ -10155,7 +10181,7 @@
             }
           ],
           "id": "replace_resource",
-          "originalEndpointId": "Resources.replace_resource",
+          "originalEndpointId": "endpoint_resources.replace_resource",
           "name": "Replace Resource",
           "path": {
             "pathParameters": [
@@ -10381,7 +10407,7 @@
             }
           ],
           "id": "delete_resource",
-          "originalEndpointId": "Resources.delete_resource",
+          "originalEndpointId": "endpoint_resources.delete_resource",
           "name": "Delete Resource",
           "path": {
             "pathParameters": [
@@ -10499,7 +10525,7 @@
             }
           ],
           "id": "update_resource",
-          "originalEndpointId": "Resources.update_resource",
+          "originalEndpointId": "endpoint_resources.update_resource",
           "name": "Update Resource",
           "path": {
             "pathParameters": [
@@ -10729,7 +10755,7 @@
             }
           ],
           "id": "list_resource_actions",
-          "originalEndpointId": "Resource Actions.list_resource_actions",
+          "originalEndpointId": "endpoint_resourceActions.list_resource_actions",
           "name": "List Resource Actions",
           "path": {
             "pathParameters": [
@@ -10928,7 +10954,7 @@
             }
           ],
           "id": "create_resource_action",
-          "originalEndpointId": "Resource Actions.create_resource_action",
+          "originalEndpointId": "endpoint_resourceActions.create_resource_action",
           "name": "Create Resource Action",
           "path": {
             "pathParameters": [
@@ -11112,7 +11138,7 @@
             }
           ],
           "id": "get_resource_action",
-          "originalEndpointId": "Resource Actions.get_resource_action",
+          "originalEndpointId": "endpoint_resourceActions.get_resource_action",
           "name": "Get Resource Action",
           "path": {
             "pathParameters": [
@@ -11289,7 +11315,7 @@
             }
           ],
           "id": "delete_resource_action",
-          "originalEndpointId": "Resource Actions.delete_resource_action",
+          "originalEndpointId": "endpoint_resourceActions.delete_resource_action",
           "name": "Delete Resource Action",
           "path": {
             "pathParameters": [
@@ -11426,7 +11452,7 @@
             }
           ],
           "id": "update_resource_action",
-          "originalEndpointId": "Resource Actions.update_resource_action",
+          "originalEndpointId": "endpoint_resourceActions.update_resource_action",
           "name": "Update Resource Action",
           "path": {
             "pathParameters": [
@@ -11635,7 +11661,7 @@
             }
           ],
           "id": "list_resource_action_groups",
-          "originalEndpointId": "Resource Action Groups.list_resource_action_groups",
+          "originalEndpointId": "endpoint_resourceActionGroups.list_resource_action_groups",
           "name": "List Resource Action Groups",
           "path": {
             "pathParameters": [
@@ -11838,7 +11864,7 @@
             }
           ],
           "id": "create_resource_action_group",
-          "originalEndpointId": "Resource Action Groups.create_resource_action_group",
+          "originalEndpointId": "endpoint_resourceActionGroups.create_resource_action_group",
           "name": "Create Resource Action Group",
           "path": {
             "pathParameters": [
@@ -12036,7 +12062,7 @@
             }
           ],
           "id": "get_resource_action_group",
-          "originalEndpointId": "Resource Action Groups.get_resource_action_group",
+          "originalEndpointId": "endpoint_resourceActionGroups.get_resource_action_group",
           "name": "Get Resource Action Group",
           "path": {
             "pathParameters": [
@@ -12219,7 +12245,7 @@
             }
           ],
           "id": "delete_resource_action_group",
-          "originalEndpointId": "Resource Action Groups.delete_resource_action_group",
+          "originalEndpointId": "endpoint_resourceActionGroups.delete_resource_action_group",
           "name": "Delete Resource Action Group",
           "path": {
             "pathParameters": [
@@ -12356,7 +12382,7 @@
             }
           ],
           "id": "update_resource_action_group",
-          "originalEndpointId": "Resource Action Groups.update_resource_action_group",
+          "originalEndpointId": "endpoint_resourceActionGroups.update_resource_action_group",
           "name": "Update Resource Action Group",
           "path": {
             "pathParameters": [
@@ -12567,7 +12593,7 @@
             }
           ],
           "id": "list_resource_roles",
-          "originalEndpointId": "Resource Roles.list_resource_roles",
+          "originalEndpointId": "endpoint_resourceRoles.list_resource_roles",
           "name": "List Resource Roles",
           "path": {
             "pathParameters": [
@@ -12776,7 +12802,7 @@
             }
           ],
           "id": "create_resource_role",
-          "originalEndpointId": "Resource Roles.create_resource_role",
+          "originalEndpointId": "endpoint_resourceRoles.create_resource_role",
           "name": "Create Resource Role",
           "path": {
             "pathParameters": [
@@ -12982,7 +13008,7 @@
             }
           ],
           "id": "get_resource_role",
-          "originalEndpointId": "Resource Roles.get_resource_role",
+          "originalEndpointId": "endpoint_resourceRoles.get_resource_role",
           "name": "Get Resource Role",
           "path": {
             "pathParameters": [
@@ -13169,7 +13195,7 @@
             }
           ],
           "id": "delete_resource_role",
-          "originalEndpointId": "Resource Roles.delete_resource_role",
+          "originalEndpointId": "endpoint_resourceRoles.delete_resource_role",
           "name": "Delete Resource Role",
           "path": {
             "pathParameters": [
@@ -13306,7 +13332,7 @@
             }
           ],
           "id": "update_resource_role",
-          "originalEndpointId": "Resource Roles.update_resource_role",
+          "originalEndpointId": "endpoint_resourceRoles.update_resource_role",
           "name": "Update Resource Role",
           "path": {
             "pathParameters": [
@@ -13521,7 +13547,7 @@
             }
           ],
           "id": "assign_permissions_to_resource_role",
-          "originalEndpointId": "Resource Roles.assign_permissions_to_resource_role",
+          "originalEndpointId": "endpoint_resourceRoles.assign_permissions_to_resource_role",
           "name": "Assign Permissions to Role",
           "path": {
             "pathParameters": [
@@ -13734,7 +13760,7 @@
             }
           ],
           "id": "remove_permissions_from_resource_role",
-          "originalEndpointId": "Resource Roles.remove_permissions_from_resource_role",
+          "originalEndpointId": "endpoint_resourceRoles.remove_permissions_from_resource_role",
           "name": "Remove Permissions from Role",
           "path": {
             "pathParameters": [
@@ -13946,7 +13972,7 @@
             }
           ],
           "id": "get_resource_role_ancestors",
-          "originalEndpointId": "Resource Roles.get_resource_role_ancestors",
+          "originalEndpointId": "endpoint_resourceRoles.get_resource_role_ancestors",
           "name": "Get Resource Role Ancestors",
           "path": {
             "pathParameters": [
@@ -14142,7 +14168,7 @@
             }
           ],
           "id": "get_resource_role_descendants",
-          "originalEndpointId": "Resource Roles.get_resource_role_descendants",
+          "originalEndpointId": "endpoint_resourceRoles.get_resource_role_descendants",
           "name": "Get Resource Role Descendants",
           "path": {
             "pathParameters": [
@@ -14349,7 +14375,7 @@
             }
           ],
           "id": "list_resource_attributes",
-          "originalEndpointId": "Resource Attributes.list_resource_attributes",
+          "originalEndpointId": "endpoint_resourceAttributes.list_resource_attributes",
           "name": "List Resource Attributes",
           "path": {
             "pathParameters": [
@@ -14548,7 +14574,7 @@
             }
           ],
           "id": "create_resource_attribute",
-          "originalEndpointId": "Resource Attributes.create_resource_attribute",
+          "originalEndpointId": "endpoint_resourceAttributes.create_resource_attribute",
           "name": "Create Resource Attribute",
           "path": {
             "pathParameters": [
@@ -14734,7 +14760,7 @@
             }
           ],
           "id": "get_resource_attribute",
-          "originalEndpointId": "Resource Attributes.get_resource_attribute",
+          "originalEndpointId": "endpoint_resourceAttributes.get_resource_attribute",
           "name": "Get Resource Attribute",
           "path": {
             "pathParameters": [
@@ -14913,7 +14939,7 @@
             }
           ],
           "id": "delete_resource_attribute",
-          "originalEndpointId": "Resource Attributes.delete_resource_attribute",
+          "originalEndpointId": "endpoint_resourceAttributes.delete_resource_attribute",
           "name": "Delete Resource Attribute",
           "path": {
             "pathParameters": [
@@ -15082,7 +15108,7 @@
             }
           ],
           "id": "update_resource_attribute",
-          "originalEndpointId": "Resource Attributes.update_resource_attribute",
+          "originalEndpointId": "endpoint_resourceAttributes.update_resource_attribute",
           "name": "Update Resource Attribute",
           "path": {
             "pathParameters": [
@@ -15293,7 +15319,7 @@
             }
           ],
           "id": "list_user_attributes",
-          "originalEndpointId": "User Attributes.list_user_attributes",
+          "originalEndpointId": "endpoint_userAttributes.list_user_attributes",
           "name": "List User Attributes",
           "path": {
             "pathParameters": [
@@ -15486,7 +15512,7 @@
             }
           ],
           "id": "create_user_attribute",
-          "originalEndpointId": "User Attributes.create_user_attribute",
+          "originalEndpointId": "endpoint_userAttributes.create_user_attribute",
           "name": "Create User Attribute",
           "path": {
             "pathParameters": [
@@ -15667,7 +15693,7 @@
             }
           ],
           "id": "get_user_attribute",
-          "originalEndpointId": "User Attributes.get_user_attribute",
+          "originalEndpointId": "endpoint_userAttributes.get_user_attribute",
           "name": "Get User Attribute",
           "path": {
             "pathParameters": [
@@ -15841,7 +15867,7 @@
             }
           ],
           "id": "delete_user_attribute",
-          "originalEndpointId": "User Attributes.delete_user_attribute",
+          "originalEndpointId": "endpoint_userAttributes.delete_user_attribute",
           "name": "Delete User Attribute",
           "path": {
             "pathParameters": [
@@ -16004,7 +16030,7 @@
             }
           ],
           "id": "update_user_attribute",
-          "originalEndpointId": "User Attributes.update_user_attribute",
+          "originalEndpointId": "endpoint_userAttributes.update_user_attribute",
           "name": "Update User Attribute",
           "path": {
             "pathParameters": [
@@ -16210,7 +16236,7 @@
             }
           ],
           "id": "list_roles",
-          "originalEndpointId": "Roles.list_roles",
+          "originalEndpointId": "endpoint_roles.list_roles",
           "name": "List Roles",
           "path": {
             "pathParameters": [
@@ -16430,7 +16456,7 @@
             }
           ],
           "id": "create_role",
-          "originalEndpointId": "Roles.create_role",
+          "originalEndpointId": "endpoint_roles.create_role",
           "name": "Create Role",
           "path": {
             "pathParameters": [
@@ -16615,7 +16641,7 @@
             }
           ],
           "id": "get_role",
-          "originalEndpointId": "Roles.get_role",
+          "originalEndpointId": "endpoint_roles.get_role",
           "name": "Get Role",
           "path": {
             "pathParameters": [
@@ -16781,7 +16807,7 @@
             }
           ],
           "id": "delete_role",
-          "originalEndpointId": "Roles.delete_role",
+          "originalEndpointId": "endpoint_roles.delete_role",
           "name": "Delete Role",
           "path": {
             "pathParameters": [
@@ -16899,7 +16925,7 @@
             }
           ],
           "id": "update_role",
-          "originalEndpointId": "Roles.update_role",
+          "originalEndpointId": "endpoint_roles.update_role",
           "name": "Update Role",
           "path": {
             "pathParameters": [
@@ -17093,7 +17119,7 @@
             }
           ],
           "id": "assign_permissions_to_role",
-          "originalEndpointId": "Roles.assign_permissions_to_role",
+          "originalEndpointId": "endpoint_roles.assign_permissions_to_role",
           "name": "Assign Permissions To Role",
           "path": {
             "pathParameters": [
@@ -17285,7 +17311,7 @@
             }
           ],
           "id": "remove_permissions_from_role",
-          "originalEndpointId": "Roles.remove_permissions_from_role",
+          "originalEndpointId": "endpoint_roles.remove_permissions_from_role",
           "name": "Remove Permissions From Role",
           "path": {
             "pathParameters": [
@@ -17476,7 +17502,7 @@
             }
           ],
           "id": "get_role_ancestors",
-          "originalEndpointId": "Roles.get_role_ancestors",
+          "originalEndpointId": "endpoint_roles.get_role_ancestors",
           "name": "Get Role Ancestors",
           "path": {
             "pathParameters": [
@@ -17651,7 +17677,7 @@
             }
           ],
           "id": "get_role_descendants",
-          "originalEndpointId": "Roles.get_role_descendants",
+          "originalEndpointId": "endpoint_roles.get_role_descendants",
           "name": "Get Role Descendants",
           "path": {
             "pathParameters": [
@@ -17837,7 +17863,7 @@
             }
           ],
           "id": "list_condition_sets",
-          "originalEndpointId": "Condition Sets.list_condition_sets",
+          "originalEndpointId": "endpoint_conditionSets.list_condition_sets",
           "name": "List Condition Sets",
           "path": {
             "pathParameters": [
@@ -18094,7 +18120,7 @@
             }
           ],
           "id": "create_condition_set",
-          "originalEndpointId": "Condition Sets.create_condition_set",
+          "originalEndpointId": "endpoint_conditionSets.create_condition_set",
           "name": "Create Condition Set",
           "path": {
             "pathParameters": [
@@ -18329,7 +18355,7 @@
             }
           ],
           "id": "get_condition_set",
-          "originalEndpointId": "Condition Sets.get_condition_set",
+          "originalEndpointId": "endpoint_conditionSets.get_condition_set",
           "name": "Get Condition Set",
           "path": {
             "pathParameters": [
@@ -18523,7 +18549,7 @@
             }
           ],
           "id": "delete_condition_set",
-          "originalEndpointId": "Condition Sets.delete_condition_set",
+          "originalEndpointId": "endpoint_conditionSets.delete_condition_set",
           "name": "Delete Condition Set",
           "path": {
             "pathParameters": [
@@ -18641,7 +18667,7 @@
             }
           ],
           "id": "update_condition_set",
-          "originalEndpointId": "Condition Sets.update_condition_set",
+          "originalEndpointId": "endpoint_conditionSets.update_condition_set",
           "name": "Update Condition Set",
           "path": {
             "pathParameters": [
@@ -18889,7 +18915,7 @@
             }
           ],
           "id": "get_condition_set_ancestors",
-          "originalEndpointId": "Condition Sets.get_condition_set_ancestors",
+          "originalEndpointId": "endpoint_conditionSets.get_condition_set_ancestors",
           "name": "Get Condition Set Ancestors",
           "path": {
             "pathParameters": [
@@ -19122,7 +19148,7 @@
             }
           ],
           "id": "get_condition_set_descendants",
-          "originalEndpointId": "Condition Sets.get_condition_set_descendants",
+          "originalEndpointId": "endpoint_conditionSets.get_condition_set_descendants",
           "name": "Get Condition Set Descendants",
           "path": {
             "pathParameters": [
@@ -19365,7 +19391,7 @@
             }
           ],
           "id": "list_users",
-          "originalEndpointId": "Users.list_users",
+          "originalEndpointId": "endpoint_users.list_users",
           "name": "List Users",
           "path": {
             "pathParameters": [
@@ -19600,7 +19626,7 @@
             }
           ],
           "id": "create_user",
-          "originalEndpointId": "Users.create_user",
+          "originalEndpointId": "endpoint_users.create_user",
           "name": "Create User",
           "path": {
             "pathParameters": [
@@ -19845,7 +19871,7 @@
             }
           ],
           "id": "get_user",
-          "originalEndpointId": "Users.get_user",
+          "originalEndpointId": "endpoint_users.get_user",
           "name": "Get User",
           "path": {
             "pathParameters": [
@@ -20064,7 +20090,7 @@
             }
           ],
           "id": "replace_user",
-          "originalEndpointId": "Users.replace_user",
+          "originalEndpointId": "endpoint_users.replace_user",
           "name": "Replace User",
           "path": {
             "pathParameters": [
@@ -20328,7 +20354,7 @@
             }
           ],
           "id": "delete_user",
-          "originalEndpointId": "Users.delete_user",
+          "originalEndpointId": "endpoint_users.delete_user",
           "name": "Delete User",
           "path": {
             "pathParameters": [
@@ -20446,7 +20472,7 @@
             }
           ],
           "id": "update_user",
-          "originalEndpointId": "Users.update_user",
+          "originalEndpointId": "endpoint_users.update_user",
           "name": "Update User",
           "path": {
             "pathParameters": [
@@ -20684,7 +20710,7 @@
             }
           ],
           "id": "assign_role_to_user",
-          "originalEndpointId": "Users.assign_role_to_user",
+          "originalEndpointId": "endpoint_users.assign_role_to_user",
           "name": "Assign Role To User",
           "path": {
             "pathParameters": [
@@ -20866,7 +20892,7 @@
             }
           ],
           "id": "unassign_role_from_user",
-          "originalEndpointId": "Users.unassign_role_from_user",
+          "originalEndpointId": "endpoint_users.unassign_role_from_user",
           "name": "Unassign Role From User",
           "path": {
             "pathParameters": [
@@ -21017,7 +21043,7 @@
             }
           ],
           "id": "list_tenant_users",
-          "originalEndpointId": "Tenants.list_tenant_users",
+          "originalEndpointId": "endpoint_tenants.list_tenant_users",
           "name": "List Tenant Users",
           "path": {
             "pathParameters": [
@@ -21271,7 +21297,7 @@
             }
           ],
           "id": "list_tenants",
-          "originalEndpointId": "Tenants.list_tenants",
+          "originalEndpointId": "endpoint_tenants.list_tenants",
           "name": "List Tenants",
           "path": {
             "pathParameters": [
@@ -21481,7 +21507,7 @@
             }
           ],
           "id": "create_tenant",
-          "originalEndpointId": "Tenants.create_tenant",
+          "originalEndpointId": "endpoint_tenants.create_tenant",
           "name": "Create Tenant",
           "path": {
             "pathParameters": [
@@ -21664,7 +21690,7 @@
             }
           ],
           "id": "get_tenant",
-          "originalEndpointId": "Tenants.get_tenant",
+          "originalEndpointId": "endpoint_tenants.get_tenant",
           "name": "Get Tenant",
           "path": {
             "pathParameters": [
@@ -21830,7 +21856,7 @@
             }
           ],
           "id": "delete_tenant",
-          "originalEndpointId": "Tenants.delete_tenant",
+          "originalEndpointId": "endpoint_tenants.delete_tenant",
           "name": "Delete Tenant",
           "path": {
             "pathParameters": [
@@ -21948,7 +21974,7 @@
             }
           ],
           "id": "update_tenant",
-          "originalEndpointId": "Tenants.update_tenant",
+          "originalEndpointId": "endpoint_tenants.update_tenant",
           "name": "Update Tenant",
           "path": {
             "pathParameters": [
@@ -22132,7 +22158,7 @@
             }
           ],
           "id": "delete_tenant_user",
-          "originalEndpointId": "Tenants.delete_tenant_user",
+          "originalEndpointId": "endpoint_tenants.delete_tenant_user",
           "name": "Delete Tenant User",
           "path": {
             "pathParameters": [
@@ -22279,7 +22305,7 @@
             }
           ],
           "id": "list_role_assignments",
-          "originalEndpointId": "Role Assignments.list_role_assignments",
+          "originalEndpointId": "endpoint_roleAssignments.list_role_assignments",
           "name": "List Role Assignments",
           "path": {
             "pathParameters": [
@@ -22496,7 +22522,7 @@
             }
           ],
           "id": "assign_role",
-          "originalEndpointId": "Role Assignments.assign_role",
+          "originalEndpointId": "endpoint_roleAssignments.assign_role",
           "name": "Assign Role",
           "path": {
             "pathParameters": [
@@ -22661,7 +22687,7 @@
             }
           ],
           "id": "unassign_role",
-          "originalEndpointId": "Role Assignments.unassign_role",
+          "originalEndpointId": "endpoint_roleAssignments.unassign_role",
           "name": "Unassign Role",
           "path": {
             "pathParameters": [
@@ -22785,7 +22811,7 @@
             }
           ],
           "id": "bulk_assign_role",
-          "originalEndpointId": "Role Assignments.bulk_assign_role",
+          "originalEndpointId": "endpoint_roleAssignments.bulk_assign_role",
           "name": "Bulk Assign Role",
           "path": {
             "pathParameters": [
@@ -22936,7 +22962,7 @@
             }
           ],
           "id": "bulk_unassign_role",
-          "originalEndpointId": "Role Assignments.bulk_unassign_role",
+          "originalEndpointId": "endpoint_roleAssignments.bulk_unassign_role",
           "name": "Bulk Unassign Role",
           "path": {
             "pathParameters": [
@@ -23098,7 +23124,7 @@
             }
           ],
           "id": "list_set_permissions",
-          "originalEndpointId": "Condition Set Rules.list_set_permissions",
+          "originalEndpointId": "endpoint_conditionSetRules.list_set_permissions",
           "name": "List Set Permissions",
           "path": {
             "pathParameters": [
@@ -23313,7 +23339,7 @@
             }
           ],
           "id": "assign_set_permissions",
-          "originalEndpointId": "Condition Set Rules.assign_set_permissions",
+          "originalEndpointId": "endpoint_conditionSetRules.assign_set_permissions",
           "name": "Assign Set Permissions",
           "path": {
             "pathParameters": [
@@ -23483,7 +23509,7 @@
             }
           ],
           "id": "unassign_set_permissions",
-          "originalEndpointId": "Condition Set Rules.unassign_set_permissions",
+          "originalEndpointId": "endpoint_conditionSetRules.unassign_set_permissions",
           "name": "Unassign Set Permissions",
           "path": {
             "pathParameters": [
@@ -23618,7 +23644,7 @@
             }
           ],
           "id": "list_resource_instances",
-          "originalEndpointId": "Resource Instances.list_resource_instances",
+          "originalEndpointId": "endpoint_resourceInstances.list_resource_instances",
           "name": "List Resource Instances",
           "path": {
             "pathParameters": [
@@ -23798,7 +23824,7 @@
             }
           ],
           "id": "create_resource_instance",
-          "originalEndpointId": "Resource Instances.create_resource_instance",
+          "originalEndpointId": "endpoint_resourceInstances.create_resource_instance",
           "name": "Create Resource Instance",
           "path": {
             "pathParameters": [
@@ -23979,7 +24005,7 @@
             }
           ],
           "id": "get_resource_instance",
-          "originalEndpointId": "Resource Instances.get_resource_instance",
+          "originalEndpointId": "endpoint_resourceInstances.get_resource_instance",
           "name": "Get Resource Instance",
           "path": {
             "pathParameters": [
@@ -24145,7 +24171,7 @@
             }
           ],
           "id": "delete_resource_instance",
-          "originalEndpointId": "Resource Instances.delete_resource_instance",
+          "originalEndpointId": "endpoint_resourceInstances.delete_resource_instance",
           "name": "Delete Resource Instance",
           "path": {
             "pathParameters": [
@@ -24263,7 +24289,7 @@
             }
           ],
           "id": "update_resource_instance",
-          "originalEndpointId": "Resource Instances.update_resource_instance",
+          "originalEndpointId": "endpoint_resourceInstances.update_resource_instance",
           "name": "Update Resource Instance",
           "path": {
             "pathParameters": [
@@ -24466,7 +24492,7 @@
             }
           ],
           "id": "bulk_create_users",
-          "originalEndpointId": "Bulk Operations.bulk_create_users",
+          "originalEndpointId": "endpoint_bulkOperations.bulk_create_users",
           "name": "Bulk Create Users",
           "path": {
             "pathParameters": [
@@ -24610,7 +24636,7 @@
             }
           ],
           "id": "bulk_replace_users",
-          "originalEndpointId": "Bulk Operations.bulk_replace_users",
+          "originalEndpointId": "endpoint_bulkOperations.bulk_replace_users",
           "name": "Bulk Replace Users",
           "path": {
             "pathParameters": [
@@ -24754,7 +24780,7 @@
             }
           ],
           "id": "bulk_delete_users",
-          "originalEndpointId": "Bulk Operations.bulk_delete_users",
+          "originalEndpointId": "endpoint_bulkOperations.bulk_delete_users",
           "name": "Bulk Delete Users",
           "path": {
             "pathParameters": [
@@ -24894,7 +24920,7 @@
             }
           ],
           "id": "bulk_create_tenants",
-          "originalEndpointId": "Bulk Operations.bulk_create_tenants",
+          "originalEndpointId": "endpoint_bulkOperations.bulk_create_tenants",
           "name": "Bulk Create Tenants",
           "path": {
             "pathParameters": [
@@ -25040,7 +25066,7 @@
             }
           ],
           "id": "bulk_delete_tenants",
-          "originalEndpointId": "Bulk Operations.bulk_delete_tenants",
+          "originalEndpointId": "endpoint_bulkOperations.bulk_delete_tenants",
           "name": "Bulk Delete Tenants",
           "path": {
             "pathParameters": [

@@ -9,24 +9,74 @@
         "defaultEnvironment": "Prod",
         "environments": [
           {
-            "id": "Prod",
-            "baseUrl": "http://debug2.api.com"
+            "id": "Debug",
+            "baseUrl": "http://debug.api.com"
+          }
+        ],
+        "id": "list",
+        "originalEndpointId": "endpoint_.list",
+        "name": "List",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/pets"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
           },
+          "statusCode": 200,
+          "description": "A response"
+        },
+        "errorsV2": [],
+        "examples": [
           {
-            "id": "Prod",
-            "baseUrl": "http://debug2.api.com"
-          },
+            "name": "listExample",
+            "description": "",
+            "path": "/pets",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": "foo",
+            "responseBodyV3": {
+              "type": "json",
+              "value": "foo"
+            }
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      },
+      {
+        "auth": false,
+        "method": "GET",
+        "defaultEnvironment": "Prod",
+        "environments": [
           {
-            "id": "Dev",
-            "baseUrl": "http://debug2.api.com"
-          },
-          {
-            "id": "Dev",
+            "id": "Debug-1",
             "baseUrl": "http://debug2.api.com"
           }
         ],
         "id": "list",
-        "originalEndpointId": "list",
+        "originalEndpointId": "endpoint_.list",
         "name": "List",
         "path": {
           "pathParameters": [],

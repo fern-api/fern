@@ -114,7 +114,7 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           }
@@ -173,7 +173,7 @@
             "valueType": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -1716,7 +1716,7 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -1765,7 +1765,7 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -1874,7 +1874,8 @@
             "type": {
               "type": "id",
               "value": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatement1"
-            }
+            },
+            "displayName": "ParameterizedQuery"
           }
         ]
       }
@@ -1897,7 +1898,7 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -1946,7 +1947,7 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
@@ -2055,7 +2056,8 @@
             "type": {
               "type": "id",
               "value": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItems1"
-            }
+            },
+            "displayName": "ParameterizedQuery"
           }
         ]
       }
@@ -2077,29 +2079,6 @@
         ]
       }
     },
-    "V1EvalPostResponsesContentApplicationJsonSchema2": {
-      "name": "V1EvalPostResponsesContentApplicationJsonSchema2",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [],
-        "extraProperties": {
-          "type": "unknown"
-        }
-      }
-    },
-    "V1EvalPostResponsesContentApplicationJsonSchema3": {
-      "name": "V1EvalPostResponsesContentApplicationJsonSchema3",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "unknown"
-          }
-        }
-      }
-    },
     "V1EvalPostResponsesContentApplicationJsonSchema": {
       "name": "V1EvalPostResponsesContentApplicationJsonSchema",
       "shape": {
@@ -2117,22 +2096,30 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
           {
-            "typeName": "V1EvalPostResponsesContentApplicationJsonSchema2",
             "type": {
-              "type": "id",
-              "value": "V1EvalPostResponsesContentApplicationJsonSchema2"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
-            "typeName": "V1EvalPostResponsesContentApplicationJsonSchema3",
             "type": {
-              "type": "id",
-              "value": "V1EvalPostResponsesContentApplicationJsonSchema3"
+              "type": "list",
+              "itemType": {
+                "type": "unknown"
+              }
             }
           },
           {
@@ -2182,29 +2169,6 @@
         ]
       }
     },
-    "V1EvalCodeGetResponsesContentApplicationJsonSchema2": {
-      "name": "V1EvalCodeGetResponsesContentApplicationJsonSchema2",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [],
-        "extraProperties": {
-          "type": "unknown"
-        }
-      }
-    },
-    "V1EvalCodeGetResponsesContentApplicationJsonSchema3": {
-      "name": "V1EvalCodeGetResponsesContentApplicationJsonSchema3",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "unknown"
-          }
-        }
-      }
-    },
     "V1EvalCodeGetResponsesContentApplicationJsonSchema": {
       "name": "V1EvalCodeGetResponsesContentApplicationJsonSchema",
       "shape": {
@@ -2222,22 +2186,30 @@
             "type": {
               "type": "primitive",
               "value": {
-                "type": "integer"
+                "type": "double"
               }
             }
           },
           {
-            "typeName": "V1EvalCodeGetResponsesContentApplicationJsonSchema2",
             "type": {
-              "type": "id",
-              "value": "V1EvalCodeGetResponsesContentApplicationJsonSchema2"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
-            "typeName": "V1EvalCodeGetResponsesContentApplicationJsonSchema3",
             "type": {
-              "type": "id",
-              "value": "V1EvalCodeGetResponsesContentApplicationJsonSchema3"
+              "type": "list",
+              "itemType": {
+                "type": "unknown"
+              }
             }
           },
           {
@@ -2339,7 +2311,8 @@
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaFrom1"
-            }
+            },
+            "displayName": "EmailNameAndAddress"
           }
         ]
       }
@@ -2395,7 +2368,8 @@
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo01"
-            }
+            },
+            "displayName": "EmailNameAndAddress"
           }
         ]
       },
@@ -2452,7 +2426,8 @@
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaToOneOf1Items1"
-            }
+            },
+            "displayName": "EmailNameAndAddress"
           }
         ]
       }
@@ -2482,14 +2457,16 @@
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo0"
-            }
+            },
+            "displayName": "EmailData"
           },
           {
             "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo1",
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaTo1"
-            }
+            },
+            "displayName": "EmailDataList"
           }
         ]
       }
@@ -2545,7 +2522,8 @@
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc01"
-            }
+            },
+            "displayName": "EmailNameAndAddress"
           }
         ]
       },
@@ -2602,7 +2580,8 @@
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaCcOneOf1Items1"
-            }
+            },
+            "displayName": "EmailNameAndAddress"
           }
         ]
       }
@@ -2632,14 +2611,16 @@
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc0"
-            }
+            },
+            "displayName": "EmailData"
           },
           {
             "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc1",
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaCc1"
-            }
+            },
+            "displayName": "EmailDataList"
           }
         ]
       }
@@ -2695,7 +2676,8 @@
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc01"
-            }
+            },
+            "displayName": "EmailNameAndAddress"
           }
         ]
       },
@@ -2752,7 +2734,8 @@
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaBccOneOf1Items1"
-            }
+            },
+            "displayName": "EmailNameAndAddress"
           }
         ]
       }
@@ -2782,14 +2765,16 @@
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc0"
-            }
+            },
+            "displayName": "EmailData"
           },
           {
             "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc1",
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaBcc1"
-            }
+            },
+            "displayName": "EmailDataList"
           }
         ]
       }
@@ -2946,14 +2931,16 @@
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList0"
-            }
+            },
+            "displayName": "EmailNameAndAddress"
           },
           {
             "typeName": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList1",
             "type": {
               "type": "id",
               "value": "V1EmailPostRequestBodyContentApplicationJsonSchemaReplyToList1"
-            }
+            },
+            "displayName": "EmailList"
           }
         ]
       }
@@ -3211,7 +3198,7 @@
             }
           ],
           "id": "vals",
-          "originalEndpointId": "search.vals",
+          "originalEndpointId": "endpoint_search.vals",
           "name": "Vals",
           "path": {
             "pathParameters": [],
@@ -3380,7 +3367,7 @@
             }
           ],
           "id": "username",
-          "originalEndpointId": "alias.username",
+          "originalEndpointId": "endpoint_alias.username",
           "name": "Username",
           "path": {
             "pathParameters": [
@@ -3480,7 +3467,7 @@
             }
           ],
           "id": "val",
-          "originalEndpointId": "alias.val",
+          "originalEndpointId": "endpoint_alias.val",
           "name": "Val",
           "path": {
             "pathParameters": [
@@ -3635,7 +3622,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "me.get",
+          "originalEndpointId": "endpoint_me.get",
           "name": "Get",
           "path": {
             "pathParameters": [],
@@ -3718,7 +3705,7 @@
             }
           ],
           "id": "likes",
-          "originalEndpointId": "me.likes",
+          "originalEndpointId": "endpoint_me.likes",
           "name": "Likes",
           "path": {
             "pathParameters": [],
@@ -3864,7 +3851,7 @@
             }
           ],
           "id": "comments",
-          "originalEndpointId": "me.comments",
+          "originalEndpointId": "endpoint_me.comments",
           "name": "Comments",
           "path": {
             "pathParameters": [],
@@ -4045,7 +4032,7 @@
             }
           ],
           "id": "references",
-          "originalEndpointId": "me.references",
+          "originalEndpointId": "endpoint_me.references",
           "name": "References",
           "path": {
             "pathParameters": [],
@@ -4219,7 +4206,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "blobs.list",
+          "originalEndpointId": "endpoint_blobs.list",
           "name": "List",
           "path": {
             "pathParameters": [],
@@ -4309,7 +4296,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "blobs.get",
+          "originalEndpointId": "endpoint_blobs.get",
           "name": "Get",
           "path": {
             "pathParameters": [
@@ -4384,7 +4371,7 @@
             }
           ],
           "id": "store",
-          "originalEndpointId": "blobs.store",
+          "originalEndpointId": "endpoint_blobs.store",
           "name": "Store",
           "path": {
             "pathParameters": [
@@ -4475,7 +4462,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "blobs.delete",
+          "originalEndpointId": "endpoint_blobs.delete",
           "name": "Delete",
           "path": {
             "pathParameters": [
@@ -4553,7 +4540,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "users.get",
+          "originalEndpointId": "endpoint_users.get",
           "name": "Get",
           "path": {
             "pathParameters": [
@@ -4653,7 +4640,7 @@
             }
           ],
           "id": "vals",
-          "originalEndpointId": "users.vals",
+          "originalEndpointId": "endpoint_users.vals",
           "name": "Vals",
           "path": {
             "pathParameters": [
@@ -4830,7 +4817,7 @@
             }
           ],
           "id": "execute",
-          "originalEndpointId": "sqlite.execute",
+          "originalEndpointId": "endpoint_sqlite.execute",
           "name": "Execute",
           "path": {
             "pathParameters": [],
@@ -5009,7 +4996,7 @@
             }
           ],
           "id": "batch",
-          "originalEndpointId": "sqlite.batch",
+          "originalEndpointId": "endpoint_sqlite.batch",
           "name": "Batch",
           "path": {
             "pathParameters": [],
@@ -5161,7 +5148,7 @@
             }
           ],
           "id": "evalPost",
-          "originalEndpointId": "vals.evalPost",
+          "originalEndpointId": "endpoint_vals.evalPost",
           "name": "Eval Post",
           "path": {
             "pathParameters": [],
@@ -5313,7 +5300,7 @@
             }
           ],
           "id": "evalGet",
-          "originalEndpointId": "vals.evalGet",
+          "originalEndpointId": "endpoint_vals.evalGet",
           "name": "Eval Get",
           "path": {
             "pathParameters": [
@@ -5427,7 +5414,7 @@
             }
           ],
           "id": "runGet",
-          "originalEndpointId": "vals.runGet",
+          "originalEndpointId": "endpoint_vals.runGet",
           "name": "Run Get",
           "path": {
             "pathParameters": [
@@ -5509,7 +5496,7 @@
             }
           ],
           "id": "runPost",
-          "originalEndpointId": "vals.runPost",
+          "originalEndpointId": "endpoint_vals.runPost",
           "name": "Run Post",
           "path": {
             "pathParameters": [
@@ -5614,7 +5601,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "vals.create",
+          "originalEndpointId": "endpoint_vals.create",
           "name": "Create",
           "path": {
             "pathParameters": [],
@@ -5812,7 +5799,7 @@
             }
           ],
           "id": "put",
-          "originalEndpointId": "vals.put",
+          "originalEndpointId": "endpoint_vals.put",
           "name": "Put",
           "path": {
             "pathParameters": [],
@@ -5905,7 +5892,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "vals.get",
+          "originalEndpointId": "endpoint_vals.get",
           "name": "Get",
           "path": {
             "pathParameters": [
@@ -6032,7 +6019,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "vals.update",
+          "originalEndpointId": "endpoint_vals.update",
           "name": "Update",
           "path": {
             "pathParameters": [
@@ -6194,7 +6181,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "vals.delete",
+          "originalEndpointId": "endpoint_vals.delete",
           "name": "Delete",
           "path": {
             "pathParameters": [
@@ -6274,7 +6261,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "vals.list",
+          "originalEndpointId": "endpoint_vals.list",
           "name": "List",
           "path": {
             "pathParameters": [
@@ -6412,7 +6399,7 @@
             }
           ],
           "id": "createVersion",
-          "originalEndpointId": "vals.createVersion",
+          "originalEndpointId": "endpoint_vals.createVersion",
           "name": "Create Version",
           "path": {
             "pathParameters": [
@@ -6632,7 +6619,7 @@
             }
           ],
           "id": "getVersion",
-          "originalEndpointId": "vals.getVersion",
+          "originalEndpointId": "endpoint_vals.getVersion",
           "name": "Get Version",
           "path": {
             "pathParameters": [
@@ -6808,7 +6795,7 @@
             }
           ],
           "id": "deleteVersion",
-          "originalEndpointId": "vals.deleteVersion",
+          "originalEndpointId": "endpoint_vals.deleteVersion",
           "name": "Delete Version",
           "path": {
             "pathParameters": [
@@ -6908,7 +6895,7 @@
             }
           ],
           "id": "cancel",
-          "originalEndpointId": "vals.cancel",
+          "originalEndpointId": "endpoint_vals.cancel",
           "name": "Cancel",
           "path": {
             "pathParameters": [
@@ -7041,7 +7028,7 @@
             }
           ],
           "id": "send",
-          "originalEndpointId": "emails.send",
+          "originalEndpointId": "endpoint_emails.send",
           "name": "Send",
           "path": {
             "pathParameters": [],

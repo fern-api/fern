@@ -129,12 +129,13 @@ export class DocsDefinitionResolver {
                     apiSection: async ({ workspace }) => {
                         const fernWorkspace = await workspace.toFernWorkspace(
                             { context: this.taskContext },
+
                             {
                                 enableUniqueErrorsPerEndpoint: true,
                                 detectGlobalHeaders: false,
+                                preserveSchemaIds: true,
                                 objectQueryParameters: true,
-                                respectReadonlySchemas: true,
-                                respectNullableSchemas: true
+                                respectReadonlySchemas: true
                             }
                         );
                         fernWorkspace.changelog?.files.forEach((file) => {
@@ -674,6 +675,7 @@ export class DocsDefinitionResolver {
             hidden: undefined,
             authed: undefined,
             icon: product.icon,
+            image: product.image != null ? this.getFileId(product.image) : undefined,
             pointsTo: undefined,
             viewers: undefined,
             orphaned: undefined,
@@ -858,8 +860,7 @@ export class DocsDefinitionResolver {
                     enableUniqueErrorsPerEndpoint: true,
                     detectGlobalHeaders: false,
                     objectQueryParameters: true,
-                    respectReadonlySchemas: true,
-                    respectNullableSchemas: true
+                    preserveSchemaIds: true
                 }
             );
             ir = generateIntermediateRepresentation({

@@ -132,7 +132,7 @@
         "auth": false,
         "method": "GET",
         "id": "listTrees",
-        "originalEndpointId": "listTrees",
+        "originalEndpointId": "endpoint_.listTrees",
         "name": "List all trees",
         "path": {
           "pathParameters": [],
@@ -212,7 +212,7 @@
         "auth": false,
         "method": "POST",
         "id": "createTree",
-        "originalEndpointId": "createTree",
+        "originalEndpointId": "endpoint_.createTree",
         "name": "Create a new tree",
         "path": {
           "pathParameters": [],
@@ -307,7 +307,7 @@
         "auth": false,
         "method": "GET",
         "id": "getTree",
-        "originalEndpointId": "getTree",
+        "originalEndpointId": "endpoint_.getTree",
         "name": "Get a tree by ID",
         "path": {
           "pathParameters": [
@@ -389,7 +389,7 @@
         "auth": false,
         "method": "POST",
         "id": "createFern",
-        "originalEndpointId": "createFern",
+        "originalEndpointId": "endpoint_.createFern",
         "name": "Create a new fern",
         "path": {
           "pathParameters": [],
@@ -491,7 +491,7 @@
         "auth": false,
         "method": "GET",
         "id": "getFern",
-        "originalEndpointId": "getFern",
+        "originalEndpointId": "endpoint_.getFern",
         "name": "Get a fern by ID",
         "path": {
           "pathParameters": [
@@ -571,7 +571,7 @@
         "auth": false,
         "method": "POST",
         "id": "createGrass",
-        "originalEndpointId": "createGrass",
+        "originalEndpointId": "endpoint_.createGrass",
         "name": "Create a new grass",
         "path": {
           "pathParameters": [],
@@ -627,7 +627,7 @@
                     "itemType": {
                       "type": "primitive",
                       "value": {
-                        "type": "integer"
+                        "type": "double"
                       }
                     }
                   }

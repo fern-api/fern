@@ -3955,7 +3955,7 @@
     }
   },
   "services": {
-    "service_petsV1.pet": {
+    "service_petsV1/pet": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -4048,7 +4048,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "petsV1.pet.addPet",
+          "id": "endpoint_petsV1/pet.addPet",
           "displayName": "Add a new pet to the store.",
           "method": "POST",
           "name": {
@@ -7097,7 +7097,7 @@
           }
         },
         {
-          "id": "petsV1.pet.updatePet",
+          "id": "endpoint_petsV1/pet.updatePet",
           "displayName": "Update an existing pet.",
           "method": "PUT",
           "name": {
@@ -10175,7 +10175,7 @@
           }
         },
         {
-          "id": "petsV1.pet.findPetsByStatus",
+          "id": "endpoint_petsV1/pet.findPetsByStatus",
           "displayName": "Finds Pets by status.",
           "method": "GET",
           "name": {
@@ -14451,7 +14451,7 @@
           }
         },
         {
-          "id": "petsV1.pet.findPetsByTags",
+          "id": "endpoint_petsV1/pet.findPetsByTags",
           "displayName": "Finds Pets by tags.",
           "method": "GET",
           "name": {
@@ -18717,7 +18717,7 @@
           }
         },
         {
-          "id": "petsV1.pet.getPetById",
+          "id": "endpoint_petsV1/pet.getPetById",
           "displayName": "Find pet by ID.",
           "method": "GET",
           "name": {
@@ -21023,7 +21023,7 @@
           }
         },
         {
-          "id": "petsV1.pet.updatePetWithForm",
+          "id": "endpoint_petsV1/pet.updatePetWithForm",
           "displayName": "Updates a pet in the store with form data.",
           "method": "POST",
           "name": {
@@ -23397,7 +23397,7 @@
           }
         },
         {
-          "id": "petsV1.pet.deletePet",
+          "id": "endpoint_petsV1/pet.deletePet",
           "displayName": "Deletes a pet.",
           "method": "DELETE",
           "name": {
@@ -23680,7 +23680,7 @@
           }
         },
         {
-          "id": "petsV1.pet.uploadFile",
+          "id": "endpoint_petsV1/pet.uploadFile",
           "displayName": "Uploads an image.",
           "method": "POST",
           "name": {
@@ -24012,7 +24012,7 @@
         }
       ]
     },
-    "service_petsV1.store": {
+    "service_petsV1/store": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -24105,7 +24105,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "petsV1.store.getInventory",
+          "id": "endpoint_petsV1/store.getInventory",
           "displayName": "Returns pet inventories by status.",
           "method": "GET",
           "name": {
@@ -24291,7 +24291,7 @@
           }
         },
         {
-          "id": "petsV1.store.placeOrder",
+          "id": "endpoint_petsV1/store.placeOrder",
           "displayName": "Place an order for a pet.",
           "method": "POST",
           "name": {
@@ -26183,7 +26183,7 @@
           }
         },
         {
-          "id": "petsV1.store.getOrderById",
+          "id": "endpoint_petsV1/store.getOrderById",
           "displayName": "Find purchase order by ID.",
           "method": "GET",
           "name": {
@@ -27415,7 +27415,7 @@
           }
         },
         {
-          "id": "petsV1.store.deleteOrder",
+          "id": "endpoint_petsV1/store.deleteOrder",
           "displayName": "Delete purchase order by identifier.",
           "method": "DELETE",
           "name": {
@@ -27680,7 +27680,7 @@
         }
       ]
     },
-    "service_petsV1.user": {
+    "service_petsV1/user": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -27773,7 +27773,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "petsV1.user.createUser",
+          "id": "endpoint_petsV1/user.createUser",
           "displayName": "Create user.",
           "method": "POST",
           "name": {
@@ -29954,7 +29954,7 @@
           }
         },
         {
-          "id": "petsV1.user.createUsersWithListInput",
+          "id": "endpoint_petsV1/user.createUsersWithListInput",
           "displayName": "Creates list of users with given input array.",
           "method": "POST",
           "name": {
@@ -33126,7 +33126,7 @@
           }
         },
         {
-          "id": "petsV1.user.loginUser",
+          "id": "endpoint_petsV1/user.loginUser",
           "displayName": "Logs user into the system.",
           "method": "GET",
           "name": {
@@ -33380,7 +33380,7 @@
           }
         },
         {
-          "id": "petsV1.user.logoutUser",
+          "id": "endpoint_petsV1/user.logoutUser",
           "displayName": "Logs out current logged in user session.",
           "method": "GET",
           "name": {
@@ -33463,7 +33463,7 @@
           }
         },
         {
-          "id": "petsV1.user.getUserByName",
+          "id": "endpoint_petsV1/user.getUserByName",
           "displayName": "Get user by user name.",
           "method": "GET",
           "name": {
@@ -34848,7 +34848,7 @@
           }
         },
         {
-          "id": "petsV1.user.updateUser",
+          "id": "endpoint_petsV1/user.updateUser",
           "displayName": "Update user resource.",
           "method": "PUT",
           "name": {
@@ -36097,7 +36097,7 @@
           }
         },
         {
-          "id": "petsV1.user.deleteUser",
+          "id": "endpoint_petsV1/user.deleteUser",
           "displayName": "Delete user resource.",
           "method": "DELETE",
           "name": {
@@ -36366,7 +36366,7 @@
         }
       ]
     },
-    "service_petsV2.pet": {
+    "service_petsV2/pet": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -36459,7 +36459,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "petsV2.pet.addPet",
+          "id": "endpoint_petsV2/pet.addPet",
           "displayName": "Add a new pet to the store.",
           "method": "POST",
           "name": {
@@ -39508,7 +39508,7 @@
           }
         },
         {
-          "id": "petsV2.pet.updatePet",
+          "id": "endpoint_petsV2/pet.updatePet",
           "displayName": "Update an existing pet.",
           "method": "PUT",
           "name": {
@@ -42586,7 +42586,7 @@
           }
         },
         {
-          "id": "petsV2.pet.findPetsByStatus",
+          "id": "endpoint_petsV2/pet.findPetsByStatus",
           "displayName": "Finds Pets by status.",
           "method": "GET",
           "name": {
@@ -46862,7 +46862,7 @@
           }
         },
         {
-          "id": "petsV2.pet.findPetsByTags",
+          "id": "endpoint_petsV2/pet.findPetsByTags",
           "displayName": "Finds Pets by tags.",
           "method": "GET",
           "name": {
@@ -51128,7 +51128,7 @@
           }
         },
         {
-          "id": "petsV2.pet.getPetById",
+          "id": "endpoint_petsV2/pet.getPetById",
           "displayName": "Find pet by ID.",
           "method": "GET",
           "name": {
@@ -53434,7 +53434,7 @@
           }
         },
         {
-          "id": "petsV2.pet.updatePetWithForm",
+          "id": "endpoint_petsV2/pet.updatePetWithForm",
           "displayName": "Updates a pet in the store with form data.",
           "method": "POST",
           "name": {
@@ -55808,7 +55808,7 @@
           }
         },
         {
-          "id": "petsV2.pet.deletePet",
+          "id": "endpoint_petsV2/pet.deletePet",
           "displayName": "Deletes a pet.",
           "method": "DELETE",
           "name": {
@@ -56091,7 +56091,7 @@
           }
         },
         {
-          "id": "petsV2.pet.uploadFile",
+          "id": "endpoint_petsV2/pet.uploadFile",
           "displayName": "Uploads an image.",
           "method": "POST",
           "name": {
@@ -56423,7 +56423,7 @@
         }
       ]
     },
-    "service_petsV2.store": {
+    "service_petsV2/store": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -56516,7 +56516,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "petsV2.store.getInventory",
+          "id": "endpoint_petsV2/store.getInventory",
           "displayName": "Returns pet inventories by status.",
           "method": "GET",
           "name": {
@@ -56702,7 +56702,7 @@
           }
         },
         {
-          "id": "petsV2.store.placeOrder",
+          "id": "endpoint_petsV2/store.placeOrder",
           "displayName": "Place an order for a pet.",
           "method": "POST",
           "name": {
@@ -58594,7 +58594,7 @@
           }
         },
         {
-          "id": "petsV2.store.getOrderById",
+          "id": "endpoint_petsV2/store.getOrderById",
           "displayName": "Find purchase order by ID.",
           "method": "GET",
           "name": {
@@ -59826,7 +59826,7 @@
           }
         },
         {
-          "id": "petsV2.store.deleteOrder",
+          "id": "endpoint_petsV2/store.deleteOrder",
           "displayName": "Delete purchase order by identifier.",
           "method": "DELETE",
           "name": {
@@ -60091,7 +60091,7 @@
         }
       ]
     },
-    "service_petsV2.user": {
+    "service_petsV2/user": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -60184,7 +60184,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "petsV2.user.createUser",
+          "id": "endpoint_petsV2/user.createUser",
           "displayName": "Create user.",
           "method": "POST",
           "name": {
@@ -62365,7 +62365,7 @@
           }
         },
         {
-          "id": "petsV2.user.createUsersWithListInput",
+          "id": "endpoint_petsV2/user.createUsersWithListInput",
           "displayName": "Creates list of users with given input array.",
           "method": "POST",
           "name": {
@@ -65537,7 +65537,7 @@
           }
         },
         {
-          "id": "petsV2.user.loginUser",
+          "id": "endpoint_petsV2/user.loginUser",
           "displayName": "Logs user into the system.",
           "method": "GET",
           "name": {
@@ -65791,7 +65791,7 @@
           }
         },
         {
-          "id": "petsV2.user.logoutUser",
+          "id": "endpoint_petsV2/user.logoutUser",
           "displayName": "Logs out current logged in user session.",
           "method": "GET",
           "name": {
@@ -65874,7 +65874,7 @@
           }
         },
         {
-          "id": "petsV2.user.getUserByName",
+          "id": "endpoint_petsV2/user.getUserByName",
           "displayName": "Get user by user name.",
           "method": "GET",
           "name": {
@@ -67259,7 +67259,7 @@
           }
         },
         {
-          "id": "petsV2.user.updateUser",
+          "id": "endpoint_petsV2/user.updateUser",
           "displayName": "Update user resource.",
           "method": "PUT",
           "name": {
@@ -68508,7 +68508,7 @@
           }
         },
         {
-          "id": "petsV2.user.deleteUser",
+          "id": "endpoint_petsV2/user.deleteUser",
           "displayName": "Delete user resource.",
           "method": "DELETE",
           "name": {
@@ -68885,14 +68885,14 @@
       "types": [],
       "errors": [],
       "subpackages": [
-        "subpackage_petsV1.petsV1",
-        "subpackage_petsV1.pet",
-        "subpackage_petsV1.store",
-        "subpackage_petsV1.user"
+        "subpackage_petsV1/petsV1",
+        "subpackage_petsV1/pet",
+        "subpackage_petsV1/store",
+        "subpackage_petsV1/user"
       ],
       "hasEndpointsInTree": false
     },
-    "subpackage_petsV1.petsV1": {
+    "subpackage_petsV1/petsV1": {
       "name": {
         "originalName": "petsV1",
         "camelCase": {
@@ -69006,7 +69006,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "subpackage_petsV1.pet": {
+    "subpackage_petsV1/pet": {
       "name": {
         "originalName": "pet",
         "camelCase": {
@@ -69108,13 +69108,13 @@
           }
         }
       },
-      "service": "service_petsV1.pet",
+      "service": "service_petsV1/pet",
       "types": [],
       "errors": [],
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "subpackage_petsV1.store": {
+    "subpackage_petsV1/store": {
       "name": {
         "originalName": "store",
         "camelCase": {
@@ -69216,13 +69216,13 @@
           }
         }
       },
-      "service": "service_petsV1.store",
+      "service": "service_petsV1/store",
       "types": [],
       "errors": [],
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "subpackage_petsV1.user": {
+    "subpackage_petsV1/user": {
       "name": {
         "originalName": "user",
         "camelCase": {
@@ -69324,7 +69324,7 @@
           }
         }
       },
-      "service": "service_petsV1.user",
+      "service": "service_petsV1/user",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -69435,14 +69435,14 @@
       "types": [],
       "errors": [],
       "subpackages": [
-        "subpackage_petsV2.petsV2",
-        "subpackage_petsV2.pet",
-        "subpackage_petsV2.store",
-        "subpackage_petsV2.user"
+        "subpackage_petsV2/petsV2",
+        "subpackage_petsV2/pet",
+        "subpackage_petsV2/store",
+        "subpackage_petsV2/user"
       ],
       "hasEndpointsInTree": false
     },
-    "subpackage_petsV2.petsV2": {
+    "subpackage_petsV2/petsV2": {
       "name": {
         "originalName": "petsV2",
         "camelCase": {
@@ -69556,7 +69556,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "subpackage_petsV2.pet": {
+    "subpackage_petsV2/pet": {
       "name": {
         "originalName": "pet",
         "camelCase": {
@@ -69658,13 +69658,13 @@
           }
         }
       },
-      "service": "service_petsV2.pet",
+      "service": "service_petsV2/pet",
       "types": [],
       "errors": [],
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "subpackage_petsV2.store": {
+    "subpackage_petsV2/store": {
       "name": {
         "originalName": "store",
         "camelCase": {
@@ -69766,13 +69766,13 @@
           }
         }
       },
-      "service": "service_petsV2.store",
+      "service": "service_petsV2/store",
       "types": [],
       "errors": [],
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "subpackage_petsV2.user": {
+    "subpackage_petsV2/user": {
       "name": {
         "originalName": "user",
         "camelCase": {
@@ -69874,7 +69874,7 @@
           }
         }
       },
-      "service": "service_petsV2.user",
+      "service": "service_petsV2/user",
       "types": [],
       "errors": [],
       "subpackages": [],

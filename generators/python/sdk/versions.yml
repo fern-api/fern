@@ -1,4 +1,36 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.21.2
+  changelogEntry:
+    - summary: |
+        Handle HEAD HTTP method gracefully by treating it as a POST method when constructing the snippet registry, rather than failing.
+      type: chore
+  createdAt: '2025-05-27'
+  irVersion: 58
+
+- version: 4.21.1
+  changelogEntry:
+    - summary: |
+        Make sure to generate README and Reference even when generating in local mode (if self hosting is enabled).
+      type: chore
+  createdAt: '2025-05-27'
+  irVersion: 58
+
+- version: 4.21.0
+  changelogEntry:
+    - summary: |
+        Bump to v58 of IR.
+      type: chore
+  createdAt: '2025-05-27'
+  irVersion: 58
+
+- version: 4.20.3
+  changelogEntry:
+    - summary: |
+        Fix handling of optional and unknown response types by not throwing errors when the response is empty.
+      type: fix
+  createdAt: '2025-05-20'
+  irVersion: 57
+
 - version: 4.20.2
   changelogEntry:
     - summary: |

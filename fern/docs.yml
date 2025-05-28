@@ -372,6 +372,9 @@ navigation:
           - page: Navigation
             icon: fa-regular fa-map-signs
             path: ./pages/docs/building-your-docs/navigation.mdx
+          - page: Product Switching
+            icon: fa-regular fa-boxes-stacked
+            path: ./pages/docs/building-your-docs/product-switcher.mdx
           - page: Versioning
             icon: fa-regular fa-code-branch
             path: ./pages/docs/building-your-docs/versioning.mdx
@@ -483,6 +486,10 @@ navigation:
                 path: ./pages/docs/components/tabs.mdx
                 icon: fa-regular fa-window-restore
                 slug: tabs
+              - page: Tooltips
+                path: ./pages/docs/components/tooltips.mdx
+                icon: fa-regular fa-circle-info
+                slug: tooltips
           - page: Custom React Components
             icon: fa-brands fa-react
             path: ./pages/docs/writing-content/custom-react-components.mdx

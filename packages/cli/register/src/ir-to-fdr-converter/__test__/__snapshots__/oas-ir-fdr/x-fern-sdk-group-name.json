@@ -91,7 +91,7 @@
         "description": "This endpoint should be in `auth/user.yml`",
         "method": "GET",
         "id": "getAuthUser",
-        "originalEndpointId": "getAuthUser",
+        "originalEndpointId": "endpoint_.getAuthUser",
         "name": "Get Auth User",
         "path": {
           "pathParameters": [],

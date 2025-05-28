@@ -26,8 +26,8 @@ export declare namespace ChannelConverter2_X {
 export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.ChannelV2> {
     protected inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
 
-    constructor({ context, breadcrumbs, channel, channelPath, group }: ChannelConverter2_X.Args) {
-        super({ context, breadcrumbs, channel, channelPath, group });
+    constructor({ context, breadcrumbs, websocketGroup, channel, channelPath }: ChannelConverter2_X.Args) {
+        super({ context, breadcrumbs, websocketGroup, channel, channelPath });
     }
 
     public convert(): AbstractChannelConverter.Output | undefined {
@@ -40,7 +40,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
             channel: this.channel,
             context: this.context
         });
-        const displayName = displayNameExtension.convert();
+        const displayName = displayNameExtension.convert() ?? this.websocketGroup?.join(".");
 
         if (this.channel.parameters) {
             this.convertPathParameters({

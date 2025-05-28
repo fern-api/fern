@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .types import NestedUser, Organization, Resource, ResourceStatus, User
-
 __all__ = ["NestedUser", "Organization", "Resource", "ResourceStatus", "User"]

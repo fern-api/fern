@@ -59,14 +59,16 @@
             "type": {
               "type": "id",
               "value": "type_complex:SingleFilterSearchRequest"
-            }
+            },
+            "displayName": "Single Filter Search Request"
           },
           {
             "typeName": "MultipleFilterSearchRequest",
             "type": {
               "type": "id",
               "value": "type_complex:MultipleFilterSearchRequest"
-            }
+            },
+            "displayName": "Multiple Filter Search Request"
           }
         ]
       }

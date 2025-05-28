@@ -11692,7 +11692,7 @@
             }
           ],
           "id": "getUsers",
-          "originalEndpointId": "userManagement.getUsers",
+          "originalEndpointId": "endpoint_userManagement.getUsers",
           "name": "Get users by query.",
           "path": {
             "pathParameters": [],
@@ -11838,7 +11838,7 @@
             }
           ],
           "id": "postUser",
-          "originalEndpointId": "userManagement.postUser",
+          "originalEndpointId": "endpoint_userManagement.postUser",
           "name": "Create a new user.",
           "path": {
             "pathParameters": [],
@@ -11977,7 +11977,7 @@
             }
           ],
           "id": "getUser",
-          "originalEndpointId": "userManagement.getUser",
+          "originalEndpointId": "endpoint_userManagement.getUser",
           "name": "Get a user by ID.",
           "path": {
             "pathParameters": [
@@ -12102,7 +12102,7 @@
             }
           ],
           "id": "putUser",
-          "originalEndpointId": "userManagement.putUser",
+          "originalEndpointId": "endpoint_userManagement.putUser",
           "name": "Update a user.",
           "path": {
             "pathParameters": [
@@ -12272,7 +12272,7 @@
             }
           ],
           "id": "deleteUser",
-          "originalEndpointId": "userManagement.deleteUser",
+          "originalEndpointId": "endpoint_userManagement.deleteUser",
           "name": "Delete a User.",
           "path": {
             "pathParameters": [
@@ -12389,7 +12389,7 @@
             }
           ],
           "id": "lockUser",
-          "originalEndpointId": "userManagement.lockUser",
+          "originalEndpointId": "endpoint_userManagement.lockUser",
           "name": "Lock a user.",
           "path": {
             "pathParameters": [
@@ -12540,7 +12540,7 @@
             }
           ],
           "id": "unlockUser",
-          "originalEndpointId": "userManagement.unlockUser",
+          "originalEndpointId": "endpoint_userManagement.unlockUser",
           "name": "Unlock a user.",
           "path": {
             "pathParameters": [
@@ -12701,7 +12701,7 @@
             }
           ],
           "id": "getUserResources",
-          "originalEndpointId": "users.getUserResources",
+          "originalEndpointId": "endpoint_users.getUserResources",
           "name": "Get the user resources.",
           "path": {
             "pathParameters": [],
@@ -12780,7 +12780,7 @@
             }
           ],
           "id": "getUsers",
-          "originalEndpointId": "users.getUsers",
+          "originalEndpointId": "endpoint_users.getUsers",
           "name": "Get users by query.",
           "path": {
             "pathParameters": [],
@@ -12893,7 +12893,7 @@
             }
           ],
           "id": "getUser",
-          "originalEndpointId": "users.getUser",
+          "originalEndpointId": "endpoint_users.getUser",
           "name": "Get user by id.",
           "path": {
             "pathParameters": [
@@ -13018,7 +13018,7 @@
             }
           ],
           "id": "getUserPicture",
-          "originalEndpointId": "users.getUserPicture",
+          "originalEndpointId": "endpoint_users.getUserPicture",
           "name": "Get user picture by id.",
           "path": {
             "pathParameters": [
@@ -13126,7 +13126,7 @@
             }
           ],
           "id": "postTranslation",
-          "originalEndpointId": "translations.postTranslation",
+          "originalEndpointId": "endpoint_translations.postTranslation",
           "name": "Translate a text.",
           "path": {
             "pathParameters": [
@@ -13276,7 +13276,7 @@
             }
           ],
           "id": "getTemplates",
-          "originalEndpointId": "templates.getTemplates",
+          "originalEndpointId": "endpoint_templates.getTemplates",
           "name": "Get all templates.",
           "path": {
             "pathParameters": [],
@@ -13372,7 +13372,7 @@
             }
           ],
           "id": "getTemplate",
-          "originalEndpointId": "templates.getTemplate",
+          "originalEndpointId": "endpoint_templates.getTemplate",
           "name": "Get template details.",
           "path": {
             "pathParameters": [
@@ -13495,7 +13495,7 @@
             }
           ],
           "id": "getContributors",
-          "originalEndpointId": "teams.getContributors",
+          "originalEndpointId": "endpoint_teams.getContributors",
           "name": "Get team contributors.",
           "path": {
             "pathParameters": [
@@ -13632,7 +13632,7 @@
             }
           ],
           "id": "postContributor",
-          "originalEndpointId": "teams.postContributor",
+          "originalEndpointId": "endpoint_teams.postContributor",
           "name": "Assign contributor to team.",
           "path": {
             "pathParameters": [
@@ -13806,7 +13806,7 @@
             }
           ],
           "id": "deleteMyself",
-          "originalEndpointId": "teams.deleteMyself",
+          "originalEndpointId": "endpoint_teams.deleteMyself",
           "name": "Remove yourself.",
           "path": {
             "pathParameters": [
@@ -13956,7 +13956,7 @@
             }
           ],
           "id": "deleteContributor",
-          "originalEndpointId": "teams.deleteContributor",
+          "originalEndpointId": "endpoint_teams.deleteContributor",
           "name": "Remove contributor.",
           "path": {
             "pathParameters": [
@@ -14126,7 +14126,7 @@
             }
           ],
           "id": "getTeams",
-          "originalEndpointId": "teams.getTeams",
+          "originalEndpointId": "endpoint_teams.getTeams",
           "name": "Get your teams.",
           "path": {
             "pathParameters": [],
@@ -14224,7 +14224,7 @@
             }
           ],
           "id": "postTeam",
-          "originalEndpointId": "teams.postTeam",
+          "originalEndpointId": "endpoint_teams.postTeam",
           "name": "Create a new team.",
           "path": {
             "pathParameters": [],
@@ -14364,7 +14364,7 @@
             }
           ],
           "id": "getTeam",
-          "originalEndpointId": "teams.getTeam",
+          "originalEndpointId": "endpoint_teams.getTeam",
           "name": "Get an team by name.",
           "path": {
             "pathParameters": [
@@ -14487,7 +14487,7 @@
             }
           ],
           "id": "putTeam",
-          "originalEndpointId": "teams.putTeam",
+          "originalEndpointId": "endpoint_teams.putTeam",
           "name": "Update the team.",
           "path": {
             "pathParameters": [
@@ -14657,7 +14657,7 @@
             }
           ],
           "id": "getLog",
-          "originalEndpointId": "statistics.getLog",
+          "originalEndpointId": "endpoint_statistics.getLog",
           "name": "Get api calls as log file.",
           "path": {
             "pathParameters": [
@@ -14768,7 +14768,7 @@
             }
           ],
           "id": "getUsages",
-          "originalEndpointId": "statistics.getUsages",
+          "originalEndpointId": "endpoint_statistics.getUsages",
           "name": "Get api calls in date range.",
           "path": {
             "pathParameters": [
@@ -14935,7 +14935,7 @@
             }
           ],
           "id": "getUsagesForTeam",
-          "originalEndpointId": "statistics.getUsagesForTeam",
+          "originalEndpointId": "endpoint_statistics.getUsagesForTeam",
           "name": "Get api calls in date range for team.",
           "path": {
             "pathParameters": [
@@ -15102,7 +15102,7 @@
             }
           ],
           "id": "getCurrentStorageSize",
-          "originalEndpointId": "statistics.getCurrentStorageSize",
+          "originalEndpointId": "endpoint_statistics.getCurrentStorageSize",
           "name": "Get total asset size.",
           "path": {
             "pathParameters": [
@@ -15215,7 +15215,7 @@
             }
           ],
           "id": "getTeamCurrentStorageSizeForTeam",
-          "originalEndpointId": "statistics.getTeamCurrentStorageSizeForTeam",
+          "originalEndpointId": "endpoint_statistics.getTeamCurrentStorageSizeForTeam",
           "name": "Get total asset size by team.",
           "path": {
             "pathParameters": [
@@ -15328,7 +15328,7 @@
             }
           ],
           "id": "getStorageSizes",
-          "originalEndpointId": "statistics.getStorageSizes",
+          "originalEndpointId": "endpoint_statistics.getStorageSizes",
           "name": "Get asset usage by date.",
           "path": {
             "pathParameters": [
@@ -15490,7 +15490,7 @@
             }
           ],
           "id": "getStorageSizesForTeam",
-          "originalEndpointId": "statistics.getStorageSizesForTeam",
+          "originalEndpointId": "endpoint_statistics.getStorageSizesForTeam",
           "name": "Get asset usage by date for team.",
           "path": {
             "pathParameters": [
@@ -15662,7 +15662,7 @@
             }
           ],
           "id": "getSearchResults",
-          "originalEndpointId": "search.getSearchResults",
+          "originalEndpointId": "endpoint_search.getSearchResults",
           "name": "Get search results.",
           "path": {
             "pathParameters": [
@@ -15810,7 +15810,7 @@
             }
           ],
           "id": "postField",
-          "originalEndpointId": "schemas.postField",
+          "originalEndpointId": "endpoint_schemas.postField",
           "name": "Add a schema field.",
           "path": {
             "pathParameters": [
@@ -16184,7 +16184,7 @@
             }
           ],
           "id": "postNestedField",
-          "originalEndpointId": "schemas.postNestedField",
+          "originalEndpointId": "endpoint_schemas.postNestedField",
           "name": "Add a nested field.",
           "path": {
             "pathParameters": [
@@ -16577,7 +16577,7 @@
             }
           ],
           "id": "putSchemaUIFields",
-          "originalEndpointId": "schemas.putSchemaUIFields",
+          "originalEndpointId": "endpoint_schemas.putSchemaUIFields",
           "name": "Configure UI fields.",
           "path": {
             "pathParameters": [
@@ -16922,7 +16922,7 @@
             }
           ],
           "id": "putSchemaFieldOrdering",
-          "originalEndpointId": "schemas.putSchemaFieldOrdering",
+          "originalEndpointId": "endpoint_schemas.putSchemaFieldOrdering",
           "name": "Reorder all fields.",
           "path": {
             "pathParameters": [
@@ -17275,7 +17275,7 @@
             }
           ],
           "id": "putNestedFieldOrdering",
-          "originalEndpointId": "schemas.putNestedFieldOrdering",
+          "originalEndpointId": "endpoint_schemas.putNestedFieldOrdering",
           "name": "Reorder all nested fields.",
           "path": {
             "pathParameters": [
@@ -17647,7 +17647,7 @@
             }
           ],
           "id": "putField",
-          "originalEndpointId": "schemas.putField",
+          "originalEndpointId": "endpoint_schemas.putField",
           "name": "Update a schema field.",
           "path": {
             "pathParameters": [
@@ -18025,7 +18025,7 @@
             }
           ],
           "id": "deleteField",
-          "originalEndpointId": "schemas.deleteField",
+          "originalEndpointId": "endpoint_schemas.deleteField",
           "name": "Delete a schema field.",
           "path": {
             "pathParameters": [
@@ -18369,7 +18369,7 @@
             }
           ],
           "id": "putNestedField",
-          "originalEndpointId": "schemas.putNestedField",
+          "originalEndpointId": "endpoint_schemas.putNestedField",
           "name": "Update a nested field.",
           "path": {
             "pathParameters": [
@@ -18766,7 +18766,7 @@
             }
           ],
           "id": "deleteNestedField",
-          "originalEndpointId": "schemas.deleteNestedField",
+          "originalEndpointId": "endpoint_schemas.deleteNestedField",
           "name": "Delete a nested field.",
           "path": {
             "pathParameters": [
@@ -19130,7 +19130,7 @@
             }
           ],
           "id": "lockField",
-          "originalEndpointId": "schemas.lockField",
+          "originalEndpointId": "endpoint_schemas.lockField",
           "name": "Lock a schema field.",
           "path": {
             "pathParameters": [
@@ -19475,7 +19475,7 @@
             }
           ],
           "id": "lockNestedField",
-          "originalEndpointId": "schemas.lockNestedField",
+          "originalEndpointId": "endpoint_schemas.lockNestedField",
           "name": "Lock a nested field.",
           "path": {
             "pathParameters": [
@@ -19839,7 +19839,7 @@
             }
           ],
           "id": "hideField",
-          "originalEndpointId": "schemas.hideField",
+          "originalEndpointId": "endpoint_schemas.hideField",
           "name": "Hide a schema field.",
           "path": {
             "pathParameters": [
@@ -20184,7 +20184,7 @@
             }
           ],
           "id": "hideNestedField",
-          "originalEndpointId": "schemas.hideNestedField",
+          "originalEndpointId": "endpoint_schemas.hideNestedField",
           "name": "Hide a nested field.",
           "path": {
             "pathParameters": [
@@ -20548,7 +20548,7 @@
             }
           ],
           "id": "showField",
-          "originalEndpointId": "schemas.showField",
+          "originalEndpointId": "endpoint_schemas.showField",
           "name": "Show a schema field.",
           "path": {
             "pathParameters": [
@@ -20893,7 +20893,7 @@
             }
           ],
           "id": "showNestedField",
-          "originalEndpointId": "schemas.showNestedField",
+          "originalEndpointId": "endpoint_schemas.showNestedField",
           "name": "Show a nested field.",
           "path": {
             "pathParameters": [
@@ -21257,7 +21257,7 @@
             }
           ],
           "id": "enableField",
-          "originalEndpointId": "schemas.enableField",
+          "originalEndpointId": "endpoint_schemas.enableField",
           "name": "Enable a schema field.",
           "path": {
             "pathParameters": [
@@ -21602,7 +21602,7 @@
             }
           ],
           "id": "enableNestedField",
-          "originalEndpointId": "schemas.enableNestedField",
+          "originalEndpointId": "endpoint_schemas.enableNestedField",
           "name": "Enable a nested field.",
           "path": {
             "pathParameters": [
@@ -21966,7 +21966,7 @@
             }
           ],
           "id": "disableField",
-          "originalEndpointId": "schemas.disableField",
+          "originalEndpointId": "endpoint_schemas.disableField",
           "name": "Disable a schema field.",
           "path": {
             "pathParameters": [
@@ -22311,7 +22311,7 @@
             }
           ],
           "id": "disableNestedField",
-          "originalEndpointId": "schemas.disableNestedField",
+          "originalEndpointId": "endpoint_schemas.disableNestedField",
           "name": "Disable a nested field.",
           "path": {
             "pathParameters": [
@@ -22674,7 +22674,7 @@
             }
           ],
           "id": "getSchemas",
-          "originalEndpointId": "schemas.getSchemas",
+          "originalEndpointId": "endpoint_schemas.getSchemas",
           "name": "Get schemas.",
           "path": {
             "pathParameters": [
@@ -22977,7 +22977,7 @@
             }
           ],
           "id": "postSchema",
-          "originalEndpointId": "schemas.postSchema",
+          "originalEndpointId": "endpoint_schemas.postSchema",
           "name": "Create a new schema.",
           "path": {
             "pathParameters": [
@@ -23314,7 +23314,7 @@
             }
           ],
           "id": "getSchema",
-          "originalEndpointId": "schemas.getSchema",
+          "originalEndpointId": "endpoint_schemas.getSchema",
           "name": "Get a schema by name.",
           "path": {
             "pathParameters": [
@@ -23626,7 +23626,7 @@
             }
           ],
           "id": "putSchema",
-          "originalEndpointId": "schemas.putSchema",
+          "originalEndpointId": "endpoint_schemas.putSchema",
           "name": "Update a schema.",
           "path": {
             "pathParameters": [
@@ -23975,7 +23975,7 @@
             }
           ],
           "id": "deleteSchema",
-          "originalEndpointId": "schemas.deleteSchema",
+          "originalEndpointId": "endpoint_schemas.deleteSchema",
           "name": "Delete a schema.",
           "path": {
             "pathParameters": [
@@ -24098,7 +24098,7 @@
             }
           ],
           "id": "putSchemaSync",
-          "originalEndpointId": "schemas.putSchemaSync",
+          "originalEndpointId": "endpoint_schemas.putSchemaSync",
           "name": "Synchronize a schema.",
           "path": {
             "pathParameters": [
@@ -24451,7 +24451,7 @@
             }
           ],
           "id": "putCategory",
-          "originalEndpointId": "schemas.putCategory",
+          "originalEndpointId": "endpoint_schemas.putCategory",
           "name": "Update a schema category.",
           "path": {
             "pathParameters": [
@@ -24796,7 +24796,7 @@
             }
           ],
           "id": "putPreviewUrls",
-          "originalEndpointId": "schemas.putPreviewUrls",
+          "originalEndpointId": "endpoint_schemas.putPreviewUrls",
           "name": "Update the preview urls.",
           "path": {
             "pathParameters": [
@@ -25141,7 +25141,7 @@
             }
           ],
           "id": "putScripts",
-          "originalEndpointId": "schemas.putScripts",
+          "originalEndpointId": "endpoint_schemas.putScripts",
           "name": "Update the scripts.",
           "path": {
             "pathParameters": [
@@ -25486,7 +25486,7 @@
             }
           ],
           "id": "putRules",
-          "originalEndpointId": "schemas.putRules",
+          "originalEndpointId": "endpoint_schemas.putRules",
           "name": "Update the rules.",
           "path": {
             "pathParameters": [
@@ -25831,7 +25831,7 @@
             }
           ],
           "id": "publishSchema",
-          "originalEndpointId": "schemas.publishSchema",
+          "originalEndpointId": "endpoint_schemas.publishSchema",
           "name": "Publish a schema.",
           "path": {
             "pathParameters": [
@@ -26156,7 +26156,7 @@
             }
           ],
           "id": "unpublishSchema",
-          "originalEndpointId": "schemas.unpublishSchema",
+          "originalEndpointId": "endpoint_schemas.unpublishSchema",
           "name": "Unpublish a schema.",
           "path": {
             "pathParameters": [
@@ -26491,7 +26491,7 @@
             }
           ],
           "id": "getActions",
-          "originalEndpointId": "rules.getActions",
+          "originalEndpointId": "endpoint_rules.getActions",
           "name": "Get supported rule actions.",
           "path": {
             "pathParameters": [],
@@ -26574,7 +26574,7 @@
             }
           ],
           "id": "getRules",
-          "originalEndpointId": "rules.getRules",
+          "originalEndpointId": "endpoint_rules.getRules",
           "name": "Get rules.",
           "path": {
             "pathParameters": [
@@ -26731,7 +26731,7 @@
             }
           ],
           "id": "postRule",
-          "originalEndpointId": "rules.postRule",
+          "originalEndpointId": "endpoint_rules.postRule",
           "name": "Create a new rule.",
           "path": {
             "pathParameters": [
@@ -26923,7 +26923,7 @@
             }
           ],
           "id": "deleteRuleRun",
-          "originalEndpointId": "rules.deleteRuleRun",
+          "originalEndpointId": "endpoint_rules.deleteRuleRun",
           "name": "Cancel the current run.",
           "path": {
             "pathParameters": [
@@ -27015,7 +27015,7 @@
             }
           ],
           "id": "putRule",
-          "originalEndpointId": "rules.putRule",
+          "originalEndpointId": "endpoint_rules.putRule",
           "name": "Update a rule.",
           "path": {
             "pathParameters": [
@@ -27212,7 +27212,7 @@
             }
           ],
           "id": "deleteRule",
-          "originalEndpointId": "rules.deleteRule",
+          "originalEndpointId": "endpoint_rules.deleteRule",
           "name": "Delete a rule.",
           "path": {
             "pathParameters": [
@@ -27335,7 +27335,7 @@
             }
           ],
           "id": "enableRule",
-          "originalEndpointId": "rules.enableRule",
+          "originalEndpointId": "endpoint_rules.enableRule",
           "name": "Enable a rule.",
           "path": {
             "pathParameters": [
@@ -27512,7 +27512,7 @@
             }
           ],
           "id": "disableRule",
-          "originalEndpointId": "rules.disableRule",
+          "originalEndpointId": "endpoint_rules.disableRule",
           "name": "Disable a rule.",
           "path": {
             "pathParameters": [
@@ -27689,7 +27689,7 @@
             }
           ],
           "id": "triggerRule",
-          "originalEndpointId": "rules.triggerRule",
+          "originalEndpointId": "endpoint_rules.triggerRule",
           "name": "Trigger a rule.",
           "path": {
             "pathParameters": [
@@ -27812,7 +27812,7 @@
             }
           ],
           "id": "putRuleRun",
-          "originalEndpointId": "rules.putRuleRun",
+          "originalEndpointId": "endpoint_rules.putRuleRun",
           "name": "Run a rule.",
           "path": {
             "pathParameters": [
@@ -27938,7 +27938,7 @@
             }
           ],
           "id": "deleteRuleEvents",
-          "originalEndpointId": "rules.deleteRuleEvents",
+          "originalEndpointId": "endpoint_rules.deleteRuleEvents",
           "name": "Cancels all rule events.",
           "path": {
             "pathParameters": [
@@ -28049,7 +28049,7 @@
             }
           ],
           "id": "simulatePOST",
-          "originalEndpointId": "rules.simulatePOST",
+          "originalEndpointId": "endpoint_rules.simulatePOST",
           "name": "Simulate a rule.",
           "path": {
             "pathParameters": [
@@ -28239,7 +28239,7 @@
             }
           ],
           "id": "simulateGET",
-          "originalEndpointId": "rules.simulateGET",
+          "originalEndpointId": "endpoint_rules.simulateGET",
           "name": "Simulate a rule.",
           "path": {
             "pathParameters": [
@@ -28401,7 +28401,7 @@
             }
           ],
           "id": "getEvents",
-          "originalEndpointId": "rules.getEvents",
+          "originalEndpointId": "endpoint_rules.getEvents",
           "name": "Get rule events.",
           "path": {
             "pathParameters": [
@@ -28584,7 +28584,7 @@
             }
           ],
           "id": "deleteEvents",
-          "originalEndpointId": "rules.deleteEvents",
+          "originalEndpointId": "endpoint_rules.deleteEvents",
           "name": "Cancels all events.",
           "path": {
             "pathParameters": [
@@ -28676,7 +28676,7 @@
             }
           ],
           "id": "putEvent",
-          "originalEndpointId": "rules.putEvent",
+          "originalEndpointId": "endpoint_rules.putEvent",
           "name": "Retry the event immediately.",
           "path": {
             "pathParameters": [
@@ -28799,7 +28799,7 @@
             }
           ],
           "id": "deleteEvent",
-          "originalEndpointId": "rules.deleteEvent",
+          "originalEndpointId": "endpoint_rules.deleteEvent",
           "name": "Cancels an event.",
           "path": {
             "pathParameters": [
@@ -28922,7 +28922,7 @@
             }
           ],
           "id": "getEventTypes",
-          "originalEndpointId": "rules.getEventTypes",
+          "originalEndpointId": "endpoint_rules.getEventTypes",
           "name": "Provide a list of all event types that are used in rules.",
           "path": {
             "pathParameters": [],
@@ -29005,7 +29005,7 @@
             }
           ],
           "id": "getEventSchema",
-          "originalEndpointId": "rules.getEventSchema",
+          "originalEndpointId": "endpoint_rules.getEventSchema",
           "name": "Provide the json schema for the event with the specified name.",
           "path": {
             "pathParameters": [
@@ -29116,7 +29116,7 @@
             }
           ],
           "id": "getPlans",
-          "originalEndpointId": "plans.getPlans",
+          "originalEndpointId": "endpoint_plans.getPlans",
           "name": "Get app plan information.",
           "path": {
             "pathParameters": [
@@ -29273,7 +29273,7 @@
             }
           ],
           "id": "putPlan",
-          "originalEndpointId": "plans.putPlan",
+          "originalEndpointId": "endpoint_plans.putPlan",
           "name": "Change the app plan.",
           "path": {
             "pathParameters": [
@@ -29421,7 +29421,7 @@
             }
           ],
           "id": "getTeamPlans",
-          "originalEndpointId": "plans.getTeamPlans",
+          "originalEndpointId": "endpoint_plans.getTeamPlans",
           "name": "Get team plan information.",
           "path": {
             "pathParameters": [
@@ -29578,7 +29578,7 @@
             }
           ],
           "id": "putTeamPlan",
-          "originalEndpointId": "plans.putTeamPlan",
+          "originalEndpointId": "endpoint_plans.putTeamPlan",
           "name": "Change the team plan.",
           "path": {
             "pathParameters": [
@@ -29736,7 +29736,7 @@
             }
           ],
           "id": "getInfo",
-          "originalEndpointId": "ping.getInfo",
+          "originalEndpointId": "endpoint_ping.getInfo",
           "name": "Get API information.",
           "path": {
             "pathParameters": [],
@@ -29811,7 +29811,7 @@
             }
           ],
           "id": "getPing",
-          "originalEndpointId": "ping.getPing",
+          "originalEndpointId": "endpoint_ping.getPing",
           "name": "Get ping status of the API.",
           "path": {
             "pathParameters": [],
@@ -29870,7 +29870,7 @@
             }
           ],
           "id": "getAppPing",
-          "originalEndpointId": "ping.getAppPing",
+          "originalEndpointId": "endpoint_ping.getAppPing",
           "name": "Get ping status.",
           "path": {
             "pathParameters": [
@@ -29959,7 +29959,7 @@
             }
           ],
           "id": "getNews",
-          "originalEndpointId": "news.getNews",
+          "originalEndpointId": "endpoint_news.getNews",
           "name": "Get features since version.",
           "path": {
             "pathParameters": [],
@@ -30075,7 +30075,7 @@
             }
           ],
           "id": "getLanguages",
-          "originalEndpointId": "languages.getLanguages",
+          "originalEndpointId": "endpoint_languages.getLanguages",
           "name": "Get supported languages.",
           "path": {
             "pathParameters": [],
@@ -30174,7 +30174,7 @@
             }
           ],
           "id": "getAppHistory",
-          "originalEndpointId": "history.getAppHistory",
+          "originalEndpointId": "endpoint_history.getAppHistory",
           "name": "Get historical events.",
           "path": {
             "pathParameters": [
@@ -30316,7 +30316,7 @@
             }
           ],
           "id": "getTeamHistory",
-          "originalEndpointId": "history.getTeamHistory",
+          "originalEndpointId": "endpoint_history.getTeamHistory",
           "name": "Get historical events for a team.",
           "path": {
             "pathParameters": [
@@ -30468,7 +30468,7 @@
             }
           ],
           "id": "getEventConsumers",
-          "originalEndpointId": "eventConsumers.getEventConsumers",
+          "originalEndpointId": "endpoint_eventConsumers.getEventConsumers",
           "name": "Get event consumers.",
           "path": {
             "pathParameters": [],
@@ -30568,7 +30568,7 @@
             }
           ],
           "id": "startEventConsumer",
-          "originalEndpointId": "eventConsumers.startEventConsumer",
+          "originalEndpointId": "endpoint_eventConsumers.startEventConsumer",
           "name": "Start an event consumer.",
           "path": {
             "pathParameters": [
@@ -30704,7 +30704,7 @@
             }
           ],
           "id": "stopEventConsumer",
-          "originalEndpointId": "eventConsumers.stopEventConsumer",
+          "originalEndpointId": "endpoint_eventConsumers.stopEventConsumer",
           "name": "Stop an event consumer.",
           "path": {
             "pathParameters": [
@@ -30840,7 +30840,7 @@
             }
           ],
           "id": "resetEventConsumer",
-          "originalEndpointId": "eventConsumers.resetEventConsumer",
+          "originalEndpointId": "endpoint_eventConsumers.resetEventConsumer",
           "name": "Reset an event consumer.",
           "path": {
             "pathParameters": [
@@ -30986,7 +30986,7 @@
             }
           ],
           "id": "getDump",
-          "originalEndpointId": "diagnostics.getDump",
+          "originalEndpointId": "endpoint_diagnostics.getDump",
           "name": "Creates a dump and writes it into storage..",
           "path": {
             "pathParameters": [],
@@ -31057,7 +31057,7 @@
             }
           ],
           "id": "getGCDump",
-          "originalEndpointId": "diagnostics.getGCDump",
+          "originalEndpointId": "endpoint_diagnostics.getGCDump",
           "name": "Creates a gc dump and writes it into storage.",
           "path": {
             "pathParameters": [],
@@ -31139,7 +31139,7 @@
             }
           ],
           "id": "getContents",
-          "originalEndpointId": "contents.getContents",
+          "originalEndpointId": "endpoint_contents.getContents",
           "name": "Queries contents.",
           "path": {
             "pathParameters": [
@@ -31463,7 +31463,7 @@
             }
           ],
           "id": "postContent",
-          "originalEndpointId": "contents.postContent",
+          "originalEndpointId": "endpoint_contents.postContent",
           "name": "Create a content item.",
           "path": {
             "pathParameters": [
@@ -31833,7 +31833,7 @@
             }
           ],
           "id": "getContentsPost",
-          "originalEndpointId": "contents.getContentsPost",
+          "originalEndpointId": "endpoint_contents.getContentsPost",
           "name": "Queries contents.",
           "path": {
             "pathParameters": [
@@ -32163,7 +32163,7 @@
             }
           ],
           "id": "getContent",
-          "originalEndpointId": "contents.getContent",
+          "originalEndpointId": "endpoint_contents.getContent",
           "name": "Get a content item.",
           "path": {
             "pathParameters": [
@@ -32470,7 +32470,7 @@
             }
           ],
           "id": "postUpsertContent",
-          "originalEndpointId": "contents.postUpsertContent",
+          "originalEndpointId": "endpoint_contents.postUpsertContent",
           "name": "Upsert a content item.",
           "path": {
             "pathParameters": [
@@ -32859,7 +32859,7 @@
             }
           ],
           "id": "putContent",
-          "originalEndpointId": "contents.putContent",
+          "originalEndpointId": "endpoint_contents.putContent",
           "name": "Update a content item.",
           "path": {
             "pathParameters": [
@@ -33208,7 +33208,7 @@
             }
           ],
           "id": "deleteContent",
-          "originalEndpointId": "contents.deleteContent",
+          "originalEndpointId": "endpoint_contents.deleteContent",
           "name": "Delete a content item.",
           "path": {
             "pathParameters": [
@@ -33378,7 +33378,7 @@
             }
           ],
           "id": "patchContent",
-          "originalEndpointId": "contents.patchContent",
+          "originalEndpointId": "endpoint_contents.patchContent",
           "name": "Patchs a content item.",
           "path": {
             "pathParameters": [
@@ -33727,7 +33727,7 @@
             }
           ],
           "id": "getContentValidity",
-          "originalEndpointId": "contents.getContentValidity",
+          "originalEndpointId": "endpoint_contents.getContentValidity",
           "name": "Get a content item validity.",
           "path": {
             "pathParameters": [
@@ -33870,7 +33870,7 @@
             }
           ],
           "id": "getReferences",
-          "originalEndpointId": "contents.getReferences",
+          "originalEndpointId": "endpoint_contents.getReferences",
           "name": "Get all references of a content.",
           "path": {
             "pathParameters": [
@@ -34200,7 +34200,7 @@
             }
           ],
           "id": "getReferencing",
-          "originalEndpointId": "contents.getReferencing",
+          "originalEndpointId": "endpoint_contents.getReferencing",
           "name": "Get a referencing contents of a content item.",
           "path": {
             "pathParameters": [
@@ -34531,7 +34531,7 @@
             }
           ],
           "id": "getContentVersion",
-          "originalEndpointId": "contents.getContentVersion",
+          "originalEndpointId": "endpoint_contents.getContentVersion",
           "name": "Get a content by version.",
           "path": {
             "pathParameters": [
@@ -34688,7 +34688,7 @@
             }
           ],
           "id": "postContents",
-          "originalEndpointId": "contents.postContents",
+          "originalEndpointId": "endpoint_contents.postContents",
           "name": "Import content items.",
           "path": {
             "pathParameters": [
@@ -34891,7 +34891,7 @@
             }
           ],
           "id": "bulkUpdateContents",
-          "originalEndpointId": "contents.bulkUpdateContents",
+          "originalEndpointId": "endpoint_contents.bulkUpdateContents",
           "name": "Bulk update content items.",
           "path": {
             "pathParameters": [
@@ -35094,7 +35094,7 @@
             }
           ],
           "id": "putContentStatus",
-          "originalEndpointId": "contents.putContentStatus",
+          "originalEndpointId": "endpoint_contents.putContentStatus",
           "name": "Change status of a content item.",
           "path": {
             "pathParameters": [
@@ -35447,7 +35447,7 @@
             }
           ],
           "id": "deleteContentStatus",
-          "originalEndpointId": "contents.deleteContentStatus",
+          "originalEndpointId": "endpoint_contents.deleteContentStatus",
           "name": "Cancel status change of a content item.",
           "path": {
             "pathParameters": [
@@ -35776,7 +35776,7 @@
             }
           ],
           "id": "createDraft",
-          "originalEndpointId": "contents.createDraft",
+          "originalEndpointId": "endpoint_contents.createDraft",
           "name": "Create a new draft version.",
           "path": {
             "pathParameters": [
@@ -36105,7 +36105,7 @@
             }
           ],
           "id": "deleteVersion",
-          "originalEndpointId": "contents.deleteVersion",
+          "originalEndpointId": "endpoint_contents.deleteVersion",
           "name": "Delete the draft version.",
           "path": {
             "pathParameters": [
@@ -36443,7 +36443,7 @@
             }
           ],
           "id": "getWatchingUsers",
-          "originalEndpointId": "comments.getWatchingUsers",
+          "originalEndpointId": "endpoint_comments.getWatchingUsers",
           "name": "Get all watching users..",
           "path": {
             "pathParameters": [
@@ -36579,7 +36579,7 @@
             }
           ],
           "id": "getComments",
-          "originalEndpointId": "comments.getComments",
+          "originalEndpointId": "endpoint_comments.getComments",
           "name": "Get all comments.",
           "path": {
             "pathParameters": [
@@ -36766,7 +36766,7 @@
             }
           ],
           "id": "postComment",
-          "originalEndpointId": "comments.postComment",
+          "originalEndpointId": "endpoint_comments.postComment",
           "name": "Create a new comment.",
           "path": {
             "pathParameters": [
@@ -36941,7 +36941,7 @@
             }
           ],
           "id": "putComment",
-          "originalEndpointId": "comments.putComment",
+          "originalEndpointId": "endpoint_comments.putComment",
           "name": "Update a comment.",
           "path": {
             "pathParameters": [
@@ -37107,7 +37107,7 @@
             }
           ],
           "id": "deleteComment",
-          "originalEndpointId": "comments.deleteComment",
+          "originalEndpointId": "endpoint_comments.deleteComment",
           "name": "Delete a comment.",
           "path": {
             "pathParameters": [
@@ -37260,7 +37260,7 @@
             }
           ],
           "id": "getNotifications",
-          "originalEndpointId": "notifications.getNotifications",
+          "originalEndpointId": "endpoint_notifications.getNotifications",
           "name": "Get all notifications.",
           "path": {
             "pathParameters": [
@@ -37416,7 +37416,7 @@
             }
           ],
           "id": "deleteComment",
-          "originalEndpointId": "notifications.deleteComment",
+          "originalEndpointId": "endpoint_notifications.deleteComment",
           "name": "Delete a notification.",
           "path": {
             "pathParameters": [
@@ -37549,7 +37549,7 @@
             }
           ],
           "id": "getBackupContent",
-          "originalEndpointId": "backups.getBackupContent",
+          "originalEndpointId": "endpoint_backups.getBackupContent",
           "name": "Get the backup content.",
           "path": {
             "pathParameters": [
@@ -37666,7 +37666,7 @@
             }
           ],
           "id": "deleteBackup",
-          "originalEndpointId": "backups.deleteBackup",
+          "originalEndpointId": "endpoint_backups.deleteBackup",
           "name": "Delete a backup.",
           "path": {
             "pathParameters": [
@@ -37789,7 +37789,7 @@
             }
           ],
           "id": "getBackupContentV2",
-          "originalEndpointId": "backups.getBackupContentV2",
+          "originalEndpointId": "endpoint_backups.getBackupContentV2",
           "name": "Get the backup content.",
           "path": {
             "pathParameters": [
@@ -37915,7 +37915,7 @@
             }
           ],
           "id": "getBackups",
-          "originalEndpointId": "backups.getBackups",
+          "originalEndpointId": "endpoint_backups.getBackups",
           "name": "Get all backup jobs.",
           "path": {
             "pathParameters": [
@@ -38048,7 +38048,7 @@
             }
           ],
           "id": "postBackup",
-          "originalEndpointId": "backups.postBackup",
+          "originalEndpointId": "endpoint_backups.postBackup",
           "name": "Start a new backup.",
           "path": {
             "pathParameters": [
@@ -38152,7 +38152,7 @@
             }
           ],
           "id": "getRestoreJob",
-          "originalEndpointId": "backups.getRestoreJob",
+          "originalEndpointId": "endpoint_backups.getRestoreJob",
           "name": "Get current restore status.",
           "path": {
             "pathParameters": [],
@@ -38242,7 +38242,7 @@
             }
           ],
           "id": "postRestoreJob",
-          "originalEndpointId": "backups.postRestoreJob",
+          "originalEndpointId": "endpoint_backups.postRestoreJob",
           "name": "Restore a backup.",
           "path": {
             "pathParameters": [],
@@ -38347,7 +38347,7 @@
             }
           ],
           "id": "getAssetContentBySlug",
-          "originalEndpointId": "assets.getAssetContentBySlug",
+          "originalEndpointId": "endpoint_assets.getAssetContentBySlug",
           "name": "Get the asset content.",
           "path": {
             "pathParameters": [
@@ -38663,7 +38663,7 @@
             }
           ],
           "id": "getAssetContent",
-          "originalEndpointId": "assets.getAssetContent",
+          "originalEndpointId": "endpoint_assets.getAssetContent",
           "name": "Get the asset content.",
           "path": {
             "pathParameters": [
@@ -38941,7 +38941,7 @@
             }
           ],
           "id": "getAssetFolders",
-          "originalEndpointId": "assets.getAssetFolders",
+          "originalEndpointId": "endpoint_assets.getAssetFolders",
           "name": "Get asset folders.",
           "path": {
             "pathParameters": [
@@ -39115,7 +39115,7 @@
             }
           ],
           "id": "postAssetFolder",
-          "originalEndpointId": "assets.postAssetFolder",
+          "originalEndpointId": "endpoint_assets.postAssetFolder",
           "name": "Create an asset folder.",
           "path": {
             "pathParameters": [
@@ -39271,7 +39271,7 @@
             }
           ],
           "id": "putAssetFolder",
-          "originalEndpointId": "assets.putAssetFolder",
+          "originalEndpointId": "endpoint_assets.putAssetFolder",
           "name": "Update an asset folder.",
           "path": {
             "pathParameters": [
@@ -39446,7 +39446,7 @@
             }
           ],
           "id": "deleteAssetFolder",
-          "originalEndpointId": "assets.deleteAssetFolder",
+          "originalEndpointId": "endpoint_assets.deleteAssetFolder",
           "name": "Delete an asset folder.",
           "path": {
             "pathParameters": [
@@ -39569,7 +39569,7 @@
             }
           ],
           "id": "putAssetFolderParent",
-          "originalEndpointId": "assets.putAssetFolderParent",
+          "originalEndpointId": "endpoint_assets.putAssetFolderParent",
           "name": "Move an asset folder.",
           "path": {
             "pathParameters": [
@@ -39741,7 +39741,7 @@
             }
           ],
           "id": "getTags",
-          "originalEndpointId": "assets.getTags",
+          "originalEndpointId": "endpoint_assets.getTags",
           "name": "Get assets tags.",
           "path": {
             "pathParameters": [
@@ -39859,7 +39859,7 @@
             }
           ],
           "id": "putTag",
-          "originalEndpointId": "assets.putTag",
+          "originalEndpointId": "endpoint_assets.putTag",
           "name": "Rename an asset tag.",
           "path": {
             "pathParameters": [
@@ -40034,7 +40034,7 @@
             }
           ],
           "id": "getAssets",
-          "originalEndpointId": "assets.getAssets",
+          "originalEndpointId": "endpoint_assets.getAssets",
           "name": "Get assets.",
           "path": {
             "pathParameters": [
@@ -40116,7 +40116,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -40129,7 +40129,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -40306,7 +40306,7 @@
             }
           ],
           "id": "postAsset",
-          "originalEndpointId": "assets.postAsset",
+          "originalEndpointId": "endpoint_assets.postAsset",
           "name": "Upload a new asset.",
           "path": {
             "pathParameters": [
@@ -40570,7 +40570,7 @@
             }
           ],
           "id": "getAssetsPost",
-          "originalEndpointId": "assets.getAssetsPost",
+          "originalEndpointId": "endpoint_assets.getAssetsPost",
           "name": "Get assets.",
           "path": {
             "pathParameters": [
@@ -40782,7 +40782,7 @@
             }
           ],
           "id": "getAsset",
-          "originalEndpointId": "assets.getAsset",
+          "originalEndpointId": "endpoint_assets.getAsset",
           "name": "Get an asset by id.",
           "path": {
             "pathParameters": [
@@ -40969,7 +40969,7 @@
             }
           ],
           "id": "postUpsertAsset",
-          "originalEndpointId": "assets.postUpsertAsset",
+          "originalEndpointId": "endpoint_assets.postUpsertAsset",
           "name": "Upsert an asset.",
           "path": {
             "pathParameters": [
@@ -41238,7 +41238,7 @@
             }
           ],
           "id": "putAsset",
-          "originalEndpointId": "assets.putAsset",
+          "originalEndpointId": "endpoint_assets.putAsset",
           "name": "Update an asset.",
           "path": {
             "pathParameters": [
@@ -41457,7 +41457,7 @@
             }
           ],
           "id": "deleteAsset",
-          "originalEndpointId": "assets.deleteAsset",
+          "originalEndpointId": "endpoint_assets.deleteAsset",
           "name": "Delete an asset.",
           "path": {
             "pathParameters": [
@@ -41607,7 +41607,7 @@
             }
           ],
           "id": "bulkUpdateAssets",
-          "originalEndpointId": "assets.bulkUpdateAssets",
+          "originalEndpointId": "endpoint_assets.bulkUpdateAssets",
           "name": "Bulk update assets.",
           "path": {
             "pathParameters": [
@@ -41783,7 +41783,7 @@
             }
           ],
           "id": "putAssetContent",
-          "originalEndpointId": "assets.putAssetContent",
+          "originalEndpointId": "endpoint_assets.putAssetContent",
           "name": "Replace asset content.",
           "path": {
             "pathParameters": [
@@ -42025,7 +42025,7 @@
             }
           ],
           "id": "putAssetParent",
-          "originalEndpointId": "assets.putAssetParent",
+          "originalEndpointId": "endpoint_assets.putAssetParent",
           "name": "Moves the asset.",
           "path": {
             "pathParameters": [
@@ -42254,7 +42254,7 @@
             }
           ],
           "id": "getAssetScripts",
-          "originalEndpointId": "apps.getAssetScripts",
+          "originalEndpointId": "endpoint_apps.getAssetScripts",
           "name": "Get the app asset scripts.",
           "path": {
             "pathParameters": [
@@ -42381,7 +42381,7 @@
             }
           ],
           "id": "putAssetScripts",
-          "originalEndpointId": "apps.putAssetScripts",
+          "originalEndpointId": "endpoint_apps.putAssetScripts",
           "name": "Update the app asset scripts.",
           "path": {
             "pathParameters": [
@@ -42542,7 +42542,7 @@
             }
           ],
           "id": "getClients",
-          "originalEndpointId": "apps.getClients",
+          "originalEndpointId": "endpoint_apps.getClients",
           "name": "Get app clients.",
           "path": {
             "pathParameters": [
@@ -42678,7 +42678,7 @@
             }
           ],
           "id": "postClient",
-          "originalEndpointId": "apps.postClient",
+          "originalEndpointId": "endpoint_apps.postClient",
           "name": "Create a new app client.",
           "path": {
             "pathParameters": [
@@ -42851,7 +42851,7 @@
             }
           ],
           "id": "putClient",
-          "originalEndpointId": "apps.putClient",
+          "originalEndpointId": "endpoint_apps.putClient",
           "name": "Updates an app client.",
           "path": {
             "pathParameters": [
@@ -43039,7 +43039,7 @@
             }
           ],
           "id": "deleteClient",
-          "originalEndpointId": "apps.deleteClient",
+          "originalEndpointId": "endpoint_apps.deleteClient",
           "name": "Revoke an app client.",
           "path": {
             "pathParameters": [
@@ -43206,7 +43206,7 @@
             }
           ],
           "id": "getContributors",
-          "originalEndpointId": "apps.getContributors",
+          "originalEndpointId": "endpoint_apps.getContributors",
           "name": "Get app contributors.",
           "path": {
             "pathParameters": [
@@ -43343,7 +43343,7 @@
             }
           ],
           "id": "postContributor",
-          "originalEndpointId": "apps.postContributor",
+          "originalEndpointId": "endpoint_apps.postContributor",
           "name": "Assign contributor to app.",
           "path": {
             "pathParameters": [
@@ -43517,7 +43517,7 @@
             }
           ],
           "id": "deleteMyself",
-          "originalEndpointId": "apps.deleteMyself",
+          "originalEndpointId": "endpoint_apps.deleteMyself",
           "name": "Remove yourself.",
           "path": {
             "pathParameters": [
@@ -43667,7 +43667,7 @@
             }
           ],
           "id": "deleteContributor",
-          "originalEndpointId": "apps.deleteContributor",
+          "originalEndpointId": "endpoint_apps.deleteContributor",
           "name": "Remove contributor.",
           "path": {
             "pathParameters": [
@@ -43836,7 +43836,7 @@
             }
           ],
           "id": "getImage",
-          "originalEndpointId": "apps.getImage",
+          "originalEndpointId": "endpoint_apps.getImage",
           "name": "Get the app image.",
           "path": {
             "pathParameters": [
@@ -43934,7 +43934,7 @@
             }
           ],
           "id": "uploadImage",
-          "originalEndpointId": "apps.uploadImage",
+          "originalEndpointId": "endpoint_apps.uploadImage",
           "name": "Upload the app image.",
           "path": {
             "pathParameters": [
@@ -44118,7 +44118,7 @@
             }
           ],
           "id": "deleteImage",
-          "originalEndpointId": "apps.deleteImage",
+          "originalEndpointId": "endpoint_apps.deleteImage",
           "name": "Remove the app image.",
           "path": {
             "pathParameters": [
@@ -44272,7 +44272,7 @@
             }
           ],
           "id": "getLanguages",
-          "originalEndpointId": "apps.getLanguages",
+          "originalEndpointId": "endpoint_apps.getLanguages",
           "name": "Get app languages.",
           "path": {
             "pathParameters": [
@@ -44407,7 +44407,7 @@
             }
           ],
           "id": "postLanguage",
-          "originalEndpointId": "apps.postLanguage",
+          "originalEndpointId": "endpoint_apps.postLanguage",
           "name": "Attaches an app language.",
           "path": {
             "pathParameters": [
@@ -44579,7 +44579,7 @@
             }
           ],
           "id": "putLanguage",
-          "originalEndpointId": "apps.putLanguage",
+          "originalEndpointId": "endpoint_apps.putLanguage",
           "name": "Updates an app language.",
           "path": {
             "pathParameters": [
@@ -44766,7 +44766,7 @@
             }
           ],
           "id": "deleteLanguage",
-          "originalEndpointId": "apps.deleteLanguage",
+          "originalEndpointId": "endpoint_apps.deleteLanguage",
           "name": "Deletes an app language.",
           "path": {
             "pathParameters": [
@@ -44933,7 +44933,7 @@
             }
           ],
           "id": "getRoles",
-          "originalEndpointId": "apps.getRoles",
+          "originalEndpointId": "endpoint_apps.getRoles",
           "name": "Get app roles.",
           "path": {
             "pathParameters": [
@@ -45070,7 +45070,7 @@
             }
           ],
           "id": "postRole",
-          "originalEndpointId": "apps.postRole",
+          "originalEndpointId": "endpoint_apps.postRole",
           "name": "Add role to app.",
           "path": {
             "pathParameters": [
@@ -45244,7 +45244,7 @@
             }
           ],
           "id": "getPermissions",
-          "originalEndpointId": "apps.getPermissions",
+          "originalEndpointId": "endpoint_apps.getPermissions",
           "name": "Get app permissions.",
           "path": {
             "pathParameters": [
@@ -45360,7 +45360,7 @@
             }
           ],
           "id": "putRole",
-          "originalEndpointId": "apps.putRole",
+          "originalEndpointId": "endpoint_apps.putRole",
           "name": "Update an app role.",
           "path": {
             "pathParameters": [
@@ -45557,7 +45557,7 @@
             }
           ],
           "id": "deleteRole",
-          "originalEndpointId": "apps.deleteRole",
+          "originalEndpointId": "endpoint_apps.deleteRole",
           "name": "Remove role from app.",
           "path": {
             "pathParameters": [
@@ -45727,7 +45727,7 @@
             }
           ],
           "id": "getApps",
-          "originalEndpointId": "apps.getApps",
+          "originalEndpointId": "endpoint_apps.getApps",
           "name": "Get your apps.",
           "path": {
             "pathParameters": [],
@@ -45843,7 +45843,7 @@
             }
           ],
           "id": "postApp",
-          "originalEndpointId": "apps.postApp",
+          "originalEndpointId": "endpoint_apps.postApp",
           "name": "Create a new app.",
           "path": {
             "pathParameters": [],
@@ -46002,7 +46002,7 @@
             }
           ],
           "id": "getTeamApps",
-          "originalEndpointId": "apps.getTeamApps",
+          "originalEndpointId": "endpoint_apps.getTeamApps",
           "name": "Get team apps.",
           "path": {
             "pathParameters": [
@@ -46138,7 +46138,7 @@
             }
           ],
           "id": "getApp",
-          "originalEndpointId": "apps.getApp",
+          "originalEndpointId": "endpoint_apps.getApp",
           "name": "Get an app by name.",
           "path": {
             "pathParameters": [
@@ -46279,7 +46279,7 @@
             }
           ],
           "id": "putApp",
-          "originalEndpointId": "apps.putApp",
+          "originalEndpointId": "endpoint_apps.putApp",
           "name": "Update the app.",
           "path": {
             "pathParameters": [
@@ -46453,7 +46453,7 @@
             }
           ],
           "id": "deleteApp",
-          "originalEndpointId": "apps.deleteApp",
+          "originalEndpointId": "endpoint_apps.deleteApp",
           "name": "Delete the app.",
           "path": {
             "pathParameters": [
@@ -46557,7 +46557,7 @@
             }
           ],
           "id": "putAppTeam",
-          "originalEndpointId": "apps.putAppTeam",
+          "originalEndpointId": "endpoint_apps.putAppTeam",
           "name": "Transfer the app.",
           "path": {
             "pathParameters": [
@@ -46731,7 +46731,7 @@
             }
           ],
           "id": "getSettings",
-          "originalEndpointId": "apps.getSettings",
+          "originalEndpointId": "endpoint_apps.getSettings",
           "name": "Get the app settings.",
           "path": {
             "pathParameters": [
@@ -46874,7 +46874,7 @@
             }
           ],
           "id": "putSettings",
-          "originalEndpointId": "apps.putSettings",
+          "originalEndpointId": "endpoint_apps.putSettings",
           "name": "Update the app settings.",
           "path": {
             "pathParameters": [
@@ -47076,7 +47076,7 @@
             }
           ],
           "id": "getWorkflows",
-          "originalEndpointId": "apps.getWorkflows",
+          "originalEndpointId": "endpoint_apps.getWorkflows",
           "name": "Get app workflow.",
           "path": {
             "pathParameters": [
@@ -47217,7 +47217,7 @@
             }
           ],
           "id": "postWorkflow",
-          "originalEndpointId": "apps.postWorkflow",
+          "originalEndpointId": "endpoint_apps.postWorkflow",
           "name": "Create a workflow.",
           "path": {
             "pathParameters": [
@@ -47395,7 +47395,7 @@
             }
           ],
           "id": "putWorkflow",
-          "originalEndpointId": "apps.putWorkflow",
+          "originalEndpointId": "endpoint_apps.putWorkflow",
           "name": "Update a workflow.",
           "path": {
             "pathParameters": [
@@ -47594,7 +47594,7 @@
             }
           ],
           "id": "deleteWorkflow",
-          "originalEndpointId": "apps.deleteWorkflow",
+          "originalEndpointId": "endpoint_apps.deleteWorkflow",
           "name": "Delete a workflow.",
           "path": {
             "pathParameters": [

@@ -4,5 +4,4 @@
 
 from .create_organization_request import CreateOrganizationRequest
 from .organization import Organization
-
 __all__ = ["CreateOrganizationRequest", "Organization"]

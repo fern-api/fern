@@ -9,25 +9,14 @@
         "properties": []
       }
     },
-    "WebhooksFormSubmissionPayloadContentApplicationJsonSchemaPayloadSchemaItems0": {
-      "name": "WebhooksFormSubmissionPayloadContentApplicationJsonSchemaPayloadSchemaItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "unknown"
-        }
-      }
-    },
     "WebhooksFormSubmissionPayloadContentApplicationJsonSchemaPayloadSchemaItems": {
       "name": "WebhooksFormSubmissionPayloadContentApplicationJsonSchemaPayloadSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "WebhooksFormSubmissionPayloadContentApplicationJsonSchemaPayloadSchemaItems0",
             "type": {
-              "type": "id",
-              "value": "WebhooksFormSubmissionPayloadContentApplicationJsonSchemaPayloadSchemaItems0"
+              "type": "unknown"
             }
           }
         ]
@@ -1026,7 +1015,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -1074,7 +1063,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -1260,7 +1249,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -1400,7 +1389,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -1416,7 +1405,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -1432,7 +1421,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -1448,7 +1437,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -1647,7 +1636,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -1660,7 +1649,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -2964,7 +2953,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3012,7 +3001,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3198,7 +3187,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3338,7 +3327,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -3354,7 +3343,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -3370,7 +3359,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -3386,7 +3375,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -3585,7 +3574,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -3598,7 +3587,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -7028,45 +7017,21 @@
         ]
       }
     },
-    "SitePublishRequestBadRequestError0": {
-      "description": "Requested an invalid Domain. Please send a valid custom domain URI",
-      "name": "SitePublishRequestBadRequestError0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "unknown"
-        }
-      }
-    },
-    "SitePublishRequestBadRequestError1": {
-      "description": "You must pass at least one domain id to the publish endpoint",
-      "name": "SitePublishRequestBadRequestError1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "unknown"
-        }
-      }
-    },
     "Site-publishRequestBadRequestError": {
       "name": "Site-publishRequestBadRequestError",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitePublishRequestBadRequestError0",
             "description": "Requested an invalid Domain. Please send a valid custom domain URI",
             "type": {
-              "type": "id",
-              "value": "SitePublishRequestBadRequestError0"
+              "type": "unknown"
             }
           },
           {
-            "typeName": "SitePublishRequestBadRequestError1",
             "description": "You must pass at least one domain id to the publish endpoint",
             "type": {
-              "type": "id",
-              "value": "SitePublishRequestBadRequestError1"
+              "type": "unknown"
             }
           }
         ]
@@ -7363,7 +7328,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -7376,7 +7341,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -7389,7 +7354,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -7430,14 +7395,6 @@
         ]
       }
     },
-    "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems1": {
-      "name": "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems": {
       "name": "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems",
       "shape": {
@@ -7452,10 +7409,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -7546,14 +7510,6 @@
         ]
       }
     },
-    "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems1": {
-      "name": "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems": {
       "name": "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems",
       "shape": {
@@ -7568,10 +7524,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -9243,7 +9206,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "default": 100
                 }
               }
@@ -9257,7 +9220,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "default": 0
                 }
               }
@@ -9271,7 +9234,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -9803,7 +9766,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "default": 100
                 }
               }
@@ -9817,7 +9780,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "default": 0
                 }
               }
@@ -9831,7 +9794,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -11924,7 +11887,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -11937,7 +11900,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -11950,7 +11913,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -13124,7 +13087,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -13137,7 +13100,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -13150,7 +13113,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -15126,7 +15089,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -15139,7 +15102,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -15152,7 +15115,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -16783,7 +16746,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -16796,7 +16759,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -16809,7 +16772,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -17256,7 +17219,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -17269,7 +17232,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -17282,7 +17245,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -18567,7 +18530,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -18580,7 +18543,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -18593,7 +18556,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -19198,7 +19161,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -19211,7 +19174,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -19224,7 +19187,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -20004,7 +19967,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -20017,7 +19980,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "default": 10
                 }
               }
@@ -20031,7 +19994,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "default": 0
                 }
               }
@@ -20045,7 +20008,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -20067,14 +20030,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems1": {
-      "name": "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems": {
       "name": "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems",
       "shape": {
@@ -20089,10 +20044,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -20183,14 +20145,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems1": {
-      "name": "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems": {
       "name": "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems",
       "shape": {
@@ -20205,10 +20159,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -20675,14 +20636,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems1": {
-      "name": "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems": {
       "name": "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems",
       "shape": {
@@ -20697,10 +20650,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -20791,14 +20751,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems1": {
-      "name": "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems": {
       "name": "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems",
       "shape": {
@@ -20813,10 +20765,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -20986,14 +20945,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf0DetailsItems1": {
-      "name": "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf0DetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf0DetailsItems": {
       "name": "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf0DetailsItems",
       "shape": {
@@ -21008,10 +20959,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf0DetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf0DetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -21102,14 +21060,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf1DetailsItems1": {
-      "name": "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf1DetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf1DetailsItems": {
       "name": "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf1DetailsItems",
       "shape": {
@@ -21124,10 +21074,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf1DetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf1DetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -21642,14 +21599,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf0DetailsItems1": {
-      "name": "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf0DetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf0DetailsItems": {
       "name": "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf0DetailsItems",
       "shape": {
@@ -21664,10 +21613,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf0DetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf0DetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -21758,14 +21714,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf1DetailsItems1": {
-      "name": "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf1DetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf1DetailsItems": {
       "name": "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf1DetailsItems",
       "shape": {
@@ -21780,10 +21728,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf1DetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf1DetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -22250,14 +22205,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf0DetailsItems1": {
-      "name": "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf0DetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf0DetailsItems": {
       "name": "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf0DetailsItems",
       "shape": {
@@ -22272,10 +22219,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf0DetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf0DetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -22366,14 +22320,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf1DetailsItems1": {
-      "name": "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf1DetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf1DetailsItems": {
       "name": "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf1DetailsItems",
       "shape": {
@@ -22388,10 +22334,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf1DetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf1DetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -22836,7 +22789,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -22849,7 +22802,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "default": 10
                 }
               }
@@ -22863,7 +22816,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer",
+                  "type": "double",
                   "default": 0
                 }
               }
@@ -22877,7 +22830,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -22899,14 +22852,6 @@
         ]
       }
     },
-    "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems1": {
-      "name": "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems": {
       "name": "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems",
       "shape": {
@@ -22921,10 +22866,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -23015,14 +22967,6 @@
         ]
       }
     },
-    "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems1": {
-      "name": "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems": {
       "name": "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems",
       "shape": {
@@ -23037,10 +22981,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -23673,7 +23624,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -23709,7 +23660,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -23864,7 +23815,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -23877,7 +23828,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -24009,7 +23960,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -24162,7 +24113,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -24175,7 +24126,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -24188,7 +24139,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -24306,14 +24257,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsGetResponsesContentApplicationJsonSchemaDetailsItems1": {
-      "name": "SitesSiteIdProductsGetResponsesContentApplicationJsonSchemaDetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdProductsGetResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdProductsGetResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -24328,10 +24271,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdProductsGetResponsesContentApplicationJsonSchemaDetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdProductsGetResponsesContentApplicationJsonSchemaDetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -24854,7 +24804,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -24890,7 +24840,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -25045,7 +24995,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -25058,7 +25008,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -25190,7 +25140,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -25756,7 +25706,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -25792,7 +25742,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -25947,7 +25897,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -25960,7 +25910,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -26092,7 +26042,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -26305,14 +26255,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsPostResponsesContentApplicationJsonSchemaDetailsItems1": {
-      "name": "SitesSiteIdProductsPostResponsesContentApplicationJsonSchemaDetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdProductsPostResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdProductsPostResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -26327,10 +26269,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdProductsPostResponsesContentApplicationJsonSchemaDetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdProductsPostResponsesContentApplicationJsonSchemaDetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -26941,7 +26890,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -26977,7 +26926,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -27132,7 +27081,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -27145,7 +27094,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -27277,7 +27226,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -27490,14 +27439,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsProductIdGetResponsesContentApplicationJsonSchemaDetailsItems1": {
-      "name": "SitesSiteIdProductsProductIdGetResponsesContentApplicationJsonSchemaDetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdProductsProductIdGetResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdProductsProductIdGetResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -27512,10 +27453,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdProductsProductIdGetResponsesContentApplicationJsonSchemaDetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdProductsProductIdGetResponsesContentApplicationJsonSchemaDetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -28142,7 +28090,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -28178,7 +28126,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -28333,7 +28281,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -28346,7 +28294,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -28478,7 +28426,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -29104,14 +29052,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsProductIdPatchResponsesContentApplicationJsonSchemaDetailsItems1": {
-      "name": "SitesSiteIdProductsProductIdPatchResponsesContentApplicationJsonSchemaDetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdProductsProductIdPatchResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdProductsProductIdPatchResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -29126,10 +29066,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdProductsProductIdPatchResponsesContentApplicationJsonSchemaDetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdProductsProductIdPatchResponsesContentApplicationJsonSchemaDetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -29308,7 +29255,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -29344,7 +29291,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -29499,7 +29446,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -29512,7 +29459,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -29644,7 +29591,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -29762,7 +29709,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -29798,7 +29745,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -29953,7 +29900,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -29966,7 +29913,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -30098,7 +30045,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -30298,14 +30245,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsProductIdSkusPostResponsesContentApplicationJsonSchemaDetailsItems1": {
-      "name": "SitesSiteIdProductsProductIdSkusPostResponsesContentApplicationJsonSchemaDetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdProductsProductIdSkusPostResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdProductsProductIdSkusPostResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -30320,10 +30259,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdProductsProductIdSkusPostResponsesContentApplicationJsonSchemaDetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdProductsProductIdSkusPostResponsesContentApplicationJsonSchemaDetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -30502,7 +30448,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -30538,7 +30484,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -30693,7 +30639,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -30706,7 +30652,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -30838,7 +30784,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -30956,7 +30902,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -30992,7 +30938,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -31147,7 +31093,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -31160,7 +31106,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -31292,7 +31238,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -31470,14 +31416,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesContentApplicationJsonSchemaDetailsItems1": {
-      "name": "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesContentApplicationJsonSchemaDetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -31492,10 +31430,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesContentApplicationJsonSchemaDetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesContentApplicationJsonSchemaDetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -32470,7 +32415,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -32518,7 +32463,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -32704,7 +32649,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -32844,7 +32789,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -32860,7 +32805,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -32876,7 +32821,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -32892,7 +32837,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -33091,7 +33036,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -33104,7 +33049,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -33913,7 +33858,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -34069,7 +34014,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -34082,7 +34027,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -34095,7 +34040,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -34213,14 +34158,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersGetResponsesContentApplicationJsonSchemaDetailsItems1": {
-      "name": "SitesSiteIdOrdersGetResponsesContentApplicationJsonSchemaDetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdOrdersGetResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdOrdersGetResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -34235,10 +34172,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdOrdersGetResponsesContentApplicationJsonSchemaDetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdOrdersGetResponsesContentApplicationJsonSchemaDetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -35187,7 +35131,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -35235,7 +35179,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -35421,7 +35365,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -35561,7 +35505,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -35577,7 +35521,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -35593,7 +35537,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -35609,7 +35553,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -35808,7 +35752,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -35821,7 +35765,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -36630,7 +36574,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -36846,14 +36790,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersOrderIdGetResponsesContentApplicationJsonSchemaDetailsItems1": {
-      "name": "SitesSiteIdOrdersOrderIdGetResponsesContentApplicationJsonSchemaDetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdOrdersOrderIdGetResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdOrdersOrderIdGetResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -36868,10 +36804,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdOrdersOrderIdGetResponsesContentApplicationJsonSchemaDetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdOrdersOrderIdGetResponsesContentApplicationJsonSchemaDetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -37820,7 +37763,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -37868,7 +37811,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -38054,7 +37997,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -38194,7 +38137,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -38210,7 +38153,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -38226,7 +38169,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -38242,7 +38185,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -38441,7 +38384,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -38454,7 +38397,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -39263,7 +39206,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -39479,14 +39422,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersOrderIdPatchResponsesContentApplicationJsonSchemaDetailsItems1": {
-      "name": "SitesSiteIdOrdersOrderIdPatchResponsesContentApplicationJsonSchemaDetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdOrdersOrderIdPatchResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdOrdersOrderIdPatchResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -39501,10 +39436,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdOrdersOrderIdPatchResponsesContentApplicationJsonSchemaDetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdOrdersOrderIdPatchResponsesContentApplicationJsonSchemaDetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -40453,7 +40395,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -40501,7 +40443,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -40687,7 +40629,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -40827,7 +40769,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -40843,7 +40785,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -40859,7 +40801,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -40875,7 +40817,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -41074,7 +41016,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -41087,7 +41029,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -41896,7 +41838,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -42112,14 +42054,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersOrderIdFulfillPostResponsesContentApplicationJsonSchemaDetailsItems1": {
-      "name": "SitesSiteIdOrdersOrderIdFulfillPostResponsesContentApplicationJsonSchemaDetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdOrdersOrderIdFulfillPostResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdOrdersOrderIdFulfillPostResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -42134,10 +42068,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdOrdersOrderIdFulfillPostResponsesContentApplicationJsonSchemaDetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdOrdersOrderIdFulfillPostResponsesContentApplicationJsonSchemaDetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -43086,7 +43027,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -43134,7 +43075,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -43320,7 +43261,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -43460,7 +43401,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -43476,7 +43417,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -43492,7 +43433,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -43508,7 +43449,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -43707,7 +43648,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -43720,7 +43661,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -44529,7 +44470,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -44745,14 +44686,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesContentApplicationJsonSchemaDetailsItems1": {
-      "name": "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesContentApplicationJsonSchemaDetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -44767,10 +44700,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesContentApplicationJsonSchemaDetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesContentApplicationJsonSchemaDetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -45737,7 +45677,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -45785,7 +45725,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -45971,7 +45911,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -46111,7 +46051,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -46127,7 +46067,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -46143,7 +46083,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -46159,7 +46099,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -46358,7 +46298,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -46371,7 +46311,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -47180,7 +47120,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -47396,14 +47336,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersOrderIdRefundPostResponsesContentApplicationJsonSchemaDetailsItems1": {
-      "name": "SitesSiteIdOrdersOrderIdRefundPostResponsesContentApplicationJsonSchemaDetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdOrdersOrderIdRefundPostResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdOrdersOrderIdRefundPostResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -47418,10 +47350,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdOrdersOrderIdRefundPostResponsesContentApplicationJsonSchemaDetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdOrdersOrderIdRefundPostResponsesContentApplicationJsonSchemaDetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -47614,7 +47553,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -47708,14 +47647,6 @@
         ]
       }
     },
-    "CollectionsCollectionIdItemsItemIdInventoryGetResponsesContentApplicationJsonSchemaDetailsItems1": {
-      "name": "CollectionsCollectionIdItemsItemIdInventoryGetResponsesContentApplicationJsonSchemaDetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "CollectionsCollectionIdItemsItemIdInventoryGetResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "CollectionsCollectionIdItemsItemIdInventoryGetResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -47730,10 +47661,17 @@
             }
           },
           {
-            "typeName": "CollectionsCollectionIdItemsItemIdInventoryGetResponsesContentApplicationJsonSchemaDetailsItems1",
             "type": {
-              "type": "id",
-              "value": "CollectionsCollectionIdItemsItemIdInventoryGetResponsesContentApplicationJsonSchemaDetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -47941,7 +47879,7 @@
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "double"
                 }
               }
             }
@@ -48035,14 +47973,6 @@
         ]
       }
     },
-    "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesContentApplicationJsonSchemaDetailsItems1": {
-      "name": "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesContentApplicationJsonSchemaDetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -48057,10 +47987,17 @@
             }
           },
           {
-            "typeName": "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesContentApplicationJsonSchemaDetailsItems1",
             "type": {
-              "type": "id",
-              "value": "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesContentApplicationJsonSchemaDetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -48336,14 +48273,6 @@
         ]
       }
     },
-    "SitesSiteIdEcommerceSettingsGetResponsesContentApplicationJsonSchemaDetailsItems1": {
-      "name": "SitesSiteIdEcommerceSettingsGetResponsesContentApplicationJsonSchemaDetailsItems1",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SitesSiteIdEcommerceSettingsGetResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdEcommerceSettingsGetResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -48358,10 +48287,17 @@
             }
           },
           {
-            "typeName": "SitesSiteIdEcommerceSettingsGetResponsesContentApplicationJsonSchemaDetailsItems1",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdEcommerceSettingsGetResponsesContentApplicationJsonSchemaDetailsItems1"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -48527,7 +48463,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "forms.list",
+          "originalEndpointId": "endpoint_forms.list",
           "name": "List Forms",
           "path": {
             "pathParameters": [
@@ -48571,7 +48507,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -48584,7 +48520,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -48868,7 +48804,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "forms.get",
+          "originalEndpointId": "endpoint_forms.get",
           "name": "Get Form Schema",
           "path": {
             "pathParameters": [
@@ -49087,7 +49023,7 @@
             }
           ],
           "id": "list-submissions",
-          "originalEndpointId": "forms.list-submissions",
+          "originalEndpointId": "endpoint_forms.list-submissions",
           "name": "List Form Submissions",
           "path": {
             "pathParameters": [
@@ -49131,7 +49067,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -49144,7 +49080,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -49334,7 +49270,7 @@
             }
           ],
           "id": "get-submission",
-          "originalEndpointId": "forms.get-submission",
+          "originalEndpointId": "endpoint_forms.get-submission",
           "name": "Get Form Submission",
           "path": {
             "pathParameters": [
@@ -49511,7 +49447,7 @@
             }
           ],
           "id": "update-submission",
-          "originalEndpointId": "forms.update-submission",
+          "originalEndpointId": "endpoint_forms.update-submission",
           "name": "Modify Form Submission",
           "path": {
             "pathParameters": [
@@ -49780,7 +49716,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "sites.list",
+          "originalEndpointId": "endpoint_sites.list",
           "name": "List Sites",
           "path": {
             "pathParameters": [],
@@ -50137,7 +50073,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "sites.get",
+          "originalEndpointId": "endpoint_sites.get",
           "name": "Get Site",
           "path": {
             "pathParameters": [
@@ -50326,7 +50262,7 @@
             }
           ],
           "id": "get-custom-domain",
-          "originalEndpointId": "sites.get-custom-domain",
+          "originalEndpointId": "endpoint_sites.get-custom-domain",
           "name": "Get Custom Domains",
           "path": {
             "pathParameters": [
@@ -50493,7 +50429,7 @@
             }
           ],
           "id": "publish",
-          "originalEndpointId": "sites.publish",
+          "originalEndpointId": "endpoint_sites.publish",
           "name": "Publish site",
           "path": {
             "pathParameters": [
@@ -50736,8 +50672,8 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_sites.activityLogs",
-        "subpackage_sites.scripts"
+        "subpackage_sites/activityLogs",
+        "subpackage_sites/scripts"
       ]
     },
     "subpackage_orders": {
@@ -50756,7 +50692,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "orders.list",
+          "originalEndpointId": "endpoint_orders.list",
           "name": "List Orders",
           "path": {
             "pathParameters": [
@@ -50811,7 +50747,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -50824,7 +50760,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -51728,7 +51664,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "orders.get",
+          "originalEndpointId": "endpoint_orders.get",
           "name": "Get Order",
           "path": {
             "pathParameters": [
@@ -52341,7 +52277,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "orders.update",
+          "originalEndpointId": "endpoint_orders.update",
           "name": "Update Order",
           "path": {
             "pathParameters": [
@@ -53024,7 +52960,7 @@
             }
           ],
           "id": "update-fulfill",
-          "originalEndpointId": "orders.update-fulfill",
+          "originalEndpointId": "endpoint_orders.update-fulfill",
           "name": "Fulfill Order",
           "path": {
             "pathParameters": [
@@ -53669,7 +53605,7 @@
             }
           ],
           "id": "update-unfulfill",
-          "originalEndpointId": "orders.update-unfulfill",
+          "originalEndpointId": "endpoint_orders.update-unfulfill",
           "name": "Unfulfill Order",
           "path": {
             "pathParameters": [
@@ -54282,7 +54218,7 @@
             }
           ],
           "id": "refund",
-          "originalEndpointId": "orders.refund",
+          "originalEndpointId": "endpoint_orders.refund",
           "name": "Refund Order",
           "path": {
             "pathParameters": [
@@ -55224,7 +55160,7 @@
                     "itemType": {
                       "type": "primitive",
                       "value": {
-                        "type": "integer"
+                        "type": "double"
                       }
                     }
                   }
@@ -55677,7 +55613,7 @@
                     "itemType": {
                       "type": "primitive",
                       "value": {
-                        "type": "integer"
+                        "type": "double"
                       }
                     }
                   }
@@ -55841,7 +55777,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "inventory.list",
+          "originalEndpointId": "endpoint_inventory.list",
           "name": "List Inventory",
           "path": {
             "pathParameters": [
@@ -56040,7 +55976,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "inventory.update",
+          "originalEndpointId": "endpoint_inventory.update",
           "name": "Update Item Inventory",
           "path": {
             "pathParameters": [
@@ -56120,7 +56056,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
@@ -56133,7 +56069,7 @@
                       "itemType": {
                         "type": "primitive",
                         "value": {
-                          "type": "integer"
+                          "type": "double"
                         }
                       }
                     }
@@ -56318,7 +56254,7 @@
                     "itemType": {
                       "type": "primitive",
                       "value": {
-                        "type": "integer"
+                        "type": "double"
                       }
                     }
                   }
@@ -56360,7 +56296,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "users.list",
+          "originalEndpointId": "endpoint_users.list",
           "name": "List Users",
           "path": {
             "pathParameters": [
@@ -56404,7 +56340,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -56417,7 +56353,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -56714,7 +56650,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "users.get",
+          "originalEndpointId": "endpoint_users.get",
           "name": "Get User",
           "path": {
             "pathParameters": [
@@ -56922,7 +56858,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "users.delete",
+          "originalEndpointId": "endpoint_users.delete",
           "name": "Delete User",
           "path": {
             "pathParameters": [
@@ -57084,7 +57020,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "users.update",
+          "originalEndpointId": "endpoint_users.update",
           "name": "Update User",
           "path": {
             "pathParameters": [
@@ -57357,7 +57293,7 @@
             }
           ],
           "id": "invite",
-          "originalEndpointId": "users.invite",
+          "originalEndpointId": "endpoint_users.invite",
           "name": "Create and Invite a User",
           "path": {
             "pathParameters": [
@@ -58065,7 +58001,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "pages.list",
+          "originalEndpointId": "endpoint_pages.list",
           "name": "List Pages",
           "path": {
             "pathParameters": [
@@ -58122,7 +58058,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -58135,7 +58071,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -58362,7 +58298,7 @@
             }
           ],
           "id": "get-metadata",
-          "originalEndpointId": "pages.get-metadata",
+          "originalEndpointId": "endpoint_pages.get-metadata",
           "name": "Get Page Metadata",
           "path": {
             "pathParameters": [
@@ -58567,7 +58503,7 @@
             }
           ],
           "id": "update-page-settings",
-          "originalEndpointId": "Pages.update-page-settings",
+          "originalEndpointId": "endpoint_pages.update-page-settings",
           "name": "Update Page Metadata",
           "path": {
             "pathParameters": [
@@ -59026,7 +58962,7 @@
             }
           ],
           "id": "get-content",
-          "originalEndpointId": "pages.get-content",
+          "originalEndpointId": "endpoint_pages.get-content",
           "name": "Get Page Content",
           "path": {
             "pathParameters": [
@@ -59083,7 +59019,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -59096,7 +59032,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -59299,7 +59235,7 @@
             }
           ],
           "id": "update-static-content",
-          "originalEndpointId": "Pages.update-static-content",
+          "originalEndpointId": "endpoint_pages.update-static-content",
           "name": "Update Page Content",
           "path": {
             "pathParameters": [
@@ -59504,16 +59440,12 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "errors": [
-                  "foo"
-                ]
+                "errors": []
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "errors": [
-                    "foo"
-                  ]
+                  "errors": []
                 }
               }
             }
@@ -59648,7 +59580,7 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_pages.scripts"
+        "subpackage_pages/scripts"
       ]
     },
     "subpackage_token": {
@@ -59667,7 +59599,7 @@
             }
           ],
           "id": "authorized-by",
-          "originalEndpointId": "token.authorized-by",
+          "originalEndpointId": "endpoint_token.authorized-by",
           "name": "Get Authorization User Info",
           "path": {
             "pathParameters": [],
@@ -59764,7 +59696,7 @@
             }
           ],
           "id": "introspect",
-          "originalEndpointId": "token.introspect",
+          "originalEndpointId": "endpoint_token.introspect",
           "name": "Get Authorization Info",
           "path": {
             "pathParameters": [],
@@ -59874,8 +59806,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_sites.activityLogs": {
-      "subpackageId": "subpackage_sites.activityLogs",
+    "subpackage_sites/activityLogs": {
+      "subpackageId": "subpackage_sites/activityLogs",
       "name": "activityLogs",
       "endpoints": [
         {
@@ -59890,7 +59822,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "sites.activity-logs.list",
+          "originalEndpointId": "endpoint_sites/activityLogs.list",
           "name": "Get Site Activity Logs",
           "path": {
             "pathParameters": [
@@ -59934,7 +59866,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -59947,7 +59879,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -60112,7 +60044,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "collections.list",
+          "originalEndpointId": "endpoint_collections.list",
           "name": "List Collections",
           "path": {
             "pathParameters": [
@@ -60311,7 +60243,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "collections.create",
+          "originalEndpointId": "endpoint_collections.create",
           "name": "Create Collection",
           "path": {
             "pathParameters": [
@@ -60549,7 +60481,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "collections.get",
+          "originalEndpointId": "endpoint_collections.get",
           "name": "Get Collection Details",
           "path": {
             "pathParameters": [
@@ -60728,7 +60660,7 @@
             }
           ],
           "id": "delete-collection",
-          "originalEndpointId": "Collections.delete-collection",
+          "originalEndpointId": "endpoint_collections.delete-collection",
           "name": "Delete Collection",
           "path": {
             "pathParameters": [
@@ -60857,7 +60789,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "collections.delete",
+          "originalEndpointId": "endpoint_collections.delete",
           "name": "Delete Collection Field",
           "path": {
             "pathParameters": [
@@ -60999,12 +60931,12 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "subpackage_collections.fields",
-        "subpackage_collections.items"
+        "subpackage_collections/fields",
+        "subpackage_collections/items"
       ]
     },
-    "subpackage_collections.fields": {
-      "subpackageId": "subpackage_collections.fields",
+    "subpackage_collections/fields": {
+      "subpackageId": "subpackage_collections/fields",
       "name": "fields",
       "endpoints": [
         {
@@ -61019,7 +60951,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "collections.fields.create",
+          "originalEndpointId": "endpoint_collections/fields.create",
           "name": "Create Collection Field",
           "path": {
             "pathParameters": [
@@ -61252,7 +61184,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "collections.fields.update",
+          "originalEndpointId": "endpoint_collections/fields.update",
           "name": "Update Collection Field",
           "path": {
             "pathParameters": [
@@ -61492,8 +61424,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_collections.items": {
-      "subpackageId": "subpackage_collections.items",
+    "subpackage_collections/items": {
+      "subpackageId": "subpackage_collections/items",
       "name": "items",
       "endpoints": [
         {
@@ -61508,7 +61440,7 @@
             }
           ],
           "id": "list-items",
-          "originalEndpointId": "collections.items.list-items",
+          "originalEndpointId": "endpoint_collections/items.list-items",
           "name": "List Collection Items",
           "path": {
             "pathParameters": [
@@ -61565,7 +61497,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -61578,7 +61510,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -61823,7 +61755,7 @@
             }
           ],
           "id": "create-item",
-          "originalEndpointId": "collections.items.create-item",
+          "originalEndpointId": "endpoint_collections/items.create-item",
           "name": "Create Collection Item",
           "path": {
             "pathParameters": [
@@ -62129,7 +62061,7 @@
             }
           ],
           "id": "list-items-live",
-          "originalEndpointId": "collections.items.list-items-live",
+          "originalEndpointId": "endpoint_collections/items.list-items-live",
           "name": "List Live Collection Items",
           "path": {
             "pathParameters": [
@@ -62186,7 +62118,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -62199,7 +62131,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -62444,7 +62376,7 @@
             }
           ],
           "id": "create-item-live",
-          "originalEndpointId": "collections.items.create-item-live",
+          "originalEndpointId": "endpoint_collections/items.create-item-live",
           "name": "Create Live Collection Item",
           "path": {
             "pathParameters": [
@@ -62750,7 +62682,7 @@
             }
           ],
           "id": "create-item-for-multiple-locales",
-          "originalEndpointId": "collections.items.create-item-for-multiple-locales",
+          "originalEndpointId": "endpoint_collections/items.create-item-for-multiple-locales",
           "name": "Create Item for Multiple Locales",
           "path": {
             "pathParameters": [
@@ -63026,7 +62958,7 @@
             }
           ],
           "id": "get-item",
-          "originalEndpointId": "collections.items.get-item",
+          "originalEndpointId": "endpoint_collections/items.get-item",
           "name": "Get Collection Item",
           "path": {
             "pathParameters": [
@@ -63229,7 +63161,7 @@
             }
           ],
           "id": "delete-item",
-          "originalEndpointId": "collections.items.delete-item",
+          "originalEndpointId": "endpoint_collections/items.delete-item",
           "name": "Delete Collection Item",
           "path": {
             "pathParameters": [
@@ -63392,7 +63324,7 @@
             }
           ],
           "id": "update-item",
-          "originalEndpointId": "collections.items.update-item",
+          "originalEndpointId": "endpoint_collections/items.update-item",
           "name": "Update Collection Item",
           "path": {
             "pathParameters": [
@@ -63718,7 +63650,7 @@
             }
           ],
           "id": "get-item-live",
-          "originalEndpointId": "collections.items.get-item-live",
+          "originalEndpointId": "endpoint_collections/items.get-item-live",
           "name": "Get Live Collection Item",
           "path": {
             "pathParameters": [
@@ -63921,7 +63853,7 @@
             }
           ],
           "id": "delete-item-live",
-          "originalEndpointId": "collections.items.delete-item-live",
+          "originalEndpointId": "endpoint_collections/items.delete-item-live",
           "name": "Delete Collection Item (Live)",
           "path": {
             "pathParameters": [
@@ -64084,7 +64016,7 @@
             }
           ],
           "id": "update-item-live",
-          "originalEndpointId": "collections.items.update-item-live",
+          "originalEndpointId": "endpoint_collections/items.update-item-live",
           "name": "Update Live Collection Item",
           "path": {
             "pathParameters": [
@@ -64410,7 +64342,7 @@
             }
           ],
           "id": "publish-item",
-          "originalEndpointId": "collections.items.publish-item",
+          "originalEndpointId": "endpoint_collections/items.publish-item",
           "name": "Publish Collection Item",
           "path": {
             "pathParameters": [
@@ -64604,8 +64536,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_pages.scripts": {
-      "subpackageId": "subpackage_pages.scripts",
+    "subpackage_pages/scripts": {
+      "subpackageId": "subpackage_pages/scripts",
       "name": "scripts",
       "endpoints": [
         {
@@ -64620,7 +64552,7 @@
             }
           ],
           "id": "get-custom-code",
-          "originalEndpointId": "pages.scripts.get-custom-code",
+          "originalEndpointId": "endpoint_pages/scripts.get-custom-code",
           "name": "Get Custom Code",
           "path": {
             "pathParameters": [
@@ -64803,7 +64735,7 @@
             }
           ],
           "id": "upsert-custom-code",
-          "originalEndpointId": "pages.scripts.upsert-custom-code",
+          "originalEndpointId": "endpoint_pages/scripts.upsert-custom-code",
           "name": "Add/Update Custom Code",
           "path": {
             "pathParameters": [
@@ -65077,7 +65009,7 @@
             }
           ],
           "id": "delete-custom-code",
-          "originalEndpointId": "pages.scripts.delete-custom-code",
+          "originalEndpointId": "endpoint_pages/scripts.delete-custom-code",
           "name": "Delete Custom Code",
           "path": {
             "pathParameters": [
@@ -65200,8 +65132,8 @@
       "types": [],
       "subpackages": []
     },
-    "subpackage_sites.scripts": {
-      "subpackageId": "subpackage_sites.scripts",
+    "subpackage_sites/scripts": {
+      "subpackageId": "subpackage_sites/scripts",
       "name": "scripts",
       "endpoints": [
         {
@@ -65216,7 +65148,7 @@
             }
           ],
           "id": "get-custom-code",
-          "originalEndpointId": "sites.scripts.get-custom-code",
+          "originalEndpointId": "endpoint_sites/scripts.get-custom-code",
           "name": "Get Custom Code",
           "path": {
             "pathParameters": [
@@ -65399,7 +65331,7 @@
             }
           ],
           "id": "upsert-custom-code",
-          "originalEndpointId": "sites.scripts.upsert-custom-code",
+          "originalEndpointId": "endpoint_sites/scripts.upsert-custom-code",
           "name": "Add/Update Custom Code",
           "path": {
             "pathParameters": [
@@ -65667,7 +65599,7 @@
             }
           ],
           "id": "delete-custom-code",
-          "originalEndpointId": "sites.scripts.delete-custom-code",
+          "originalEndpointId": "endpoint_sites/scripts.delete-custom-code",
           "name": "Delete Custom Code",
           "path": {
             "pathParameters": [
@@ -65796,7 +65728,7 @@
             }
           ],
           "id": "list-custom-code-blocks",
-          "originalEndpointId": "sites.scripts.list-custom-code-blocks",
+          "originalEndpointId": "endpoint_sites/scripts.list-custom-code-blocks",
           "name": "List Custom Code Blocks",
           "path": {
             "pathParameters": [
@@ -65840,7 +65772,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -65853,7 +65785,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -66073,7 +66005,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "scripts.list",
+          "originalEndpointId": "endpoint_scripts.list",
           "name": "Get Registered Scripts",
           "path": {
             "pathParameters": [
@@ -66274,7 +66206,7 @@
             }
           ],
           "id": "register-hosted",
-          "originalEndpointId": "scripts.register-hosted",
+          "originalEndpointId": "endpoint_scripts.register-hosted",
           "name": "Register Script - Hosted",
           "path": {
             "pathParameters": [
@@ -66519,7 +66451,7 @@
             }
           ],
           "id": "register-inline",
-          "originalEndpointId": "scripts.register-inline",
+          "originalEndpointId": "endpoint_scripts.register-inline",
           "name": "Register Script - Inline",
           "path": {
             "pathParameters": [
@@ -66771,7 +66703,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "assets.list",
+          "originalEndpointId": "endpoint_assets.list",
           "name": "List Assets",
           "path": {
             "pathParameters": [
@@ -66964,7 +66896,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "assets.create",
+          "originalEndpointId": "endpoint_assets.create",
           "name": "Create Asset Metadata",
           "path": {
             "pathParameters": [
@@ -67212,7 +67144,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "assets.get",
+          "originalEndpointId": "endpoint_assets.get",
           "name": "Get Asset",
           "path": {
             "pathParameters": [
@@ -67403,7 +67335,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "assets.delete",
+          "originalEndpointId": "endpoint_assets.delete",
           "name": "Delete Asset",
           "path": {
             "pathParameters": [
@@ -67532,7 +67464,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "assets.update",
+          "originalEndpointId": "endpoint_assets.update",
           "name": "Update Asset",
           "path": {
             "pathParameters": [
@@ -67755,7 +67687,7 @@
             }
           ],
           "id": "list-folders",
-          "originalEndpointId": "assets.list-folders",
+          "originalEndpointId": "endpoint_assets.list-folders",
           "name": "List Asset Folders",
           "path": {
             "pathParameters": [
@@ -67938,7 +67870,7 @@
             }
           ],
           "id": "create-folder",
-          "originalEndpointId": "assets.create-folder",
+          "originalEndpointId": "endpoint_assets.create-folder",
           "name": "Create Asset Folder",
           "path": {
             "pathParameters": [
@@ -68149,7 +68081,7 @@
             }
           ],
           "id": "get-folder",
-          "originalEndpointId": "assets.get-folder",
+          "originalEndpointId": "endpoint_assets.get-folder",
           "name": "Get Asset Folder",
           "path": {
             "pathParameters": [
@@ -68326,7 +68258,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "webhooks.list",
+          "originalEndpointId": "endpoint_webhooks.list",
           "name": "List Webhooks",
           "path": {
             "pathParameters": [
@@ -68549,7 +68481,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "webhooks.create",
+          "originalEndpointId": "endpoint_webhooks.create",
           "name": "Create Webhook",
           "path": {
             "pathParameters": [
@@ -68839,7 +68771,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "webhooks.get",
+          "originalEndpointId": "endpoint_webhooks.get",
           "name": "Get Webhook",
           "path": {
             "pathParameters": [
@@ -69000,7 +68932,7 @@
             }
           ],
           "id": "delete",
-          "originalEndpointId": "webhooks.delete",
+          "originalEndpointId": "endpoint_webhooks.delete",
           "name": "Remove Webhook",
           "path": {
             "pathParameters": [
@@ -69139,7 +69071,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "access-groups.list",
+          "originalEndpointId": "endpoint_accessGroups.list",
           "name": "List Access Groups",
           "path": {
             "pathParameters": [
@@ -69183,7 +69115,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -69196,7 +69128,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -69391,7 +69323,7 @@
             }
           ],
           "id": "list",
-          "originalEndpointId": "products.list",
+          "originalEndpointId": "endpoint_products.list",
           "name": "List Products & SKUs",
           "path": {
             "pathParameters": [
@@ -69435,7 +69367,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -69448,7 +69380,7 @@
                 "itemType": {
                   "type": "primitive",
                   "value": {
-                    "type": "integer"
+                    "type": "double"
                   }
                 }
               }
@@ -69762,7 +69694,7 @@
             }
           ],
           "id": "create",
-          "originalEndpointId": "products.create",
+          "originalEndpointId": "endpoint_products.create",
           "name": "Create Product & SKU",
           "path": {
             "pathParameters": [
@@ -70135,7 +70067,7 @@
             }
           ],
           "id": "get",
-          "originalEndpointId": "products.get",
+          "originalEndpointId": "endpoint_products.get",
           "name": "Get Product and SKUs",
           "path": {
             "pathParameters": [
@@ -70478,7 +70410,7 @@
             }
           ],
           "id": "update",
-          "originalEndpointId": "products.update",
+          "originalEndpointId": "endpoint_products.update",
           "name": "Update Product",
           "path": {
             "pathParameters": [
@@ -70842,7 +70774,7 @@
             }
           ],
           "id": "create-sku",
-          "originalEndpointId": "products.create-sku",
+          "originalEndpointId": "endpoint_products.create-sku",
           "name": "Create SKU",
           "path": {
             "pathParameters": [
@@ -71157,7 +71089,7 @@
             }
           ],
           "id": "update-sku",
-          "originalEndpointId": "products.update-sku",
+          "originalEndpointId": "endpoint_products.update-sku",
           "name": "Update SKU",
           "path": {
             "pathParameters": [
@@ -71487,7 +71419,7 @@
             }
           ],
           "id": "get-settings",
-          "originalEndpointId": "ecommerce.get-settings",
+          "originalEndpointId": "endpoint_ecommerce.get-settings",
           "name": "Get Ecommerce Settings",
           "path": {
             "pathParameters": [
@@ -71683,6 +71615,10 @@
       "subpackage_products",
       "subpackage_ecommerce"
     ]
+  },
+  "auth": {
+    "type": "bearerAuth",
+    "tokenName": "token"
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

@@ -1,3 +1,4 @@
+import { titleCase } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Type } from "@fern-api/ir-sdk";
 
@@ -32,8 +33,15 @@ export function convertUndiscriminatedUnionTypeDeclaration({
                     type: file.parseTypeReference(member)
                 };
             }
+
+            const parsedType = file.parseTypeReference(member.type);
+            const typeWithDisplayName =
+                parsedType.type === "named"
+                    ? { ...parsedType, displayName: member["display-name"] ?? titleCase(parsedType.name.originalName) }
+                    : parsedType;
+
             return {
-                type: file.parseTypeReference(member.type),
+                type: typeWithDisplayName,
                 docs: member.docs
             };
         })

@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "4a3dbf4c",
+            "example_identifier": "1b92a637",
             "id": {
                 "method": "POST",
                 "path": "/movie",
@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": "4a3dbf4c",
+            "example_identifier": "1b92a637",
             "id": {
                 "method": "POST",
                 "path": "/movie",
@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "4a3dbf4c",
+            "example_identifier": "1b92a637",
             "id": {
                 "method": "POST",
                 "path": "/movie",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "fde963d7",
+            "example_identifier": "a276d34e",
             "id": {
                 "method": "POST",
                 "path": "/movie",

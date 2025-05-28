@@ -119,7 +119,7 @@
           }
         ],
         "id": "listUsers",
-        "originalEndpointId": "listUsers",
+        "originalEndpointId": "endpoint_.listUsers",
         "name": "List Users",
         "path": {
           "pathParameters": [],
@@ -215,7 +215,7 @@
           }
         ],
         "id": "getUserInformation",
-        "originalEndpointId": "getUserInformation",
+        "originalEndpointId": "endpoint_.getUserInformation",
         "name": "Get user information",
         "path": {
           "pathParameters": [
@@ -331,7 +331,7 @@
           }
         ],
         "id": "getAuthenticationToken",
-        "originalEndpointId": "getAuthenticationToken",
+        "originalEndpointId": "endpoint_.getAuthenticationToken",
         "name": "Get authentication token",
         "path": {
           "pathParameters": [],

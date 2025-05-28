@@ -1,7 +1,7 @@
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { TypeReference } from "@fern-api/ir-sdk";
-import { AbstractConverterContext } from "@fern-api/v2-importer-commons";
+import { AbstractConverterContext, DisplayNameOverrideSource } from "@fern-api/v2-importer-commons";
 
 /**
  * Context class for converting OpenAPI 3.1 specifications
@@ -25,10 +25,14 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
 
     public convertReferenceToTypeReference({
         reference,
-        breadcrumbs
+        breadcrumbs,
+        displayNameOverride,
+        displayNameOverrideSource
     }: {
         reference: OpenAPIV3_1.ReferenceObject;
         breadcrumbs?: string[];
+        displayNameOverride?: string | undefined;
+        displayNameOverrideSource?: DisplayNameOverrideSource;
     }): { ok: true; reference: TypeReference } | { ok: false } {
         const typeId = this.getTypeIdFromSchemaReference(reference);
         if (typeId == null) {
@@ -38,6 +42,18 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
         if (!resolvedReference.resolved) {
             return { ok: false };
         }
+
+        let displayName: string | undefined;
+
+        if (displayNameOverrideSource === "reference_identifier") {
+            displayName = displayNameOverride ?? resolvedReference.value.title;
+        } else if (
+            displayNameOverrideSource === "discriminator_key" ||
+            displayNameOverrideSource === "schema_identifier"
+        ) {
+            displayName = resolvedReference.value.title ?? displayNameOverride;
+        }
+
         return {
             ok: true,
             reference: TypeReference.named({
@@ -50,7 +66,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
                 typeId,
                 default: undefined,
                 inline: false,
-                displayName: resolvedReference.value.title ?? undefined
+                displayName
             })
         };
     }

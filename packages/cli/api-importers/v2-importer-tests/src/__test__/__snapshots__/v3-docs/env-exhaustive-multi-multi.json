@@ -664,7 +664,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "alpha.listPets",
+          "id": "endpoint_alpha.listPets",
           "method": "GET",
           "name": {
             "originalName": "listPets",
@@ -686,6 +686,9 @@
             }
           },
           "baseUrl": "Debug",
+          "v2BaseUrls": [
+            "Debug"
+          ],
           "path": {
             "head": "/pets",
             "parts": []
@@ -844,7 +847,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "beta.listPets",
+          "id": "endpoint_beta.listPets",
           "method": "GET",
           "name": {
             "originalName": "listPets",
@@ -866,6 +869,9 @@
             }
           },
           "baseUrl": "Debug-1",
+          "v2BaseUrls": [
+            "Debug-1"
+          ],
           "path": {
             "head": "/pets",
             "parts": []

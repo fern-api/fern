@@ -58,7 +58,8 @@
             "type": {
               "type": "id",
               "value": "EthCallParamBlock1"
-            }
+            },
+            "displayName": "Block tag"
           },
           {
             "type": {
@@ -402,7 +403,8 @@
             "type": {
               "type": "id",
               "value": "EthEstimateGasParamBlock1"
-            }
+            },
+            "displayName": "Block tag"
           }
         ]
       }
@@ -737,7 +739,8 @@
             "type": {
               "type": "id",
               "value": "EthGetBalanceParamBlock1"
-            }
+            },
+            "displayName": "Block tag"
           },
           {
             "type": {
@@ -1792,28 +1795,32 @@
             "type": {
               "type": "id",
               "value": "EthGetBlockByHashResultTransactionsOneOf1Items0"
-            }
+            },
+            "displayName": "Signed 4844 Transaction"
           },
           {
             "typeName": "EthGetBlockByHashResultTransactionsOneOf1Items1",
             "type": {
               "type": "id",
               "value": "EthGetBlockByHashResultTransactionsOneOf1Items1"
-            }
+            },
+            "displayName": "Signed 1559 Transaction"
           },
           {
             "typeName": "EthGetBlockByHashResultTransactionsOneOf1Items2",
             "type": {
               "type": "id",
               "value": "EthGetBlockByHashResultTransactionsOneOf1Items2"
-            }
+            },
+            "displayName": "Signed 2930 Transaction"
           },
           {
             "typeName": "EthGetBlockByHashResultTransactionsOneOf1Items3",
             "type": {
               "type": "id",
               "value": "EthGetBlockByHashResultTransactionsOneOf1Items3"
-            }
+            },
+            "displayName": "Signed Legacy Transaction"
           }
         ]
       }
@@ -1854,7 +1861,8 @@
             "type": {
               "type": "id",
               "value": "EthGetBlockByHashResultTransactions1"
-            }
+            },
+            "displayName": "Full transactions"
           }
         ]
       }
@@ -3241,28 +3249,32 @@
             "type": {
               "type": "id",
               "value": "EthGetBlockByNumberResultTransactionsOneOf1Items0"
-            }
+            },
+            "displayName": "Signed 4844 Transaction"
           },
           {
             "typeName": "EthGetBlockByNumberResultTransactionsOneOf1Items1",
             "type": {
               "type": "id",
               "value": "EthGetBlockByNumberResultTransactionsOneOf1Items1"
-            }
+            },
+            "displayName": "Signed 1559 Transaction"
           },
           {
             "typeName": "EthGetBlockByNumberResultTransactionsOneOf1Items2",
             "type": {
               "type": "id",
               "value": "EthGetBlockByNumberResultTransactionsOneOf1Items2"
-            }
+            },
+            "displayName": "Signed 2930 Transaction"
           },
           {
             "typeName": "EthGetBlockByNumberResultTransactionsOneOf1Items3",
             "type": {
               "type": "id",
               "value": "EthGetBlockByNumberResultTransactionsOneOf1Items3"
-            }
+            },
+            "displayName": "Signed Legacy Transaction"
           }
         ]
       }
@@ -3303,7 +3315,8 @@
             "type": {
               "type": "id",
               "value": "EthGetBlockByNumberResultTransactions1"
-            }
+            },
+            "displayName": "Full transactions"
           }
         ]
       }
@@ -3682,7 +3695,8 @@
             "type": {
               "type": "id",
               "value": "EthGetBlockByNumberParamBlockNumberOrTag1"
-            }
+            },
+            "displayName": "Block tag"
           }
         ]
       }
@@ -3786,7 +3800,8 @@
             "type": {
               "type": "id",
               "value": "EthGetBlockTransactionCountByNumberParamBlockNumberOrTag1"
-            }
+            },
+            "displayName": "Block tag"
           }
         ]
       }
@@ -3852,7 +3867,8 @@
             "type": {
               "type": "id",
               "value": "EthGetCodeParamBlock1"
-            }
+            },
+            "displayName": "Block tag"
           },
           {
             "type": {
@@ -4053,7 +4069,8 @@
             "type": {
               "type": "id",
               "value": "EthGetLogsResult1"
-            }
+            },
+            "displayName": "new logs"
           }
         ]
       }
@@ -4202,7 +4219,8 @@
             "type": {
               "type": "id",
               "value": "EthGetLogsResult1"
-            }
+            },
+            "displayName": "new logs"
           }
         ]
       }
@@ -4376,7 +4394,8 @@
             "type": {
               "type": "id",
               "value": "EthGetProofParamBlock1"
-            }
+            },
+            "displayName": "Block tag"
           },
           {
             "type": {
@@ -4546,7 +4565,8 @@
             "type": {
               "type": "id",
               "value": "EthGetStorageAtParamBlock1"
-            }
+            },
+            "displayName": "Block tag"
           },
           {
             "type": {
@@ -5614,28 +5634,32 @@
             "type": {
               "type": "id",
               "value": "EthGetTransactionByBlockHashAndIndexResult0"
-            }
+            },
+            "displayName": "Signed 4844 Transaction"
           },
           {
             "typeName": "EthGetTransactionByBlockHashAndIndexResult1",
             "type": {
               "type": "id",
               "value": "EthGetTransactionByBlockHashAndIndexResult1"
-            }
+            },
+            "displayName": "Signed 1559 Transaction"
           },
           {
             "typeName": "EthGetTransactionByBlockHashAndIndexResult2",
             "type": {
               "type": "id",
               "value": "EthGetTransactionByBlockHashAndIndexResult2"
-            }
+            },
+            "displayName": "Signed 2930 Transaction"
           },
           {
             "typeName": "EthGetTransactionByBlockHashAndIndexResult3",
             "type": {
               "type": "id",
               "value": "EthGetTransactionByBlockHashAndIndexResult3"
-            }
+            },
+            "displayName": "Signed Legacy Transaction"
           }
         ]
       }
@@ -6694,28 +6718,32 @@
             "type": {
               "type": "id",
               "value": "EthGetTransactionByBlockNumberAndIndexResult0"
-            }
+            },
+            "displayName": "Signed 4844 Transaction"
           },
           {
             "typeName": "EthGetTransactionByBlockNumberAndIndexResult1",
             "type": {
               "type": "id",
               "value": "EthGetTransactionByBlockNumberAndIndexResult1"
-            }
+            },
+            "displayName": "Signed 1559 Transaction"
           },
           {
             "typeName": "EthGetTransactionByBlockNumberAndIndexResult2",
             "type": {
               "type": "id",
               "value": "EthGetTransactionByBlockNumberAndIndexResult2"
-            }
+            },
+            "displayName": "Signed 2930 Transaction"
           },
           {
             "typeName": "EthGetTransactionByBlockNumberAndIndexResult3",
             "type": {
               "type": "id",
               "value": "EthGetTransactionByBlockNumberAndIndexResult3"
-            }
+            },
+            "displayName": "Signed Legacy Transaction"
           }
         ]
       }
@@ -6765,7 +6793,8 @@
             "type": {
               "type": "id",
               "value": "EthGetTransactionByBlockNumberAndIndexParamBlock1"
-            }
+            },
+            "displayName": "Block tag"
           }
         ]
       }
@@ -7811,28 +7840,32 @@
             "type": {
               "type": "id",
               "value": "EthGetTransactionByHashResult0"
-            }
+            },
+            "displayName": "Signed 4844 Transaction"
           },
           {
             "typeName": "EthGetTransactionByHashResult1",
             "type": {
               "type": "id",
               "value": "EthGetTransactionByHashResult1"
-            }
+            },
+            "displayName": "Signed 1559 Transaction"
           },
           {
             "typeName": "EthGetTransactionByHashResult2",
             "type": {
               "type": "id",
               "value": "EthGetTransactionByHashResult2"
-            }
+            },
+            "displayName": "Signed 2930 Transaction"
           },
           {
             "typeName": "EthGetTransactionByHashResult3",
             "type": {
               "type": "id",
               "value": "EthGetTransactionByHashResult3"
-            }
+            },
+            "displayName": "Signed Legacy Transaction"
           }
         ]
       }
@@ -7908,7 +7941,8 @@
             "type": {
               "type": "id",
               "value": "EthGetTransactionCountParamBlock1"
-            }
+            },
+            "displayName": "Block tag"
           },
           {
             "type": {
@@ -8399,7 +8433,8 @@
             "type": {
               "type": "id",
               "value": "EthSyncingResult10"
-            }
+            },
+            "displayName": "Syncing progress"
           },
           {
             "description": "Should always return false if not syncing.",
@@ -8432,7 +8467,8 @@
             "type": {
               "type": "id",
               "value": "EthSyncingResult1"
-            }
+            },
+            "displayName": "Syncing status"
           }
         ]
       }
@@ -8455,7 +8491,8 @@
             "type": {
               "type": "id",
               "value": "EthSyncingResult1"
-            }
+            },
+            "displayName": "Syncing status"
           }
         ]
       }
@@ -8643,8 +8680,11 @@
                   "description": "The block number, tag, or hash at which to execute the call. Defaults to `'latest'` if not provided.",
                   "key": "Block",
                   "valueType": {
-                    "type": "id",
-                    "value": "eth_call_Param_Block"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "eth_call_Param_Block"
+                    }
                   }
                 }
               ]
@@ -8841,8 +8881,11 @@
                   "description": "The block number or tag at which to estimate gas usage. Defaults to `'latest'` if not provided.",
                   "key": "Block",
                   "valueType": {
-                    "type": "id",
-                    "value": "eth_estimateGas_Param_Block"
+                    "type": "optional",
+                    "itemType": {
+                      "type": "id",
+                      "value": "eth_estimateGas_Param_Block"
+                    }
                   }
                 }
               ]

@@ -1190,7 +1190,7 @@
     }
   },
   "services": {
-    "service_OrganizationUsers": {
+    "service_organizationUsers": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -1244,7 +1244,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "OrganizationUsers.listOrganizationUsers",
+          "id": "endpoint_organizationUsers.listOrganizationUsers",
           "displayName": "List organization users",
           "method": "GET",
           "name": {
@@ -4282,7 +4282,7 @@
         }
       ]
     },
-    "service_Users": {
+    "service_users": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -4336,7 +4336,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Users.listUsers",
+          "id": "endpoint_users.listUsers",
           "displayName": "List users",
           "method": "GET",
           "name": {
@@ -7265,7 +7265,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "getAUser",
+          "id": "endpoint_.getAUser",
           "displayName": "Get a user",
           "method": "GET",
           "name": {
@@ -8838,7 +8838,7 @@
           }
         }
       },
-      "service": "service_OrganizationUsers",
+      "service": "service_organizationUsers",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -8907,7 +8907,7 @@
           }
         }
       },
-      "service": "service_Users",
+      "service": "service_users",
       "types": [],
       "errors": [],
       "subpackages": [],

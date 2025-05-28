@@ -15,6 +15,7 @@
 ```typescript
 await client.extendedInlineRequestBody({
     child: "child",
+    parent: "parent",
 });
 ```
 

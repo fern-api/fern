@@ -1,1 +1,1 @@
-export const HttpMethods = ["get", "post", "put", "delete", "patch"] as const;
+export const HttpMethods = ["get", "post", "put", "delete", "patch", "head"] as const;

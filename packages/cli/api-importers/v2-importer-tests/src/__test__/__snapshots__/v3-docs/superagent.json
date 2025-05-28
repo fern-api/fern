@@ -1140,7 +1140,6 @@
                       },
                       "typeId": "ValidationError",
                       "inline": false,
-                      "displayName": "ValidationError",
                       "type": "named"
                     },
                     "type": "list"
@@ -2471,7 +2470,7 @@
     }
   },
   "services": {
-    "service_Agent": {
+    "service_agent": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -2525,7 +2524,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Agent.List_all_agents_api_v1_agents_get",
+          "id": "endpoint_agent.List_all_agents_api_v1_agents_get",
           "displayName": "List All Agents",
           "method": "GET",
           "name": {
@@ -2639,7 +2638,7 @@
           }
         },
         {
-          "id": "Agent.Create_agent_api_v1_agents_post",
+          "id": "endpoint_agent.Create_agent_api_v1_agents_post",
           "displayName": "Create Agent",
           "method": "POST",
           "name": {
@@ -2696,7 +2695,6 @@
               },
               "typeId": "Agent",
               "inline": false,
-              "displayName": "Agent",
               "type": "named"
             },
             "v2Examples": {
@@ -3352,7 +3350,7 @@
           }
         },
         {
-          "id": "Agent.Get_agent_api_v1_agents__agentId__get",
+          "id": "endpoint_agent.Get_agent_api_v1_agents__agentId__get",
           "displayName": "Get Agent",
           "method": "GET",
           "name": {
@@ -3620,7 +3618,7 @@
           }
         },
         {
-          "id": "Agent.Delete_agent_api_v1_agents__agentId__delete",
+          "id": "endpoint_agent.Delete_agent_api_v1_agents__agentId__delete",
           "displayName": "Delete Agent",
           "method": "DELETE",
           "name": {
@@ -3888,7 +3886,7 @@
           }
         },
         {
-          "id": "Agent.Patch_agent_api_v1_agents__agentId__patch",
+          "id": "endpoint_agent.Patch_agent_api_v1_agents__agentId__patch",
           "displayName": "Patch Agent",
           "method": "PATCH",
           "name": {
@@ -4195,7 +4193,7 @@
           }
         },
         {
-          "id": "Agent.Prompt_agent_api_v1_agents__agentId__predict_post",
+          "id": "endpoint_agent.Prompt_agent_api_v1_agents__agentId__predict_post",
           "displayName": "Prompt Agent",
           "method": "POST",
           "name": {
@@ -4296,7 +4294,6 @@
               },
               "typeId": "PredictAgent",
               "inline": false,
-              "displayName": "PredictAgent",
               "type": "named"
             },
             "v2Examples": {
@@ -4702,7 +4699,7 @@
         }
       ]
     },
-    "service_Auth": {
+    "service_auth": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -4756,7 +4753,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Auth.sign_in_api_v1_auth_sign_in_post",
+          "id": "endpoint_auth.sign_in_api_v1_auth_sign_in_post",
           "displayName": "Sign In",
           "method": "POST",
           "name": {
@@ -4813,7 +4810,6 @@
               },
               "typeId": "SignIn",
               "inline": false,
-              "displayName": "SignIn",
               "type": "named"
             },
             "v2Examples": {
@@ -5110,7 +5106,7 @@
           }
         },
         {
-          "id": "Auth.sign_up_api_v1_auth_sign_up_post",
+          "id": "endpoint_auth.sign_up_api_v1_auth_sign_up_post",
           "displayName": "Sign Up",
           "method": "POST",
           "name": {
@@ -5167,7 +5163,6 @@
               },
               "typeId": "SignUp",
               "inline": false,
-              "displayName": "SignUp",
               "type": "named"
             },
             "v2Examples": {
@@ -5619,7 +5614,7 @@
         }
       ]
     },
-    "service_User": {
+    "service_user": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -5673,7 +5668,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "User.read_user_me_api_v1_users_me_get",
+          "id": "endpoint_user.read_user_me_api_v1_users_me_get",
           "displayName": "Read User Me",
           "method": "GET",
           "name": {
@@ -5786,7 +5781,7 @@
           }
         },
         {
-          "id": "User.read_user_api_v1_users__userId__get",
+          "id": "endpoint_user.read_user_api_v1_users__userId__get",
           "displayName": "Read User",
           "method": "GET",
           "name": {
@@ -6054,7 +6049,7 @@
         }
       ]
     },
-    "service_Api token": {
+    "service_apiToken": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -6108,7 +6103,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Api token.List_API_tokens_api_v1_api_tokens_get",
+          "id": "endpoint_apiToken.List_API_tokens_api_v1_api_tokens_get",
           "displayName": "List Api Tokens",
           "method": "GET",
           "name": {
@@ -6222,7 +6217,7 @@
           }
         },
         {
-          "id": "Api token.Create_API_token_api_v1_api_tokens_post",
+          "id": "endpoint_apiToken.Create_API_token_api_v1_api_tokens_post",
           "displayName": "Create Api Token",
           "method": "POST",
           "name": {
@@ -6279,7 +6274,6 @@
               },
               "typeId": "ApiToken",
               "inline": false,
-              "displayName": "ApiToken",
               "type": "named"
             },
             "v2Examples": {
@@ -6512,7 +6506,7 @@
           }
         },
         {
-          "id": "Api token.Get_API_token_api_v1_api_tokens__tokenId__get",
+          "id": "endpoint_apiToken.Get_API_token_api_v1_api_tokens__tokenId__get",
           "displayName": "Get Api Token",
           "method": "GET",
           "name": {
@@ -6780,7 +6774,7 @@
           }
         },
         {
-          "id": "Api token.Delete_API_token_api_v1_api_tokens__tokenId__delete",
+          "id": "endpoint_apiToken.Delete_API_token_api_v1_api_tokens__tokenId__delete",
           "displayName": "Delete Api Token",
           "method": "DELETE",
           "name": {
@@ -7049,7 +7043,7 @@
         }
       ]
     },
-    "service_Documents": {
+    "service_documents": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -7103,7 +7097,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Documents.List_documents_api_v1_documents_get",
+          "id": "endpoint_documents.List_documents_api_v1_documents_get",
           "displayName": "List Documents",
           "method": "GET",
           "name": {
@@ -7217,7 +7211,7 @@
           }
         },
         {
-          "id": "Documents.Create_document_api_v1_documents_post",
+          "id": "endpoint_documents.Create_document_api_v1_documents_post",
           "displayName": "Create Document",
           "method": "POST",
           "name": {
@@ -7274,7 +7268,6 @@
               },
               "typeId": "Document",
               "inline": false,
-              "displayName": "Document",
               "type": "named"
             },
             "v2Examples": {
@@ -7945,7 +7938,7 @@
           }
         },
         {
-          "id": "Documents.Get_document_api_v1_documents__documentId__get",
+          "id": "endpoint_documents.Get_document_api_v1_documents__documentId__get",
           "displayName": "Get Document",
           "method": "GET",
           "name": {
@@ -8213,7 +8206,7 @@
           }
         },
         {
-          "id": "Documents.Delete_document_api_v1_documents__documentId__delete",
+          "id": "endpoint_documents.Delete_document_api_v1_documents__documentId__delete",
           "displayName": "Delete Document",
           "method": "DELETE",
           "name": {
@@ -8482,7 +8475,7 @@
         }
       ]
     },
-    "service_Prompts": {
+    "service_prompts": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -8536,7 +8529,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Prompts.List_prompts_api_v1_prompts_get",
+          "id": "endpoint_prompts.List_prompts_api_v1_prompts_get",
           "displayName": "List Prompts",
           "method": "GET",
           "name": {
@@ -8650,7 +8643,7 @@
           }
         },
         {
-          "id": "Prompts.Create_a_prompt_api_v1_prompts_post",
+          "id": "endpoint_prompts.Create_a_prompt_api_v1_prompts_post",
           "displayName": "Create A Prompt",
           "method": "POST",
           "name": {
@@ -8707,7 +8700,6 @@
               },
               "typeId": "Prompt",
               "inline": false,
-              "displayName": "Prompt",
               "type": "named"
             },
             "v2Examples": {
@@ -9112,7 +9104,7 @@
           }
         },
         {
-          "id": "Prompts.Get_prompt_api_v1_prompts__promptId__get",
+          "id": "endpoint_prompts.Get_prompt_api_v1_prompts__promptId__get",
           "displayName": "Get Prompt",
           "method": "GET",
           "name": {
@@ -9380,7 +9372,7 @@
           }
         },
         {
-          "id": "Prompts.Delete_prompt_api_v1_prompts__promptId__delete",
+          "id": "endpoint_prompts.Delete_prompt_api_v1_prompts__promptId__delete",
           "displayName": "Delete Prompt",
           "method": "DELETE",
           "name": {
@@ -9648,7 +9640,7 @@
           }
         },
         {
-          "id": "Prompts.Patch_prompt_api_v1_prompts__promptId__patch",
+          "id": "endpoint_prompts.Patch_prompt_api_v1_prompts__promptId__patch",
           "displayName": "Patch Prompt",
           "method": "PATCH",
           "name": {
@@ -9956,7 +9948,7 @@
         }
       ]
     },
-    "service_Tools": {
+    "service_tools": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -10010,7 +10002,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Tools.List_tools_api_v1_tools_get",
+          "id": "endpoint_tools.List_tools_api_v1_tools_get",
           "displayName": "List Tools",
           "method": "GET",
           "name": {
@@ -10124,7 +10116,7 @@
           }
         },
         {
-          "id": "Tools.Create_a_tool_api_v1_tools_post",
+          "id": "endpoint_tools.Create_a_tool_api_v1_tools_post",
           "displayName": "Create A Tool",
           "method": "POST",
           "name": {
@@ -10181,7 +10173,6 @@
               },
               "typeId": "Tool",
               "inline": false,
-              "displayName": "Tool",
               "type": "named"
             },
             "v2Examples": {
@@ -10565,7 +10556,7 @@
           }
         },
         {
-          "id": "Tools.Get_tool_api_v1_tools__toolId__get",
+          "id": "endpoint_tools.Get_tool_api_v1_tools__toolId__get",
           "displayName": "Get Tool",
           "method": "GET",
           "name": {
@@ -10833,7 +10824,7 @@
           }
         },
         {
-          "id": "Tools.Delete_tool_api_v1_tools__toolId__delete",
+          "id": "endpoint_tools.Delete_tool_api_v1_tools__toolId__delete",
           "displayName": "Delete Tool",
           "method": "DELETE",
           "name": {
@@ -11102,7 +11093,7 @@
         }
       ]
     },
-    "service_Traces": {
+    "service_traces": {
       "name": {
         "fernFilepath": {
           "allParts": [
@@ -11156,7 +11147,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "Traces.List_agent_traces_api_v1_traces_get",
+          "id": "endpoint_traces.List_agent_traces_api_v1_traces_get",
           "displayName": "List Agent Traces",
           "method": "GET",
           "name": {
@@ -11349,7 +11340,6 @@
         },
         "typeId": "HTTPValidationError",
         "inline": false,
-        "displayName": "HTTPValidationError",
         "type": "named"
       },
       "statusCode": 422,
@@ -11432,7 +11422,6 @@
         },
         "typeId": "HTTPValidationError",
         "inline": false,
-        "displayName": "HTTPValidationError",
         "type": "named"
       },
       "statusCode": 422,
@@ -11515,7 +11504,6 @@
         },
         "typeId": "HTTPValidationError",
         "inline": false,
-        "displayName": "HTTPValidationError",
         "type": "named"
       },
       "statusCode": 422,
@@ -11598,7 +11586,6 @@
         },
         "typeId": "HTTPValidationError",
         "inline": false,
-        "displayName": "HTTPValidationError",
         "type": "named"
       },
       "statusCode": 422,
@@ -11681,7 +11668,6 @@
         },
         "typeId": "HTTPValidationError",
         "inline": false,
-        "displayName": "HTTPValidationError",
         "type": "named"
       },
       "statusCode": 422,
@@ -11764,7 +11750,6 @@
         },
         "typeId": "HTTPValidationError",
         "inline": false,
-        "displayName": "HTTPValidationError",
         "type": "named"
       },
       "statusCode": 422,
@@ -11847,7 +11832,6 @@
         },
         "typeId": "HTTPValidationError",
         "inline": false,
-        "displayName": "HTTPValidationError",
         "type": "named"
       },
       "statusCode": 422,
@@ -11930,7 +11914,6 @@
         },
         "typeId": "HTTPValidationError",
         "inline": false,
-        "displayName": "HTTPValidationError",
         "type": "named"
       },
       "statusCode": 422,
@@ -12013,7 +11996,6 @@
         },
         "typeId": "HTTPValidationError",
         "inline": false,
-        "displayName": "HTTPValidationError",
         "type": "named"
       },
       "statusCode": 422,
@@ -12096,7 +12078,6 @@
         },
         "typeId": "HTTPValidationError",
         "inline": false,
-        "displayName": "HTTPValidationError",
         "type": "named"
       },
       "statusCode": 422,
@@ -12179,7 +12160,6 @@
         },
         "typeId": "HTTPValidationError",
         "inline": false,
-        "displayName": "HTTPValidationError",
         "type": "named"
       },
       "statusCode": 422,
@@ -12262,7 +12242,6 @@
         },
         "typeId": "HTTPValidationError",
         "inline": false,
-        "displayName": "HTTPValidationError",
         "type": "named"
       },
       "statusCode": 422,
@@ -12345,7 +12324,6 @@
         },
         "typeId": "HTTPValidationError",
         "inline": false,
-        "displayName": "HTTPValidationError",
         "type": "named"
       },
       "statusCode": 422,
@@ -12428,7 +12406,6 @@
         },
         "typeId": "HTTPValidationError",
         "inline": false,
-        "displayName": "HTTPValidationError",
         "type": "named"
       },
       "statusCode": 422,
@@ -12511,7 +12488,6 @@
         },
         "typeId": "HTTPValidationError",
         "inline": false,
-        "displayName": "HTTPValidationError",
         "type": "named"
       },
       "statusCode": 422,
@@ -12594,7 +12570,6 @@
         },
         "typeId": "HTTPValidationError",
         "inline": false,
-        "displayName": "HTTPValidationError",
         "type": "named"
       },
       "statusCode": 422,
@@ -12677,7 +12652,6 @@
         },
         "typeId": "HTTPValidationError",
         "inline": false,
-        "displayName": "HTTPValidationError",
         "type": "named"
       },
       "statusCode": 422,
@@ -12760,7 +12734,6 @@
         },
         "typeId": "HTTPValidationError",
         "inline": false,
-        "displayName": "HTTPValidationError",
         "type": "named"
       },
       "statusCode": 422,
@@ -12843,7 +12816,6 @@
         },
         "typeId": "HTTPValidationError",
         "inline": false,
-        "displayName": "HTTPValidationError",
         "type": "named"
       },
       "statusCode": 422,
@@ -12926,7 +12898,6 @@
         },
         "typeId": "HTTPValidationError",
         "inline": false,
-        "displayName": "HTTPValidationError",
         "type": "named"
       },
       "statusCode": 422,
@@ -13009,7 +12980,6 @@
         },
         "typeId": "HTTPValidationError",
         "inline": false,
-        "displayName": "HTTPValidationError",
         "type": "named"
       },
       "statusCode": 422,
@@ -13123,7 +13093,7 @@
           }
         }
       },
-      "service": "service_Agent",
+      "service": "service_agent",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -13192,7 +13162,7 @@
           }
         }
       },
-      "service": "service_Auth",
+      "service": "service_auth",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -13261,7 +13231,7 @@
           }
         }
       },
-      "service": "service_User",
+      "service": "service_user",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -13330,7 +13300,7 @@
           }
         }
       },
-      "service": "service_Api token",
+      "service": "service_apiToken",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -13399,7 +13369,7 @@
           }
         }
       },
-      "service": "service_Documents",
+      "service": "service_documents",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -13468,7 +13438,7 @@
           }
         }
       },
-      "service": "service_Prompts",
+      "service": "service_prompts",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -13537,7 +13507,7 @@
           }
         }
       },
-      "service": "service_Tools",
+      "service": "service_tools",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -13606,7 +13576,7 @@
           }
         }
       },
-      "service": "service_Traces",
+      "service": "service_traces",
       "types": [],
       "errors": [],
       "subpackages": [],

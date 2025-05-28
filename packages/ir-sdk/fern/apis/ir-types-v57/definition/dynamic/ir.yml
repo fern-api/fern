@@ -1,0 +1,103 @@
+imports:
+  commons: ../commons.yml
+  endpoints: ./endpoints.yml
+  environment: ../environment.yml
+  types: ./types.yml
+types:
+  DynamicIntermediateRepresentation:
+    audiences:
+      - dynamic
+    docs: |
+      This represents the IR required to generate dynamic snippets.
+
+      This IR minimizes the space required to generate snippets in a variety
+      of environments (e.g. web, offline, etc).
+    properties:
+      version:
+        docs: |
+          The version of the dynamic IR. This is independent from the version
+          of the primary IR.
+        type: literal<"1.0.0">
+      types: map<commons.TypeId, types.NamedType>
+      endpoints: map<commons.EndpointId, endpoints.Endpoint>
+      environments: optional<environment.EnvironmentsConfig>
+      headers:
+        docs: |
+          The headers that are required on every request. These headers
+          are typically included in the SDK's client constructor.
+        type: optional<list<types.NamedParameter>>
+      pathParameters:
+        docs: |
+          The path parameters that are required on every request. These
+          path parameters are typically included in the SDK's client
+          constructor.
+        type: optional<list<types.NamedParameter>>
+      generatorConfig: optional<GeneratorConfig>
+  
+  GeneratorConfig:
+    docs: |
+      The configuration for the generator. This is a simplified version of the
+      generator-exec GeneratorConfig configuration.
+    properties:
+      apiName:
+        docs: |
+          The name of the API. This is equivalent to the workspace name in the
+          generator-exec configuration.
+        type: string
+      organization: string
+      customConfig: unknown
+      outputConfig: GeneratorOutputConfig
+
+  GeneratorOutputConfig:
+    docs: |
+      The configuration for the output of the generator. This is a simplified version of
+      the generator-exec output.mode configuration.
+    union:
+      publish: PublishInfo
+      local: {}
+
+  PublishInfo:
+    union:
+      go: GoPublishInfo
+      maven: MavenPublishInfo
+      npm: NpmPublishInfo
+      nuget: NugetPublishInfo
+      pypi: PypiPublishInfo
+      rubygems: RubyGemsPublishInfo
+
+  GoPublishInfo:
+    properties:
+      version: string
+      repoUrl:
+        type: string
+        docs: A full repo url (i.e. https://github.com/fern-api/fern)
+
+  MavenPublishInfo:
+    properties:
+      version: string
+      coordinate: string
+      repoUrl: optional<string>
+
+  NpmPublishInfo:
+    properties:
+      version: string
+      packageName: string
+      repoUrl: optional<string>
+
+  NugetPublishInfo:
+    properties:
+      version: string
+      packageName: string
+      repoUrl: optional<string>
+
+  PypiPublishInfo:
+    properties:
+      version: string
+      packageName: string
+      repoUrl: optional<string>
+
+  RubyGemsPublishInfo:
+    properties:
+      version: string
+      packageName: string
+      repoUrl: optional<string>
