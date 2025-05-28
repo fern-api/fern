@@ -1,4 +1,11 @@
 - changelogEntry:
+    - summary: Fix duplicate properties in example IR generation.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-28"
+  version: 0.63.11-rc1
+
+- changelogEntry:
     - summary: |
         Mark readonly fields as optional in the IR.
       type: fix
