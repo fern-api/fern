@@ -9,7 +9,7 @@ import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
 import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
-import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -53,8 +53,7 @@ export async function runLocalGenerationForWorkspace({
                     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
                 );
 
-                let organization;
-                let intermediateRepresentation = generateIntermediateRepresentation({
+                const intermediateRepresentation = generateIntermediateRepresentation({
                     workspace: fernWorkspace,
                     audiences: generatorGroup.audiences,
                     generationLanguage: generatorInvocation.language,
@@ -81,7 +80,9 @@ export async function runLocalGenerationForWorkspace({
                     }
                 }
 
-                organization = await venus.organization.get(FernVenusApi.OrganizationId(projectConfig.organization));
+                const organization = await venus.organization.get(
+                    FernVenusApi.OrganizationId(projectConfig.organization)
+                );
 
                 if (generatorInvocation.absolutePathToLocalOutput == null && !organization.ok) {
                     interactiveTaskContext.failWithoutThrowing(
