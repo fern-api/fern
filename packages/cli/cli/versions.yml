@@ -1,4 +1,19 @@
 - changelogEntry:
+    - summary: | 
+        The `<Code>` component now supports more flexible prop ordering and additional properties. You can now specify `maxLines` and `focus` props in any order relative to the `src` prop. For example:
+
+        ```mdx
+        <Code src="../snippets/example.ts" maxLines={20} focus={1-18} />
+        <Code maxLines={20} focus={1-18} src="../snippets/example.ts" />
+        ```
+
+        Both formats will work the same way, preserving the specified properties in the generated markdown. The component will automatically detect and include any additional props in the code block's metastring.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-28"
+  version: 0.63.15
+
+- changelogEntry:
     - summary: Fix duplicate properties in example IR generation.
       type: fix
   irVersion: 58
