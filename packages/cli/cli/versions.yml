@@ -4,6 +4,14 @@
       type: internal
   irVersion: 58
   createdAt: "2025-05-27"
+  version: 0.63.9
+
+- changelogEntry:
+    - summary: |
+        Rerelease CLI at 0.63.8-rc1
+      type: internal
+  irVersion: 58
+  createdAt: "2025-05-27"
   version: 0.63.8-rc2
 
 - changelogEntry:
