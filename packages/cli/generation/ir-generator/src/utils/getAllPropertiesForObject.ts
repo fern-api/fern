@@ -103,7 +103,9 @@ export function getAllPropertiesForObject({
                     isOptional:
                         resolvedPropertyType._type === "container" &&
                         resolvedPropertyType.container._type === "optional",
-                    isNullable: resolvedPropertyType._type === "container" && resolvedPropertyType.container._type === "nullable",
+                    isNullable:
+                        resolvedPropertyType._type === "container" &&
+                        resolvedPropertyType.container._type === "nullable"
                 });
             }
         }
