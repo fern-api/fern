@@ -184,13 +184,21 @@ export function buildObjectTypeDeclaration({
                 });
             }
         }
-        const typeReference = buildTypeReference({
+        let typeReference = buildTypeReference({
             schema: property.schema,
             context,
             fileContainingReference: declarationFile,
             namespace,
             declarationDepth: declarationDepth + 1
         });
+        if (property.readonly && typeof typeReference === "string" && !typeReference.includes("optional")) {
+            typeReference = `optional<${typeReference}>`
+        } else if (property.readonly && typeof typeReference === "object" && !typeReference.type.includes("optional")) {
+            typeReference = {
+                ...typeReference,
+                type:  `optional<${typeReference.type}>`
+            }
+        }
 
         const audiences = property.audiences;
         const name = property.nameOverride;
