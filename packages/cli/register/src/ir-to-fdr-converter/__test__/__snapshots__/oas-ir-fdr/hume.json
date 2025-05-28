@@ -2723,8 +2723,28 @@
         ]
       }
     },
-    "V0BatchJobsGetParametersSchema": {
-      "name": "V0BatchJobsGetParametersSchema",
+    "V0BatchJobsGetParametersWhen": {
+      "name": "V0BatchJobsGetParametersWhen",
+      "shape": {
+        "type": "object",
+        "extends": [
+          "When"
+        ],
+        "properties": []
+      }
+    },
+    "V0BatchJobsGetParametersSortBy": {
+      "name": "V0BatchJobsGetParametersSortBy",
+      "shape": {
+        "type": "object",
+        "extends": [
+          "SortBy"
+        ],
+        "properties": []
+      }
+    },
+    "V0BatchJobsGetParametersDirection": {
+      "name": "V0BatchJobsGetParametersDirection",
       "shape": {
         "type": "object",
         "extends": [
@@ -5325,7 +5345,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V0BatchJobsGetParametersSchema"
+                "value": "V0BatchJobsGetParametersWhen"
               }
             }
           },
@@ -5349,7 +5369,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V0BatchJobsGetParametersSchema"
+                "value": "V0BatchJobsGetParametersSortBy"
               }
             }
           },
@@ -5360,7 +5380,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V0BatchJobsGetParametersSchema"
+                "value": "V0BatchJobsGetParametersDirection"
               }
             }
           }

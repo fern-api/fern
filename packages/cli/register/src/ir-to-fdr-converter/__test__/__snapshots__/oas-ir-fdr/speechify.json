@@ -1308,8 +1308,8 @@
         ]
       }
     },
-    "V1AudioStreamPostParametersSchema": {
-      "name": "V1AudioStreamPostParametersSchema",
+    "V1AudioStreamPostParametersAccept": {
+      "name": "V1AudioStreamPostParametersAccept",
       "shape": {
         "type": "enum",
         "values": [
@@ -1600,7 +1600,7 @@
               "key": "Accept",
               "type": {
                 "type": "id",
-                "value": "V1AudioStreamPostParametersSchema"
+                "value": "V1AudioStreamPostParametersAccept"
               }
             }
           ],

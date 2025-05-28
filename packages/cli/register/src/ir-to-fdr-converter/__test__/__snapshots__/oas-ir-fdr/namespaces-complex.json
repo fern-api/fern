@@ -410,8 +410,8 @@
         ]
       }
     },
-    "PetFindByStatusGetParametersSchema": {
-      "name": "PetFindByStatusGetParametersSchema",
+    "PetFindByStatusGetParametersStatus": {
+      "name": "PetFindByStatusGetParametersStatus",
       "shape": {
         "type": "enum",
         "default": "available",
@@ -428,8 +428,8 @@
         ]
       }
     },
-    "PetComplexFindByStatusGetParametersSchema": {
-      "name": "PetComplexFindByStatusGetParametersSchema",
+    "PetComplexFindByStatusGetParametersStatus": {
+      "name": "PetComplexFindByStatusGetParametersStatus",
       "shape": {
         "type": "enum",
         "default": "available",
@@ -829,7 +829,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PetFindByStatusGetParametersSchema"
+                  "value": "PetFindByStatusGetParametersStatus"
                 }
               }
             }
@@ -3072,7 +3072,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PetFindByStatusGetParametersSchema"
+                  "value": "PetFindByStatusGetParametersStatus"
                 }
               }
             }
@@ -4169,7 +4169,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PetComplexFindByStatusGetParametersSchema"
+                  "value": "PetComplexFindByStatusGetParametersStatus"
                 }
               }
             }

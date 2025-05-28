@@ -14880,8 +14880,8 @@
         ]
       }
     },
-    "BookingLineItemsGetParametersSchema": {
-      "name": "BookingLineItemsGetParametersSchema",
+    "BookingLineItemsGetParametersDirection": {
+      "name": "BookingLineItemsGetParametersDirection",
       "shape": {
         "type": "enum",
         "default": "desc",
@@ -15279,8 +15279,37 @@
         ]
       }
     },
-    "BookingsGetParametersSchema": {
-      "name": "BookingsGetParametersSchema",
+    "BookingsGetParametersSort": {
+      "name": "BookingsGetParametersSort",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "cargo_ready_date"
+          },
+          {
+            "value": "created_at"
+          }
+        ]
+      }
+    },
+    "BookingsGetParametersDirection": {
+      "name": "BookingsGetParametersDirection",
+      "shape": {
+        "type": "enum",
+        "default": "desc",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
+    "BookingsGetParametersFStatus": {
+      "name": "BookingsGetParametersFStatus",
       "shape": {
         "type": "enum",
         "values": [
@@ -17021,8 +17050,8 @@
         ]
       }
     },
-    "EventsGetParametersSchema": {
-      "name": "EventsGetParametersSchema",
+    "EventsGetParametersFDataResourceObject": {
+      "name": "EventsGetParametersFDataResourceObject",
       "shape": {
         "type": "enum",
         "values": [
@@ -17303,8 +17332,34 @@
         ]
       }
     },
-    "InvoicesGetParametersSchema": {
-      "name": "InvoicesGetParametersSchema",
+    "InvoicesGetParametersSort": {
+      "name": "InvoicesGetParametersSort",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "due_date"
+          }
+        ]
+      }
+    },
+    "InvoicesGetParametersDirection": {
+      "name": "InvoicesGetParametersDirection",
+      "shape": {
+        "type": "enum",
+        "default": "desc",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
+    "InvoicesGetParametersFStatus": {
+      "name": "InvoicesGetParametersFStatus",
       "shape": {
         "type": "enum",
         "values": [
@@ -20194,8 +20249,8 @@
         ]
       }
     },
-    "PortsGetParametersSchema": {
-      "name": "PortsGetParametersSchema",
+    "PortsGetParametersFPortType": {
+      "name": "PortsGetParametersFPortType",
       "shape": {
         "type": "enum",
         "values": [
@@ -20854,8 +20909,8 @@
         ]
       }
     },
-    "PurchaseOrderLineItemsGetParametersSchema": {
-      "name": "PurchaseOrderLineItemsGetParametersSchema",
+    "PurchaseOrderLineItemsGetParametersDirection": {
+      "name": "PurchaseOrderLineItemsGetParametersDirection",
       "shape": {
         "type": "enum",
         "default": "desc",
@@ -21125,8 +21180,35 @@
         ]
       }
     },
-    "PurchaseOrdersGetParametersSchema": {
-      "name": "PurchaseOrdersGetParametersSchema",
+    "PurchaseOrdersGetParametersSort": {
+      "name": "PurchaseOrdersGetParametersSort",
+      "shape": {
+        "type": "enum",
+        "default": "id",
+        "values": [
+          {
+            "value": "id"
+          }
+        ]
+      }
+    },
+    "PurchaseOrdersGetParametersDirection": {
+      "name": "PurchaseOrdersGetParametersDirection",
+      "shape": {
+        "type": "enum",
+        "default": "asc",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
+    "PurchaseOrdersGetParametersFStatus": {
+      "name": "PurchaseOrdersGetParametersFStatus",
       "shape": {
         "type": "enum",
         "values": [
@@ -21844,8 +21926,32 @@
         ]
       }
     },
-    "ShipmentsGetParametersSchema": {
-      "name": "ShipmentsGetParametersSchema",
+    "ShipmentsGetParametersSort": {
+      "name": "ShipmentsGetParametersSort",
+      "shape": {
+        "type": "enum",
+        "default": "id",
+        "values": [
+          {
+            "value": "id"
+          },
+          {
+            "value": "transportation_mode"
+          },
+          {
+            "value": "status"
+          },
+          {
+            "value": "updated_at"
+          },
+          {
+            "value": "archived_at"
+          }
+        ]
+      }
+    },
+    "ShipmentsGetParametersDirection": {
+      "name": "ShipmentsGetParametersDirection",
       "shape": {
         "type": "enum",
         "default": "desc",
@@ -22942,7 +23048,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BookingLineItemsGetParametersSchema"
+                  "value": "BookingLineItemsGetParametersDirection"
                 }
               }
             },
@@ -23456,7 +23562,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BookingsGetParametersSchema"
+                  "value": "BookingsGetParametersSort"
                 }
               }
             },
@@ -23467,7 +23573,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BookingsGetParametersSchema"
+                  "value": "BookingsGetParametersDirection"
                 }
               }
             },
@@ -23478,7 +23584,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BookingsGetParametersSchema"
+                  "value": "BookingsGetParametersFStatus"
                 }
               }
             },
@@ -27751,7 +27857,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EventsGetParametersSchema"
+                  "value": "EventsGetParametersFDataResourceObject"
                 }
               }
             }
@@ -31185,7 +31291,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "InvoicesGetParametersSchema"
+                  "value": "InvoicesGetParametersSort"
                 }
               }
             },
@@ -31196,7 +31302,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "InvoicesGetParametersSchema"
+                  "value": "InvoicesGetParametersDirection"
                 }
               }
             },
@@ -31207,7 +31313,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "InvoicesGetParametersSchema"
+                  "value": "InvoicesGetParametersFStatus"
                 }
               }
             },
@@ -36521,7 +36627,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PortsGetParametersSchema"
+                  "value": "PortsGetParametersFPortType"
                 }
               }
             },
@@ -37554,7 +37660,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PurchaseOrderLineItemsGetParametersSchema"
+                  "value": "PurchaseOrderLineItemsGetParametersDirection"
                 }
               }
             },
@@ -38262,7 +38368,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PurchaseOrdersGetParametersSchema"
+                  "value": "PurchaseOrdersGetParametersSort"
                 }
               }
             },
@@ -38273,7 +38379,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PurchaseOrdersGetParametersSchema"
+                  "value": "PurchaseOrdersGetParametersDirection"
                 }
               }
             },
@@ -38297,7 +38403,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PurchaseOrdersGetParametersSchema"
+                  "value": "PurchaseOrdersGetParametersFStatus"
                 }
               }
             },
@@ -40475,7 +40581,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "ShipmentsGetParametersSchema"
+                  "value": "ShipmentsGetParametersSort"
                 }
               }
             },
@@ -40486,7 +40592,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "ShipmentsGetParametersSchema"
+                  "value": "ShipmentsGetParametersDirection"
                 }
               }
             },
