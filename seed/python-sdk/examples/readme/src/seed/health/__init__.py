@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from . import service
-
 __all__ = ["service"]
