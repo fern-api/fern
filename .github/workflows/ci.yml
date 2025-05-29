@@ -77,7 +77,9 @@ jobs:
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: Run tests
-        run: pnpm test 2>&1 | tee test.log
+        run: |
+          pnpm test 2>&1 | tee test.log
+          sleep .1
 
       - name: Summarize failures
         if: failure()
