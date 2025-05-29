@@ -116,7 +116,7 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "displayName": null,
+                            "displayName": "Basic Type",
                             "typeId": "type_:BasicType",
                             "default": null,
                             "inline": null
@@ -150,7 +150,7 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "displayName": null,
+                            "displayName": "Complex Type",
                             "typeId": "type_:ComplexType",
                             "default": null,
                             "inline": null
@@ -5698,7 +5698,7 @@
                                     }
                                 }
                             },
-                            "displayName": null,
+                            "displayName": "Actor",
                             "typeId": "type_types:Actor",
                             "default": null,
                             "inline": null
@@ -5770,7 +5770,7 @@
                                     }
                                 }
                             },
-                            "displayName": null,
+                            "displayName": "Actress",
                             "typeId": "type_types:Actress",
                             "default": null,
                             "inline": null
@@ -5842,7 +5842,7 @@
                                     }
                                 }
                             },
-                            "displayName": null,
+                            "displayName": "Stunt Double",
                             "typeId": "type_types:StuntDouble",
                             "default": null,
                             "inline": null
