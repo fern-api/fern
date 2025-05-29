@@ -77,7 +77,11 @@ jobs:
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: Run tests
-        run: pnpm test
+        run: pnpm test 2>&1 | tee test.log
+
+      - name: Summarize failures
+        if: failure()
+        run: cat test.log | grep 'Failed Tests'
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
