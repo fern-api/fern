@@ -8,10 +8,7 @@ import { SeedExhaustiveClient } from "../../src/Client";
 describe("InlinedRequests", () => {
     test("postWithObjectBodyandResponse", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = {
             string: "string",
             integer: 1,

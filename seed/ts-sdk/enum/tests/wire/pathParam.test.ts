@@ -10,7 +10,7 @@ describe("PathParam", () => {
         const server = mockServerPool.createServer();
         const client = new SeedEnumClient({ environment: server.baseUrl });
 
-        server.mockEndpoint().post("/path/>/red").respondWith().statusCode(200).build();
+        server.mockEndpoint().post("/path/%3E/red").respondWith().statusCode(200).build();
 
         const response = await client.pathParam.send(">", "red");
         expect(response).toEqual(undefined);

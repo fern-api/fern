@@ -8,10 +8,7 @@ import { SeedBearerTokenEnvironmentVariableClient } from "../../src/Client";
 describe("Service", () => {
     test("getWithBearerToken", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedBearerTokenEnvironmentVariableClient({
-            apiKey: process.env.COURIER_API_KEY || "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedBearerTokenEnvironmentVariableClient({ apiKey: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
         server.mockEndpoint().get("/apiKey").respondWith().statusCode(200).jsonBody(rawResponseBody).build();

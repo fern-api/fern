@@ -8,11 +8,7 @@ import { SeedTraceClient } from "../../src/Client";
 describe("Sysprop", () => {
     test("setNumWarmInstances", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
 
         server.mockEndpoint().put("/sysprop/num-warm-instances/JAVA/1").respondWith().statusCode(200).build();
 
@@ -22,11 +18,7 @@ describe("Sysprop", () => {
 
     test("getNumWarmInstances", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
 
         const rawResponseBody = { JAVA: 1 };
         server

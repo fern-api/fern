@@ -1,4 +1,5 @@
-import { beforeAll, afterAll } from "@jest/globals";
+import { afterAll, beforeAll } from "@jest/globals";
+
 import { mockServerPool } from "./MockServerPool";
 
 beforeAll(() => {

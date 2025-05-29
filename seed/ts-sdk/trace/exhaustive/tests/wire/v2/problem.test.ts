@@ -9,11 +9,7 @@ import { SeedTraceClient } from "../../../src/Client";
 describe("Problem", () => {
     test("getLightweightProblems", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
 
         const rawResponseBody = [
             {
@@ -64,11 +60,7 @@ describe("Problem", () => {
 
     test("getProblems", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
 
         const rawResponseBody = [
             {
@@ -987,11 +979,7 @@ describe("Problem", () => {
 
     test("getLatestProblem", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             problemId: "problemId",
@@ -1456,11 +1444,7 @@ describe("Problem", () => {
 
     test("getProblemVersion", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             problemId: "problemId",

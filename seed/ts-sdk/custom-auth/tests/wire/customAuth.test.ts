@@ -8,10 +8,7 @@ import { SeedCustomAuthClient } from "../../src/Client";
 describe("CustomAuth", () => {
     test("getWithCustomAuth", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedCustomAuthClient({
-            customAuthScheme: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedCustomAuthClient({ customAuthScheme: "test", environment: server.baseUrl });
 
         const rawResponseBody = true;
         server.mockEndpoint().get("/custom-auth").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
@@ -22,10 +19,7 @@ describe("CustomAuth", () => {
 
     test("postWithCustomAuth", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedCustomAuthClient({
-            customAuthScheme: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedCustomAuthClient({ customAuthScheme: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
         const rawResponseBody = true;
         server

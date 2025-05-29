@@ -1,8 +1,8 @@
 import { setupServer } from "msw/node";
 
+import { fromJson, toJson } from "../../src/core/json";
 import { MockServer } from "./MockServer";
 import { randomBaseUrl } from "./randomBaseUrl";
-import { fromJson, toJson } from "../../src/core/json";
 
 const mswServer = setupServer();
 interface MockServerOptions {
@@ -77,7 +77,7 @@ class MockServerPool {
 
     public listen(): void {
         mswServer.listen({
-            onUnhandledRequest: "error",
+            onUnhandledRequest: "error"
         });
 
         if (process.env.LOG_LEVEL === "debug") {

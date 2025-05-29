@@ -8,10 +8,7 @@ import { SeedExhaustiveClient } from "../../src/Client";
 describe("NoReqBody", () => {
     test("getWithNoRequestBody", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             string: "string",
@@ -52,10 +49,7 @@ describe("NoReqBody", () => {
 
     test("postWithNoRequestBody", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({
-            token: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
         server.mockEndpoint().post("/no-req-body").respondWith().statusCode(200).jsonBody(rawResponseBody).build();

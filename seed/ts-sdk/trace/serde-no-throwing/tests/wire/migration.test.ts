@@ -8,11 +8,7 @@ import { SeedTraceClient } from "../../src/Client";
 describe("Migration", () => {
     test("getAttemptedMigrations", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({
-            token: "test",
-            xRandomHeader: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
 
         const rawResponseBody = [
             { name: "name", status: "RUNNING" },

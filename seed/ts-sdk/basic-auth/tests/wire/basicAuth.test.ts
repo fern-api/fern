@@ -8,11 +8,7 @@ import { SeedBasicAuthClient } from "../../src/Client";
 describe("BasicAuth", () => {
     test("getWithBasicAuth", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedBasicAuthClient({
-            username: "test",
-            password: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedBasicAuthClient({ username: "test", password: "test", environment: server.baseUrl });
 
         const rawResponseBody = true;
         server.mockEndpoint().get("/basic-auth").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
@@ -23,11 +19,7 @@ describe("BasicAuth", () => {
 
     test("postWithBasicAuth", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedBasicAuthClient({
-            username: "test",
-            password: "test",
-            environment: server.baseUrl,
-        });
+        const client = new SeedBasicAuthClient({ username: "test", password: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
         const rawResponseBody = true;
         server

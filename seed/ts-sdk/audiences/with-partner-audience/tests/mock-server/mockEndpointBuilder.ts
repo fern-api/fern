@@ -1,8 +1,8 @@
 import { DefaultBodyType, HttpHandler, HttpResponse, HttpResponseResolver, http } from "msw";
 
+import { toJson } from "../../src/core/json";
 import { withHeaders } from "./withHeaders";
 import { withJson } from "./withJson";
-import { toJson } from "../../src/core/json";
 
 type HttpMethod = "all" | "get" | "post" | "put" | "delete" | "patch" | "options" | "head";
 
