@@ -760,7 +760,7 @@
                                     }
                                 }
                             },
-                            "displayName": null,
+                            "displayName": "Optional Metadata",
                             "typeId": "type_union:OptionalMetadata",
                             "default": null,
                             "inline": null
@@ -832,7 +832,7 @@
                                     }
                                 }
                             },
-                            "displayName": null,
+                            "displayName": "Named Metadata",
                             "typeId": "type_union:NamedMetadata",
                             "default": null,
                             "inline": null
@@ -2153,7 +2153,7 @@
                                     }
                                 }
                             },
-                            "displayName": null,
+                            "displayName": "Key Type",
                             "typeId": "type_union:KeyType",
                             "default": null,
                             "inline": null

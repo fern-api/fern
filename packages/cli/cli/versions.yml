@@ -4,6 +4,14 @@
       type: fix
   irVersion: 58
   createdAt: "2025-05-29"
+  version: 0.63.20
+
+- changelogEntry:
+    - summary: |
+        Added automatic display names for undiscriminated union members based on their type names for the original OpenAPI parser.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-29"
   version: 0.63.19
 
 - changelogEntry:
