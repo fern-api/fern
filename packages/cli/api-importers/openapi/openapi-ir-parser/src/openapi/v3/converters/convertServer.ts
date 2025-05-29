@@ -28,7 +28,7 @@ function getServerUrl({
     );
 
     for (const [variable, value] of Object.entries(valuesToSubstitute)) {
-        url = url.replace(`{${variable}}`, value);
+        url = url.replace(`{${variable}}`, encodeURIComponent(value));
     }
 
     return url;

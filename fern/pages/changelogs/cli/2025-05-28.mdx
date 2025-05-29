@@ -1,5 +1,21 @@
 ## 0.63.16
-**`(fix):`** Implement V3 parser support for streamCondition endpoints.
+**`(fix):`** Added support for `oneOf` within `allOf` schemas in OpenAPI conversion. When an `allOf` schema contains a `oneOf` schema, we now properly merge the properties while preserving the union type structure. For example:
+
+```yaml
+allOf:
+  - type: object
+    properties:
+      name: string
+  - oneOf:
+      - type: object
+        properties:
+          type: string
+      - type: object
+        properties:
+          kind: number
+```
+
+This will be converted to a Fern type that combines the base properties with the union type options.
 
 
 ## 0.63.15

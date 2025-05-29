@@ -118,7 +118,7 @@
             }
         },
         {
-            "example_identifier": "b7bf2d43",
+            "example_identifier": "27ab18f2",
             "id": {
                 "method": "GET",
                 "path": "/users",
@@ -131,7 +131,7 @@
             }
         },
         {
-            "example_identifier": "2ca2b1df",
+            "example_identifier": "c29fdeeb",
             "id": {
                 "method": "GET",
                 "path": "/users",

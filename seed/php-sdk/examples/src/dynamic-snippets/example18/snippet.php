@@ -36,6 +36,10 @@ $client->service->createBigEntity(
             'id' => 'id',
         ]),
         'extendedMovie' => new ExtendedMovie([
+            'cast' => [
+                'cast',
+                'cast',
+            ],
             'id' => 'id',
             'prequel' => 'prequel',
             'title' => 'title',
@@ -50,10 +54,6 @@ $client->service->createBigEntity(
                 ],
             ],
             'revenue' => 1000000,
-            'cast' => [
-                'cast',
-                'cast',
-            ],
         ]),
         'entity' => new Entity([
             'type' => BasicType::Primitive->value,

@@ -59,8 +59,8 @@ export async function replaceReferencedCode({
             if (title != null) {
                 metastring += ` title={"${title}"}`;
             }
-            
-            // Extract 
+
+            // Extract
             const additionalProps = match[3]?.trim() || "";
             if (additionalProps) {
                 // Parse and add any additional props to the metastring

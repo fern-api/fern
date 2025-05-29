@@ -7395,6 +7395,18 @@
         ]
       }
     },
+    "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf0Code": {
+      "description": "Error code",
+      "name": "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf0Code",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "missing_scopes"
+          }
+        ]
+      }
+    },
     "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems": {
       "name": "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems",
       "shape": {
@@ -7425,19 +7437,8 @@
         ]
       }
     },
-    "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf0Code": {
-      "description": "Error code",
-      "name": "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf0Code",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "missing_scopes"
-          }
-        ]
-      }
-    },
     "GetSiteActivityLogsRequestForbiddenError0": {
+      "description": "The request is missing the required scopes.",
       "name": "GetSiteActivityLogsRequestForbiddenError0",
       "shape": {
         "type": "object",
@@ -7449,10 +7450,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf0Code"
               }
             }
           },
@@ -7495,17 +7494,18 @@
                 }
               }
             }
-          },
+          }
+        ]
+      }
+    },
+    "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf1Code": {
+      "description": "Error code",
+      "name": "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf1Code",
+      "shape": {
+        "type": "enum",
+        "values": [
           {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf0Code"
-              }
-            }
+            "value": "missing_scopes"
           }
         ]
       }
@@ -7540,19 +7540,8 @@
         ]
       }
     },
-    "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf1Code": {
-      "description": "Error code",
-      "name": "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf1Code",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "missing_scopes"
-          }
-        ]
-      }
-    },
     "GetSiteActivityLogsRequestForbiddenError1": {
+      "description": "Error response for non-enterprise plan sites.",
       "name": "GetSiteActivityLogsRequestForbiddenError1",
       "shape": {
         "type": "object",
@@ -7564,10 +7553,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf1Code"
               }
             }
           },
@@ -7608,17 +7595,6 @@
                   "type": "id",
                   "value": "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems"
                 }
-              }
-            }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdActivityLogsGetResponsesContentApplicationJsonSchemaOneOf1Code"
               }
             }
           }
@@ -20134,6 +20110,18 @@
         ]
       }
     },
+    "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf0Code": {
+      "description": "Error code",
+      "name": "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf0Code",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "missing_scopes"
+          }
+        ]
+      }
+    },
     "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems": {
       "name": "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems",
       "shape": {
@@ -20164,19 +20152,8 @@
         ]
       }
     },
-    "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf0Code": {
-      "description": "Error code",
-      "name": "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf0Code",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "missing_scopes"
-          }
-        ]
-      }
-    },
     "ListUsersRequestForbiddenError0": {
+      "description": "The request is missing the required scopes.",
       "name": "ListUsersRequestForbiddenError0",
       "shape": {
         "type": "object",
@@ -20188,10 +20165,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf0Code"
               }
             }
           },
@@ -20234,17 +20209,18 @@
                 }
               }
             }
-          },
+          }
+        ]
+      }
+    },
+    "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf1Code": {
+      "description": "Error code",
+      "name": "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf1Code",
+      "shape": {
+        "type": "enum",
+        "values": [
           {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf0Code"
-              }
-            }
+            "value": "users_not_enabled"
           }
         ]
       }
@@ -20279,19 +20255,8 @@
         ]
       }
     },
-    "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf1Code": {
-      "description": "Error code",
-      "name": "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf1Code",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "users_not_enabled"
-          }
-        ]
-      }
-    },
     "ListUsersRequestForbiddenError1": {
+      "description": "The site does not have Users enabled.",
       "name": "ListUsersRequestForbiddenError1",
       "shape": {
         "type": "object",
@@ -20303,10 +20268,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf1Code"
               }
             }
           },
@@ -20347,17 +20310,6 @@
                   "type": "id",
                   "value": "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems"
                 }
-              }
-            }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdUsersGetResponsesContentApplicationJsonSchemaOneOf1Code"
               }
             }
           }
@@ -20740,6 +20692,18 @@
         ]
       }
     },
+    "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf0Code": {
+      "description": "Error code",
+      "name": "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf0Code",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "missing_scopes"
+          }
+        ]
+      }
+    },
     "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems": {
       "name": "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems",
       "shape": {
@@ -20770,19 +20734,8 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf0Code": {
-      "description": "Error code",
-      "name": "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf0Code",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "missing_scopes"
-          }
-        ]
-      }
-    },
     "GetUserRequestForbiddenError0": {
+      "description": "The request is missing the required scopes.",
       "name": "GetUserRequestForbiddenError0",
       "shape": {
         "type": "object",
@@ -20794,10 +20747,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf0Code"
               }
             }
           },
@@ -20840,17 +20791,18 @@
                 }
               }
             }
-          },
+          }
+        ]
+      }
+    },
+    "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf1Code": {
+      "description": "Error code",
+      "name": "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf1Code",
+      "shape": {
+        "type": "enum",
+        "values": [
           {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf0Code"
-              }
-            }
+            "value": "users_not_enabled"
           }
         ]
       }
@@ -20885,19 +20837,8 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf1Code": {
-      "description": "Error code",
-      "name": "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf1Code",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "users_not_enabled"
-          }
-        ]
-      }
-    },
     "GetUserRequestForbiddenError1": {
+      "description": "The site does not have Users enabled.",
       "name": "GetUserRequestForbiddenError1",
       "shape": {
         "type": "object",
@@ -20909,10 +20850,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf1Code"
               }
             }
           },
@@ -20953,17 +20892,6 @@
                   "type": "id",
                   "value": "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems"
                 }
-              }
-            }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdUsersUserIdGetResponsesContentApplicationJsonSchemaOneOf1Code"
               }
             }
           }
@@ -21049,6 +20977,18 @@
         ]
       }
     },
+    "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf0Code": {
+      "description": "Error code",
+      "name": "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf0Code",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "missing_scopes"
+          }
+        ]
+      }
+    },
     "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf0DetailsItems": {
       "name": "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf0DetailsItems",
       "shape": {
@@ -21079,19 +21019,8 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf0Code": {
-      "description": "Error code",
-      "name": "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf0Code",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "missing_scopes"
-          }
-        ]
-      }
-    },
     "DeleteUserRequestForbiddenError0": {
+      "description": "The request is missing the required scopes.",
       "name": "DeleteUserRequestForbiddenError0",
       "shape": {
         "type": "object",
@@ -21103,10 +21032,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf0Code"
               }
             }
           },
@@ -21149,17 +21076,18 @@
                 }
               }
             }
-          },
+          }
+        ]
+      }
+    },
+    "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf1Code": {
+      "description": "Error code",
+      "name": "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf1Code",
+      "shape": {
+        "type": "enum",
+        "values": [
           {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf0Code"
-              }
-            }
+            "value": "users_not_enabled"
           }
         ]
       }
@@ -21194,19 +21122,8 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf1Code": {
-      "description": "Error code",
-      "name": "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf1Code",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "users_not_enabled"
-          }
-        ]
-      }
-    },
     "DeleteUserRequestForbiddenError1": {
+      "description": "The site does not have Users enabled.",
       "name": "DeleteUserRequestForbiddenError1",
       "shape": {
         "type": "object",
@@ -21218,10 +21135,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf1Code"
               }
             }
           },
@@ -21262,17 +21177,6 @@
                   "type": "id",
                   "value": "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf1DetailsItems"
                 }
-              }
-            }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdUsersUserIdDeleteResponsesContentApplicationJsonSchemaOneOf1Code"
               }
             }
           }
@@ -21703,6 +21607,18 @@
         ]
       }
     },
+    "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf0Code": {
+      "description": "Error code",
+      "name": "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf0Code",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "missing_scopes"
+          }
+        ]
+      }
+    },
     "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf0DetailsItems": {
       "name": "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf0DetailsItems",
       "shape": {
@@ -21733,19 +21649,8 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf0Code": {
-      "description": "Error code",
-      "name": "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf0Code",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "missing_scopes"
-          }
-        ]
-      }
-    },
     "UpdateUserRequestForbiddenError0": {
+      "description": "The request is missing the required scopes.",
       "name": "UpdateUserRequestForbiddenError0",
       "shape": {
         "type": "object",
@@ -21757,10 +21662,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf0Code"
               }
             }
           },
@@ -21803,17 +21706,18 @@
                 }
               }
             }
-          },
+          }
+        ]
+      }
+    },
+    "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf1Code": {
+      "description": "Error code",
+      "name": "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf1Code",
+      "shape": {
+        "type": "enum",
+        "values": [
           {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf0Code"
-              }
-            }
+            "value": "users_not_enabled"
           }
         ]
       }
@@ -21848,19 +21752,8 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf1Code": {
-      "description": "Error code",
-      "name": "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf1Code",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "users_not_enabled"
-          }
-        ]
-      }
-    },
     "UpdateUserRequestForbiddenError1": {
+      "description": "The site does not have Users enabled.",
       "name": "UpdateUserRequestForbiddenError1",
       "shape": {
         "type": "object",
@@ -21872,10 +21765,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf1Code"
               }
             }
           },
@@ -21916,17 +21807,6 @@
                   "type": "id",
                   "value": "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf1DetailsItems"
                 }
-              }
-            }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdUsersUserIdPatchResponsesContentApplicationJsonSchemaOneOf1Code"
               }
             }
           }
@@ -22309,6 +22189,18 @@
         ]
       }
     },
+    "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf0Code": {
+      "description": "Error code",
+      "name": "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf0Code",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "duplicate_user_email"
+          }
+        ]
+      }
+    },
     "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf0DetailsItems": {
       "name": "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf0DetailsItems",
       "shape": {
@@ -22339,19 +22231,8 @@
         ]
       }
     },
-    "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf0Code": {
-      "description": "Error code",
-      "name": "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf0Code",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "duplicate_user_email"
-          }
-        ]
-      }
-    },
     "InviteUserRequestForbiddenError0": {
+      "description": "The request is missing the required scopes.",
       "name": "InviteUserRequestForbiddenError0",
       "shape": {
         "type": "object",
@@ -22363,10 +22244,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf0Code"
               }
             }
           },
@@ -22409,17 +22288,18 @@
                 }
               }
             }
-          },
+          }
+        ]
+      }
+    },
+    "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf1Code": {
+      "description": "Error code",
+      "name": "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf1Code",
+      "shape": {
+        "type": "enum",
+        "values": [
           {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf0Code"
-              }
-            }
+            "value": "user_limit_reached"
           }
         ]
       }
@@ -22454,19 +22334,8 @@
         ]
       }
     },
-    "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf1Code": {
-      "description": "Error code",
-      "name": "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf1Code",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "user_limit_reached"
-          }
-        ]
-      }
-    },
     "InviteUserRequestForbiddenError1": {
+      "description": "The site does not have Users enabled.",
       "name": "InviteUserRequestForbiddenError1",
       "shape": {
         "type": "object",
@@ -22478,10 +22347,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf1Code"
               }
             }
           },
@@ -22524,17 +22391,6 @@
                 }
               }
             }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf1Code"
-              }
-            }
           }
         ]
       }
@@ -22562,6 +22418,7 @@
       }
     },
     "InviteUserRequestConflictError0": {
+      "description": "The email address provided is already in use by another user.",
       "name": "InviteUserRequestConflictError0",
       "shape": {
         "type": "object",
@@ -22573,10 +22430,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf0Code"
               }
             }
           },
@@ -22619,22 +22474,12 @@
                 }
               }
             }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf0Code"
-              }
-            }
           }
         ]
       }
     },
     "InviteUserRequestConflictError1": {
+      "description": "The site has reached the maximum number of users allowed.",
       "name": "InviteUserRequestConflictError1",
       "shape": {
         "type": "object",
@@ -22646,10 +22491,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf1Code"
               }
             }
           },
@@ -22690,17 +22533,6 @@
                   "type": "id",
                   "value": "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf1DetailsItems"
                 }
-              }
-            }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdUsersInvitePostResponsesContentApplicationJsonSchemaOneOf1Code"
               }
             }
           }
@@ -22956,6 +22788,18 @@
         ]
       }
     },
+    "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf0Code": {
+      "description": "Error code",
+      "name": "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf0Code",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "missing_scopes"
+          }
+        ]
+      }
+    },
     "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems": {
       "name": "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf0DetailsItems",
       "shape": {
@@ -22986,19 +22830,8 @@
         ]
       }
     },
-    "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf0Code": {
-      "description": "Error code",
-      "name": "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf0Code",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "missing_scopes"
-          }
-        ]
-      }
-    },
     "ListAccessGroupsRequestForbiddenError0": {
+      "description": "The request is missing the required scopes.",
       "name": "ListAccessGroupsRequestForbiddenError0",
       "shape": {
         "type": "object",
@@ -23010,10 +22843,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf0Code"
               }
             }
           },
@@ -23056,17 +22887,18 @@
                 }
               }
             }
-          },
+          }
+        ]
+      }
+    },
+    "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf1Code": {
+      "description": "Error code",
+      "name": "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf1Code",
+      "shape": {
+        "type": "enum",
+        "values": [
           {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf0Code"
-              }
-            }
+            "value": "users_not_enabled"
           }
         ]
       }
@@ -23101,19 +22933,8 @@
         ]
       }
     },
-    "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf1Code": {
-      "description": "Error code",
-      "name": "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf1Code",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "users_not_enabled"
-          }
-        ]
-      }
-    },
     "ListAccessGroupsRequestForbiddenError1": {
+      "description": "The site does not have Users enabled.",
       "name": "ListAccessGroupsRequestForbiddenError1",
       "shape": {
         "type": "object",
@@ -23125,10 +22946,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf1Code"
               }
             }
           },
@@ -23169,17 +22988,6 @@
                   "type": "id",
                   "value": "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf1DetailsItems"
                 }
-              }
-            }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdAccessgroupsGetResponsesContentApplicationJsonSchemaOneOf1Code"
               }
             }
           }
@@ -24361,6 +24169,18 @@
         ]
       }
     },
+    "SitesSiteIdProductsGetResponsesContentApplicationJsonSchemaCode": {
+      "description": "Error code",
+      "name": "SitesSiteIdProductsGetResponsesContentApplicationJsonSchemaCode",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ecommerce_not_enabled"
+          }
+        ]
+      }
+    },
     "SitesSiteIdProductsGetResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdProductsGetResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -24391,18 +24211,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsGetResponsesContentApplicationJsonSchemaCode": {
-      "description": "Error code",
-      "name": "SitesSiteIdProductsGetResponsesContentApplicationJsonSchemaCode",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ecommerce_not_enabled"
-          }
-        ]
-      }
-    },
     "List-productsRequestConflictError": {
       "name": "List-productsRequestConflictError",
       "shape": {
@@ -24415,10 +24223,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdProductsGetResponsesContentApplicationJsonSchemaCode"
               }
             }
           },
@@ -24459,17 +24265,6 @@
                   "type": "id",
                   "value": "SitesSiteIdProductsGetResponsesContentApplicationJsonSchemaDetailsItems"
                 }
-              }
-            }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdProductsGetResponsesContentApplicationJsonSchemaCode"
               }
             }
           }
@@ -24748,6 +24543,7 @@
       }
     },
     "SitesSiteIdProductsPostRequestBodyContentApplicationJsonSchemaProductFieldData": {
+      "description": "Contains content-specific details for a product, covering both standard (e.g., title, description)  and custom fields tailored to the product setup.",
       "name": "SitesSiteIdProductsPostRequestBodyContentApplicationJsonSchemaProductFieldData",
       "shape": {
         "type": "object",
@@ -24757,12 +24553,9 @@
             "description": "Name of the Product",
             "key": "name",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string"
               }
             }
           },
@@ -24770,12 +24563,9 @@
             "description": "URL structure of the Product in your site.",
             "key": "slug",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string"
               }
             }
           },
@@ -24875,6 +24665,7 @@
       }
     },
     "SitesSiteIdProductsPostRequestBodyContentApplicationJsonSchemaProduct": {
+      "description": "The Product object",
       "name": "SitesSiteIdProductsPostRequestBodyContentApplicationJsonSchemaProduct",
       "shape": {
         "type": "object",
@@ -26359,6 +26150,18 @@
         ]
       }
     },
+    "SitesSiteIdProductsPostResponsesContentApplicationJsonSchemaCode": {
+      "description": "Error code",
+      "name": "SitesSiteIdProductsPostResponsesContentApplicationJsonSchemaCode",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ecommerce_not_enabled"
+          }
+        ]
+      }
+    },
     "SitesSiteIdProductsPostResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdProductsPostResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -26389,18 +26192,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsPostResponsesContentApplicationJsonSchemaCode": {
-      "description": "Error code",
-      "name": "SitesSiteIdProductsPostResponsesContentApplicationJsonSchemaCode",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ecommerce_not_enabled"
-          }
-        ]
-      }
-    },
     "Create-productRequestConflictError": {
       "name": "Create-productRequestConflictError",
       "shape": {
@@ -26413,10 +26204,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdProductsPostResponsesContentApplicationJsonSchemaCode"
               }
             }
           },
@@ -26457,17 +26246,6 @@
                   "type": "id",
                   "value": "SitesSiteIdProductsPostResponsesContentApplicationJsonSchemaDetailsItems"
                 }
-              }
-            }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdProductsPostResponsesContentApplicationJsonSchemaCode"
               }
             }
           }
@@ -27543,6 +27321,18 @@
         ]
       }
     },
+    "SitesSiteIdProductsProductIdGetResponsesContentApplicationJsonSchemaCode": {
+      "description": "Error code",
+      "name": "SitesSiteIdProductsProductIdGetResponsesContentApplicationJsonSchemaCode",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ecommerce_not_enabled"
+          }
+        ]
+      }
+    },
     "SitesSiteIdProductsProductIdGetResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdProductsProductIdGetResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -27573,18 +27363,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsProductIdGetResponsesContentApplicationJsonSchemaCode": {
-      "description": "Error code",
-      "name": "SitesSiteIdProductsProductIdGetResponsesContentApplicationJsonSchemaCode",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ecommerce_not_enabled"
-          }
-        ]
-      }
-    },
     "Get-productRequestConflictError": {
       "name": "Get-productRequestConflictError",
       "shape": {
@@ -27597,10 +27375,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdProductsProductIdGetResponsesContentApplicationJsonSchemaCode"
               }
             }
           },
@@ -27641,17 +27417,6 @@
                   "type": "id",
                   "value": "SitesSiteIdProductsProductIdGetResponsesContentApplicationJsonSchemaDetailsItems"
                 }
-              }
-            }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdProductsProductIdGetResponsesContentApplicationJsonSchemaCode"
               }
             }
           }
@@ -29156,6 +28921,18 @@
         ]
       }
     },
+    "SitesSiteIdProductsProductIdPatchResponsesContentApplicationJsonSchemaCode": {
+      "description": "Error code",
+      "name": "SitesSiteIdProductsProductIdPatchResponsesContentApplicationJsonSchemaCode",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ecommerce_not_enabled"
+          }
+        ]
+      }
+    },
     "SitesSiteIdProductsProductIdPatchResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdProductsProductIdPatchResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -29186,18 +28963,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsProductIdPatchResponsesContentApplicationJsonSchemaCode": {
-      "description": "Error code",
-      "name": "SitesSiteIdProductsProductIdPatchResponsesContentApplicationJsonSchemaCode",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ecommerce_not_enabled"
-          }
-        ]
-      }
-    },
     "Update-productRequestConflictError": {
       "name": "Update-productRequestConflictError",
       "shape": {
@@ -29210,10 +28975,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdProductsProductIdPatchResponsesContentApplicationJsonSchemaCode"
               }
             }
           },
@@ -29254,17 +29017,6 @@
                   "type": "id",
                   "value": "SitesSiteIdProductsProductIdPatchResponsesContentApplicationJsonSchemaDetailsItems"
                 }
-              }
-            }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdProductsProductIdPatchResponsesContentApplicationJsonSchemaCode"
               }
             }
           }
@@ -30349,6 +30101,18 @@
         ]
       }
     },
+    "SitesSiteIdProductsProductIdSkusPostResponsesContentApplicationJsonSchemaCode": {
+      "description": "Error code",
+      "name": "SitesSiteIdProductsProductIdSkusPostResponsesContentApplicationJsonSchemaCode",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ecommerce_not_enabled"
+          }
+        ]
+      }
+    },
     "SitesSiteIdProductsProductIdSkusPostResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdProductsProductIdSkusPostResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -30379,18 +30143,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsProductIdSkusPostResponsesContentApplicationJsonSchemaCode": {
-      "description": "Error code",
-      "name": "SitesSiteIdProductsProductIdSkusPostResponsesContentApplicationJsonSchemaCode",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ecommerce_not_enabled"
-          }
-        ]
-      }
-    },
     "Create-skusRequestConflictError": {
       "name": "Create-skusRequestConflictError",
       "shape": {
@@ -30403,10 +30155,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdProductsProductIdSkusPostResponsesContentApplicationJsonSchemaCode"
               }
             }
           },
@@ -30447,17 +30197,6 @@
                   "type": "id",
                   "value": "SitesSiteIdProductsProductIdSkusPostResponsesContentApplicationJsonSchemaDetailsItems"
                 }
-              }
-            }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdProductsProductIdSkusPostResponsesContentApplicationJsonSchemaCode"
               }
             }
           }
@@ -31520,6 +31259,18 @@
         ]
       }
     },
+    "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesContentApplicationJsonSchemaCode": {
+      "description": "Error code",
+      "name": "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesContentApplicationJsonSchemaCode",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ecommerce_not_enabled"
+          }
+        ]
+      }
+    },
     "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -31550,18 +31301,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesContentApplicationJsonSchemaCode": {
-      "description": "Error code",
-      "name": "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesContentApplicationJsonSchemaCode",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ecommerce_not_enabled"
-          }
-        ]
-      }
-    },
     "Update-skuRequestConflictError": {
       "name": "Update-skuRequestConflictError",
       "shape": {
@@ -31574,10 +31313,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesContentApplicationJsonSchemaCode"
               }
             }
           },
@@ -31618,17 +31355,6 @@
                   "type": "id",
                   "value": "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesContentApplicationJsonSchemaDetailsItems"
                 }
-              }
-            }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesContentApplicationJsonSchemaCode"
               }
             }
           }
@@ -34262,6 +33988,18 @@
         ]
       }
     },
+    "SitesSiteIdOrdersGetResponsesContentApplicationJsonSchemaCode": {
+      "description": "Error code",
+      "name": "SitesSiteIdOrdersGetResponsesContentApplicationJsonSchemaCode",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ecommerce_not_enabled"
+          }
+        ]
+      }
+    },
     "SitesSiteIdOrdersGetResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdOrdersGetResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -34292,18 +34030,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersGetResponsesContentApplicationJsonSchemaCode": {
-      "description": "Error code",
-      "name": "SitesSiteIdOrdersGetResponsesContentApplicationJsonSchemaCode",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ecommerce_not_enabled"
-          }
-        ]
-      }
-    },
     "List-ordersRequestConflictError": {
       "name": "List-ordersRequestConflictError",
       "shape": {
@@ -34316,10 +34042,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdOrdersGetResponsesContentApplicationJsonSchemaCode"
               }
             }
           },
@@ -34360,17 +34084,6 @@
                   "type": "id",
                   "value": "SitesSiteIdOrdersGetResponsesContentApplicationJsonSchemaDetailsItems"
                 }
-              }
-            }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdOrdersGetResponsesContentApplicationJsonSchemaCode"
               }
             }
           }
@@ -36894,6 +36607,18 @@
         ]
       }
     },
+    "SitesSiteIdOrdersOrderIdGetResponsesContentApplicationJsonSchemaCode": {
+      "description": "Error code",
+      "name": "SitesSiteIdOrdersOrderIdGetResponsesContentApplicationJsonSchemaCode",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ecommerce_not_enabled"
+          }
+        ]
+      }
+    },
     "SitesSiteIdOrdersOrderIdGetResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdOrdersOrderIdGetResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -36924,18 +36649,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersOrderIdGetResponsesContentApplicationJsonSchemaCode": {
-      "description": "Error code",
-      "name": "SitesSiteIdOrdersOrderIdGetResponsesContentApplicationJsonSchemaCode",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ecommerce_not_enabled"
-          }
-        ]
-      }
-    },
     "Get-orderRequestConflictError": {
       "name": "Get-orderRequestConflictError",
       "shape": {
@@ -36948,10 +36661,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdOrdersOrderIdGetResponsesContentApplicationJsonSchemaCode"
               }
             }
           },
@@ -36992,17 +36703,6 @@
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdGetResponsesContentApplicationJsonSchemaDetailsItems"
                 }
-              }
-            }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdOrdersOrderIdGetResponsesContentApplicationJsonSchemaCode"
               }
             }
           }
@@ -39526,6 +39226,18 @@
         ]
       }
     },
+    "SitesSiteIdOrdersOrderIdPatchResponsesContentApplicationJsonSchemaCode": {
+      "description": "Error code",
+      "name": "SitesSiteIdOrdersOrderIdPatchResponsesContentApplicationJsonSchemaCode",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ecommerce_not_enabled"
+          }
+        ]
+      }
+    },
     "SitesSiteIdOrdersOrderIdPatchResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdOrdersOrderIdPatchResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -39556,18 +39268,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersOrderIdPatchResponsesContentApplicationJsonSchemaCode": {
-      "description": "Error code",
-      "name": "SitesSiteIdOrdersOrderIdPatchResponsesContentApplicationJsonSchemaCode",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ecommerce_not_enabled"
-          }
-        ]
-      }
-    },
     "Update-orderRequestConflictError": {
       "name": "Update-orderRequestConflictError",
       "shape": {
@@ -39580,10 +39280,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdOrdersOrderIdPatchResponsesContentApplicationJsonSchemaCode"
               }
             }
           },
@@ -39624,17 +39322,6 @@
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdPatchResponsesContentApplicationJsonSchemaDetailsItems"
                 }
-              }
-            }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdOrdersOrderIdPatchResponsesContentApplicationJsonSchemaCode"
               }
             }
           }
@@ -42158,6 +41845,18 @@
         ]
       }
     },
+    "SitesSiteIdOrdersOrderIdFulfillPostResponsesContentApplicationJsonSchemaCode": {
+      "description": "Error code",
+      "name": "SitesSiteIdOrdersOrderIdFulfillPostResponsesContentApplicationJsonSchemaCode",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ecommerce_not_enabled"
+          }
+        ]
+      }
+    },
     "SitesSiteIdOrdersOrderIdFulfillPostResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdOrdersOrderIdFulfillPostResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -42188,18 +41887,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersOrderIdFulfillPostResponsesContentApplicationJsonSchemaCode": {
-      "description": "Error code",
-      "name": "SitesSiteIdOrdersOrderIdFulfillPostResponsesContentApplicationJsonSchemaCode",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ecommerce_not_enabled"
-          }
-        ]
-      }
-    },
     "Fulfill-orderRequestConflictError": {
       "name": "Fulfill-orderRequestConflictError",
       "shape": {
@@ -42212,10 +41899,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdOrdersOrderIdFulfillPostResponsesContentApplicationJsonSchemaCode"
               }
             }
           },
@@ -42256,17 +41941,6 @@
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdFulfillPostResponsesContentApplicationJsonSchemaDetailsItems"
                 }
-              }
-            }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdOrdersOrderIdFulfillPostResponsesContentApplicationJsonSchemaCode"
               }
             }
           }
@@ -44790,6 +44464,18 @@
         ]
       }
     },
+    "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesContentApplicationJsonSchemaCode": {
+      "description": "Error code",
+      "name": "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesContentApplicationJsonSchemaCode",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ecommerce_not_enabled"
+          }
+        ]
+      }
+    },
     "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -44820,18 +44506,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesContentApplicationJsonSchemaCode": {
-      "description": "Error code",
-      "name": "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesContentApplicationJsonSchemaCode",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ecommerce_not_enabled"
-          }
-        ]
-      }
-    },
     "Unfulfill-orderRequestConflictError": {
       "name": "Unfulfill-orderRequestConflictError",
       "shape": {
@@ -44844,10 +44518,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesContentApplicationJsonSchemaCode"
               }
             }
           },
@@ -44888,17 +44560,6 @@
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesContentApplicationJsonSchemaDetailsItems"
                 }
-              }
-            }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesContentApplicationJsonSchemaCode"
               }
             }
           }
@@ -47440,6 +47101,18 @@
         ]
       }
     },
+    "SitesSiteIdOrdersOrderIdRefundPostResponsesContentApplicationJsonSchemaCode": {
+      "description": "Error code",
+      "name": "SitesSiteIdOrdersOrderIdRefundPostResponsesContentApplicationJsonSchemaCode",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ecommerce_not_enabled"
+          }
+        ]
+      }
+    },
     "SitesSiteIdOrdersOrderIdRefundPostResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdOrdersOrderIdRefundPostResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -47470,18 +47143,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersOrderIdRefundPostResponsesContentApplicationJsonSchemaCode": {
-      "description": "Error code",
-      "name": "SitesSiteIdOrdersOrderIdRefundPostResponsesContentApplicationJsonSchemaCode",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ecommerce_not_enabled"
-          }
-        ]
-      }
-    },
     "Refund-orderRequestConflictError": {
       "name": "Refund-orderRequestConflictError",
       "shape": {
@@ -47494,10 +47155,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdOrdersOrderIdRefundPostResponsesContentApplicationJsonSchemaCode"
               }
             }
           },
@@ -47538,17 +47197,6 @@
                   "type": "id",
                   "value": "SitesSiteIdOrdersOrderIdRefundPostResponsesContentApplicationJsonSchemaDetailsItems"
                 }
-              }
-            }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdOrdersOrderIdRefundPostResponsesContentApplicationJsonSchemaCode"
               }
             }
           }
@@ -47751,6 +47399,18 @@
         ]
       }
     },
+    "CollectionsCollectionIdItemsItemIdInventoryGetResponsesContentApplicationJsonSchemaCode": {
+      "description": "Error code",
+      "name": "CollectionsCollectionIdItemsItemIdInventoryGetResponsesContentApplicationJsonSchemaCode",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ecommerce_not_enabled"
+          }
+        ]
+      }
+    },
     "CollectionsCollectionIdItemsItemIdInventoryGetResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "CollectionsCollectionIdItemsItemIdInventoryGetResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -47781,18 +47441,6 @@
         ]
       }
     },
-    "CollectionsCollectionIdItemsItemIdInventoryGetResponsesContentApplicationJsonSchemaCode": {
-      "description": "Error code",
-      "name": "CollectionsCollectionIdItemsItemIdInventoryGetResponsesContentApplicationJsonSchemaCode",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ecommerce_not_enabled"
-          }
-        ]
-      }
-    },
     "List-inventoryRequestConflictError": {
       "name": "List-inventoryRequestConflictError",
       "shape": {
@@ -47805,10 +47453,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "CollectionsCollectionIdItemsItemIdInventoryGetResponsesContentApplicationJsonSchemaCode"
               }
             }
           },
@@ -47849,17 +47495,6 @@
                   "type": "id",
                   "value": "CollectionsCollectionIdItemsItemIdInventoryGetResponsesContentApplicationJsonSchemaDetailsItems"
                 }
-              }
-            }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "CollectionsCollectionIdItemsItemIdInventoryGetResponsesContentApplicationJsonSchemaCode"
               }
             }
           }
@@ -48077,6 +47712,18 @@
         ]
       }
     },
+    "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesContentApplicationJsonSchemaCode": {
+      "description": "Error code",
+      "name": "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesContentApplicationJsonSchemaCode",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ecommerce_not_enabled"
+          }
+        ]
+      }
+    },
     "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -48107,18 +47754,6 @@
         ]
       }
     },
-    "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesContentApplicationJsonSchemaCode": {
-      "description": "Error code",
-      "name": "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesContentApplicationJsonSchemaCode",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ecommerce_not_enabled"
-          }
-        ]
-      }
-    },
     "Update-inventoryRequestConflictError": {
       "name": "Update-inventoryRequestConflictError",
       "shape": {
@@ -48131,10 +47766,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesContentApplicationJsonSchemaCode"
               }
             }
           },
@@ -48175,17 +47808,6 @@
                   "type": "id",
                   "value": "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesContentApplicationJsonSchemaDetailsItems"
                 }
-              }
-            }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesContentApplicationJsonSchemaCode"
               }
             }
           }
@@ -48377,6 +47999,18 @@
         ]
       }
     },
+    "SitesSiteIdEcommerceSettingsGetResponsesContentApplicationJsonSchemaCode": {
+      "description": "Error code",
+      "name": "SitesSiteIdEcommerceSettingsGetResponsesContentApplicationJsonSchemaCode",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ecommerce_not_enabled"
+          }
+        ]
+      }
+    },
     "SitesSiteIdEcommerceSettingsGetResponsesContentApplicationJsonSchemaDetailsItems": {
       "name": "SitesSiteIdEcommerceSettingsGetResponsesContentApplicationJsonSchemaDetailsItems",
       "shape": {
@@ -48407,18 +48041,6 @@
         ]
       }
     },
-    "SitesSiteIdEcommerceSettingsGetResponsesContentApplicationJsonSchemaCode": {
-      "description": "Error code",
-      "name": "SitesSiteIdEcommerceSettingsGetResponsesContentApplicationJsonSchemaCode",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "ecommerce_not_enabled"
-          }
-        ]
-      }
-    },
     "Ecommerce-settingsRequestConflictError": {
       "name": "Ecommerce-settingsRequestConflictError",
       "shape": {
@@ -48431,10 +48053,8 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+                "type": "id",
+                "value": "SitesSiteIdEcommerceSettingsGetResponsesContentApplicationJsonSchemaCode"
               }
             }
           },
@@ -48475,17 +48095,6 @@
                   "type": "id",
                   "value": "SitesSiteIdEcommerceSettingsGetResponsesContentApplicationJsonSchemaDetailsItems"
                 }
-              }
-            }
-          },
-          {
-            "description": "Error code",
-            "key": "code",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "SitesSiteIdEcommerceSettingsGetResponsesContentApplicationJsonSchemaCode"
               }
             }
           }

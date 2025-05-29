@@ -196,22 +196,6 @@ public partial class ServiceClient
     ///         CastMember = new Actor { Name = "name", Id = "id" },
     ///         ExtendedMovie = new ExtendedMovie
     ///         {
-    ///             Id = "id",
-    ///             Prequel = "prequel",
-    ///             Title = "title",
-    ///             From = "from",
-    ///             Rating = 1.1,
-    ///             Type = "movie",
-    ///             Tag = "tag",
-    ///             Book = "book",
-    ///             Metadata = new Dictionary&lt;string, object&gt;()
-    ///             {
-    ///                 {
-    ///                     "metadata",
-    ///                     new Dictionary&lt;object, object?&gt;() { { "key", "value" } }
-    ///                 },
-    ///             },
-    ///             Revenue = 1000000,
     ///             Cast = new List&lt;string&gt;() { "cast", "cast" },
     ///             Id = "id",
     ///             Prequel = "prequel",
