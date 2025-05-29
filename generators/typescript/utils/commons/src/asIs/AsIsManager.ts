@@ -38,7 +38,7 @@ export class AsIsManager {
     }
 
     public async AddToTsProject({ project }: { project: Project }): Promise<void> {
-        let filesToCopy: Record<string, string>[] = [];
+        const filesToCopy: Record<string, string>[] = [];
 
         filesToCopy.push(this.useBigInt ? asIsFiles.json.bigint : asIsFiles.json.vanilla);
         if (this.useBigInt) {

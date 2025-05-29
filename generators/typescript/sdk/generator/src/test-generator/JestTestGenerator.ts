@@ -203,6 +203,7 @@ describe("test", () => {
                 },
                 _other: () => {
                     // noop
+                    return;
                 }
             });
         });
