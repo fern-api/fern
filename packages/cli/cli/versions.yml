@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Use `x-fern-type-name` to override the generated request name for endpoints.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-29"
+  version: 0.63.21
+
+- changelogEntry:
+    - summary: |
         Implement V3 parser support for streamCondition endpoints.
       type: fix
   irVersion: 58
