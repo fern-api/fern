@@ -418,6 +418,8 @@ function getUrlForExample(endpoint: HttpEndpoint, example: Omit<ExampleEndpointC
     );
     const url =
         endpoint.fullPath.head +
-        endpoint.fullPath.parts.map((pathPart) => pathParameters[pathPart.pathParameter] + pathPart.tail).join("");
+        endpoint.fullPath.parts
+            .map((pathPart) => encodeURIComponent(`${pathParameters[pathPart.pathParameter]}`) + pathPart.tail)
+            .join("");
     return url.startsWith("/") || url === "" ? url : `/${url}`;
 }

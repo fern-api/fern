@@ -19207,7 +19207,7 @@
             {
               "name": "deleteProjectInviteExample",
               "description": "",
-              "path": "/v1/projects/123456-7890-1234-5678-901234/invites/john.doe@example.com",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/invites/john.doe%40example.com",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "email": "john.doe@example.com"
