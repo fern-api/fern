@@ -29835,7 +29835,7 @@
             {
               "name": "User reply",
               "description": "",
-              "path": "/conversations/123 or \"last\"/reply",
+              "path": "/conversations/123%20or%20%22last%22/reply",
               "pathParameters": {
                 "id": "123 or \"last\""
               },
@@ -30032,7 +30032,7 @@
             {
               "name": "Admin note reply",
               "description": "",
-              "path": "/conversations/123 or \"last\"/reply",
+              "path": "/conversations/123%20or%20%22last%22/reply",
               "pathParameters": {
                 "id": "123 or \"last\""
               },
@@ -30219,7 +30219,7 @@
             {
               "name": "User last conversation reply",
               "description": "",
-              "path": "/conversations/123 or \"last\"/reply",
+              "path": "/conversations/123%20or%20%22last%22/reply",
               "pathParameters": {
                 "id": "123 or \"last\""
               },
@@ -30416,7 +30416,7 @@
             {
               "name": "Not found",
               "description": "",
-              "path": "/conversations/123 or \"last\"/reply",
+              "path": "/conversations/123%20or%20%22last%22/reply",
               "pathParameters": {
                 "id": "123 or \"last\""
               },
