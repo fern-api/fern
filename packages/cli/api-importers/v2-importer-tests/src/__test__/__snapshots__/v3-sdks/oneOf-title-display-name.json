@@ -401,27 +401,7 @@
       "pathParameters": [],
       "endpoints": [
         {
-          "id": "endpoint_.postTestOneOfDisplayName",
           "method": "POST",
-          "name": {
-            "originalName": "postTestOneOfDisplayName",
-            "camelCase": {
-              "unsafeName": "postTestOneOfDisplayName",
-              "safeName": "postTestOneOfDisplayName"
-            },
-            "snakeCase": {
-              "unsafeName": "post_test_one_of_display_name",
-              "safeName": "post_test_one_of_display_name"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME",
-              "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME"
-            },
-            "pascalCase": {
-              "unsafeName": "PostTestOneOfDisplayName",
-              "safeName": "PostTestOneOfDisplayName"
-            }
-          },
           "path": {
             "head": "/test-one-of-display-name",
             "parts": []
@@ -429,112 +409,6 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
-          "requestBody": {
-            "contentType": "application/json",
-            "name": {
-              "originalName": "postTestOneOfDisplayName_Request",
-              "camelCase": {
-                "unsafeName": "postTestOneOfDisplayNameRequest",
-                "safeName": "postTestOneOfDisplayNameRequest"
-              },
-              "snakeCase": {
-                "unsafeName": "post_test_one_of_display_name_request",
-                "safeName": "post_test_one_of_display_name_request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST",
-                "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "PostTestOneOfDisplayNameRequest",
-                "safeName": "PostTestOneOfDisplayNameRequest"
-              }
-            },
-            "extendedProperties": [],
-            "extends": [],
-            "properties": [
-              {
-                "name": {
-                  "name": {
-                    "originalName": "fields",
-                    "camelCase": {
-                      "unsafeName": "fields",
-                      "safeName": "fields"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "fields",
-                      "safeName": "fields"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "FIELDS",
-                      "safeName": "FIELDS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Fields",
-                      "safeName": "Fields"
-                    }
-                  },
-                  "wireValue": "fields"
-                },
-                "valueType": {
-                  "container": {
-                    "optional": {
-                      "container": {
-                        "list": {
-                          "fernFilepath": {
-                            "allParts": [],
-                            "packagePath": []
-                          },
-                          "name": {
-                            "originalName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
-                            "camelCase": {
-                              "unsafeName": "testOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
-                              "safeName": "testOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "test_one_of_display_name_post_request_body_content_application_json_schema_fields_items",
-                              "safeName": "test_one_of_display_name_post_request_body_content_application_json_schema_fields_items"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "TEST_ONE_OF_DISPLAY_NAME_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_FIELDS_ITEMS",
-                              "safeName": "TEST_ONE_OF_DISPLAY_NAME_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_FIELDS_ITEMS"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
-                              "safeName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems"
-                            }
-                          },
-                          "typeId": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
-                          "inline": false,
-                          "type": "named"
-                        },
-                        "type": "list"
-                      },
-                      "type": "container"
-                    },
-                    "type": "optional"
-                  },
-                  "type": "container"
-                },
-                "v2Examples": {
-                  "userSpecifiedExamples": {},
-                  "autogeneratedExamples": {
-                    "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFields_example_autogenerated": [
-                      {}
-                    ]
-                  }
-                }
-              }
-            ],
-            "extraProperties": false,
-            "v2Examples": {
-              "userSpecifiedExamples": {},
-              "autogeneratedExamples": {
-                "postTestOneOfDisplayNameExample": {}
-              }
-            },
-            "type": "inlinedRequestBody"
-          },
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],
@@ -737,34 +611,134 @@
             "parts": []
           },
           "allPathParameters": [],
-          "v2Examples": {
-            "autogeneratedExamples": {
-              "postTestOneOfDisplayNameExample": {
-                "request": {
-                  "endpoint": {
-                    "method": "POST",
-                    "path": "/test-one-of-display-name"
-                  },
-                  "pathParameters": {},
-                  "queryParameters": {},
-                  "headers": {},
-                  "requestBody": {}
-                },
-                "response": {
-                  "statusCode": 200,
-                  "body": {
-                    "value": {
-                      "id": "foo"
+          "source": {
+            "type": "openapi"
+          },
+          "id": "endpoint_.postTestOneOfDisplayName",
+          "name": {
+            "originalName": "postTestOneOfDisplayName",
+            "camelCase": {
+              "unsafeName": "postTestOneOfDisplayName",
+              "safeName": "postTestOneOfDisplayName"
+            },
+            "snakeCase": {
+              "unsafeName": "post_test_one_of_display_name",
+              "safeName": "post_test_one_of_display_name"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME",
+              "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME"
+            },
+            "pascalCase": {
+              "unsafeName": "PostTestOneOfDisplayName",
+              "safeName": "PostTestOneOfDisplayName"
+            }
+          },
+          "requestBody": {
+            "contentType": "application/json",
+            "name": {
+              "originalName": "postTestOneOfDisplayName_Request",
+              "camelCase": {
+                "unsafeName": "postTestOneOfDisplayNameRequest",
+                "safeName": "postTestOneOfDisplayNameRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "post_test_one_of_display_name_request",
+                "safeName": "post_test_one_of_display_name_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST",
+                "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "PostTestOneOfDisplayNameRequest",
+                "safeName": "PostTestOneOfDisplayNameRequest"
+              }
+            },
+            "extendedProperties": [],
+            "extends": [],
+            "properties": [
+              {
+                "name": {
+                  "name": {
+                    "originalName": "fields",
+                    "camelCase": {
+                      "unsafeName": "fields",
+                      "safeName": "fields"
                     },
-                    "type": "json"
+                    "snakeCase": {
+                      "unsafeName": "fields",
+                      "safeName": "fields"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "FIELDS",
+                      "safeName": "FIELDS"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Fields",
+                      "safeName": "Fields"
+                    }
+                  },
+                  "wireValue": "fields"
+                },
+                "valueType": {
+                  "container": {
+                    "optional": {
+                      "container": {
+                        "list": {
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "name": {
+                            "originalName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
+                            "camelCase": {
+                              "unsafeName": "testOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
+                              "safeName": "testOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "test_one_of_display_name_post_request_body_content_application_json_schema_fields_items",
+                              "safeName": "test_one_of_display_name_post_request_body_content_application_json_schema_fields_items"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "TEST_ONE_OF_DISPLAY_NAME_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_FIELDS_ITEMS",
+                              "safeName": "TEST_ONE_OF_DISPLAY_NAME_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_FIELDS_ITEMS"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
+                              "safeName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems"
+                            }
+                          },
+                          "typeId": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
+                          "inline": false,
+                          "type": "named"
+                        },
+                        "type": "list"
+                      },
+                      "type": "container"
+                    },
+                    "type": "optional"
+                  },
+                  "type": "container"
+                },
+                "v2Examples": {
+                  "userSpecifiedExamples": {},
+                  "autogeneratedExamples": {
+                    "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFields_example_autogenerated": [
+                      {}
+                    ]
                   }
                 }
               }
+            ],
+            "extraProperties": false,
+            "v2Examples": {
+              "userSpecifiedExamples": {},
+              "autogeneratedExamples": {
+                "postTestOneOfDisplayNameExample": {}
+              }
             },
-            "userSpecifiedExamples": {}
-          },
-          "source": {
-            "type": "openapi"
+            "type": "inlinedRequestBody"
           },
           "response": {
             "statusCode": 200,
@@ -810,6 +784,32 @@
               },
               "type": "json"
             }
+          },
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "postTestOneOfDisplayNameExample": {
+                "request": {
+                  "endpoint": {
+                    "method": "POST",
+                    "path": "/test-one-of-display-name"
+                  },
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "headers": {},
+                  "requestBody": {}
+                },
+                "response": {
+                  "statusCode": 200,
+                  "body": {
+                    "value": {
+                      "id": "foo"
+                    },
+                    "type": "json"
+                  }
+                }
+              }
+            },
+            "userSpecifiedExamples": {}
           }
         }
       ]

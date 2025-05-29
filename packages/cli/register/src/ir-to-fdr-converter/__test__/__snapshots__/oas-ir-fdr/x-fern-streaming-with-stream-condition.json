@@ -120,6 +120,138 @@
             "baseUrl": "https://api.streamingtest.io"
           }
         ],
+        "id": "chat_stream",
+        "originalEndpointId": "endpoint_.chat_stream",
+        "name": "Start a chat",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/v2/chats"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [
+          {
+            "description": "The API will make a best effort to complete the request in the specified seconds or time out.",
+            "key": "Request-Timeout",
+            "type": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          },
+          {
+            "description": "The API will make a best effort to complete the request in the specified milliseconds or time out.",
+            "key": "Request-Timeout-Millis",
+            "type": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          }
+        ],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "The chat message or question.",
+                  "key": "query",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "description": "Indicates whether the response should be streamed or not.",
+                  "key": "stream_response",
+                  "valueType": {
+                    "type": "literal",
+                    "value": {
+                      "type": "booleanLiteral",
+                      "value": true
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "stream",
+            "shape": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "ChatStreamedResponse"
+              }
+            }
+          },
+          "statusCode": 200,
+          "description": "A response to a chat request."
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "chatExample",
+            "description": "",
+            "path": "/v2/chats",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "query": "How can I use the Vectara platform?",
+              "stream_response": true
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "query": "How can I use the Vectara platform?",
+                "stream_response": true
+              }
+            },
+            "responseStatusCode": 200
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      },
+      {
+        "auth": false,
+        "description": "Create a chat while specifying the default retrieval parameters used by the prompt.",
+        "method": "POST",
+        "defaultEnvironment": "https://api.streamingtest.io",
+        "environments": [
+          {
+            "id": "https://api.streamingtest.io",
+            "baseUrl": "https://api.streamingtest.io"
+          }
+        ],
         "id": "chat",
         "originalEndpointId": "endpoint_.chat",
         "name": "Start a chat",
@@ -172,23 +304,40 @@
             "type": "json",
             "contentType": "application/json",
             "shape": {
-              "type": "reference",
-              "value": {
-                "type": "id",
-                "value": "ChatRequest"
-              }
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "description": "The chat message or question.",
+                  "key": "query",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "description": "Indicates whether the response should be streamed or not.",
+                  "key": "stream_response",
+                  "valueType": {
+                    "type": "literal",
+                    "value": {
+                      "type": "booleanLiteral",
+                      "value": false
+                    }
+                  }
+                }
+              ]
             }
           }
         },
         "response": {
           "type": {
-            "type": "stream",
-            "shape": {
-              "type": "reference",
-              "value": {
-                "type": "id",
-                "value": "ChatFullResponse"
-              }
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "ChatFullResponse"
             }
           },
           "statusCode": 200,
@@ -204,35 +353,17 @@
             "queryParameters": {},
             "headers": {},
             "requestBody": {
-              "query": "How can I use the Vectara platform?"
+              "query": "How can I use the Vectara platform?",
+              "stream_response": false
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
-                "query": "How can I use the Vectara platform?"
+                "query": "How can I use the Vectara platform?",
+                "stream_response": false
               }
             },
-            "responseStatusCode": 200,
-            "responseBody": [
-              {
-                "chat_id": "foo",
-                "turn_id": "foo",
-                "answer": "foo"
-              }
-            ],
-            "responseBodyV3": {
-              "type": "stream",
-              "value": [
-                {
-                  "type": "json",
-                  "value": {
-                    "chat_id": "foo",
-                    "turn_id": "foo",
-                    "answer": "foo"
-                  }
-                }
-              ]
-            }
+            "responseStatusCode": 200
           }
         ],
         "protocol": {
