@@ -579,7 +579,7 @@
                                     }
                                 }
                             },
-                            "displayName": null,
+                            "displayName": "Cat",
                             "typeId": "type_ast:Cat",
                             "default": null,
                             "inline": null
@@ -651,7 +651,7 @@
                                     }
                                 }
                             },
-                            "displayName": null,
+                            "displayName": "Dog",
                             "typeId": "type_ast:Dog",
                             "default": null,
                             "inline": null
@@ -816,7 +816,7 @@
                                     }
                                 }
                             },
-                            "displayName": null,
+                            "displayName": "Acai",
                             "typeId": "type_ast:Acai",
                             "default": null,
                             "inline": null
@@ -888,7 +888,7 @@
                                     }
                                 }
                             },
-                            "displayName": null,
+                            "displayName": "Fig",
                             "typeId": "type_ast:Fig",
                             "default": null,
                             "inline": null
@@ -1053,7 +1053,7 @@
                                     }
                                 }
                             },
-                            "displayName": null,
+                            "displayName": "Branch Node",
                             "typeId": "type_ast:BranchNode",
                             "default": null,
                             "inline": null
@@ -1125,7 +1125,7 @@
                                     }
                                 }
                             },
-                            "displayName": null,
+                            "displayName": "Leaf Node",
                             "typeId": "type_ast:LeafNode",
                             "default": null,
                             "inline": null
