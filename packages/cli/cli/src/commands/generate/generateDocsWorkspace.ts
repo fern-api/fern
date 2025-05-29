@@ -30,7 +30,18 @@ export async function generateDocsWorkspace({
     const shouldSkipAuth = process.env["FERN_AUTH_NO_VERIFY"] === "true";
 
     let token: FernToken | null = null;
-    if (!shouldSkipAuth) {
+    if (shouldSkipAuth) {
+        // TODO this is a bit hacky, might be a better way to do this
+        const fernToken = process.env["FERN_TOKEN"];
+        if (!fernToken) {
+            cliContext.failAndThrow("No token found. Please set the FERN_TOKEN environment variable.");
+            return;
+        }
+        token = {
+            type: "organization",
+            value: fernToken
+        };
+    } else {
         token = await cliContext.runTask(async (context) => {
             return askToLogin(context);
         });
