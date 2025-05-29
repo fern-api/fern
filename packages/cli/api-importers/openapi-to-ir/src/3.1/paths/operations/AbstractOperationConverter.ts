@@ -136,7 +136,11 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                             }
                         }
 
-                        if (!HEADERS_TO_SKIP.has(headerName.toLowerCase()) && !duplicateHeader) {
+                        if (
+                            !HEADERS_TO_SKIP.has(headerName.toLowerCase()) &&
+                            !duplicateHeader &&
+                            !this.context.globalHeaderNames?.includes(headerWireValue)
+                        ) {
                             headers.push(convertedParameter.parameter);
                         }
                         break;
