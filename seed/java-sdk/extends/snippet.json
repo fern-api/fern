@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "5800f13d",
+            "example_identifier": "9c39292d",
             "id": {
                 "method": "POST",
                 "path": "/extends/extended-inline-request-body",
@@ -9,8 +9,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.extends.SeedExtendsClient;\nimport com.seed.extends.requests.Inlined;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExtendsClient client = SeedExtendsClient\n            .builder()\n            .build();\n\n        client.extendedInlineRequestBody(\n            Inlined\n                .builder()\n                .docs(\"docs\")\n                .name(\"name\")\n                .unique(\"unique\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.extends.SeedExtendsClient;\nimport com.seed.extends.requests.Inlined;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExtendsClient client = SeedExtendsClient\n            .builder()\n            .build();\n\n        client.extendedInlineRequestBody(\n            Inlined\n                .builder()\n                .docs(\"docs\")\n                .name(\"name\")\n                .unique(\"unique\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.extends.SeedExtendsClient;\nimport com.seed.extends.requests.Inlined;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExtendsClient client = SeedExtendsClient\n            .builder()\n            .build();\n\n        client.extendedInlineRequestBody(\n            Inlined\n                .builder()\n                .name(\"name\")\n                .docs(\"docs\")\n                .unique(\"unique\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.extends.SeedExtendsClient;\nimport com.seed.extends.requests.Inlined;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExtendsClient client = SeedExtendsClient\n            .builder()\n            .build();\n\n        client.extendedInlineRequestBody(\n            Inlined\n                .builder()\n                .name(\"name\")\n                .docs(\"docs\")\n                .unique(\"unique\")\n                .build()\n        );\n    }\n}\n"
             }
         }
     ],

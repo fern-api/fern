@@ -4,5 +4,4 @@
 
 from . import package
 from .package import Package, Record
-
 __all__ = ["Package", "Record", "package"]

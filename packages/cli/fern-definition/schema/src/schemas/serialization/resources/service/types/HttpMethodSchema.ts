@@ -9,8 +9,8 @@ import * as core from "../../../../core";
 export const HttpMethodSchema: core.serialization.Schema<
     serializers.HttpMethodSchema.Raw,
     FernDefinition.HttpMethodSchema
-> = core.serialization.enum_(["GET", "POST", "PUT", "PATCH", "DELETE"]);
+> = core.serialization.enum_(["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"]);
 
 export declare namespace HttpMethodSchema {
-    export type Raw = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+    export type Raw = "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD";
 }

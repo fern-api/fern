@@ -1,5 +1,199 @@
 - changelogEntry:
     - summary: |
+        Parse the `x-fern-global-headers` extension to add global headers to the IR.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-29"
+  version: 0.63.18
+
+- changelogEntry:
+    - summary: Encode path parameters appropriately when constructing URLs.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-29"
+  version: 0.63.17
+
+- changelogEntry:
+    - summary: | 
+        Added support for `oneOf` within `allOf` schemas in OpenAPI conversion. When an `allOf` schema contains a `oneOf` schema, we now properly merge the properties while preserving the union type structure. For example:
+
+        ```yaml
+        allOf:
+          - type: object
+            properties:
+              name: string
+          - oneOf:
+              - type: object
+                properties:
+                  type: string
+              - type: object
+                properties:
+                  kind: number
+        ```
+
+        This will be converted to a Fern type that combines the base properties with the union type options.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-28"
+  version: 0.63.16
+
+- changelogEntry:
+    - summary: | 
+        The `<Code>` component now supports more flexible prop ordering and additional properties. You can now specify `maxLines` and `focus` props in any order relative to the `src` prop. For example:
+
+        ```mdx
+        <Code src="../snippets/example.ts" maxLines={20} focus={1-18} />
+        <Code maxLines={20} focus={1-18} src="../snippets/example.ts" />
+        ```
+
+        Both formats will work the same way, preserving the specified properties in the generated markdown. The component will automatically detect and include any additional props in the code block's metastring.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-28"
+  version: 0.63.15
+
+- changelogEntry:
+    - summary: Fix duplicate properties in example IR generation.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-28"
+  version: 0.63.14
+
+- changelogEntry:
+    - summary: Make nullable properties optional in examples in the Fern Definition.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-28"
+  version: 0.63.13
+
+- changelogEntry:
+    - summary: Fix parameter name collisions for enums
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-28"
+  version: 0.63.12
+  
+- changelogEntry:
+    - summary: |
+        Mark readonly fields as optional in the IR.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-28"
+  version: 0.63.11-rc0
+
+- changelogEntry:
+    - summary: Fix missing properties from base schemas in example generation.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-27"
+  version: 0.63.10
+
+- changelogEntry:
+    - summary: Rerelease CLI at 0.63.8-rc1
+      type: internal
+  irVersion: 58
+  createdAt: "2025-05-27"
+  version: 0.63.9
+
+- changelogEntry:
+    - summary: |
+        Fix a bug where `additionalProperties: false` would lead to objects still being converted as maps.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-27"
+  version: 0.63.8-rc3
+
+- changelogEntry:
+    - summary: |
+        Rerelease CLI at 0.63.8-rc1
+      type: internal
+  irVersion: 58
+  createdAt: "2025-05-27"
+  version: 0.63.8-rc2
+
+- changelogEntry:
+    - summary: |
+        Support retrieving subpackages in the ApiDefinitionHolder by both the id locator and tag locator.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-27"
+  version: 0.63.8-rc1
+
+- changelogEntry:
+    - summary: |
+        Beta support for custom React components in local development mode.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-05-27"
+  version: 0.63.8-rc0
+
+- changelogEntry:
+    - summary: |
+        Support running python generators with v58 of IR.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-27"
+  version: 0.63.7
+
+- changelogEntry:
+    - summary: |
+        Union variant names use 'display-name' for Fern definitions, and fallback to the type name for all others
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-23"
+  version: 0.63.6
+
+- changelogEntry:
+    - summary: |
+        Fix a bug where stream endpoint response types would not be stored in the IR.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-22"
+  version: 0.63.5
+
+- changelogEntry:
+    - summary: |
+        Fix a bug where array property examples would not be used in favor of item examples.
+        Correctly process `additionalProperties: true` case for empty object schemas.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-22"
+  version: 0.63.4
+
+- changelogEntry:
+    - summary: |
+        Re-release `0.63.2`
+      type: internal
+  irVersion: 58
+  createdAt: "2025-05-22"
+  version: 0.63.3
+
+- changelogEntry:
+    - summary: |
+        The CLI now recognizes that Go `1.1.0` requires IRv58.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-22"
+  version: 0.63.2
+
+- changelogEntry:
+    - summary: |
+        Add support for rendering and parsing multiple endpoint baseUrls in the v3 parser.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-05-22"
+  version: 0.63.1
+
+- changelogEntry:
+    - summary: |
+        Add support for `HEAD` HTTP methods and validate that they define no response body.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-05-22"
+  version: 0.63.0
+
+- changelogEntry:
+    - summary: |
         Add support for overriding auth in generators.yml. You can now specify auth for a specific generator by adding an `api` field with an `auth` property. For example:
 
         ```yaml

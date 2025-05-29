@@ -23,7 +23,7 @@
     - summary: |
         Send only request body reference for body-only wrapped request
       type: fix
-  createdAt: '2025-2-3'
+  createdAt: '2025-02-03'
   irVersion: 53
   version: 1.5.1
 - changelogEntry:

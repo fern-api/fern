@@ -7001,8 +7001,8 @@
         ]
       }
     },
-    "AccountHistoryGetParametersSchema": {
-      "name": "AccountHistoryGetParametersSchema",
+    "AccountHistoryGetParametersType": {
+      "name": "AccountHistoryGetParametersType",
       "shape": {
         "type": "enum",
         "values": [
@@ -7042,8 +7042,39 @@
         ]
       }
     },
-    "AlgoOrdersHistoryGetParametersSchema": {
-      "name": "AlgoOrdersHistoryGetParametersSchema",
+    "AlgoOrdersHistoryGetParametersSide": {
+      "name": "AlgoOrdersHistoryGetParametersSide",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "BUY"
+          },
+          {
+            "value": "SELL"
+          }
+        ]
+      }
+    },
+    "AlgoOrdersHistoryGetParametersStatus": {
+      "name": "AlgoOrdersHistoryGetParametersStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "OPEN"
+          },
+          {
+            "value": "CLOSED"
+          },
+          {
+            "value": "NEW"
+          }
+        ]
+      }
+    },
+    "AlgoOrdersHistoryGetParametersType": {
+      "name": "AlgoOrdersHistoryGetParametersType",
       "shape": {
         "type": "enum",
         "values": [
@@ -7242,8 +7273,8 @@
         ]
       }
     },
-    "MarketsKlinesGetParametersSchema": {
-      "name": "MarketsKlinesGetParametersSchema",
+    "MarketsKlinesGetParametersPriceKind": {
+      "name": "MarketsKlinesGetParametersPriceKind",
       "shape": {
         "type": "enum",
         "values": [
@@ -7307,8 +7338,39 @@
         ]
       }
     },
-    "OrdersHistoryGetParametersSchema": {
-      "name": "OrdersHistoryGetParametersSchema",
+    "OrdersHistoryGetParametersSide": {
+      "name": "OrdersHistoryGetParametersSide",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "BUY"
+          },
+          {
+            "value": "SELL"
+          }
+        ]
+      }
+    },
+    "OrdersHistoryGetParametersStatus": {
+      "name": "OrdersHistoryGetParametersStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "OPEN"
+          },
+          {
+            "value": "CLOSED"
+          },
+          {
+            "value": "NEW"
+          }
+        ]
+      }
+    },
+    "OrdersHistoryGetParametersType": {
+      "name": "OrdersHistoryGetParametersType",
       "shape": {
         "type": "enum",
         "values": [
@@ -7483,8 +7545,8 @@
         ]
       }
     },
-    "TransfersGetParametersSchema": {
-      "name": "TransfersGetParametersSchema",
+    "TransfersGetParametersStatus": {
+      "name": "TransfersGetParametersStatus",
       "shape": {
         "type": "enum",
         "values": [
@@ -7599,8 +7661,25 @@
         ]
       }
     },
-    "VaultsHistoryGetParametersSchema": {
-      "name": "VaultsHistoryGetParametersSchema",
+    "VaultsHistoryGetParametersType": {
+      "name": "VaultsHistoryGetParametersType",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "pnl"
+          },
+          {
+            "value": "value"
+          },
+          {
+            "value": "price"
+          }
+        ]
+      }
+    },
+    "VaultsHistoryGetParametersResolution": {
+      "name": "VaultsHistoryGetParametersResolution",
       "shape": {
         "type": "enum",
         "values": [
@@ -12643,7 +12722,7 @@
               "key": "type",
               "type": {
                 "type": "id",
-                "value": "AccountHistoryGetParametersSchema"
+                "value": "AccountHistoryGetParametersType"
               }
             }
           ],
@@ -15590,7 +15669,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "AlgoOrdersHistoryGetParametersSchema"
+                  "value": "AlgoOrdersHistoryGetParametersSide"
                 }
               }
             },
@@ -15614,7 +15693,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "AlgoOrdersHistoryGetParametersSchema"
+                  "value": "AlgoOrdersHistoryGetParametersStatus"
                 }
               }
             },
@@ -15625,7 +15704,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "AlgoOrdersHistoryGetParametersSchema"
+                  "value": "AlgoOrdersHistoryGetParametersType"
                 }
               }
             }
@@ -16644,7 +16723,8 @@
                     "strike_price": "66500",
                     "symbol": "ETH-USD-PERP",
                     "tags": [
-                      "foo"
+                      "MEME",
+                      "DEFI"
                     ]
                   }
                 ]
@@ -16714,7 +16794,8 @@
                       "strike_price": "66500",
                       "symbol": "ETH-USD-PERP",
                       "tags": [
-                        "foo"
+                        "MEME",
+                        "DEFI"
                       ]
                     }
                   ]
@@ -16771,7 +16852,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "MarketsKlinesGetParametersSchema"
+                  "value": "MarketsKlinesGetParametersPriceKind"
                 }
               }
             },
@@ -17883,7 +17964,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "OrdersHistoryGetParametersSchema"
+                  "value": "OrdersHistoryGetParametersSide"
                 }
               }
             },
@@ -17907,7 +17988,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "OrdersHistoryGetParametersSchema"
+                  "value": "OrdersHistoryGetParametersStatus"
                 }
               }
             },
@@ -17918,7 +17999,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "OrdersHistoryGetParametersSchema"
+                  "value": "OrdersHistoryGetParametersType"
                 }
               }
             }
@@ -19682,7 +19763,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "TransfersGetParametersSchema"
+                  "value": "TransfersGetParametersStatus"
                 }
               }
             }
@@ -20593,7 +20674,7 @@
               "key": "type",
               "type": {
                 "type": "id",
-                "value": "VaultsHistoryGetParametersSchema"
+                "value": "VaultsHistoryGetParametersType"
               }
             },
             {
@@ -20601,7 +20682,7 @@
               "key": "resolution",
               "type": {
                 "type": "id",
-                "value": "VaultsHistoryGetParametersSchema"
+                "value": "VaultsHistoryGetParametersResolution"
               }
             }
           ],

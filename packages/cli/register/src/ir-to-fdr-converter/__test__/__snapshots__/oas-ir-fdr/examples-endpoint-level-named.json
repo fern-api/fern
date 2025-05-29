@@ -156,6 +156,60 @@
         "extends": [],
         "properties": []
       }
+    },
+    "SucculentsPostRequestBodyContentApplicationJsonSchemaSucculentsItems": {
+      "name": "SucculentsPostRequestBodyContentApplicationJsonSchemaSucculentsItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "createSucculents_Response_201": {
+      "name": "createSucculents_Response_201",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "code",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "subpackages": {},
@@ -846,6 +900,116 @@
               }
             },
             "responseStatusCode": 200
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "id": "createSucculents",
+        "originalEndpointId": "endpoint_.createSucculents",
+        "name": "Create several new succulents",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/succulents"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "succulents",
+                  "valueType": {
+                    "type": "list",
+                    "itemType": {
+                      "type": "id",
+                      "value": "SucculentsPostRequestBodyContentApplicationJsonSchemaSucculentsItems"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "createSucculents_Response_201"
+            }
+          },
+          "statusCode": 201,
+          "description": "Succulents created successfully"
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "createSucculents_example",
+            "description": "",
+            "path": "/succulents",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "succulents": [
+                {
+                  "name": "Aeonium"
+                },
+                {
+                  "name": "Sedum"
+                },
+                {
+                  "name": "Crassula"
+                }
+              ]
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "succulents": [
+                  {
+                    "name": "Aeonium"
+                  },
+                  {
+                    "name": "Sedum"
+                  },
+                  {
+                    "name": "Crassula"
+                  }
+                ]
+              }
+            },
+            "responseStatusCode": 201,
+            "responseBody": {
+              "message": "Succulents created successfully",
+              "code": 201
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "message": "Succulents created successfully",
+                "code": 201
+              }
+            }
           }
         ],
         "protocol": {

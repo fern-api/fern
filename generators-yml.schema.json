@@ -2715,6 +2715,16 @@
     "group.GeneratorAPISettingsSchema": {
       "type": "object",
       "properties": {
+        "auth": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fernDefinition.auth.ApiAuthSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "settings": {
           "oneOf": [
             {

@@ -1,4 +1,5 @@
 import { camelCase } from "lodash-es";
+import { OpenAPIV3_1 } from "openapi-types";
 
 import { Audiences } from "@fern-api/configuration";
 import { FernIr, IntermediateRepresentation, Package } from "@fern-api/ir-sdk";
@@ -233,6 +234,22 @@ export abstract class AbstractSpecConverter<
         return value;
     }
 
+    protected shouldAddServerToCollectedServers({
+        server,
+        currentServers
+    }: {
+        server: OpenAPIV3_1.ServerObject;
+        currentServers: OpenAPIV3_1.ServerObject[];
+    }): boolean {
+        return !currentServers.some(
+            (s) =>
+                s.url === server.url &&
+                "x-fern-server-name" in s &&
+                "x-fern-server-name" in server &&
+                s["x-fern-server-name"] === server["x-fern-server-name"]
+        );
+    }
+
     protected addEndpointToIr({
         endpoint,
         audiences,
@@ -346,6 +363,10 @@ export abstract class AbstractSpecConverter<
         for (const error of Object.values(errors)) {
             this.irGraph.addError(error);
         }
+    }
+
+    protected addGlobalHeadersToIr(globalHeaders: FernIr.HttpHeader[]): void {
+        this.ir.headers = globalHeaders;
     }
 
     protected addEnvironmentsToIr({

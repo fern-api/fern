@@ -294,6 +294,7 @@ export class Service {
      *             id: "id"
      *         },
      *         extendedMovie: {
+     *             cast: ["cast", "cast"],
      *             id: "id",
      *             prequel: "prequel",
      *             title: "title",
@@ -307,8 +308,7 @@ export class Service {
      *                     "key": "value"
      *                 }
      *             },
-     *             revenue: 1000000,
-     *             cast: ["cast", "cast"]
+     *             revenue: 1000000
      *         },
      *         entity: {
      *             type: "primitive",

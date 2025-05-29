@@ -157,7 +157,7 @@
             }
         },
         {
-            "example_identifier": "79b41356",
+            "example_identifier": "e6281a66",
             "id": {
                 "method": "POST",
                 "path": "/v2/playlist/{serviceParam}/create",
@@ -170,7 +170,7 @@
             }
         },
         {
-            "example_identifier": "b07406f",
+            "example_identifier": "513457ef",
             "id": {
                 "method": "GET",
                 "path": "/v2/playlist/{serviceParam}/all",
@@ -183,7 +183,7 @@
             }
         },
         {
-            "example_identifier": "33834ea9",
+            "example_identifier": "c5db3399",
             "id": {
                 "method": "GET",
                 "path": "/v2/playlist/{serviceParam}/{playlistId}",
@@ -196,7 +196,7 @@
             }
         },
         {
-            "example_identifier": "adb91320",
+            "example_identifier": "56f82548",
             "id": {
                 "method": "PUT",
                 "path": "/v2/playlist/{serviceParam}/{playlistId}",

@@ -1188,16 +1188,22 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uuid"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uuid"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -1229,10 +1235,16 @@
               "wireValue": "created"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DATE_TIME"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DATE_TIME"
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -1527,16 +1539,22 @@
             },
             "valueType": {
               "container": {
-                "list": {
-                  "primitive": {
-                    "v1": "STRING",
-                    "v2": {
-                      "type": "string"
-                    }
+                "optional": {
+                  "container": {
+                    "list": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
-                "type": "list"
+                "type": "optional"
               },
               "type": "container"
             },
@@ -1759,16 +1777,22 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uuid"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uuid"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -1931,16 +1955,22 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uuid"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uuid"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -1973,16 +2003,22 @@
               "wireValue": "document_index_id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uuid"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uuid"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -2118,16 +2154,22 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uuid"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uuid"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -2159,10 +2201,16 @@
               "wireValue": "created"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DATE_TIME"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DATE_TIME"
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -9530,16 +9578,22 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uuid"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uuid"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -9572,10 +9626,16 @@
               "wireValue": "created"
             },
             "valueType": {
-              "primitive": {
-                "v1": "DATE_TIME"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "DATE_TIME"
+                  },
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -17700,16 +17760,22 @@
               "wireValue": "id"
             },
             "valueType": {
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "validation": {
-                    "format": "uuid"
+              "container": {
+                "optional": {
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "validation": {
+                        "format": "uuid"
+                      },
+                      "type": "string"
+                    }
                   },
-                  "type": "string"
-                }
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
-              "type": "primitive"
+              "type": "container"
             },
             "propertyAccess": "READ_ONLY",
             "v2Examples": {
@@ -36033,8 +36099,11 @@
               "wireValue": "id"
             },
             "typeReference": {
-              "value": "STRING",
-              "type": "primitive"
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "optional"
             }
           },
           {
@@ -36061,8 +36130,11 @@
               "wireValue": "created"
             },
             "typeReference": {
-              "value": "DATE_TIME",
-              "type": "primitive"
+              "value": {
+                "value": "DATE_TIME",
+                "type": "primitive"
+              },
+              "type": "optional"
             }
           },
           {
@@ -36236,10 +36308,13 @@
             },
             "typeReference": {
               "value": {
-                "value": "STRING",
-                "type": "primitive"
+                "value": {
+                  "value": "STRING",
+                  "type": "primitive"
+                },
+                "type": "list"
               },
-              "type": "list"
+              "type": "optional"
             }
           },
           {
@@ -36421,8 +36496,11 @@
               "wireValue": "id"
             },
             "typeReference": {
-              "value": "STRING",
-              "type": "primitive"
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "optional"
             }
           },
           {
@@ -36539,8 +36617,11 @@
               "wireValue": "id"
             },
             "typeReference": {
-              "value": "STRING",
-              "type": "primitive"
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "optional"
             }
           },
           {
@@ -36567,8 +36648,11 @@
               "wireValue": "document_index_id"
             },
             "typeReference": {
-              "value": "STRING",
-              "type": "primitive"
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "optional"
             }
           },
           {
@@ -36657,8 +36741,11 @@
               "wireValue": "id"
             },
             "typeReference": {
-              "value": "STRING",
-              "type": "primitive"
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "optional"
             }
           },
           {
@@ -36685,8 +36772,11 @@
               "wireValue": "created"
             },
             "typeReference": {
-              "value": "DATE_TIME",
-              "type": "primitive"
+              "value": {
+                "value": "DATE_TIME",
+                "type": "primitive"
+              },
+              "type": "optional"
             }
           },
           {
@@ -41558,8 +41648,11 @@
               "wireValue": "id"
             },
             "typeReference": {
-              "value": "STRING",
-              "type": "primitive"
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "optional"
             }
           },
           {
@@ -41586,8 +41679,11 @@
               "wireValue": "created"
             },
             "typeReference": {
-              "value": "DATE_TIME",
-              "type": "primitive"
+              "value": {
+                "value": "DATE_TIME",
+                "type": "primitive"
+              },
+              "type": "optional"
             }
           },
           {
@@ -47004,8 +47100,11 @@
               "wireValue": "id"
             },
             "typeReference": {
-              "value": "STRING",
-              "type": "primitive"
+              "value": {
+                "value": "STRING",
+                "type": "primitive"
+              },
+              "type": "optional"
             }
           },
           {

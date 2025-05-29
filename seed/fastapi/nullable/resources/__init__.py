@@ -3,16 +3,5 @@
 # isort: skip_file
 
 from . import nullable
-from .nullable import CreateUserRequest, DeleteUserRequest, Email, Metadata, Status, User, UserId, WeirdNumber
-
-__all__ = [
-    "CreateUserRequest",
-    "DeleteUserRequest",
-    "Email",
-    "Metadata",
-    "Status",
-    "User",
-    "UserId",
-    "WeirdNumber",
-    "nullable",
-]
+from .nullable import Email, Metadata, Status, User, UserId, WeirdNumber
+__all__ = ["Email", "Metadata", "Status", "User", "UserId", "WeirdNumber", "nullable"]

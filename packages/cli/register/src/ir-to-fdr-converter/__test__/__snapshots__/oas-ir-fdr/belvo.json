@@ -7653,14 +7653,16 @@
             "type": {
               "type": "id",
               "value": "InvoiceWithIdSat"
-            }
+            },
+            "displayName": "🇲🇽 SAT Mexico"
           },
           {
             "typeName": "InvoiceDian",
             "type": {
               "type": "id",
               "value": "InvoiceDian"
-            }
+            },
+            "displayName": "🇨🇴 DIAN Colombia"
           }
         ]
       }
@@ -10785,14 +10787,16 @@
             "type": {
               "type": "id",
               "value": "TaxStatusSat"
-            }
+            },
+            "displayName": "SAT 🇲🇽 Mexico"
           },
           {
             "typeName": "TaxStatusDian",
             "type": {
               "type": "id",
               "value": "TaxStatusDian"
-            }
+            },
+            "displayName": "DIAN 🇨🇴 Colombia"
           }
         ]
       }
@@ -19133,14 +19137,16 @@
             "type": {
               "type": "id",
               "value": "CustomerOfpi"
-            }
+            },
+            "displayName": "Brazil 🇧🇷 OFPI"
           },
           {
             "typeName": "CustomerPse",
             "type": {
               "type": "id",
               "value": "CustomerPse"
-            }
+            },
+            "displayName": "Colombia 🇨🇴 PSE"
           }
         ]
       }
@@ -19599,14 +19605,16 @@
             "type": {
               "type": "id",
               "value": "HolderInformationBusinessOfpiResponse"
-            }
+            },
+            "displayName": "BUSINESS"
           },
           {
             "typeName": "HolderInformationIndividualOfpiResponse",
             "type": {
               "type": "id",
               "value": "HolderInformationIndividualOfpiResponse"
-            }
+            },
+            "displayName": "INDIVIDUAL"
           }
         ]
       }
@@ -19645,14 +19653,16 @@
             "type": {
               "type": "id",
               "value": "BankAccountDetailsOfpi"
-            }
+            },
+            "displayName": "OFPI (PIX Account Information)"
           },
           {
             "typeName": "BankAccountDetailsOfpiPix",
             "type": {
               "type": "id",
               "value": "BankAccountDetailsOfpiPix"
-            }
+            },
+            "displayName": "OFPI (PIX Keys)"
           }
         ]
       }
@@ -19934,7 +19944,8 @@
             "type": {
               "type": "id",
               "value": "BankAccountBusinessPse"
-            }
+            },
+            "displayName": "Business Bank Account"
           }
         ]
       }
@@ -19949,14 +19960,16 @@
             "type": {
               "type": "id",
               "value": "BankAccountOfpiResponse"
-            }
+            },
+            "displayName": "Brazil 🇧🇷 OFPI"
           },
           {
             "typeName": "BankAccountPseResponse",
             "type": {
               "type": "id",
               "value": "BankAccountPseResponse"
-            }
+            },
+            "displayName": "Colombia 🇨🇴 PSE"
           }
         ]
       }
@@ -20123,14 +20136,16 @@
             "type": {
               "type": "id",
               "value": "HolderInformationBusinessOfpi"
-            }
+            },
+            "displayName": "BUSINESS"
           },
           {
             "typeName": "HolderInformationIndividualOfpi",
             "type": {
               "type": "id",
               "value": "HolderInformationIndividualOfpi"
-            }
+            },
+            "displayName": "INDIVIDUAL"
           }
         ]
       }
@@ -20170,7 +20185,8 @@
             "type": {
               "type": "id",
               "value": "BankAccountHolderRequestOfpi"
-            }
+            },
+            "displayName": "OFPI"
           }
         ]
       }
@@ -20186,14 +20202,16 @@
             "type": {
               "type": "id",
               "value": "BankAccountDetailsOfpi"
-            }
+            },
+            "displayName": "OFPI (PIX Account Information)"
           },
           {
             "typeName": "BankAccountDetailsOfpiPix",
             "type": {
               "type": "id",
               "value": "BankAccountDetailsOfpiPix"
-            }
+            },
+            "displayName": "OFPI (PIX Keys)"
           }
         ]
       }
@@ -20336,7 +20354,8 @@
             "type": {
               "type": "id",
               "value": "HolderBusinessPse"
-            }
+            },
+            "displayName": "PSE"
           }
         ]
       }
@@ -20352,7 +20371,8 @@
             "type": {
               "type": "id",
               "value": "ProvidersPse"
-            }
+            },
+            "displayName": "PSE"
           }
         ]
       }
@@ -20737,14 +20757,16 @@
             "type": {
               "type": "id",
               "value": "PaymentLinkListOfpi"
-            }
+            },
+            "displayName": "Brazil 🇧🇷 OFPI"
           },
           {
             "typeName": "PaymentLinkListPse",
             "type": {
               "type": "id",
               "value": "PaymentLinkListPse"
-            }
+            },
+            "displayName": "Colombia 🇨🇴 PSE"
           }
         ]
       }
@@ -21506,14 +21528,16 @@
             "type": {
               "type": "id",
               "value": "BankAccountDetailsOpenFinance"
-            }
+            },
+            "displayName": "OFPI (PIX Account Information)"
           },
           {
             "typeName": "BankAccountDetailsOpenFinancePix",
             "type": {
               "type": "id",
               "value": "BankAccountDetailsOpenFinancePix"
-            }
+            },
+            "displayName": "OFPI (PIX Keys)"
           }
         ]
       }
@@ -22556,14 +22580,16 @@
             "type": {
               "type": "id",
               "value": "TransactionBankAccountBodyPse"
-            }
+            },
+            "displayName": "Bank account PSE"
           },
           {
             "typeName": "BankAccountInformationPse",
             "type": {
               "type": "id",
               "value": "BankAccountInformationPse"
-            }
+            },
+            "displayName": "Bank account information PSE"
           }
         ]
       }
@@ -22578,14 +22604,16 @@
             "type": {
               "type": "id",
               "value": "TransactionBankAccountOfpi"
-            }
+            },
+            "displayName": "Brazil 🇧🇷 OFPI"
           },
           {
             "typeName": "TransactionBankAccountPse",
             "type": {
               "type": "id",
               "value": "TransactionBankAccountPse"
-            }
+            },
+            "displayName": "Colombia 🇨🇴 PSE"
           }
         ]
       }
@@ -22749,14 +22777,16 @@
             "type": {
               "type": "id",
               "value": "ChargePaymentMethodDetailsPse"
-            }
+            },
+            "displayName": "PSE"
           },
           {
             "typeName": "ChargePaymentMethodDetailsOfpi",
             "type": {
               "type": "id",
               "value": "ChargePaymentMethodDetailsOfpi"
-            }
+            },
+            "displayName": "OFPI"
           }
         ]
       }
@@ -22771,7 +22801,8 @@
             "type": {
               "type": "id",
               "value": "PaymentMethodInformationPse"
-            }
+            },
+            "displayName": "PSE"
           }
         ]
       }
@@ -23040,42 +23071,48 @@
             "type": {
               "type": "id",
               "value": "NextStepDisplayPaymentMethodInformation"
-            }
+            },
+            "displayName": "OFPI -  Display Payment Method Information"
           },
           {
             "typeName": "NextStepNeedsRedirect",
             "type": {
               "type": "id",
               "value": "NextStepNeedsRedirect"
-            }
+            },
+            "displayName": "OFPI - Needs Redirect"
           },
           {
             "typeName": "NextStepDisplayConfirmationRequiredOfpi",
             "type": {
               "type": "id",
               "value": "NextStepDisplayConfirmationRequiredOfpi"
-            }
+            },
+            "displayName": "OFPI - Display Confirmation Required"
           },
           {
             "typeName": "NextStepDisplayPaymentProcessing",
             "type": {
               "type": "id",
               "value": "NextStepDisplayPaymentProcessing"
-            }
+            },
+            "displayName": "OFPI - Payment Processing"
           },
           {
             "typeName": "NextStepDisplayPaymentSucceeded",
             "type": {
               "type": "id",
               "value": "NextStepDisplayPaymentSucceeded"
-            }
+            },
+            "displayName": "OFPI - Payment Succeeded"
           },
           {
             "typeName": "NextStepDisplayPaymentFailed",
             "type": {
               "type": "id",
               "value": "NextStepDisplayPaymentFailed"
-            }
+            },
+            "displayName": "OFPI - Payment Failed"
           }
         ]
       }
@@ -23090,7 +23127,8 @@
             "type": {
               "type": "id",
               "value": "LastErrorPaymentError"
-            }
+            },
+            "displayName": "payment_error"
           }
         ]
       }
@@ -23105,14 +23143,16 @@
             "type": {
               "type": "id",
               "value": "PaymentIntentPaymentMethodDetailsIndividualOfpi"
-            }
+            },
+            "displayName": "INDIVIDUAL"
           },
           {
             "typeName": "PaymentIntentPaymentMethodDetailsBusinessOfpi",
             "type": {
               "type": "id",
               "value": "PaymentIntentPaymentMethodDetailsBusinessOfpi"
-            }
+            },
+            "displayName": "BUSINESS"
           }
         ]
       }
@@ -24633,42 +24673,48 @@
             "type": {
               "type": "id",
               "value": "NextStepDisplayPaymentMethodInformationPse"
-            }
+            },
+            "displayName": "Display PSE payment method information"
           },
           {
             "typeName": "NextStepDisplayCredentialsRequiredPse",
             "type": {
               "type": "id",
               "value": "NextStepDisplayCredentialsRequiredPse"
-            }
+            },
+            "displayName": "Display PSE credentials required"
           },
           {
             "typeName": "NextStepDisplayNeedsRedirectPse",
             "type": {
               "type": "id",
               "value": "NextStepDisplayNeedsRedirectPse"
-            }
+            },
+            "displayName": "Display PSE needs redirect"
           },
           {
             "typeName": "NextStepDisplayTokenRequiredPse",
             "type": {
               "type": "id",
               "value": "NextStepDisplayTokenRequiredPse"
-            }
+            },
+            "displayName": "Display PSE token required"
           },
           {
             "typeName": "NextStepDisplayCustomerBankAccountsPse",
             "type": {
               "type": "id",
               "value": "NextStepDisplayCustomerBankAccountsPse"
-            }
+            },
+            "displayName": "Display PSE customer bank accounts"
           },
           {
             "typeName": "NextStepDisplayConfirmationRequiredPse",
             "type": {
               "type": "id",
               "value": "NextStepDisplayConfirmationRequiredPse"
-            }
+            },
+            "displayName": "Display PSE confirmation required"
           }
         ]
       }
@@ -24683,42 +24729,48 @@
             "type": {
               "type": "id",
               "value": "LastErrorInvalidCredentials"
-            }
+            },
+            "displayName": "invalid_credentials"
           },
           {
             "typeName": "LastErrorInvalidToken",
             "type": {
               "type": "id",
               "value": "LastErrorInvalidToken"
-            }
+            },
+            "displayName": "invalid_token"
           },
           {
             "typeName": "LastErrorLoginError",
             "type": {
               "type": "id",
               "value": "LastErrorLoginError"
-            }
+            },
+            "displayName": "login_error"
           },
           {
             "typeName": "LastErrorTwoFactor",
             "type": {
               "type": "id",
               "value": "LastErrorTwoFactor"
-            }
+            },
+            "displayName": "login_two_factor_error"
           },
           {
             "typeName": "LastErrorPaymentError",
             "type": {
               "type": "id",
               "value": "LastErrorPaymentError"
-            }
+            },
+            "displayName": "payment_error"
           },
           {
             "typeName": "LastErrorSessionExpired",
             "type": {
               "type": "id",
               "value": "LastErrorSessionExpired"
-            }
+            },
+            "displayName": "session_expired"
           }
         ]
       }
@@ -25067,7 +25119,8 @@
             "type": {
               "type": "id",
               "value": "PaymentIntentPse"
-            }
+            },
+            "displayName": "Colombia 🇨🇴 PSE"
           }
         ]
       }
@@ -25417,7 +25470,8 @@
             "type": {
               "type": "id",
               "value": "PatchPaymentIntentsBodyPse"
-            }
+            },
+            "displayName": "PATCH payment method details"
           }
         ]
       }
@@ -25529,77 +25583,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -25614,77 +25679,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -25699,77 +25775,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -25784,77 +25871,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -25869,77 +25967,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -25954,84 +26063,95 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
     },
-    "ApiTransactionsPostParametersSchema": {
+    "ApiTransactionsPostParametersXBelvoRequestMode": {
       "description": "Recommended header parameter to make your POST request to retrieve transactions asynchronous (thus preventing timeouts).\n\nWhen you make a asynchronous request, Belvo responds with a `202 - Accepted` payload, including the `request_id`. Once we have retrieved the transaction information, you will receive a `new_transactions_available` webhook with the link and request IDs.\n\n\n**Note**: This parameter is case sensitive (in other words, if you write `ASYNC`, then Belvo will default to a synchronous call).\n",
-      "name": "ApiTransactionsPostParametersSchema",
+      "name": "ApiTransactionsPostParametersXBelvoRequestMode",
       "shape": {
         "type": "enum",
         "values": [
@@ -26051,77 +26171,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -26136,77 +26267,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -26221,77 +26363,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -26306,77 +26459,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -26391,77 +26555,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -26476,77 +26651,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -26561,77 +26747,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -26646,77 +26843,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -26731,14 +26939,16 @@
             "type": {
               "type": "id",
               "value": "InvoiceWithIdSat"
-            }
+            },
+            "displayName": "🇲🇽 SAT Mexico"
           },
           {
             "typeName": "InvoiceDian",
             "type": {
               "type": "id",
               "value": "InvoiceDian"
-            }
+            },
+            "displayName": "🇨🇴 DIAN Colombia"
           }
         ]
       }
@@ -26753,28 +26963,32 @@
             "type": {
               "type": "id",
               "value": "TaxReturnsPersonalPaginated"
-            }
+            },
+            "displayName": "Tax Return Personal"
           },
           {
             "typeName": "TaxReturnsPersonalMonthlyPaginated",
             "type": {
               "type": "id",
               "value": "TaxReturnsPersonalMonthlyPaginated"
-            }
+            },
+            "displayName": "Tax Return Personal Monthly"
           },
           {
             "typeName": "TaxReturnsBusinessPaginated",
             "type": {
               "type": "id",
               "value": "TaxReturnsBusinessPaginated"
-            }
+            },
+            "displayName": "Tax Return Personal Business"
           },
           {
             "typeName": "TaxReturnsBusinessMonthlyPaginated",
             "type": {
               "type": "id",
               "value": "TaxReturnsBusinessMonthlyPaginated"
-            }
+            },
+            "displayName": "Tax Return Personal Business Monthly"
           }
         ]
       }
@@ -26789,14 +27003,16 @@
             "type": {
               "type": "id",
               "value": "TaxReturnsMonthlyRequest"
-            }
+            },
+            "displayName": "Monthly Tax Returns"
           },
           {
             "typeName": "TaxReturnsYearlyRequest",
             "type": {
               "type": "id",
               "value": "TaxReturnsYearlyRequest"
-            }
+            },
+            "displayName": "Yearly Tax Returns"
           }
         ]
       }
@@ -26811,77 +27027,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -26896,28 +27123,32 @@
             "type": {
               "type": "id",
               "value": "TaxReturnPersonal"
-            }
+            },
+            "displayName": "Tax Return Personal"
           },
           {
             "typeName": "TaxReturnPersonalMonthly",
             "type": {
               "type": "id",
               "value": "TaxReturnPersonalMonthly"
-            }
+            },
+            "displayName": "Tax Return Personal Monthly"
           },
           {
             "typeName": "TaxReturnBusiness",
             "type": {
               "type": "id",
               "value": "TaxReturnBusiness"
-            }
+            },
+            "displayName": "Tax Return Business"
           },
           {
             "typeName": "TaxReturnBusinessMonthly",
             "type": {
               "type": "id",
               "value": "TaxReturnBusinessMonthly"
-            }
+            },
+            "displayName": "Tax Return Business Monthly"
           }
         ]
       }
@@ -26932,14 +27163,16 @@
             "type": {
               "type": "id",
               "value": "TaxStatusSat"
-            }
+            },
+            "displayName": "SAT 🇲🇽 Mexico"
           },
           {
             "typeName": "TaxStatusDian",
             "type": {
               "type": "id",
               "value": "TaxStatusDian"
-            }
+            },
+            "displayName": "DIAN 🇨🇴 Colombia"
           }
         ]
       }
@@ -26954,77 +27187,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -27039,14 +27283,16 @@
             "type": {
               "type": "id",
               "value": "TaxStatusSat"
-            }
+            },
+            "displayName": "SAT 🇲🇽 Mexico"
           },
           {
             "typeName": "TaxStatusDian",
             "type": {
               "type": "id",
               "value": "TaxStatusDian"
-            }
+            },
+            "displayName": "DIAN 🇨🇴 Colombia"
           }
         ]
       }
@@ -27061,77 +27307,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -27146,77 +27403,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -27231,77 +27499,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -27316,77 +27595,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -27401,77 +27691,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -27486,77 +27787,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -27571,77 +27883,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -27656,77 +27979,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -27741,77 +28075,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -27826,77 +28171,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -27911,77 +28267,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -27996,14 +28363,16 @@
             "type": {
               "type": "id",
               "value": "TaxDeclarationIndividualPaginated"
-            }
+            },
+            "displayName": "Tax Declaration Individual"
           },
           {
             "typeName": "TaxDeclarationBusinessPaginated",
             "type": {
               "type": "id",
               "value": "TaxDeclarationBusinessPaginated"
-            }
+            },
+            "displayName": "Tax Declaration Business"
           }
         ]
       }
@@ -28018,77 +28387,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -28103,14 +28483,16 @@
             "type": {
               "type": "id",
               "value": "TaxDeclarationIndividual"
-            }
+            },
+            "displayName": "Individual Tax Declaration"
           },
           {
             "typeName": "TaxDeclarationBusiness",
             "type": {
               "type": "id",
               "value": "TaxDeclarationBusiness"
-            }
+            },
+            "displayName": "Business Tax Declaration"
           }
         ]
       }
@@ -28125,77 +28507,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -28210,77 +28603,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -28295,77 +28699,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -28380,77 +28795,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -28465,77 +28891,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -28550,14 +28987,16 @@
             "type": {
               "type": "id",
               "value": "CreateCustomerOfpi"
-            }
+            },
+            "displayName": "Brazil 🇧🇷 OFPI"
           },
           {
             "typeName": "CreateCustomerPse",
             "type": {
               "type": "id",
               "value": "CreateCustomerPse"
-            }
+            },
+            "displayName": "Colombia 🇨🇴 PSE"
           }
         ]
       }
@@ -28572,14 +29011,16 @@
             "type": {
               "type": "id",
               "value": "CustomerOfpi"
-            }
+            },
+            "displayName": "Brazil 🇧🇷 OFPI"
           },
           {
             "typeName": "CustomerPse",
             "type": {
               "type": "id",
               "value": "CustomerPse"
-            }
+            },
+            "displayName": "Colombia 🇨🇴 PSE"
           }
         ]
       }
@@ -28594,77 +29035,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -28679,14 +29131,16 @@
             "type": {
               "type": "id",
               "value": "CustomerOfpi"
-            }
+            },
+            "displayName": "Brazil 🇧🇷 OFPI"
           },
           {
             "typeName": "CustomerPse",
             "type": {
               "type": "id",
               "value": "CustomerPse"
-            }
+            },
+            "displayName": "Colombia 🇨🇴 PSE"
           }
         ]
       }
@@ -28701,14 +29155,16 @@
             "type": {
               "type": "id",
               "value": "CreateBankAccountOfpi"
-            }
+            },
+            "displayName": "Brazil 🇧🇷 OFPI"
           },
           {
             "typeName": "CreateBankAccountPse",
             "type": {
               "type": "id",
               "value": "CreateBankAccountPse"
-            }
+            },
+            "displayName": "Colombia 🇨🇴 PSE"
           }
         ]
       }
@@ -28723,14 +29179,16 @@
             "type": {
               "type": "id",
               "value": "BankAccountOfpiResponse"
-            }
+            },
+            "displayName": "Brazil 🇧🇷 OFPI"
           },
           {
             "typeName": "BankAccountPseResponse",
             "type": {
               "type": "id",
               "value": "BankAccountPseResponse"
-            }
+            },
+            "displayName": "Colombia 🇨🇴 PSE"
           }
         ]
       }
@@ -28745,77 +29203,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -28830,20 +29299,36 @@
             "type": {
               "type": "id",
               "value": "BankAccountOfpiResponse"
-            }
+            },
+            "displayName": "Brazil 🇧🇷 OFPI"
           },
           {
             "typeName": "BankAccountPseResponse",
             "type": {
               "type": "id",
               "value": "BankAccountPseResponse"
-            }
+            },
+            "displayName": "Colombia 🇨🇴 PSE"
           }
         ]
       }
     },
-    "PaymentsPaymentLinksGetParametersSchema": {
-      "name": "PaymentsPaymentLinksGetParametersSchema",
+    "PaymentsPaymentLinksGetParametersStatus": {
+      "name": "PaymentsPaymentLinksGetParametersStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ACTIVE"
+          },
+          {
+            "value": "INACTIVE"
+          }
+        ]
+      }
+    },
+    "PaymentsPaymentLinksGetParametersOrdering": {
+      "name": "PaymentsPaymentLinksGetParametersOrdering",
       "shape": {
         "type": "enum",
         "values": [
@@ -28866,14 +29351,16 @@
             "type": {
               "type": "id",
               "value": "CreatePaymentLinkOfpi"
-            }
+            },
+            "displayName": "Brazil 🇧🇷 OFPI"
           },
           {
             "typeName": "CreatePaymentLinkPse",
             "type": {
               "type": "id",
               "value": "CreatePaymentLinkPse"
-            }
+            },
+            "displayName": "Colombia 🇨🇴 PSE"
           }
         ]
       }
@@ -28888,14 +29375,16 @@
             "type": {
               "type": "id",
               "value": "PaymentLinkOfpi"
-            }
+            },
+            "displayName": "Brazil 🇧🇷 OFPI"
           },
           {
             "typeName": "PaymentLinkPse",
             "type": {
               "type": "id",
               "value": "PaymentLinkPse"
-            }
+            },
+            "displayName": "Colombia 🇨🇴 PSE"
           }
         ]
       }
@@ -28910,77 +29399,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -28995,14 +29495,16 @@
             "type": {
               "type": "id",
               "value": "PaymentLinkOfpi"
-            }
+            },
+            "displayName": "Brazil 🇧🇷 OFPI"
           },
           {
             "typeName": "PaymentLinkPse",
             "type": {
               "type": "id",
               "value": "PaymentLinkPse"
-            }
+            },
+            "displayName": "Colombia 🇨🇴 PSE"
           }
         ]
       }
@@ -29017,7 +29519,8 @@
             "type": {
               "type": "id",
               "value": "CreatePaymentIntentPse"
-            }
+            },
+            "displayName": "Colombia 🇨🇴 PSE"
           }
         ]
       }
@@ -29032,7 +29535,8 @@
             "type": {
               "type": "id",
               "value": "PaymentIntentPse"
-            }
+            },
+            "displayName": "Colombia 🇨🇴 PSE"
           }
         ]
       }
@@ -29047,77 +29551,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -29132,7 +29647,8 @@
             "type": {
               "type": "id",
               "value": "PaymentIntentPse"
-            }
+            },
+            "displayName": "Colombia 🇨🇴 PSE"
           }
         ]
       }
@@ -29147,7 +29663,8 @@
             "type": {
               "type": "id",
               "value": "PaymentIntentPse"
-            }
+            },
+            "displayName": "Colombia 🇨🇴 PSE"
           }
         ]
       }
@@ -29162,77 +29679,88 @@
             "type": {
               "type": "id",
               "value": "InvalidAccessMode"
-            }
+            },
+            "displayName": "Invalid Access Mode"
           },
           {
             "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
               "value": "TooManySessionsError"
-            }
+            },
+            "displayName": "Too Many Sessions"
           },
           {
             "typeName": "LoginError",
             "type": {
               "type": "id",
               "value": "LoginError"
-            }
+            },
+            "displayName": "Login Error"
           },
           {
             "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
               "value": "SessionExpiredError"
-            }
+            },
+            "displayName": "Session Expired"
           },
           {
             "typeName": "ValidationError",
             "type": {
               "type": "id",
               "value": "ValidationError"
-            }
+            },
+            "displayName": "Validation Error"
           },
           {
             "typeName": "InstitutionDownError",
             "type": {
               "type": "id",
               "value": "InstitutionDownError"
-            }
+            },
+            "displayName": "Institution Down"
           },
           {
             "typeName": "InstitutionUnavailableError",
             "type": {
               "type": "id",
               "value": "InstitutionUnavailableError"
-            }
+            },
+            "displayName": "Institution Unavailable"
           },
           {
             "typeName": "InstitutionInactiveError",
             "type": {
               "type": "id",
               "value": "InstitutionInactiveError"
-            }
+            },
+            "displayName": "Institution Inactive"
           },
           {
             "typeName": "UnsupportedOperationError",
             "type": {
               "type": "id",
               "value": "UnsupportedOperationError"
-            }
+            },
+            "displayName": "Unsupported Operation"
           },
           {
             "typeName": "InvalidLinkError",
             "type": {
               "type": "id",
               "value": "InvalidLinkError"
-            }
+            },
+            "displayName": "Invalid Link"
           },
           {
             "typeName": "UnconfirmedLinkError",
             "type": {
               "type": "id",
               "value": "UnconfirmedLinkError"
-            }
+            },
+            "displayName": "Unconfirmed Link"
           }
         ]
       }
@@ -35168,7 +35696,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "ApiTransactionsPostParametersSchema"
+                  "value": "ApiTransactionsPostParametersXBelvoRequestMode"
                 }
               }
             }
@@ -38666,7 +39194,13 @@
                       }
                     ],
                     "resources": [
-                      "ACCOUNTS"
+                      "ACCOUNTS",
+                      "BALANCES",
+                      "INCOMES",
+                      "OWNERS",
+                      "RECURRING_EXPENSES",
+                      "RISK_INSIGHTS",
+                      "TRANSACTIONS"
                     ],
                     "integration_type": "credentials",
                     "status": "healthy"
@@ -38719,7 +39253,13 @@
                         }
                       ],
                       "resources": [
-                        "ACCOUNTS"
+                        "ACCOUNTS",
+                        "BALANCES",
+                        "INCOMES",
+                        "OWNERS",
+                        "RECURRING_EXPENSES",
+                        "RISK_INSIGHTS",
+                        "TRANSACTIONS"
                       ],
                       "integration_type": "credentials",
                       "status": "healthy"
@@ -38912,7 +39452,13 @@
                   }
                 ],
                 "resources": [
-                  "ACCOUNTS"
+                  "ACCOUNTS",
+                  "BALANCES",
+                  "INCOMES",
+                  "OWNERS",
+                  "RECURRING_EXPENSES",
+                  "RISK_INSIGHTS",
+                  "TRANSACTIONS"
                 ],
                 "integration_type": "credentials",
                 "status": "healthy"
@@ -38958,7 +39504,13 @@
                     }
                   ],
                   "resources": [
-                    "ACCOUNTS"
+                    "ACCOUNTS",
+                    "BALANCES",
+                    "INCOMES",
+                    "OWNERS",
+                    "RECURRING_EXPENSES",
+                    "RISK_INSIGHTS",
+                    "TRANSACTIONS"
                   ],
                   "integration_type": "credentials",
                   "status": "healthy"
@@ -54430,7 +54982,9 @@
                     "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                     "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                     "accounts": [
-                      "0d3ffb69-f83b-456e-ad8e-208d0998d71d"
+                      "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                      "00293c8e-1152-440b-9892-3c071fb88672",
+                      "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e"
                     ],
                     "created_at": "2022-02-01T20:25:47.307911Z",
                     "transactions_metrics": {
@@ -54514,7 +55068,9 @@
                       "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                       "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                       "accounts": [
-                        "0d3ffb69-f83b-456e-ad8e-208d0998d71d"
+                        "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "00293c8e-1152-440b-9892-3c071fb88672",
+                        "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e"
                       ],
                       "created_at": "2022-02-01T20:25:47.307911Z",
                       "transactions_metrics": {
@@ -54790,7 +55346,9 @@
                   "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                   "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                   "accounts": [
-                    "0d3ffb69-f83b-456e-ad8e-208d0998d71d"
+                    "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                    "00293c8e-1152-440b-9892-3c071fb88672",
+                    "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e"
                   ],
                   "created_at": "2022-02-01T20:25:47.307911Z",
                   "transactions_metrics": {
@@ -54869,7 +55427,9 @@
                     "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                     "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                     "accounts": [
-                      "0d3ffb69-f83b-456e-ad8e-208d0998d71d"
+                      "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                      "00293c8e-1152-440b-9892-3c071fb88672",
+                      "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e"
                     ],
                     "created_at": "2022-02-01T20:25:47.307911Z",
                     "transactions_metrics": {
@@ -55146,7 +55706,9 @@
                   "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                   "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                   "accounts": [
-                    "0d3ffb69-f83b-456e-ad8e-208d0998d71d"
+                    "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                    "00293c8e-1152-440b-9892-3c071fb88672",
+                    "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e"
                   ],
                   "created_at": "2022-02-01T20:25:47.307911Z",
                   "transactions_metrics": {
@@ -55225,7 +55787,9 @@
                     "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                     "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                     "accounts": [
-                      "0d3ffb69-f83b-456e-ad8e-208d0998d71d"
+                      "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                      "00293c8e-1152-440b-9892-3c071fb88672",
+                      "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e"
                     ],
                     "created_at": "2022-02-01T20:25:47.307911Z",
                     "transactions_metrics": {
@@ -55452,7 +56016,9 @@
                   "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                   "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                   "accounts": [
-                    "0d3ffb69-f83b-456e-ad8e-208d0998d71d"
+                    "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                    "00293c8e-1152-440b-9892-3c071fb88672",
+                    "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e"
                   ],
                   "created_at": "2022-02-01T20:25:47.307911Z",
                   "transactions_metrics": {
@@ -55531,7 +56097,9 @@
                     "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                     "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                     "accounts": [
-                      "0d3ffb69-f83b-456e-ad8e-208d0998d71d"
+                      "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                      "00293c8e-1152-440b-9892-3c071fb88672",
+                      "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e"
                     ],
                     "created_at": "2022-02-01T20:25:47.307911Z",
                     "transactions_metrics": {
@@ -62953,7 +63521,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PaymentsPaymentLinksGetParametersSchema"
+                  "value": "PaymentsPaymentLinksGetParametersStatus"
                 }
               }
             },
@@ -62964,7 +63532,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PaymentsPaymentLinksGetParametersSchema"
+                  "value": "PaymentsPaymentLinksGetParametersOrdering"
                 }
               }
             },

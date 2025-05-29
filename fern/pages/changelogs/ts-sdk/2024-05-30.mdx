@@ -1,3 +1,13 @@
 ## 0.20.5
-**`(feat):`** Add support for extraPeerDependencies and extraPeerDependenciesMeta config
+**`(feat):`** Support setting `extraPeerDependencies` and `extraPeerDependenciesMeta` as
+configuration arguments. For example:
+
+```yaml
+extraPeerDependencies:
+  "openai": "^4.47.1"
+extraPeerDependenciesMeta:
+  "openai":
+    optional: true
+```
+
 

@@ -410,8 +410,8 @@
         ]
       }
     },
-    "PetFindByStatusGetParametersSchema": {
-      "name": "PetFindByStatusGetParametersSchema",
+    "PetFindByStatusGetParametersStatus": {
+      "name": "PetFindByStatusGetParametersStatus",
       "shape": {
         "type": "enum",
         "default": "available",
@@ -811,7 +811,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PetFindByStatusGetParametersSchema"
+                  "value": "PetFindByStatusGetParametersStatus"
                 }
               }
             }
@@ -3048,7 +3048,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PetFindByStatusGetParametersSchema"
+                  "value": "PetFindByStatusGetParametersStatus"
                 }
               }
             }

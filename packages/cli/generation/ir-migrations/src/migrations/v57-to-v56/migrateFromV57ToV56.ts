@@ -71,10 +71,16 @@ function convertDynamicIr(
 function convertDynamicEndpoints(
     endpoints: Record<string, IrVersions.V57.dynamic.Endpoint>
 ): Record<string, IrVersions.V56.dynamic.Endpoint> {
-    return mapValues(endpoints, (endpoint) => convertDynamicEndpoint(endpoint));
+    return Object.fromEntries(
+        Object.entries(endpoints)
+            .map(([key, endpoint]) => [key, convertDynamicEndpoint(endpoint)])
+            .filter(([_, endpoint]) => endpoint != null)
+    );
 }
 
-function convertDynamicEndpoint(endpoint: IrVersions.V57.dynamic.Endpoint): IrVersions.V56.dynamic.Endpoint {
+function convertDynamicEndpoint(
+    endpoint: IrVersions.V57.dynamic.Endpoint
+): IrVersions.V56.dynamic.Endpoint | undefined {
     return {
         ...endpoint,
         auth: endpoint.auth != null ? convertDynamicAuth(endpoint.auth) : undefined,
@@ -85,12 +91,12 @@ function convertDynamicEndpoint(endpoint: IrVersions.V57.dynamic.Endpoint): IrVe
 function convertDynamicExamples(
     examples: IrVersions.V57.dynamic.EndpointExample[]
 ): IrVersions.V56.dynamic.EndpointExample[] {
-    return examples.map((example) => convertDynamicExample(example));
+    return examples.map((example) => convertDynamicExample(example)).filter((example) => example != null);
 }
 
 function convertDynamicExample(
     example: IrVersions.V57.dynamic.EndpointExample
-): IrVersions.V56.dynamic.EndpointExample {
+): IrVersions.V56.dynamic.EndpointExample | undefined {
     return {
         ...example,
         auth: example.auth != null ? convertDynamicAuthValues(example.auth) : undefined

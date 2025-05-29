@@ -200,26 +200,26 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "metadata": {
-                  "metadata": "metadata"
-                },
-                "docs": "docs",
                 "data": {
                   "id": "id",
                   "name": "name"
-                }
+                },
+                "metadata": {
+                  "metadata": "metadata"
+                },
+                "docs": "docs"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "metadata": {
-                    "metadata": "metadata"
-                  },
-                  "docs": "docs",
                   "data": {
                     "id": "id",
                     "name": "name"
-                  }
+                  },
+                  "metadata": {
+                    "metadata": "metadata"
+                  },
+                  "docs": "docs"
                 }
               },
               "codeSamples": []
@@ -285,26 +285,26 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "metadata": {
-                  "metadata": "metadata"
-                },
-                "docs": "docs",
                 "data": {
                   "id": "id",
                   "name": "name"
-                }
+                },
+                "metadata": {
+                  "metadata": "metadata"
+                },
+                "docs": "docs"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "metadata": {
-                    "metadata": "metadata"
-                  },
-                  "docs": "docs",
                   "data": {
                     "id": "id",
                     "name": "name"
-                  }
+                  },
+                  "metadata": {
+                    "metadata": "metadata"
+                  },
+                  "docs": "docs"
                 }
               },
               "codeSamples": []
@@ -441,26 +441,26 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "metadata": {
-                  "metadata": "metadata"
-                },
-                "docs": "docs",
                 "data": {
                   "id": "id",
                   "name": "name"
-                }
+                },
+                "metadata": {
+                  "metadata": "metadata"
+                },
+                "docs": "docs"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "metadata": {
-                    "metadata": "metadata"
-                  },
-                  "docs": "docs",
                   "data": {
                     "id": "id",
                     "name": "name"
-                  }
+                  },
+                  "metadata": {
+                    "metadata": "metadata"
+                  },
+                  "docs": "docs"
                 }
               },
               "codeSamples": []
@@ -529,26 +529,26 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "metadata": {
-                  "metadata": "metadata"
-                },
-                "docs": "docs",
                 "data": {
                   "id": "id",
                   "name": "name"
-                }
+                },
+                "metadata": {
+                  "metadata": "metadata"
+                },
+                "docs": "docs"
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "metadata": {
-                    "metadata": "metadata"
-                  },
-                  "docs": "docs",
                   "data": {
                     "id": "id",
                     "name": "name"
-                  }
+                  },
+                  "metadata": {
+                    "metadata": "metadata"
+                  },
+                  "docs": "docs"
                 }
               },
               "codeSamples": []

@@ -1,6 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { ResponseError, TypeReference } from "@fern-api/ir-sdk";
+import { FernFilepath, ResponseError, TypeReference } from "@fern-api/ir-sdk";
 import { Converters, ERROR_NAMES_BY_STATUS_CODE } from "@fern-api/v2-importer-commons";
 
 export declare namespace ResponseErrorConverter {
@@ -47,10 +47,7 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
                 return undefined;
             }
 
-            const errorId = this.context.enableUniqueErrorsPerEndpoint
-                ? uppercaseFirstChar(`${this.methodName}Request${errorName}`)
-                : errorName;
-
+            const errorId = this.getErrorIdFromErrorName(errorName);
             const error: ResponseError = {
                 error: {
                     name: this.context.casingsGenerator.generateName(errorId),
@@ -82,6 +79,9 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
         }
         for (const contentType of [...jsonContentTypes]) {
             const mediaTypeObject = this.responseError.content?.[contentType];
+            if (mediaTypeObject == null) {
+                continue;
+            }
             const convertedSchema = this.parseMediaTypeObject({
                 mediaTypeObject,
                 schemaId: uppercaseFirstChar(`${this.methodName}Request${errorName}`),
@@ -90,46 +90,58 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
             if (convertedSchema == null) {
                 continue;
             }
-            const errorId = this.context.enableUniqueErrorsPerEndpoint
-                ? uppercaseFirstChar(`${this.methodName}Request${errorName}`)
-                : errorName;
+            const errorId = this.getErrorIdFromErrorName(errorName);
             if (convertedSchema.schema != null) {
-                const error = {
-                    error: {
-                        name: this.context.casingsGenerator.generateName(errorId),
-                        fernFilepath: convertedSchema.schema.typeDeclaration.name.fernFilepath,
-                        errorId
-                    },
-                    docs: this.responseError.description
-                };
-                return {
-                    error,
-                    errorType: convertedSchema.type,
-                    displayName: errorName,
-                    statusCode: this.statusCode,
-                    inlinedTypes: convertedSchema.inlinedTypes,
-                    examples: convertedSchema.examples
-                };
+                return this.constructErrorConverterOutput({
+                    errorName,
+                    errorId,
+                    fernFilepath: convertedSchema.schema.typeDeclaration.name.fernFilepath,
+                    convertedSchema
+                });
             } else if (convertedSchema.type.type === "named") {
-                const error = {
-                    error: {
-                        name: this.context.casingsGenerator.generateName(errorId),
-                        fernFilepath: convertedSchema.type.fernFilepath,
-                        errorId
-                    },
-                    docs: this.responseError.description
-                };
-                return {
-                    error,
-                    errorType: convertedSchema.type,
-                    displayName: errorName,
-                    statusCode: this.statusCode,
-                    inlinedTypes: convertedSchema.inlinedTypes,
-                    examples: convertedSchema.examples
-                };
+                return this.constructErrorConverterOutput({
+                    errorName,
+                    errorId,
+                    fernFilepath: convertedSchema.type.fernFilepath,
+                    convertedSchema
+                });
             }
         }
         return undefined;
+    }
+
+    private constructErrorConverterOutput({
+        errorName,
+        errorId,
+        fernFilepath,
+        convertedSchema
+    }: {
+        errorName: string;
+        errorId: string;
+        fernFilepath: FernFilepath;
+        convertedSchema: Converters.AbstractConverters.AbstractMediaTypeObjectConverter.MediaTypeObject;
+    }): ResponseErrorConverter.Output {
+        return {
+            error: {
+                error: {
+                    name: this.context.casingsGenerator.generateName(errorId),
+                    fernFilepath,
+                    errorId
+                },
+                docs: this.responseError.description
+            },
+            errorType: convertedSchema.type,
+            displayName: errorName,
+            statusCode: this.statusCode,
+            inlinedTypes: convertedSchema.inlinedTypes,
+            examples: convertedSchema.examples
+        };
+    }
+
+    private getErrorIdFromErrorName(errorName: string): string {
+        return this.context.enableUniqueErrorsPerEndpoint
+            ? uppercaseFirstChar(`${this.methodName}Request${errorName}`)
+            : errorName;
     }
 }
 

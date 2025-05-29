@@ -197,14 +197,16 @@
             "type": {
               "type": "id",
               "value": "Block"
-            }
+            },
+            "displayName": "Block"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -219,14 +221,16 @@
             "type": {
               "type": "id",
               "value": "Integer"
-            }
+            },
+            "displayName": "integer"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -241,14 +245,16 @@
             "type": {
               "type": "id",
               "value": "Address"
-            }
+            },
+            "displayName": "address"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -535,14 +541,16 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -568,14 +576,16 @@
             "type": {
               "type": "id",
               "value": "Nonce"
-            }
+            },
+            "displayName": "nonce"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -601,14 +611,16 @@
             "type": {
               "type": "id",
               "value": "Address"
-            }
+            },
+            "displayName": "address"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -623,14 +635,16 @@
             "type": {
               "type": "id",
               "value": "Transaction"
-            }
+            },
+            "displayName": "transaction"
           },
           {
             "typeName": "TransactionHash",
             "type": {
               "type": "id",
               "value": "TransactionHash"
-            }
+            },
+            "displayName": "transactionHash"
           }
         ]
       }
@@ -1067,14 +1081,16 @@
             "type": {
               "type": "id",
               "value": "Keccak"
-            }
+            },
+            "displayName": "keccak"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -1096,6 +1112,16 @@
     "Nonce": {
       "description": "A number only to be used once",
       "name": "Nonce",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "Null": {
+      "description": "Null",
+      "name": "Null",
       "shape": {
         "type": "alias",
         "value": {
@@ -1259,14 +1285,16 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "BlockNumberTag",
             "type": {
               "type": "id",
               "value": "BlockNumberTag"
-            }
+            },
+            "displayName": "blockNumberTag"
           }
         ]
       }
@@ -1281,14 +1309,16 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "BlockNumberTag",
             "type": {
               "type": "id",
               "value": "BlockNumberTag"
-            }
+            },
+            "displayName": "blockNumberTag"
           }
         ]
       }
@@ -1303,14 +1333,16 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "BlockNumberTag",
             "type": {
               "type": "id",
               "value": "BlockNumberTag"
-            }
+            },
+            "displayName": "blockNumberTag"
           }
         ]
       }
@@ -1350,14 +1382,16 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "BlockNumberTag",
             "type": {
               "type": "id",
               "value": "BlockNumberTag"
-            }
+            },
+            "displayName": "blockNumberTag"
           }
         ]
       }
@@ -1384,14 +1418,16 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "BlockNumberTag",
             "type": {
               "type": "id",
               "value": "BlockNumberTag"
-            }
+            },
+            "displayName": "blockNumberTag"
           }
         ]
       }
@@ -1432,14 +1468,16 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "BlockNumberTag",
             "type": {
               "type": "id",
               "value": "BlockNumberTag"
-            }
+            },
+            "displayName": "blockNumberTag"
           }
         ]
       }
@@ -1454,14 +1492,16 @@
             "type": {
               "type": "id",
               "value": "Address"
-            }
+            },
+            "displayName": "address"
           },
           {
             "typeName": "Addresses",
             "type": {
               "type": "id",
               "value": "Addresses"
-            }
+            },
+            "displayName": "addresses"
           }
         ]
       }
@@ -1539,14 +1579,16 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "BlockNumberTag",
             "type": {
               "type": "id",
               "value": "BlockNumberTag"
-            }
+            },
+            "displayName": "blockNumberTag"
           }
         ]
       }
@@ -1561,14 +1603,16 @@
             "type": {
               "type": "id",
               "value": "Transaction"
-            }
+            },
+            "displayName": "transaction"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -1583,14 +1627,16 @@
             "type": {
               "type": "id",
               "value": "Transaction"
-            }
+            },
+            "displayName": "transaction"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -1605,14 +1651,16 @@
             "type": {
               "type": "id",
               "value": "Transaction"
-            }
+            },
+            "displayName": "transaction"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -1627,14 +1675,16 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "BlockNumberTag",
             "type": {
               "type": "id",
               "value": "BlockNumberTag"
-            }
+            },
+            "displayName": "blockNumberTag"
           }
         ]
       }
@@ -1649,14 +1699,16 @@
             "type": {
               "type": "id",
               "value": "Transaction"
-            }
+            },
+            "displayName": "transaction"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -1671,14 +1723,16 @@
             "type": {
               "type": "id",
               "value": "Transaction"
-            }
+            },
+            "displayName": "transaction"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -1693,14 +1747,16 @@
             "type": {
               "type": "id",
               "value": "Transaction"
-            }
+            },
+            "displayName": "transaction"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -1715,14 +1771,16 @@
             "type": {
               "type": "id",
               "value": "Nonce"
-            }
+            },
+            "displayName": "nonce"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -1737,14 +1795,16 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "BlockNumberTag",
             "type": {
               "type": "id",
               "value": "BlockNumberTag"
-            }
+            },
+            "displayName": "blockNumberTag"
           }
         ]
       }
@@ -1759,14 +1819,16 @@
             "type": {
               "type": "id",
               "value": "Nonce"
-            }
+            },
+            "displayName": "nonce"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -1781,14 +1843,16 @@
             "type": {
               "type": "id",
               "value": "Receipt"
-            }
+            },
+            "displayName": "receipt"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -1803,14 +1867,16 @@
             "type": {
               "type": "id",
               "value": "Receipt"
-            }
+            },
+            "displayName": "receipt"
           },
           {
             "typeName": "Null",
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -1825,14 +1891,16 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "BlockNumberTag",
             "type": {
               "type": "id",
               "value": "BlockNumberTag"
-            }
+            },
+            "displayName": "blockNumberTag"
           }
         ]
       }
@@ -1942,7 +2010,8 @@
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -1957,14 +2026,16 @@
             "type": {
               "type": "id",
               "value": "BlockNumber"
-            }
+            },
+            "displayName": "blockNumber"
           },
           {
             "typeName": "BlockNumberTag",
             "type": {
               "type": "id",
               "value": "BlockNumberTag"
-            }
+            },
+            "displayName": "blockNumberTag"
           }
         ]
       }
@@ -1988,7 +2059,8 @@
             "type": {
               "type": "id",
               "value": "Null"
-            }
+            },
+            "displayName": "null"
           }
         ]
       }
@@ -2003,21 +2075,24 @@
             "type": {
               "type": "id",
               "value": "PowHash"
-            }
+            },
+            "displayName": "powHash"
           },
           {
             "typeName": "SeedHash",
             "type": {
               "type": "id",
               "value": "SeedHash"
-            }
+            },
+            "displayName": "seedHash"
           },
           {
             "typeName": "Difficulty",
             "type": {
               "type": "id",
               "value": "Difficulty"
-            }
+            },
+            "displayName": "difficulty"
           }
         ]
       }
@@ -2057,14 +2132,16 @@
             "type": {
               "type": "id",
               "value": "Address"
-            }
+            },
+            "displayName": "address"
           },
           {
             "typeName": "Addresses",
             "type": {
               "type": "id",
               "value": "Addresses"
-            }
+            },
+            "displayName": "addresses"
           }
         ]
       }
@@ -5789,6 +5866,7 @@
       "KeccakOrPending",
       "Keccak",
       "Nonce",
+      "Null",
       "Integer",
       "Address",
       "Addresses",

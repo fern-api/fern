@@ -5,6 +5,7 @@ export { type DefinitionFileSchema, type RootApiFileSchema, type PackageMarkerFi
 export * from "./utils/generics";
 export * from "./utils/auth";
 export { getRequestBody } from "./utils/getRequestBody";
+export { getResponseBodyType } from "./utils/getResponseBodyType";
 export { isInlineRequestBody } from "./utils/isInlineRequestBody";
 export { isRawProtobufSourceSchema } from "./utils/isRawProtobufSourceSchema";
 export { isOpenApiSourceSchema } from "./utils/isOpenApiSourceSchema";

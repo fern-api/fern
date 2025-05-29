@@ -370,6 +370,7 @@ function convertIrEnvironments({
 }): FdrCjsSdk.api.v1.commons.Environment[] {
     const environmentsConfigValue = environmentsConfig.environments;
     const endpointBaseUrlId = endpoint.baseUrl;
+    const endpointBaseUrlIds = endpoint.v2BaseUrls;
     switch (environmentsConfigValue.type) {
         case "singleBaseUrl":
             return environmentsConfigValue.environments.map((singleBaseUrlEnvironment) => {
@@ -379,6 +380,26 @@ function convertIrEnvironments({
                 };
             });
         case "multipleBaseUrls":
+            if (endpointBaseUrlIds != null) {
+                const environments = endpointBaseUrlIds.flatMap((baseUrlId) => {
+                    return environmentsConfigValue.environments.map((singleBaseUrlEnvironment) => {
+                        const endpointBaseUrl = singleBaseUrlEnvironment.urls[baseUrlId];
+                        if (endpointBaseUrl == null) {
+                            throw new Error(
+                                `Expected environment ${singleBaseUrlEnvironment.id} to contain url for ${baseUrlId}`
+                            );
+                        }
+                        return {
+                            id: FdrCjsSdk.EnvironmentId(baseUrlId),
+                            baseUrl: endpointBaseUrl
+                        };
+                    });
+                });
+                return environments.filter(
+                    (environment, index, self) =>
+                        index === self.findIndex((t) => t.id === environment.id && t.baseUrl === environment.baseUrl)
+                );
+            }
             if (endpointBaseUrlId == null) {
                 throw new Error(`Expected endpoint ${endpoint.name.originalName} to have base url.`);
             }
@@ -448,6 +469,10 @@ function convertHttpMethod(method: Ir.http.HttpMethod): FdrCjsSdk.HttpMethod {
         put: () => FdrCjsSdk.HttpMethod.Put,
         patch: () => FdrCjsSdk.HttpMethod.Patch,
         delete: () => FdrCjsSdk.HttpMethod.Delete,
+
+        // TODO: Temporary workaround; update to FdrCjsSdk.HttpMethod.Head once we update the FDR SDK.
+        //       A HEAD request is most similar to a GET, so this is the closest we can get for now.
+        head: () => FdrCjsSdk.HttpMethod.Get,
         _other: () => {
             throw new Error("Unknown http method: " + method);
         }

@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .event import Event
-
 __all__ = ["Event"]

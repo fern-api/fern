@@ -27,9 +27,8 @@ on:
       - "generators/typescript/express/versions.yml"
       # This file
       - ".github/workflows/write-changelogs.yml"
-  #TODO: Uncomment after testing/validation
-  #schedule:
-  #- cron: "0 0 * * *"
+  schedule:
+  - cron: "0 0 * * *"
   workflow_dispatch:
 jobs:
   write-changelogs:

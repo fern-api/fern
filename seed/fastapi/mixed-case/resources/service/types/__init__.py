@@ -7,5 +7,4 @@ from .organization import Organization
 from .resource import Resource
 from .resource_status import ResourceStatus
 from .user import User
-
 __all__ = ["NestedUser", "Organization", "Resource", "ResourceStatus", "User"]
