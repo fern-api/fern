@@ -116,24 +116,6 @@
           "queryParameters": [],
           "headers": [
             {
-              "key": "my-api-key",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            },
-            {
-              "key": "another_header",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            },
-            {
               "key": "x-api-key",
               "type": {
                 "type": "primitive",
@@ -203,8 +185,6 @@
               },
               "queryParameters": {},
               "headers": {
-                "my-api-key": "my-api-key",
-                "another_header": "another_header",
                 "x-api-key": "x-api-key",
                 "my-api-version": "my-api-version"
               },
@@ -252,5 +232,36 @@
     ]
   },
   "snippetsConfiguration": {},
-  "globalHeaders": []
+  "globalHeaders": [
+    {
+      "key": "my-api-key",
+      "type": {
+        "type": "optional",
+        "itemType": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "key": "another_header",
+      "type": {
+        "type": "primitive",
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "key": "version",
+      "type": {
+        "type": "primitive",
+        "value": {
+          "type": "string"
+        }
+      }
+    }
+  ]
 }
