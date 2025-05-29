@@ -1,3 +1,4 @@
+import { mergeWith } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import * as FernIr from "@fern-api/ir-sdk";
@@ -11,7 +12,6 @@ import { MapSchemaConverter } from "./MapSchemaConverter";
 import { ObjectSchemaConverter } from "./ObjectSchemaConverter";
 import { OneOfSchemaConverter } from "./OneOfSchemaConverter";
 import { PrimitiveSchemaConverter } from "./PrimitiveSchemaConverter";
-import { mergeWith } from "lodash-es";
 
 const TYPE_INVARIANT_KEYS = [
     "description",
@@ -186,11 +186,11 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             }
         }
 
-        const shouldMergeAllOf = 
-            this.schemaOnlyHasAllowedKeys(["allOf", "type", "title"]) && 
+        const shouldMergeAllOf =
+            this.schemaOnlyHasAllowedKeys(["allOf", "type", "title"]) &&
             Array.isArray(this.schema.allOf) &&
             this.schema.allOf.length >= 1;
-            
+
         if (shouldMergeAllOf) {
             let mergedSchema: Record<string, unknown> = {};
             for (const allOfSchema of this.schema.allOf ?? []) {

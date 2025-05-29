@@ -168,7 +168,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         for (const typeId of Object.keys({ ...inlinedTypes, ...inlinedTypesFromProperties })) {
             referencedTypes.add(typeId);
         }
-    
+
         return {
             type: Type.union({
                 baseProperties,
