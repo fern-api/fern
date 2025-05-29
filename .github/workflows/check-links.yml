@@ -1,13 +1,8 @@
 name: Check Links
 
 on:
-  #TODO: Remove before merging
-  push:
-    branches:
-      - "dak/ci/link-checking"
-  #TODO: Uncomment after testing/validation
-  #schedule:
-  #- cron: "0 0 * * *"
+  schedule:
+  - cron: "0 0 * * *"
   workflow_dispatch:
 jobs:
   check-links:
