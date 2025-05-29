@@ -918,7 +918,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"data\": {\n        \"users\": [\n            {\n                \"name\": \"name\",\n                \"id\": 1\n            },\n            {\n                \"name\": \"name\",\n                \"id\": 1\n            }\n        ]\n    },\n    \"next\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"total_count\": 1\n}",
+              "body": "{\n    \"total_count\": 1,\n    \"data\": {\n        \"users\": [\n            {\n                \"name\": \"name\",\n                \"id\": 1\n            },\n            {\n                \"name\": \"name\",\n                \"id\": 1\n            }\n        ]\n    },\n    \"next\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -992,7 +992,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"data\": {\n        \"users\": [\n            {\n                \"name\": \"name\",\n                \"id\": 1\n            },\n            {\n                \"name\": \"name\",\n                \"id\": 1\n            }\n        ]\n    },\n    \"next\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"total_count\": 1\n}",
+              "body": "{\n    \"total_count\": 1,\n    \"data\": {\n        \"users\": [\n            {\n                \"name\": \"name\",\n                \"id\": 1\n            },\n            {\n                \"name\": \"name\",\n                \"id\": 1\n            }\n        ]\n    },\n    \"next\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]
