@@ -53,6 +53,7 @@ types:
   V2HttpEndpointCodeSample:
     extends: commons.WithDocs
     properties:
+      name: optional<string>
       language: string
       code: string
 
