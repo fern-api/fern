@@ -1,6 +1,6 @@
 import {
-    getPropertyKey,
     GetReferenceOpts,
+    getPropertyKey,
     getTextOfTsKeyword,
     getTextOfTsNode,
     maybeAddDocsNode,

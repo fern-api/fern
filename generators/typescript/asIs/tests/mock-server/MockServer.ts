@@ -22,7 +22,7 @@ export class MockServer {
             once: options?.once,
             onBuild: (handler) => {
                 this.server.use(handler);
-            },
+            }
         }).baseUrl(this.baseUrl);
         return builder;
     }

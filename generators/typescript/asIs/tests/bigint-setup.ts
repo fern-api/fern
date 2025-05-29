@@ -1,4 +1,4 @@
-import { expect } from '@jest/globals';
+import { expect } from "@jest/globals";
 
 expect.addEqualityTesters([
     (a: any, b: any) => {
@@ -7,7 +7,7 @@ expect.addEqualityTesters([
         }
         // Return undefined to let Jest handle other comparisons normally
         return undefined;
-    },
+    }
 ]);
 
 export {};

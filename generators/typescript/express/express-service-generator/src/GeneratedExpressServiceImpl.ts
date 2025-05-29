@@ -1,4 +1,10 @@
-import { PackageId, convertHttpPathToExpressRoute, getPropertyKey, getTextOfTsNode, maybeAddDocsNode } from "@fern-typescript/commons";
+import {
+    PackageId,
+    convertHttpPathToExpressRoute,
+    getPropertyKey,
+    getTextOfTsNode,
+    maybeAddDocsNode
+} from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressService } from "@fern-typescript/contexts";
 import { ClassDeclaration, InterfaceDeclaration, Scope, ts } from "ts-morph";
 

@@ -413,7 +413,7 @@ export class SdkGenerator {
             includeSerdeLayer: config.includeSerdeLayer,
             generateWireTests: config.generateWireTests,
             useBigInt: config.useBigInt,
-            retainOriginalCasing: config.retainOriginalCasing,
+            retainOriginalCasing: config.retainOriginalCasing
         });
         this.referenceConfigBuilder = new ReferenceConfigBuilder();
         this.generatorAgent = new TypeScriptGeneratorAgent({

@@ -12,10 +12,12 @@ export class GeneratedGenericAPISdkErrorImpl
     private static readonly RAW_RESPONSE_PROPERTY_NAME = "rawResponse";
 
     private static readonly MESSAGE_CONSTRUCTOR_PARAMETER_NAME = "message";
-    private static readonly STATUS_CODE_CONSTRUCTOR_PARAMETER_NAME = GeneratedGenericAPISdkErrorImpl.STATUS_CODE_PROPERTY_NAME;
+    private static readonly STATUS_CODE_CONSTRUCTOR_PARAMETER_NAME =
+        GeneratedGenericAPISdkErrorImpl.STATUS_CODE_PROPERTY_NAME;
     private static readonly RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME =
         GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_PROPERTY_NAME;
-    private static readonly RAW_RESPONSE_CONSTRUCTOR_PARAMETER_NAME = GeneratedGenericAPISdkErrorImpl.RAW_RESPONSE_PROPERTY_NAME;
+    private static readonly RAW_RESPONSE_CONSTRUCTOR_PARAMETER_NAME =
+        GeneratedGenericAPISdkErrorImpl.RAW_RESPONSE_PROPERTY_NAME;
 
     private static readonly BUILD_MESSAGE_FUNCTION_NAME = "buildMessage";
 

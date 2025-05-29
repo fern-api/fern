@@ -1,4 +1,4 @@
-import { getPropertyKey, GetReferenceOpts, PackageId } from "@fern-typescript/commons";
+import { GetReferenceOpts, PackageId, getPropertyKey } from "@fern-typescript/commons";
 import { GeneratedRequestWrapperExample, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -105,9 +105,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
             .filter((queryParam) => this.isNotLiteral(queryParam.value.shape))
             .map((queryParam) => {
                 return ts.factory.createPropertyAssignment(
-                    getPropertyKey(
-                        generatedType.getPropertyNameOfQueryParameterFromName(queryParam.name).propertyName
-                    ),
+                    getPropertyKey(generatedType.getPropertyNameOfQueryParameterFromName(queryParam.name).propertyName),
                     context.type.getGeneratedExample(queryParam.value).build(context, opts)
                 );
             });

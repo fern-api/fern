@@ -82,7 +82,10 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
 
     public getNonDiscriminantPropertiesForBuilder(): ts.ObjectLiteralElementLike[] {
         return [
-            ts.factory.createPropertyAssignment(getPropertyKey(this.discriminant), ts.factory.createIdentifier("undefined")),
+            ts.factory.createPropertyAssignment(
+                getPropertyKey(this.discriminant),
+                ts.factory.createIdentifier("undefined")
+            ),
             ts.factory.createPropertyAssignment(
                 UnknownErrorSingleUnionTypeGenerator.CONTENT_PROPERTY_NAME,
                 ts.factory.createIdentifier(UnknownErrorSingleUnionTypeGenerator.BUILDER_PARAMETER_NAME)
