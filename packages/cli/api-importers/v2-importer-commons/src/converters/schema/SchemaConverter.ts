@@ -160,7 +160,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
     private tryConvertSingularAllOfSchema(): SchemaConverter.Output | undefined {
         if (
-            this.schemaOnlyHasAllowedKeys(["allOf", "type", "title"]) &&
+            this.schemaOnlyHasAllowedKeys(["allOf"]) &&
             this.schema.allOf?.length === 1 &&
             this.schema.allOf[0] != null
         ) {

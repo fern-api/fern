@@ -37,7 +37,9 @@ jobs:
           pnpm jsonschema
 
       - name: Format
-        run: pnpm format:check
+        run: |
+          pnpm format:check
+          sleep .1
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
