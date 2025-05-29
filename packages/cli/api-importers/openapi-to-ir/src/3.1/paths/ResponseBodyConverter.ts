@@ -9,8 +9,8 @@ import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
 export declare namespace ResponseBodyConverter {
     export interface Args extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Args {
         responseBody: OpenAPIV3_1.ResponseObject;
-        statusCode: string;
         streamingExtension: FernStreamingExtension.Output | undefined;
+        statusCode: string;
     }
 
     export interface Output extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Output {
@@ -40,38 +40,62 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
     }
 
     public convert(): ResponseBodyConverter.Output | undefined {
-        return this.shouldConvertAsStreaming() ? this.convertStreaming() : this.convertNonStreaming();
+        return this.shouldConvertAsStreaming()
+            ? this.convertStreamingResponseBody()
+            : this.convertNonStreamingResponseBody();
     }
 
-    private convertStreaming(): ResponseBodyConverter.Output | undefined {
+    private convertStreamingResponseBody(): ResponseBodyConverter.Output | undefined {
         if (this.streamingExtension == null) {
             return undefined;
         }
-        const schemaId = [...this.group, this.method, "Response", this.statusCode].join("_");
-        const contentTypes = Object.keys(this.responseBody.content ?? {});
-        for (const contentType of contentTypes) {
-            const mediaTypeObject = this.responseBody.content?.[contentType];
-            if (mediaTypeObject == null) {
-                continue;
-            }
-            const convertedSchema = this.parseMediaTypeObject({
-                mediaTypeObject,
-                schemaId,
-                contentType: this.streamingExtension.format
+        if (this.streamingExtension.type == "streamCondition") {
+            const streamingResponse = this.streamingExtension.responseStream;
+            const nonStreamingResponse = this.streamingExtension.response;
+            const nonStreamingSchemaId = [...this.group, this.method, "Response", this.statusCode].join("_");
+            const streamingSchemaId = `${nonStreamingSchemaId}_streaming`;
+
+            const convertedStreamingSchema = this.parseMediaTypeSchemaOrReference({
+                schemaOrReference: streamingResponse,
+                schemaId: streamingSchemaId
             });
-            if (convertedSchema == null) {
-                continue;
-            }
-            return this.convertStreamingResponse({
-                mediaTypeObject,
-                convertedSchema
+            const convertedNonStreamingSchema = this.parseMediaTypeSchemaOrReference({
+                schemaOrReference: nonStreamingResponse,
+                schemaId: nonStreamingSchemaId
             });
+
+            return this.convertStreamConditionResponse({
+                convertedStreamingSchema,
+                convertedNonStreamingSchema
+            });
+        }
+        if (this.streamingExtension.type === "stream") {
+            const schemaId = [...this.group, this.method, "Response", this.statusCode].join("_");
+            const contentTypes = Object.keys(this.responseBody.content ?? {});
+            for (const contentType of contentTypes) {
+                const mediaTypeObject = this.responseBody.content?.[contentType];
+                if (mediaTypeObject == null) {
+                    continue;
+                }
+                const convertedSchema = this.parseMediaTypeObject({
+                    mediaTypeObject,
+                    schemaId,
+                    contentType: this.streamingExtension.format
+                });
+                if (convertedSchema == null) {
+                    continue;
+                }
+                return this.convertStreamingResponse({
+                    mediaTypeObject,
+                    convertedSchema
+                });
+            }
         }
 
         return undefined;
     }
 
-    private convertNonStreaming(): ResponseBodyConverter.Output | undefined {
+    private convertNonStreamingResponseBody(): ResponseBodyConverter.Output | undefined {
         const schemaId = [...this.group, this.method, "Response", this.statusCode].join("_");
         const jsonContentTypes = Object.keys(this.responseBody.content ?? {}).filter((type) => type.includes("json"));
         for (const contentType of jsonContentTypes) {
@@ -128,6 +152,44 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
         }
 
         return undefined;
+    }
+
+    private convertStreamConditionResponse({
+        convertedStreamingSchema,
+        convertedNonStreamingSchema
+    }: {
+        convertedStreamingSchema:
+            | Converters.AbstractConverters.AbstractMediaTypeObjectConverter.MediaTypeObject
+            | undefined;
+        convertedNonStreamingSchema:
+            | Converters.AbstractConverters.AbstractMediaTypeObjectConverter.MediaTypeObject
+            | undefined;
+    }): ResponseBodyConverter.Output | undefined {
+        if (convertedStreamingSchema == null || convertedNonStreamingSchema == null) {
+            return undefined;
+        }
+        return {
+            responseBody: HttpResponseBody.json(
+                JsonResponse.response({
+                    responseBodyType: convertedNonStreamingSchema.type,
+                    docs: this.responseBody.description,
+                    v2Examples: convertedNonStreamingSchema.schema?.typeDeclaration.v2Examples
+                })
+            ),
+            streamResponseBody: HttpResponseBody.streaming(
+                StreamingResponse.json({
+                    // TODO: Use the streamExtension.streamDescription
+                    docs: this.responseBody.description,
+                    payload: convertedStreamingSchema.type,
+                    terminator: undefined,
+                    v2Examples: convertedStreamingSchema.schema?.typeDeclaration.v2Examples
+                })
+            ),
+            inlinedTypes: {
+                ...convertedStreamingSchema.inlinedTypes,
+                ...convertedNonStreamingSchema.inlinedTypes
+            }
+        };
     }
 
     private convertStreamingResponse({

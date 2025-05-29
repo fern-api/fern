@@ -869,7 +869,7 @@ function convertV2HttpEndpointExample({
                 : undefined,
         codeSamples: example.codeSamples
             ?.map((codeSample) => ({
-                name: exampleName,
+                name: codeSample.name,
                 description: codeSample.docs ?? undefined,
                 install: undefined,
                 language: codeSample.language,

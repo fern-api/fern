@@ -251,12 +251,6 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             const convertedPath = pathConverter.convert();
             if (convertedPath != null) {
                 for (const endpoint of convertedPath.endpoints) {
-                    this.addEndpointToIr({
-                        endpoint: endpoint.endpoint,
-                        audiences: endpoint.audiences,
-                        endpointGroup: endpoint.group
-                    });
-
                     if (endpoint.streamEndpoint != null) {
                         this.addEndpointToIr({
                             endpoint: endpoint.streamEndpoint,
@@ -264,6 +258,12 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                             endpointGroup: endpoint.group
                         });
                     }
+
+                    this.addEndpointToIr({
+                        endpoint: endpoint.endpoint,
+                        audiences: endpoint.audiences,
+                        endpointGroup: endpoint.group
+                    });
 
                     if (endpoint.servers) {
                         for (const server of endpoint.servers) {
