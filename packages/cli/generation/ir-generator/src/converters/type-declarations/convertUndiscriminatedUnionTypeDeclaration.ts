@@ -27,18 +27,18 @@ export function convertUndiscriminatedUnionTypeDeclaration({
 
     return Type.undiscriminatedUnion({
         members: uniqueMembers.map((member) => {
-            const parsedType = file.parseTypeReference(
-                typeof member === "string" ? member : member.type
-            );
+            const parsedType = file.parseTypeReference(typeof member === "string" ? member : member.type);
 
-            const typeWithDisplayName = parsedType.type === "named" 
-                ? { 
-                    ...parsedType, 
-                    displayName: typeof member === "string"
-                        ? titleCase(parsedType.name.originalName)
-                        : member["display-name"] ?? titleCase(parsedType.name.originalName)
-                }
-                : parsedType;
+            const typeWithDisplayName =
+                parsedType.type === "named"
+                    ? {
+                          ...parsedType,
+                          displayName:
+                              typeof member === "string"
+                                  ? titleCase(parsedType.name.originalName)
+                                  : (member["display-name"] ?? titleCase(parsedType.name.originalName))
+                      }
+                    : parsedType;
 
             return {
                 type: typeWithDisplayName,
