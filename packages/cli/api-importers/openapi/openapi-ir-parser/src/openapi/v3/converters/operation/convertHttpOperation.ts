@@ -153,6 +153,11 @@ export function convertHttpOperation({
     const availability = getFernAvailability(operation);
     const examples = getExamplesFromExtension(operationContext, operation, context);
     const serverName = getExtension<string>(operation, FernOpenAPIExtension.SERVER_NAME_V2);
+
+    const nameOverride = getExtension<string>(operation, FernOpenAPIExtension.TYPE_NAME);
+    const generatedRequestName =
+        nameOverride ?? getGeneratedTypeName(requestBreadcrumbs, context.options.preserveSchemaIds);
+
     return {
         summary: operation.summary,
         internal: getExtension<boolean>(operation, OpenAPIExtension.INTERNAL),
@@ -169,7 +174,7 @@ export function convertHttpOperation({
         queryParameters: convertedParameters.queryParameters,
         headers: convertedParameters.headers,
         requestNameOverride: requestNameOverride ?? undefined,
-        generatedRequestName: getGeneratedTypeName(requestBreadcrumbs, context.options.preserveSchemaIds),
+        generatedRequestName,
         request: convertedRequest,
         response: convertedResponse.value,
         errors: convertedResponse.errors,
