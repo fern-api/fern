@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        `allOf` schemas that share properties with the parent schema's required properties will now be parsed as an inline `allOf` schema.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-29"
+  version: 0.63.21
+
+- changelogEntry:
+    - summary: |
         Implement V3 parser support for streamCondition endpoints.
       type: fix
   irVersion: 58
