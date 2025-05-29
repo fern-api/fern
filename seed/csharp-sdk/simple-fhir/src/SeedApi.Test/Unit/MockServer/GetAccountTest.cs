@@ -13,31 +13,460 @@ public class GetAccountTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
+              "resource_type": "Account",
+              "name": "name",
+              "patient": {
+                "resource_type": "Patient",
+                "name": "name",
+                "scripts": [
+                  {
+                    "resource_type": "Script",
+                    "name": "name",
+                    "id": "id",
+                    "related_resources": [
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      },
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    ],
+                    "memo": {
+                      "description": "description",
+                      "account": {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "resource_type": "Script",
+                    "name": "name",
+                    "id": "id",
+                    "related_resources": [
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      },
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    ],
+                    "memo": {
+                      "description": "description",
+                      "account": {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "id": "id",
+                "related_resources": [
+                  {
+                    "resource_type": "Account",
+                    "name": "name",
+                    "patient": {
+                      "resource_type": "Patient",
+                      "name": "name",
+                      "scripts": [],
+                      "id": "id",
+                      "related_resources": [],
+                      "memo": {
+                        "description": "description"
+                      }
+                    },
+                    "practitioner": {
+                      "resource_type": "Practitioner",
+                      "name": "name",
+                      "id": "id",
+                      "related_resources": [],
+                      "memo": {
+                        "description": "description"
+                      }
+                    },
+                    "id": "id",
+                    "related_resources": [
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      },
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    ],
+                    "memo": {
+                      "description": "description",
+                      "account": {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "resource_type": "Account",
+                    "name": "name",
+                    "patient": {
+                      "resource_type": "Patient",
+                      "name": "name",
+                      "scripts": [],
+                      "id": "id",
+                      "related_resources": [],
+                      "memo": {
+                        "description": "description"
+                      }
+                    },
+                    "practitioner": {
+                      "resource_type": "Practitioner",
+                      "name": "name",
+                      "id": "id",
+                      "related_resources": [],
+                      "memo": {
+                        "description": "description"
+                      }
+                    },
+                    "id": "id",
+                    "related_resources": [
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      },
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    ],
+                    "memo": {
+                      "description": "description",
+                      "account": {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "memo": {
+                  "description": "description",
+                  "account": {
+                    "resource_type": "Account",
+                    "name": "name",
+                    "patient": {
+                      "resource_type": "Patient",
+                      "name": "name",
+                      "scripts": [],
+                      "id": "id",
+                      "related_resources": [],
+                      "memo": {
+                        "description": "description"
+                      }
+                    },
+                    "practitioner": {
+                      "resource_type": "Practitioner",
+                      "name": "name",
+                      "id": "id",
+                      "related_resources": [],
+                      "memo": {
+                        "description": "description"
+                      }
+                    },
+                    "id": "id",
+                    "related_resources": [
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      },
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    ],
+                    "memo": {
+                      "description": "description",
+                      "account": {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "practitioner": {
+                "resource_type": "Practitioner",
+                "name": "name",
+                "id": "id",
+                "related_resources": [
+                  {
+                    "resource_type": "Account",
+                    "name": "name",
+                    "patient": {
+                      "resource_type": "Patient",
+                      "name": "name",
+                      "scripts": [],
+                      "id": "id",
+                      "related_resources": [],
+                      "memo": {
+                        "description": "description"
+                      }
+                    },
+                    "practitioner": {
+                      "resource_type": "Practitioner",
+                      "name": "name",
+                      "id": "id",
+                      "related_resources": [],
+                      "memo": {
+                        "description": "description"
+                      }
+                    },
+                    "id": "id",
+                    "related_resources": [
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      },
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    ],
+                    "memo": {
+                      "description": "description",
+                      "account": {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "resource_type": "Account",
+                    "name": "name",
+                    "patient": {
+                      "resource_type": "Patient",
+                      "name": "name",
+                      "scripts": [],
+                      "id": "id",
+                      "related_resources": [],
+                      "memo": {
+                        "description": "description"
+                      }
+                    },
+                    "practitioner": {
+                      "resource_type": "Practitioner",
+                      "name": "name",
+                      "id": "id",
+                      "related_resources": [],
+                      "memo": {
+                        "description": "description"
+                      }
+                    },
+                    "id": "id",
+                    "related_resources": [
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      },
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    ],
+                    "memo": {
+                      "description": "description",
+                      "account": {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "memo": {
+                  "description": "description",
+                  "account": {
+                    "resource_type": "Account",
+                    "name": "name",
+                    "patient": {
+                      "resource_type": "Patient",
+                      "name": "name",
+                      "scripts": [],
+                      "id": "id",
+                      "related_resources": [],
+                      "memo": {
+                        "description": "description"
+                      }
+                    },
+                    "practitioner": {
+                      "resource_type": "Practitioner",
+                      "name": "name",
+                      "id": "id",
+                      "related_resources": [],
+                      "memo": {
+                        "description": "description"
+                      }
+                    },
+                    "id": "id",
+                    "related_resources": [
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      },
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    ],
+                    "memo": {
+                      "description": "description",
+                      "account": {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
               "id": "id",
               "related_resources": [
                 {
-                  "id": "id",
-                  "related_resources": [
-                    {
-                      "id": "id",
-                      "related_resources": [],
-                      "memo": {
-                        "description": "description"
-                      },
-                      "resource_type": "Account",
-                      "name": "name",
-                      "patient": {
-                        "resource_type": "Patient",
+                  "resource_type": "Account",
+                  "name": "name",
+                  "patient": {
+                    "resource_type": "Patient",
+                    "name": "name",
+                    "scripts": [
+                      {
+                        "resource_type": "Script",
                         "name": "name",
-                        "scripts": [],
                         "id": "id",
                         "related_resources": [],
                         "memo": {
                           "description": "description"
                         }
                       },
-                      "practitioner": {
-                        "resource_type": "Practitioner",
+                      {
+                        "resource_type": "Script",
                         "name": "name",
                         "id": "id",
                         "related_resources": [],
@@ -45,13 +474,81 @@ public class GetAccountTest : BaseMockServerTest
                           "description": "description"
                         }
                       }
-                    },
-                    {
-                      "id": "id",
-                      "related_resources": [],
-                      "memo": {
-                        "description": "description"
+                    ],
+                    "id": "id",
+                    "related_resources": [
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
                       },
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    ],
+                    "memo": {
+                      "description": "description",
+                      "account": {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    }
+                  },
+                  "practitioner": {
+                    "resource_type": "Practitioner",
+                    "name": "name",
+                    "id": "id",
+                    "related_resources": [
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      },
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    ],
+                    "memo": {
+                      "description": "description",
+                      "account": {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    }
+                  },
+                  "id": "id",
+                  "related_resources": [
+                    {
                       "resource_type": "Account",
                       "name": "name",
                       "patient": {
@@ -72,17 +569,45 @@ public class GetAccountTest : BaseMockServerTest
                         "memo": {
                           "description": "description"
                         }
+                      },
+                      "id": "id",
+                      "related_resources": [],
+                      "memo": {
+                        "description": "description"
+                      }
+                    },
+                    {
+                      "resource_type": "Account",
+                      "name": "name",
+                      "patient": {
+                        "resource_type": "Patient",
+                        "name": "name",
+                        "scripts": [],
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      },
+                      "practitioner": {
+                        "resource_type": "Practitioner",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      },
+                      "id": "id",
+                      "related_resources": [],
+                      "memo": {
+                        "description": "description"
                       }
                     }
                   ],
                   "memo": {
                     "description": "description",
                     "account": {
-                      "id": "id",
-                      "related_resources": [],
-                      "memo": {
-                        "description": "description"
-                      },
                       "resource_type": "Account",
                       "name": "name",
                       "patient": {
@@ -103,129 +628,33 @@ public class GetAccountTest : BaseMockServerTest
                         "memo": {
                           "description": "description"
                         }
+                      },
+                      "id": "id",
+                      "related_resources": [],
+                      "memo": {
+                        "description": "description"
                       }
                     }
-                  },
-                  "resource_type": "Account",
-                  "name": "name",
-                  "patient": {
-                    "id": "id",
-                    "related_resources": [
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      },
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    ],
-                    "memo": {
-                      "description": "description",
-                      "account": {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    },
-                    "resource_type": "Patient",
-                    "name": "name",
-                    "scripts": [
-                      {
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        },
-                        "resource_type": "Script",
-                        "name": "name"
-                      },
-                      {
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        },
-                        "resource_type": "Script",
-                        "name": "name"
-                      }
-                    ]
-                  },
-                  "practitioner": {
-                    "id": "id",
-                    "related_resources": [
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      },
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    ],
-                    "memo": {
-                      "description": "description",
-                      "account": {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    },
-                    "resource_type": "Practitioner",
-                    "name": "name"
                   }
                 },
                 {
-                  "id": "id",
-                  "related_resources": [
-                    {
-                      "id": "id",
-                      "related_resources": [],
-                      "memo": {
-                        "description": "description"
-                      },
-                      "resource_type": "Account",
-                      "name": "name",
-                      "patient": {
-                        "resource_type": "Patient",
+                  "resource_type": "Account",
+                  "name": "name",
+                  "patient": {
+                    "resource_type": "Patient",
+                    "name": "name",
+                    "scripts": [
+                      {
+                        "resource_type": "Script",
                         "name": "name",
-                        "scripts": [],
                         "id": "id",
                         "related_resources": [],
                         "memo": {
                           "description": "description"
                         }
                       },
-                      "practitioner": {
-                        "resource_type": "Practitioner",
+                      {
+                        "resource_type": "Script",
                         "name": "name",
                         "id": "id",
                         "related_resources": [],
@@ -233,13 +662,81 @@ public class GetAccountTest : BaseMockServerTest
                           "description": "description"
                         }
                       }
-                    },
-                    {
-                      "id": "id",
-                      "related_resources": [],
-                      "memo": {
-                        "description": "description"
+                    ],
+                    "id": "id",
+                    "related_resources": [
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
                       },
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    ],
+                    "memo": {
+                      "description": "description",
+                      "account": {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    }
+                  },
+                  "practitioner": {
+                    "resource_type": "Practitioner",
+                    "name": "name",
+                    "id": "id",
+                    "related_resources": [
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      },
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    ],
+                    "memo": {
+                      "description": "description",
+                      "account": {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    }
+                  },
+                  "id": "id",
+                  "related_resources": [
+                    {
                       "resource_type": "Account",
                       "name": "name",
                       "patient": {
@@ -260,17 +757,45 @@ public class GetAccountTest : BaseMockServerTest
                         "memo": {
                           "description": "description"
                         }
+                      },
+                      "id": "id",
+                      "related_resources": [],
+                      "memo": {
+                        "description": "description"
+                      }
+                    },
+                    {
+                      "resource_type": "Account",
+                      "name": "name",
+                      "patient": {
+                        "resource_type": "Patient",
+                        "name": "name",
+                        "scripts": [],
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      },
+                      "practitioner": {
+                        "resource_type": "Practitioner",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      },
+                      "id": "id",
+                      "related_resources": [],
+                      "memo": {
+                        "description": "description"
                       }
                     }
                   ],
                   "memo": {
                     "description": "description",
                     "account": {
-                      "id": "id",
-                      "related_resources": [],
-                      "memo": {
-                        "description": "description"
-                      },
                       "resource_type": "Account",
                       "name": "name",
                       "patient": {
@@ -291,132 +816,36 @@ public class GetAccountTest : BaseMockServerTest
                         "memo": {
                           "description": "description"
                         }
+                      },
+                      "id": "id",
+                      "related_resources": [],
+                      "memo": {
+                        "description": "description"
                       }
                     }
-                  },
-                  "resource_type": "Account",
-                  "name": "name",
-                  "patient": {
-                    "id": "id",
-                    "related_resources": [
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      },
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    ],
-                    "memo": {
-                      "description": "description",
-                      "account": {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    },
-                    "resource_type": "Patient",
-                    "name": "name",
-                    "scripts": [
-                      {
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        },
-                        "resource_type": "Script",
-                        "name": "name"
-                      },
-                      {
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        },
-                        "resource_type": "Script",
-                        "name": "name"
-                      }
-                    ]
-                  },
-                  "practitioner": {
-                    "id": "id",
-                    "related_resources": [
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      },
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    ],
-                    "memo": {
-                      "description": "description",
-                      "account": {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    },
-                    "resource_type": "Practitioner",
-                    "name": "name"
                   }
                 }
               ],
               "memo": {
                 "description": "description",
                 "account": {
-                  "id": "id",
-                  "related_resources": [
-                    {
-                      "id": "id",
-                      "related_resources": [],
-                      "memo": {
-                        "description": "description"
-                      },
-                      "resource_type": "Account",
-                      "name": "name",
-                      "patient": {
-                        "resource_type": "Patient",
+                  "resource_type": "Account",
+                  "name": "name",
+                  "patient": {
+                    "resource_type": "Patient",
+                    "name": "name",
+                    "scripts": [
+                      {
+                        "resource_type": "Script",
                         "name": "name",
-                        "scripts": [],
                         "id": "id",
                         "related_resources": [],
                         "memo": {
                           "description": "description"
                         }
                       },
-                      "practitioner": {
-                        "resource_type": "Practitioner",
+                      {
+                        "resource_type": "Script",
                         "name": "name",
                         "id": "id",
                         "related_resources": [],
@@ -424,13 +853,81 @@ public class GetAccountTest : BaseMockServerTest
                           "description": "description"
                         }
                       }
-                    },
-                    {
-                      "id": "id",
-                      "related_resources": [],
-                      "memo": {
-                        "description": "description"
+                    ],
+                    "id": "id",
+                    "related_resources": [
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
                       },
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    ],
+                    "memo": {
+                      "description": "description",
+                      "account": {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    }
+                  },
+                  "practitioner": {
+                    "resource_type": "Practitioner",
+                    "name": "name",
+                    "id": "id",
+                    "related_resources": [
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      },
+                      {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    ],
+                    "memo": {
+                      "description": "description",
+                      "account": {
+                        "resource_type": "Account",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      }
+                    }
+                  },
+                  "id": "id",
+                  "related_resources": [
+                    {
                       "resource_type": "Account",
                       "name": "name",
                       "patient": {
@@ -451,17 +948,45 @@ public class GetAccountTest : BaseMockServerTest
                         "memo": {
                           "description": "description"
                         }
+                      },
+                      "id": "id",
+                      "related_resources": [],
+                      "memo": {
+                        "description": "description"
+                      }
+                    },
+                    {
+                      "resource_type": "Account",
+                      "name": "name",
+                      "patient": {
+                        "resource_type": "Patient",
+                        "name": "name",
+                        "scripts": [],
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      },
+                      "practitioner": {
+                        "resource_type": "Practitioner",
+                        "name": "name",
+                        "id": "id",
+                        "related_resources": [],
+                        "memo": {
+                          "description": "description"
+                        }
+                      },
+                      "id": "id",
+                      "related_resources": [],
+                      "memo": {
+                        "description": "description"
                       }
                     }
                   ],
                   "memo": {
                     "description": "description",
                     "account": {
-                      "id": "id",
-                      "related_resources": [],
-                      "memo": {
-                        "description": "description"
-                      },
                       "resource_type": "Account",
                       "name": "name",
                       "patient": {
@@ -482,540 +1007,15 @@ public class GetAccountTest : BaseMockServerTest
                         "memo": {
                           "description": "description"
                         }
+                      },
+                      "id": "id",
+                      "related_resources": [],
+                      "memo": {
+                        "description": "description"
                       }
                     }
-                  },
-                  "resource_type": "Account",
-                  "name": "name",
-                  "patient": {
-                    "id": "id",
-                    "related_resources": [
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      },
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    ],
-                    "memo": {
-                      "description": "description",
-                      "account": {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    },
-                    "resource_type": "Patient",
-                    "name": "name",
-                    "scripts": [
-                      {
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        },
-                        "resource_type": "Script",
-                        "name": "name"
-                      },
-                      {
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        },
-                        "resource_type": "Script",
-                        "name": "name"
-                      }
-                    ]
-                  },
-                  "practitioner": {
-                    "id": "id",
-                    "related_resources": [
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      },
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    ],
-                    "memo": {
-                      "description": "description",
-                      "account": {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    },
-                    "resource_type": "Practitioner",
-                    "name": "name"
                   }
                 }
-              },
-              "resource_type": "Account",
-              "name": "name",
-              "patient": {
-                "id": "id",
-                "related_resources": [
-                  {
-                    "id": "id",
-                    "related_resources": [
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      },
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    ],
-                    "memo": {
-                      "description": "description",
-                      "account": {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    },
-                    "resource_type": "Account",
-                    "name": "name",
-                    "patient": {
-                      "id": "id",
-                      "related_resources": [],
-                      "memo": {
-                        "description": "description"
-                      },
-                      "resource_type": "Patient",
-                      "name": "name",
-                      "scripts": []
-                    },
-                    "practitioner": {
-                      "id": "id",
-                      "related_resources": [],
-                      "memo": {
-                        "description": "description"
-                      },
-                      "resource_type": "Practitioner",
-                      "name": "name"
-                    }
-                  },
-                  {
-                    "id": "id",
-                    "related_resources": [
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      },
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    ],
-                    "memo": {
-                      "description": "description",
-                      "account": {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    },
-                    "resource_type": "Account",
-                    "name": "name",
-                    "patient": {
-                      "id": "id",
-                      "related_resources": [],
-                      "memo": {
-                        "description": "description"
-                      },
-                      "resource_type": "Patient",
-                      "name": "name",
-                      "scripts": []
-                    },
-                    "practitioner": {
-                      "id": "id",
-                      "related_resources": [],
-                      "memo": {
-                        "description": "description"
-                      },
-                      "resource_type": "Practitioner",
-                      "name": "name"
-                    }
-                  }
-                ],
-                "memo": {
-                  "description": "description",
-                  "account": {
-                    "id": "id",
-                    "related_resources": [
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      },
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    ],
-                    "memo": {
-                      "description": "description",
-                      "account": {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    },
-                    "resource_type": "Account",
-                    "name": "name",
-                    "patient": {
-                      "id": "id",
-                      "related_resources": [],
-                      "memo": {
-                        "description": "description"
-                      },
-                      "resource_type": "Patient",
-                      "name": "name",
-                      "scripts": []
-                    },
-                    "practitioner": {
-                      "id": "id",
-                      "related_resources": [],
-                      "memo": {
-                        "description": "description"
-                      },
-                      "resource_type": "Practitioner",
-                      "name": "name"
-                    }
-                  }
-                },
-                "resource_type": "Patient",
-                "name": "name",
-                "scripts": [
-                  {
-                    "id": "id",
-                    "related_resources": [
-                      {
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        },
-                        "resource_type": "Account",
-                        "name": "name"
-                      },
-                      {
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        },
-                        "resource_type": "Account",
-                        "name": "name"
-                      }
-                    ],
-                    "memo": {
-                      "description": "description",
-                      "account": {
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        },
-                        "resource_type": "Account",
-                        "name": "name"
-                      }
-                    },
-                    "resource_type": "Script",
-                    "name": "name"
-                  },
-                  {
-                    "id": "id",
-                    "related_resources": [
-                      {
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        },
-                        "resource_type": "Account",
-                        "name": "name"
-                      },
-                      {
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        },
-                        "resource_type": "Account",
-                        "name": "name"
-                      }
-                    ],
-                    "memo": {
-                      "description": "description",
-                      "account": {
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        },
-                        "resource_type": "Account",
-                        "name": "name"
-                      }
-                    },
-                    "resource_type": "Script",
-                    "name": "name"
-                  }
-                ]
-              },
-              "practitioner": {
-                "id": "id",
-                "related_resources": [
-                  {
-                    "id": "id",
-                    "related_resources": [
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      },
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    ],
-                    "memo": {
-                      "description": "description",
-                      "account": {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    },
-                    "resource_type": "Account",
-                    "name": "name",
-                    "patient": {
-                      "id": "id",
-                      "related_resources": [],
-                      "memo": {
-                        "description": "description"
-                      },
-                      "resource_type": "Patient",
-                      "name": "name",
-                      "scripts": []
-                    },
-                    "practitioner": {
-                      "id": "id",
-                      "related_resources": [],
-                      "memo": {
-                        "description": "description"
-                      },
-                      "resource_type": "Practitioner",
-                      "name": "name"
-                    }
-                  },
-                  {
-                    "id": "id",
-                    "related_resources": [
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      },
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    ],
-                    "memo": {
-                      "description": "description",
-                      "account": {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    },
-                    "resource_type": "Account",
-                    "name": "name",
-                    "patient": {
-                      "id": "id",
-                      "related_resources": [],
-                      "memo": {
-                        "description": "description"
-                      },
-                      "resource_type": "Patient",
-                      "name": "name",
-                      "scripts": []
-                    },
-                    "practitioner": {
-                      "id": "id",
-                      "related_resources": [],
-                      "memo": {
-                        "description": "description"
-                      },
-                      "resource_type": "Practitioner",
-                      "name": "name"
-                    }
-                  }
-                ],
-                "memo": {
-                  "description": "description",
-                  "account": {
-                    "id": "id",
-                    "related_resources": [
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      },
-                      {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    ],
-                    "memo": {
-                      "description": "description",
-                      "account": {
-                        "resource_type": "Account",
-                        "name": "name",
-                        "id": "id",
-                        "related_resources": [],
-                        "memo": {
-                          "description": "description"
-                        }
-                      }
-                    },
-                    "resource_type": "Account",
-                    "name": "name",
-                    "patient": {
-                      "id": "id",
-                      "related_resources": [],
-                      "memo": {
-                        "description": "description"
-                      },
-                      "resource_type": "Patient",
-                      "name": "name",
-                      "scripts": []
-                    },
-                    "practitioner": {
-                      "id": "id",
-                      "related_resources": [],
-                      "memo": {
-                        "description": "description"
-                      },
-                      "resource_type": "Practitioner",
-                      "name": "name"
-                    }
-                  }
-                },
-                "resource_type": "Practitioner",
-                "name": "name"
               }
             }
             """;
