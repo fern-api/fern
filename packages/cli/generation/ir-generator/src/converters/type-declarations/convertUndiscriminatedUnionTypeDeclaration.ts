@@ -27,22 +27,22 @@ export function convertUndiscriminatedUnionTypeDeclaration({
 
     return Type.undiscriminatedUnion({
         members: uniqueMembers.map((member) => {
-            if (typeof member === "string") {
-                return {
-                    docs: undefined,
-                    type: file.parseTypeReference(member)
-                };
-            }
+            const parsedType = file.parseTypeReference(
+                typeof member === "string" ? member : member.type
+            );
 
-            const parsedType = file.parseTypeReference(member.type);
-            const typeWithDisplayName =
-                parsedType.type === "named"
-                    ? { ...parsedType, displayName: member["display-name"] ?? titleCase(parsedType.name.originalName) }
-                    : parsedType;
+            const typeWithDisplayName = parsedType.type === "named" 
+                ? { 
+                    ...parsedType, 
+                    displayName: typeof member === "string"
+                        ? titleCase(parsedType.name.originalName)
+                        : member["display-name"] ?? titleCase(parsedType.name.originalName)
+                }
+                : parsedType;
 
             return {
                 type: typeWithDisplayName,
-                docs: member.docs
+                docs: typeof member === "string" ? undefined : member.docs
             };
         })
     });
