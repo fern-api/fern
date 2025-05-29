@@ -8,7 +8,7 @@ import { FiddleClient } from "../../../src/Client";
 describe("HttpMethods", () => {
     test("testGet", async () => {
         const server = mockServerPool.createServer();
-        const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
+        const client = new FiddleClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
         server.mockEndpoint().get("/http-methods/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
@@ -19,7 +19,7 @@ describe("HttpMethods", () => {
 
     test("testPost", async () => {
         const server = mockServerPool.createServer();
-        const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
+        const client = new FiddleClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = { string: "string" };
         const rawResponseBody = {
             string: "string",
@@ -69,7 +69,7 @@ describe("HttpMethods", () => {
 
     test("testPut", async () => {
         const server = mockServerPool.createServer();
-        const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
+        const client = new FiddleClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = { string: "string" };
         const rawResponseBody = {
             string: "string",
@@ -119,7 +119,7 @@ describe("HttpMethods", () => {
 
     test("testPatch", async () => {
         const server = mockServerPool.createServer();
-        const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
+        const client = new FiddleClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = {
             string: "string",
             integer: 1,
@@ -197,7 +197,7 @@ describe("HttpMethods", () => {
 
     test("testDelete", async () => {
         const server = mockServerPool.createServer();
-        const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
+        const client = new FiddleClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = true;
         server

@@ -9,7 +9,7 @@ describe("SeedAliasExtendsClient", () => {
     test("extendedInlineRequestBody", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedAliasExtendsClient({ environment: server.baseUrl });
-        const rawRequestBody = { child: "child" };
+        const rawRequestBody = { child: "child", parent: "parent" };
 
         server
             .mockEndpoint()
@@ -21,6 +21,7 @@ describe("SeedAliasExtendsClient", () => {
 
         const response = await client.extendedInlineRequestBody({
             child: "child",
+            parent: "parent",
         });
         expect(response).toEqual(undefined);
     });

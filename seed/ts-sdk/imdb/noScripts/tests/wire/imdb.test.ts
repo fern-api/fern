@@ -9,7 +9,7 @@ import { SeedApiClient } from "../../src/Client";
                 
             test("createMovie", async () => {
                 const server = mockServerPool.createServer();
-                const client = new SeedApiClient({ "token" : process.env.TESTS_AUTH || "test" , "environment" : server.baseUrl });
+                const client = new SeedApiClient({ "token" : "test" , "environment" : server.baseUrl });
                 const rawRequestBody = { "title" : "title" , "rating" : 1.1 };
                 const rawResponseBody = "string";
                 server
@@ -28,7 +28,7 @@ import { SeedApiClient } from "../../src/Client";
           
             test("getMovie", async () => {
                 const server = mockServerPool.createServer();
-                const client = new SeedApiClient({ "token" : process.env.TESTS_AUTH || "test" , "environment" : server.baseUrl });
+                const client = new SeedApiClient({ "token" : "test" , "environment" : server.baseUrl });
                 
                 const rawResponseBody = { "id" : "id" , "title" : "title" , "rating" : 1.1 };
                 server

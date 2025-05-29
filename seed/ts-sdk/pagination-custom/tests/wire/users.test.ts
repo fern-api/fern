@@ -9,7 +9,7 @@ describe("Users", () => {
     test("listUsernamesCustom", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedPaginationClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
 

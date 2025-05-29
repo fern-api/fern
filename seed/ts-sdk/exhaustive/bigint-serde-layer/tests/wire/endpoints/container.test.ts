@@ -9,7 +9,7 @@ describe("Container", () => {
     test("getAndReturnListOfPrimitives", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = ["string", "string"];
@@ -30,7 +30,7 @@ describe("Container", () => {
     test("getAndReturnListOfObjects", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = [{ string: "string" }, { string: "string" }];
@@ -65,7 +65,7 @@ describe("Container", () => {
     test("getAndReturnSetOfPrimitives", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = ["string"];
@@ -86,7 +86,7 @@ describe("Container", () => {
     test("getAndReturnSetOfObjects", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = [{ string: "string" }];
@@ -115,7 +115,7 @@ describe("Container", () => {
     test("getAndReturnMapPrimToPrim", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = { string: "string" };
@@ -140,7 +140,7 @@ describe("Container", () => {
     test("getAndReturnMapOfPrimToObject", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = { string: { string: "string" } };
@@ -169,7 +169,7 @@ describe("Container", () => {
     test("getAndReturnOptional", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = { string: "string" };

@@ -8,7 +8,7 @@ import { SeedPathParametersClient } from "../../src/Client";
 describe("Organizations", () => {
     test("getOrganization", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPathParametersClient({ tenantId: "tenantId", environment: server.baseUrl });
+        const client = new SeedPathParametersClient({ tenant_id: "tenant_id", environment: server.baseUrl });
 
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
         server
@@ -28,7 +28,7 @@ describe("Organizations", () => {
 
     test("getOrganizationUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPathParametersClient({ tenantId: "tenantId", environment: server.baseUrl });
+        const client = new SeedPathParametersClient({ tenant_id: "tenant_id", environment: server.baseUrl });
 
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
         server
@@ -51,7 +51,7 @@ describe("Organizations", () => {
 
     test("searchOrganizations", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPathParametersClient({ tenantId: "tenantId", environment: server.baseUrl });
+        const client = new SeedPathParametersClient({ tenant_id: "tenant_id", environment: server.baseUrl });
 
         const rawResponseBody = [
             { name: "name", tags: ["tags", "tags"] },

@@ -8,7 +8,7 @@ import { SeedExamplesClient } from "../../src/Client";
 describe("SeedExamplesClient", () => {
     test("echo", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
+        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = "Hello world!\\n\\nwith\\n\\tnewlines";
         const rawResponseBody = "Hello world!\\n\\nwith\\n\\tnewlines";
         server
@@ -26,7 +26,7 @@ describe("SeedExamplesClient", () => {
 
     test("createType", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
+        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = "primitive";
         const rawResponseBody = { type: "primitive", value: "value", label: "label" };
         server

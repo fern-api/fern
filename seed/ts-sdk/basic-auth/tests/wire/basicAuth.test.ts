@@ -9,8 +9,8 @@ describe("BasicAuth", () => {
     test("getWithBasicAuth", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthClient({
-            username: process.env.TESTS_USERNAME || "test",
-            password: process.env.TESTS_PASSWORD || "test",
+            username: "test",
+            password: "test",
             environment: server.baseUrl,
         });
 
@@ -24,8 +24,8 @@ describe("BasicAuth", () => {
     test("postWithBasicAuth", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthClient({
-            username: process.env.TESTS_USERNAME || "test",
-            password: process.env.TESTS_PASSWORD || "test",
+            username: "test",
+            password: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = { key: "value" };

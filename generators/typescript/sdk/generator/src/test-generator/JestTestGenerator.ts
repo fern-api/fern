@@ -5,6 +5,8 @@ import {
     PackageId,
     Reference,
     getExampleEndpointCalls,
+    getParameterNameForRootExamplePathParameter,
+    getParameterNameForRootPathParameter,
     getTextOfTsNode
 } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
@@ -27,6 +29,7 @@ export declare namespace JestTestGenerator {
         writeUnitTests: boolean;
         generateWireTests: boolean;
         useBigInt: boolean;
+        retainOriginalCasing: boolean;
     }
 }
 
@@ -38,6 +41,7 @@ export class JestTestGenerator {
     private readonly includeSerdeLayer: boolean;
     private readonly generateWireTests: boolean;
     private readonly useBigInt: boolean;
+    private readonly retainOriginalCasing: boolean;
 
     constructor({
         ir,
@@ -46,7 +50,8 @@ export class JestTestGenerator {
         includeSerdeLayer,
         writeUnitTests,
         generateWireTests,
-        useBigInt
+        useBigInt,
+        retainOriginalCasing
     }: JestTestGenerator.Args) {
         this.ir = ir;
         this.dependencyManager = dependencyManager;
@@ -55,6 +60,7 @@ export class JestTestGenerator {
         this.generateWireTests = generateWireTests;
         this.includeSerdeLayer = includeSerdeLayer;
         this.useBigInt = useBigInt;
+        this.retainOriginalCasing = retainOriginalCasing;
     }
 
     private addJestConfig(): void {
@@ -165,70 +171,78 @@ describe("test", () => {
         });
         const importStatement = context.sdkClientClass.getReferenceToClientClass({ isRoot: true });
 
-        const options: [string, unknown][] = [];
+        const baseOptions: Record<string, Code> = {};
+        if (this.ir.variables.length > 0) {
+            return; // not supported
+        }
+
         this.ir.pathParameters.forEach((pathParameter) => {
-            options.push([
-                pathParameter.name.camelCase.unsafeName,
-                pathParameter.variable ?? pathParameter.name.camelCase.unsafeName
-            ]);
+            baseOptions[
+                getParameterNameForRootPathParameter({
+                    pathParameter,
+                    retainOriginalCasing: this.retainOriginalCasing
+                })
+            ] = code`${literalOf(pathParameter.variable ?? pathParameter.name.camelCase.unsafeName)}`;
         });
         this.ir.auth.schemes.forEach((schema) => {
             schema._visit({
                 bearer: (schema) => {
-                    options.push([
-                        schema.token.camelCase.unsafeName,
-                        code`process.env.${schema.tokenEnvVar ?? "TESTS_AUTH"} || "test"`
-                    ]);
+                    baseOptions[schema.token.camelCase.unsafeName] = code`"test"`;
                 },
                 header: (schema) => {
-                    options.push([
-                        schema.name.name.camelCase.unsafeName,
-                        code`process.env.${schema.headerEnvVar ?? "TESTS_AUTH"} || "test"`
-                    ]);
+                    baseOptions[schema.name.name.camelCase.unsafeName] = code`"test"`;
                 },
                 basic: (schema) => {
-                    options.push([
-                        schema.username.camelCase.safeName,
-                        code`process.env.${schema.usernameEnvVar ?? "TESTS_USERNAME"} || "test"`
-                    ]);
-                    options.push([
-                        schema.password.camelCase.unsafeName,
-                        code`process.env.${schema.passwordEnvVar ?? "TESTS_PASSWORD"} || "test"`
-                    ]);
+                    baseOptions[schema.username.camelCase.unsafeName] = code`"test"`;
+                    baseOptions[schema.password.camelCase.unsafeName] = code`"test"`;
                 },
                 oauth: (schema) => {
                     // noop
-                    options.push([
-                        OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME,
-                        code`process.env.${schema.configuration.clientIdEnvVar ?? "TESTS_CLIENT_ID"} || "test"`
-                    ]);
-                    options.push([
-                        OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME,
-                        code`process.env.${schema.configuration.clientSecretEnvVar ?? "TESTS_CLIENT_SECRET"} || "test"`
-                    ]);
+                    baseOptions[OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME] = code`"test"`;
+                    baseOptions[OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME] = code`"test"`;
                 },
                 _other: () => {
                     // noop
                 }
             });
         });
-        if (this.ir.auth.schemes.some((scheme) => scheme.type === "basic")) {
-            options.push(["username", code`process.env.TESTS_USERNAME || "test"`]);
-            options.push(["password", code`process.env.TESTS_PASSWORD || "test"`]);
-        }
         this.ir.headers.forEach((header) => {
             // We don't need to include literal types because they will automatically be included
             if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
                 return;
             }
-            options.push([header.name.name.camelCase.unsafeName, code`process.env.TESTS_HEADER || "test"`]);
+            baseOptions[header.name.name.camelCase.unsafeName] = code`"test"`;
+        });
+        this.ir.apiVersion?._visit({
+            header: (v) => {
+                const propName = v.header.name.name.camelCase.unsafeName;
+                const defaultValue = v.value.default?.name.wireValue;
+                if (defaultValue) {
+                    baseOptions[propName] = code`${literalOf(defaultValue)}`;
+                    return;
+                }
+                if (context.type.isOptional(v.header.valueType)) {
+                    return;
+                }
+                if (context.type.isNullable(v.header.valueType)) {
+                    baseOptions[propName] = code`null`;
+                    return;
+                }
+                const fallbackValue = v.value.values[0]?.name.wireValue;
+                if (fallbackValue) {
+                    baseOptions[propName] = code`${literalOf(fallbackValue)}`;
+                    return;
+                }
+            },
+            _other: () => {}
         });
 
         const tests = service.endpoints
+            .filter((e) => this.shouldBuildTest(e))
             .map((endpoint) => {
-                return this.buildTest(endpoint, packageId, serviceGenerator, context, importStatement, options);
+                return this.buildTest(endpoint, packageId, serviceGenerator, context, importStatement, baseOptions);
             })
-            .filter(Boolean);
+            .filter((test) => test != null);
 
         if (tests.length === 0) {
             return undefined;
@@ -247,23 +261,9 @@ describe("test", () => {
         serviceGenerator: GeneratedSdkClientClass,
         context: SdkContext,
         importStatement: Reference,
-        options: [string, unknown][]
+        baseOptions: Record<string, Code>
     ): Code | undefined {
-        const notSupportedResponse =
-            !!endpoint.response &&
-            (endpoint.response.body?.type === "streaming" || endpoint.response.body?.type === "fileDownload");
-        const notSupportedRequest =
-            !!endpoint.requestBody &&
-            (endpoint.requestBody.type === "bytes" || endpoint.requestBody.type === "fileUpload");
-        const shouldSkip =
-            endpoint.idempotent ||
-            (endpoint.pagination != null && context.config.generatePaginatedClients) ||
-            notSupportedResponse ||
-            notSupportedRequest;
-        if (shouldSkip) {
-            return;
-        }
-
+        const options: Record<string, Code> = { ...baseOptions };
         const successfulExamples = getExampleEndpointCalls(endpoint).filter(
             (example) => example.response.type === "ok"
         );
@@ -306,26 +306,36 @@ describe("test", () => {
             if (!this.ir.environments) {
                 return code`server.baseUrl`;
             }
-            return this.ir.environments.environments._visit<Code | Record<string, Code>>({
-                singleBaseUrl: (environment) => {
+            return this.ir.environments.environments._visit<Code>({
+                singleBaseUrl: () => {
                     return code`server.baseUrl`;
                 },
                 multipleBaseUrls: (environment) => {
-                    return Object.fromEntries(
-                        environment.baseUrls.map((url) => {
-                            return [url.name.camelCase.unsafeName, code`server.baseUrl`];
-                        })
-                    );
+                    return code`${literalOf(
+                        Object.fromEntries(
+                            environment.baseUrls.map((url) => {
+                                return [url.name.camelCase.unsafeName, code`server.baseUrl`];
+                            })
+                        )
+                    )}`;
                 },
                 _other: () => code`server.baseUrl`
             });
         };
-        options.push(["environment", generateEnvironment()]);
+        options["environment"] = generateEnvironment();
+        example.rootPathParameters.forEach((pathParameter) => {
+            options[
+                getParameterNameForRootExamplePathParameter({
+                    pathParameter,
+                    retainOriginalCasing: this.retainOriginalCasing
+                })
+            ] = code`${literalOf(pathParameter.value.jsonExample)}`;
+        });
 
         return code`
             test("${endpoint.name.originalName}", async () => {
                 const server = mockServerPool.createServer();
-                const client = new ${getTextOfTsNode(importStatement.getEntityName())}(${Object.fromEntries(options)});
+                const client = new ${getTextOfTsNode(importStatement.getEntityName())}(${literalOf(options)});
                 ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
                 ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
                 server
@@ -353,6 +363,60 @@ describe("test", () => {
                 expect(response).toEqual(${expected});
             });
           `;
+    }
+
+    private shouldBuildTest(endpoint: IR.HttpEndpoint): boolean {
+        if (
+            this.ir.auth.schemes.some((scheme) => {
+                switch (scheme.type) {
+                    case "basic":
+                    case "bearer":
+                    case "header":
+                        return false; // supported
+                    case "oauth":
+                        return true; // not supported
+                    default:
+                        assertNever(scheme);
+                }
+            })
+        ) {
+            return false;
+        }
+
+        const requestType = endpoint.requestBody?.type ?? "undefined";
+        switch (requestType) {
+            case "bytes":
+            case "fileUpload":
+                return false; // not supported
+            case "inlinedRequestBody":
+            case "reference":
+            case "undefined":
+                break; // supported
+            default:
+                assertNever(requestType);
+        }
+
+        const responseType = endpoint.response?.body?.type ?? "undefined";
+        switch (responseType) {
+            case "fileDownload":
+            case "text":
+            case "bytes":
+            case "streaming":
+            case "streamParameter":
+                return false; // not supported
+            case "json":
+            case "undefined":
+                break; // supported
+            default:
+                assertNever(responseType);
+        }
+        if (endpoint.idempotent) {
+            return false;
+        }
+        if (endpoint.pagination) {
+            return false;
+        }
+        return true;
     }
     getRequestExample(request: ExampleRequestBody | undefined): Code | undefined {
         if (!request) {
@@ -605,4 +669,11 @@ function getExpectedResponseBody(response: IR.ExampleResponse, context: SdkConte
             throw new Error("Unsupported response type");
         }
     });
+}
+
+function testsEnvVarPrefix(str: string): string {
+    if (str.startsWith("TESTS_")) {
+        return str;
+    }
+    return `TEST_${str}`;
 }

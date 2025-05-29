@@ -9,7 +9,7 @@ describe("Ec2", () => {
     test("bootInstance", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedMultiUrlEnvironmentNoDefaultClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: { ec2: server.baseUrl, s3: server.baseUrl },
         });
         const rawRequestBody = { size: "size" };

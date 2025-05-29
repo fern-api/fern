@@ -10,7 +10,7 @@ describe("Service", () => {
         const server = mockServerPool.createServer();
         const client = new SeedResponsePropertyClient({ environment: server.baseUrl });
         const rawRequestBody = "string";
-        const rawResponseBody = { metadata: { metadata: "metadata" }, docs: "docs", data: { id: "id", name: "name" } };
+        const rawResponseBody = { data: { id: "id", name: "name" }, metadata: { metadata: "metadata" }, docs: "docs" };
         server
             .mockEndpoint()
             .post("/movie")
@@ -22,14 +22,14 @@ describe("Service", () => {
 
         const response = await client.service.getMovie("string");
         expect(response).toEqual({
-            metadata: {
-                metadata: "metadata",
-            },
-            docs: "docs",
             data: {
                 id: "id",
                 name: "name",
             },
+            metadata: {
+                metadata: "metadata",
+            },
+            docs: "docs",
         });
     });
 
@@ -37,7 +37,7 @@ describe("Service", () => {
         const server = mockServerPool.createServer();
         const client = new SeedResponsePropertyClient({ environment: server.baseUrl });
         const rawRequestBody = "string";
-        const rawResponseBody = { metadata: { metadata: "metadata" }, docs: "docs", data: { id: "id", name: "name" } };
+        const rawResponseBody = { data: { id: "id", name: "name" }, metadata: { metadata: "metadata" }, docs: "docs" };
         server
             .mockEndpoint()
             .post("/movie")
@@ -49,14 +49,14 @@ describe("Service", () => {
 
         const response = await client.service.getMovieDocs("string");
         expect(response).toEqual({
-            metadata: {
-                metadata: "metadata",
-            },
-            docs: "docs",
             data: {
                 id: "id",
                 name: "name",
             },
+            metadata: {
+                metadata: "metadata",
+            },
+            docs: "docs",
         });
     });
 
@@ -84,7 +84,7 @@ describe("Service", () => {
         const server = mockServerPool.createServer();
         const client = new SeedResponsePropertyClient({ environment: server.baseUrl });
         const rawRequestBody = "string";
-        const rawResponseBody = { metadata: { metadata: "metadata" }, docs: "docs", data: { id: "id", name: "name" } };
+        const rawResponseBody = { data: { id: "id", name: "name" }, metadata: { metadata: "metadata" }, docs: "docs" };
         server
             .mockEndpoint()
             .post("/movie")
@@ -96,14 +96,14 @@ describe("Service", () => {
 
         const response = await client.service.getMovieMetadata("string");
         expect(response).toEqual({
-            metadata: {
-                metadata: "metadata",
-            },
-            docs: "docs",
             data: {
                 id: "id",
                 name: "name",
             },
+            metadata: {
+                metadata: "metadata",
+            },
+            docs: "docs",
         });
     });
 
@@ -111,7 +111,7 @@ describe("Service", () => {
         const server = mockServerPool.createServer();
         const client = new SeedResponsePropertyClient({ environment: server.baseUrl });
         const rawRequestBody = "string";
-        const rawResponseBody = { metadata: { metadata: "metadata" }, docs: "docs", data: { id: "id", name: "name" } };
+        const rawResponseBody = { data: { id: "id", name: "name" }, metadata: { metadata: "metadata" }, docs: "docs" };
         server
             .mockEndpoint()
             .post("/movie")
@@ -123,14 +123,14 @@ describe("Service", () => {
 
         const response = await client.service.getOptionalMovie("string");
         expect(response).toEqual({
-            metadata: {
-                metadata: "metadata",
-            },
-            docs: "docs",
             data: {
                 id: "id",
                 name: "name",
             },
+            metadata: {
+                metadata: "metadata",
+            },
+            docs: "docs",
         });
     });
 

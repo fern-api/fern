@@ -8,7 +8,7 @@ import { SeedExamplesClient } from "../../../src/Client";
 describe("Service", () => {
     test("check", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
+        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
 
         server.mockEndpoint().get("/check/id-2sdx82h").respondWith().statusCode(200).build();
 
@@ -18,7 +18,7 @@ describe("Service", () => {
 
     test("ping", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
+        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = true;
         server.mockEndpoint().get("/ping").respondWith().statusCode(200).jsonBody(rawResponseBody).build();

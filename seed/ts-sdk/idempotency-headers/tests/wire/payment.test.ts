@@ -9,7 +9,7 @@ describe("Payment", () => {
     test("delete", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedIdempotencyHeadersClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
 

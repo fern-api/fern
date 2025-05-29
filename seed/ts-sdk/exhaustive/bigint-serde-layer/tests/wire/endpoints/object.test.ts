@@ -9,7 +9,7 @@ describe("Object_", () => {
     test("getAndReturnWithOptionalField", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = {
@@ -90,7 +90,7 @@ describe("Object_", () => {
     test("getAndReturnWithRequiredField", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = { string: "string" };
@@ -115,7 +115,7 @@ describe("Object_", () => {
     test("getAndReturnWithMapOfMap", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = { map: { map: { map: "map" } } };
@@ -148,7 +148,7 @@ describe("Object_", () => {
     test("getAndReturnNestedWithOptionalField", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = {
@@ -241,7 +241,7 @@ describe("Object_", () => {
     test("getAndReturnNestedWithRequiredField", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = {
@@ -334,7 +334,7 @@ describe("Object_", () => {
     test("getAndReturnNestedWithRequiredFieldAsList", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = [

@@ -10,8 +10,8 @@ describe("Problem", () => {
     test("createProblem", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = {
@@ -170,8 +170,8 @@ describe("Problem", () => {
     test("updateProblem", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = {
@@ -329,8 +329,8 @@ describe("Problem", () => {
     test("deleteProblem", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
 
@@ -343,8 +343,8 @@ describe("Problem", () => {
     test("getDefaultStarterFiles", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = {

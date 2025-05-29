@@ -9,7 +9,7 @@ describe("NoReqBody", () => {
     test("getWithNoRequestBody", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
 
@@ -53,7 +53,7 @@ describe("NoReqBody", () => {
     test("postWithNoRequestBody", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
 

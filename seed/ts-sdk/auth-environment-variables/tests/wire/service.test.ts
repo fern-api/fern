@@ -9,8 +9,8 @@ describe("Service", () => {
     test("getWithApiKey", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedAuthEnvironmentVariablesClient({
-            apiKey: process.env.FERN_API_KEY || "test",
-            xAnotherHeader: process.env.TESTS_HEADER || "test",
+            apiKey: "test",
+            xAnotherHeader: "test",
             environment: server.baseUrl,
         });
 
@@ -24,8 +24,8 @@ describe("Service", () => {
     test("getWithHeader", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedAuthEnvironmentVariablesClient({
-            apiKey: process.env.FERN_API_KEY || "test",
-            xAnotherHeader: process.env.TESTS_HEADER || "test",
+            apiKey: "test",
+            xAnotherHeader: "test",
             environment: server.baseUrl,
         });
 

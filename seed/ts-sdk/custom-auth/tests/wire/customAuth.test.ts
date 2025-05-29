@@ -9,7 +9,7 @@ describe("CustomAuth", () => {
     test("getWithCustomAuth", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedCustomAuthClient({
-            customAuthScheme: process.env.TESTS_AUTH || "test",
+            customAuthScheme: "test",
             environment: server.baseUrl,
         });
 
@@ -23,7 +23,7 @@ describe("CustomAuth", () => {
     test("postWithCustomAuth", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedCustomAuthClient({
-            customAuthScheme: process.env.TESTS_AUTH || "test",
+            customAuthScheme: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = { key: "value" };

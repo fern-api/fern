@@ -10,8 +10,8 @@ describe("Admin", () => {
     test("updateTestSubmissionStatus", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = { type: "stopped" };
@@ -36,8 +36,8 @@ describe("Admin", () => {
     test("sendTestSubmissionUpdate", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = {
@@ -69,8 +69,8 @@ describe("Admin", () => {
     test("updateWorkspaceSubmissionStatus", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = { type: "stopped" };
@@ -95,8 +95,8 @@ describe("Admin", () => {
     test("sendWorkspaceSubmissionUpdate", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = {
@@ -128,8 +128,8 @@ describe("Admin", () => {
     test("storeTracedTestCase", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = {
@@ -296,8 +296,8 @@ describe("Admin", () => {
     test("storeTracedTestCaseV2", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = [
@@ -445,8 +445,8 @@ describe("Admin", () => {
     test("storeTracedWorkspace", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = {
@@ -615,8 +615,8 @@ describe("Admin", () => {
     test("storeTracedWorkspaceV2", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = [

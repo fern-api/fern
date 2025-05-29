@@ -9,7 +9,7 @@ describe("Dummy", () => {
     test("getDummy", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedNoEnvironmentClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
 

@@ -8,7 +8,7 @@ import { FiddleClient } from "../../src/Client";
 describe("NoAuth", () => {
     test("postWithNoAuth", async () => {
         const server = mockServerPool.createServer();
-        const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
+        const client = new FiddleClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
         const rawResponseBody = true;
         server

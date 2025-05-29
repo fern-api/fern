@@ -9,16 +9,16 @@ describe("Playlist", () => {
     test("createPlaylist", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", problems: ["problems", "problems"] };
         const rawResponseBody = {
-            name: "name",
-            problems: ["problems", "problems"],
             playlist_id: "playlist_id",
             "owner-id": "owner-id",
+            name: "name",
+            problems: ["problems", "problems"],
         };
         server
             .mockEndpoint()
@@ -38,24 +38,24 @@ describe("Playlist", () => {
             },
         });
         expect(response).toEqual({
-            name: "name",
-            problems: ["problems", "problems"],
             playlistId: "playlist_id",
             ownerId: "owner-id",
+            name: "name",
+            problems: ["problems", "problems"],
         });
     });
 
     test("getPlaylists", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
 
         const rawResponseBody = [
-            { name: "name", problems: ["problems", "problems"], playlist_id: "playlist_id", "owner-id": "owner-id" },
-            { name: "name", problems: ["problems", "problems"], playlist_id: "playlist_id", "owner-id": "owner-id" },
+            { playlist_id: "playlist_id", "owner-id": "owner-id", name: "name", problems: ["problems", "problems"] },
+            { playlist_id: "playlist_id", "owner-id": "owner-id", name: "name", problems: ["problems", "problems"] },
         ];
         server.mockEndpoint().get("/v2/playlist/1/all").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
@@ -68,16 +68,16 @@ describe("Playlist", () => {
         });
         expect(response).toEqual([
             {
-                name: "name",
-                problems: ["problems", "problems"],
                 playlistId: "playlist_id",
                 ownerId: "owner-id",
+                name: "name",
+                problems: ["problems", "problems"],
             },
             {
-                name: "name",
-                problems: ["problems", "problems"],
                 playlistId: "playlist_id",
                 ownerId: "owner-id",
+                name: "name",
+                problems: ["problems", "problems"],
             },
         ]);
     });
@@ -85,16 +85,16 @@ describe("Playlist", () => {
     test("getPlaylist", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
 
         const rawResponseBody = {
-            name: "name",
-            problems: ["problems", "problems"],
             playlist_id: "playlist_id",
             "owner-id": "owner-id",
+            name: "name",
+            problems: ["problems", "problems"],
         };
         server
             .mockEndpoint()
@@ -106,26 +106,26 @@ describe("Playlist", () => {
 
         const response = await client.playlist.getPlaylist(1, "playlistId");
         expect(response).toEqual({
-            name: "name",
-            problems: ["problems", "problems"],
             playlistId: "playlist_id",
             ownerId: "owner-id",
+            name: "name",
+            problems: ["problems", "problems"],
         });
     });
 
     test("updatePlaylist", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = { name: "name", problems: ["problems", "problems"] };
         const rawResponseBody = {
-            name: "name",
-            problems: ["problems", "problems"],
             playlist_id: "playlist_id",
             "owner-id": "owner-id",
+            name: "name",
+            problems: ["problems", "problems"],
         };
         server
             .mockEndpoint()
@@ -141,18 +141,18 @@ describe("Playlist", () => {
             problems: ["problems", "problems"],
         });
         expect(response).toEqual({
-            name: "name",
-            problems: ["problems", "problems"],
             playlistId: "playlist_id",
             ownerId: "owner-id",
+            name: "name",
+            problems: ["problems", "problems"],
         });
     });
 
     test("deletePlaylist", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
 

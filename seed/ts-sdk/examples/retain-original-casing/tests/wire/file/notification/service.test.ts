@@ -8,7 +8,7 @@ import { SeedExamplesClient } from "../../../../src/Client";
 describe("Service", () => {
     test("getException", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
+        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             type: "generic",

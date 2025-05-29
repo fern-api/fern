@@ -9,8 +9,8 @@ describe("Problem", () => {
     test("getLightweightProblems", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
 
@@ -64,8 +64,8 @@ describe("Problem", () => {
     test("getProblems", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
 
@@ -987,8 +987,8 @@ describe("Problem", () => {
     test("getLatestProblem", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
 
@@ -1456,8 +1456,8 @@ describe("Problem", () => {
     test("getProblemVersion", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
 

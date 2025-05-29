@@ -9,8 +9,8 @@ describe("Homepage", () => {
     test("getHomepageProblems", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
 
@@ -24,8 +24,8 @@ describe("Homepage", () => {
     test("setHomepageProblems", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({
-            token: process.env.TESTS_AUTH || "test",
-            xRandomHeader: process.env.TESTS_HEADER || "test",
+            token: "test",
+            xRandomHeader: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = ["string", "string"];

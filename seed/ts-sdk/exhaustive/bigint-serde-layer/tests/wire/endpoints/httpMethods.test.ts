@@ -9,7 +9,7 @@ describe("HttpMethods", () => {
     test("testGet", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
 
@@ -23,7 +23,7 @@ describe("HttpMethods", () => {
     test("testPost", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = { string: "string" };
@@ -76,7 +76,7 @@ describe("HttpMethods", () => {
     test("testPut", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = { string: "string" };
@@ -129,7 +129,7 @@ describe("HttpMethods", () => {
     test("testPatch", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = {
@@ -210,7 +210,7 @@ describe("HttpMethods", () => {
     test("testDelete", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
 

@@ -10,7 +10,8 @@ export {
     getParameterNameForPositionalPathParameter,
     getParameterNameForPropertyPathParameter,
     getParameterNameForPropertyPathParameterName,
-    getParameterNameForRootPathParameter
+    getParameterNameForRootPathParameter,
+    getParameterNameForRootExamplePathParameter
 } from "./codegen-utils/getParameterNameForPathParameter";
 export * from "./core-utilities";
 export { type Zurg } from "./core-utilities/zurg/Zurg";

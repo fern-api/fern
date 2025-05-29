@@ -8,7 +8,7 @@ import { SeedAcceptClient } from "../../src/Client";
 describe("Service", () => {
     test("endpoint", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedAcceptClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
+        const client = new SeedAcceptClient({ token: "test", environment: server.baseUrl });
 
         server.mockEndpoint().delete("/container/").respondWith().statusCode(200).build();
 

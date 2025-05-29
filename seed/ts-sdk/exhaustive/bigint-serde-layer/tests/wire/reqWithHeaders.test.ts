@@ -9,7 +9,7 @@ describe("ReqWithHeaders", () => {
     test("getWithCustomHeader", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = "string";

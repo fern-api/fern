@@ -8,7 +8,7 @@ import { FiddleClient } from "../../src/Client";
 describe("InlinedRequests", () => {
     test("postWithObjectBodyandResponse", async () => {
         const server = mockServerPool.createServer();
-        const client = new FiddleClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
+        const client = new FiddleClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = {
             string: "string",
             integer: 1,

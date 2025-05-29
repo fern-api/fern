@@ -8,7 +8,7 @@ import { SeedExamplesClient } from "../../src/Client";
 describe("Service", () => {
     test("getMovie", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
+        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             id: "movie-c06a4ad7",
@@ -56,7 +56,7 @@ describe("Service", () => {
 
     test("createMovie", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
+        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = {
             id: "movie-c06a4ad7",
             prequel: "movie-cv9b914f",
@@ -105,7 +105,7 @@ describe("Service", () => {
 
     test("getMetadata", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
+        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             type: "html",
@@ -135,10 +135,11 @@ describe("Service", () => {
 
     test("createBigEntity", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
+        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = {
             castMember: { name: "name", id: "id" },
             extendedMovie: {
+                cast: ["cast", "cast"],
                 id: "id",
                 prequel: "prequel",
                 title: "title",
@@ -149,7 +150,6 @@ describe("Service", () => {
                 book: "book",
                 metadata: { metadata: { key: "value" } },
                 revenue: 1000000,
-                cast: ["cast", "cast"],
             },
             entity: { type: "primitive", name: "name" },
             metadata: { type: "html", value: "metadata", extra: { extra: "extra" }, tags: ["tags"] },
@@ -258,6 +258,7 @@ describe("Service", () => {
                 id: "id",
             },
             extendedMovie: {
+                cast: ["cast", "cast"],
                 id: "id",
                 prequel: "prequel",
                 title: "title",
@@ -272,7 +273,6 @@ describe("Service", () => {
                     },
                 },
                 revenue: 1000000,
-                cast: ["cast", "cast"],
             },
             entity: {
                 type: "primitive",

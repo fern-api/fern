@@ -9,7 +9,7 @@ describe("Params", () => {
     test("getWithPath", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
 
@@ -23,7 +23,7 @@ describe("Params", () => {
     test("getWithInlinePath", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
 
@@ -39,7 +39,7 @@ describe("Params", () => {
     test("getWithQuery", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
 
@@ -55,7 +55,7 @@ describe("Params", () => {
     test("getWithAllowMultipleQuery", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
 
@@ -71,7 +71,7 @@ describe("Params", () => {
     test("getWithPathAndQuery", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
 
@@ -86,7 +86,7 @@ describe("Params", () => {
     test("getWithInlinePathAndQuery", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
 
@@ -102,7 +102,7 @@ describe("Params", () => {
     test("modifyWithPath", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = "string";
@@ -123,7 +123,7 @@ describe("Params", () => {
     test("modifyWithInlinePath", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({
-            token: process.env.TESTS_AUTH || "test",
+            token: "test",
             environment: server.baseUrl,
         });
         const rawRequestBody = "string";

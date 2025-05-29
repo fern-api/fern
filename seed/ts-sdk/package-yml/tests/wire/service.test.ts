@@ -8,7 +8,7 @@ import { SeedPackageYmlClient } from "../../src/Client";
 describe("Service", () => {
     test("nop", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPackageYmlClient({ id: "id", environment: server.baseUrl });
+        const client = new SeedPackageYmlClient({ id: "id-a2ijs82", environment: server.baseUrl });
 
         server.mockEndpoint().get("/id-a2ijs82/id-219xca8").respondWith().statusCode(200).build();
 

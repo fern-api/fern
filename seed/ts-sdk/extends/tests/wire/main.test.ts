@@ -9,7 +9,7 @@ describe("SeedExtendsClient", () => {
     test("extendedInlineRequestBody", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExtendsClient({ environment: server.baseUrl });
-        const rawRequestBody = { unique: "unique" };
+        const rawRequestBody = { unique: "unique", name: "name", docs: "docs" };
 
         server
             .mockEndpoint()
@@ -21,6 +21,8 @@ describe("SeedExtendsClient", () => {
 
         const response = await client.extendedInlineRequestBody({
             unique: "unique",
+            name: "name",
+            docs: "docs",
         });
         expect(response).toEqual(undefined);
     });

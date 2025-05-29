@@ -8,7 +8,7 @@ import { SeedApiClient } from "../../src/Client";
 describe("Imdb", () => {
     test("create_movie", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
+        const client = new SeedApiClient({ token: "test", environment: server.baseUrl });
         const rawRequestBody = { id: "id", movie_title: "movie_title", movie_rating: 1.1 };
         const rawResponseBody = "string";
         server
@@ -30,7 +30,7 @@ describe("Imdb", () => {
 
     test("get_movie", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ token: process.env.TESTS_AUTH || "test", environment: server.baseUrl });
+        const client = new SeedApiClient({ token: "test", environment: server.baseUrl });
 
         const rawResponseBody = { id: "id", title: "title", rating: 1.1 };
         server.mockEndpoint().get("/movies/movie_id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
