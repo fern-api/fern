@@ -3,7 +3,7 @@
       type: fix
   irVersion: 58
   createdAt: "2025-05-29"
-  version: 0.63.16
+  version: 0.63.17
 
 - changelogEntry:
     - summary: | 
