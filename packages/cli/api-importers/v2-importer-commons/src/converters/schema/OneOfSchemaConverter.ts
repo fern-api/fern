@@ -2,6 +2,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 
 import {
     ContainerType,
+    DeclaredTypeName,
     SingleUnionType,
     SingleUnionTypeProperties,
     Type,
@@ -140,6 +141,30 @@ export class OneOfSchemaConverter extends AbstractConverter<
         });
 
         referencedTypes = new Set([...referencedTypes, ...baseReferencedTypes]);
+
+        const extends_: DeclaredTypeName[] = [];
+        for (const [index, allOfSchema] of (this.schema.allOf ?? []).entries()) {
+            const breadcrumbs = [...this.breadcrumbs, "allOf", index.toString()];
+
+            if (this.context.isReferenceObject(allOfSchema)) {
+                const maybeTypeReference = this.context.convertReferenceToTypeReference({
+                    reference: allOfSchema,
+                    breadcrumbs
+                });
+                if (maybeTypeReference.ok) {
+                    const declaredTypeName = this.context.typeReferenceToDeclaredTypeName(maybeTypeReference.reference);
+                    if (declaredTypeName != null) {
+                        extends_.push(declaredTypeName);
+                    }
+                }
+                const typeId = this.context.getTypeIdFromSchemaReference(allOfSchema);
+                if (typeId != null) {
+                    referencedTypes.add(typeId);
+                }
+                continue;
+            }
+        }
+
         for (const typeId of Object.keys({ ...inlinedTypes, ...inlinedTypesFromProperties })) {
             referencedTypes.add(typeId);
         }
@@ -151,7 +176,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                     name: this.schema.discriminator.propertyName,
                     wireValue: this.schema.discriminator.propertyName
                 }),
-                extends: [],
+                extends: extends_,
                 types: unionTypes
             }),
             referencedTypes,

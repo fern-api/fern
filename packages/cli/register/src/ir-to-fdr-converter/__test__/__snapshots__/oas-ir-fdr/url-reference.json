@@ -550,6 +550,7 @@
       }
     },
     "PetOwner": {
+      "description": "A tag for a pet",
       "name": "PetOwner",
       "shape": {
         "type": "object",
@@ -653,18 +654,6 @@
             }
           },
           {
-            "key": "id",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "long"
-                }
-              }
-            }
-          },
-          {
             "description": "A category for a pet",
             "key": "category",
             "valueType": {
@@ -717,30 +706,6 @@
               "itemType": {
                 "type": "id",
                 "value": "PetOwnerStatus"
-              }
-            }
-          },
-          {
-            "key": "id",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "long"
-                }
-              }
-            }
-          },
-          {
-            "key": "name",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
               }
             }
           }

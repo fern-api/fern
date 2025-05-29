@@ -11909,7 +11909,6 @@
       }
     },
     "ListenControlMessageResponse0": {
-      "description": "The server will process all remaining audio data and return the final results. You may receive a response with the from_finalize attribute set to true, indicating that the finalization process is complete. This response typically occurs when there is a noticeable amount of audio buffered in the server.\n",
       "name": "ListenControlMessageResponse0",
       "shape": {
         "type": "object",
@@ -11918,30 +11917,23 @@
           {
             "key": "type",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "ChannelsListenMessagesControlMessageResponseOneOf0Type"
-              }
+              "type": "id",
+              "value": "ChannelsListenMessagesControlMessageResponseOneOf0Type"
             }
           },
           {
             "description": "The channel number being finalized",
             "key": "channel",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer",
-                  "minimum": 0
-                }
+              "type": "primitive",
+              "value": {
+                "type": "integer",
+                "minimum": 0
               }
             }
           }
         ]
-      },
-      "displayName": "FinalizeResponse"
+      }
     },
     "ChannelsListenMessagesControlMessageResponseOneOf1Type": {
       "name": "ChannelsListenMessagesControlMessageResponseOneOf1Type",
@@ -11955,7 +11947,6 @@
       }
     },
     "ListenControlMessageResponse1": {
-      "description": "Provides real-time metadata during audio streaming, including audio characteristics\nand processing details. This response is sent periodically during streaming to\nprovide updates about the audio being processed.\n",
       "name": "ListenControlMessageResponse1",
       "shape": {
         "type": "object",
@@ -11964,11 +11955,8 @@
           {
             "key": "type",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "ChannelsListenMessagesControlMessageResponseOneOf1Type"
-              }
+              "type": "id",
+              "value": "ChannelsListenMessagesControlMessageResponseOneOf1Type"
             }
           },
           {
@@ -11988,13 +11976,10 @@
             "description": "Unique identifier for the request",
             "key": "request_id",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "format": "uuid"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "uuid"
               }
             }
           },
@@ -12002,13 +11987,10 @@
             "description": "SHA-256 hash of the audio content",
             "key": "sha256",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "regex": "^[a-fA-F0-9]{64}$"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^[a-fA-F0-9]{64}$"
               }
             }
           },
@@ -12016,13 +11998,10 @@
             "description": "Timestamp when the response was created",
             "key": "created",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "format": "date-time"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
               }
             }
           },
@@ -12030,12 +12009,9 @@
             "description": "Duration of the audio in seconds",
             "key": "duration",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "double"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "double"
               }
             }
           },
@@ -12043,19 +12019,15 @@
             "description": "Number of audio channels",
             "key": "channels",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer",
-                  "minimum": 0
-                }
+              "type": "primitive",
+              "value": {
+                "type": "integer",
+                "minimum": 0
               }
             }
           }
         ]
-      },
-      "displayName": "MetadataResponse"
+      }
     },
     "ChannelsListenMessagesControlMessageResponseOneOf2Type": {
       "name": "ChannelsListenMessagesControlMessageResponseOneOf2Type",
@@ -12069,7 +12041,6 @@
       }
     },
     "ListenControlMessageResponse2": {
-      "description": "Indicates that the server has closed the WebSocket connection and the server will process all remaining audio data.\n",
       "name": "ListenControlMessageResponse2",
       "shape": {
         "type": "object",
@@ -12078,11 +12049,8 @@
           {
             "key": "type",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "ChannelsListenMessagesControlMessageResponseOneOf2Type"
-              }
+              "type": "id",
+              "value": "ChannelsListenMessagesControlMessageResponseOneOf2Type"
             }
           },
           {
@@ -12102,13 +12070,10 @@
             "description": "Unique identifier for the request",
             "key": "request_id",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "format": "uuid"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "uuid"
               }
             }
           },
@@ -12116,13 +12081,10 @@
             "description": "SHA-256 hash of the audio content",
             "key": "sha256",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "regex": "^[a-fA-F0-9]{64}$"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^[a-fA-F0-9]{64}$"
               }
             }
           },
@@ -12130,13 +12092,10 @@
             "description": "Timestamp when the response was created",
             "key": "created",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "format": "date-time"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
               }
             }
           },
@@ -12144,12 +12103,9 @@
             "description": "Duration of the audio in seconds",
             "key": "duration",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "double"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "double"
               }
             }
           },
@@ -12157,19 +12113,15 @@
             "description": "Number of audio channels",
             "key": "channels",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer",
-                  "minimum": 0
-                }
+              "type": "primitive",
+              "value": {
+                "type": "integer",
+                "minimum": 0
               }
             }
           }
         ]
-      },
-      "displayName": "CloseStreamResponse"
+      }
     },
     "listen_controlMessageResponse": {
       "name": "listen_controlMessageResponse",
