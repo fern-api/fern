@@ -1,12 +1,14 @@
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
-import { TypeReference } from "@fern-api/ir-sdk";
+import { FernIr, TypeReference } from "@fern-api/ir-sdk";
 import { AbstractConverterContext, DisplayNameOverrideSource } from "@fern-api/v2-importer-commons";
 
 /**
  * Context class for converting OpenAPI 3.1 specifications
  */
 export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPIV3_1.Document> {
+    public globalHeaderNames: string[] | undefined;
+
     public isReferenceObject(
         parameter:
             | OpenAPIV3_1.ReferenceObject
@@ -69,5 +71,9 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
                 displayName
             })
         };
+    }
+
+    public setGlobalHeaders(globalHeaders: FernIr.HttpHeader[]): void {
+        this.globalHeaderNames = globalHeaders.map((header) => header.name.wireValue);
     }
 }

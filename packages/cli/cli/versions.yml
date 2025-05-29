@@ -1,4 +1,12 @@
 - changelogEntry:
+    - summary: |
+        Parse the `x-fern-global-headers` extension to add global headers to the IR.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-29"
+  version: 0.63.18
+
+- changelogEntry:
     - summary: Encode path parameters appropriately when constructing URLs.
       type: fix
   irVersion: 58

@@ -25,7 +25,7 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
     /**
      * String primitive type constant
      */
-    protected static STRING = FernIr.TypeReference.primitive({
+    public static STRING = FernIr.TypeReference.primitive({
         v1: "STRING",
         v2: FernIr.PrimitiveTypeV2.string({
             default: undefined,
