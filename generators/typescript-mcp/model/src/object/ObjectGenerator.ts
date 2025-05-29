@@ -25,7 +25,15 @@ export class ObjectGenerator extends FileGenerator<
     public doGenerate(): TypescriptFile {
         return new TypescriptFile({
             node: ts.codeblock((writer) => {
-                writer.writeLine("import * as schemas from './';");
+                this.objectDeclaration.properties.forEach((value) => {
+                    const type = this.context.zodTypeMapper.convert({
+                        reference: value.valueType
+                    });
+                    const named = this.context.zodTypeMapper.HACKExtractNamed(type);
+                    for (const name of named) {
+                        writer.writeLine(`import ${name} from '../schemas/${name}';`);
+                    }
+                });
                 writer.writeNodeStatement(
                     new ExportNode({
                         initializer: ts.invokeMethod({
@@ -36,9 +44,13 @@ export class ObjectGenerator extends FileGenerator<
                                     fields: this.objectDeclaration.properties.map((value) => ({
                                         name: value.name.name.snakeCase.safeName,
                                         value: ts.codeblock((writer) => {
-                                            writer.write(
-                                                this.context.zodTypeMapper.convert({ reference: value.valueType })
-                                            );
+                                            const type = this.context.zodTypeMapper.convert({
+                                                reference: value.valueType
+                                            });
+                                            writer.writeLine(type.replace(/schemas\./g, ""));
+                                            // writer.write(
+                                            //     this.context.zodTypeMapper.convert({ reference: value.valueType })
+                                            // );
                                         })
                                     }))
                                 })

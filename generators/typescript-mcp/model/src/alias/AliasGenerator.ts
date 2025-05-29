@@ -21,13 +21,21 @@ export class AliasGenerator extends FileGenerator<TypescriptFile, TypescriptCust
     public doGenerate(): TypescriptFile {
         return new TypescriptFile({
             node: ts.codeblock((writer) => {
-                writer.writeLine("import * as schemas from './';");
+                writer.writeLine("import z from 'zod';");
+                const type = this.context.zodTypeMapper.convert({
+                    reference: this.aliasDeclaration.aliasOf
+                });
+                const named = this.context.zodTypeMapper.HACKExtractNamed(type);
+                for (const name of named) {
+                    writer.writeLine(`import ${name} from '../schemas/${name}';`);
+                }
                 writer.writeNodeStatement(
                     new ExportNode({
                         initializer: ts.codeblock((writer) => {
-                            writer.writeLine(
-                                this.context.zodTypeMapper.convert({ reference: this.aliasDeclaration.aliasOf })
-                            );
+                            writer.writeLine(type.replace(/schemas\./g, ""));
+                            // writer.writeLine(
+                            //     this.context.zodTypeMapper.convert({ reference: this.aliasDeclaration.aliasOf })
+                            // );
                         }),
                         default: true
                     })

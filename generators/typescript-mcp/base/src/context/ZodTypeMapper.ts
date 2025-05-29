@@ -46,14 +46,7 @@ export class ZodTypeMapper {
             endpoint.sdkRequest?.shape._visit({
                 justRequestBody: (value) =>
                     value._visit({
-                        typeReference: (value) =>
-                            value.requestBodyType._visit({
-                                container: (value) => this.convertContainer(value),
-                                named: (value) => this.convertNamed(value),
-                                primitive: (value) => this.convertPrimitiveTypeV1(value.v1),
-                                unknown: () => "z.unknown()",
-                                _other: (value) => "z.any()"
-                            }),
+                        typeReference: (value) => this.convert({ reference: value.requestBodyType }),
                         bytes: (value) => "z.any()",
                         _other: (value) => "z.any()"
                     }),
@@ -63,7 +56,7 @@ export class ZodTypeMapper {
         );
     }
 
-    // TODO: finish implementing this, use SdkRequestWrapper type instead of Name
+    // TODO: finish implementing this
     public convertWrapper(endpoint: HttpEndpoint, sdkRequestWrapper: SdkRequestWrapper): string {
         // sdkRequestWrapper.bodyKey
         const bodyProperties =
@@ -130,8 +123,7 @@ export class ZodTypeMapper {
         return `z.record(${this.convert({ reference: map.keyType })}, ${this.convert({ reference: map.valueType })})`;
     }
 
-    // TODO TODO: finish implementing this
-    // TODO TODO: Need to refactor so that all type mappers return method calls
+    // TODO: finish implementing this
     public convertLiteral(literal: Literal): string {
         return literal._visit({
             string: (value) => `z.literal("${value}")`,
@@ -142,8 +134,12 @@ export class ZodTypeMapper {
 
     // TODO: finish implementing this
     public convertNamed(named: NamedType): string {
-        // TODO: previously was using this.context.project.builder but need to resolve circular dependency
         return `schemas.${named.name.pascalCase.safeName}`;
+    }
+
+    public HACKExtractNamed(type: string): string[] {
+        const matches = type.match(/schemas\.([A-Za-z0-9_]+)[.,\n]/g) ?? [];
+        return matches.map((match) => match.replace(/schemas\./, "").replace(/[.,]$/, ""));
     }
 
     // TODO: finish implementing this

@@ -44,7 +44,7 @@ export class ToolsGenerator extends FileGenerator<
     public doGenerate(): TypescriptFile {
         return new TypescriptFile({
             node: ts.codeblock((writer) => {
-                writer.writeLine(`import z from "zod";`);
+                writer.writeLine("import z from \"zod\";");
                 writer.writeNodeStatement(
                     ts.variable({
                         name: this.sdkClientVariableName,
@@ -73,6 +73,17 @@ export class ToolsGenerator extends FileGenerator<
                 writer.newLine();
                 for (const service of Object.values(this.context.ir.services)) {
                     for (const endpoint of service.endpoints) {
+                        const toolName = this.context.project.builder.getToolName(
+                            endpoint.name,
+                            service.name.fernFilepath.allParts
+                        );
+                        const shouldFilter =
+                            this.context.customConfig.mcpToolNamesToEnable &&
+                            this.context.customConfig.mcpToolNamesToEnable?.findIndex((name) => name === toolName) ===
+                                -1;
+                        if (shouldFilter) {
+                            continue;
+                        }
                         const toolDefinition = new ToolDefinition({
                             mcpSdkReference: this.mcpSdkReference,
                             sdkClientClassReference: this.sdkClientClassReference,
@@ -151,8 +162,14 @@ export class ToolDefinition {
     write(writer: ts.Writer): void {
         const hasSchema = !!this.schemaVariableName;
         const writeSchema = (writer: ts.Writer) => {
-            writer.writeNode(this.args.schemasReference);
-            hasSchema && writer.write(this.schemaVariableName);
+            if (hasSchema) {
+                // writer.writeNode(this.args.schemasReference);
+                const reference = ts.reference({
+                    name: this.schemaVariableName,
+                    importFrom: { type: "default", moduleName: `../schemas/${this.schemaVariableName}` }
+                });
+                writer.writeNode(reference);
+            }
         };
 
         const partsFromPath = this.args.endpoint.path.parts;

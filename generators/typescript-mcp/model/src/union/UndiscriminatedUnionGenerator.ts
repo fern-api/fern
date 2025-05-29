@@ -25,7 +25,15 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<
     public doGenerate(): TypescriptFile {
         return new TypescriptFile({
             node: ts.codeblock((writer) => {
-                writer.writeLine("import * as schemas from './';");
+                this.undiscriminatedUnionDeclaration.members.forEach((member) => {
+                    const type = this.context.zodTypeMapper.convert({
+                        reference: member.type
+                    });
+                    const named = this.context.zodTypeMapper.HACKExtractNamed(type);
+                    for (const name of named) {
+                        writer.writeLine(`import ${name} from '../schemas/${name}';`);
+                    }
+                });
                 writer.writeNodeStatement(
                     new ExportNode({
                         initializer: ts.invokeMethod({
@@ -35,9 +43,13 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<
                                 new ArrayLiteralNode({
                                     values: this.undiscriminatedUnionDeclaration.members.map((member) =>
                                         ts.codeblock((writer) => {
-                                            writer.write(
-                                                this.context.zodTypeMapper.convert({ reference: member.type })
-                                            );
+                                            const type = this.context.zodTypeMapper.convert({
+                                                reference: member.type
+                                            });
+                                            writer.writeLine(type.replace(/schemas\./g, ""));
+                                            // writer.write(
+                                            //     this.context.zodTypeMapper.convert({ reference: member.type })
+                                            // );
                                         })
                                     )
                                 })

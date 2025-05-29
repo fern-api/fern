@@ -29,11 +29,16 @@ export class EndpointGenerator extends FileGenerator<
         return new TypescriptFile({
             node: ts.codeblock((writer) => {
                 writer.writeLine("import z from 'zod';");
-                writer.writeLine("import * as schemas from './';");
+                const type = this.context.zodTypeMapper.convertEndpoint(this.endpoint);
+                const named = this.context.zodTypeMapper.HACKExtractNamed(type);
+                for (const name of named) {
+                    writer.writeLine(`import ${name} from '../schemas/${name}';`);
+                }
                 writer.writeNodeStatement(
                     new ExportNode({
                         initializer: ts.codeblock((writer) => {
-                            writer.writeLine(this.context.zodTypeMapper.convertEndpoint(this.endpoint));
+                            writer.writeLine(type.replace(/schemas\./g, ""));
+                            // writer.writeLine(this.context.zodTypeMapper.convertEndpoint(this.endpoint));
                         }),
                         default: true
                     })

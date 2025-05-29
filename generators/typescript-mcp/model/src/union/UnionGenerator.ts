@@ -21,7 +21,13 @@ export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCust
     public doGenerate(): TypescriptFile {
         return new TypescriptFile({
             node: ts.codeblock((writer) => {
-                writer.writeLine("import * as schemas from './';");
+                this.unionDeclaration.types.forEach((type) => {
+                    const _type = this.context.zodTypeMapper.convertSingleUnionType(type);
+                    const named = this.context.zodTypeMapper.HACKExtractNamed(_type);
+                    for (const name of named) {
+                        writer.writeLine(`import ${name} from '../schemas/${name}';`);
+                    }
+                });
                 writer.writeNodeStatement(
                     new ExportNode({
                         initializer: ts.invokeMethod({
@@ -31,7 +37,9 @@ export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCust
                                 new ArrayLiteralNode({
                                     values: this.unionDeclaration.types.map((type) =>
                                         ts.codeblock((writer) => {
-                                            writer.write(this.context.zodTypeMapper.convertSingleUnionType(type));
+                                            const _type = this.context.zodTypeMapper.convertSingleUnionType(type);
+                                            writer.writeLine(_type.replace(/schemas\./g, ""));
+                                            // writer.write(this.context.zodTypeMapper.convertSingleUnionType(type));
                                         })
                                     )
                                 })

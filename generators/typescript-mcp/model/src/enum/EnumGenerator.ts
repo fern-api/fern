@@ -21,7 +21,6 @@ export class EnumGenerator extends FileGenerator<TypescriptFile, TypescriptCusto
     public doGenerate(): TypescriptFile {
         return new TypescriptFile({
             node: ts.codeblock((writer) => {
-                writer.writeLine("import * as schemas from './';");
                 writer.writeNodeStatement(
                     new ExportNode({
                         initializer: ts.invokeMethod({
