@@ -102,6 +102,14 @@ describe("fern generate", () => {
         });
         expect(stdout).toContain("ferndevtest.docs.dev.buildwithfern.com Started.");
     }, 180_000);
+
+    it("generate docs with no docs.yml file fails", async () => {
+        const { stdout } = await runFernCliWithoutAuthToken(["generate", "--docs"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("basic")),
+            reject: false
+        });
+        expect(stdout).toContain("No docs.yml file found. Please make sure your project has one.");
+    }, 180_000);
 });
 
 function extractFilepath(logLine: string): string | null {
