@@ -14,9 +14,11 @@ describe("Query", () => {
         server.mockEndpoint().post("/query").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.query.send({
+            prompt: "You are a helpful assistant",
             optional_prompt: "You are a helpful assistant",
             alias_prompt: "You are a helpful assistant",
             alias_optional_prompt: "You are a helpful assistant",
+            stream: false,
             optional_stream: false,
             alias_stream: false,
             alias_optional_stream: false,

@@ -32,7 +32,6 @@ describe("Inlined", () => {
         const response = await client.inlined.send({
             temperature: 10.1,
             context: "You're super wise",
-            aliasedContext: "You're super wise",
             maybeContext: "You're super wise",
             objectWithLiteral: {
                 nestedLiteral: {

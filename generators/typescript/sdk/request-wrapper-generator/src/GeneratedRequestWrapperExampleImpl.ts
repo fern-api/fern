@@ -89,26 +89,20 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
             });
 
         const pathParamProperties = generatedType.shouldInlinePathParameters()
-            ? [...this.example.servicePathParameters, ...this.example.endpointPathParameters]
-                  .filter((pathParam) => this.isNotLiteral(pathParam.value.shape))
-                  .map((pathParam) => {
-                      return ts.factory.createPropertyAssignment(
-                          getPropertyKey(
-                              generatedType.getPropertyNameOfPathParameterFromName(pathParam.name).propertyName
-                          ),
-                          context.type.getGeneratedExample(pathParam.value).build(context, opts)
-                      );
-                  })
+            ? [...this.example.servicePathParameters, ...this.example.endpointPathParameters].map((pathParam) => {
+                  return ts.factory.createPropertyAssignment(
+                      getPropertyKey(generatedType.getPropertyNameOfPathParameterFromName(pathParam.name).propertyName),
+                      context.type.getGeneratedExample(pathParam.value).build(context, opts)
+                  );
+              })
             : [];
 
-        const queryParamProperties = [...this.example.queryParameters]
-            .filter((queryParam) => this.isNotLiteral(queryParam.value.shape))
-            .map((queryParam) => {
-                return ts.factory.createPropertyAssignment(
-                    getPropertyKey(generatedType.getPropertyNameOfQueryParameterFromName(queryParam.name).propertyName),
-                    context.type.getGeneratedExample(queryParam.value).build(context, opts)
-                );
-            });
+        const queryParamProperties = [...this.example.queryParameters].map((queryParam) => {
+            return ts.factory.createPropertyAssignment(
+                getPropertyKey(generatedType.getPropertyNameOfQueryParameterFromName(queryParam.name).propertyName),
+                context.type.getGeneratedExample(queryParam.value).build(context, opts)
+            );
+        });
         const bodyProperties =
             this.example.request?._visit<ts.PropertyAssignment[]>({
                 inlinedRequestBody: (body) => {
@@ -181,6 +175,10 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
     }
 
     private isNotLiteral(shape: ExampleTypeReferenceShape): boolean {
-        return !(shape.type === "container" && shape.container.type === "literal");
+        if (shape.type === "named" && shape.shape.type === "alias") {
+            return this.isNotLiteral(shape.shape.value.shape);
+        } else {
+            return !(shape.type === "container" && shape.container.type === "literal");
+        }
     }
 }
