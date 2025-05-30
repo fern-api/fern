@@ -44,24 +44,28 @@ export class WebhookConverter extends AbstractOperationConverter {
             breadcrumbs: payloadBreadcrumbs
         });
 
-        const requestBody = this.convertRequestBody({
+        const convertedRequestBody = this.convertRequestBody({
             breadcrumbs: payloadBreadcrumbs,
             group,
             method,
             streamingExtension: undefined
         });
+        if (convertedRequestBody == null) {
+            return undefined;
+        }
+        const { requestBody } = convertedRequestBody;
 
         let payload: WebhookPayload;
-        if (requestBody?.value.type === "inlinedRequestBody") {
+        if (requestBody.type === "inlinedRequestBody") {
             payload = WebhookPayload.inlinedPayload({
-                name: requestBody.value.name,
-                extends: requestBody.value.extends,
-                properties: requestBody.value.properties
+                name: requestBody.name,
+                extends: requestBody.extends,
+                properties: requestBody.properties
             });
-        } else if (requestBody?.value.type === "reference") {
+        } else if (requestBody.type === "reference") {
             payload = WebhookPayload.reference({
-                payloadType: requestBody.value.requestBodyType,
-                docs: requestBody.value.docs
+                payloadType: requestBody.requestBodyType,
+                docs: requestBody.docs
             });
         } else {
             return undefined;
