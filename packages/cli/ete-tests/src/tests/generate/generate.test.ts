@@ -3,7 +3,7 @@ import stripAnsi from "strip-ansi";
 
 import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
 
-import { runFernCli } from "../../utils/runFernCli";
+import { runFernCli, runFernCliWithoutAuthToken } from "../../utils/runFernCli";
 import { init } from "../init/init";
 
 const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
@@ -65,6 +65,37 @@ describe("fern generate", () => {
                 // for some reason, locally the output contains a newline that Circle doesn't
                 .trim()
         ).toMatchSnapshot();
+    }, 180_000);
+
+    it("generate docs with no auth requires login", async () => {
+        const { stdout } = await runFernCliWithoutAuthToken(["generate", "--docs"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("docs")),
+            reject: false
+        });
+        expect(stdout).toContain("Login required.");
+    }, 180_000);
+
+    it("generate docs with auth bypass fails", async () => {
+        const { stdout } = await runFernCliWithoutAuthToken(["generate", "--docs"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("docs")),
+            reject: false,
+            env: {
+                FERN_AUTH_NO_VERIFY: "true"
+            }
+        });
+        expect(stdout).toContain("No token found. Please set the FERN_TOKEN environment variable.");
+    }, 180_000);
+
+    it("generate docs with auth bypass succeeds", async () => {
+        const { stdout } = await runFernCliWithoutAuthToken(["generate", "--docs"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("docs")),
+            reject: false,
+            env: {
+                FERN_AUTH_NO_VERIFY: "true",
+                FERN_TOKEN: "dummy"
+            }
+        });
+        expect(stdout).toContain("ferndevtest.docs.dev.buildwithfern.com Started.");
     }, 180_000);
 });
 
