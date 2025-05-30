@@ -3920,7 +3920,7 @@
             playground:
               oauth: true
         ```
-        [More Information](https://buildwithfern.com/learn/docs/api-references/customize-api-playground)
+        [More Information](https://buildwithfern.com/learn/docs/api-references/api-explorer)
       type: feat
   createdAt: "2024-09-07"
   irVersion: 53
