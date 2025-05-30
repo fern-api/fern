@@ -25,6 +25,7 @@ export async function generateDocsWorkspace({
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
+        cliContext.failAndThrow("No docs.yml file found. Please make sure your project has one.");
         return;
     }
     const shouldSkipAuth = process.env["FERN_SELF_HOSTED"] === "true";
