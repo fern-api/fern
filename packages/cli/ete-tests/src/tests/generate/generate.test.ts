@@ -104,7 +104,7 @@ describe("fern generate", () => {
     }, 180_000);
 
     it("generate docs with no docs.yml file fails", async () => {
-        const { stdout } = await runFernCliWithoutAuthToken(["generate", "--docs"], {
+        const { stdout } = await runFernCli(["generate", "--docs"], {
             cwd: join(fixturesDir, RelativeFilePath.of("basic")),
             reject: false
         });
