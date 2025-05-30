@@ -167,6 +167,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Schema",
               "typeId": "type_:Schema",
               "type": "named"
             }
@@ -196,6 +197,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Get Example Response Message",
               "typeId": "type_:GetExampleResponseMessage",
               "type": "named"
             }
