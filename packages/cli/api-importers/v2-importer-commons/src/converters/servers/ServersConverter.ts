@@ -102,7 +102,7 @@ export class ServersConverter extends AbstractConverter<
                 return {
                     id: serverName,
                     name: this.context.casingsGenerator.generateName(serverName),
-                    url: this.getServerUrl(server),
+                    url: this.maybeRemoveTrailingSlashIfNotEmpty(this.getServerUrl(server)),
                     docs: server.description
                 };
             })
@@ -226,5 +226,9 @@ export class ServersConverter extends AbstractConverter<
                 context: this.context
             }) ?? DEFAULT_BASE_URL_ID
         );
+    }
+
+    private maybeRemoveTrailingSlashIfNotEmpty(url: string): string {
+        return url.endsWith("/") && url !== "/" ? url.slice(0, -1) : url;
     }
 }
