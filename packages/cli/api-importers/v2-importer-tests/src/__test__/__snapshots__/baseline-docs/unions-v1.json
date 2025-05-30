@@ -81,6 +81,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Triangle",
               "typeId": "type_:Triangle",
               "type": "named"
             }
@@ -110,6 +111,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Square",
               "typeId": "type_:Square",
               "type": "named"
             }

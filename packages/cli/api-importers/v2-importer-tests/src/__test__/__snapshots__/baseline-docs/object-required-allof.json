@@ -423,9 +423,6 @@
                       "primitive": {
                         "v1": "STRING",
                         "v2": {
-                          "validation": {
-                            "format": "uuid"
-                          },
                           "type": "string"
                         }
                       },

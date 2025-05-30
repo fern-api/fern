@@ -82,6 +82,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Iban Field",
               "typeId": "type_:IbanField",
               "type": "named"
             }
@@ -111,6 +112,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Other Field",
               "typeId": "type_:OtherField",
               "type": "named"
             }
