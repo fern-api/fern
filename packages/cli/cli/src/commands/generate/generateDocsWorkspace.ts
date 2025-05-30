@@ -46,10 +46,11 @@ export async function generateDocsWorkspace({
             return askToLogin(context);
         });
         if (token.type === "user") {
+            const userToken = token as FernUserToken;
             await cliContext.runTask(async (context) => {
                 await createOrganizationIfDoesNotExist({
                     organization: project.config.organization,
-                    token: token as FernUserToken,
+                    token: userToken,
                     context
                 });
             });
