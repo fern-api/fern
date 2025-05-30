@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Support v2Examples in parsed webhooks.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-30"
+  version: 0.63.22
+
+- changelogEntry:
+    - summary: |
         `allOf` schemas that share properties with the parent schema's required properties will now be parsed as an inline `allOf` schema.
       type: fix
   irVersion: 58
