@@ -693,6 +693,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "From URL Upload Response Schema",
               "typeId": "type_:FromUrlUploadResponseSchema",
               "type": "named"
             }
@@ -722,6 +723,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Upload Info from URL",
               "typeId": "type_:FileUploadInfoFromUrl",
               "type": "named"
             }
@@ -829,6 +831,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Upload Info Waiting Status",
               "typeId": "type_:FileUploadInfoWaitingStatus",
               "type": "named"
             }
@@ -858,6 +861,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Upload Info Progress Status",
               "typeId": "type_:FileUploadInfoProgressStatus",
               "type": "named"
             }
@@ -887,6 +891,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Upload Info Success Status",
               "typeId": "type_:FileUploadInfoSuccessStatus",
               "type": "named"
             }
@@ -916,6 +921,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Upload Info Error Status",
               "typeId": "type_:FileUploadInfoErrorStatus",
               "type": "named"
             }
@@ -945,6 +951,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Upload Info Unknown Status",
               "typeId": "type_:FileUploadInfoUnknownStatus",
               "type": "named"
             }
@@ -1013,6 +1020,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Null Characters Forbidden Error",
               "typeId": "type_:NullCharactersForbiddenError",
               "type": "named"
             }
@@ -1042,6 +1050,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Group ID Required Error",
               "typeId": "type_:GroupIdRequiredError",
               "type": "named"
             }
@@ -1110,6 +1119,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Public Key Required Error",
               "typeId": "type_:PublicKeyRequiredError",
               "type": "named"
             }
@@ -1139,6 +1149,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Public Key Invalid Error",
               "typeId": "type_:PublicKeyInvalidError",
               "type": "named"
             }

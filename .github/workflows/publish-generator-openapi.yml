@@ -41,7 +41,18 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
         run: |
           VERSIONS_FILE="generators/openapi/versions.yml"
-          git show HEAD~1:${VERSIONS_FILE} > tmp_previous_versions.yml
+          
+          previous_commit=$(git log -n 2 --pretty=format:"%h" -- ${VERSIONS_FILE} | tail -n 1)
+          current_commit=$(git log -n 1 --pretty=format:"%h" -- ${VERSIONS_FILE})
+          
+          # Get the previous version of the file using the specific commit that last changed it
+          git show ${previous_commit}:${VERSIONS_FILE} > tmp_previous_versions.yml
+          
+          echo "Preview of the previous file (${previous_commit})"
+          head tmp_previous_versions.yml
+
+          echo "Preview of the current file (${current_commit})"
+          head ${VERSIONS_FILE}
 
           if [ $? -eq 0 ]; then
             pnpm seed:local publish generator openapi --changelog $VERSIONS_FILE --previous-changelog tmp_previous_versions.yml --log-level debug

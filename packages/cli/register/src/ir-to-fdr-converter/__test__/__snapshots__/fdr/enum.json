@@ -43,14 +43,16 @@
             "type": {
               "type": "id",
               "value": "type_:Color"
-            }
+            },
+            "displayName": "Color"
           },
           {
             "typeName": "Operand",
             "type": {
               "type": "id",
               "value": "type_:Operand"
-            }
+            },
+            "displayName": "Operand"
           }
         ]
       }
@@ -243,7 +245,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "path": "/path/>/red",
+              "path": "/path/%3E/red",
               "pathParameters": {
                 "operand": ">",
                 "operandOrColor": "red"

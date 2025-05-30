@@ -463,7 +463,7 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "displayName": null,
+                            "displayName": "Color",
                             "typeId": "type_:Color",
                             "default": null,
                             "inline": null
@@ -497,7 +497,7 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "displayName": null,
+                            "displayName": "Operand",
                             "typeId": "type_:Operand",
                             "default": null,
                             "inline": null
@@ -2390,7 +2390,7 @@
                             "example": {
                                 "id": "1369b7ab",
                                 "name": null,
-                                "url": "/path/>/red",
+                                "url": "/path/%3E/red",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [
                                     {
@@ -2613,7 +2613,7 @@
                         {
                             "example": {
                                 "id": "d90794eb",
-                                "url": "/path/>/red",
+                                "url": "/path/%3E/red",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [

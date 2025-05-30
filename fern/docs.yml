@@ -466,6 +466,10 @@ navigation:
                 path: ./pages/docs/components/endpoint-response-snippet.mdx
                 icon: fa-regular fa-arrow-down
                 slug: response-snippet
+              - page: Endpoint Schema Snippet
+                path: ./pages/docs/components/endpoint-schema-snippet.mdx
+                icon: fa-regular fa-table
+                slug: schema-snippet
               - page: Frames
                 path: ./pages/docs/components/frames.mdx
                 icon: fa-regular fa-border-all

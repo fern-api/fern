@@ -244,16 +244,22 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         const resolvedDefault = this.context.isReferenceObject(this.schema)
             ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                   schemaOrReference: this.schema,
-                  breadcrumbs: this.breadcrumbs,
-                  skipErrorCollector: true
+                  breadcrumbs: this.breadcrumbs
               })?.default
             : this.schema.default;
 
-        if (typeof resolvedDefault === "boolean") {
+        const resolvedConst = this.context.isReferenceObject(this.schema)
+            ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                  schemaOrReference: this.schema,
+                  breadcrumbs: this.breadcrumbs
+              })?.const
+            : this.schema.const;
+
+        if (typeof resolvedDefault === "boolean" || typeof resolvedConst === "boolean") {
             return {
                 isValid: true,
                 coerced: false,
-                validExample: resolvedDefault,
+                validExample: resolvedConst ?? resolvedDefault,
                 errors: []
             };
         }

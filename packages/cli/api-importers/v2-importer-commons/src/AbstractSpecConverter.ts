@@ -365,6 +365,10 @@ export abstract class AbstractSpecConverter<
         }
     }
 
+    protected addGlobalHeadersToIr(globalHeaders: FernIr.HttpHeader[]): void {
+        this.ir.headers = globalHeaders;
+    }
+
     protected addEnvironmentsToIr({
         environmentConfig,
         audiences

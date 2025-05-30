@@ -24,6 +24,7 @@ export interface ObjectPropertyWithPath {
     propertyType: string;
     resolvedPropertyType: ResolvedType;
     isOptional: boolean;
+    isNullable: boolean;
 }
 
 export type ObjectPropertyPath = ObjectPropertyPathPart[];
@@ -101,7 +102,10 @@ export function getAllPropertiesForObject({
                     resolvedPropertyType,
                     isOptional:
                         resolvedPropertyType._type === "container" &&
-                        resolvedPropertyType.container._type === "optional"
+                        resolvedPropertyType.container._type === "optional",
+                    isNullable:
+                        resolvedPropertyType._type === "container" &&
+                        resolvedPropertyType.container._type === "nullable"
                 });
             }
         }

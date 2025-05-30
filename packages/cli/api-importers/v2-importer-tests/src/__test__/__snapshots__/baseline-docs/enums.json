@@ -81,6 +81,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Status Enum",
               "typeId": "type_:StatusEnum",
               "type": "named"
             }
@@ -110,6 +111,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Priority Enum",
               "typeId": "type_:PriorityEnum",
               "type": "named"
             }
@@ -139,6 +141,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Error Code Enum",
               "typeId": "type_:ErrorCodeEnum",
               "type": "named"
             }

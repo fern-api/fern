@@ -102,7 +102,7 @@ export class ServersConverter extends AbstractConverter<
                 return {
                     id: serverName,
                     name: this.context.casingsGenerator.generateName(serverName),
-                    url: this.getServerUrl(server),
+                    url: this.maybeRemoveTrailingSlashIfNotEmpty(this.getServerUrl(server)),
                     docs: server.description
                 };
             })
@@ -148,7 +148,7 @@ export class ServersConverter extends AbstractConverter<
         let url = server.url;
         for (const [variableName, variable] of Object.entries(server.variables)) {
             if (variable.default != null) {
-                url = url.replace(`{${variableName}}`, variable.default);
+                url = url.replace(`{${variableName}}`, encodeURIComponent(variable.default));
             }
         }
         return url;
@@ -186,7 +186,7 @@ export class ServersConverter extends AbstractConverter<
                 }
 
                 return variable.enum.map((enumValue) => {
-                    const newUrl = server.url.replace(`{${variableName}}`, enumValue);
+                    const newUrl = server.url.replace(`{${variableName}}`, encodeURIComponent(enumValue));
 
                     // Create a new server with the variable replaced in the URL
                     // and remove the exploded variable from variables
@@ -226,5 +226,9 @@ export class ServersConverter extends AbstractConverter<
                 context: this.context
             }) ?? DEFAULT_BASE_URL_ID
         );
+    }
+
+    private maybeRemoveTrailingSlashIfNotEmpty(url: string): string {
+        return url.endsWith("/") && url !== "/" ? url.slice(0, -1) : url;
     }
 }

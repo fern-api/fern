@@ -239,10 +239,36 @@
       "name": "eligibleOverdraftAccountItem",
       "shape": {
         "type": "object",
-        "extends": [
-          "overdraftAccountFields"
-        ],
-        "properties": []
+        "extends": [],
+        "properties": [
+          {
+            "description": "The unique ID of the account resource. Use this as the `{accountId}` in [`getAccount`](#op-getAccount) or [`listAccountBalances`](#op-listAccountBalances).",
+            "key": "id",
+            "valueType": {
+              "type": "id",
+              "value": "resourceId"
+            }
+          },
+          {
+            "description": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`.",
+            "key": "label",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 80
+              }
+            },
+            "propertyAccess": "READ_ONLY"
+          },
+          {
+            "key": "maskedNumber",
+            "valueType": {
+              "type": "id",
+              "value": "maskedAccountNumber"
+            }
+          }
+        ]
       }
     },
     "eligibleOverdraftAccounts": {
@@ -290,10 +316,42 @@
       "name": "overdraftAccountItem",
       "shape": {
         "type": "object",
-        "extends": [
-          "overdraftAccountFields"
-        ],
-        "properties": []
+        "extends": [],
+        "properties": [
+          {
+            "description": "The unique ID of the account resource. Use this as the `{accountId}` in [`getAccount`](#op-getAccount) or [`listAccountBalances`](#op-listAccountBalances).",
+            "key": "id",
+            "valueType": {
+              "type": "id",
+              "value": "resourceId"
+            }
+          },
+          {
+            "description": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`.",
+            "key": "label",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 80
+                }
+              }
+            },
+            "propertyAccess": "READ_ONLY"
+          },
+          {
+            "key": "maskedNumber",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "maskedAccountNumber"
+              }
+            }
+          }
+        ]
       }
     },
     "overdraftProtectionFields": {
@@ -1042,10 +1100,46 @@
       "name": "wireTransferInstitution",
       "shape": {
         "type": "object",
-        "extends": [
-          "simpleInstitution"
-        ],
+        "extends": [],
         "properties": [
+          {
+            "description": "The financial institution's name.",
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 35
+              }
+            }
+          },
+          {
+            "description": "The financial institution's postal mailing address.",
+            "key": "address",
+            "valueType": {
+              "type": "id",
+              "value": "address"
+            }
+          },
+          {
+            "description": "The [American Bankers Association routing number](https://www.aba.com/about-us/routingnumber), [SWIFT Business Identifier Code (BIC) code](https://www.swift.com/standards/data-standards/bic-business-identifier-code), or [IBAN account number](https://www.ecbs.org/iban.htm) of the institution. The form of this institution locator string is set with the `locatorType` property.",
+            "key": "locator",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 36
+              }
+            }
+          },
+          {
+            "description": "Indicates the type of this institution's `locator`.",
+            "key": "locatorType",
+            "valueType": {
+              "type": "id",
+              "value": "institutionLocatorType"
+            }
+          },
           {
             "description": "The clearing code used to identify the financial institution for select countries.",
             "key": "localClearingCode",
@@ -2180,10 +2274,47 @@
       "shape": {
         "type": "object",
         "extends": [
-          "abstractBody",
-          "transferFields"
+          "abstractBody"
         ],
         "properties": [
+          {
+            "description": "The amount of money to transfer between accounts.",
+            "key": "amount",
+            "valueType": {
+              "type": "id",
+              "value": "monetaryValue"
+            }
+          },
+          {
+            "description": "The source account where the funds are withdrawn.",
+            "key": "sourceAccount",
+            "valueType": {
+              "type": "id",
+              "value": "transferAccountReference"
+            }
+          },
+          {
+            "description": "The target account where the funds are deposited.",
+            "key": "targetAccount",
+            "valueType": {
+              "type": "id",
+              "value": "transferAccountReference"
+            }
+          },
+          {
+            "description": "A customer-defined memo to describe the transfer.",
+            "key": "memo",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 128
+                }
+              }
+            }
+          },
           {
             "description": "When the transfer should occur and any recurrence.",
             "key": "schedule",
@@ -3272,8 +3403,8 @@
         }
       }
     },
-    "AccountsGetParametersSchema": {
-      "name": "AccountsGetParametersSchema",
+    "AccountsGetParametersLocation": {
+      "name": "AccountsGetParametersLocation",
       "shape": {
         "type": "enum",
         "values": [
@@ -3341,7 +3472,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "AccountsGetParametersSchema"
+                  "value": "AccountsGetParametersLocation"
                 }
               }
             },

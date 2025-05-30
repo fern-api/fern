@@ -693,6 +693,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "From URL Upload Response Schema",
               "typeId": "type_:FromUrlUploadResponseSchema",
               "type": "named"
             }
@@ -722,6 +723,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Upload Info from URL",
               "typeId": "type_:FileUploadInfoFromUrl",
               "type": "named"
             }
@@ -829,6 +831,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Upload Info Waiting Status",
               "typeId": "type_:FileUploadInfoWaitingStatus",
               "type": "named"
             }
@@ -858,6 +861,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Upload Info Progress Status",
               "typeId": "type_:FileUploadInfoProgressStatus",
               "type": "named"
             }
@@ -887,6 +891,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Upload Info Success Status",
               "typeId": "type_:FileUploadInfoSuccessStatus",
               "type": "named"
             }
@@ -916,6 +921,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Upload Info Error Status",
               "typeId": "type_:FileUploadInfoErrorStatus",
               "type": "named"
             }
@@ -945,6 +951,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Upload Info Unknown Status",
               "typeId": "type_:FileUploadInfoUnknownStatus",
               "type": "named"
             }
@@ -1013,6 +1020,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Request Fileds Number Limit Exceeded Error",
               "typeId": "type_:RequestFiledsNumberLimitExceededError",
               "type": "named"
             }
@@ -1042,6 +1050,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Post Request Parser Failed Error",
               "typeId": "type_:PostRequestParserFailedError",
               "type": "named"
             }
@@ -1071,6 +1080,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Null Characters Forbidden Error",
               "typeId": "type_:NullCharactersForbiddenError",
               "type": "named"
             }
@@ -1100,6 +1110,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Key Duplicated Error",
               "typeId": "type_:FileMetadataKeyDuplicatedError",
               "type": "named"
             }
@@ -1129,6 +1140,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Key Empty Error",
               "typeId": "type_:FileMetadataKeyEmptyError",
               "type": "named"
             }
@@ -1158,6 +1170,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Key Forbidden Error",
               "typeId": "type_:FileMetadataKeyForbiddenError",
               "type": "named"
             }
@@ -1187,6 +1200,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Key Length Too Big Error",
               "typeId": "type_:FileMetadataKeyLengthTooBigError",
               "type": "named"
             }
@@ -1216,6 +1230,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Value Empty Error",
               "typeId": "type_:FileMetadataValueEmptyError",
               "type": "named"
             }
@@ -1245,6 +1260,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Value Forbidden Error",
               "typeId": "type_:FileMetadataValueForbiddenError",
               "type": "named"
             }
@@ -1274,6 +1290,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Value Length Too Big Error",
               "typeId": "type_:FileMetadataValueLengthTooBigError",
               "type": "named"
             }
@@ -1303,6 +1320,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Keys Number Too Big Error",
               "typeId": "type_:FileMetadataKeysNumberTooBigError",
               "type": "named"
             }
@@ -1332,6 +1350,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Signature Required Error",
               "typeId": "type_:SignatureRequiredError",
               "type": "named"
             }
@@ -1361,6 +1380,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Signature Expiration Required Error",
               "typeId": "type_:SignatureExpirationRequiredError",
               "type": "named"
             }
@@ -1390,6 +1410,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Signature Expiration Invalid Error",
               "typeId": "type_:SignatureExpirationInvalidError",
               "type": "named"
             }
@@ -1419,6 +1440,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Files Required Error",
               "typeId": "type_:FilesRequiredError",
               "type": "named"
             }
@@ -1448,6 +1470,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Size Limit Exceeded Error",
               "typeId": "type_:FileSizeLimitExceededError",
               "type": "named"
             }
@@ -1477,6 +1500,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Type Forbidden Error",
               "typeId": "type_:FileTypeForbiddenError",
               "type": "named"
             }
@@ -1506,6 +1530,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Infected Error",
               "typeId": "type_:FileInfectedError",
               "type": "named"
             }
@@ -1574,6 +1599,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Uploadcare Public Key Required Error",
               "typeId": "type_:UploadcarePublicKeyRequiredError",
               "type": "named"
             }
@@ -1603,6 +1629,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Uploadcare Public Key Invalid Error",
               "typeId": "type_:UploadcarePublicKeyInvalidError",
               "type": "named"
             }
@@ -1632,6 +1659,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Auto Store Disabled Error",
               "typeId": "type_:AutoStoreDisabledError",
               "type": "named"
             }
@@ -1661,6 +1689,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Project Public Key Removed Error",
               "typeId": "type_:ProjectPublicKeyRemovedError",
               "type": "named"
             }
@@ -1690,6 +1719,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Account Blocked Error",
               "typeId": "type_:AccountBlockedError",
               "type": "named"
             }
@@ -1719,6 +1749,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Account Unpaid Error",
               "typeId": "type_:AccountUnpaidError",
               "type": "named"
             }
@@ -1748,6 +1779,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Upload Failed Error",
               "typeId": "type_:UploadFailedError",
               "type": "named"
             }
@@ -1777,6 +1809,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Account Limits Exceeded Error",
               "typeId": "type_:AccountLimitsExceededError",
               "type": "named"
             }
@@ -1806,6 +1839,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Signature Expiration Error",
               "typeId": "type_:SignatureExpirationError",
               "type": "named"
             }
@@ -1835,6 +1869,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Signature Invalid Error",
               "typeId": "type_:SignatureInvalidError",
               "type": "named"
             }
@@ -1903,6 +1938,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Request Fileds Number Limit Exceeded Error",
               "typeId": "type_:RequestFiledsNumberLimitExceededError",
               "type": "named"
             }
@@ -1932,6 +1968,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Post Request Parser Failed Error",
               "typeId": "type_:PostRequestParserFailedError",
               "type": "named"
             }
@@ -1961,6 +1998,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Null Characters Forbidden Error",
               "typeId": "type_:NullCharactersForbiddenError",
               "type": "named"
             }
@@ -1990,6 +2028,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Key Duplicated Error",
               "typeId": "type_:FileMetadataKeyDuplicatedError",
               "type": "named"
             }
@@ -2019,6 +2058,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Key Empty Error",
               "typeId": "type_:FileMetadataKeyEmptyError",
               "type": "named"
             }
@@ -2048,6 +2088,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Key Forbidden Error",
               "typeId": "type_:FileMetadataKeyForbiddenError",
               "type": "named"
             }
@@ -2077,6 +2118,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Key Length Too Big Error",
               "typeId": "type_:FileMetadataKeyLengthTooBigError",
               "type": "named"
             }
@@ -2106,6 +2148,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Value Empty Error",
               "typeId": "type_:FileMetadataValueEmptyError",
               "type": "named"
             }
@@ -2135,6 +2178,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Value Forbidden Error",
               "typeId": "type_:FileMetadataValueForbiddenError",
               "type": "named"
             }
@@ -2164,6 +2208,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Value Length Too Big Error",
               "typeId": "type_:FileMetadataValueLengthTooBigError",
               "type": "named"
             }
@@ -2193,6 +2238,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Keys Number Too Big Error",
               "typeId": "type_:FileMetadataKeysNumberTooBigError",
               "type": "named"
             }
@@ -2222,6 +2268,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Signature Required Error",
               "typeId": "type_:SignatureRequiredError",
               "type": "named"
             }
@@ -2251,6 +2298,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Signature Expiration Required Error",
               "typeId": "type_:SignatureExpirationRequiredError",
               "type": "named"
             }
@@ -2280,6 +2328,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Signature Expiration Invalid Error",
               "typeId": "type_:SignatureExpirationInvalidError",
               "type": "named"
             }
@@ -2309,6 +2358,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Request Param Required Error",
               "typeId": "type_:RequestParamRequiredError",
               "type": "named"
             }
@@ -2338,6 +2388,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Multipart Size Invalid Error",
               "typeId": "type_:MultipartSizeInvalidError",
               "type": "named"
             }
@@ -2367,6 +2418,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Multipart File Size Limit Exceeded Error",
               "typeId": "type_:MultipartFileSizeLimitExceededError",
               "type": "named"
             }
@@ -2396,6 +2448,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Multipart File Size Too Small Error",
               "typeId": "type_:MultipartFileSizeTooSmallError",
               "type": "named"
             }
@@ -2425,6 +2478,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Multipart Part Size Invalid Error",
               "typeId": "type_:MultipartPartSizeInvalidError",
               "type": "named"
             }
@@ -2454,6 +2508,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Multipart Part Size Too Small Error",
               "typeId": "type_:MultipartPartSizeTooSmallError",
               "type": "named"
             }
@@ -2483,6 +2538,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Multipart Part Size Too Big Error",
               "typeId": "type_:MultipartPartSizeTooBigError",
               "type": "named"
             }
@@ -2551,6 +2607,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Uploadcare Public Key Required Error",
               "typeId": "type_:UploadcarePublicKeyRequiredError",
               "type": "named"
             }
@@ -2580,6 +2637,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Uploadcare Public Key Invalid Error",
               "typeId": "type_:UploadcarePublicKeyInvalidError",
               "type": "named"
             }
@@ -2609,6 +2667,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Auto Store Disabled Error",
               "typeId": "type_:AutoStoreDisabledError",
               "type": "named"
             }
@@ -2638,6 +2697,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Project Public Key Removed Error",
               "typeId": "type_:ProjectPublicKeyRemovedError",
               "type": "named"
             }
@@ -2667,6 +2727,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Account Blocked Error",
               "typeId": "type_:AccountBlockedError",
               "type": "named"
             }
@@ -2696,6 +2757,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Account Unpaid Error",
               "typeId": "type_:AccountUnpaidError",
               "type": "named"
             }
@@ -2725,6 +2787,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Upload Failed Error",
               "typeId": "type_:UploadFailedError",
               "type": "named"
             }
@@ -2754,6 +2817,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Account Limits Exceeded Error",
               "typeId": "type_:AccountLimitsExceededError",
               "type": "named"
             }
@@ -2783,6 +2847,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Signature Expiration Error",
               "typeId": "type_:SignatureExpirationError",
               "type": "named"
             }
@@ -2812,6 +2877,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Signature Invalid Error",
               "typeId": "type_:SignatureInvalidError",
               "type": "named"
             }
@@ -2880,6 +2946,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Request Fileds Number Limit Exceeded Error",
               "typeId": "type_:RequestFiledsNumberLimitExceededError",
               "type": "named"
             }
@@ -2909,6 +2976,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Post Request Parser Failed Error",
               "typeId": "type_:PostRequestParserFailedError",
               "type": "named"
             }
@@ -2938,6 +3006,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Null Characters Forbidden Error",
               "typeId": "type_:NullCharactersForbiddenError",
               "type": "named"
             }
@@ -2967,6 +3036,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Multipart File ID Required Error",
               "typeId": "type_:MultipartFileIdRequiredError",
               "type": "named"
             }
@@ -2996,6 +3066,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Uuid Invalid Error",
               "typeId": "type_:UuidInvalidError",
               "type": "named"
             }
@@ -3025,6 +3096,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Multipart File Already Uploaded Error",
               "typeId": "type_:MultipartFileAlreadyUploadedError",
               "type": "named"
             }
@@ -3054,6 +3126,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Multipart Upload Size Too Large Error",
               "typeId": "type_:MultipartUploadSizeTooLargeError",
               "type": "named"
             }
@@ -3083,6 +3156,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Multipart Upload Size Too Small Error",
               "typeId": "type_:MultipartUploadSizeTooSmallError",
               "type": "named"
             }
@@ -3112,6 +3186,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Multipart File Completion Failed Error",
               "typeId": "type_:MultipartFileCompletionFailedError",
               "type": "named"
             }
@@ -3141,6 +3216,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Type Forbidden Error",
               "typeId": "type_:FileTypeForbiddenError",
               "type": "named"
             }
@@ -3170,6 +3246,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Infected Error",
               "typeId": "type_:FileInfectedError",
               "type": "named"
             }
@@ -3238,6 +3315,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Uploadcare Public Key Required Error",
               "typeId": "type_:UploadcarePublicKeyRequiredError",
               "type": "named"
             }
@@ -3267,6 +3345,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Uploadcare Public Key Invalid Error",
               "typeId": "type_:UploadcarePublicKeyInvalidError",
               "type": "named"
             }
@@ -3335,6 +3414,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Request Fileds Number Limit Exceeded Error",
               "typeId": "type_:RequestFiledsNumberLimitExceededError",
               "type": "named"
             }
@@ -3364,6 +3444,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Post Request Parser Failed Error",
               "typeId": "type_:PostRequestParserFailedError",
               "type": "named"
             }
@@ -3393,6 +3474,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Null Characters Forbidden Error",
               "typeId": "type_:NullCharactersForbiddenError",
               "type": "named"
             }
@@ -3422,6 +3504,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Key Duplicated Error",
               "typeId": "type_:FileMetadataKeyDuplicatedError",
               "type": "named"
             }
@@ -3451,6 +3534,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Key Empty Error",
               "typeId": "type_:FileMetadataKeyEmptyError",
               "type": "named"
             }
@@ -3480,6 +3564,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Key Forbidden Error",
               "typeId": "type_:FileMetadataKeyForbiddenError",
               "type": "named"
             }
@@ -3509,6 +3594,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Key Length Too Big Error",
               "typeId": "type_:FileMetadataKeyLengthTooBigError",
               "type": "named"
             }
@@ -3538,6 +3624,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Value Empty Error",
               "typeId": "type_:FileMetadataValueEmptyError",
               "type": "named"
             }
@@ -3567,6 +3654,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Value Forbidden Error",
               "typeId": "type_:FileMetadataValueForbiddenError",
               "type": "named"
             }
@@ -3596,6 +3684,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Value Length Too Big Error",
               "typeId": "type_:FileMetadataValueLengthTooBigError",
               "type": "named"
             }
@@ -3625,6 +3714,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File Metadata Keys Number Too Big Error",
               "typeId": "type_:FileMetadataKeysNumberTooBigError",
               "type": "named"
             }
@@ -3654,6 +3744,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Signature Required Error",
               "typeId": "type_:SignatureRequiredError",
               "type": "named"
             }
@@ -3683,6 +3774,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Signature Expiration Required Error",
               "typeId": "type_:SignatureExpirationRequiredError",
               "type": "named"
             }
@@ -3712,6 +3804,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Signature Expiration Invalid Error",
               "typeId": "type_:SignatureExpirationInvalidError",
               "type": "named"
             }
@@ -3741,6 +3834,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Source URL Required Error",
               "typeId": "type_:SourceUrlRequiredError",
               "type": "named"
             }
@@ -3770,6 +3864,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "URL Parsing Failed Error",
               "typeId": "type_:UrlParsingFailedError",
               "type": "named"
             }
@@ -3799,6 +3894,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "URL Scheme Required Error",
               "typeId": "type_:UrlSchemeRequiredError",
               "type": "named"
             }
@@ -3828,6 +3924,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "URL Scheme Invalid Error",
               "typeId": "type_:UrlSchemeInvalidError",
               "type": "named"
             }
@@ -3857,6 +3954,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "URL Host Required Error",
               "typeId": "type_:UrlHostRequiredError",
               "type": "named"
             }
@@ -3886,6 +3984,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "URL Blacklisted Error",
               "typeId": "type_:UrlBlacklistedError",
               "type": "named"
             }
@@ -3915,6 +4014,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Hostname Not Found Error",
               "typeId": "type_:HostnameNotFoundError",
               "type": "named"
             }
@@ -3944,6 +4044,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "URL Host Malformed Error",
               "typeId": "type_:UrlHostMalformedError",
               "type": "named"
             }
@@ -3973,6 +4074,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "URL Host Private IP Forbidden Error",
               "typeId": "type_:UrlHostPrivateIpForbiddenError",
               "type": "named"
             }
@@ -4041,6 +4143,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Public Key Required Error",
               "typeId": "type_:PublicKeyRequiredError",
               "type": "named"
             }
@@ -4070,6 +4173,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Public Key Invalid Error",
               "typeId": "type_:PublicKeyInvalidError",
               "type": "named"
             }
@@ -4099,6 +4203,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Auto Store Disabled Error",
               "typeId": "type_:AutoStoreDisabledError",
               "type": "named"
             }
@@ -4128,6 +4233,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Project Public Key Removed Error",
               "typeId": "type_:ProjectPublicKeyRemovedError",
               "type": "named"
             }
@@ -4157,6 +4263,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Account Blocked Error",
               "typeId": "type_:AccountBlockedError",
               "type": "named"
             }
@@ -4186,6 +4293,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Account Unpaid Error",
               "typeId": "type_:AccountUnpaidError",
               "type": "named"
             }
@@ -4215,6 +4323,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Upload Failed Error",
               "typeId": "type_:UploadFailedError",
               "type": "named"
             }
@@ -4244,6 +4353,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Account Limits Exceeded Error",
               "typeId": "type_:AccountLimitsExceededError",
               "type": "named"
             }
@@ -4273,6 +4383,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Signature Expiration Error",
               "typeId": "type_:SignatureExpirationError",
               "type": "named"
             }
@@ -4302,6 +4413,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Signature Invalid Error",
               "typeId": "type_:SignatureInvalidError",
               "type": "named"
             }
@@ -4370,6 +4482,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Null Characters Forbidden Error",
               "typeId": "type_:NullCharactersForbiddenError",
               "type": "named"
             }
@@ -4399,6 +4512,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File ID Required Error",
               "typeId": "type_:FileIdRequiredError",
               "type": "named"
             }
@@ -4428,6 +4542,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "File ID Invalid Error",
               "typeId": "type_:FileIdInvalidError",
               "type": "named"
             }
@@ -4496,6 +4611,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Public Key Required Error",
               "typeId": "type_:PublicKeyRequiredError",
               "type": "named"
             }
@@ -4525,6 +4641,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Public Key Invalid Error",
               "typeId": "type_:PublicKeyInvalidError",
               "type": "named"
             }
@@ -4593,6 +4710,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Request Fileds Number Limit Exceeded Error",
               "typeId": "type_:RequestFiledsNumberLimitExceededError",
               "type": "named"
             }
@@ -4622,6 +4740,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Post Request Parser Failed Error",
               "typeId": "type_:PostRequestParserFailedError",
               "type": "named"
             }
@@ -4651,6 +4770,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Null Characters Forbidden Error",
               "typeId": "type_:NullCharactersForbiddenError",
               "type": "named"
             }
@@ -4680,6 +4800,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Signature Required Error",
               "typeId": "type_:SignatureRequiredError",
               "type": "named"
             }
@@ -4709,6 +4830,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Signature Expiration Required Error",
               "typeId": "type_:SignatureExpirationRequiredError",
               "type": "named"
             }
@@ -4738,6 +4860,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Signature Expiration Invalid Error",
               "typeId": "type_:SignatureExpirationInvalidError",
               "type": "named"
             }
@@ -4767,6 +4890,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Group Files Invalid Error",
               "typeId": "type_:GroupFilesInvalidError",
               "type": "named"
             }
@@ -4796,6 +4920,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Group File URL Parsing Failed Error",
               "typeId": "type_:GroupFileUrlParsingFailedError",
               "type": "named"
             }
@@ -4825,6 +4950,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Group Files Not Found Error",
               "typeId": "type_:GroupFilesNotFoundError",
               "type": "named"
             }
@@ -4893,6 +5019,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Public Key Required Error",
               "typeId": "type_:PublicKeyRequiredError",
               "type": "named"
             }
@@ -4922,6 +5049,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Public Key Invalid Error",
               "typeId": "type_:PublicKeyInvalidError",
               "type": "named"
             }
@@ -4951,6 +5079,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Project Public Key Removed Error",
               "typeId": "type_:ProjectPublicKeyRemovedError",
               "type": "named"
             }
@@ -4980,6 +5109,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Account Blocked Error",
               "typeId": "type_:AccountBlockedError",
               "type": "named"
             }
@@ -5009,6 +5139,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Account Unpaid Error",
               "typeId": "type_:AccountUnpaidError",
               "type": "named"
             }
@@ -5038,6 +5169,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Upload Failed Error",
               "typeId": "type_:UploadFailedError",
               "type": "named"
             }
@@ -5067,6 +5199,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Account Limits Exceeded Error",
               "typeId": "type_:AccountLimitsExceededError",
               "type": "named"
             }
@@ -5096,6 +5229,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Signature Expiration Error",
               "typeId": "type_:SignatureExpirationError",
               "type": "named"
             }
@@ -5125,6 +5259,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Signature Invalid Error",
               "typeId": "type_:SignatureInvalidError",
               "type": "named"
             }
@@ -5193,6 +5328,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Null Characters Forbidden Error",
               "typeId": "type_:NullCharactersForbiddenError",
               "type": "named"
             }
@@ -5222,6 +5358,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Group ID Required Error",
               "typeId": "type_:GroupIdRequiredError",
               "type": "named"
             }
@@ -5290,6 +5427,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Public Key Required Error",
               "typeId": "type_:PublicKeyRequiredError",
               "type": "named"
             }
@@ -5319,6 +5457,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Public Key Invalid Error",
               "typeId": "type_:PublicKeyInvalidError",
               "type": "named"
             }

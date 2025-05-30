@@ -91,7 +91,7 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "displayName": null,
+                            "displayName": "Schema1",
                             "typeId": "type_:Schema1",
                             "default": null,
                             "inline": null
@@ -125,7 +125,7 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "displayName": null,
+                            "displayName": "Schema2",
                             "typeId": "type_:Schema2",
                             "default": null,
                             "inline": null
@@ -1675,7 +1675,7 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "displayName": null,
+                            "displayName": "Schema2test Discriminated Union Zero",
                             "typeId": "type_:Schema2TestDiscriminatedUnionZero",
                             "default": null,
                             "inline": null
@@ -1709,7 +1709,7 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "displayName": null,
+                            "displayName": "Schema2test Discriminated Union One",
                             "typeId": "type_:Schema2TestDiscriminatedUnionOne",
                             "default": null,
                             "inline": null
@@ -1989,7 +1989,7 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "displayName": null,
+                            "displayName": "Schema2test Union A",
                             "typeId": "type_:Schema2TestUnionA",
                             "default": null,
                             "inline": null
@@ -2023,7 +2023,7 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "displayName": null,
+                            "displayName": "Schema2test Union B",
                             "typeId": "type_:Schema2TestUnionB",
                             "default": null,
                             "inline": null

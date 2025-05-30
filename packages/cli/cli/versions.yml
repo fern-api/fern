@@ -1,4 +1,144 @@
 - changelogEntry:
+    - summary: |
+        Remove trailing slashes from base environment URLs if they are not empty.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-30"
+  version: 0.63.25
+
+- changelogEntry:
+    - summary: |
+        This fixes an error where the IR would be serialized to a string first and throw the following error: `Cannot create a string longer than 0x1fffffe8 characters`.
+        Now the IR is streamed to the file.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-30"
+  version: 0.63.24
+
+- changelogEntry:
+    - summary: |
+        Aggregate all code samples from user-specified examples when populating v2 examples.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-30"
+  version: 0.63.23
+
+- changelogEntry:
+    - summary: |
+        Support v2Examples in parsed webhooks.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-30"
+  version: 0.63.22
+
+- changelogEntry:
+    - summary: |
+        `allOf` schemas that share properties with the parent schema's required properties will now be parsed as an inline `allOf` schema.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-29"
+  version: 0.63.21
+
+- changelogEntry:
+    - summary: |
+        Implement V3 parser support for streamCondition endpoints.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-29"
+  version: 0.63.20
+
+- changelogEntry:
+    - summary: |
+        Added automatic display names for undiscriminated union members based on their type names for the original OpenAPI parser.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-29"
+  version: 0.63.19
+
+- changelogEntry:
+    - summary: |
+        Parse the `x-fern-global-headers` extension to add global headers to the IR.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-29"
+  version: 0.63.18
+
+- changelogEntry:
+    - summary: Encode path parameters appropriately when constructing URLs.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-29"
+  version: 0.63.17
+
+- changelogEntry:
+    - summary: | 
+        Added support for `oneOf` within `allOf` schemas in OpenAPI conversion. When an `allOf` schema contains a `oneOf` schema, we now properly merge the properties while preserving the union type structure. For example:
+
+        ```yaml
+        allOf:
+          - type: object
+            properties:
+              name: string
+          - oneOf:
+              - type: object
+                properties:
+                  type: string
+              - type: object
+                properties:
+                  kind: number
+        ```
+
+        This will be converted to a Fern type that combines the base properties with the union type options.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-28"
+  version: 0.63.16
+
+- changelogEntry:
+    - summary: | 
+        The `<Code>` component now supports more flexible prop ordering and additional properties. You can now specify `maxLines` and `focus` props in any order relative to the `src` prop. For example:
+
+        ```mdx
+        <Code src="../snippets/example.ts" maxLines={20} focus={1-18} />
+        <Code maxLines={20} focus={1-18} src="../snippets/example.ts" />
+        ```
+
+        Both formats will work the same way, preserving the specified properties in the generated markdown. The component will automatically detect and include any additional props in the code block's metastring.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-28"
+  version: 0.63.15
+
+- changelogEntry:
+    - summary: Fix duplicate properties in example IR generation.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-28"
+  version: 0.63.14
+
+- changelogEntry:
+    - summary: Make nullable properties optional in examples in the Fern Definition.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-28"
+  version: 0.63.13
+
+- changelogEntry:
+    - summary: Fix parameter name collisions for enums
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-28"
+  version: 0.63.12
+  
+- changelogEntry:
+    - summary: |
+        Mark readonly fields as optional in the IR.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-28"
+  version: 0.63.11-rc0
+
+- changelogEntry:
     - summary: Fix missing properties from base schemas in example generation.
       type: fix
   irVersion: 58
@@ -11,6 +151,14 @@
   irVersion: 58
   createdAt: "2025-05-27"
   version: 0.63.9
+
+- changelogEntry:
+    - summary: |
+        Fix a bug where `additionalProperties: false` would lead to objects still being converted as maps.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-27"
+  version: 0.63.8-rc3
 
 - changelogEntry:
     - summary: |

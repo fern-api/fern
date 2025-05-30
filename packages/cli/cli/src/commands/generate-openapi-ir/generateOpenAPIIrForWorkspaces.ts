@@ -1,8 +1,7 @@
-import { writeFile } from "fs/promises";
 import path from "path";
 
 import { generatorsYml } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import { LazyFernWorkspace, OSSWorkspace, OpenAPILoader, getAllOpenAPISpecs } from "@fern-api/lazy-fern-workspace";
 import { serialization } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
@@ -37,11 +36,11 @@ export async function generateOpenAPIIrForWorkspaces({
                     documents: await openAPILoader.loadDocuments({ context, specs: openAPISpecs })
                 });
 
-                const irOutputFilePath = path.resolve(irFilepath);
+                const irOutputFilePath = AbsoluteFilePath.of(path.resolve(irFilepath));
                 const openApiIrJson = await serialization.OpenApiIntermediateRepresentation.jsonOrThrow(openAPIIr, {
                     skipValidation: true
                 });
-                await writeFile(irOutputFilePath, await stringifyLargeObject(openApiIrJson, { pretty: true }));
+                await streamObjectToFile(irOutputFilePath, openApiIrJson, { pretty: true });
                 context.logger.info(`Wrote IR to ${irOutputFilePath}`);
             });
         })

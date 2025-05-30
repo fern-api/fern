@@ -64,24 +64,41 @@ export class ObjectSchemaConverter extends AbstractConverter<
 
         const extends_: TypeReference[] = [];
         const referencedTypes: Set<string> = baseReferencedTypes;
+        const objectHasRequiredProperties = this.schema.required != null && this.schema.required.length > 0;
         let inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> = propertiesInlinedTypes;
         let propertiesByAudience: Record<string, Set<string>> = basePropertiesByAudience;
-        for (const [index, allOfSchema] of (this.schema.allOf ?? []).entries()) {
+        for (const [index, allOfSchemaOrReference] of (this.schema.allOf ?? []).entries()) {
             const breadcrumbs = [...this.breadcrumbs, "allOf", index.toString()];
-
-            if (this.context.isReferenceObject(allOfSchema)) {
-                const maybeTypeReference = this.context.convertReferenceToTypeReference({
-                    reference: allOfSchema,
+            let allOfSchema: OpenAPIV3_1.SchemaObject;
+            if (this.context.isReferenceObject(allOfSchemaOrReference)) {
+                if (!objectHasRequiredProperties) {
+                    this.addTypeReferenceToExtends({
+                        reference: allOfSchemaOrReference,
+                        breadcrumbs,
+                        extends_,
+                        referencedTypes
+                    });
+                    continue;
+                }
+                const maybeResolvedReference = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                    schemaOrReference: allOfSchemaOrReference,
                     breadcrumbs
                 });
-                if (maybeTypeReference.ok) {
-                    extends_.push(maybeTypeReference.reference);
+                if (maybeResolvedReference == null) {
+                    continue;
                 }
-                const typeId = this.context.getTypeIdFromSchemaReference(allOfSchema);
-                if (typeId != null) {
-                    referencedTypes.add(typeId);
+                allOfSchema = maybeResolvedReference;
+                if (Object.keys(allOfSchema.properties ?? {}).every((key) => !this.schema.required?.includes(key))) {
+                    this.addTypeReferenceToExtends({
+                        reference: allOfSchemaOrReference,
+                        breadcrumbs,
+                        extends_,
+                        referencedTypes
+                    });
+                    continue;
                 }
-                continue;
+            } else {
+                allOfSchema = allOfSchemaOrReference;
             }
 
             const {
@@ -119,5 +136,29 @@ export class ObjectSchemaConverter extends AbstractConverter<
             referencedTypes,
             inlinedTypes
         };
+    }
+
+    private addTypeReferenceToExtends({
+        reference,
+        breadcrumbs,
+        extends_,
+        referencedTypes
+    }: {
+        reference: OpenAPIV3_1.ReferenceObject;
+        breadcrumbs: string[];
+        extends_: TypeReference[];
+        referencedTypes: Set<string>;
+    }) {
+        const maybeTypeReference = this.context.convertReferenceToTypeReference({
+            reference,
+            breadcrumbs
+        });
+        if (maybeTypeReference.ok) {
+            extends_.push(maybeTypeReference.reference);
+        }
+        const typeId = this.context.getTypeIdFromSchemaReference(reference);
+        if (typeId != null) {
+            referencedTypes.add(typeId);
+        }
     }
 }
