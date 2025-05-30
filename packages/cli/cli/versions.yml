@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Aggregate all code samples from user-specified examples when populating v2 examples.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-30"
+  version: 0.63.23
+
+- changelogEntry:
+    - summary: |
         Support v2Examples in parsed webhooks.
       type: fix
   irVersion: 58
