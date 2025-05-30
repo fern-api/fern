@@ -80,7 +80,7 @@ describe("fern generate", () => {
             cwd: join(fixturesDir, RelativeFilePath.of("docs")),
             reject: false,
             env: {
-                FERN_AUTH_NO_VERIFY: "true"
+                FERN_SELF_HOSTED: "true"
             }
         });
         expect(stdout).toContain("No token found. Please set the FERN_TOKEN environment variable.");
@@ -91,7 +91,7 @@ describe("fern generate", () => {
             cwd: join(fixturesDir, RelativeFilePath.of("docs")),
             reject: false,
             env: {
-                FERN_AUTH_NO_VERIFY: "true",
+                FERN_SELF_HOSTED: "true",
                 FERN_TOKEN: "dummy"
             }
         });

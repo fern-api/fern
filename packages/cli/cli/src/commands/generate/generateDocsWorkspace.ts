@@ -27,7 +27,7 @@ export async function generateDocsWorkspace({
     if (docsWorkspace == null) {
         return;
     }
-    const shouldSkipAuth = process.env["FERN_AUTH_NO_VERIFY"] === "true";
+    const shouldSkipAuth = process.env["FERN_SELF_HOSTED"] === "true";
 
     let token: FernToken | null = null;
     if (shouldSkipAuth) {
