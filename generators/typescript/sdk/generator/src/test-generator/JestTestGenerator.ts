@@ -79,18 +79,9 @@ export class JestTestGenerator {
                 preset: "ts-jest",
                 testEnvironment: "node",
                 moduleNameMapper: {
-                    '(.+)\\.js$': '$1'
-                },${
-                    setupFilesAfterEnv.length > 0
-                        ? code`
-                setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv)},`
-                        : ""
-                }${
-                    this.useBigInt
-                        ? `
-                    workerThreads: true,`
-                        : ""
-                }
+                    "(.+)\\.js$": "$1",
+                },
+                setupFilesAfterEnv: ["<rootDir>/tests/mock-server/setup.ts"]
             };
             `.toString({ dprintOptions: { indentWidth: 4 } })
         );
@@ -114,6 +105,7 @@ export class JestTestGenerator {
     private addDependencies(): void {
         this.dependencyManager.addDependency("jest", "^29.7.0", { type: DependencyType.DEV });
         this.dependencyManager.addDependency("@jest/globals", "^29.7.0", { type: DependencyType.DEV });
+        this.dependencyManager.addDependency("@types/jest", "^29.5.14", { type: DependencyType.DEV });
         this.dependencyManager.addDependency("ts-jest", "^29.3.4", { type: DependencyType.DEV });
         this.dependencyManager.addDependency("jest-environment-jsdom", "^29.7.0", { type: DependencyType.DEV });
         if (this.generateWireTests) {
@@ -142,6 +134,16 @@ export class JestTestGenerator {
 
     public get extraFiles(): Record<string, string> {
         return {
+            "tests/tsconfig.json": `{
+    "extends": "../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": null,
+        "rootDir": "..",
+        "baseUrl": ".."
+    },
+    "include": ["../src", "../tests"],
+    "exclude": []
+}`,
             "tests/custom.test.ts": `
 /**
 * This is a custom test file, if you wish to add more tests

@@ -5,6 +5,5 @@ export default {
     moduleNameMapper: {
         "(.+)\.js$": "$1",
     },
-    setupFilesAfterEnv: ["<rootDir>/tests/bigint-setup.ts", "<rootDir>/tests/mock-server/setup.ts"],
-    workerThreads: true,
+    setupFilesAfterEnv: ["<rootDir>/tests/mock-server/setup.ts"],
 };
