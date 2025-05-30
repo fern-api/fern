@@ -31,7 +31,7 @@ export async function generateDocsWorkspace({
 
     let token: FernToken | null = null;
     if (shouldSkipAuth) {
-        const fernToken = process.env["FERN_TOKEN"]; // token is a dummy token for local development
+        const fernToken = process.env["FERN_TOKEN"]; // token can be a dummy token
         if (!fernToken) {
             cliContext.failAndThrow("No token found. Please set the FERN_TOKEN environment variable.");
             return;

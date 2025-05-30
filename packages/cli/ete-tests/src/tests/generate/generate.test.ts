@@ -1,5 +1,6 @@
 import { exec } from "child_process";
 import stripAnsi from "strip-ansi";
+import { vi } from "vitest";
 
 import { AbsoluteFilePath, RelativeFilePath, doesPathExist, join } from "@fern-api/fs-utils";
 
@@ -68,6 +69,7 @@ describe("fern generate", () => {
     }, 180_000);
 
     it("generate docs with no auth requires login", async () => {
+        vi.stubEnv("FERN_TOKEN", undefined);
         const { stdout } = await runFernCliWithoutAuthToken(["generate", "--docs"], {
             cwd: join(fixturesDir, RelativeFilePath.of("docs")),
             reject: false
@@ -76,6 +78,7 @@ describe("fern generate", () => {
     }, 180_000);
 
     it("generate docs with auth bypass fails", async () => {
+        vi.stubEnv("FERN_TOKEN", undefined);
         const { stdout } = await runFernCliWithoutAuthToken(["generate", "--docs"], {
             cwd: join(fixturesDir, RelativeFilePath.of("docs")),
             reject: false,
@@ -87,6 +90,8 @@ describe("fern generate", () => {
     }, 180_000);
 
     it("generate docs with auth bypass succeeds", async () => {
+        vi.stubEnv("FERN_TOKEN", "dummy");
+
         const { stdout } = await runFernCliWithoutAuthToken(["generate", "--docs"], {
             cwd: join(fixturesDir, RelativeFilePath.of("docs")),
             reject: false,
