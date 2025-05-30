@@ -52,7 +52,14 @@
               }
             }
           },
-          "examples": []
+          "examples": [
+            {
+              "name": "statusUpdateExample",
+              "payload": {
+                "message": "foo"
+              }
+            }
+          ]
         },
         {
           "id": "updateInlined",
@@ -92,7 +99,12 @@
               ]
             }
           },
-          "examples": []
+          "examples": [
+            {
+              "name": "statusUpdateInlinedExample",
+              "payload": {}
+            }
+          ]
         }
       ],
       "websockets": [],
