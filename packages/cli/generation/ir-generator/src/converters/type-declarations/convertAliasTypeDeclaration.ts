@@ -5,8 +5,7 @@ import {
     isRawDiscriminatedUnionDefinition,
     isRawEnumDefinition,
     isRawObjectDefinition,
-    isRawUndiscriminatedUnionDefinition,
-    parseGeneric
+    isRawUndiscriminatedUnionDefinition
 } from "@fern-api/fern-definition-schema";
 import { ResolvedTypeReference, ShapeType, Type } from "@fern-api/ir-sdk";
 
