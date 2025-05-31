@@ -18,6 +18,7 @@ export class ServerGeneratorContext extends AbstractTypescriptMcpGeneratorContex
 
     public getRawAsIsFiles(): string[] {
         return [
+            AsIsFiles.FernIgnore,
             AsIsFiles.GitIgnore,
             AsIsFiles.IndexTs,
             AsIsFiles.ServerCustomTs,

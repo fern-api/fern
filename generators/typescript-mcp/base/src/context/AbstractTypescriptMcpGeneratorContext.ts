@@ -15,8 +15,8 @@ export interface FileLocation {
 export abstract class AbstractTypescriptMcpGeneratorContext<
     CustomConfig extends TypescriptCustomConfigSchema
 > extends AbstractGeneratorContext {
-    public readonly project: TypescriptMcpProject;
     public readonly zodTypeMapper: ZodTypeMapper;
+    public readonly project: TypescriptMcpProject;
     public publishConfig?: FernGeneratorExec.NpmGithubPublishInfo;
 
     public constructor(
@@ -26,10 +26,10 @@ export abstract class AbstractTypescriptMcpGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
+        this.zodTypeMapper = new ZodTypeMapper(this);
         this.project = new TypescriptMcpProject({
             context: this
         });
-        this.zodTypeMapper = new ZodTypeMapper(this);
         config.output.mode._visit<void>({
             github: (github) => {
                 if (github.publishInfo?.type === "npm") {

@@ -1,4 +1,4 @@
-import { toJson } from "../json";
+import { toJson } from "../json.js";
 
 export declare namespace GetRequestBody {
     interface Args {

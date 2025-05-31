@@ -4,6 +4,7 @@ export const GeneratorName = {
     TYPESCRIPT_NODE_SDK: "fernapi/fern-typescript-node-sdk",
     TYPESCRIPT_BROWSER_SDK: "fernapi/fern-typescript-browser-sdk",
     TYPESCRIPT_EXPRESS: "fernapi/fern-typescript-express",
+    TYPESCRIPT_MCP: "fernapi/fern-typescript-mcp",
     JAVA: "fernapi/fern-java",
     JAVA_MODEL: "fernapi/java-model",
     JAVA_SDK: "fernapi/fern-java-sdk",

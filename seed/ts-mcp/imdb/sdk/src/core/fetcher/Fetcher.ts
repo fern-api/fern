@@ -1,12 +1,12 @@
-import { toJson } from "../json";
-import { APIResponse } from "./APIResponse";
-import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse";
-import { createRequestUrl } from "./createRequestUrl";
-import { getFetchFn } from "./getFetchFn";
-import { getRequestBody } from "./getRequestBody";
-import { getResponseBody } from "./getResponseBody";
-import { makeRequest } from "./makeRequest";
-import { requestWithRetries } from "./requestWithRetries";
+import { toJson } from "../json.js";
+import { APIResponse } from "./APIResponse.js";
+import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.js";
+import { createRequestUrl } from "./createRequestUrl.js";
+import { getFetchFn } from "./getFetchFn.js";
+import { getRequestBody } from "./getRequestBody.js";
+import { getResponseBody } from "./getResponseBody.js";
+import { makeRequest } from "./makeRequest.js";
+import { requestWithRetries } from "./requestWithRetries.js";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 

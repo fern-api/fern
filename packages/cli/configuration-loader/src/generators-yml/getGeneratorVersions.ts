@@ -69,6 +69,7 @@ function getGeneratorMetadataFromName(generatorName: string, context?: TaskConte
         case "fern-typescript-browser-sdk":
         case "fern-typescript-node-sdk":
         case "fern-typescript-sdk":
+        case "fern-typescript-mcp":
             return "ts-sdk";
         case "fern-typescript-express":
             return "ts-express";

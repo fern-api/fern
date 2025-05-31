@@ -12,7 +12,7 @@
     "dist"
   ],
   "scripts": {
-    "preinstall": "cd sdk && npm run build && npm run prepack",
+    "preinstall": "cd sdk && npm run build && npm run prepack --if-present",
     "dev": "concurrently 'npm run build:watch' 'nodemon --env-file=.env -q --watch dist dist/index.js'",
     "build": "tsup src/index.ts --dts --clean",
     "build:watch": "tsup src/index.ts --dts --watch",
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.8.0",
-    "seed-api": "file:./sdk",
+    "sdk": "file:./sdk",
     "zod": "^3.24.2"
   },
   "devDependencies": {

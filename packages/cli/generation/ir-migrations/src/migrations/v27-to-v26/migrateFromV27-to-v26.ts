@@ -15,6 +15,7 @@ export const V27_TO_V26_MIGRATION: IrMigration<
     laterVersion: "v27",
     earlierVersion: "v26",
     firstGeneratorVersionToConsumeNewIR: {
+        [GeneratorName.TYPESCRIPT_MCP]: GeneratorWasNotCreatedYet,
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,

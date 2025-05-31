@@ -15,10 +15,7 @@ export class EnumGenerator extends FileGenerator<TypescriptFile, TypescriptCusto
         private readonly enumDeclaration: EnumTypeDeclaration
     ) {
         super(context);
-        this.schemaVariableName = this.context.project.builder.getSchemaVariableName(
-            this.typeDeclaration.name.name,
-            this.typeDeclaration.name.fernFilepath
-        );
+        this.schemaVariableName = this.context.project.builder.getSchemaVariableName(this.typeDeclaration);
     }
 
     public doGenerate(): TypescriptFile {

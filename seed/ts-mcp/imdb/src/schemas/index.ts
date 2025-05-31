@@ -1,3 +1,4 @@
-export { default as ImdbMovieId } from "./ImdbMovieId";
-export { default as ImdbMovie } from "./ImdbMovie";
-export { default as ImdbCreateMovieRequest } from "./ImdbCreateMovieRequest";
+export { default as MovieId } from "./MovieId";
+export { default as Movie } from "./Movie";
+export { default as CreateMovieRequest } from "./CreateMovieRequest";
+export { default as CreateMovie } from "./CreateMovie";

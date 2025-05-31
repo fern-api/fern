@@ -6,11 +6,13 @@ import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
+import { getNamespaceExport } from "@fern-api/typescript-base";
 
-import { FernFilepath, Name } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, Name, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { Logger } from "../../../../../packages/cli/logger/src/Logger";
 import { AbstractTypescriptMcpGeneratorContext } from "../context/AbstractTypescriptMcpGeneratorContext";
+import { ZodTypeMapper } from "../context/ZodTypeMapper";
 
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
 const DIST_DIRECTORY_NAME = "dist";
@@ -157,49 +159,66 @@ declare namespace TypescriptMcpProjectBuilder {
 class TypescriptMcpProjectBuilder {
     public readonly packageName: string;
     public readonly description: string;
+    public readonly namespaceExport: string;
     public readonly sdkModuleName: string;
     public readonly sdkClientClassName: string;
     public readonly zodReference: ts.Reference;
+    public readonly zodTypeMapper: ZodTypeMapper;
 
     constructor({ context }: TypescriptMcpProjectBuilder.Args) {
         const { organization, workspaceName } = context.config;
+        const { namespaceExport } = context.customConfig;
+        this.namespaceExport = getNamespaceExport({ organization, workspaceName, namespaceExport });
         this.packageName = context.publishConfig?.packageName ?? `${organization}-mcp-server`;
         this.description = `Model Context Protocol (MCP) server for ${organization}'s ${workspaceName}.`;
-        this.sdkModuleName = this.getSdkModuleName(organization, workspaceName);
-        this.sdkClientClassName = this.getSdkClientClassName(organization, workspaceName);
+        this.sdkModuleName = this.getSdkModuleName();
+        this.sdkClientClassName = this.getSdkClientClassName();
         this.zodReference = ts.reference({
             name: "z",
             importFrom: { type: "default", moduleName: "zod" }
         });
+        this.zodTypeMapper = context.zodTypeMapper;
     }
 
-    private getSdkModuleName(organization: string, workspaceName: string): string {
-        return `${kebabCase(organization)}-${kebabCase(workspaceName)}`;
+    private getSdkModuleName(): string {
+        return "sdk";
     }
 
-    private getSdkClientClassName(organization: string, workspaceName: string): string {
-        return `${capitalize(organization)}${capitalize(workspaceName)}Client`;
+    private getSdkClientClassName(): string {
+        return `${this.namespaceExport}Client`;
     }
 
-    public getSdkMethodPath(name: Name, fernFilepath?: FernFilepath): string {
-        const parts = [...(fernFilepath?.allParts ?? []), name].map((part) => part.camelCase.unsafeName);
+    public getSdkMethodPath(name: Name, prefixParts?: Name[]): string {
+        const parts = [...(prefixParts ?? []), name].map((part) => part.camelCase.unsafeName);
         return parts.join(".");
     }
 
-    public getSchemaVariableName(name: Name, fernFilepath?: FernFilepath): string {
-        const parts = [...(fernFilepath?.allParts ?? []), name].map((part) => part.pascalCase.safeName);
-        return parts.join("");
+    public getSchemaName(name: Name): string {
+        return name.pascalCase.safeName;
     }
 
-    public getToolVariableName(name: Name, fernFilepath?: FernFilepath): string {
-        const parts = [...(fernFilepath?.allParts ?? []), name].map((part, index) =>
+    // TODO: consider bringing prefixes back
+    public getSchemaVariableName(typeDeclaration: TypeDeclaration): string {
+        return this.getSchemaName(typeDeclaration.name.name);
+    }
+
+    public getSchemaVariableNameForEndpoint(endpoint: HttpEndpoint): string | undefined {
+        return endpoint.sdkRequest && endpoint.sdkRequest.shape.type === "wrapper"
+            ? endpoint.sdkRequest.shape.wrapperName.pascalCase.safeName
+            : endpoint.sdkRequest
+              ? this.getSchemaName(endpoint.name)
+              : undefined;
+    }
+
+    public getToolVariableName(name: Name, prefixParts?: Name[]): string {
+        const parts = [...(prefixParts ?? []), name].map((part, index) =>
             index === 0 ? part.camelCase.safeName : part.pascalCase.safeName
         );
         return parts.join("");
     }
 
-    public getToolName(name: Name, fernFilepath?: FernFilepath): string {
-        const parts = [...(fernFilepath?.allParts ?? []), name].map((part) => part.snakeCase.safeName);
+    public getToolName(name: Name, prefixParts?: Name[]): string {
+        const parts = [...(prefixParts ?? []), name].map((part) => part.snakeCase.safeName);
         return parts.join("_");
     }
 }
@@ -226,7 +245,7 @@ class PackageJson {
             bin: `${DIST_DIRECTORY_NAME}/index.js`,
             files: [DIST_DIRECTORY_NAME],
             scripts: {
-                preinstall: "cd sdk && npm run build && npm run prepack",
+                preinstall: "cd sdk && npm run build && npm run prepack --if-present",
                 dev: `concurrently 'npm run build:watch' 'nodemon --env-file=.env -q --watch ${DIST_DIRECTORY_NAME} ${DIST_DIRECTORY_NAME}/index.js'`,
                 build: `tsup ${SRC_DIRECTORY_NAME}/index.ts --dts --clean`,
                 "build:watch": `tsup ${SRC_DIRECTORY_NAME}/index.ts --dts --watch`,

@@ -43,6 +43,9 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     generateWireTests: z.optional(z.boolean()),
     noScripts: z.optional(z.boolean()),
 
+    // MCP alpha (not in docs)
+    mcpToolNamesToEnable: z.optional(z.array(z.string())),
+
     // deprecated
     timeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
     includeApiReference: z.optional(z.boolean())

@@ -15,21 +15,27 @@ export class AliasGenerator extends FileGenerator<TypescriptFile, TypescriptCust
         private readonly aliasDeclaration: AliasTypeDeclaration
     ) {
         super(context);
-        this.schemaVariableName = this.context.project.builder.getSchemaVariableName(
-            this.typeDeclaration.name.name,
-            this.typeDeclaration.name.fernFilepath
-        );
+        this.schemaVariableName = this.context.project.builder.getSchemaVariableName(this.typeDeclaration);
     }
 
     public doGenerate(): TypescriptFile {
         return new TypescriptFile({
             node: ts.codeblock((writer) => {
+                writer.writeLine("import z from 'zod';");
+                const type = this.context.zodTypeMapper.convert({
+                    reference: this.aliasDeclaration.aliasOf
+                });
+                const named = this.context.zodTypeMapper.HACKExtractNamed(type);
+                for (const name of named) {
+                    writer.writeLine(`import ${name} from '../schemas/${name}';`);
+                }
                 writer.writeNodeStatement(
                     new ExportNode({
-                        initializer: ts.invokeMethod({
-                            on: this.context.project.builder.zodReference,
-                            method: this.context.zodTypeMapper.convert({ reference: this.aliasDeclaration.aliasOf }),
-                            arguments_: []
+                        initializer: ts.codeblock((writer) => {
+                            writer.writeLine(type.replace(/schemas\./g, ""));
+                            // writer.writeLine(
+                            //     this.context.zodTypeMapper.convert({ reference: this.aliasDeclaration.aliasOf })
+                            // );
                         }),
                         default: true
                     })

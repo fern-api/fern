@@ -15,15 +15,19 @@ export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCust
         private readonly unionDeclaration: UnionTypeDeclaration
     ) {
         super(context);
-        this.schemaVariableName = this.context.project.builder.getSchemaVariableName(
-            this.typeDeclaration.name.name,
-            this.typeDeclaration.name.fernFilepath
-        );
+        this.schemaVariableName = this.context.project.builder.getSchemaVariableName(this.typeDeclaration);
     }
 
     public doGenerate(): TypescriptFile {
         return new TypescriptFile({
             node: ts.codeblock((writer) => {
+                this.unionDeclaration.types.forEach((type) => {
+                    const _type = this.context.zodTypeMapper.convertSingleUnionType(type);
+                    const named = this.context.zodTypeMapper.HACKExtractNamed(_type);
+                    for (const name of named) {
+                        writer.writeLine(`import ${name} from '../schemas/${name}';`);
+                    }
+                });
                 writer.writeNodeStatement(
                     new ExportNode({
                         initializer: ts.invokeMethod({
@@ -32,10 +36,10 @@ export class UnionGenerator extends FileGenerator<TypescriptFile, TypescriptCust
                             arguments_: [
                                 new ArrayLiteralNode({
                                     values: this.unionDeclaration.types.map((type) =>
-                                        ts.invokeMethod({
-                                            on: this.context.project.builder.zodReference,
-                                            method: this.context.zodTypeMapper.convertSingleUnionType(type),
-                                            arguments_: []
+                                        ts.codeblock((writer) => {
+                                            const _type = this.context.zodTypeMapper.convertSingleUnionType(type);
+                                            writer.writeLine(_type.replace(/schemas\./g, ""));
+                                            // writer.write(this.context.zodTypeMapper.convertSingleUnionType(type));
                                         })
                                     )
                                 })

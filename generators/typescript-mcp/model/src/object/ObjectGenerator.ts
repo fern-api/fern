@@ -19,15 +19,21 @@ export class ObjectGenerator extends FileGenerator<
         private readonly objectDeclaration: ObjectTypeDeclaration
     ) {
         super(context);
-        this.schemaVariableName = this.context.project.builder.getSchemaVariableName(
-            this.typeDeclaration.name.name,
-            this.typeDeclaration.name.fernFilepath
-        );
+        this.schemaVariableName = this.context.project.builder.getSchemaVariableName(this.typeDeclaration);
     }
 
     public doGenerate(): TypescriptFile {
         return new TypescriptFile({
             node: ts.codeblock((writer) => {
+                this.objectDeclaration.properties.forEach((value) => {
+                    const type = this.context.zodTypeMapper.convert({
+                        reference: value.valueType
+                    });
+                    const named = this.context.zodTypeMapper.HACKExtractNamed(type);
+                    for (const name of named) {
+                        writer.writeLine(`import ${name} from '../schemas/${name}';`);
+                    }
+                });
                 writer.writeNodeStatement(
                     new ExportNode({
                         initializer: ts.invokeMethod({
@@ -36,11 +42,15 @@ export class ObjectGenerator extends FileGenerator<
                             arguments_: [
                                 new ObjectLiteralNode({
                                     fields: this.objectDeclaration.properties.map((value) => ({
-                                        name: value.name.name.camelCase.safeName,
-                                        value: ts.invokeMethod({
-                                            on: this.context.project.builder.zodReference,
-                                            method: this.context.zodTypeMapper.convert({ reference: value.valueType }),
-                                            arguments_: []
+                                        name: value.name.name.snakeCase.safeName,
+                                        value: ts.codeblock((writer) => {
+                                            const type = this.context.zodTypeMapper.convert({
+                                                reference: value.valueType
+                                            });
+                                            writer.writeLine(type.replace(/schemas\./g, ""));
+                                            // writer.write(
+                                            //     this.context.zodTypeMapper.convert({ reference: value.valueType })
+                                            // );
                                         })
                                     }))
                                 })
