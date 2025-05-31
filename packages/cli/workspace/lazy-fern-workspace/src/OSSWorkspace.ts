@@ -167,7 +167,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         authOverrides,
                         environmentOverrides,
                         globalHeaderOverrides,
-                        enableUniqueErrorsPerEndpoint
+                        enableUniqueErrorsPerEndpoint,
+                        settings: document.settings
                     });
                     const converter = new OpenAPI3_1Converter({ context: converterContext, audiences });
                     result = await converter.convert();
@@ -182,7 +183,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         spec: document.value,
                         exampleGenerationArgs: { disabled: false },
                         errorCollector,
-                        enableUniqueErrorsPerEndpoint
+                        enableUniqueErrorsPerEndpoint,
+                        settings: document.settings
                     });
                     const converter = new AsyncAPIConverter({ context: converterContext, audiences });
                     result = await converter.convert();

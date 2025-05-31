@@ -28,7 +28,7 @@ export type DisplayNameOverrideSource = "schema_identifier" | "discriminator_key
 export declare namespace Spec {
     export interface Args<T> {
         spec: T;
-        settings?: OpenAPISettings;
+        settings?: Partial<OpenAPISettings>;
         errorCollector: ErrorCollector;
         logger: Logger;
         generationLanguage: generatorsYml.GenerationLanguage | undefined;
@@ -48,7 +48,7 @@ export declare namespace Spec {
  */
 export abstract class AbstractConverterContext<Spec extends object> {
     public spec: Spec;
-    public readonly settings?: OpenAPISettings;
+    public readonly settings?: Partial<OpenAPISettings>;
     public readonly errorCollector: ErrorCollector;
     public readonly logger: Logger;
     public readonly generationLanguage: generatorsYml.GenerationLanguage | undefined;
