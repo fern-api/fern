@@ -1,4 +1,4 @@
-import { PackageId, convertHttpPathToExpressRoute, getTextOfTsNode } from "@fern-typescript/commons";
+import { PackageId, convertHttpPathToExpressRoute, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressRegister } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { partition } from "lodash-es";
@@ -162,7 +162,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                 members.push(
                     ts.factory.createPropertySignature(
                         undefined,
-                        this.getPackagePathKey(otherChild.name),
+                        getPropertyKey(this.getPackagePathKey(otherChild.name)),
                         this.areImplementationsOptional
                             ? ts.factory.createToken(ts.SyntaxKind.QuestionToken)
                             : undefined,
@@ -182,7 +182,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
     private getPropertySignatureForService(packageId: PackageId, context: ExpressContext): ts.TypeElement {
         return ts.factory.createPropertySignature(
             undefined,
-            this.getServiceKey(packageId),
+            getPropertyKey(this.getServiceKey(packageId)),
             this.areImplementationsOptional ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
             context.expressService
                 .getReferenceToExpressService(packageId, {

@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedLiteralClient } from \"@fern/literal\";\n\nconst client = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\nawait client.inlined.send({\n    temperature: 10.1,\n    context: \"You're super wise\",\n    aliasedContext: \"You're super wise\",\n    maybeContext: \"You're super wise\",\n    objectWithLiteral: {\n        nestedLiteral: {\n            myLiteral: \"How super cool\"\n        }\n    },\n    query: \"What is the weather today\"\n});\n"
+                "client": "import { SeedLiteralClient } from \"@fern/literal\";\n\nconst client = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\nawait client.inlined.send({\n    temperature: 10.1,\n    context: \"You're super wise\",\n    maybeContext: \"You're super wise\",\n    objectWithLiteral: {\n        nestedLiteral: {\n            myLiteral: \"How super cool\"\n        }\n    },\n    query: \"What is the weather today\"\n});\n"
             }
         },
         {
@@ -41,7 +41,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedLiteralClient } from \"@fern/literal\";\n\nconst client = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\nawait client.query.send({\n    optional_prompt: \"You are a helpful assistant\",\n    alias_prompt: \"You are a helpful assistant\",\n    alias_optional_prompt: \"You are a helpful assistant\",\n    optional_stream: false,\n    alias_stream: false,\n    alias_optional_stream: false,\n    query: \"What is the weather today\"\n});\n"
+                "client": "import { SeedLiteralClient } from \"@fern/literal\";\n\nconst client = new SeedLiteralClient({ environment: \"YOUR_BASE_URL\" });\nawait client.query.send({\n    prompt: \"You are a helpful assistant\",\n    optional_prompt: \"You are a helpful assistant\",\n    alias_prompt: \"You are a helpful assistant\",\n    alias_optional_prompt: \"You are a helpful assistant\",\n    stream: false,\n    optional_stream: false,\n    alias_stream: false,\n    alias_optional_stream: false,\n    query: \"What is the weather today\"\n});\n"
             }
         },
         {

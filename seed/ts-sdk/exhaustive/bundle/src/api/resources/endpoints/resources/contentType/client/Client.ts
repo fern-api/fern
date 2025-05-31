@@ -45,7 +45,7 @@ export class ContentType {
      *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *         base64: "SGVsbG8gd29ybGQh",
      *         list: ["list", "list"],
-     *         set: new Set(["set"]),
+     *         set: ["set"],
      *         map: {
      *             1: "map"
      *         },
@@ -127,7 +127,7 @@ export class ContentType {
      *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *         base64: "SGVsbG8gd29ybGQh",
      *         list: ["list", "list"],
-     *         set: new Set(["set"]),
+     *         set: ["set"],
      *         map: {
      *             1: "map"
      *         },

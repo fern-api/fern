@@ -42,7 +42,7 @@ export class SinglePropertySingleUnionTypeGenerator<Context extends ModelContext
         return ts.factory.createTypeLiteralNode([
             ts.factory.createPropertySignature(
                 undefined,
-                this.propertyName,
+                getPropertyKey(this.propertyName),
                 hasOptionalToken ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
                 this.noOptionalProperties ? typeReference.typeNode : typeReference.typeNodeWithoutUndefined
             )
@@ -89,7 +89,7 @@ export class SinglePropertySingleUnionTypeGenerator<Context extends ModelContext
     public getNonDiscriminantPropertiesForBuilder(): ts.ObjectLiteralElementLike[] {
         return [
             ts.factory.createPropertyAssignment(
-                this.propertyName,
+                getPropertyKey(this.propertyName),
                 ts.factory.createIdentifier(SinglePropertySingleUnionTypeGenerator.BUILDER_PARAMETER_NAME)
             )
         ];

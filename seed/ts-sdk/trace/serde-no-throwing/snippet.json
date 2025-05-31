@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.sendTestSubmissionUpdate(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    updateTime: \"2024-01-15T09:30:00Z\",\n    updateInfo: {\n        type: \"running\",\n        value: \"QUEUEING_SUBMISSION\"\n    }\n});\n"
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.sendTestSubmissionUpdate(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    updateTime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    updateInfo: {\n        type: \"running\",\n        value: \"QUEUEING_SUBMISSION\"\n    }\n});\n"
             }
         },
         {
@@ -52,7 +52,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.sendWorkspaceSubmissionUpdate(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    updateTime: \"2024-01-15T09:30:00Z\",\n    updateInfo: {\n        type: \"running\",\n        value: \"QUEUEING_SUBMISSION\"\n    }\n});\n"
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.admin.sendWorkspaceSubmissionUpdate(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\", {\n    updateTime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    updateInfo: {\n        type: \"running\",\n        value: \"QUEUEING_SUBMISSION\"\n    }\n});\n"
             }
         },
         {
@@ -140,7 +140,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.playlist.createPlaylist(1, {\n    datetime: \"2024-01-15T09:30:00Z\",\n    optionalDatetime: \"2024-01-15T09:30:00Z\",\n    body: {\n        name: \"name\",\n        problems: [\"problems\", \"problems\"]\n    }\n});\n"
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.playlist.createPlaylist(1, {\n    datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    optionalDatetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    body: {\n        name: \"name\",\n        problems: [\"problems\", \"problems\"]\n    }\n});\n"
             }
         },
         {

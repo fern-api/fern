@@ -7,17 +7,19 @@ export class GeneratedGenericAPISdkErrorImpl
     extends AbstractErrorClassGenerator<SdkContext>
     implements GeneratedGenericAPISdkError
 {
-    private static STATUS_CODE_PROPERTY_NAME = "statusCode";
-    private static RESPONSE_BODY_PROPERTY_NAME = "body";
-    private static RAW_RESPONSE_PROPERTY_NAME = "rawResponse";
+    private static readonly STATUS_CODE_PROPERTY_NAME = "statusCode";
+    private static readonly RESPONSE_BODY_PROPERTY_NAME = "body";
+    private static readonly RAW_RESPONSE_PROPERTY_NAME = "rawResponse";
 
-    private static MESSAGE_CONSTRUCTOR_PARAMETER_NAME = "message";
-    private static STATUS_CODE_CONSTRUCTOR_PARAMETER_NAME = GeneratedGenericAPISdkErrorImpl.STATUS_CODE_PROPERTY_NAME;
-    private static RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME =
+    private static readonly MESSAGE_CONSTRUCTOR_PARAMETER_NAME = "message";
+    private static readonly STATUS_CODE_CONSTRUCTOR_PARAMETER_NAME =
+        GeneratedGenericAPISdkErrorImpl.STATUS_CODE_PROPERTY_NAME;
+    private static readonly RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME =
         GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_PROPERTY_NAME;
-    private static RAW_RESPONSE_CONSTRUCTOR_PARAMETER_NAME = GeneratedGenericAPISdkErrorImpl.RAW_RESPONSE_PROPERTY_NAME;
+    private static readonly RAW_RESPONSE_CONSTRUCTOR_PARAMETER_NAME =
+        GeneratedGenericAPISdkErrorImpl.RAW_RESPONSE_PROPERTY_NAME;
 
-    private static BUILD_MESSAGE_FUNCTION_NAME = "buildMessage";
+    private static readonly BUILD_MESSAGE_FUNCTION_NAME = "buildMessage";
 
     public writeToFile(context: SdkContext): void {
         super.writeToSourceFile(context);

@@ -1,3 +1,4 @@
+import { getPropertyKey } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -33,7 +34,10 @@ export abstract class AbstractKnownSingleUnionType<Context extends ModelContext>
     }): ts.ObjectLiteralElementLike[] {
         return [
             ...this.singleUnionType.getNonDiscriminantPropertiesForBuilder(context),
-            ts.factory.createPropertyAssignment(generatedUnion.discriminant, this.getDiscriminantValueAsExpression())
+            ts.factory.createPropertyAssignment(
+                getPropertyKey(generatedUnion.discriminant),
+                this.getDiscriminantValueAsExpression()
+            )
         ];
     }
 

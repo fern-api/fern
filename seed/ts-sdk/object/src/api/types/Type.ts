@@ -19,7 +19,7 @@ import * as SeedObject from "../index.js";
  *         eight: "7f71f677-e138-4a5c-bb01-e4453a19bfef",
  *         nine: "TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu",
  *         ten: [10, 10],
- *         eleven: new Set([11]),
+ *         eleven: [11],
  *         twelve: {
  *             "invalid": false,
  *             "exists": true

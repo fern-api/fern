@@ -92,18 +92,18 @@ export declare namespace GeneratedSdkClientClassImpl {
 }
 
 export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
-    private static REQUEST_OPTIONS_INTERFACE_NAME = "RequestOptions";
-    private static IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME = "IdempotentRequestOptions";
-    private static TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME = "timeoutInSeconds";
-    private static ABORT_SIGNAL_PROPERTY_NAME = "abortSignal";
-    private static MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME = "maxRetries";
-    private static CUSTOM_FETCHER_PROPERTY_NAME = "fetcher";
-    public static BASE_URL_OPTION_PROPERTY_NAME = "baseUrl";
-    public static ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
-    public static OPTIONS_INTERFACE_NAME = "Options";
-    public static OPTIONS_PRIVATE_MEMBER = "_options";
-    public static AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getAuthorizationHeader";
-    public static CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getCustomAuthorizationHeaders";
+    private static readonly REQUEST_OPTIONS_INTERFACE_NAME = "RequestOptions";
+    private static readonly IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME = "IdempotentRequestOptions";
+    private static readonly TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME = "timeoutInSeconds";
+    private static readonly ABORT_SIGNAL_PROPERTY_NAME = "abortSignal";
+    private static readonly MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME = "maxRetries";
+    private static readonly CUSTOM_FETCHER_PROPERTY_NAME = "fetcher";
+    public static readonly BASE_URL_OPTION_PROPERTY_NAME = "baseUrl";
+    public static readonly ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
+    public static readonly OPTIONS_INTERFACE_NAME = "Options";
+    public static readonly OPTIONS_PRIVATE_MEMBER = "_options";
+    public static readonly AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getAuthorizationHeader";
+    public static readonly CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getCustomAuthorizationHeaders";
 
     private isRoot: boolean;
     private intermediateRepresentation: IntermediateRepresentation;
@@ -1229,7 +1229,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         if (this.bearerAuthScheme != null) {
             properties.push(
                 ts.factory.createPropertyAssignment(
-                    this.getBearerAuthOptionKey(this.bearerAuthScheme),
+                    getPropertyKey(this.getBearerAuthOptionKey(this.bearerAuthScheme)),
                     ts.factory.createStringLiteral(`YOUR_${this.bearerAuthScheme.token.screamingSnakeCase.unsafeName}`)
                 )
             );
@@ -1238,7 +1238,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         if (this.basicAuthScheme != null) {
             properties.push(
                 ts.factory.createPropertyAssignment(
-                    this.getBasicAuthUsernameOptionKey(this.basicAuthScheme),
+                    getPropertyKey(this.getBasicAuthUsernameOptionKey(this.basicAuthScheme)),
                     ts.factory.createStringLiteral(
                         `YOUR_${this.basicAuthScheme.username.screamingSnakeCase.unsafeName}`
                     )
@@ -1246,7 +1246,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             );
             properties.push(
                 ts.factory.createPropertyAssignment(
-                    this.getBasicAuthPasswordOptionKey(this.basicAuthScheme),
+                    getPropertyKey(this.getBasicAuthPasswordOptionKey(this.basicAuthScheme)),
                     ts.factory.createStringLiteral(
                         `YOUR_${this.basicAuthScheme.password.screamingSnakeCase.unsafeName}`
                     )
@@ -1257,7 +1257,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         for (const header of this.authHeaders) {
             properties.push(
                 ts.factory.createPropertyAssignment(
-                    this.getOptionKeyForAuthHeader(header),
+                    getPropertyKey(this.getOptionKeyForAuthHeader(header)),
                     ts.factory.createStringLiteral(`YOUR_${header.name.name.screamingSnakeCase.unsafeName}`)
                 )
             );
@@ -1267,7 +1267,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             if (!isLiteralHeader(header, context)) {
                 properties.push(
                     ts.factory.createPropertyAssignment(
-                        this.getOptionKeyForHeader(header),
+                        getPropertyKey(this.getOptionKeyForHeader(header)),
                         ts.factory.createStringLiteral(`YOUR_${header.name.name.screamingSnakeCase.unsafeName}`)
                     )
                 );
@@ -1279,7 +1279,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             const header = generatedVersion.getHeader();
             properties.push(
                 ts.factory.createPropertyAssignment(
-                    this.getOptionKeyForHeader(header),
+                    getPropertyKey(this.getOptionKeyForHeader(header)),
                     ts.factory.createStringLiteral(generatedVersion.getFirstEnumValue())
                 )
             );

@@ -1,5 +1,6 @@
 import {
     GetReferenceOpts,
+    getPropertyKey,
     getTextOfTsKeyword,
     getTextOfTsNode,
     maybeAddDocsNode,
@@ -67,7 +68,7 @@ export class GeneratedBrandedStringAliasImpl<Context extends BaseContext>
                     ts.factory.createTypeLiteralNode([
                         ts.factory.createPropertySignature(
                             undefined,
-                            this.getStringBrand(),
+                            getPropertyKey(this.getStringBrand()),
                             undefined,
                             ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
                         )

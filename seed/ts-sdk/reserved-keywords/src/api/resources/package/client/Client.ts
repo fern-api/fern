@@ -34,7 +34,7 @@ export class Package {
      *
      * @example
      *     await client.package.test({
-     *         for: "for"
+     *         "for": "for"
      *     })
      */
     public test(

@@ -40,9 +40,9 @@ import { SeedExhaustiveClient } from "@fern/exhaustive";
 const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.container.getAndReturnSetOfPrimitives(
 	{
-		new Set([
+		[
 			"string"
-		])
+		]
 	}
 )
 
@@ -55,11 +55,11 @@ import { SeedExhaustiveClient } from "@fern/exhaustive";
 const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.container.getAndReturnSetOfObjects(
 	{
-		new Set([
+		[
 			{
 				string: "string"
 			}
-		])
+		]
 	}
 )
 
@@ -130,7 +130,7 @@ await client.endpoints.contentType.postJsonPatchContentType({
   uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   base64: "SGVsbG8gd29ybGQh",
   list: ["list", "list"],
-  set: new Set(["set"]),
+  set: ["set"],
   map: {
     1: "map",
   },
@@ -158,7 +158,7 @@ await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
   uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   base64: "SGVsbG8gd29ybGQh",
   list: ["list", "list"],
-  set: new Set(["set"]),
+  set: ["set"],
   map: {
     1: "map",
   },
@@ -238,7 +238,7 @@ await client.endpoints.httpMethods.testPatch("id", {
   uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   base64: "SGVsbG8gd29ybGQh",
   list: ["list", "list"],
-  set: new Set(["set"]),
+  set: ["set"],
   map: {
     1: "map",
   },
@@ -278,7 +278,7 @@ await client.endpoints.object.getAndReturnWithOptionalField({
   uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   base64: "SGVsbG8gd29ybGQh",
   list: ["list", "list"],
-  set: new Set(["set"]),
+  set: ["set"],
   map: {
     1: "map",
   },
@@ -340,7 +340,7 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base64: "SGVsbG8gd29ybGQh",
     list: ["list", "list"],
-    set: new Set(["set"]),
+    set: ["set"],
     map: {
       1: "map",
     },
@@ -371,7 +371,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base64: "SGVsbG8gd29ybGQh",
     list: ["list", "list"],
-    set: new Set(["set"]),
+    set: ["set"],
     map: {
       1: "map",
     },
@@ -709,7 +709,7 @@ await client.inlinedRequests.postWithObjectBodyandResponse({
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base64: "SGVsbG8gd29ybGQh",
     list: ["list", "list"],
-    set: new Set(["set"]),
+    set: ["set"],
     map: {
       1: "map",
     },
