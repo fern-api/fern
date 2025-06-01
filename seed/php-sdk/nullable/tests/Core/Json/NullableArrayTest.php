@@ -25,6 +25,8 @@ class NullableArray extends JsonSerializableType
     public function __construct(
         array $values,
     ) {
+        parent::__construct($values);
+
         $this->nullableStringArray = $values['nullableStringArray'];
     }
 }
