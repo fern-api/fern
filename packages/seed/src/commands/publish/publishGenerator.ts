@@ -78,6 +78,68 @@ export async function publishGenerator({
     }
 }
 
+export async function buildGenerator({
+    generator,
+    tag,
+    context
+}: {
+    generator: GeneratorWorkspace;
+    tag: string;
+    context: TaskContext;
+}): Promise<void> {
+    const generatorId = generator.workspaceName;
+    context.logger.info(`Building generator ${generatorId} with tag ${tag}...`);
+    const publishConfig = generator.workspaceConfig.publish;
+    let workingDirectory = generator.absolutePathToWorkspace;
+    if (publishConfig.workingDirectory) {
+        workingDirectory = AbsoluteFilePath.of(
+            path.join(__dirname, RelativeFilePath.of("../../.."), RelativeFilePath.of(publishConfig.workingDirectory))
+        );
+    }
+
+    // Instance of PublishDocker configuration, leverage docker CLI here
+    if ("docker" in publishConfig) {
+        const unparsedCommands = publishConfig.preBuildCommands;
+        const preBuildCommands = Array.isArray(unparsedCommands)
+            ? unparsedCommands
+            : unparsedCommands
+              ? [unparsedCommands]
+              : [];
+
+        await runCommands(preBuildCommands, context, workingDirectory);
+        await buildAndTagDockerImage(publishConfig.docker, tag, context);
+    } else {
+        // Instance of PublishCommand configuration, leverage these commands outright
+        const unparsedCommands = publishConfig.command[0];
+        context.logger.info(`cmds ${unparsedCommands}`);
+        const commands = Array.isArray(unparsedCommands) ? unparsedCommands : [unparsedCommands];
+        const versionSubstitution = publishConfig.versionSubstitution;
+        const subbedCommands = commands.map((command) => subVersion(command, tag, versionSubstitution));
+        context.logger.info(`cmds ${subbedCommands}`);
+        await runCommands(subbedCommands, context, workingDirectory);
+    }
+}
+
+async function buildAndTagDockerImage(dockerConfig: PublishDockerConfiguration, tag: string, context: TaskContext) {
+    // Build and tag the Docker image, now that you've run the pre-build commands
+    context.logger.debug(`Building Docker image ${tag}...`);
+    const standardBuildOptions = ["build", "-f", dockerConfig.file, "-t", tag, dockerConfig.context];
+    try {
+        await loggingExeca(context.logger, "docker", standardBuildOptions, { doNotPipeOutput: true });
+    } catch (e) {
+        if (e instanceof Error && e.message.includes("Multi-platform build is not supported for the docker driver")) {
+            context.logger.error(
+                "Docker cannot build multi-platform images with the current driver, trying `docker buildx`."
+            );
+            await loggingExeca(context.logger, "docker", ["buildx", ...standardBuildOptions], {
+                doNotPipeOutput: false
+            });
+            return;
+        }
+        throw e;
+    }
+}
+
 async function buildAndPushDockerImage(
     dockerConfig: PublishDockerConfiguration,
     version: string,
