@@ -1,6 +1,6 @@
 - changelogEntry:
     - summary: |
-        Add support for generating docs with no auth.
+        Add support for locally generating docs with no auth.
       type: feat
   irVersion: 58
   createdAt: "2025-06-02"
