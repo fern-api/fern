@@ -3983,8 +3983,8 @@ importers:
         specifier: 58.0.0
         version: 58.0.0(encoding@0.1.13)
       '@fern-fern/snippet-sdk':
-        specifier: ^0.0.5526
-        version: 0.0.5526(encoding@0.1.13)
+        specifier: ^0.98.20
+        version: 0.98.20(encoding@0.1.13)
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -11236,8 +11236,8 @@ packages:
   '@fern-fern/postman-sdk@0.1.1':
     resolution: {integrity: sha512-wjeVDbw6xvsBe6I/uwZ1P0ZhzjpEAyzY9M0iQXEuZoYo5wsea3SeTCrqOub3jV0WDia0PFFacfpoV0U/sD7yIQ==}
 
-  '@fern-fern/snippet-sdk@0.0.5526':
-    resolution: {integrity: sha512-YHbU5X1EEtguvlD/77eudcHV1mWyUUbhGrJw0Vcu9JU264rvuq6pOHFR1r2F1L9pPsbAx0m02QdY6b1yxSga1g==}
+  '@fern-fern/snippet-sdk@0.98.20':
+    resolution: {integrity: sha512-qHSXjKtnN3APpr9zXVFnDlnsGw1WjcoRoO+ue/4udjIOBiGOOI0IRgVjPVeDih3Ywjkyw4lKFS+hkgl4X/4Jdw==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -19421,7 +19421,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/snippet-sdk@0.0.5526(encoding@0.1.13)':
+  '@fern-fern/snippet-sdk@0.98.20(encoding@0.1.13)':
     dependencies:
       form-data: 4.0.0
       js-base64: 3.7.2
