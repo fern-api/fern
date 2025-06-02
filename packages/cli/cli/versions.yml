@@ -1,5 +1,38 @@
 - changelogEntry:
     - summary: |
+        Remove trailing slashes from base environment URLs if they are not empty.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-30"
+  version: 0.63.25
+
+- changelogEntry:
+    - summary: |
+        This fixes an error where the IR would be serialized to a string first and throw the following error: `Cannot create a string longer than 0x1fffffe8 characters`.
+        Now the IR is streamed to the file.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-30"
+  version: 0.63.24
+
+- changelogEntry:
+    - summary: |
+        Aggregate all code samples from user-specified examples when populating v2 examples.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-30"
+  version: 0.63.23
+
+- changelogEntry:
+    - summary: |
+        Support v2Examples in parsed webhooks.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-30"
+  version: 0.63.22
+
+- changelogEntry:
+    - summary: |
         `allOf` schemas that share properties with the parent schema's required properties will now be parsed as an inline `allOf` schema.
       type: fix
   irVersion: 58
@@ -3920,7 +3953,7 @@
             playground:
               oauth: true
         ```
-        [More Information](https://buildwithfern.com/learn/docs/api-references/customize-api-playground)
+        [More Information](https://buildwithfern.com/learn/docs/api-references/api-explorer)
       type: feat
   createdAt: "2024-09-07"
   irVersion: 53

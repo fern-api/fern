@@ -1,8 +1,6 @@
-import { writeFile } from "fs/promises";
-
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, RelativeFilePath, join, stringifyLargeObject } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, join, streamObjectToFile } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { createMockTaskContext } from "@fern-api/task-context";
@@ -51,8 +49,9 @@ export async function generateAndSnapshotDynamicIR({
         }
     );
 
-    await writeFile(
+    await streamObjectToFile(
         join(AbsoluteFilePath.of(absolutePathToIr), RelativeFilePath.of(`${workspaceName}.json`)),
-        await stringifyLargeObject(dynamicIntermediateRepresentationJson, { pretty: true })
+        dynamicIntermediateRepresentationJson,
+        { pretty: true }
     );
 }

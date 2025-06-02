@@ -335,6 +335,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Audio Data",
               "typeId": "type_:AudioData",
               "type": "named"
             }
@@ -364,6 +365,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Terminate Session",
               "typeId": "type_:TerminateSession",
               "type": "named"
             }
@@ -472,6 +474,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Session Begins",
               "typeId": "type_:SessionBegins",
               "type": "named"
             }
@@ -501,6 +504,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Partial Transcript",
               "typeId": "type_:PartialTranscript",
               "type": "named"
             }
@@ -530,6 +534,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Final Transcript",
               "typeId": "type_:FinalTranscript",
               "type": "named"
             }
@@ -559,6 +564,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Session Terminated",
               "typeId": "type_:SessionTerminated",
               "type": "named"
             }
@@ -588,6 +594,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Realtime Error",
               "typeId": "type_:RealtimeError",
               "type": "named"
             }
@@ -16078,6 +16085,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Session Begins",
               "typeId": "type_:SessionBegins",
               "type": "named"
             }
@@ -16107,6 +16115,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Partial Transcript",
               "typeId": "type_:PartialTranscript",
               "type": "named"
             }
@@ -16136,6 +16145,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Final Transcript",
               "typeId": "type_:FinalTranscript",
               "type": "named"
             }
@@ -16165,6 +16175,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Session Terminated",
               "typeId": "type_:SessionTerminated",
               "type": "named"
             }
@@ -16194,6 +16205,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Realtime Error",
               "typeId": "type_:RealtimeError",
               "type": "named"
             }
@@ -16563,6 +16575,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Partial Transcript",
               "typeId": "type_:PartialTranscript",
               "type": "named"
             }
@@ -16592,6 +16605,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Final Transcript",
               "typeId": "type_:FinalTranscript",
               "type": "named"
             }
