@@ -13,8 +13,8 @@ jobs:
       fail-fast: false
       matrix:
         site:
-         - name: Fern Docs
-           url: "buildwithfern.com/learn"
+        - name: Fern Docs
+          url: "buildwithfern.com/learn"
     steps:
       - name: Install link checker
         run: pip install linkchecker
