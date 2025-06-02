@@ -108,7 +108,6 @@ export function convertUndiscriminatedOneOf({
     subtypePrefixOverrides?: UndiscriminatedOneOfPrefix[];
 }): SchemaWithExample {
     const derivedSubtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
-
     const convertedSubtypes = subtypes.flatMap((schema, index) => {
         if (
             !isReferenceObject(schema) &&
@@ -136,11 +135,16 @@ export function convertUndiscriminatedOneOf({
                 subtypePrefix = override.name;
             }
         }
+
+        if (!isReferenceObject(schema)) {
+            // @ts-expect-error const is not in OpenAPI spec but sometimes appears
+            schema.default = Object.keys(schema).includes("const") ? schema.const : schema.default;
+        }
+
         return [
             convertSchema(schema, false, context, [...breadcrumbs, subtypePrefix ?? `${index}`], source, namespace)
         ];
     });
-
     const uniqueSubtypes = deduplicateSubtypes(convertedSubtypes);
     return processSubtypes({
         uniqueSubtypes,
@@ -165,7 +169,7 @@ function deduplicateSubtypes(subtypes: SchemaWithExample[]): SchemaWithExample[]
         let isDuplicate = false;
         for (let j = i + 1; j < subtypes.length; ++j) {
             const b = subtypes[j];
-            if (a != null && b != null && isSchemaEqual(a, b)) {
+            if (a != null && b != null && isSchemaEqual(a, b, true)) {
                 isDuplicate = true;
                 break;
             }
@@ -204,17 +208,32 @@ function processSubtypes({
     encoding: Encoding | undefined;
     source: Source;
 }): SchemaWithExample {
-    const everySubTypeIsLiteral = Object.entries(uniqueSubtypes).every(([_, schema]) => {
-        return schema.type === "literal";
+    const everySubTypeIsLiteralOrPrimitiveConst = uniqueSubtypes.every((schema) => {
+        return (
+            schema.type === "literal" ||
+            (schema.type === "primitive" && "default" in schema.schema && schema.schema.default != null)
+        );
     });
-    if (everySubTypeIsLiteral) {
+
+    if (everySubTypeIsLiteralOrPrimitiveConst) {
         const enumDescriptions: Record<string, { description: string }> = {};
         const enumValues: string[] = [];
+        const enumVarNames: string[] = [];
         Object.entries(uniqueSubtypes).forEach(([_, schema]) => {
             if (schema.type === "literal" && schema.value.type === "string") {
                 enumValues.push(schema.value.value);
                 if (schema.description != null) {
                     enumDescriptions[schema.value.value] = {
+                        description: schema.description
+                    };
+                }
+            } else if (schema.type === "primitive" && "default" in schema.schema && schema.schema.default != null) {
+                if (schema.title != null) {
+                    enumVarNames.push(schema.title);
+                }
+                enumValues.push(schema.schema.default.toString());
+                if (schema.description != null) {
+                    enumDescriptions[schema.title ?? schema.schema.default.toString()] = {
                         description: schema.description
                     };
                 }
@@ -228,7 +247,7 @@ function processSubtypes({
             description,
             availability,
             fernEnum: enumDescriptions,
-            enumVarNames: undefined,
+            enumVarNames: enumVarNames.length > 0 ? enumVarNames : undefined,
             enumValues,
             _default: undefined,
             namespace,
