@@ -91,6 +91,7 @@ export async function runAppPreviewServer({
         } catch (err) {
             if (err instanceof Error) {
                 context.logger.debug(`Failed to download latest docs bundle: ${(err as Error).message}`);
+                context.logger.error("Failed to unzip .tar.gz bundle. Please report to support@buildwithfern.com");
             }
 
             context.logger.debug("Falling back to .zip bundle");
