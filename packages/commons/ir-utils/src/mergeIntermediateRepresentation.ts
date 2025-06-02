@@ -19,7 +19,11 @@ export function mergeIntermediateRepresentation(
         selfHosted: ir1.selfHosted && ir2.selfHosted,
         apiDisplayName: ir1.apiDisplayName ?? ir2.apiDisplayName,
         apiDocs: ir1.apiDocs ?? ir2.apiDocs,
-        auth: ir1.auth ?? ir2.auth,
+        auth: {
+            requirement: ir1.auth?.requirement ?? ir2.auth?.requirement ?? "ALL",
+            schemes: [...(ir1.auth?.schemes ?? []), ...(ir2.auth?.schemes ?? [])],
+            docs: ir1.auth?.docs ?? ir2.auth?.docs
+        },
         headers: [...(ir1.headers ?? []), ...(ir2.headers ?? [])],
         environments,
         types: {
