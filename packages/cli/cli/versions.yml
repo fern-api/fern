@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Add support for generating docs with no auth.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-02"
+  version: 0.63.26
+
+- changelogEntry:
+    - summary: |
         Remove trailing slashes from base environment URLs if they are not empty.
       type: fix
   irVersion: 58
