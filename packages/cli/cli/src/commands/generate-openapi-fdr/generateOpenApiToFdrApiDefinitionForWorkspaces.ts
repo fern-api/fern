@@ -1,9 +1,8 @@
-import { writeFile } from "fs/promises";
 import path from "path";
 
 import { Audiences } from "@fern-api/configuration";
 import { generateFdrFromOpenApiWorkspace, generateFdrFromOpenApiWorkspaceV3 } from "@fern-api/docs-resolver";
-import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 
 import { CliContext } from "../../cli-context/CliContext";
@@ -28,8 +27,8 @@ export async function generateOpenApiToFdrApiDefinitionForWorkspaces({
                     ? await generateFdrFromOpenApiWorkspaceV3(workspace, context, audiences)
                     : await generateFdrFromOpenApiWorkspace(workspace, context);
 
-                const resolvedOutputFilePath = path.resolve(outputFilepath);
-                await writeFile(resolvedOutputFilePath, await stringifyLargeObject(fdrApiDefinition, { pretty: true }));
+                const resolvedOutputFilePath = AbsoluteFilePath.of(path.resolve(outputFilepath));
+                await streamObjectToFile(resolvedOutputFilePath, fdrApiDefinition, { pretty: true });
                 context.logger.info(`Wrote FDR API definition to ${resolvedOutputFilePath}`);
             });
         })

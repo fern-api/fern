@@ -62102,7 +62102,7 @@
               "safeName": "HttpsInkMainnetGAlchemyComV2"
             }
           },
-          "url": "https://ink-mainnet.g.alchemy.com/v2/"
+          "url": "https://ink-mainnet.g.alchemy.com/v2"
         },
         {
           "id": "https://ink-sepolia.g.alchemy.com/v2/",
@@ -62125,7 +62125,7 @@
               "safeName": "HttpsInkSepoliaGAlchemyComV2"
             }
           },
-          "url": "https://ink-sepolia.g.alchemy.com/v2/"
+          "url": "https://ink-sepolia.g.alchemy.com/v2"
         }
       ],
       "type": "singleBaseUrl"

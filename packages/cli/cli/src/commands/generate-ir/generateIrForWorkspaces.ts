@@ -1,9 +1,8 @@
-import { writeFile } from "fs/promises";
 import path from "path";
 
 import { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
 import { Audiences, generatorsYml } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-migrations";
 import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
@@ -56,9 +55,8 @@ export async function generateIrForWorkspaces({
                     directFromOpenapi
                 });
 
-                const irOutputFilePath = path.resolve(irFilepath);
-                const prettyIR = await stringifyLargeObject(intermediateRepresentation, { pretty: true });
-                await writeFile(irOutputFilePath, prettyIR);
+                const irOutputFilePath = AbsoluteFilePath.of(path.resolve(irFilepath));
+                await streamObjectToFile(irOutputFilePath, intermediateRepresentation, { pretty: true });
                 context.logger.info(`Wrote IR to ${irOutputFilePath}`);
             });
         })

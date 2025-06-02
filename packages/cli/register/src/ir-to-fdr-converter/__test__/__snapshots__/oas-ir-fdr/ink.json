@@ -8558,11 +8558,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_blockNumber",
@@ -8635,11 +8635,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_call",
@@ -8759,11 +8759,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_chainId",
@@ -8836,11 +8836,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_estimateGas",
@@ -8960,11 +8960,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_gasPrice",
@@ -9037,11 +9037,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getBalance",
@@ -9155,11 +9155,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getBlockByHash",
@@ -9349,11 +9349,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getBlockByNumber",
@@ -9540,11 +9540,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getBlockTransactionCountByHash",
@@ -9651,11 +9651,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getBlockTransactionCountByNumber",
@@ -9759,11 +9759,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getCode",
@@ -9877,11 +9877,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getLogs",
@@ -10043,11 +10043,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getProof",
@@ -10214,11 +10214,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getStorageAt",
@@ -10345,11 +10345,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getTransactionByBlockHashAndIndex",
@@ -10498,11 +10498,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getTransactionByBlockNumberAndIndex",
@@ -10648,11 +10648,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getTransactionByHash",
@@ -10788,11 +10788,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getTransactionCount",
@@ -10906,11 +10906,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_getTransactionReceipt",
@@ -11045,11 +11045,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_sendRawTransaction",
@@ -11153,11 +11153,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "eth_syncing",
@@ -11246,11 +11246,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "net_version",
@@ -11322,11 +11322,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "web3_clientVersion",
@@ -11398,11 +11398,11 @@
         "environments": [
           {
             "id": "https://ink-mainnet.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-mainnet.g.alchemy.com/v2"
           },
           {
             "id": "https://ink-sepolia.g.alchemy.com/v2/",
-            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2/"
+            "baseUrl": "https://ink-sepolia.g.alchemy.com/v2"
           }
         ],
         "id": "web3_sha3",
