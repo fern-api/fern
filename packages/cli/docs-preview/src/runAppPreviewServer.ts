@@ -75,22 +75,46 @@ export async function runAppPreviewServer({
         context.logger.info(`Using bundle from path: ${bundlePath}`);
     } else {
         try {
-            const url = process.env.APP_DOCS_PREVIEW_BUCKET;
+            const url = process.env.APP_DOCS_TAR_PREVIEW_BUCKET;
             if (url == null) {
                 throw new Error(
                     "Failed to connect to the docs preview server. Please contact support@buildwithfern.com"
                 );
             }
-            await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true, app: true });
+            await downloadBundle({
+                bucketUrl: url,
+                logger: context.logger,
+                preferCached: true,
+                app: true,
+                tryTar: true
+            });
         } catch (err) {
             if (err instanceof Error) {
                 context.logger.debug(`Failed to download latest docs bundle: ${(err as Error).message}`);
             }
-            if (await doesPathExist(getPathToBundleFolder({ app: true }))) {
-                context.logger.warn("Falling back to cached bundle...");
-            } else {
-                context.logger.warn("Please reach out to support@buildwithfern.com.");
-                return;
+
+            context.logger.debug("Falling back to .zip bundle");
+            try {
+                const url = process.env.APP_DOCS_PREVIEW_BUCKET;
+                if (url == null) {
+                    throw new Error(
+                        "Failed to connect to the docs preview server. Please contact support@buildwithfern.com"
+                    );
+                }
+                await downloadBundle({
+                    bucketUrl: url,
+                    logger: context.logger,
+                    preferCached: true,
+                    app: true,
+                    tryTar: false
+                });
+            } catch (err) {
+                if (await doesPathExist(getPathToBundleFolder({ app: true }))) {
+                    context.logger.warn("Falling back to cached bundle...");
+                } else {
+                    context.logger.warn("Please reach out to support@buildwithfern.com.");
+                    return;
+                }
             }
         }
     }
