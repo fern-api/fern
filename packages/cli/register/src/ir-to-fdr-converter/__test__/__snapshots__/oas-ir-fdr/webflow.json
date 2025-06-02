@@ -49406,7 +49406,34 @@
               ]
             }
           },
-          "examples": []
+          "examples": [
+            {
+              "name": "formsFormSubmissionExample",
+              "payload": {
+                "triggerType": "form_submission",
+                "payload": {
+                  "name": "Contact Us",
+                  "siteId": "65427cf400e02b306eaa049c",
+                  "data": {
+                    "First Name": "Zaphod",
+                    "Last Name": "Beeblebrox",
+                    "email": "zaphod@heartofgold.ai",
+                    "Phone Number": 15550000000
+                  },
+                  "schema": [
+                    null,
+                    null,
+                    null,
+                    null
+                  ],
+                  "submittedAt": "2022-09-14T12:35:16.117Z",
+                  "id": "6321ca84df3949bfc6752327",
+                  "formId": "65429eadebe8a9f3a30f62d0",
+                  "formElementId": "4e038d2c-6a1e-4953-7be9-a59a2b453177"
+                }
+              }
+            }
+          ]
         }
       ],
       "websockets": [],
@@ -50379,7 +50406,22 @@
               ]
             }
           },
-          "examples": []
+          "examples": [
+            {
+              "name": "sitesSitePublishExample",
+              "payload": {
+                "triggerType": "site_publish",
+                "payload": {
+                  "domains": [
+                    "my-website.webflow.io"
+                  ],
+                  "publishedBy": {
+                    "displayName": "Zaphod BeebleBrox"
+                  }
+                }
+              }
+            }
+          ]
         }
       ],
       "websockets": [],
@@ -55014,7 +55056,220 @@
               ]
             }
           },
-          "examples": []
+          "examples": [
+            {
+              "name": "ordersEcommNewOrderExample",
+              "payload": {
+                "status": "refunded",
+                "comment": "Customer requested gift wrapping and a personalized note saying: Happy Birthday, Ford! 🎉 Please ensure the item is packed with extra bubble wrap for safe transit.",
+                "orderComment": "Please gift wrap with a personal note saying \"Happy Birthday, Ford! 🎉",
+                "acceptedOn": "2024-03-29T21:29:21.555Z",
+                "fulfilledOn": "2024-03-29T21:29:21.555Z",
+                "refundedOn": "2024-04-08T18:25:04.238Z",
+                "disputedOn": "2024-03-29T21:29:21.555Z",
+                "disputeUpdatedOn": "2024-03-29T21:29:21.555Z",
+                "disputeLastStatus": "charge_refunded",
+                "customerPaid": {
+                  "unit": "USD",
+                  "value": "11873",
+                  "string": "$ 118.73 USD"
+                },
+                "netAmount": {
+                  "unit": "USD",
+                  "value": "11262",
+                  "string": "$ 112.62 USD"
+                },
+                "applicationFee": {
+                  "unit": "USD",
+                  "value": "237",
+                  "string": "$ 2.37 USD"
+                },
+                "allAddresses": [
+                  {
+                    "type": "billing",
+                    "addressee": "Arthur Dent",
+                    "line1": "20 W 34th St",
+                    "line2": "Empire State Building",
+                    "city": "New York",
+                    "state": "New York",
+                    "country": "US",
+                    "postalCode": "10118"
+                  },
+                  {
+                    "type": "shipping",
+                    "addressee": "Arthur Dent",
+                    "line1": "20 W 34th St",
+                    "line2": "Empire State Building",
+                    "city": "New York",
+                    "state": "New York",
+                    "country": "US",
+                    "postalCode": "10118"
+                  }
+                ],
+                "shippingAddress": {
+                  "type": "shipping",
+                  "japanType": "kanji",
+                  "addressee": "Arthur Dent",
+                  "line1": "20 W 34th St",
+                  "line2": "Empire State Building",
+                  "city": "New York",
+                  "state": "New York",
+                  "country": "US",
+                  "postalCode": "10118"
+                },
+                "billingAddress": {
+                  "type": "billing",
+                  "addressee": "Arthur Dent",
+                  "line1": "20 W 34th St",
+                  "line2": "Empire State Building",
+                  "city": "New York",
+                  "state": "New York",
+                  "country": "US",
+                  "postalCode": "10118"
+                },
+                "shippingProvider": "Shipping Company, Co.",
+                "shippingTracking": "tr00000000001",
+                "shippingTrackingURL": "https://www.shippingcompany.com/tracking/tr00000000001",
+                "customerInfo": {
+                  "fullName": "Arthur Dent",
+                  "email": "arthur.dent@example.com"
+                },
+                "purchasedItems": [
+                  {
+                    "count": 1,
+                    "rowTotal": {
+                      "unit": "USD",
+                      "value": "5561",
+                      "string": "$ 55.61 USD"
+                    },
+                    "productName": "Luxurious Fresh Ball",
+                    "productSlug": "luxurious-fresh-ball",
+                    "variantId": "66072fb71b89448912e2683f",
+                    "variantName": "Luxurious Fresh Ball Generic: Bronze, Practical: Plastic",
+                    "variantSlug": "luxurious-fresh-ball-generic-bronze-practical-plastic",
+                    "variantSKU": "luxurious-fresh-ball-generic-bronze-practical-plastic",
+                    "variantImage": {
+                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg"
+                    },
+                    "variantPrice": {
+                      "unit": "USD",
+                      "value": "5561",
+                      "string": "$ 55.61 USD"
+                    },
+                    "weight": 11,
+                    "width": 82,
+                    "height": 70,
+                    "length": 9
+                  },
+                  {
+                    "count": 1,
+                    "rowTotal": {
+                      "unit": "USD",
+                      "value": "5344",
+                      "string": "$ 53.44 USD"
+                    },
+                    "productName": "Recycled Steel Gloves",
+                    "productSlug": "recycled-steel-gloves",
+                    "variantId": "66072fb91b89448912e26ab9",
+                    "variantName": "Recycled Steel Gloves Electronic: Granite, Handcrafted: grey",
+                    "variantSlug": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
+                    "variantSKU": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
+                    "variantImage": {
+                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg"
+                    },
+                    "variantPrice": {
+                      "unit": "USD",
+                      "value": "5344",
+                      "string": "$ 53.44 USD"
+                    },
+                    "weight": 38,
+                    "width": 76,
+                    "height": 85,
+                    "length": 40
+                  }
+                ],
+                "purchasedItemsCount": 2,
+                "stripeDetails": {
+                  "subscriptionId": null,
+                  "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
+                  "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
+                  "customerId": "cus_PpRsNHwWdUoRKR",
+                  "chargeId": "ch_3OzmzDJYFi4lcbXW1ndkkrH2",
+                  "disputeId": null,
+                  "refundId": "re_3OzmzDJYFi4lcbXW1kFAmlBk",
+                  "refundReason": "fraudulent"
+                },
+                "stripeCard": {
+                  "last4": "4242",
+                  "brand": "Visa",
+                  "ownerName": "Arthur Dent",
+                  "expires": {
+                    "year": 2024,
+                    "month": 4
+                  }
+                },
+                "customData": [
+                  {}
+                ],
+                "metadata": {
+                  "isBuyNow": false
+                },
+                "isCustomerDeleted": false,
+                "isShippingRequired": true,
+                "totals": {
+                  "subtotal": {
+                    "unit": "USD",
+                    "value": "10905",
+                    "string": "$ 109.05 USD"
+                  },
+                  "extras": [
+                    {
+                      "type": "tax",
+                      "name": "State Taxes",
+                      "description": "NY Taxes (4.00%)",
+                      "price": {
+                        "unit": "USD",
+                        "value": "436",
+                        "string": "$ 4.36 USD"
+                      }
+                    },
+                    {
+                      "type": "tax",
+                      "name": "City Taxes",
+                      "description": "NEW YORK Taxes (4.88%)",
+                      "price": {
+                        "unit": "USD",
+                        "value": "532",
+                        "string": "$ 5.32 USD"
+                      }
+                    },
+                    {
+                      "type": "shipping",
+                      "name": "Flat",
+                      "description": "",
+                      "price": {
+                        "unit": "USD",
+                        "value": "0",
+                        "string": "$ 0.00 USD"
+                      }
+                    }
+                  ],
+                  "total": {
+                    "unit": "USD",
+                    "value": "11873",
+                    "string": "$ 118.73 USD"
+                  }
+                },
+                "downloadFiles": [
+                  {
+                    "id": "5e9a5eba75e0ac242e1b6f64",
+                    "name": "New product guide",
+                    "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa"
+                  }
+                ]
+              }
+            }
+          ]
         },
         {
           "id": "ecomm_order_changed",
@@ -55467,7 +55722,220 @@
               ]
             }
           },
-          "examples": []
+          "examples": [
+            {
+              "name": "ordersEcommOrderChangedExample",
+              "payload": {
+                "status": "refunded",
+                "comment": "Customer requested gift wrapping and a personalized note saying: Happy Birthday, Ford! 🎉 Please ensure the item is packed with extra bubble wrap for safe transit.",
+                "orderComment": "Please gift wrap with a personal note saying \"Happy Birthday, Ford! 🎉",
+                "acceptedOn": "2024-03-29T21:29:21.555Z",
+                "fulfilledOn": "2024-03-29T21:29:21.555Z",
+                "refundedOn": "2024-04-08T18:25:04.238Z",
+                "disputedOn": "2024-03-29T21:29:21.555Z",
+                "disputeUpdatedOn": "2024-03-29T21:29:21.555Z",
+                "disputeLastStatus": "charge_refunded",
+                "customerPaid": {
+                  "unit": "USD",
+                  "value": "11873",
+                  "string": "$ 118.73 USD"
+                },
+                "netAmount": {
+                  "unit": "USD",
+                  "value": "11262",
+                  "string": "$ 112.62 USD"
+                },
+                "applicationFee": {
+                  "unit": "USD",
+                  "value": "237",
+                  "string": "$ 2.37 USD"
+                },
+                "allAddresses": [
+                  {
+                    "type": "billing",
+                    "addressee": "Arthur Dent",
+                    "line1": "20 W 34th St",
+                    "line2": "Empire State Building",
+                    "city": "New York",
+                    "state": "New York",
+                    "country": "US",
+                    "postalCode": "10118"
+                  },
+                  {
+                    "type": "shipping",
+                    "addressee": "Arthur Dent",
+                    "line1": "20 W 34th St",
+                    "line2": "Empire State Building",
+                    "city": "New York",
+                    "state": "New York",
+                    "country": "US",
+                    "postalCode": "10118"
+                  }
+                ],
+                "shippingAddress": {
+                  "type": "shipping",
+                  "japanType": "kanji",
+                  "addressee": "Arthur Dent",
+                  "line1": "20 W 34th St",
+                  "line2": "Empire State Building",
+                  "city": "New York",
+                  "state": "New York",
+                  "country": "US",
+                  "postalCode": "10118"
+                },
+                "billingAddress": {
+                  "type": "billing",
+                  "addressee": "Arthur Dent",
+                  "line1": "20 W 34th St",
+                  "line2": "Empire State Building",
+                  "city": "New York",
+                  "state": "New York",
+                  "country": "US",
+                  "postalCode": "10118"
+                },
+                "shippingProvider": "Shipping Company, Co.",
+                "shippingTracking": "tr00000000001",
+                "shippingTrackingURL": "https://www.shippingcompany.com/tracking/tr00000000001",
+                "customerInfo": {
+                  "fullName": "Arthur Dent",
+                  "email": "arthur.dent@example.com"
+                },
+                "purchasedItems": [
+                  {
+                    "count": 1,
+                    "rowTotal": {
+                      "unit": "USD",
+                      "value": "5561",
+                      "string": "$ 55.61 USD"
+                    },
+                    "productName": "Luxurious Fresh Ball",
+                    "productSlug": "luxurious-fresh-ball",
+                    "variantId": "66072fb71b89448912e2683f",
+                    "variantName": "Luxurious Fresh Ball Generic: Bronze, Practical: Plastic",
+                    "variantSlug": "luxurious-fresh-ball-generic-bronze-practical-plastic",
+                    "variantSKU": "luxurious-fresh-ball-generic-bronze-practical-plastic",
+                    "variantImage": {
+                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2672c_image14.jpeg"
+                    },
+                    "variantPrice": {
+                      "unit": "USD",
+                      "value": "5561",
+                      "string": "$ 55.61 USD"
+                    },
+                    "weight": 11,
+                    "width": 82,
+                    "height": 70,
+                    "length": 9
+                  },
+                  {
+                    "count": 1,
+                    "rowTotal": {
+                      "unit": "USD",
+                      "value": "5344",
+                      "string": "$ 53.44 USD"
+                    },
+                    "productName": "Recycled Steel Gloves",
+                    "productSlug": "recycled-steel-gloves",
+                    "variantId": "66072fb91b89448912e26ab9",
+                    "variantName": "Recycled Steel Gloves Electronic: Granite, Handcrafted: grey",
+                    "variantSlug": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
+                    "variantSKU": "recycled-steel-gloves-electronic-granite-handcrafted-grey",
+                    "variantImage": {
+                      "url": "https://d1otoma47x30pg.cloudfront.net/66072f39417a2a35b2589cc7/66072fb51b89448912e2671e_image2.jpeg"
+                    },
+                    "variantPrice": {
+                      "unit": "USD",
+                      "value": "5344",
+                      "string": "$ 53.44 USD"
+                    },
+                    "weight": 38,
+                    "width": 76,
+                    "height": 85,
+                    "length": 40
+                  }
+                ],
+                "purchasedItemsCount": 2,
+                "stripeDetails": {
+                  "subscriptionId": null,
+                  "paymentMethod": "pm_1OzmzBJYFi4lcbXWHKNdXU7j",
+                  "paymentIntentId": "pi_3OzmzDJYFi4lcbXW1hTBW6ft",
+                  "customerId": "cus_PpRsNHwWdUoRKR",
+                  "chargeId": "ch_3OzmzDJYFi4lcbXW1ndkkrH2",
+                  "disputeId": null,
+                  "refundId": "re_3OzmzDJYFi4lcbXW1kFAmlBk",
+                  "refundReason": "fraudulent"
+                },
+                "stripeCard": {
+                  "last4": "4242",
+                  "brand": "Visa",
+                  "ownerName": "Arthur Dent",
+                  "expires": {
+                    "year": 2024,
+                    "month": 4
+                  }
+                },
+                "customData": [
+                  {}
+                ],
+                "metadata": {
+                  "isBuyNow": false
+                },
+                "isCustomerDeleted": false,
+                "isShippingRequired": true,
+                "totals": {
+                  "subtotal": {
+                    "unit": "USD",
+                    "value": "10905",
+                    "string": "$ 109.05 USD"
+                  },
+                  "extras": [
+                    {
+                      "type": "tax",
+                      "name": "State Taxes",
+                      "description": "NY Taxes (4.00%)",
+                      "price": {
+                        "unit": "USD",
+                        "value": "436",
+                        "string": "$ 4.36 USD"
+                      }
+                    },
+                    {
+                      "type": "tax",
+                      "name": "City Taxes",
+                      "description": "NEW YORK Taxes (4.88%)",
+                      "price": {
+                        "unit": "USD",
+                        "value": "532",
+                        "string": "$ 5.32 USD"
+                      }
+                    },
+                    {
+                      "type": "shipping",
+                      "name": "Flat",
+                      "description": "",
+                      "price": {
+                        "unit": "USD",
+                        "value": "0",
+                        "string": "$ 0.00 USD"
+                      }
+                    }
+                  ],
+                  "total": {
+                    "unit": "USD",
+                    "value": "11873",
+                    "string": "$ 118.73 USD"
+                  }
+                },
+                "downloadFiles": [
+                  {
+                    "id": "5e9a5eba75e0ac242e1b6f64",
+                    "name": "New product guide",
+                    "url": "https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa"
+                  }
+                ]
+              }
+            }
+          ]
         }
       ],
       "websockets": [],
@@ -55986,7 +56454,12 @@
               ]
             }
           },
-          "examples": []
+          "examples": [
+            {
+              "name": "inventoryEcommInventoryChangedExample",
+              "payload": {}
+            }
+          ]
         }
       ],
       "websockets": [],
@@ -57287,7 +57760,12 @@
               ]
             }
           },
-          "examples": []
+          "examples": [
+            {
+              "name": "usersUserAccountAddedExample",
+              "payload": {}
+            }
+          ]
         },
         {
           "id": "user_account_updated",
@@ -57325,7 +57803,12 @@
               ]
             }
           },
-          "examples": []
+          "examples": [
+            {
+              "name": "usersUserAccountUpdatedExample",
+              "payload": {}
+            }
+          ]
         },
         {
           "id": "user_account_deleted",
@@ -57363,7 +57846,12 @@
               ]
             }
           },
-          "examples": []
+          "examples": [
+            {
+              "name": "usersUserAccountDeletedExample",
+              "payload": {}
+            }
+          ]
         }
       ],
       "websockets": [],
@@ -57492,7 +57980,20 @@
               ]
             }
           },
-          "examples": []
+          "examples": [
+            {
+              "name": "itemsCollectionItemCreatedExample",
+              "payload": {
+                "cmsLocaleId": "653ad57de882f528b32e810e",
+                "isArchived": false,
+                "isDraft": false,
+                "fieldData": {
+                  "name": "Pan Galactic Gargle Blaster Recipe",
+                  "slug": "pan-galactic-gargle-blaster"
+                }
+              }
+            }
+          ]
         },
         {
           "id": "collection_item_changed",
@@ -57611,7 +58112,20 @@
               ]
             }
           },
-          "examples": []
+          "examples": [
+            {
+              "name": "itemsCollectionItemChangedExample",
+              "payload": {
+                "cmsLocaleId": "653ad57de882f528b32e810e",
+                "isArchived": false,
+                "isDraft": false,
+                "fieldData": {
+                  "name": "Pan Galactic Gargle Blaster Recipe",
+                  "slug": "pan-galactic-gargle-blaster"
+                }
+              }
+            }
+          ]
         },
         {
           "id": "collection_item_deleted",
@@ -57651,7 +58165,20 @@
               ]
             }
           },
-          "examples": []
+          "examples": [
+            {
+              "name": "itemsCollectionItemDeletedExample",
+              "payload": {
+                "triggerType": "collection_item_deleted,",
+                "payload": {
+                  "id": "66424365e972c886137a1cf1",
+                  "siteId": "65427cf400e02b306eaa049c",
+                  "workspaceId": "625860a7a6c16d624927122f",
+                  "collectionId": "664243617fcc8b464b23c4ee"
+                }
+              }
+            }
+          ]
         },
         {
           "id": "collection_item_unpublished",
@@ -57691,7 +58218,20 @@
               ]
             }
           },
-          "examples": []
+          "examples": [
+            {
+              "name": "itemsCollectionItemUnpublishedExample",
+              "payload": {
+                "triggerType": "collection_item_deleted,",
+                "payload": {
+                  "id": "66424365e972c886137a1cf1",
+                  "siteId": "65427cf400e02b306eaa049c",
+                  "workspaceId": "625860a7a6c16d624927122f",
+                  "collectionId": "664243617fcc8b464b23c4ee"
+                }
+              }
+            }
+          ]
         }
       ],
       "websockets": [],
@@ -59207,7 +59747,20 @@
               ]
             }
           },
-          "examples": []
+          "examples": [
+            {
+              "name": "pagesPageCreatedExample",
+              "payload": {
+                "triggerType": "page_created",
+                "payload": {
+                  "siteId": "65427cf400e02b306eaa049c",
+                  "pageId": "66a3cfb276641574f5d58311",
+                  "pageTitle": "Heart of Gold Specs",
+                  "createdOn": "2024-07-26T16:32:50.903Z"
+                }
+              }
+            }
+          ]
         },
         {
           "id": "page_metadata_updated",
@@ -59247,7 +59800,20 @@
               ]
             }
           },
-          "examples": []
+          "examples": [
+            {
+              "name": "pagesPageMetadataUpdatedExample",
+              "payload": {
+                "triggerType": "page_metadata_updated",
+                "payload": {
+                  "siteId": "65427cf400e02b306eaa049c",
+                  "pageId": "66a3cfb276641574f5d58311",
+                  "pageTitle": "Heart of Gold Specs",
+                  "lastUpdated": "2024-07-26T16:32:50.903Z"
+                }
+              }
+            }
+          ]
         },
         {
           "id": "page_deleted",
@@ -59287,7 +59853,20 @@
               ]
             }
           },
-          "examples": []
+          "examples": [
+            {
+              "name": "pagesPageDeletedExample",
+              "payload": {
+                "triggerType": "page_deleted",
+                "payload": {
+                  "siteId": "65427cf400e02b306eaa049c",
+                  "pageId": "66a3cfb276641574f5d58311",
+                  "pageTitle": "Heart of Gold Specs",
+                  "deletedOn": "2024-07-26T16:32:50.903Z"
+                }
+              }
+            }
+          ]
         }
       ],
       "websockets": [],

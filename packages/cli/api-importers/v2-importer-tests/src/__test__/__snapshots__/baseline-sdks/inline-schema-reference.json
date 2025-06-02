@@ -253,6 +253,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Not Found",
               "typeId": "type_:NotFound",
               "type": "named"
             }
@@ -282,6 +283,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Schema1",
               "typeId": "type_:Schema1",
               "type": "named"
             }
@@ -311,6 +313,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Schema2",
               "typeId": "type_:Schema2",
               "type": "named"
             }
@@ -340,6 +343,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Get Example Response Message",
               "typeId": "type_:GetExampleResponseMessage",
               "type": "named"
             }
