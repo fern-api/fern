@@ -3,4 +3,5 @@
 # isort: skip_file
 
 from .types import NestedUser, User
+
 __all__ = ["NestedUser", "User"]
