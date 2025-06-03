@@ -233,7 +233,7 @@ function processSubtypes({
                 }
                 enumValues.push(schema.schema.default.toString());
                 if (schema.description != null) {
-                    enumDescriptions[schema.title ?? schema.schema.default.toString()] = {
+                    enumDescriptions[schema.schema.default.toString()] = {
                         description: schema.description
                     };
                 }
