@@ -108,6 +108,7 @@ export function convertUndiscriminatedOneOf({
     subtypePrefixOverrides?: UndiscriminatedOneOfPrefix[];
 }): SchemaWithExample {
     const derivedSubtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
+    const isInlineNumberOrStringEnum = subtypes.every((schema) => isInlineNumberOrStringEnumSubtype(schema));
     const convertedSubtypes = subtypes.flatMap((schema, index) => {
         if (
             !isReferenceObject(schema) &&
@@ -127,6 +128,25 @@ export function convertUndiscriminatedOneOf({
                     availability: enumValue.availability
                 });
             });
+        } else if (isInlineNumberOrStringEnum) {
+            const enumOptionSchema = schema as InlineNumberOrStringEnumSubtype;
+            const enumValueTitle = enumOptionSchema.title;
+            const enumValue = enumOptionSchema.const;
+            return [
+                SchemaWithExample.literal({
+                    nameOverride: undefined,
+                    generatedName: getGeneratedTypeName(
+                        [generatedName, enumValue.toString()],
+                        context.options.preserveSchemaIds
+                    ),
+                    title: enumValueTitle,
+                    value: LiteralSchemaValue.string(String(enumValue)),
+                    namespace,
+                    groupName: undefined,
+                    description: enumOptionSchema.description,
+                    availability: undefined
+                })
+            ];
         }
         let subtypePrefix = derivedSubtypePrefixes[index];
         if (subtypePrefixOverrides != null) {
@@ -136,15 +156,11 @@ export function convertUndiscriminatedOneOf({
             }
         }
 
-        if (!isReferenceObject(schema)) {
-            // @ts-expect-error const is not in OpenAPI spec but sometimes appears
-            schema.default = Object.keys(schema).includes("const") ? schema.const : schema.default;
-        }
-
         return [
             convertSchema(schema, false, context, [...breadcrumbs, subtypePrefix ?? `${index}`], source, namespace)
         ];
     });
+
     const uniqueSubtypes = deduplicateSubtypes(convertedSubtypes);
     return processSubtypes({
         uniqueSubtypes,
@@ -181,6 +197,24 @@ function deduplicateSubtypes(subtypes: SchemaWithExample[]): SchemaWithExample[]
     return uniqueSubtypes;
 }
 
+type InlineNumberOrStringEnumSubtype = {
+    type: "string" | "number" | "integer";
+    const: string | number;
+    description?: string;
+    title?: string;
+};
+
+function isInlineNumberOrStringEnumSubtype(
+    schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
+): schema is InlineNumberOrStringEnumSubtype {
+    return (
+        !isReferenceObject(schema) &&
+        (schema.type === "string" || schema.type === "number" || schema.type === "integer") &&
+        Object.prototype.hasOwnProperty.call(schema, "const") &&
+        (schema as any).const != null
+    );
+}
+
 function processSubtypes({
     uniqueSubtypes,
     nameOverride,
@@ -209,10 +243,7 @@ function processSubtypes({
     source: Source;
 }): SchemaWithExample {
     const everySubTypeIsLiteralOrPrimitiveConst = uniqueSubtypes.every((schema) => {
-        return (
-            schema.type === "literal" ||
-            (schema.type === "primitive" && "default" in schema.schema && schema.schema.default != null)
-        );
+        return schema.type === "literal";
     });
 
     if (everySubTypeIsLiteralOrPrimitiveConst) {
@@ -221,19 +252,12 @@ function processSubtypes({
         const enumVarNames: string[] = [];
         Object.entries(uniqueSubtypes).forEach(([_, schema]) => {
             if (schema.type === "literal" && schema.value.type === "string") {
-                enumValues.push(schema.value.value);
-                if (schema.description != null) {
-                    enumDescriptions[schema.value.value] = {
-                        description: schema.description
-                    };
-                }
-            } else if (schema.type === "primitive" && "default" in schema.schema && schema.schema.default != null) {
                 if (schema.title != null) {
                     enumVarNames.push(schema.title);
                 }
-                enumValues.push(schema.schema.default.toString());
+                enumValues.push(schema.value.value);
                 if (schema.description != null) {
-                    enumDescriptions[schema.schema.default.toString()] = {
+                    enumDescriptions[schema.value.value] = {
                         description: schema.description
                     };
                 }
