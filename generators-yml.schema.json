@@ -2495,6 +2495,16 @@
               "type": "null"
             }
           ]
+        },
+        "sdk-output-path": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
