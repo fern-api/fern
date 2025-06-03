@@ -46,8 +46,8 @@ describe("parse inline types", () => {
             )
         );
 
-        const parsedTypeReferenceJson = await IrSerialization.TypeReference.jsonOrThrow(parsedTypeReference);
-        const expectedTypeReferenceJson = await IrSerialization.TypeReference.jsonOrThrow(expectedTypeReference);
+        const parsedTypeReferenceJson = IrSerialization.TypeReference.jsonOrThrow(parsedTypeReference);
+        const expectedTypeReferenceJson = IrSerialization.TypeReference.jsonOrThrow(expectedTypeReference);
 
         expect(parsedTypeReferenceJson).toEqual(expectedTypeReferenceJson);
     });

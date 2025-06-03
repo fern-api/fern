@@ -110,9 +110,10 @@ export const ValidGenericRule: Rule = {
                                             nodePath
                                         });
                                     } else {
+                                        const valueAsString = typeof value === "string" ? value : JSON.stringify(value);
                                         errors.push({
                                             severity: "fatal",
-                                            message: `Cannot reference generic ${value} from object property ${key}`
+                                            message: `Cannot reference generic ${valueAsString} from object property ${key}`
                                         });
                                     }
                                 }
@@ -134,9 +135,10 @@ export const ValidGenericRule: Rule = {
                                             nodePath
                                         });
                                     } else {
+                                        const valueAsString = typeof value === "string" ? value : JSON.stringify(value);
                                         errors.push({
                                             severity: "fatal",
-                                            message: `Cannot reference generic ${value} from union property ${key}`
+                                            message: `Cannot reference generic ${valueAsString} from union property ${key}`
                                         });
                                     }
                                 }
