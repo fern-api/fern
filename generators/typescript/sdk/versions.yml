@@ -5,7 +5,7 @@
         Generate tests to verify the SDK sends and receives HTTP requests as expected.
         You can turn of these tests by setting `generateWireTests` to `false` in the `config` of your generator configuration.
       type: feat
-  createdAt: '2025-05-03'
+  createdAt: '2025-06-03'
   irVersion: 57
 
 - version: 1.1.0
