@@ -184,18 +184,66 @@ export async function downloadBundle({
             });
         }
 
-        // install esbuild
-        logger.debug("Installing esbuild");
-        await loggingExeca(logger, "pnpm", ["i", "esbuild"], {
-            cwd: absolutePathToBundleFolder,
-            doNotPipeOutput: true
-        });
-        // resolve imports
-        logger.debug("Resolve esbuild imports");
-        await loggingExeca(logger, "node", ["install-esbuild.js"], {
-            cwd: absolutePathToBundleFolder,
-            doNotPipeOutput: true
-        });
+        // if pnpm still hasn't been installed, user should install themselves
+        try {
+            await loggingExeca(logger, process.platform === "win32" ? "where" : "which", ["pnpm"], {
+                cwd: absolutePathToBundleFolder,
+                doNotPipeOutput: true
+            });
+        } catch (error) {
+            logger.error(
+                "Requires [pnpm] to run local development. Please run: npm install -g pnpm, and then: fern docs dev"
+            );
+
+            // remove incomplete bundle
+            if (await doesPathExist(absolutePathToPreviewFolder)) {
+                await rm(absolutePathToPreviewFolder, { recursive: true });
+            }
+            logger.debug(`rm -rf ${absolutePathToPreviewFolder}`);
+            return {
+                type: "failure"
+            };
+        }
+
+        try {
+            // install esbuild
+            logger.debug("Installing esbuild");
+            await loggingExeca(logger, "pnpm", ["i", "esbuild"], {
+                cwd: absolutePathToBundleFolder,
+                doNotPipeOutput: true
+            });
+        } catch (error) {
+            logger.error("Failed to install required package. Please reach out to support@buildwithfern.com.");
+
+            // remove incomplete bundle
+            if (await doesPathExist(absolutePathToPreviewFolder)) {
+                await rm(absolutePathToPreviewFolder, { recursive: true });
+            }
+            logger.debug(`rm -rf ${absolutePathToPreviewFolder}`);
+            return {
+                type: "failure"
+            };
+        }
+
+        try {
+            // resolve imports
+            logger.debug("Resolve esbuild imports");
+            await loggingExeca(logger, "node", ["install-esbuild.js"], {
+                cwd: absolutePathToBundleFolder,
+                doNotPipeOutput: true
+            });
+        } catch (error) {
+            logger.error("Failed to resolve imports. Please reach out to support@buildwithfern.com.");
+
+            // remove incomplete bundle
+            if (await doesPathExist(absolutePathToPreviewFolder)) {
+                await rm(absolutePathToPreviewFolder, { recursive: true });
+            }
+            logger.debug(`rm -rf ${absolutePathToPreviewFolder}`);
+            return {
+                type: "failure"
+            };
+        }
     }
 
     return {
