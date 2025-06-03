@@ -41,7 +41,7 @@ fixtures:
     - customConfig:
         noScripts: true
         extraDependencies:
-          dummy: "dummy"
+          lodash: 4.17.21
       outputFolder: noScripts
     - customConfig:
         useBrandedStringAliases: true

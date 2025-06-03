@@ -41,7 +41,7 @@
         "qs": "^6.13.1",
         "readable-stream": "^4.5.2",
         "js-base64": "3.7.7",
-        "dummy": "dummy"
+        "lodash": "4.17.21"
     },
     "devDependencies": {
         "@types/url-join": "4.0.1",
