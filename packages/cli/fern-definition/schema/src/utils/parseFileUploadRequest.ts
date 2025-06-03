@@ -7,7 +7,8 @@ import {
     HttpRequestSchema,
     ObjectPropertySchema
 } from "../schemas";
-import { ParseGenericNested, parseGenericNested } from "./generics/parseGenericNested";
+import { isFileInGeneric } from "./generics/isFileInGeneric";
+import { parseGenericNested } from "./generics/parseGenericNested";
 import { isInlineRequestBody } from "./isInlineRequestBody";
 import { parseRawFileType } from "./parseRawFileType";
 
@@ -135,19 +136,4 @@ function doesPropertyHaveFile(property: HttpInlineRequestBodyPropertySchema): bo
     }
 
     return isFileInGeneric(generic);
-}
-
-function isFileInGeneric(input: ParseGenericNested): boolean {
-    for (const arg of input.arguments) {
-        if (typeof arg === "string") {
-            if (arg === "file") {
-                return true;
-            }
-        } else {
-            if (isFileInGeneric(arg)) {
-                return true;
-            }
-        }
-    }
-    return false;
 }

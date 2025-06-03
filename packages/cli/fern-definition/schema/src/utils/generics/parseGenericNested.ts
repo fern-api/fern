@@ -3,6 +3,7 @@ export interface ParseGenericNested {
     arguments: (string | ParseGenericNested)[];
 }
 
+const MAX_RECURSION_DEPTH = 128;
 export function parseGenericNested(input: string): ParseGenericNested | undefined {
     let index = 0;
     let depth = 0; // Track recursion depth to prevent infinite loops
@@ -38,9 +39,9 @@ export function parseGenericNested(input: string): ParseGenericNested | undefine
             index++; // consume '<'
             depth++;
 
-            if (depth > 100) {
+            if (depth > MAX_RECURSION_DEPTH) {
                 // Arbitrary limit to prevent infinite recursion
-                throw new Error("Exceeded maximum recursion depth while parsing generics.");
+                throw new Error("Internal error; Exceeded maximum recursion depth while parsing generics.");
             }
 
             const result = { name: name.trim(), arguments: [] as (ParseGenericNested | string)[] };
