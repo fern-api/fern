@@ -192,7 +192,7 @@ export async function downloadBundle({
             });
         } catch (error) {
             logger.error(
-                "Requires [pnpm] to run local development. Please install and try again: https://pnpm.io/installation"
+                "Requires [pnpm] to run local development. Please run: npm install -g pnpm, and then: fern docs dev"
             );
 
             // remove incomplete bundle
