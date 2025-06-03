@@ -1,4 +1,4 @@
-- changeLogEntry:
+- changelogEntry:
     - summary: |
         Add support for locally generating docs with no auth.
       type: fix
