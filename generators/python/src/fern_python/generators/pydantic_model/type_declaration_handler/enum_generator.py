@@ -182,6 +182,5 @@ class EnumSnippetGenerator(AbstractTypeSnippetGenerator):
 
         return AST.Expression(AST.CodeWriter(write_enum))
 
-
 def _get_class_var_name(name: ir_types.Name) -> str:
     return name.screaming_snake_case.safe_name
