@@ -66,7 +66,7 @@ export class JestTestGenerator {
     private addJestConfig(): void {
         const setupFilesAfterEnv = [];
         if (this.useBigInt) {
-            setupFilesAfterEnv.push("<rootDir>/tests/bigint-setup.ts");
+            setupFilesAfterEnv.push("<rootDir>/tests/bigint.setup.ts");
         }
         if (this.generateWireTests) {
             setupFilesAfterEnv.push("<rootDir>/tests/mock-server/setup.ts");
@@ -88,7 +88,7 @@ export class JestTestGenerator {
         jestConfig.saveSync();
     }
 
-    public getTestFile(serviceId: string, service: IR.HttpService): ExportedFilePath {
+    public getTestFile(service: IR.HttpService): ExportedFilePath {
         const folders = service.name.fernFilepath.packagePath.map((folder) => folder.originalName);
         const filename = `${service.name.fernFilepath.file?.camelCase.unsafeName ?? "main"}.test.ts`;
 
@@ -198,7 +198,7 @@ describe("test", () => {
                     baseOptions[schema.username.camelCase.unsafeName] = code`"test"`;
                     baseOptions[schema.password.camelCase.unsafeName] = code`"test"`;
                 },
-                oauth: (schema) => {
+                oauth: () => {
                     // noop
                     baseOptions[OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME] = code`"test"`;
                     baseOptions[OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME] = code`"test"`;
@@ -242,9 +242,7 @@ describe("test", () => {
 
         const tests = service.endpoints
             .filter((e) => this.shouldBuildTest(e))
-            .map((endpoint) => {
-                return this.buildTest(endpoint, packageId, serviceGenerator, context, importStatement, baseOptions);
-            })
+            .map((endpoint) => this.buildTest(endpoint, serviceGenerator, context, importStatement, baseOptions))
             .filter((test) => test != null);
 
         if (tests.length === 0) {
@@ -260,7 +258,6 @@ describe("test", () => {
 
     private buildTest(
         endpoint: IR.HttpEndpoint,
-        packageId: PackageId,
         serviceGenerator: GeneratedSdkClientClass,
         context: SdkContext,
         importStatement: Reference,
@@ -421,6 +418,7 @@ describe("test", () => {
         }
         return true;
     }
+
     getRequestExample(request: ExampleRequestBody | undefined): Code | undefined {
         if (!request) {
             return undefined;
@@ -439,6 +437,7 @@ describe("test", () => {
             _other: () => code`${literalOf(request.jsonExample)}`
         });
     }
+
     getResponseExample(response: IR.ExampleResponse | undefined): Code | undefined {
         if (!response) {
             return undefined;
@@ -605,32 +604,6 @@ describe("test", () => {
     }
 }
 
-function getExampleTypeReferenceForResponse(exampleResponse: IR.ExampleResponse): IR.ExampleTypeReference | undefined {
-    switch (exampleResponse.type) {
-        case "ok":
-            return getExampleTypeReferenceForSuccessResponse(exampleResponse.value);
-        case "error":
-            return exampleResponse.body;
-        default:
-            assertNever(exampleResponse);
-    }
-}
-
-// TODO: Update this to handle multiple responses in the stream and sse cases.
-function getExampleTypeReferenceForSuccessResponse(
-    successResponse: IR.ExampleEndpointSuccessResponse
-): IR.ExampleTypeReference | undefined {
-    switch (successResponse.type) {
-        case "body":
-            return successResponse.value;
-        case "stream":
-            return successResponse.value[0];
-        case "sse":
-            return successResponse.value[0]?.data;
-        default:
-            assertNever(successResponse);
-    }
-}
 function getExampleResponseStatusCode(response: IR.ExampleResponse): number {
     return response._visit({
         ok: () => 200,
@@ -672,11 +645,4 @@ function getExpectedResponseBody(response: IR.ExampleResponse, context: SdkConte
             throw new Error("Unsupported response type");
         }
     });
-}
-
-function testsEnvVarPrefix(str: string): string {
-    if (str.startsWith("TESTS_")) {
-        return str;
-    }
-    return `TEST_${str}`;
 }

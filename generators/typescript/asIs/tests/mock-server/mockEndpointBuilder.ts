@@ -54,7 +54,7 @@ export interface HttpHandlerBuilderOptions {
 
 class RequestBuilder implements MethodStage, RequestHeadersStage, RequestBodyStage, ResponseStage {
     private method: HttpMethod = "get";
-    #baseUrl: string = "";
+    private _baseUrl: string = "";
     private path: string = "/";
     private readonly predicates: ((resolver: HttpResponseResolver) => HttpResponseResolver)[] = [];
     private readonly handlerOptions?: HttpHandlerBuilderOptions;
@@ -64,7 +64,7 @@ class RequestBuilder implements MethodStage, RequestHeadersStage, RequestBodySta
     }
 
     baseUrl(baseUrl: string): MethodStage {
-        this.#baseUrl = baseUrl;
+        this._baseUrl = baseUrl;
         return this;
     }
 
@@ -136,13 +136,13 @@ class RequestBuilder implements MethodStage, RequestHeadersStage, RequestBodySta
     }
 
     private buildPath(): string {
-        if (this.#baseUrl.endsWith("/") && this.path.startsWith("/")) {
-            return this.#baseUrl + this.path.slice(1);
+        if (this._baseUrl.endsWith("/") && this.path.startsWith("/")) {
+            return this._baseUrl + this.path.slice(1);
         }
-        if (!this.#baseUrl.endsWith("/") && !this.path.startsWith("/")) {
-            return this.#baseUrl + "/" + this.path;
+        if (!this._baseUrl.endsWith("/") && !this.path.startsWith("/")) {
+            return this._baseUrl + "/" + this.path;
         }
-        return this.#baseUrl + this.path;
+        return this._baseUrl + this.path;
     }
 }
 

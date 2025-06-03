@@ -881,7 +881,7 @@ export class SdkGenerator {
             }
 
             this.withSourceFile({
-                filepath: this.jestTestGenerator.getTestFile(packageId.isRoot ? "" : packageId.subpackageId, service),
+                filepath: this.jestTestGenerator.getTestFile(service),
                 run: ({ sourceFile, importsManager }) => {
                     const context = this.generateSdkContext({ sourceFile, importsManager });
                     const file = this.jestTestGenerator.buildFile(

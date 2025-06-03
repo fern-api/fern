@@ -18,7 +18,7 @@ const asIsFiles = {
         mockServer: {
             "tests/mock-server/*": "tests/mock-server/"
         },
-        bigintSetup: { "tests/bigint-setup.ts": "tests/bigint-setup.ts" }
+        bigintSetup: { "tests/bigint.setup.ts": "tests/bigint.setup.ts" }
     }
 } as const;
 
