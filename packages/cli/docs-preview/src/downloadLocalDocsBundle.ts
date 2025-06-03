@@ -62,12 +62,14 @@ export async function downloadBundle({
     bucketUrl,
     logger,
     preferCached,
-    app = false
+    app = false,
+    tryTar = false
 }: {
     bucketUrl: string;
     logger: Logger;
     preferCached: boolean;
     app?: boolean;
+    tryTar?: boolean;
 }): Promise<DownloadLocalBundle.Result> {
     logger.debug("Setting up docs preview bundle...");
     const response = await fetcher<string>({
@@ -140,7 +142,7 @@ export async function downloadBundle({
             type: "failure"
         };
     }
-    const outputZipPath = join(absoluteDirectoryToTmpDir, RelativeFilePath.of("output.zip"));
+    const outputZipPath = join(absoluteDirectoryToTmpDir, RelativeFilePath.of(tryTar ? "output.tar.gz" : "output.zip"));
 
     const contents = docsBundleZipResponse.body;
     if (contents == null) {
@@ -152,7 +154,7 @@ export async function downloadBundle({
     // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     const nodeBuffer = Buffer.from(contents as any);
     await writeFile(outputZipPath, new Uint8Array(nodeBuffer));
-    logger.debug(`Wrote output.zip to ${outputZipPath}`);
+    logger.debug(`Wrote ${tryTar ? "output.tar.gz" : "output.zip"} to ${outputZipPath}`);
 
     const absolutePathToPreviewFolder = getPathToPreviewFolder({ app });
     if (await doesPathExist(absolutePathToPreviewFolder)) {

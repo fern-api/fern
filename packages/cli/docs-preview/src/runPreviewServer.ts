@@ -78,7 +78,7 @@ export async function runPreviewServer({
                     "Failed to connect to the docs preview server. Please contact support@buildwithfern.com"
                 );
             }
-            await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true });
+            await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true, tryTar: false });
         } catch (err) {
             const pathToBundle = getPathToBundleFolder({});
             if (err instanceof Error) {

@@ -1,5 +1,21 @@
 - changelogEntry:
     - summary: |
+        Add support for overriding FDR server origin via OVERRIDE_FDR_ORIGIN environment variable.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-03"
+  version: 0.63.28
+
+- changelogEntry:
+    - summary: |
+        Improvements to development server download and shutdown logic.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-03"
+  version: 0.63.27
+
+- changelogEntry:
+    - summary: |
         Multiple auth schemes in the same API from difference spec files will be merged and deduplicated.
       type: fix
   irVersion: 58
