@@ -150,10 +150,12 @@ export async function runAppPreviewServer({
 
     context.logger.debug(`Next.js standalone server started with PID: ${serverProcess.pid}`);
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     serverProcess.on("error", (err) => {
         context.logger.debug(`Server process error: ${err.message}`);
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     serverProcess.on("exit", (code, signal) => {
         if (code) {
             context.logger.debug(`Server process exited with code: ${code}`);
