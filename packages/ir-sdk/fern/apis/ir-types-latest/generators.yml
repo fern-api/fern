@@ -16,7 +16,7 @@ groups:
       - dynamic
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.38.6
+        version: 0.45.1
         output:
           location: npm
           package-name: "@fern-api/dynamic-ir-sdk"
