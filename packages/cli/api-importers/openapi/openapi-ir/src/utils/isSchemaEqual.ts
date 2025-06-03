@@ -4,7 +4,14 @@ import { isEqual } from "lodash-es";
 export function isSchemaEqual(a: Schema, b: Schema, checkAdditionalProperties: boolean = false): boolean {
     if (a.type === "primitive" && b.type === "primitive") {
         if (checkAdditionalProperties) {
-            return isPrimitiveSchemaValueEqual(a.schema, b.schema) && a.nameOverride === b.nameOverride && a.generatedName === b.generatedName && a.title === b.title && a.description === b.description && a.availability === b.availability && a.groupName === b.groupName && a.namespace === b.namespace;
+            return isPrimitiveSchemaValueEqual(a.schema, b.schema) 
+                && a.nameOverride === b.nameOverride 
+                && a.generatedName === b.generatedName 
+                && a.title === b.title
+                && a.description === b.description 
+                && a.availability === b.availability 
+                && a.groupName === b.groupName 
+                && a.namespace === b.namespace;
         }
         return isPrimitiveSchemaValueEqual(a.schema, b.schema);
     } else if (a.type === "enum" && b.type === "enum") {
@@ -29,7 +36,7 @@ export function isSchemaEqual(a: Schema, b: Schema, checkAdditionalProperties: b
     return false;
 }
 
-function isPrimitiveSchemaValueEqual(a: PrimitiveSchemaValue, b: PrimitiveSchemaValue, checkAdditionalProperties: boolean = false) {
+function isPrimitiveSchemaValueEqual(a: PrimitiveSchemaValue, b: PrimitiveSchemaValue) {
     return a.type === b.type;
 }
 
