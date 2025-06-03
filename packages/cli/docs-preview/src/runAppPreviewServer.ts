@@ -151,12 +151,12 @@ export async function runAppPreviewServer({
     context.logger.debug(`Next.js standalone server started with PID: ${serverProcess.pid}`);
 
     serverProcess.on("error", (err) => {
-        context.logger.error(`Server process error: ${err.message}`);
+        context.logger.debug(`Server process error: ${err.message}`);
     });
 
     serverProcess.on("exit", (code, signal) => {
         if (code) {
-            context.logger.error(`Server process exited with code: ${code}`);
+            context.logger.debug(`Server process exited with code: ${code}`);
         } else if (signal) {
             context.logger.debug(`Server process killed with signal: ${signal}`);
         } else {
@@ -199,7 +199,7 @@ export async function runAppPreviewServer({
     }
     for (const failSig of failureSignals) {
         process.on(failSig, () => {
-            context.logger.error("Server failed, shutting down process...");
+            context.logger.debug("Server failed, shutting down process...");
             cleanup();
         });
     }
@@ -209,12 +209,12 @@ export async function runAppPreviewServer({
 
     // handle uncaught exits
     process.on("uncaughtException", (err) => {
-        context.logger.error(`Uncaught exception: ${err}`);
+        context.logger.debug(`Uncaught exception: ${err}`);
         cleanup();
         process.exit(1);
     });
     process.on("unhandledRejection", (reason) => {
-        context.logger.error(`Unhandled rejection: ${reason}`);
+        context.logger.debug(`Unhandled rejection: ${reason}`);
         cleanup();
         process.exit(1);
     });
