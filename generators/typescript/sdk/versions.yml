@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - version: 1.0.1
   changelogEntry:
     - summary: Fix property lookup in inherited schemas during snippet generation for object schemas.
@@ -1839,6 +1840,7 @@
             ...
         }
         ```
+      type: feat
   createdAt: '2024-05-06'
   irVersion: 38
 

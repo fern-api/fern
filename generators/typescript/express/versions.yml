@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
   - summary: | 
       Re-release `0.18.0-rc1`

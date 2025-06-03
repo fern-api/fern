@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # - version: 2.0.0
 #   createdAt: '2024-10-09'
 #   changelogEntry:
