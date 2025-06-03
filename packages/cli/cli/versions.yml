@@ -1,7 +1,7 @@
 - changelogEntry:
     - summary: |
         Add support for overriding FDR server origin via OVERRIDE_FDR_ORIGIN environment variable.
-      type: fix
+      type: feat
   irVersion: 58
   createdAt: "2025-06-03"
   version: 0.63.28
