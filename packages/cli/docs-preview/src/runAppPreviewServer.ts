@@ -168,17 +168,52 @@ export async function runAppPreviewServer({
         if (!serverProcess.killed) {
             context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
             try {
+                // First try graceful shutdown
                 serverProcess.kill();
+
+                // If process doesn't exit within 2 seconds, force kill
+                setTimeout(() => {
+                    if (!serverProcess.killed) {
+                        context.logger.debug(`Force killing server process with PID: ${serverProcess.pid}`);
+                        try {
+                            serverProcess.kill("SIGKILL");
+                        } catch (err) {
+                            context.logger.error(`Failed to force kill server process: ${err}`);
+                        }
+                    }
+                }, 2000);
             } catch (err) {
                 context.logger.error(`Failed to kill server process: ${err}`);
             }
         }
     };
 
-    // clean up process
-    process.on("SIGINT", cleanup);
-    process.on("SIGTERM", cleanup);
+    // Handle all possible termination scenarios
+    const shutdownSignals = ["SIGTERM", "SIGINT", "SIGQUIT"];
+    const failureSignals = ["SIGKILL", "SIGHUP"];
+    for (const shutSig in shutdownSignals) {
+        context.logger.debug("Shutting down server...");
+        process.on(shutSig, cleanup);
+    }
+    for (const failSig in failureSignals) {
+        context.logger.error("Server failed, shutting down process...");
+        process.on(failSig, cleanup);
+    }
+
     process.on("exit", cleanup);
+    process.on("uncaughtException", (err) => {
+        context.logger.error(`Uncaught exception: ${err}`);
+        cleanup();
+        process.exit(1);
+    });
+    process.on("unhandledRejection", (reason) => {
+        context.logger.error(`Unhandled rejection: ${reason}`);
+        cleanup();
+        process.exit(1);
+    });
+
+    // Ensure cleanup runs before process exits
+    process.on("beforeExit", cleanup);
 
     await new Promise((resolve) => setTimeout(resolve, 3000));
     context.logger.debug(`Next.js server should now be running on http://localhost:${port}`);
