@@ -1,3 +1,11 @@
+- changeLogEntry:
+    - summary: |
+        Add support for locally generating docs with no auth.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-03"
+  version: 0.63.27
+
 - changelogEntry:
     - summary: |
         Improvements to development server download and shutdown logic.
