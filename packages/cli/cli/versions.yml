@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Implicitly interpert a request body as a multipart-form if it contains a property with a file, list of files, and optional file.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-05-30"
+  version: 0.63.26
+
+- changelogEntry:
     - summary: |
         Add support for overriding FDR server origin via OVERRIDE_FDR_ORIGIN environment variable.
       type: feat

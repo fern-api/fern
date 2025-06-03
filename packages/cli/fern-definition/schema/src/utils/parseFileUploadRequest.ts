@@ -2,10 +2,13 @@ import { MediaType } from "@fern-api/core-utils";
 
 import {
     AvailabilityUnionSchema,
+    HttpInlineRequestBodyPropertySchema,
     HttpInlineRequestBodySchema,
     HttpRequestSchema,
     ObjectPropertySchema
 } from "../schemas";
+import { isFileInGeneric } from "./generics/isFileInGeneric";
+import { parseGenericNested } from "./generics/parseGenericNested";
 import { isInlineRequestBody } from "./isInlineRequestBody";
 import { parseRawFileType } from "./parseRawFileType";
 
@@ -47,13 +50,11 @@ function isFileUploadRequest(request: HttpRequestSchema | string): request is Ht
         return true;
     }
 
-    if (request.body != null && isInlineRequestBody(request.body)) {
-        if (
-            Object.values(request.body.properties ?? []).some((property) => {
-                const propertyType = typeof property === "string" ? property : property.type;
-                return propertyType === "file";
-            })
-        ) {
+    if (request.body == null) {
+        return false;
+    }
+    if (isInlineRequestBody(request.body)) {
+        if (Object.values(request.body.properties ?? []).some(doesPropertyHaveFile)) {
             return true;
         }
     }
@@ -118,4 +119,21 @@ function createRawFileUploadRequest(
         extends: requestBody.extends,
         properties
     };
+}
+
+function doesPropertyHaveFile(property: HttpInlineRequestBodyPropertySchema): boolean {
+    const propertyType = typeof property === "string" ? property : property.type;
+    if (propertyType === "file") {
+        return true;
+    }
+    if (!propertyType.includes("file")) {
+        // fast check to avoid unnecessary parsing
+        return false;
+    }
+    const generic = parseGenericNested(propertyType);
+    if (generic == null) {
+        return false;
+    }
+
+    return isFileInGeneric(generic);
 }
