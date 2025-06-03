@@ -32909,13 +32909,37 @@
               "nameOverride": "ConditionSetCreate",
               "title": "ConditionSetCreate",
               "value": {
-                "schema": {
-                  "format": "uuid",
-                  "type": "string"
+                "value": {
+                  "description": "For ResourceSets, the id of the base resource.",
+                  "generatedName": "ConditionSetCreateResourceId",
+                  "title": "Resource Id",
+                  "schemas": [
+                    {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "ConditionSetCreateResourceId",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    {
+                      "schema": {
+                        "format": "uuid",
+                        "type": "string"
+                      },
+                      "generatedName": "ConditionSetCreateResourceId",
+                      "groupName": [],
+                      "type": "primitive"
+                    }
+                  ],
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "undiscriminated"
                 },
-                "generatedName": "ConditionSetCreateResourceId",
-                "groupName": [],
-                "type": "primitive"
+                "type": "oneOf"
               },
               "groupName": [],
               "type": "optional"
@@ -33005,13 +33029,37 @@
               "nameOverride": "ConditionSetCreate",
               "title": "ConditionSetCreate",
               "value": {
-                "schema": {
-                  "format": "uuid",
-                  "type": "string"
+                "value": {
+                  "description": "Parent Condition Set",
+                  "generatedName": "ConditionSetCreateParentId",
+                  "title": "Parent Id",
+                  "schemas": [
+                    {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "ConditionSetCreateParentId",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    {
+                      "schema": {
+                        "format": "uuid",
+                        "type": "string"
+                      },
+                      "generatedName": "ConditionSetCreateParentId",
+                      "groupName": [],
+                      "type": "primitive"
+                    }
+                  ],
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "undiscriminated"
                 },
-                "generatedName": "ConditionSetCreateParentId",
-                "groupName": [],
-                "type": "primitive"
+                "type": "oneOf"
               },
               "groupName": [],
               "type": "optional"
@@ -33109,13 +33157,37 @@
               "nameOverride": "ConditionSetRead",
               "title": "ConditionSetRead",
               "value": {
-                "schema": {
-                  "format": "uuid",
-                  "type": "string"
+                "value": {
+                  "description": "For ResourceSets, the id of the base resource.",
+                  "generatedName": "ConditionSetReadResourceId",
+                  "title": "Resource Id",
+                  "schemas": [
+                    {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "ConditionSetReadResourceId",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    {
+                      "schema": {
+                        "format": "uuid",
+                        "type": "string"
+                      },
+                      "generatedName": "ConditionSetReadResourceId",
+                      "groupName": [],
+                      "type": "primitive"
+                    }
+                  ],
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "undiscriminated"
                 },
-                "generatedName": "ConditionSetReadResourceId",
-                "groupName": [],
-                "type": "primitive"
+                "type": "oneOf"
               },
               "groupName": [],
               "type": "optional"
@@ -33330,13 +33402,37 @@
               "nameOverride": "ConditionSetRead",
               "title": "ConditionSetRead",
               "value": {
-                "schema": {
-                  "format": "uuid",
-                  "type": "string"
+                "value": {
+                  "description": "Parent Condition Set",
+                  "generatedName": "ConditionSetReadParentId",
+                  "title": "Parent Id",
+                  "schemas": [
+                    {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "ConditionSetReadParentId",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    {
+                      "schema": {
+                        "format": "uuid",
+                        "type": "string"
+                      },
+                      "generatedName": "ConditionSetReadParentId",
+                      "groupName": [],
+                      "type": "primitive"
+                    }
+                  ],
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "undiscriminated"
                 },
-                "generatedName": "ConditionSetReadParentId",
-                "groupName": [],
-                "type": "primitive"
+                "type": "oneOf"
               },
               "groupName": [],
               "type": "optional"
@@ -33882,13 +33978,37 @@
               "nameOverride": "ConditionSetUpdate",
               "title": "ConditionSetUpdate",
               "value": {
-                "schema": {
-                  "format": "uuid",
-                  "type": "string"
+                "value": {
+                  "description": "Parent Condition Set",
+                  "generatedName": "ConditionSetUpdateParentId",
+                  "title": "Parent Id",
+                  "schemas": [
+                    {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "ConditionSetUpdateParentId",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    {
+                      "schema": {
+                        "format": "uuid",
+                        "type": "string"
+                      },
+                      "generatedName": "ConditionSetUpdateParentId",
+                      "groupName": [],
+                      "type": "primitive"
+                    }
+                  ],
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.json",
+                    "type": "openapi"
+                  },
+                  "type": "undiscriminated"
                 },
-                "generatedName": "ConditionSetUpdateParentId",
-                "groupName": [],
-                "type": "primitive"
+                "type": "oneOf"
               },
               "groupName": [],
               "type": "optional"
