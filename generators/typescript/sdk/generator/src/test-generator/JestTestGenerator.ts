@@ -237,6 +237,7 @@ describe("test", () => {
                     return;
                 }
             },
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
             _other: () => {}
         });
 
@@ -250,10 +251,10 @@ describe("test", () => {
         }
 
         return code`
-            describe("${serviceName}", () => {
-                ${tests}
-            });
-            `;
+describe("${serviceName}", () => {
+    ${tests}
+});
+`;
     }
 
     private buildTest(
@@ -335,41 +336,40 @@ describe("test", () => {
         const isHeadersResponse = endpoint.response?.body === undefined && endpoint.method === IR.HttpMethod.Head;
 
         return code`
-            test("${endpoint.name.originalName}", async () => {
-                const server = mockServerPool.createServer();
-                const client = new ${getTextOfTsNode(importStatement.getEntityName())}(${literalOf(options)});
-                ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
-                ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
-                server
-                    .mockEndpoint()
-                    .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders.map((h) => {
-                        return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
-                            `;
-                    })}${example.endpointHeaders.map((h) => {
-                        return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
-                            `;
-                    })}${
-                        rawRequestBody
-                            ? code`.jsonBody(rawRequestBody)
-                        `
-                            : ""
-                    }.respondWith()
-                    .statusCode(${responseStatusCode})${
-                        rawResponseBody
-                            ? code`.jsonBody(rawResponseBody)
-                        `
-                            : ""
-                    }.build();
-                ${
-                    isHeadersResponse
-                        ? code`
-                        const headers = ${getTextOfTsNode(generatedExample)};
-                expect(headers).toBeInstanceOf(Headers);`
-                        : code`
-                        const response = ${getTextOfTsNode(generatedExample)};
-                expect(response).toEqual(${expected});`
-                }
-            });
+    test("${endpoint.name.originalName}", async () => {
+        const server = mockServerPool.createServer();
+        const client = new ${getTextOfTsNode(importStatement.getEntityName())}(${literalOf(options)});
+        ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
+        ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
+        server
+            .mockEndpoint()
+            .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders.map((h) => {
+                return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+                    `;
+            })}${example.endpointHeaders.map((h) => {
+                return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+                    `;
+            })}${
+                rawRequestBody
+                    ? code`.jsonBody(rawRequestBody)
+                `
+                    : ""
+            }.respondWith()
+            .statusCode(${responseStatusCode})${
+                rawResponseBody
+                    ? code`.jsonBody(rawResponseBody)
+                `
+                    : ""
+            }.build();
+            
+        ${
+            isHeadersResponse
+                ? code`const headers = ${getTextOfTsNode(generatedExample)};
+        expect(headers).toBeInstanceOf(Headers);`
+                : code`const response = ${getTextOfTsNode(generatedExample)};
+        expect(response).toEqual(${expected});`
+        }
+    });
           `;
     }
 

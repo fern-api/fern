@@ -5,45 +5,44 @@
 import { mockServerPool } from "../mock-server/MockServerPool.js";
 import { SeedApiClient } from "../../src/Client";
 
-            describe("Imdb", () => {
-                
-            test("createMovie", async () => {
-                const server = mockServerPool.createServer();
-                const client = new SeedApiClient({ "token" : "test" , "environment" : server.baseUrl });
-                const rawRequestBody = { "title" : "title" , "rating" : 1.1 };
-                const rawResponseBody = "string";
-                server
-                    .mockEndpoint()
-                    .post("/movies/create-movie").jsonBody(rawRequestBody)
-                        .respondWith()
-                    .statusCode(200).jsonBody(rawResponseBody)
-                        .build();
-
-                const response = await client.imdb.createMovie({
+describe("Imdb", () => {
+    
+    test("createMovie", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedApiClient({ "token" : "test" , "environment" : server.baseUrl });
+        const rawRequestBody = { "title" : "title" , "rating" : 1.1 };
+        const rawResponseBody = "string";
+        server
+            .mockEndpoint()
+            .post("/movies/create-movie").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
+            
+        const response = await client.imdb.createMovie({
     title: "title",
     rating: 1.1
 });
-                expect(response).toEqual("string");
-            });
+        expect(response).toEqual("string");
+    });
           
-            test("getMovie", async () => {
-                const server = mockServerPool.createServer();
-                const client = new SeedApiClient({ "token" : "test" , "environment" : server.baseUrl });
-                
-                const rawResponseBody = { "id" : "id" , "title" : "title" , "rating" : 1.1 };
-                server
-                    .mockEndpoint()
-                    .get("/movies/movieId").respondWith()
-                    .statusCode(200).jsonBody(rawResponseBody)
-                        .build();
-
-                const response = await client.imdb.getMovie("movieId");
-                expect(response).toEqual({
+    test("getMovie", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedApiClient({ "token" : "test" , "environment" : server.baseUrl });
+        
+        const rawResponseBody = { "id" : "id" , "title" : "title" , "rating" : 1.1 };
+        server
+            .mockEndpoint()
+            .get("/movies/movieId").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
+            
+        const response = await client.imdb.getMovie("movieId");
+        expect(response).toEqual({
     id: "id",
     title: "title",
     rating: 1.1
 });
-            });
+    });
           
-            });
-            
+});
