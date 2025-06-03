@@ -111,7 +111,7 @@ module.exports = {
         "@typescript-eslint/no-empty-interface": "off",
         "@typescript-eslint/no-unnecessary-condition": "off",
         "@typescript-eslint/unified-signatures": "off",
-        "@typescript-eslint/no-non-null-assertion": "warn",
+        "@typescript-eslint/no-non-null-assertion": "off",
         // "@typescript-eslint/no-deprecated": "warn",
         "eslint-comments/no-unused-disable": "off",
         "jest/expect-expect": "off",
