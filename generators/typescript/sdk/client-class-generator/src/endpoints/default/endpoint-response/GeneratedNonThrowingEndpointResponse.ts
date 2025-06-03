@@ -74,7 +74,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
 
     public getReturnType(context: SdkContext): ts.TypeNode {
         return context.coreUtilities.fetcher.APIResponse._getReferenceToType(
-            getSuccessReturnType(this.response, context),
+            getSuccessReturnType(this.endpoint, this.response, context),
             context.endpointErrorUnion
                 .getGeneratedEndpointErrorUnion(this.packageId, this.endpoint.name)
                 .getErrorUnion()

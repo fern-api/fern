@@ -23,9 +23,7 @@ Instantiate and use the client with the following:
 import { SeedHttpHeadClient } from "@fern/http-head";
 
 const client = new SeedHttpHeadClient({ environment: "YOUR_BASE_URL" });
-await client.user.list({
-    limit: 1,
-});
+await client.user.head();
 ```
 
 ## Request And Response Types
@@ -50,7 +48,7 @@ will be thrown.
 import { SeedHttpHeadError } from "@fern/http-head";
 
 try {
-    await client.user.list(...);
+    await client.user.head(...);
 } catch (err) {
     if (err instanceof SeedHttpHeadError) {
         console.log(err.statusCode);
@@ -68,7 +66,7 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-const response = await client.user.list(..., {
+const response = await client.user.head(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -90,7 +88,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.user.list(..., {
+const response = await client.user.head(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -100,7 +98,7 @@ const response = await client.user.list(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.user.list(..., {
+const response = await client.user.head(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -111,7 +109,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.user.list(..., {
+const response = await client.user.head(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -123,7 +121,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.user.list(...).withRawResponse();
+const { data, rawResponse } = await client.user.head(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);

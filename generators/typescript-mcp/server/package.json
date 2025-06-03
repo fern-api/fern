@@ -35,7 +35,7 @@
     "@fern-api/typescript-ast": "workspace:*",
     "@fern-api/typescript-mcp-base": "workspace:*",
     "@fern-api/typescript-mcp-model": "workspace:*",
-    "@fern-fern/generator-exec-sdk": "^0.0.1021",
+    "@fern-fern/generator-exec-sdk": "^0.0.1045",
     "@fern-fern/ir-sdk": "^57.0.0",
     "@fern-typescript/sdk-generator-cli": "workspace:*",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",

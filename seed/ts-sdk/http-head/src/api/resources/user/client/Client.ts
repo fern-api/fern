@@ -3,9 +3,9 @@
  */
 
 import * as core from "../../../../core/index.js";
-import * as SeedHttpHead from "../../../index.js";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
+import * as SeedHttpHead from "../../../index.js";
 
 export declare namespace User {
     export interface Options {
@@ -28,6 +28,66 @@ export declare namespace User {
 
 export class User {
     constructor(protected readonly _options: User.Options) {}
+
+    /**
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.head()
+     */
+    public head(requestOptions?: User.RequestOptions): core.HttpResponsePromise<Headers> {
+        return core.HttpResponsePromise.fromPromise(this.__head(requestOptions));
+    }
+
+    private async __head(requestOptions?: User.RequestOptions): Promise<core.WithRawResponse<Headers>> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/users",
+            ),
+            method: "HEAD",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/http-head",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/http-head/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: _response.rawResponse.headers, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedHttpHeadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedHttpHeadError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.SeedHttpHeadTimeoutError("Timeout exceeded when calling HEAD /users.");
+            case "unknown":
+                throw new errors.SeedHttpHeadError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
 
     /**
      * @param {SeedHttpHead.ListUsersRequest} request
@@ -68,9 +128,7 @@ export class User {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
             },
-            contentType: "application/json",
             queryParameters: _queryParams,
-            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

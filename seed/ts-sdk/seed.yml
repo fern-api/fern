@@ -1,4 +1,4 @@
-irVersion: v55
+irVersion: v58
 displayName: TypeScript SDK
 image: fernapi/fern-typescript-node-sdk
 changelogLocation: ../../generators/typescript/sdk/versions.yml
@@ -41,7 +41,7 @@ fixtures:
     - customConfig:
         noScripts: true
         extraDependencies:
-          dummy: "dummy"
+          lodash: 4.17.21
       outputFolder: noScripts
     - customConfig:
         useBrandedStringAliases: true
