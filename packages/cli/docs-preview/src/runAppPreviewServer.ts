@@ -188,19 +188,26 @@ export async function runAppPreviewServer({
         }
     };
 
-    // Handle all possible termination scenarios
-    const shutdownSignals = ["SIGTERM", "SIGINT", "SIGQUIT"];
-    const failureSignals = ["SIGKILL", "SIGHUP"];
-    for (const shutSig in shutdownSignals) {
-        context.logger.debug("Shutting down server...");
-        process.on(shutSig, cleanup);
+    // handle termination signals
+    const shutdownSignals = ["SIGTERM", "SIGINT"];
+    const failureSignals = ["SIGHUP"];
+    for (const shutSig of shutdownSignals) {
+        process.on(shutSig, () => {
+            context.logger.debug("Shutting down server...");
+            cleanup();
+        });
     }
-    for (const failSig in failureSignals) {
-        context.logger.error("Server failed, shutting down process...");
-        process.on(failSig, cleanup);
+    for (const failSig of failureSignals) {
+        process.on(failSig, () => {
+            context.logger.error("Server failed, shutting down process...");
+            cleanup();
+        });
     }
 
+    // handle normal exit
     process.on("exit", cleanup);
+
+    // handle uncaught exits
     process.on("uncaughtException", (err) => {
         context.logger.error(`Uncaught exception: ${err}`);
         cleanup();
