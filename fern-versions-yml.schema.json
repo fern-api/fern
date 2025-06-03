@@ -2,10 +2,10 @@
     "$schema": "http://json-schema.org/draft-06/schema#",
     "type": "array",
     "items": {
-        "$ref": "#/definitions/Welcome3Element"
+        "$ref": "#/definitions/VersionEntry"
     },
     "definitions": {
-        "Welcome3Element": {
+        "VersionEntry": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -31,7 +31,7 @@
                 "irVersion",
                 "version"
             ],
-            "title": "Welcome3Element"
+            "title": "Version"
         },
         "ChangelogEntry": {
             "type": "object",
@@ -41,7 +41,7 @@
                     "type": "string"
                 },
                 "type": {
-                    "$ref": "#/definitions/Type"
+                    "$ref": "#/definitions/ChangelogType"
                 },
                 "fixed": {
                     "type": "array",
@@ -72,9 +72,9 @@
                 "summary",
                 "type"
             ],
-            "title": "ChangelogEntry"
+            "title": "Changelog"
         },
-        "Type": {
+        "ChangelogType": {
             "type": "string",
             "enum": [
                 "fix",
@@ -83,7 +83,7 @@
                 "internal",
                 "break"
             ],
-            "title": "Type"
+            "title": "Changelog Type"
         }
     }
 }
