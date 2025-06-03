@@ -43,14 +43,16 @@
             "type": {
               "type": "id",
               "value": "type_:Color"
-            }
+            },
+            "displayName": "Color"
           },
           {
             "typeName": "Operand",
             "type": {
               "type": "id",
               "value": "type_:Operand"
-            }
+            },
+            "displayName": "Operand"
           }
         ]
       }

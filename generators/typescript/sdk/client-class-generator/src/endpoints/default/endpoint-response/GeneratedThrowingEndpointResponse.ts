@@ -9,6 +9,7 @@ import {
     ErrorDiscriminationByPropertyStrategy,
     ErrorDiscriminationStrategy,
     HttpEndpoint,
+    HttpMethod,
     HttpResponseBody,
     Name,
     NameAndWireValue,
@@ -95,7 +96,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     }
 
     public getPaginationInfo(context: SdkContext): PaginationResponseInfo | undefined {
-        const successReturnType = getSuccessReturnType(this.response, context, {
+        const successReturnType = getSuccessReturnType(this.endpoint, this.response, context, {
             includeContentHeadersOnResponse: this.includeContentHeadersOnResponse
         });
 
@@ -433,7 +434,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     }
 
     public getReturnType(context: SdkContext): ts.TypeNode {
-        return getSuccessReturnType(this.response, context, {
+        return getSuccessReturnType(this.endpoint, this.response, context, {
             includeContentHeadersOnResponse: this.includeContentHeadersOnResponse
         });
     }
@@ -927,30 +928,38 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     }
 
     private getReturnStatementsForOkResponse(context: SdkContext): ts.Statement[] {
-        return this.endpoint.response?.body != null
-            ? this.getReturnStatementsForOkResponseBody(context)
-            : [
-                  ts.factory.createReturnStatement(
-                      ts.factory.createObjectLiteralExpression(
-                          [
-                              ts.factory.createPropertyAssignment(
-                                  ts.factory.createIdentifier("data"),
-                                  ts.factory.createIdentifier("undefined")
-                              ),
-                              ts.factory.createPropertyAssignment(
-                                  ts.factory.createIdentifier("rawResponse"),
-                                  ts.factory.createPropertyAccessExpression(
-                                      ts.factory.createIdentifier(
-                                          GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME
-                                      ),
-                                      ts.factory.createIdentifier("rawResponse")
-                                  )
-                              )
-                          ],
-                          false
-                      )
+        if (this.endpoint.response?.body != null) {
+            return this.getReturnStatementsForOkResponseBody(context);
+        }
+
+        const dataInitializer =
+            this.endpoint.method === HttpMethod.Head
+                ? ts.factory.createPropertyAccessExpression(
+                      ts.factory.createPropertyAccessExpression(
+                          ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+                          ts.factory.createIdentifier("rawResponse")
+                      ),
+                      "headers"
                   )
-              ];
+                : ts.factory.createIdentifier("undefined");
+
+        return [
+            ts.factory.createReturnStatement(
+                ts.factory.createObjectLiteralExpression(
+                    [
+                        ts.factory.createPropertyAssignment(ts.factory.createIdentifier("data"), dataInitializer),
+                        ts.factory.createPropertyAssignment(
+                            ts.factory.createIdentifier("rawResponse"),
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+                                ts.factory.createIdentifier("rawResponse")
+                            )
+                        )
+                    ],
+                    false
+                )
+            )
+        ];
     }
 
     private getReferenceToError(context: SdkContext): ts.Expression {

@@ -579,7 +579,7 @@
                                     }
                                 }
                             },
-                            "displayName": null,
+                            "displayName": "T",
                             "typeId": "type_ast:T",
                             "default": null,
                             "inline": null
@@ -651,7 +651,7 @@
                                     }
                                 }
                             },
-                            "displayName": null,
+                            "displayName": "U",
                             "typeId": "type_ast:U",
                             "default": null,
                             "inline": null

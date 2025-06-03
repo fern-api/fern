@@ -38564,7 +38564,28 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "body": {
+                "task_revision_id": "0190a234-8dc6-6d08-aea9-928fcecad8f1",
+                "response": {
+                  "hint": "The image is not suitable for authentication and onboarding checks. Please ensure the photo is a clear, passport-style image with a plain background, good lighting, and no accessories like sunglasses.",
+                  "match": false,
+                  "rationale": "The image does not meet the requirements for a passport-style photo. The person is wearing sunglasses, and the background is not plain.",
+                  "compliance": false
+                },
+                "run_data": {
+                  "audit": {
+                    "ip": "10.152.3.59",
+                    "ua": "Vercel Edge Functions"
+                  },
+                  "submitted": {
+                    "description": "brown hair, blue sweater"
+                  }
+                },
+                "id": "0190a234-cb74-6342-dec6-4be8f73f0c9f",
+                "created": "2024-07-11T14:31:21.989219"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
                   "task_revision_id": "0190a234-8dc6-6d08-aea9-928fcecad8f1",
                   "response": {
                     "hint": "The image is not suitable for authentication and onboarding checks. Please ensure the photo is a clear, passport-style image with a plain background, good lighting, and no accessories like sunglasses.",
@@ -38583,31 +38604,6 @@
                   },
                   "id": "0190a234-cb74-6342-dec6-4be8f73f0c9f",
                   "created": "2024-07-11T14:31:21.989219"
-                }
-              },
-              "responseBodyV3": {
-                "type": "json",
-                "value": {
-                  "body": {
-                    "task_revision_id": "0190a234-8dc6-6d08-aea9-928fcecad8f1",
-                    "response": {
-                      "hint": "The image is not suitable for authentication and onboarding checks. Please ensure the photo is a clear, passport-style image with a plain background, good lighting, and no accessories like sunglasses.",
-                      "match": false,
-                      "rationale": "The image does not meet the requirements for a passport-style photo. The person is wearing sunglasses, and the background is not plain.",
-                      "compliance": false
-                    },
-                    "run_data": {
-                      "audit": {
-                        "ip": "10.152.3.59",
-                        "ua": "Vercel Edge Functions"
-                      },
-                      "submitted": {
-                        "description": "brown hair, blue sweater"
-                      }
-                    },
-                    "id": "0190a234-cb74-6342-dec6-4be8f73f0c9f",
-                    "created": "2024-07-11T14:31:21.989219"
-                  }
                 }
               }
             }
@@ -40569,8 +40565,88 @@
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
-              "responseBody": {
-                "body": [
+              "responseBody": [
+                {
+                  "name": "gpt-3.5-turbo",
+                  "alias": "GPT 3.5 Turbo",
+                  "provider": "OpenAI",
+                  "description": "A fast and cost-effective model for a broad range of tasks. 16K context window with training cut off of Sep 2021.",
+                  "supports_vision": false
+                },
+                {
+                  "name": "gpt-4",
+                  "alias": "GPT 4",
+                  "provider": "OpenAI",
+                  "description": "The fourth-generation model with advanced reasoning and understanding. 8k context window with training cut off of Sep 2021.",
+                  "supports_vision": false
+                },
+                {
+                  "name": "gpt-4-turbo",
+                  "alias": "GPT 4 Turbo",
+                  "provider": "OpenAI",
+                  "description": "The latest GPT-4 Turbo model with vision capabilities. 128K context window with training cut off of Dec 2023.",
+                  "supports_vision": true
+                },
+                {
+                  "name": "gpt-4-turbo-preview",
+                  "alias": "GPT 4 Turbo Preview",
+                  "provider": "OpenAI",
+                  "description": "GPT-4 Turbo preview model featuring improved instruction following, JSON mode. 128K context window with training cut off of April 2023. Returns a maximum of 4,096 output tokens. This is a preview model.",
+                  "supports_vision": false
+                },
+                {
+                  "name": "gpt-4o",
+                  "alias": "GPT 4o",
+                  "provider": "OpenAI",
+                  "description": "GPT-4o (\"o\" for \"omni\") is OpenAI's most advanced model. It is multimodal, it has the same high intelligence as GPT-4 Turbo but is much more efficient — it generates text 2x faster and is 50% cheaper.",
+                  "supports_vision": true
+                },
+                {
+                  "name": "claude-3-5-sonnet-20240620",
+                  "alias": "Claude 3.5 Sonnet",
+                  "provider": "Anthropic",
+                  "description": "Anthropics most intelligent model. 200K context window with 4k max output with training cut off of June 2024.",
+                  "supports_vision": true
+                },
+                {
+                  "name": "claude-3-haiku-20240307",
+                  "alias": "Claude 3 Haiku",
+                  "provider": "Anthropic",
+                  "description": "Anthropics fastest and most compact model. 200K context window with 4k max output with training cut off of Aug 2023.",
+                  "supports_vision": true
+                },
+                {
+                  "name": "claude-3-sonnet-20240229",
+                  "alias": "Claude 3 Sonnet",
+                  "provider": "Anthropic",
+                  "description": "Balanced model between intelligence and speed. 200K context window with 4k max output with training cut off of Aug 2023.",
+                  "supports_vision": true
+                },
+                {
+                  "name": "claude-3-opus-20240229",
+                  "alias": "Claude 3 Opus",
+                  "provider": "Anthropic",
+                  "description": "Anthropics most powerful model. 200K context window with 4k max output with training cut off of Aug 2023.",
+                  "supports_vision": true
+                },
+                {
+                  "name": "gemini-1.5-pro-latest",
+                  "alias": "Gemini 1.5 Pro",
+                  "provider": "Google",
+                  "description": "Googles latest gemini model. 100K context window and 8k max output with training cut off in late 2023.",
+                  "supports_vision": true
+                },
+                {
+                  "name": "gemini-pro",
+                  "alias": "Gemini 1.0 Pro",
+                  "provider": "Google",
+                  "description": "Googles 1.0 version gemini model. 30K context window and 2k max output with training cut off in late 2023.",
+                  "supports_vision": false
+                }
+              ],
+              "responseBodyV3": {
+                "type": "json",
+                "value": [
                   {
                     "name": "gpt-3.5-turbo",
                     "alias": "GPT 3.5 Turbo",
@@ -40649,90 +40725,6 @@
                     "supports_vision": false
                   }
                 ]
-              },
-              "responseBodyV3": {
-                "type": "json",
-                "value": {
-                  "body": [
-                    {
-                      "name": "gpt-3.5-turbo",
-                      "alias": "GPT 3.5 Turbo",
-                      "provider": "OpenAI",
-                      "description": "A fast and cost-effective model for a broad range of tasks. 16K context window with training cut off of Sep 2021.",
-                      "supports_vision": false
-                    },
-                    {
-                      "name": "gpt-4",
-                      "alias": "GPT 4",
-                      "provider": "OpenAI",
-                      "description": "The fourth-generation model with advanced reasoning and understanding. 8k context window with training cut off of Sep 2021.",
-                      "supports_vision": false
-                    },
-                    {
-                      "name": "gpt-4-turbo",
-                      "alias": "GPT 4 Turbo",
-                      "provider": "OpenAI",
-                      "description": "The latest GPT-4 Turbo model with vision capabilities. 128K context window with training cut off of Dec 2023.",
-                      "supports_vision": true
-                    },
-                    {
-                      "name": "gpt-4-turbo-preview",
-                      "alias": "GPT 4 Turbo Preview",
-                      "provider": "OpenAI",
-                      "description": "GPT-4 Turbo preview model featuring improved instruction following, JSON mode. 128K context window with training cut off of April 2023. Returns a maximum of 4,096 output tokens. This is a preview model.",
-                      "supports_vision": false
-                    },
-                    {
-                      "name": "gpt-4o",
-                      "alias": "GPT 4o",
-                      "provider": "OpenAI",
-                      "description": "GPT-4o (\"o\" for \"omni\") is OpenAI's most advanced model. It is multimodal, it has the same high intelligence as GPT-4 Turbo but is much more efficient — it generates text 2x faster and is 50% cheaper.",
-                      "supports_vision": true
-                    },
-                    {
-                      "name": "claude-3-5-sonnet-20240620",
-                      "alias": "Claude 3.5 Sonnet",
-                      "provider": "Anthropic",
-                      "description": "Anthropics most intelligent model. 200K context window with 4k max output with training cut off of June 2024.",
-                      "supports_vision": true
-                    },
-                    {
-                      "name": "claude-3-haiku-20240307",
-                      "alias": "Claude 3 Haiku",
-                      "provider": "Anthropic",
-                      "description": "Anthropics fastest and most compact model. 200K context window with 4k max output with training cut off of Aug 2023.",
-                      "supports_vision": true
-                    },
-                    {
-                      "name": "claude-3-sonnet-20240229",
-                      "alias": "Claude 3 Sonnet",
-                      "provider": "Anthropic",
-                      "description": "Balanced model between intelligence and speed. 200K context window with 4k max output with training cut off of Aug 2023.",
-                      "supports_vision": true
-                    },
-                    {
-                      "name": "claude-3-opus-20240229",
-                      "alias": "Claude 3 Opus",
-                      "provider": "Anthropic",
-                      "description": "Anthropics most powerful model. 200K context window with 4k max output with training cut off of Aug 2023.",
-                      "supports_vision": true
-                    },
-                    {
-                      "name": "gemini-1.5-pro-latest",
-                      "alias": "Gemini 1.5 Pro",
-                      "provider": "Google",
-                      "description": "Googles latest gemini model. 100K context window and 8k max output with training cut off in late 2023.",
-                      "supports_vision": true
-                    },
-                    {
-                      "name": "gemini-pro",
-                      "alias": "Gemini 1.0 Pro",
-                      "provider": "Google",
-                      "description": "Googles 1.0 version gemini model. 30K context window and 2k max output with training cut off in late 2023.",
-                      "supports_vision": false
-                    }
-                  ]
-                }
               }
             }
           ],

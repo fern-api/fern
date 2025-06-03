@@ -6,6 +6,16 @@ import { mockServerPool } from "../mock-server/MockServerPool.js";
 import { SeedHttpHeadClient } from "../../src/Client";
 
 describe("User", () => {
+    test("head", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedHttpHeadClient({ environment: server.baseUrl });
+
+        server.mockEndpoint().head("/users").respondWith().statusCode(200).build();
+
+        const headers = await client.user.head();
+        expect(headers).toBeInstanceOf(Headers);
+    });
+
     test("list", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedHttpHeadClient({ environment: server.baseUrl });

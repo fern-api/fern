@@ -90,7 +90,7 @@ async function addApiConfigurationToSingleWorkspace({
                 yaml.dump({
                     api: {
                         path: join(
-                            await relativize(absolutePathToFernDirectory, absoluteFilepathToWorkspace),
+                            relativize(absolutePathToFernDirectory, absoluteFilepathToWorkspace),
                             RelativeFilePath.of(openapiDirectory.name),
                             RelativeFilePath.of(openapiDirectory.contents[0]?.name)
                         )
@@ -109,7 +109,7 @@ async function addApiConfigurationToSingleWorkspace({
             const parsedDocument = YAML.parseDocument(existingGeneratorsYml.contents);
             parsedDocument.set("api", {
                 path: join(
-                    await relativize(absolutePathToFernDirectory, absoluteFilepathToWorkspace),
+                    relativize(absolutePathToFernDirectory, absoluteFilepathToWorkspace),
                     RelativeFilePath.of(openapiDirectory.name),
                     RelativeFilePath.of(openapiDirectory.contents[0]?.name)
                 )

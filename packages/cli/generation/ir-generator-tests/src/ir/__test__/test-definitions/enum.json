@@ -463,7 +463,7 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "displayName": null,
+                            "displayName": "Color",
                             "typeId": "type_:Color",
                             "default": null,
                             "inline": null
@@ -497,7 +497,7 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "displayName": null,
+                            "displayName": "Operand",
                             "typeId": "type_:Operand",
                             "default": null,
                             "inline": null

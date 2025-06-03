@@ -711,7 +711,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelCustomConfigS
                         writer.write("}");
                     }
                     writer.writeSemicolonIfLastCharacterIsNot();
-                    writer.writeLine;
+                    writer.writeLine();
                 })
             })
         );

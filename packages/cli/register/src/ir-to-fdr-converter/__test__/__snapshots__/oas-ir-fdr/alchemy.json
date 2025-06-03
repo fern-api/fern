@@ -1119,6 +1119,16 @@
         }
       }
     },
+    "Null": {
+      "description": "Null",
+      "name": "Null",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
     "Integer": {
       "description": "Hex representation of the integer",
       "name": "Integer",
@@ -5856,6 +5866,7 @@
       "KeccakOrPending",
       "Keccak",
       "Nonce",
+      "Null",
       "Integer",
       "Address",
       "Addresses",

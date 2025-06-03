@@ -3,6 +3,17 @@
         {
             "id": {
                 "path": "/users",
+                "method": "HEAD",
+                "identifier_override": "endpoint_user.head"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedHttpHeadClient } from \"@fern/http-head\";\n\nconst client = new SeedHttpHeadClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.head();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
                 "method": "GET",
                 "identifier_override": "endpoint_user.list"
             },

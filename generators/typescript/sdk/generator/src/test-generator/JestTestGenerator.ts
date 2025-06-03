@@ -332,6 +332,8 @@ describe("test", () => {
             ] = code`${literalOf(pathParameter.value.jsonExample)}`;
         });
 
+        const isHeadersResponse = endpoint.response?.body === undefined && endpoint.method === IR.HttpMethod.Head;
+
         return code`
             test("${endpoint.name.originalName}", async () => {
                 const server = mockServerPool.createServer();
@@ -358,9 +360,15 @@ describe("test", () => {
                         `
                             : ""
                     }.build();
-
-                const response = ${getTextOfTsNode(generatedExample)};
-                expect(response).toEqual(${expected});
+                ${
+                    isHeadersResponse
+                        ? code`
+                        const headers = ${getTextOfTsNode(generatedExample)};
+                expect(headers).toBeInstanceOf(Headers);`
+                        : code`
+                        const response = ${getTextOfTsNode(generatedExample)};
+                expect(response).toEqual(${expected});`
+                }
             });
           `;
     }

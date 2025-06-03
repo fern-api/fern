@@ -4,9 +4,10 @@ import { ts } from "ts-morph";
 
 import { assertNever } from "@fern-api/core-utils";
 
-import { HttpResponseBody, PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpResponseBody, PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
 
 export function getSuccessReturnType(
+    endpoint: HttpEndpoint,
     response:
         | HttpResponseBody.Json
         | HttpResponseBody.FileDownload
@@ -19,6 +20,9 @@ export function getSuccessReturnType(
     } = { includeContentHeadersOnResponse: false }
 ): ts.TypeNode {
     if (response == null) {
+        if (endpoint.method === "HEAD") {
+            return ts.factory.createTypeReferenceNode("Headers");
+        }
         return ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword);
     }
     switch (response.type) {

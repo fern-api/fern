@@ -73,28 +73,32 @@
             "type": {
               "type": "id",
               "value": "type_:Account"
-            }
+            },
+            "displayName": "Account"
           },
           {
             "typeName": "Patient",
             "type": {
               "type": "id",
               "value": "type_:Patient"
-            }
+            },
+            "displayName": "Patient"
           },
           {
             "typeName": "Practitioner",
             "type": {
               "type": "id",
               "value": "type_:Practitioner"
-            }
+            },
+            "displayName": "Practitioner"
           },
           {
             "typeName": "Script",
             "type": {
               "type": "id",
               "value": "type_:Script"
-            }
+            },
+            "displayName": "Script"
           }
         ]
       }

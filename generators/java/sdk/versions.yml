@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
         Generates docs for method types.

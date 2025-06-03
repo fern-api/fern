@@ -1106,14 +1106,16 @@
             "type": {
               "type": "id",
               "value": "type_:AliasVariant"
-            }
+            },
+            "displayName": "Alias Variant"
           },
           {
             "typeName": "NonAliasVariant",
             "type": {
               "type": "id",
               "value": "type_:NonAliasVariant"
-            }
+            },
+            "displayName": "Non Alias Variant"
           }
         ]
       }

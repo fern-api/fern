@@ -6467,7 +6467,7 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "displayName": null,
+                            "displayName": "Alias Variant",
                             "typeId": "type_:AliasVariant",
                             "default": null,
                             "inline": null
@@ -6501,7 +6501,7 @@
                                 "packagePath": [],
                                 "file": null
                             },
-                            "displayName": null,
+                            "displayName": "Non Alias Variant",
                             "typeId": "type_:NonAliasVariant",
                             "default": null,
                             "inline": null

@@ -198,9 +198,37 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             headers: this.getHeaders(context),
             queryParameters: this.queryParams.getReferenceTo(context),
             body: this.getSerializedRequestBodyWithNullCheck(context),
-            contentType: this.requestBody?.contentType ?? "application/json",
-            requestType: "json"
+            contentType: this.requestBody?.contentType ?? this.getFallbackContentType(),
+            requestType: this.getRequestType()
         };
+    }
+
+    private getFallbackContentType(): string | undefined {
+        const requestBodyType = this.requestBody?.type ?? "undefined";
+        switch (requestBodyType) {
+            case "inlinedRequestBody":
+                return "application/json";
+            case "reference":
+                return "application/json";
+            case "undefined":
+                return undefined;
+            default:
+                assertNever(requestBodyType);
+        }
+    }
+
+    private getRequestType(): "json" | undefined {
+        const requestBodyType = this.requestBody?.type ?? "undefined";
+        switch (requestBodyType) {
+            case "inlinedRequestBody":
+                return "json";
+            case "reference":
+                return "json";
+            case "undefined":
+                return undefined;
+            default:
+                assertNever(requestBodyType);
+        }
     }
 
     private getHeaders(context: SdkContext): ts.ObjectLiteralElementLike[] {

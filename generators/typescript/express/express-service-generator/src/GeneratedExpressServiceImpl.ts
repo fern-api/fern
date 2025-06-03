@@ -371,12 +371,13 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     private addRouteToRouter(endpoint: HttpEndpoint, context: ExpressContext): ts.Statement {
         return context.externalDependencies.express.Router._addRoute({
             referenceToRouter: this.getReferenceToRouter(),
-            method: HttpMethod._visit<"get" | "post" | "put" | "patch" | "delete">(endpoint.method, {
+            method: HttpMethod._visit<"get" | "post" | "put" | "patch" | "delete" | "head">(endpoint.method, {
                 get: () => "get",
                 post: () => "post",
                 put: () => "put",
                 patch: () => "patch",
                 delete: () => "delete",
+                head: () => "head",
                 _other: () => {
                     throw new Error("Unknown ");
                 }

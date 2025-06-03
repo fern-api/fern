@@ -12,6 +12,7 @@ public class ListWithExtendedResultsAndOptionalDataTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
+              "total_count": 1,
               "data": {
                 "users": [
                   {
@@ -24,8 +25,7 @@ public class ListWithExtendedResultsAndOptionalDataTest : BaseMockServerTest
                   }
                 ]
               },
-              "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-              "total_count": 1
+              "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
             }
             """;
 
