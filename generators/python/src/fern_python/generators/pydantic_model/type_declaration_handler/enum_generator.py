@@ -63,11 +63,15 @@ class EnumGenerator(AbstractTypeGenerator):
                 should_export=True,
             )
         else:
+
+
+            enum_value_type = "int" if all(_is_integer(value.name.wire_value) for value in self._enum.values) else "str"
+
             enum_class = AST.ClassDeclaration(
                 name=self._class_name,
                 extends=[
                     AST.ClassReference(
-                        qualified_name_excluding_import=("str",),
+                        qualified_name_excluding_import=(enum_value_type,),
                     ),
                     AST.ClassReference(
                         import_=AST.ReferenceImport(module=AST.Module.built_in(("enum",))),
@@ -81,10 +85,15 @@ class EnumGenerator(AbstractTypeGenerator):
             self._source_file.add_class_declaration(enum_class)
 
             for value in self._enum.values:
+                if enum_value_type == "int":
+                    initializer = AST.Expression(value.name.wire_value)
+                else:
+                    initializer = AST.Expression(f'"{value.name.wire_value}"')
+
                 enum_class.add_class_var(
                     AST.VariableDeclaration(
                         name=_get_class_var_name(value.name.name),
-                        initializer=AST.Expression(f'"{value.name.wire_value}"'),
+                        initializer=initializer,
                         docstring=AST.Docstring(value.docs) if value.docs is not None else None,
                     )
                 )
@@ -185,3 +194,10 @@ class EnumSnippetGenerator(AbstractTypeSnippetGenerator):
 
 def _get_class_var_name(name: ir_types.Name) -> str:
     return name.screaming_snake_case.safe_name
+
+def _is_integer(s):
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
