@@ -29,7 +29,7 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/logger": "workspace:*",
-    "@fern-fern/generator-exec-sdk": "^0.0.1021",
+    "@fern-fern/generator-exec-sdk": "^0.0.1045",
     "@fern-fern/ir-sdk": "58.0.0",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*"

@@ -32,7 +32,7 @@
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/python-base": "workspace:*",
-    "@fern-fern/generator-exec-sdk": "^0.0.1021",
+    "@fern-fern/generator-exec-sdk": "^0.0.1045",
     "@fern-fern/ir-sdk": "57.13.0",
     "@fern-api/logger": "workspace:*",
     "@fern-fern/generator-cli-sdk": "0.0.23",

@@ -22,8 +22,8 @@ importers:
         specifier: workspace:*
         version: link:packages/commons/logging-execa
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.816
-        version: 0.0.816(encoding@0.1.13)
+        specifier: ^0.0.1045
+        version: 0.0.1045(encoding@0.1.13)
       '@fern-fern/ir-v39-sdk':
         specifier: ^0.0.1
         version: 0.0.1
@@ -231,8 +231,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/commons/path-utils
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1021
-        version: 0.0.1021(encoding@0.1.13)
+        specifier: ^0.0.1045
+        version: 0.0.1045(encoding@0.1.13)
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -567,8 +567,8 @@ importers:
         specifier: 0.0.23
         version: 0.0.23(encoding@0.1.13)
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1021
-        version: 0.0.1021(encoding@0.1.13)
+        specifier: ^0.0.1045
+        version: 0.0.1045(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: ^57.12.0
         version: 57.12.0(encoding@0.1.13)
@@ -881,8 +881,8 @@ importers:
         specifier: 0.0.23
         version: 0.0.23(encoding@0.1.13)
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1021
-        version: 0.0.1021(encoding@0.1.13)
+        specifier: ^0.0.1045
+        version: 0.0.1045(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: ^57.0.0
         version: 57.0.0
@@ -1101,8 +1101,8 @@ importers:
         specifier: 0.0.23
         version: 0.0.23(encoding@0.1.13)
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1021
-        version: 0.0.1021(encoding@0.1.13)
+        specifier: ^0.0.1045
+        version: 0.0.1045(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: ^57.13.0
         version: 57.13.0(encoding@0.1.13)
@@ -1446,8 +1446,8 @@ importers:
         specifier: workspace:*
         version: link:../model
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1021
-        version: 0.0.1021(encoding@0.1.13)
+        specifier: ^0.0.1045
+        version: 0.0.1045(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: ^57.0.0
         version: 57.0.0
@@ -1840,8 +1840,8 @@ importers:
         specifier: workspace:*
         version: link:../base
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1021
-        version: 0.0.1021(encoding@0.1.13)
+        specifier: ^0.0.1045
+        version: 0.0.1045(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: 57.13.0
         version: 57.13.0(encoding@0.1.13)
@@ -1897,8 +1897,8 @@ importers:
         specifier: 0.0.23
         version: 0.0.23(encoding@0.1.13)
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1021
-        version: 0.0.1021(encoding@0.1.13)
+        specifier: ^0.0.1045
+        version: 0.0.1045(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: 57.13.0
         version: 57.13.0(encoding@0.1.13)
@@ -2132,8 +2132,8 @@ importers:
         specifier: workspace:*
         version: link:../base
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1021
-        version: 0.0.1021(encoding@0.1.13)
+        specifier: ^0.0.1045
+        version: 0.0.1045(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: ^57.0.0
         version: 57.0.0
@@ -2226,8 +2226,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1021
-        version: 0.0.1021(encoding@0.1.13)
+        specifier: ^0.0.1045
+        version: 0.0.1045(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: ^39
         version: 39.0.0
@@ -2293,8 +2293,8 @@ importers:
         specifier: workspace:*
         version: link:../cli
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1021
-        version: 0.0.1021(encoding@0.1.13)
+        specifier: ^0.0.1045
+        version: 0.0.1045(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: ^39
         version: 39.0.0
@@ -2362,8 +2362,8 @@ importers:
         specifier: workspace:*
         version: link:../cli
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1021
-        version: 0.0.1021(encoding@0.1.13)
+        specifier: ^0.0.1045
+        version: 0.0.1045(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: ^39
         version: 39.0.0
@@ -2585,8 +2585,8 @@ importers:
         specifier: workspace:*
         version: link:../model
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1021
-        version: 0.0.1021(encoding@0.1.13)
+        specifier: ^0.0.1045
+        version: 0.0.1045(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: ^57.0.0
         version: 57.0.0
@@ -2712,8 +2712,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/configs
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1021
-        version: 0.0.1021(encoding@0.1.13)
+        specifier: ^0.0.1045
+        version: 0.0.1045(encoding@0.1.13)
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -2854,8 +2854,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/configs
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1021
-        version: 0.0.1021(encoding@0.1.13)
+        specifier: ^0.0.1045
+        version: 0.0.1045(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: 57.0.0
         version: 57.0.0
@@ -3977,14 +3977,14 @@ importers:
         specifier: 0.0.23
         version: 0.0.23(encoding@0.1.13)
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1021
-        version: 0.0.1021(encoding@0.1.13)
+        specifier: ^0.0.1045
+        version: 0.0.1045(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: 58.0.0
         version: 58.0.0(encoding@0.1.13)
       '@fern-fern/snippet-sdk':
-        specifier: ^0.98.20
-        version: 0.98.20(encoding@0.1.13)
+        specifier: ^0.0.6434
+        version: 0.0.6434(encoding@0.1.13)
       '@fern-typescript/commons':
         specifier: workspace:*
         version: link:../../utils/commons
@@ -4472,8 +4472,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/cli/logger
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1021
-        version: 0.0.1021(encoding@0.1.13)
+        specifier: ^0.0.1045
+        version: 0.0.1045(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: 58.0.0
         version: 58.0.0(encoding@0.1.13)
@@ -4664,8 +4664,8 @@ importers:
         specifier: workspace:*
         version: link:../../../../packages/cli/logger
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1021
-        version: 0.0.1021(encoding@0.1.13)
+        specifier: ^0.0.1045
+        version: 0.0.1045(encoding@0.1.13)
       '@fern-fern/ir-sdk':
         specifier: 58.0.0
         version: 58.0.0(encoding@0.1.13)
@@ -7574,8 +7574,8 @@ importers:
         specifier: 0.0.584
         version: 0.0.584(encoding@0.1.13)
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1021
-        version: 0.0.1021(encoding@0.1.13)
+        specifier: ^0.0.1045
+        version: 0.0.1045(encoding@0.1.13)
       chalk:
         specifier: ^5.3.0
         version: 5.3.0
@@ -9417,8 +9417,8 @@ importers:
         specifier: 0.0.584
         version: 0.0.584(encoding@0.1.13)
       '@fern-fern/generator-exec-sdk':
-        specifier: ^0.0.1021
-        version: 0.0.1021(encoding@0.1.13)
+        specifier: ^0.0.1045
+        version: 0.0.1045(encoding@0.1.13)
       '@fern-fern/generators-sdk':
         specifier: 0.114.0-5745f9e74
         version: 0.114.0-5745f9e74(encoding@0.1.13)
@@ -11032,11 +11032,8 @@ packages:
   '@fern-fern/generator-cli-sdk@0.0.23':
     resolution: {integrity: sha512-UGJWwnN1h4fcuRiu5XREE3vHiyuSgob6/4Sr6PNODFNC1wHczF2/2eqEWejC6mzmBdcDziPhk0ecZqZDuLkXVg==}
 
-  '@fern-fern/generator-exec-sdk@0.0.1021':
-    resolution: {integrity: sha512-/otTBt9iQSafy9QBvXXFk+pP4Ue8vw5ClgdnW/3NecYt9A+Z0UQua4w9S7VqTAgDnaMCLKs1FVAQB90t/NI81g==}
-
-  '@fern-fern/generator-exec-sdk@0.0.816':
-    resolution: {integrity: sha512-0i88vvoJjv+sRmSSUrsThJP/Qz4A4uAVUUo8gBXQBKCbjk/76wRxpOAwXh3Twgo/A8XKAfxRA2OBGQ8xv5syXg==}
+  '@fern-fern/generator-exec-sdk@0.0.1045':
+    resolution: {integrity: sha512-V9SXkuyY/LdrwBYh9MYNny4CaAc8o9i7DgYYiL2yzoMA/FR9AUcBOl1I/ykJH1CRs0oGycp5zBZrO0qmLHpPVA==}
 
   '@fern-fern/generators-sdk@0.114.0-5745f9e74':
     resolution: {integrity: sha512-FG7SU7ul1Q6EELAPsixGvbq8VP4Xjl42cd1VmLBlYXds5EtYxG/SZCu2QLsGgPMrkCFJ6V6VQgzXFTU3RoYR9A==}
@@ -11236,8 +11233,8 @@ packages:
   '@fern-fern/postman-sdk@0.1.1':
     resolution: {integrity: sha512-wjeVDbw6xvsBe6I/uwZ1P0ZhzjpEAyzY9M0iQXEuZoYo5wsea3SeTCrqOub3jV0WDia0PFFacfpoV0U/sD7yIQ==}
 
-  '@fern-fern/snippet-sdk@0.98.20':
-    resolution: {integrity: sha512-qHSXjKtnN3APpr9zXVFnDlnsGw1WjcoRoO+ue/4udjIOBiGOOI0IRgVjPVeDih3Ywjkyw4lKFS+hkgl4X/4Jdw==}
+  '@fern-fern/snippet-sdk@0.0.6434':
+    resolution: {integrity: sha512-xqt1EHBHOVAAqpo4u/YFetvjRnhabLvxrcnL26DJrbqXj9UY0DWqlzRAOX6QBgisncZKnQKU1+10r7pKdf5g3Q==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -19221,16 +19218,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/generator-exec-sdk@0.0.1021(encoding@0.1.13)':
-    dependencies:
-      form-data: 4.0.0
-      node-fetch: 2.7.0(encoding@0.1.13)
-      qs: 6.11.2
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - encoding
-
-  '@fern-fern/generator-exec-sdk@0.0.816(encoding@0.1.13)':
+  '@fern-fern/generator-exec-sdk@0.0.1045(encoding@0.1.13)':
     dependencies:
       form-data: 4.0.0
       node-fetch: 2.7.0(encoding@0.1.13)
@@ -19421,7 +19409,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/snippet-sdk@0.98.20(encoding@0.1.13)':
+  '@fern-fern/snippet-sdk@0.0.6434(encoding@0.1.13)':
     dependencies:
       form-data: 4.0.0
       js-base64: 3.7.2
