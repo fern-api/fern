@@ -326,11 +326,16 @@ describe("test", () => {
             throw new Error("Only successful responses are supported");
         }
 
-        // For certain complex types, we just JSON.parse/JSON.stringify to simplify some times
-        let shouldJsonParseStringify = false;
+        if (endpoint.response?.body === undefined && endpoint.method === "HEAD") {
+            return code`
+            test("${endpoint.name.camelCase.unsafeName}", async () => {
+                const headers = ${getTextOfTsNode(generatedExample)};
+                expect(headers).toBeInstanceOf(Headers);
+            });
+          `;
+        }
 
         const includeSerdeLayer = this.includeSerdeLayer;
-
         const getExpectedResponse = () => {
             const body = getExampleTypeReferenceForResponse(example.response);
             if (!body) {
@@ -390,10 +395,10 @@ describe("test", () => {
                                 // Sets are not supported in ts-sdk
                                 return arrayOf(...value.set.map(visitExampleTypeReference));
                             },
-                            literal: (value) => {
+                            literal: () => {
                                 return jsonExample;
                             },
-                            _other: (value) => {
+                            _other: () => {
                                 return jsonExample;
                             }
                         });
@@ -416,23 +421,21 @@ describe("test", () => {
                                     })
                                 );
                             },
-                            union: (value) => {
-                                shouldJsonParseStringify = true;
+                            union: () => {
                                 return jsonExample;
                             },
                             undiscriminatedUnion: (value) => {
-                                shouldJsonParseStringify = true;
                                 return code`${visitExampleTypeReference(value.singleUnionType)}`;
                             },
-                            _other: (value: { type: string }) => {
+                            _other: () => {
                                 return jsonExample;
                             }
                         });
                     },
-                    unknown: (value) => {
+                    unknown: () => {
                         return code`${literalOf(jsonExample)}`;
                     },
-                    _other: (value) => {
+                    _other: () => {
                         return jsonExample;
                     }
                 });
@@ -442,14 +445,10 @@ describe("test", () => {
         };
 
         const response = getExpectedResponse();
-        const expected = "response";
-        // Uncomment if/when we support Sets in responses from the TS-SDK
-        // const expected = shouldJsonParseStringify ? code`${adaptResponse}(response)` : "response";
-
         return code`
             test("${endpoint.name.camelCase.unsafeName}", async () => {
                 const response = ${getTextOfTsNode(generatedExample)};
-                expect(${expected}).toEqual(${response});
+                expect(response).toEqual(${response});
             });
           `;
     }

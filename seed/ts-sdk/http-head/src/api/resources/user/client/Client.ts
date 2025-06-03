@@ -35,11 +35,11 @@ export class User {
      * @example
      *     await client.user.head()
      */
-    public head(requestOptions?: User.RequestOptions): core.HttpResponsePromise<void> {
+    public head(requestOptions?: User.RequestOptions): core.HttpResponsePromise<Headers> {
         return core.HttpResponsePromise.fromPromise(this.__head(requestOptions));
     }
 
-    private async __head(requestOptions?: User.RequestOptions): Promise<core.WithRawResponse<void>> {
+    private async __head(requestOptions?: User.RequestOptions): Promise<core.WithRawResponse<Headers>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -61,7 +61,7 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
+            return { data: _response.rawResponse.headers, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
