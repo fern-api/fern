@@ -25,7 +25,7 @@ function convertExampleNamedTypeToTypeReference(
     return FernIr.TypeReference.named({
         ...exampleNamedType.typeName,
         inline: false,
-        default: undefined,
+        default: undefined
     });
 }
 
