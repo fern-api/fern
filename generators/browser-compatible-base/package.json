@@ -31,7 +31,7 @@
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
-    "@fern-api/dynamic-ir-sdk": "57.0.0",
+    "@fern-api/dynamic-ir-sdk": "58.2.0",
     "@fern-fern/generator-exec-sdk": "^0.0.1045"
   },
   "devDependencies": {

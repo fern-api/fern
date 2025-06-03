@@ -23,11 +23,9 @@ function convertExampleNamedTypeToTypeReference(
     exampleNamedType: FernIr.ExampleTypeReferenceShape.Named
 ): FernIr.TypeReference.Named {
     return FernIr.TypeReference.named({
-        name: exampleNamedType.typeName.name,
+        ...exampleNamedType.typeName,
         inline: false,
         default: undefined,
-        fernFilepath: exampleNamedType.typeName.fernFilepath,
-        typeId: exampleNamedType.typeName.typeId
     });
 }
 
