@@ -75,22 +75,47 @@ export async function runAppPreviewServer({
         context.logger.info(`Using bundle from path: ${bundlePath}`);
     } else {
         try {
-            const url = process.env.APP_DOCS_PREVIEW_BUCKET;
+            const url = process.env.APP_DOCS_TAR_PREVIEW_BUCKET;
             if (url == null) {
                 throw new Error(
                     "Failed to connect to the docs preview server. Please contact support@buildwithfern.com"
                 );
             }
-            await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true, app: true });
+            await downloadBundle({
+                bucketUrl: url,
+                logger: context.logger,
+                preferCached: true,
+                app: true,
+                tryTar: true
+            });
         } catch (err) {
             if (err instanceof Error) {
                 context.logger.debug(`Failed to download latest docs bundle: ${(err as Error).message}`);
+                context.logger.error("Failed to unzip .tar.gz bundle. Please report to support@buildwithfern.com");
             }
-            if (await doesPathExist(getPathToBundleFolder({ app: true }))) {
-                context.logger.warn("Falling back to cached bundle...");
-            } else {
-                context.logger.warn("Please reach out to support@buildwithfern.com.");
-                return;
+
+            context.logger.debug("Falling back to .zip bundle");
+            try {
+                const url = process.env.APP_DOCS_PREVIEW_BUCKET;
+                if (url == null) {
+                    throw new Error(
+                        "Failed to connect to the docs preview server. Please contact support@buildwithfern.com"
+                    );
+                }
+                await downloadBundle({
+                    bucketUrl: url,
+                    logger: context.logger,
+                    preferCached: true,
+                    app: true,
+                    tryTar: false
+                });
+            } catch (err) {
+                if (await doesPathExist(getPathToBundleFolder({ app: true }))) {
+                    context.logger.warn("Falling back to cached bundle...");
+                } else {
+                    context.logger.warn("Please reach out to support@buildwithfern.com.");
+                    return;
+                }
             }
         }
     }
@@ -126,12 +151,12 @@ export async function runAppPreviewServer({
     context.logger.debug(`Next.js standalone server started with PID: ${serverProcess.pid}`);
 
     serverProcess.on("error", (err) => {
-        context.logger.error(`Server process error: ${err.message}`);
+        context.logger.debug(`Server process error: ${err.message}`);
     });
 
     serverProcess.on("exit", (code, signal) => {
         if (code) {
-            context.logger.error(`Server process exited with code: ${code}`);
+            context.logger.debug(`Server process exited with code: ${code}`);
         } else if (signal) {
             context.logger.debug(`Server process killed with signal: ${signal}`);
         } else {
@@ -143,17 +168,59 @@ export async function runAppPreviewServer({
         if (!serverProcess.killed) {
             context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
             try {
+                // First try graceful shutdown
                 serverProcess.kill();
+
+                // If process doesn't exit within 2 seconds, force kill
+                setTimeout(() => {
+                    if (!serverProcess.killed) {
+                        context.logger.debug(`Force killing server process with PID: ${serverProcess.pid}`);
+                        try {
+                            serverProcess.kill("SIGKILL");
+                        } catch (err) {
+                            context.logger.error(`Failed to force kill server process: ${err}`);
+                        }
+                    }
+                }, 2000);
             } catch (err) {
                 context.logger.error(`Failed to kill server process: ${err}`);
             }
         }
     };
 
-    // clean up process
-    process.on("SIGINT", cleanup);
-    process.on("SIGTERM", cleanup);
+    // handle termination signals
+    const shutdownSignals = ["SIGTERM", "SIGINT"];
+    const failureSignals = ["SIGHUP"];
+    for (const shutSig of shutdownSignals) {
+        process.on(shutSig, () => {
+            context.logger.debug("Shutting down server...");
+            cleanup();
+        });
+    }
+    for (const failSig of failureSignals) {
+        process.on(failSig, () => {
+            context.logger.debug("Server failed, shutting down process...");
+            cleanup();
+        });
+    }
+
+    // handle normal exit
     process.on("exit", cleanup);
+
+    // handle uncaught exits
+    process.on("uncaughtException", (err) => {
+        context.logger.debug(`Uncaught exception: ${err}`);
+        cleanup();
+        process.exit(1);
+    });
+    process.on("unhandledRejection", (reason) => {
+        context.logger.debug(`Unhandled rejection: ${reason}`);
+        cleanup();
+        process.exit(1);
+    });
+
+    // Ensure cleanup runs before process exits
+    process.on("beforeExit", cleanup);
 
     await new Promise((resolve) => setTimeout(resolve, 3000));
     context.logger.debug(`Next.js server should now be running on http://localhost:${port}`);
