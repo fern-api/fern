@@ -81,7 +81,8 @@ export class JestTestGenerator {
                 moduleNameMapper: {
                     "(.+)\\.js$": "$1",
                 },
-                setupFilesAfterEnv: ["<rootDir>/tests/mock-server/setup.ts"]
+                setupFilesAfterEnv: ${arrayOf(...setupFilesAfterEnv)},
+                ${this.useBigInt ? code`workerThreads: true,` : code``}
             };
             `.toString({ dprintOptions: { indentWidth: 4 } })
         );
