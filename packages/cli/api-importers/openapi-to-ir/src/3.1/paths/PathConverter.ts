@@ -45,6 +45,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
         const endpoints: OperationConverter.Output[] = [];
         const webhooks: WebhookConverter.Output[] = [];
         const inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
+
         for (const method of HttpMethods) {
             const operation = this.pathItem[method];
 

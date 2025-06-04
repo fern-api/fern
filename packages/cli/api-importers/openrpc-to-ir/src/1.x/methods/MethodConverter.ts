@@ -231,7 +231,9 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                 (topLevelServer) => topLevelServer.name === server.name && topLevelServer.url !== server.url
             );
 
-            if (matchingTopLevelServerNameWithDifferentUrl != null) {return server.url;}
+            if (matchingTopLevelServerNameWithDifferentUrl != null) {
+                return server.url;
+            }
 
             const matchingTopLevelServerUrl = this.topLevelServers.find(
                 (topLevelServer) => topLevelServer.url === server.url
