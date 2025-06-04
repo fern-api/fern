@@ -4,7 +4,7 @@
     type: internal
   irVersion: 58
   createdAt: '2025-06-03'
-  version: 0.18.0
+  version: 0.18.1
 
 - changelogEntry:
   - summary: | 
