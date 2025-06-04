@@ -10,6 +10,10 @@ import com.fern.ir.model.auth.OAuthScheme;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.ir.HeaderApiVersionScheme;
 import com.fern.ir.model.ir.IntermediateRepresentation;
+import com.fern.ir.model.publish.DirectPublish;
+import com.fern.ir.model.publish.Filesystem;
+import com.fern.ir.model.publish.GithubPublish;
+import com.fern.ir.model.publish.PublishingConfig.Visitor;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.AbstractPoetClassNameFactory;
 import com.fern.java.DefaultGeneratorExecClient;
@@ -115,19 +119,50 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
             JavaSdkDownloadFilesCustomConfig customConfig) {
+        JavaSdkCustomConfig sdkCustomConfig = JavaSdkCustomConfig.builder()
+                .wrappedAliases(customConfig.wrappedAliases())
+                .clientClassName(customConfig.clientClassName())
+                .baseApiExceptionClassName(customConfig.baseApiExceptionClassName())
+                .baseExceptionClassName(customConfig.baseExceptionClassName())
+                .customDependencies(customConfig.customDependencies())
+                .build();
+
+        Boolean generateFullProject = ir.getPublishConfig()
+                .map(publishConfig -> publishConfig.visit(new Visitor<Boolean>() {
+                    @Override
+                    public Boolean visitDirect(DirectPublish value) {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitGithub(GithubPublish value) {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitFilesystem(Filesystem value) {
+                        return value.getGenerateFullProject();
+                    }
+
+                    @Override
+                    public Boolean _visitUnknown(Object value) {
+                        throw new RuntimeException("Encountered unknown publish config: " + value);
+                    }
+                }))
+                .orElse(false);
+
+        if (generateFullProject) {
+            this.runInProjectModeHook(generatorExecClient, generatorConfig, ir, sdkCustomConfig);
+            return;
+        }
+
         ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
-                customConfig.packagePrefix().map(List::of).orElseGet(Collections::emptyList),
-                customConfig.packageLayout());
+                sdkCustomConfig.packagePrefix().map(List::of).orElseGet(Collections::emptyList),
+                sdkCustomConfig.packageLayout());
         ClientGeneratorContext context = new ClientGeneratorContext(
                 ir,
                 generatorConfig,
-                JavaSdkCustomConfig.builder()
-                        .wrappedAliases(customConfig.wrappedAliases())
-                        .clientClassName(customConfig.clientClassName())
-                        .baseApiExceptionClassName(customConfig.baseApiExceptionClassName())
-                        .baseExceptionClassName(customConfig.baseExceptionClassName())
-                        .customDependencies(customConfig.customDependencies())
-                        .build(),
+                sdkCustomConfig,
                 clientPoetClassNameFactory,
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes());
         generateClient(context, ir, generatorExecClient);
@@ -140,6 +175,35 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             IntermediateRepresentation ir,
             JavaSdkCustomConfig customConfig,
             GithubOutputMode githubOutputMode) {
+        this.runInProjectModeHook(generatorExecClient, generatorConfig, ir, customConfig);
+    }
+
+    @Override
+    public void runInPublishModeHook(
+            DefaultGeneratorExecClient generatorExecClient,
+            GeneratorConfig generatorConfig,
+            IntermediateRepresentation ir,
+            JavaSdkCustomConfig customConfig,
+            GeneratorPublishConfig publishOutputMode) {
+        List<String> packagePrefixTokens = customConfig
+                .packagePrefix()
+                .map(List::of)
+                .orElseGet(() -> AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(
+                        ir, generatorConfig.getOrganization()));
+        ClientPoetClassNameFactory clientPoetClassNameFactory =
+                new ClientPoetClassNameFactory(packagePrefixTokens, customConfig.packageLayout());
+        List<AuthScheme> resolvedAuthSchemes =
+                new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
+        ClientGeneratorContext context = new ClientGeneratorContext(
+                ir, generatorConfig, customConfig, clientPoetClassNameFactory, resolvedAuthSchemes);
+        generateClient(context, ir, generatorExecClient);
+    }
+
+    private void runInProjectModeHook(
+            DefaultGeneratorExecClient generatorExecClient,
+            GeneratorConfig generatorConfig,
+            IntermediateRepresentation ir,
+            JavaSdkCustomConfig customConfig) {
         List<String> packagePrefixTokens = customConfig
                 .packagePrefix()
                 .map(List::of)
@@ -169,27 +233,6 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .build());
         TestGenerator testGenerator = new TestGenerator(context);
         this.addGeneratedFile(testGenerator.generateFile());
-    }
-
-    @Override
-    public void runInPublishModeHook(
-            DefaultGeneratorExecClient generatorExecClient,
-            GeneratorConfig generatorConfig,
-            IntermediateRepresentation ir,
-            JavaSdkCustomConfig customConfig,
-            GeneratorPublishConfig publishOutputMode) {
-        List<String> packagePrefixTokens = customConfig
-                .packagePrefix()
-                .map(List::of)
-                .orElseGet(() -> AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(
-                        ir, generatorConfig.getOrganization()));
-        ClientPoetClassNameFactory clientPoetClassNameFactory =
-                new ClientPoetClassNameFactory(packagePrefixTokens, customConfig.packageLayout());
-        List<AuthScheme> resolvedAuthSchemes =
-                new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
-        ClientGeneratorContext context = new ClientGeneratorContext(
-                ir, generatorConfig, customConfig, clientPoetClassNameFactory, resolvedAuthSchemes);
-        generateClient(context, ir, generatorExecClient);
     }
 
     public GeneratedRootClient generateClient(
