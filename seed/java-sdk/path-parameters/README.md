@@ -23,6 +23,7 @@ public class Example {
             .build();
 
         client.user().createUser(
+            "tenant_id",
             User
                 .builder()
                 .name("name")
