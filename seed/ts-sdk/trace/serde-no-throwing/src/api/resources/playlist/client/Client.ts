@@ -44,8 +44,8 @@ export class Playlist {
      *
      * @example
      *     await client.playlist.createPlaylist(1, {
-     *         datetime: "2024-01-15T09:30:00Z",
-     *         optionalDatetime: "2024-01-15T09:30:00Z",
+     *         datetime: new Date("2024-01-15T09:30:00.000Z"),
+     *         optionalDatetime: new Date("2024-01-15T09:30:00.000Z"),
      *         body: {
      *             name: "name",
      *             problems: ["problems", "problems"]
@@ -206,9 +206,7 @@ export class Playlist {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
             },
-            contentType: "application/json",
             queryParameters: _queryParams,
-            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -286,8 +284,6 @@ export class Playlist {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
             },
-            contentType: "application/json",
-            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -510,8 +506,6 @@ export class Playlist {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
             },
-            contentType: "application/json",
-            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

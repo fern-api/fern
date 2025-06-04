@@ -477,7 +477,8 @@
             "type": {
               "type": "id",
               "value": "type_:UndiscriminatedUnion1InlineType1"
-            }
+            },
+            "displayName": "Undiscriminated Union1inline Type1"
           },
           {
             "typeName": "UndiscriminatedUnion1InlineType2",
@@ -485,7 +486,8 @@
             "type": {
               "type": "id",
               "value": "type_:UndiscriminatedUnion1InlineType2"
-            }
+            },
+            "displayName": "Undiscriminated Union1inline Type2"
           },
           {
             "typeName": "UndiscriminatedUnion1DiscriminatedUnion1",
@@ -493,7 +495,8 @@
             "type": {
               "type": "id",
               "value": "type_:UndiscriminatedUnion1DiscriminatedUnion1"
-            }
+            },
+            "displayName": "Undiscriminated Union1discriminated Union1"
           },
           {
             "typeName": "UndiscriminatedUnion1InlineEnum1",
@@ -501,7 +504,8 @@
             "type": {
               "type": "id",
               "value": "type_:UndiscriminatedUnion1InlineEnum1"
-            }
+            },
+            "displayName": "Undiscriminated Union1inline Enum1"
           },
           {
             "typeName": "UserId",
@@ -509,7 +513,8 @@
             "type": {
               "type": "id",
               "value": "type_:UserId"
-            }
+            },
+            "displayName": "User ID"
           },
           {
             "description": "lorem ipsum",
@@ -553,7 +558,8 @@
             "type": {
               "type": "id",
               "value": "type_:ReferenceType"
-            }
+            },
+            "displayName": "Reference Type"
           }
         ]
       }
@@ -1100,14 +1106,16 @@
             "type": {
               "type": "id",
               "value": "type_:AliasVariant"
-            }
+            },
+            "displayName": "Alias Variant"
           },
           {
             "typeName": "NonAliasVariant",
             "type": {
               "type": "id",
               "value": "type_:NonAliasVariant"
-            }
+            },
+            "displayName": "Non Alias Variant"
           }
         ]
       }

@@ -57,14 +57,16 @@
             "type": {
               "type": "id",
               "value": "type_ast:Cat"
-            }
+            },
+            "displayName": "Cat"
           },
           {
             "typeName": "Dog",
             "type": {
               "type": "id",
               "value": "type_ast:Dog"
-            }
+            },
+            "displayName": "Dog"
           }
         ]
       }
@@ -79,14 +81,16 @@
             "type": {
               "type": "id",
               "value": "type_ast:Acai"
-            }
+            },
+            "displayName": "Acai"
           },
           {
             "typeName": "Fig",
             "type": {
               "type": "id",
               "value": "type_ast:Fig"
-            }
+            },
+            "displayName": "Fig"
           }
         ]
       }
@@ -101,14 +105,16 @@
             "type": {
               "type": "id",
               "value": "type_ast:BranchNode"
-            }
+            },
+            "displayName": "Branch Node"
           },
           {
             "typeName": "LeafNode",
             "type": {
               "type": "id",
               "value": "type_ast:LeafNode"
-            }
+            },
+            "displayName": "Leaf Node"
           }
         ]
       }

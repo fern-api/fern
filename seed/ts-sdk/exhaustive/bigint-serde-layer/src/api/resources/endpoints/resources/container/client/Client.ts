@@ -301,9 +301,9 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.container.getAndReturnSetOfObjects(new Set([{
+     *     await client.endpoints.container.getAndReturnSetOfObjects([{
      *             string: "string"
-     *         }]))
+     *         }])
      */
     public getAndReturnSetOfObjects(
         request: SeedExhaustive.types.ObjectWithRequiredField[],

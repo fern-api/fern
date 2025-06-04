@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedAliasExtendsClient } from \"@fern/alias-extends\";\n\nconst client = new SeedAliasExtendsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.extendedInlineRequestBody({\n    child: \"child\"\n});\n"
+                "client": "import { SeedAliasExtendsClient } from \"@fern/alias-extends\";\n\nconst client = new SeedAliasExtendsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.extendedInlineRequestBody({\n    child: \"child\",\n    parent: \"parent\"\n});\n"
             }
         }
     ],

@@ -23,6 +23,8 @@ import { Extensions } from ".";
 import { APIErrorLevel, ErrorCollector } from "./ErrorCollector";
 import { SchemaConverter } from "./converters/schema/SchemaConverter";
 
+export type DisplayNameOverrideSource = "schema_identifier" | "discriminator_key" | "reference_identifier";
+
 export declare namespace Spec {
     export interface Args<T> {
         spec: T;
@@ -90,8 +92,10 @@ export abstract class AbstractConverterContext<Spec extends object> {
         reference: OpenAPIV3_1.ReferenceObject;
         breadcrumbs?: string[];
         displayNameOverride?: string | undefined;
-        displayNameOverrideSource?: "reference_title" | "discriminator_key" | "schema_title";
-    }): { ok: true; reference: TypeReference } | { ok: false };
+        displayNameOverrideSource?: DisplayNameOverrideSource;
+    }):
+        | { ok: true; reference: TypeReference; inlinedTypes?: Record<string, SchemaConverter.ConvertedSchema> }
+        | { ok: false };
 
     /**
      * Converts breadcrumbs into a schema name or type id
@@ -654,8 +658,10 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return $ref.startsWith("http://") || $ref.startsWith("https://");
     }
 
-    public isReferenceObjectWithTitle(value: unknown): value is OpenAPIV3_1.ReferenceObject & { title: string } {
-        return this.isReferenceObject(value) && "title" in value;
+    public isReferenceObjectWithIdentifier(
+        value: unknown
+    ): value is OpenAPIV3_1.ReferenceObject & { title?: string; name?: string; messageId?: string } {
+        return this.isReferenceObject(value) && ("title" in value || "name" in value || "messageId" in value);
     }
 
     public isExampleWithSummary(example: unknown): example is { summary: string } {

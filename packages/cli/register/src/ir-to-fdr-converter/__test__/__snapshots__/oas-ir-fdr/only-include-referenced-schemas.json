@@ -17785,8 +17785,8 @@
         ]
       }
     },
-    "DataAttributesGetParametersSchema": {
-      "name": "DataAttributesGetParametersSchema",
+    "DataAttributesGetParametersModel": {
+      "name": "DataAttributesGetParametersModel",
       "shape": {
         "type": "enum",
         "values": [
@@ -17802,8 +17802,8 @@
         ]
       }
     },
-    "EventsGetParametersSchema0": {
-      "name": "EventsGetParametersSchema0",
+    "EventsGetParametersFilter0": {
+      "name": "EventsGetParametersFilter0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17821,8 +17821,8 @@
       },
       "displayName": "user_id query parameter"
     },
-    "EventsGetParametersSchema1": {
-      "name": "EventsGetParametersSchema1",
+    "EventsGetParametersFilter1": {
+      "name": "EventsGetParametersFilter1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17840,8 +17840,8 @@
       },
       "displayName": "intercom_user_id query parameter"
     },
-    "EventsGetParametersSchema2": {
-      "name": "EventsGetParametersSchema2",
+    "EventsGetParametersFilter2": {
+      "name": "EventsGetParametersFilter2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17859,32 +17859,32 @@
       },
       "displayName": "email query parameter"
     },
-    "EventsGetParametersSchema": {
-      "name": "EventsGetParametersSchema",
+    "EventsGetParametersFilter": {
+      "name": "EventsGetParametersFilter",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EventsGetParametersSchema0",
+            "typeName": "EventsGetParametersFilter0",
             "type": {
               "type": "id",
-              "value": "EventsGetParametersSchema0"
+              "value": "EventsGetParametersFilter0"
             },
             "displayName": "user_id query parameter"
           },
           {
-            "typeName": "EventsGetParametersSchema1",
+            "typeName": "EventsGetParametersFilter1",
             "type": {
               "type": "id",
-              "value": "EventsGetParametersSchema1"
+              "value": "EventsGetParametersFilter1"
             },
             "displayName": "intercom_user_id query parameter"
           },
           {
-            "typeName": "EventsGetParametersSchema2",
+            "typeName": "EventsGetParametersFilter2",
             "type": {
               "type": "id",
-              "value": "EventsGetParametersSchema2"
+              "value": "EventsGetParametersFilter2"
             },
             "displayName": "email query parameter"
           }
@@ -29835,7 +29835,7 @@
             {
               "name": "User reply",
               "description": "",
-              "path": "/conversations/123 or \"last\"/reply",
+              "path": "/conversations/123%20or%20%22last%22/reply",
               "pathParameters": {
                 "id": "123 or \"last\""
               },
@@ -30032,7 +30032,7 @@
             {
               "name": "Admin note reply",
               "description": "",
-              "path": "/conversations/123 or \"last\"/reply",
+              "path": "/conversations/123%20or%20%22last%22/reply",
               "pathParameters": {
                 "id": "123 or \"last\""
               },
@@ -30219,7 +30219,7 @@
             {
               "name": "User last conversation reply",
               "description": "",
-              "path": "/conversations/123 or \"last\"/reply",
+              "path": "/conversations/123%20or%20%22last%22/reply",
               "pathParameters": {
                 "id": "123 or \"last\""
               },
@@ -30416,7 +30416,7 @@
             {
               "name": "Not found",
               "description": "",
-              "path": "/conversations/123 or \"last\"/reply",
+              "path": "/conversations/123%20or%20%22last%22/reply",
               "pathParameters": {
                 "id": "123 or \"last\""
               },
@@ -32813,7 +32813,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "DataAttributesGetParametersSchema"
+                  "value": "DataAttributesGetParametersModel"
                 }
               }
             },
@@ -34025,7 +34025,7 @@
               "key": "filter",
               "type": {
                 "type": "id",
-                "value": "EventsGetParametersSchema"
+                "value": "EventsGetParametersFilter"
               }
             },
             {

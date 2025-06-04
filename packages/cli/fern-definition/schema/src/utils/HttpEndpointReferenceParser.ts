@@ -1,14 +1,10 @@
-import { HttpMethodSchema } from "../schemas";
-
 export declare namespace HttpEndpointReferenceParser {
     interface Parsed {
         path: string;
-        // TODO: Temporary workaround; use HttpMethodSchema once we publish IR v57.16
-        // method: HttpMethodSchema;
         method: Method;
     }
 
-    type Method = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
+    type Method = "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD";
 
     export type ValidationResult = Valid | Invalid;
 

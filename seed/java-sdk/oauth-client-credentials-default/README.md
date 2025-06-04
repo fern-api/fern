@@ -18,6 +18,8 @@ public class Example {
     public static void main(String[] args) {
         SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient
             .builder()
+            .clientId("<clientId>")
+            .clientSecret("<clientSecret>")
             .build();
 
         client.auth().getToken(

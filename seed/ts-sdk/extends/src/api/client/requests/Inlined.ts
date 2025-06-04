@@ -7,7 +7,9 @@ import * as SeedExtends from "../../index.js";
 /**
  * @example
  *     {
- *         unique: "unique"
+ *         unique: "unique",
+ *         name: "name",
+ *         docs: "docs"
  *     }
  */
 export interface Inlined extends SeedExtends.ExampleType {

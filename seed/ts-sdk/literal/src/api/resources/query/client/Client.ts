@@ -43,9 +43,11 @@ export class Query {
      *
      * @example
      *     await client.query.send({
+     *         prompt: "You are a helpful assistant",
      *         optional_prompt: "You are a helpful assistant",
      *         alias_prompt: "You are a helpful assistant",
      *         alias_optional_prompt: "You are a helpful assistant",
+     *         stream: false,
      *         optional_stream: false,
      *         alias_stream: false,
      *         alias_optional_stream: false,
@@ -118,9 +120,7 @@ export class Query {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
             },
-            contentType: "application/json",
             queryParameters: _queryParams,
-            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

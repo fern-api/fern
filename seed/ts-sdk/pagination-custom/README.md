@@ -23,9 +23,20 @@ Instantiate and use the client with the following:
 import { SeedPaginationClient } from "@fern/pagination-custom";
 
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-await client.users.listUsernamesCustom({
+const response = await client.users.listUsernamesCustom({
     starting_after: "starting_after",
 });
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+const page = await client.users.listUsernamesCustom({
+    starting_after: "starting_after",
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
 ```
 
 ## Request And Response Types
@@ -58,6 +69,30 @@ try {
         console.log(err.body);
         console.log(err.rawResponse);
     }
+}
+```
+
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedPaginationClient } from "@fern/pagination-custom";
+
+const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+const response = await client.users.listUsernamesCustom({
+    starting_after: "starting_after",
+});
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+const page = await client.users.listUsernamesCustom({
+    starting_after: "starting_after",
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
 }
 ```
 

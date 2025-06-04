@@ -3654,6 +3654,83 @@
         ]
       }
     },
+    "TranscriptListParameters/properties/limit": {
+      "description": "Maximum amount of transcripts to retrieve",
+      "name": "TranscriptListParameters/properties/limit",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "long",
+            "default": 10
+          }
+        }
+      }
+    },
+    "TranscriptListParameters/properties/status": {
+      "description": "Filter by transcript status",
+      "name": "TranscriptListParameters/properties/status",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "TranscriptListParameters/properties/created_on": {
+      "description": "Only get transcripts created on this date",
+      "name": "TranscriptListParameters/properties/created_on",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      }
+    },
+    "TranscriptListParameters/properties/before_id": {
+      "description": "Get transcripts that were created before this transcript ID",
+      "name": "TranscriptListParameters/properties/before_id",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "TranscriptListParameters/properties/after_id": {
+      "description": "Get transcripts that were created after this transcript ID",
+      "name": "TranscriptListParameters/properties/after_id",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "TranscriptListParameters/properties/throttled_only": {
+      "description": "Only get throttled transcripts, overrides the status filter",
+      "name": "TranscriptListParameters/properties/throttled_only",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
     "SendAudio": {
       "name": "SendAudio",
       "shape": {
@@ -4108,35 +4185,40 @@
             "type": {
               "type": "id",
               "value": "SessionBegins"
-            }
+            },
+            "displayName": "SessionBegins"
           },
           {
             "typeName": "PartialTranscript",
             "type": {
               "type": "id",
               "value": "PartialTranscript"
-            }
+            },
+            "displayName": "partialTranscript"
           },
           {
             "typeName": "FinalTranscript",
             "type": {
               "type": "id",
               "value": "FinalTranscript"
-            }
+            },
+            "displayName": "finalTranscript"
           },
           {
             "typeName": "SessionTerminated",
             "type": {
               "type": "id",
               "value": "SessionTerminated"
-            }
+            },
+            "displayName": "SessionTerminated"
           },
           {
             "typeName": "RealtimeError",
             "type": {
               "type": "id",
               "value": "RealtimeError"
-            }
+            },
+            "displayName": "RealtimeError"
           }
         ]
       }
@@ -4151,14 +4233,16 @@
             "type": {
               "type": "id",
               "value": "SendAudio"
-            }
+            },
+            "displayName": "sendAudio"
           },
           {
             "typeName": "TerminateSession",
             "type": {
               "type": "id",
               "value": "TerminateSession"
-            }
+            },
+            "displayName": "terminateSession"
           }
         ]
       }

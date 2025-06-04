@@ -45,14 +45,11 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
         contentType,
         schemaId
     }: {
-        mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
+        mediaTypeObject: OpenAPIV3_1.MediaTypeObject;
         contentType: string;
         resolveSchema?: boolean;
         schemaId: string;
     }): AbstractMediaTypeObjectConverter.MediaTypeObject | undefined {
-        if (mediaTypeObject == null) {
-            return undefined;
-        }
         if (mediaTypeObject.schema == null) {
             return undefined;
         }
@@ -99,6 +96,26 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
                 : undefined;
 
         return { ...convertedSchema, examples };
+    }
+
+    protected parseMediaTypeSchemaOrReference({
+        schemaOrReference,
+        schemaId
+    }: {
+        schemaOrReference: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
+        schemaId: string;
+    }): AbstractMediaTypeObjectConverter.MediaTypeObject | undefined {
+        const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
+            context: this.context,
+            breadcrumbs: [...this.breadcrumbs],
+            schemaOrReference,
+            schemaIdOverride: schemaId
+        });
+        const convertedSchema = schemaOrReferenceConverter.convert();
+        if (convertedSchema == null) {
+            return undefined;
+        }
+        return { ...convertedSchema, examples: undefined };
     }
 
     protected convertMediaTypeObjectExamples({

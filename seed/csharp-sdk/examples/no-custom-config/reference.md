@@ -451,6 +451,7 @@ await client.Service.CreateBigEntityAsync(
         CastMember = new Actor { Name = "name", Id = "id" },
         ExtendedMovie = new ExtendedMovie
         {
+            Cast = new List<string>() { "cast", "cast" },
             Id = "id",
             Prequel = "prequel",
             Title = "title",
@@ -467,7 +468,6 @@ await client.Service.CreateBigEntityAsync(
                 },
             },
             Revenue = 1000000,
-            Cast = new List<string>() { "cast", "cast" },
         },
         Entity = new Entity { Type = BasicType.Primitive, Name = "name" },
         Metadata = "metadata",

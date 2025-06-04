@@ -1745,9 +1745,9 @@
         ]
       }
     },
-    "SessionsGetParametersSchema": {
+    "SessionsGetParametersStatus": {
       "description": "status of the session to get",
-      "name": "SessionsGetParametersSchema",
+      "name": "SessionsGetParametersStatus",
       "shape": {
         "type": "enum",
         "values": [
@@ -1762,6 +1762,139 @@
           },
           {
             "value": "ended"
+          }
+        ]
+      }
+    },
+    "SessionsEventsResponse2000": {
+      "name": "SessionsEventsResponse2000",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "data",
+            "valueType": {
+              "type": "id",
+              "value": "StatusMessage"
+            }
+          },
+          {
+            "description": "The event name.",
+            "key": "event",
+            "valueType": {
+              "type": "literal",
+              "value": {
+                "type": "stringLiteral",
+                "value": "status"
+              }
+            }
+          },
+          {
+            "description": "The event ID.",
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "description": "The retry time in milliseconds.",
+            "key": "retry",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "displayName": "Event status"
+    },
+    "SessionsEventsResponse2001": {
+      "name": "SessionsEventsResponse2001",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "data",
+            "valueType": {
+              "type": "id",
+              "value": "ErrorMessage"
+            }
+          },
+          {
+            "description": "The event name.",
+            "key": "event",
+            "valueType": {
+              "type": "literal",
+              "value": {
+                "type": "stringLiteral",
+                "value": "error"
+              }
+            }
+          },
+          {
+            "description": "The event ID.",
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "description": "The retry time in milliseconds.",
+            "key": "retry",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "displayName": "Event error"
+    },
+    "Sessions_events_Response_200": {
+      "description": "Each oneOf object in the array represents one possible Server Sent Events (SSE) message, serialized as UTF-8 text according to the SSE specification.",
+      "name": "Sessions_events_Response_200",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "SessionsEventsResponse2000",
+            "type": {
+              "type": "id",
+              "value": "SessionsEventsResponse2000"
+            },
+            "displayName": "Event status"
+          },
+          {
+            "typeName": "SessionsEventsResponse2001",
+            "type": {
+              "type": "id",
+              "value": "SessionsEventsResponse2001"
+            },
+            "displayName": "Event error"
           }
         ]
       }
@@ -2448,7 +2581,8 @@
                     "name": "Acme corp login",
                     "status": "foo",
                     "tags": [
-                      "foo"
+                      "blue",
+                      "red"
                     ],
                     "upload_uri": "foo"
                   }
@@ -2479,7 +2613,8 @@
                       "name": "Acme corp login",
                       "status": "foo",
                       "tags": [
-                        "foo"
+                        "blue",
+                        "red"
                       ],
                       "upload_uri": "foo"
                     }
@@ -2585,7 +2720,8 @@
                   "name": "Acme corp login",
                   "status": "foo",
                   "tags": [
-                    "foo"
+                    "blue",
+                    "red"
                   ],
                   "upload_uri": "foo"
                 },
@@ -2614,7 +2750,8 @@
                     "name": "Acme corp login",
                     "status": "foo",
                     "tags": [
-                      "foo"
+                      "blue",
+                      "red"
                     ],
                     "upload_uri": "foo"
                   },
@@ -2840,7 +2977,8 @@
                   "name": "Acme corp login",
                   "status": "foo",
                   "tags": [
-                    "foo"
+                    "blue",
+                    "red"
                   ],
                   "upload_uri": "foo"
                 },
@@ -2869,7 +3007,8 @@
                     "name": "Acme corp login",
                     "status": "foo",
                     "tags": [
-                      "foo"
+                      "blue",
+                      "red"
                     ],
                     "upload_uri": "foo"
                   },
@@ -2959,7 +3098,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "SessionsGetParametersSchema"
+                  "value": "SessionsGetParametersStatus"
                 }
               }
             },
@@ -3669,12 +3808,18 @@
           "queryParameters": [],
           "headers": [],
           "response": {
-            "statusCode": 200,
             "type": {
-              "type": "object",
-              "extends": [],
-              "properties": []
-            }
+              "type": "stream",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "Sessions_events_Response_200"
+                }
+              }
+            },
+            "statusCode": 200,
+            "description": "OK"
           },
           "errorsV2": [
             {
@@ -3727,32 +3872,7 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200,
-              "responseBody": {
-                "data": {
-                  "event": "foo",
-                  "eventTimeMillis": 42,
-                  "id": "foo",
-                  "status": "awaiting_capacity"
-                },
-                "event": "foo",
-                "id": 42,
-                "retry": 42
-              },
-              "responseBodyV3": {
-                "type": "json",
-                "value": {
-                  "data": {
-                    "event": "foo",
-                    "eventTimeMillis": 42,
-                    "id": "foo",
-                    "status": "awaiting_capacity"
-                  },
-                  "event": "foo",
-                  "id": 42,
-                  "retry": 42
-                }
-              }
+              "responseStatusCode": 200
             }
           ],
           "protocol": {

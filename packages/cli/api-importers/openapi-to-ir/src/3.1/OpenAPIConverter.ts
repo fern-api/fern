@@ -4,6 +4,8 @@ import { AuthScheme, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk
 import { convertApiAuth, convertEnvironments } from "@fern-api/ir-utils";
 import { AbstractSpecConverter, Converters, ServersConverter } from "@fern-api/v2-importer-commons";
 
+import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers";
+import { convertGlobalHeadersExtension } from "../utils/convertGlobalHeadersExtension";
 import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1";
 import { PathConverter } from "./paths/PathConverter";
 import { WebhookConverter } from "./paths/operations/WebhookConverter";
@@ -31,6 +33,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
         const idToAuthScheme = this.convertSecuritySchemes();
 
+        this.convertGlobalHeaders();
+
         this.convertSchemas();
 
         this.convertWebhooks();
@@ -44,6 +48,27 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         this.updateEndpointsWithDefaultUrl(defaultUrl);
 
         return this.finalizeIr();
+    }
+
+    private convertGlobalHeaders(): void {
+        if (this.context.globalHeaderOverrides) {
+            // TODO: Convert global headers to IR
+        }
+
+        const globalHeadersExtension = new FernGlobalHeadersExtension({
+            breadcrumbs: ["x-fern-global-headers"],
+            document: this.context.spec,
+            context: this.context
+        });
+        const convertedGlobalHeaders = globalHeadersExtension.convert();
+        if (convertedGlobalHeaders != null) {
+            const globalHeaders = convertGlobalHeadersExtension({
+                globalHeaders: convertedGlobalHeaders,
+                context: this.context
+            });
+            this.addGlobalHeadersToIr(globalHeaders);
+            this.context.setGlobalHeaders(globalHeaders);
+        }
     }
 
     private convertSecuritySchemes(): Record<string, AuthScheme> {
@@ -80,9 +105,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 continue;
             }
 
-            // if no top level schemes, then just add the scheme to the whole api
             if (
-                this.shouldAddSchemeToApi({
+                this.shouldAddAuthSchemeToIr({
                     authScheme: convertedScheme,
                     schemeId: id,
                     currentSecuritySchemes: securitySchemes
@@ -227,12 +251,6 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             const convertedPath = pathConverter.convert();
             if (convertedPath != null) {
                 for (const endpoint of convertedPath.endpoints) {
-                    this.addEndpointToIr({
-                        endpoint: endpoint.endpoint,
-                        audiences: endpoint.audiences,
-                        endpointGroup: endpoint.group
-                    });
-
                     if (endpoint.streamEndpoint != null) {
                         this.addEndpointToIr({
                             endpoint: endpoint.streamEndpoint,
@@ -241,8 +259,23 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                         });
                     }
 
-                    if (endpoint.servers && endpoint.servers[0] != null) {
-                        endpointLevelServers.push(endpoint.servers[0]);
+                    this.addEndpointToIr({
+                        endpoint: endpoint.endpoint,
+                        audiences: endpoint.audiences,
+                        endpointGroup: endpoint.group
+                    });
+
+                    if (endpoint.servers) {
+                        for (const server of endpoint.servers) {
+                            if (
+                                this.shouldAddServerToCollectedServers({
+                                    server,
+                                    currentServers: endpointLevelServers
+                                })
+                            ) {
+                                endpointLevelServers.push(server);
+                            }
+                        }
                     }
                     if (endpoint.errors) {
                         // TODO: For SDK-IR, errorIds are not guaranteed to be unique.
@@ -271,7 +304,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         return { endpointLevelServers, errors };
     }
 
-    private shouldAddSchemeToApi({
+    private shouldAddAuthSchemeToIr({
         authScheme,
         schemeId,
         currentSecuritySchemes

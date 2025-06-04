@@ -1,15 +1,15 @@
 import path from "path";
 
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { loadApis } from "@fern-api/project-loader";
 import { createMockTaskContext } from "@fern-api/task-context";
 
+import { loadApisOrThrow } from "../../loadApisOrThrow";
 import { generateAndSnapshotDynamicIR } from "./generateAndSnapshotDynamicIR";
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 describe("test definitions", async () => {
     const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../../../test-definitions");
-    const apiWorkspaces = await loadApis({
+    const apiWorkspaces = await loadApisOrThrow({
         fernDirectory: join(AbsoluteFilePath.of(TEST_DEFINITIONS_DIR), RelativeFilePath.of("fern")),
         context: createMockTaskContext(),
         cliVersion: "0.0.0",

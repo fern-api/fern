@@ -39,6 +39,10 @@ class AbstractGenerator(ABC):
             ),
             github=lambda github_output_mode: self._get_github_publish_config(generator_config, github_output_mode),
         )
+        if ir.publish_config is not None: 
+            ir_publish_config = ir.publish_config.get_as_union()
+            if ir_publish_config.type == "filesystem" and ir_publish_config.generate_full_project: 
+                project_config = ProjectConfig(package_name=generator_config.organization, package_version="0.0.0")
         maybe_github_output_mode = generator_config.output.mode.visit(
             download_files=lambda: None,
             publish=lambda _: None,

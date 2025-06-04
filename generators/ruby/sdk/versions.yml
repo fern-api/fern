@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 - version: 0.8.2
   createdAt: '2024-08-05'
@@ -262,7 +263,6 @@
   changelogEntry:
     - type: chore
       summary: Loosen the Faraday dependencies within the generated SDKs
-      changed: null
   irVersion: 32
 
 - version: 0.1.0-rc0

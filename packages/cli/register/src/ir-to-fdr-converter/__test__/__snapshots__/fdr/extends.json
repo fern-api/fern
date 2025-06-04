@@ -134,15 +134,15 @@
             "queryParameters": {},
             "headers": {},
             "requestBody": {
-              "docs": "docs",
               "name": "name",
+              "docs": "docs",
               "unique": "unique"
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
-                "docs": "docs",
                 "name": "name",
+                "docs": "docs",
                 "unique": "unique"
               }
             },

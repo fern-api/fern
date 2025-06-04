@@ -66,8 +66,6 @@ export class Service {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
             },
-            contentType: "application/json",
-            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -247,9 +245,7 @@ export class Service {
                 "X-API-Version": xApiVersion,
                 ...requestOptions?.headers,
             },
-            contentType: "application/json",
             queryParameters: _queryParams,
-            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -294,6 +290,7 @@ export class Service {
      *             id: "id"
      *         },
      *         extendedMovie: {
+     *             cast: ["cast", "cast"],
      *             id: "id",
      *             prequel: "prequel",
      *             title: "title",
@@ -307,8 +304,7 @@ export class Service {
      *                     "key": "value"
      *                 }
      *             },
-     *             revenue: 1000000,
-     *             cast: ["cast", "cast"]
+     *             revenue: 1000000
      *         },
      *         entity: {
      *             type: "primitive",

@@ -9646,30 +9646,22 @@
         ]
       }
     },
-    "BankInfoGetParametersSchema": {
-      "name": "BankInfoGetParametersSchema",
+    "BankInfoGetParametersAccountType": {
+      "name": "BankInfoGetParametersAccountType",
       "shape": {
         "type": "enum",
         "values": [
           {
-            "value": "account_type"
-          }
-        ]
-      }
-    },
-    "BankInfoIdGetParametersSchema": {
-      "name": "BankInfoIdGetParametersSchema",
-      "shape": {
-        "type": "enum",
-        "values": [
+            "value": "CHECKING"
+          },
           {
-            "value": "account_type"
+            "value": "SAVINGS"
           }
         ]
       }
     },
-    "BenefitsGetParametersSchema": {
-      "name": "BenefitsGetParametersSchema",
+    "BankInfoGetParametersExpand": {
+      "name": "BankInfoGetParametersExpand",
       "shape": {
         "type": "enum",
         "values": [
@@ -9679,8 +9671,44 @@
         ]
       }
     },
-    "BenefitsIdGetParametersSchema": {
-      "name": "BenefitsIdGetParametersSchema",
+    "BankInfoGetParametersOrderBy": {
+      "name": "BankInfoGetParametersOrderBy",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "-remote_created_at"
+          },
+          {
+            "value": "remote_created_at"
+          }
+        ]
+      }
+    },
+    "BankInfoGetParametersRemoteFields": {
+      "name": "BankInfoGetParametersRemoteFields",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "account_type"
+          }
+        ]
+      }
+    },
+    "BankInfoGetParametersShowEnumOrigins": {
+      "name": "BankInfoGetParametersShowEnumOrigins",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "account_type"
+          }
+        ]
+      }
+    },
+    "BankInfoIdGetParametersExpand": {
+      "name": "BankInfoIdGetParametersExpand",
       "shape": {
         "type": "enum",
         "values": [
@@ -9690,8 +9718,52 @@
         ]
       }
     },
-    "EmployeePayrollRunsGetParametersSchema": {
-      "name": "EmployeePayrollRunsGetParametersSchema",
+    "BankInfoIdGetParametersRemoteFields": {
+      "name": "BankInfoIdGetParametersRemoteFields",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "account_type"
+          }
+        ]
+      }
+    },
+    "BankInfoIdGetParametersShowEnumOrigins": {
+      "name": "BankInfoIdGetParametersShowEnumOrigins",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "account_type"
+          }
+        ]
+      }
+    },
+    "BenefitsGetParametersExpand": {
+      "name": "BenefitsGetParametersExpand",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "employee"
+          }
+        ]
+      }
+    },
+    "BenefitsIdGetParametersExpand": {
+      "name": "BenefitsIdGetParametersExpand",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "employee"
+          }
+        ]
+      }
+    },
+    "EmployeePayrollRunsGetParametersExpand": {
+      "name": "EmployeePayrollRunsGetParametersExpand",
       "shape": {
         "type": "enum",
         "values": [
@@ -9707,8 +9779,8 @@
         ]
       }
     },
-    "EmployeePayrollRunsIdGetParametersSchema": {
-      "name": "EmployeePayrollRunsIdGetParametersSchema",
+    "EmployeePayrollRunsIdGetParametersExpand": {
+      "name": "EmployeePayrollRunsIdGetParametersExpand",
       "shape": {
         "type": "enum",
         "values": [
@@ -9724,8 +9796,798 @@
         ]
       }
     },
-    "EmployeesGetParametersSchema": {
-      "name": "EmployeesGetParametersSchema",
+    "EmployeesGetParametersEmploymentStatus": {
+      "name": "EmployeesGetParametersEmploymentStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ACTIVE"
+          },
+          {
+            "value": "INACTIVE"
+          },
+          {
+            "value": "PENDING"
+          }
+        ]
+      }
+    },
+    "EmployeesGetParametersExpand": {
+      "name": "EmployeesGetParametersExpand",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "company"
+          },
+          {
+            "value": "company,pay_group"
+          },
+          {
+            "value": "employments"
+          },
+          {
+            "value": "employments,company"
+          },
+          {
+            "value": "employments,company,pay_group"
+          },
+          {
+            "value": "employments,groups"
+          },
+          {
+            "value": "employments,groups,company"
+          },
+          {
+            "value": "employments,groups,company,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location"
+          },
+          {
+            "value": "employments,groups,home_location,company"
+          },
+          {
+            "value": "employments,groups,home_location,company,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,manager"
+          },
+          {
+            "value": "employments,groups,home_location,manager,company"
+          },
+          {
+            "value": "employments,groups,home_location,manager,company,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,manager,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,manager,team"
+          },
+          {
+            "value": "employments,groups,home_location,manager,team,company"
+          },
+          {
+            "value": "employments,groups,home_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,manager,team,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,team"
+          },
+          {
+            "value": "employments,groups,home_location,team,company"
+          },
+          {
+            "value": "employments,groups,home_location,team,company,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,team,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,work_location"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,company"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,company,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,manager"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,manager,company"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,manager,company,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,manager,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,manager,team"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,manager,team,company"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,manager,team,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,team"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,team,company"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,team,company,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,team,pay_group"
+          },
+          {
+            "value": "employments,groups,manager"
+          },
+          {
+            "value": "employments,groups,manager,company"
+          },
+          {
+            "value": "employments,groups,manager,company,pay_group"
+          },
+          {
+            "value": "employments,groups,manager,pay_group"
+          },
+          {
+            "value": "employments,groups,manager,team"
+          },
+          {
+            "value": "employments,groups,manager,team,company"
+          },
+          {
+            "value": "employments,groups,manager,team,company,pay_group"
+          },
+          {
+            "value": "employments,groups,manager,team,pay_group"
+          },
+          {
+            "value": "employments,groups,pay_group"
+          },
+          {
+            "value": "employments,groups,team"
+          },
+          {
+            "value": "employments,groups,team,company"
+          },
+          {
+            "value": "employments,groups,team,company,pay_group"
+          },
+          {
+            "value": "employments,groups,team,pay_group"
+          },
+          {
+            "value": "employments,groups,work_location"
+          },
+          {
+            "value": "employments,groups,work_location,company"
+          },
+          {
+            "value": "employments,groups,work_location,company,pay_group"
+          },
+          {
+            "value": "employments,groups,work_location,manager"
+          },
+          {
+            "value": "employments,groups,work_location,manager,company"
+          },
+          {
+            "value": "employments,groups,work_location,manager,company,pay_group"
+          },
+          {
+            "value": "employments,groups,work_location,manager,pay_group"
+          },
+          {
+            "value": "employments,groups,work_location,manager,team"
+          },
+          {
+            "value": "employments,groups,work_location,manager,team,company"
+          },
+          {
+            "value": "employments,groups,work_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "employments,groups,work_location,manager,team,pay_group"
+          },
+          {
+            "value": "employments,groups,work_location,pay_group"
+          },
+          {
+            "value": "employments,groups,work_location,team"
+          },
+          {
+            "value": "employments,groups,work_location,team,company"
+          },
+          {
+            "value": "employments,groups,work_location,team,company,pay_group"
+          },
+          {
+            "value": "employments,groups,work_location,team,pay_group"
+          },
+          {
+            "value": "employments,home_location"
+          },
+          {
+            "value": "employments,home_location,company"
+          },
+          {
+            "value": "employments,home_location,company,pay_group"
+          },
+          {
+            "value": "employments,home_location,manager"
+          },
+          {
+            "value": "employments,home_location,manager,company"
+          },
+          {
+            "value": "employments,home_location,manager,company,pay_group"
+          },
+          {
+            "value": "employments,home_location,manager,pay_group"
+          },
+          {
+            "value": "employments,home_location,manager,team"
+          },
+          {
+            "value": "employments,home_location,manager,team,company"
+          },
+          {
+            "value": "employments,home_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "employments,home_location,manager,team,pay_group"
+          },
+          {
+            "value": "employments,home_location,pay_group"
+          },
+          {
+            "value": "employments,home_location,team"
+          },
+          {
+            "value": "employments,home_location,team,company"
+          },
+          {
+            "value": "employments,home_location,team,company,pay_group"
+          },
+          {
+            "value": "employments,home_location,team,pay_group"
+          },
+          {
+            "value": "employments,home_location,work_location"
+          },
+          {
+            "value": "employments,home_location,work_location,company"
+          },
+          {
+            "value": "employments,home_location,work_location,company,pay_group"
+          },
+          {
+            "value": "employments,home_location,work_location,manager"
+          },
+          {
+            "value": "employments,home_location,work_location,manager,company"
+          },
+          {
+            "value": "employments,home_location,work_location,manager,company,pay_group"
+          },
+          {
+            "value": "employments,home_location,work_location,manager,pay_group"
+          },
+          {
+            "value": "employments,home_location,work_location,manager,team"
+          },
+          {
+            "value": "employments,home_location,work_location,manager,team,company"
+          },
+          {
+            "value": "employments,home_location,work_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "employments,home_location,work_location,manager,team,pay_group"
+          },
+          {
+            "value": "employments,home_location,work_location,pay_group"
+          },
+          {
+            "value": "employments,home_location,work_location,team"
+          },
+          {
+            "value": "employments,home_location,work_location,team,company"
+          },
+          {
+            "value": "employments,home_location,work_location,team,company,pay_group"
+          },
+          {
+            "value": "employments,home_location,work_location,team,pay_group"
+          },
+          {
+            "value": "employments,manager"
+          },
+          {
+            "value": "employments,manager,company"
+          },
+          {
+            "value": "employments,manager,company,pay_group"
+          },
+          {
+            "value": "employments,manager,pay_group"
+          },
+          {
+            "value": "employments,manager,team"
+          },
+          {
+            "value": "employments,manager,team,company"
+          },
+          {
+            "value": "employments,manager,team,company,pay_group"
+          },
+          {
+            "value": "employments,manager,team,pay_group"
+          },
+          {
+            "value": "employments,pay_group"
+          },
+          {
+            "value": "employments,team"
+          },
+          {
+            "value": "employments,team,company"
+          },
+          {
+            "value": "employments,team,company,pay_group"
+          },
+          {
+            "value": "employments,team,pay_group"
+          },
+          {
+            "value": "employments,work_location"
+          },
+          {
+            "value": "employments,work_location,company"
+          },
+          {
+            "value": "employments,work_location,company,pay_group"
+          },
+          {
+            "value": "employments,work_location,manager"
+          },
+          {
+            "value": "employments,work_location,manager,company"
+          },
+          {
+            "value": "employments,work_location,manager,company,pay_group"
+          },
+          {
+            "value": "employments,work_location,manager,pay_group"
+          },
+          {
+            "value": "employments,work_location,manager,team"
+          },
+          {
+            "value": "employments,work_location,manager,team,company"
+          },
+          {
+            "value": "employments,work_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "employments,work_location,manager,team,pay_group"
+          },
+          {
+            "value": "employments,work_location,pay_group"
+          },
+          {
+            "value": "employments,work_location,team"
+          },
+          {
+            "value": "employments,work_location,team,company"
+          },
+          {
+            "value": "employments,work_location,team,company,pay_group"
+          },
+          {
+            "value": "employments,work_location,team,pay_group"
+          },
+          {
+            "value": "groups"
+          },
+          {
+            "value": "groups,company"
+          },
+          {
+            "value": "groups,company,pay_group"
+          },
+          {
+            "value": "groups,home_location"
+          },
+          {
+            "value": "groups,home_location,company"
+          },
+          {
+            "value": "groups,home_location,company,pay_group"
+          },
+          {
+            "value": "groups,home_location,manager"
+          },
+          {
+            "value": "groups,home_location,manager,company"
+          },
+          {
+            "value": "groups,home_location,manager,company,pay_group"
+          },
+          {
+            "value": "groups,home_location,manager,pay_group"
+          },
+          {
+            "value": "groups,home_location,manager,team"
+          },
+          {
+            "value": "groups,home_location,manager,team,company"
+          },
+          {
+            "value": "groups,home_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "groups,home_location,manager,team,pay_group"
+          },
+          {
+            "value": "groups,home_location,pay_group"
+          },
+          {
+            "value": "groups,home_location,team"
+          },
+          {
+            "value": "groups,home_location,team,company"
+          },
+          {
+            "value": "groups,home_location,team,company,pay_group"
+          },
+          {
+            "value": "groups,home_location,team,pay_group"
+          },
+          {
+            "value": "groups,home_location,work_location"
+          },
+          {
+            "value": "groups,home_location,work_location,company"
+          },
+          {
+            "value": "groups,home_location,work_location,company,pay_group"
+          },
+          {
+            "value": "groups,home_location,work_location,manager"
+          },
+          {
+            "value": "groups,home_location,work_location,manager,company"
+          },
+          {
+            "value": "groups,home_location,work_location,manager,company,pay_group"
+          },
+          {
+            "value": "groups,home_location,work_location,manager,pay_group"
+          },
+          {
+            "value": "groups,home_location,work_location,manager,team"
+          },
+          {
+            "value": "groups,home_location,work_location,manager,team,company"
+          },
+          {
+            "value": "groups,home_location,work_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "groups,home_location,work_location,manager,team,pay_group"
+          },
+          {
+            "value": "groups,home_location,work_location,pay_group"
+          },
+          {
+            "value": "groups,home_location,work_location,team"
+          },
+          {
+            "value": "groups,home_location,work_location,team,company"
+          },
+          {
+            "value": "groups,home_location,work_location,team,company,pay_group"
+          },
+          {
+            "value": "groups,home_location,work_location,team,pay_group"
+          },
+          {
+            "value": "groups,manager"
+          },
+          {
+            "value": "groups,manager,company"
+          },
+          {
+            "value": "groups,manager,company,pay_group"
+          },
+          {
+            "value": "groups,manager,pay_group"
+          },
+          {
+            "value": "groups,manager,team"
+          },
+          {
+            "value": "groups,manager,team,company"
+          },
+          {
+            "value": "groups,manager,team,company,pay_group"
+          },
+          {
+            "value": "groups,manager,team,pay_group"
+          },
+          {
+            "value": "groups,pay_group"
+          },
+          {
+            "value": "groups,team"
+          },
+          {
+            "value": "groups,team,company"
+          },
+          {
+            "value": "groups,team,company,pay_group"
+          },
+          {
+            "value": "groups,team,pay_group"
+          },
+          {
+            "value": "groups,work_location"
+          },
+          {
+            "value": "groups,work_location,company"
+          },
+          {
+            "value": "groups,work_location,company,pay_group"
+          },
+          {
+            "value": "groups,work_location,manager"
+          },
+          {
+            "value": "groups,work_location,manager,company"
+          },
+          {
+            "value": "groups,work_location,manager,company,pay_group"
+          },
+          {
+            "value": "groups,work_location,manager,pay_group"
+          },
+          {
+            "value": "groups,work_location,manager,team"
+          },
+          {
+            "value": "groups,work_location,manager,team,company"
+          },
+          {
+            "value": "groups,work_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "groups,work_location,manager,team,pay_group"
+          },
+          {
+            "value": "groups,work_location,pay_group"
+          },
+          {
+            "value": "groups,work_location,team"
+          },
+          {
+            "value": "groups,work_location,team,company"
+          },
+          {
+            "value": "groups,work_location,team,company,pay_group"
+          },
+          {
+            "value": "groups,work_location,team,pay_group"
+          },
+          {
+            "value": "home_location"
+          },
+          {
+            "value": "home_location,company"
+          },
+          {
+            "value": "home_location,company,pay_group"
+          },
+          {
+            "value": "home_location,manager"
+          },
+          {
+            "value": "home_location,manager,company"
+          },
+          {
+            "value": "home_location,manager,company,pay_group"
+          },
+          {
+            "value": "home_location,manager,pay_group"
+          },
+          {
+            "value": "home_location,manager,team"
+          },
+          {
+            "value": "home_location,manager,team,company"
+          },
+          {
+            "value": "home_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "home_location,manager,team,pay_group"
+          },
+          {
+            "value": "home_location,pay_group"
+          },
+          {
+            "value": "home_location,team"
+          },
+          {
+            "value": "home_location,team,company"
+          },
+          {
+            "value": "home_location,team,company,pay_group"
+          },
+          {
+            "value": "home_location,team,pay_group"
+          },
+          {
+            "value": "home_location,work_location"
+          },
+          {
+            "value": "home_location,work_location,company"
+          },
+          {
+            "value": "home_location,work_location,company,pay_group"
+          },
+          {
+            "value": "home_location,work_location,manager"
+          },
+          {
+            "value": "home_location,work_location,manager,company"
+          },
+          {
+            "value": "home_location,work_location,manager,company,pay_group"
+          },
+          {
+            "value": "home_location,work_location,manager,pay_group"
+          },
+          {
+            "value": "home_location,work_location,manager,team"
+          },
+          {
+            "value": "home_location,work_location,manager,team,company"
+          },
+          {
+            "value": "home_location,work_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "home_location,work_location,manager,team,pay_group"
+          },
+          {
+            "value": "home_location,work_location,pay_group"
+          },
+          {
+            "value": "home_location,work_location,team"
+          },
+          {
+            "value": "home_location,work_location,team,company"
+          },
+          {
+            "value": "home_location,work_location,team,company,pay_group"
+          },
+          {
+            "value": "home_location,work_location,team,pay_group"
+          },
+          {
+            "value": "manager"
+          },
+          {
+            "value": "manager,company"
+          },
+          {
+            "value": "manager,company,pay_group"
+          },
+          {
+            "value": "manager,pay_group"
+          },
+          {
+            "value": "manager,team"
+          },
+          {
+            "value": "manager,team,company"
+          },
+          {
+            "value": "manager,team,company,pay_group"
+          },
+          {
+            "value": "manager,team,pay_group"
+          },
+          {
+            "value": "pay_group"
+          },
+          {
+            "value": "team"
+          },
+          {
+            "value": "team,company"
+          },
+          {
+            "value": "team,company,pay_group"
+          },
+          {
+            "value": "team,pay_group"
+          },
+          {
+            "value": "work_location"
+          },
+          {
+            "value": "work_location,company"
+          },
+          {
+            "value": "work_location,company,pay_group"
+          },
+          {
+            "value": "work_location,manager"
+          },
+          {
+            "value": "work_location,manager,company"
+          },
+          {
+            "value": "work_location,manager,company,pay_group"
+          },
+          {
+            "value": "work_location,manager,pay_group"
+          },
+          {
+            "value": "work_location,manager,team"
+          },
+          {
+            "value": "work_location,manager,team,company"
+          },
+          {
+            "value": "work_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "work_location,manager,team,pay_group"
+          },
+          {
+            "value": "work_location,pay_group"
+          },
+          {
+            "value": "work_location,team"
+          },
+          {
+            "value": "work_location,team,company"
+          },
+          {
+            "value": "work_location,team,company,pay_group"
+          },
+          {
+            "value": "work_location,team,pay_group"
+          }
+        ]
+      }
+    },
+    "EmployeesGetParametersRemoteFields": {
+      "name": "EmployeesGetParametersRemoteFields",
       "shape": {
         "type": "enum",
         "values": [
@@ -9777,8 +10639,8 @@
         ]
       }
     },
-    "EmployeesIdGetParametersSchema": {
-      "name": "EmployeesIdGetParametersSchema",
+    "EmployeesGetParametersShowEnumOrigins": {
+      "name": "EmployeesGetParametersShowEnumOrigins",
       "shape": {
         "type": "enum",
         "values": [
@@ -9830,8 +10692,918 @@
         ]
       }
     },
-    "EmploymentsGetParametersSchema": {
-      "name": "EmploymentsGetParametersSchema",
+    "EmployeesIdGetParametersExpand": {
+      "name": "EmployeesIdGetParametersExpand",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "company"
+          },
+          {
+            "value": "company,pay_group"
+          },
+          {
+            "value": "employments"
+          },
+          {
+            "value": "employments,company"
+          },
+          {
+            "value": "employments,company,pay_group"
+          },
+          {
+            "value": "employments,groups"
+          },
+          {
+            "value": "employments,groups,company"
+          },
+          {
+            "value": "employments,groups,company,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location"
+          },
+          {
+            "value": "employments,groups,home_location,company"
+          },
+          {
+            "value": "employments,groups,home_location,company,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,manager"
+          },
+          {
+            "value": "employments,groups,home_location,manager,company"
+          },
+          {
+            "value": "employments,groups,home_location,manager,company,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,manager,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,manager,team"
+          },
+          {
+            "value": "employments,groups,home_location,manager,team,company"
+          },
+          {
+            "value": "employments,groups,home_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,manager,team,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,team"
+          },
+          {
+            "value": "employments,groups,home_location,team,company"
+          },
+          {
+            "value": "employments,groups,home_location,team,company,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,team,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,work_location"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,company"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,company,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,manager"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,manager,company"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,manager,company,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,manager,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,manager,team"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,manager,team,company"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,manager,team,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,team"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,team,company"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,team,company,pay_group"
+          },
+          {
+            "value": "employments,groups,home_location,work_location,team,pay_group"
+          },
+          {
+            "value": "employments,groups,manager"
+          },
+          {
+            "value": "employments,groups,manager,company"
+          },
+          {
+            "value": "employments,groups,manager,company,pay_group"
+          },
+          {
+            "value": "employments,groups,manager,pay_group"
+          },
+          {
+            "value": "employments,groups,manager,team"
+          },
+          {
+            "value": "employments,groups,manager,team,company"
+          },
+          {
+            "value": "employments,groups,manager,team,company,pay_group"
+          },
+          {
+            "value": "employments,groups,manager,team,pay_group"
+          },
+          {
+            "value": "employments,groups,pay_group"
+          },
+          {
+            "value": "employments,groups,team"
+          },
+          {
+            "value": "employments,groups,team,company"
+          },
+          {
+            "value": "employments,groups,team,company,pay_group"
+          },
+          {
+            "value": "employments,groups,team,pay_group"
+          },
+          {
+            "value": "employments,groups,work_location"
+          },
+          {
+            "value": "employments,groups,work_location,company"
+          },
+          {
+            "value": "employments,groups,work_location,company,pay_group"
+          },
+          {
+            "value": "employments,groups,work_location,manager"
+          },
+          {
+            "value": "employments,groups,work_location,manager,company"
+          },
+          {
+            "value": "employments,groups,work_location,manager,company,pay_group"
+          },
+          {
+            "value": "employments,groups,work_location,manager,pay_group"
+          },
+          {
+            "value": "employments,groups,work_location,manager,team"
+          },
+          {
+            "value": "employments,groups,work_location,manager,team,company"
+          },
+          {
+            "value": "employments,groups,work_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "employments,groups,work_location,manager,team,pay_group"
+          },
+          {
+            "value": "employments,groups,work_location,pay_group"
+          },
+          {
+            "value": "employments,groups,work_location,team"
+          },
+          {
+            "value": "employments,groups,work_location,team,company"
+          },
+          {
+            "value": "employments,groups,work_location,team,company,pay_group"
+          },
+          {
+            "value": "employments,groups,work_location,team,pay_group"
+          },
+          {
+            "value": "employments,home_location"
+          },
+          {
+            "value": "employments,home_location,company"
+          },
+          {
+            "value": "employments,home_location,company,pay_group"
+          },
+          {
+            "value": "employments,home_location,manager"
+          },
+          {
+            "value": "employments,home_location,manager,company"
+          },
+          {
+            "value": "employments,home_location,manager,company,pay_group"
+          },
+          {
+            "value": "employments,home_location,manager,pay_group"
+          },
+          {
+            "value": "employments,home_location,manager,team"
+          },
+          {
+            "value": "employments,home_location,manager,team,company"
+          },
+          {
+            "value": "employments,home_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "employments,home_location,manager,team,pay_group"
+          },
+          {
+            "value": "employments,home_location,pay_group"
+          },
+          {
+            "value": "employments,home_location,team"
+          },
+          {
+            "value": "employments,home_location,team,company"
+          },
+          {
+            "value": "employments,home_location,team,company,pay_group"
+          },
+          {
+            "value": "employments,home_location,team,pay_group"
+          },
+          {
+            "value": "employments,home_location,work_location"
+          },
+          {
+            "value": "employments,home_location,work_location,company"
+          },
+          {
+            "value": "employments,home_location,work_location,company,pay_group"
+          },
+          {
+            "value": "employments,home_location,work_location,manager"
+          },
+          {
+            "value": "employments,home_location,work_location,manager,company"
+          },
+          {
+            "value": "employments,home_location,work_location,manager,company,pay_group"
+          },
+          {
+            "value": "employments,home_location,work_location,manager,pay_group"
+          },
+          {
+            "value": "employments,home_location,work_location,manager,team"
+          },
+          {
+            "value": "employments,home_location,work_location,manager,team,company"
+          },
+          {
+            "value": "employments,home_location,work_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "employments,home_location,work_location,manager,team,pay_group"
+          },
+          {
+            "value": "employments,home_location,work_location,pay_group"
+          },
+          {
+            "value": "employments,home_location,work_location,team"
+          },
+          {
+            "value": "employments,home_location,work_location,team,company"
+          },
+          {
+            "value": "employments,home_location,work_location,team,company,pay_group"
+          },
+          {
+            "value": "employments,home_location,work_location,team,pay_group"
+          },
+          {
+            "value": "employments,manager"
+          },
+          {
+            "value": "employments,manager,company"
+          },
+          {
+            "value": "employments,manager,company,pay_group"
+          },
+          {
+            "value": "employments,manager,pay_group"
+          },
+          {
+            "value": "employments,manager,team"
+          },
+          {
+            "value": "employments,manager,team,company"
+          },
+          {
+            "value": "employments,manager,team,company,pay_group"
+          },
+          {
+            "value": "employments,manager,team,pay_group"
+          },
+          {
+            "value": "employments,pay_group"
+          },
+          {
+            "value": "employments,team"
+          },
+          {
+            "value": "employments,team,company"
+          },
+          {
+            "value": "employments,team,company,pay_group"
+          },
+          {
+            "value": "employments,team,pay_group"
+          },
+          {
+            "value": "employments,work_location"
+          },
+          {
+            "value": "employments,work_location,company"
+          },
+          {
+            "value": "employments,work_location,company,pay_group"
+          },
+          {
+            "value": "employments,work_location,manager"
+          },
+          {
+            "value": "employments,work_location,manager,company"
+          },
+          {
+            "value": "employments,work_location,manager,company,pay_group"
+          },
+          {
+            "value": "employments,work_location,manager,pay_group"
+          },
+          {
+            "value": "employments,work_location,manager,team"
+          },
+          {
+            "value": "employments,work_location,manager,team,company"
+          },
+          {
+            "value": "employments,work_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "employments,work_location,manager,team,pay_group"
+          },
+          {
+            "value": "employments,work_location,pay_group"
+          },
+          {
+            "value": "employments,work_location,team"
+          },
+          {
+            "value": "employments,work_location,team,company"
+          },
+          {
+            "value": "employments,work_location,team,company,pay_group"
+          },
+          {
+            "value": "employments,work_location,team,pay_group"
+          },
+          {
+            "value": "groups"
+          },
+          {
+            "value": "groups,company"
+          },
+          {
+            "value": "groups,company,pay_group"
+          },
+          {
+            "value": "groups,home_location"
+          },
+          {
+            "value": "groups,home_location,company"
+          },
+          {
+            "value": "groups,home_location,company,pay_group"
+          },
+          {
+            "value": "groups,home_location,manager"
+          },
+          {
+            "value": "groups,home_location,manager,company"
+          },
+          {
+            "value": "groups,home_location,manager,company,pay_group"
+          },
+          {
+            "value": "groups,home_location,manager,pay_group"
+          },
+          {
+            "value": "groups,home_location,manager,team"
+          },
+          {
+            "value": "groups,home_location,manager,team,company"
+          },
+          {
+            "value": "groups,home_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "groups,home_location,manager,team,pay_group"
+          },
+          {
+            "value": "groups,home_location,pay_group"
+          },
+          {
+            "value": "groups,home_location,team"
+          },
+          {
+            "value": "groups,home_location,team,company"
+          },
+          {
+            "value": "groups,home_location,team,company,pay_group"
+          },
+          {
+            "value": "groups,home_location,team,pay_group"
+          },
+          {
+            "value": "groups,home_location,work_location"
+          },
+          {
+            "value": "groups,home_location,work_location,company"
+          },
+          {
+            "value": "groups,home_location,work_location,company,pay_group"
+          },
+          {
+            "value": "groups,home_location,work_location,manager"
+          },
+          {
+            "value": "groups,home_location,work_location,manager,company"
+          },
+          {
+            "value": "groups,home_location,work_location,manager,company,pay_group"
+          },
+          {
+            "value": "groups,home_location,work_location,manager,pay_group"
+          },
+          {
+            "value": "groups,home_location,work_location,manager,team"
+          },
+          {
+            "value": "groups,home_location,work_location,manager,team,company"
+          },
+          {
+            "value": "groups,home_location,work_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "groups,home_location,work_location,manager,team,pay_group"
+          },
+          {
+            "value": "groups,home_location,work_location,pay_group"
+          },
+          {
+            "value": "groups,home_location,work_location,team"
+          },
+          {
+            "value": "groups,home_location,work_location,team,company"
+          },
+          {
+            "value": "groups,home_location,work_location,team,company,pay_group"
+          },
+          {
+            "value": "groups,home_location,work_location,team,pay_group"
+          },
+          {
+            "value": "groups,manager"
+          },
+          {
+            "value": "groups,manager,company"
+          },
+          {
+            "value": "groups,manager,company,pay_group"
+          },
+          {
+            "value": "groups,manager,pay_group"
+          },
+          {
+            "value": "groups,manager,team"
+          },
+          {
+            "value": "groups,manager,team,company"
+          },
+          {
+            "value": "groups,manager,team,company,pay_group"
+          },
+          {
+            "value": "groups,manager,team,pay_group"
+          },
+          {
+            "value": "groups,pay_group"
+          },
+          {
+            "value": "groups,team"
+          },
+          {
+            "value": "groups,team,company"
+          },
+          {
+            "value": "groups,team,company,pay_group"
+          },
+          {
+            "value": "groups,team,pay_group"
+          },
+          {
+            "value": "groups,work_location"
+          },
+          {
+            "value": "groups,work_location,company"
+          },
+          {
+            "value": "groups,work_location,company,pay_group"
+          },
+          {
+            "value": "groups,work_location,manager"
+          },
+          {
+            "value": "groups,work_location,manager,company"
+          },
+          {
+            "value": "groups,work_location,manager,company,pay_group"
+          },
+          {
+            "value": "groups,work_location,manager,pay_group"
+          },
+          {
+            "value": "groups,work_location,manager,team"
+          },
+          {
+            "value": "groups,work_location,manager,team,company"
+          },
+          {
+            "value": "groups,work_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "groups,work_location,manager,team,pay_group"
+          },
+          {
+            "value": "groups,work_location,pay_group"
+          },
+          {
+            "value": "groups,work_location,team"
+          },
+          {
+            "value": "groups,work_location,team,company"
+          },
+          {
+            "value": "groups,work_location,team,company,pay_group"
+          },
+          {
+            "value": "groups,work_location,team,pay_group"
+          },
+          {
+            "value": "home_location"
+          },
+          {
+            "value": "home_location,company"
+          },
+          {
+            "value": "home_location,company,pay_group"
+          },
+          {
+            "value": "home_location,manager"
+          },
+          {
+            "value": "home_location,manager,company"
+          },
+          {
+            "value": "home_location,manager,company,pay_group"
+          },
+          {
+            "value": "home_location,manager,pay_group"
+          },
+          {
+            "value": "home_location,manager,team"
+          },
+          {
+            "value": "home_location,manager,team,company"
+          },
+          {
+            "value": "home_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "home_location,manager,team,pay_group"
+          },
+          {
+            "value": "home_location,pay_group"
+          },
+          {
+            "value": "home_location,team"
+          },
+          {
+            "value": "home_location,team,company"
+          },
+          {
+            "value": "home_location,team,company,pay_group"
+          },
+          {
+            "value": "home_location,team,pay_group"
+          },
+          {
+            "value": "home_location,work_location"
+          },
+          {
+            "value": "home_location,work_location,company"
+          },
+          {
+            "value": "home_location,work_location,company,pay_group"
+          },
+          {
+            "value": "home_location,work_location,manager"
+          },
+          {
+            "value": "home_location,work_location,manager,company"
+          },
+          {
+            "value": "home_location,work_location,manager,company,pay_group"
+          },
+          {
+            "value": "home_location,work_location,manager,pay_group"
+          },
+          {
+            "value": "home_location,work_location,manager,team"
+          },
+          {
+            "value": "home_location,work_location,manager,team,company"
+          },
+          {
+            "value": "home_location,work_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "home_location,work_location,manager,team,pay_group"
+          },
+          {
+            "value": "home_location,work_location,pay_group"
+          },
+          {
+            "value": "home_location,work_location,team"
+          },
+          {
+            "value": "home_location,work_location,team,company"
+          },
+          {
+            "value": "home_location,work_location,team,company,pay_group"
+          },
+          {
+            "value": "home_location,work_location,team,pay_group"
+          },
+          {
+            "value": "manager"
+          },
+          {
+            "value": "manager,company"
+          },
+          {
+            "value": "manager,company,pay_group"
+          },
+          {
+            "value": "manager,pay_group"
+          },
+          {
+            "value": "manager,team"
+          },
+          {
+            "value": "manager,team,company"
+          },
+          {
+            "value": "manager,team,company,pay_group"
+          },
+          {
+            "value": "manager,team,pay_group"
+          },
+          {
+            "value": "pay_group"
+          },
+          {
+            "value": "team"
+          },
+          {
+            "value": "team,company"
+          },
+          {
+            "value": "team,company,pay_group"
+          },
+          {
+            "value": "team,pay_group"
+          },
+          {
+            "value": "work_location"
+          },
+          {
+            "value": "work_location,company"
+          },
+          {
+            "value": "work_location,company,pay_group"
+          },
+          {
+            "value": "work_location,manager"
+          },
+          {
+            "value": "work_location,manager,company"
+          },
+          {
+            "value": "work_location,manager,company,pay_group"
+          },
+          {
+            "value": "work_location,manager,pay_group"
+          },
+          {
+            "value": "work_location,manager,team"
+          },
+          {
+            "value": "work_location,manager,team,company"
+          },
+          {
+            "value": "work_location,manager,team,company,pay_group"
+          },
+          {
+            "value": "work_location,manager,team,pay_group"
+          },
+          {
+            "value": "work_location,pay_group"
+          },
+          {
+            "value": "work_location,team"
+          },
+          {
+            "value": "work_location,team,company"
+          },
+          {
+            "value": "work_location,team,company,pay_group"
+          },
+          {
+            "value": "work_location,team,pay_group"
+          }
+        ]
+      }
+    },
+    "EmployeesIdGetParametersRemoteFields": {
+      "name": "EmployeesIdGetParametersRemoteFields",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "employment_status"
+          },
+          {
+            "value": "employment_status,ethnicity"
+          },
+          {
+            "value": "employment_status,ethnicity,gender"
+          },
+          {
+            "value": "employment_status,ethnicity,gender,marital_status"
+          },
+          {
+            "value": "employment_status,ethnicity,marital_status"
+          },
+          {
+            "value": "employment_status,gender"
+          },
+          {
+            "value": "employment_status,gender,marital_status"
+          },
+          {
+            "value": "employment_status,marital_status"
+          },
+          {
+            "value": "ethnicity"
+          },
+          {
+            "value": "ethnicity,gender"
+          },
+          {
+            "value": "ethnicity,gender,marital_status"
+          },
+          {
+            "value": "ethnicity,marital_status"
+          },
+          {
+            "value": "gender"
+          },
+          {
+            "value": "gender,marital_status"
+          },
+          {
+            "value": "marital_status"
+          }
+        ]
+      }
+    },
+    "EmployeesIdGetParametersShowEnumOrigins": {
+      "name": "EmployeesIdGetParametersShowEnumOrigins",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "employment_status"
+          },
+          {
+            "value": "employment_status,ethnicity"
+          },
+          {
+            "value": "employment_status,ethnicity,gender"
+          },
+          {
+            "value": "employment_status,ethnicity,gender,marital_status"
+          },
+          {
+            "value": "employment_status,ethnicity,marital_status"
+          },
+          {
+            "value": "employment_status,gender"
+          },
+          {
+            "value": "employment_status,gender,marital_status"
+          },
+          {
+            "value": "employment_status,marital_status"
+          },
+          {
+            "value": "ethnicity"
+          },
+          {
+            "value": "ethnicity,gender"
+          },
+          {
+            "value": "ethnicity,gender,marital_status"
+          },
+          {
+            "value": "ethnicity,marital_status"
+          },
+          {
+            "value": "gender"
+          },
+          {
+            "value": "gender,marital_status"
+          },
+          {
+            "value": "marital_status"
+          }
+        ]
+      }
+    },
+    "EmploymentsGetParametersExpand": {
+      "name": "EmploymentsGetParametersExpand",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "employee"
+          },
+          {
+            "value": "employee,pay_group"
+          },
+          {
+            "value": "pay_group"
+          }
+        ]
+      }
+    },
+    "EmploymentsGetParametersOrderBy": {
+      "name": "EmploymentsGetParametersOrderBy",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "-effective_date"
+          },
+          {
+            "value": "effective_date"
+          }
+        ]
+      }
+    },
+    "EmploymentsGetParametersRemoteFields": {
+      "name": "EmploymentsGetParametersRemoteFields",
       "shape": {
         "type": "enum",
         "values": [
@@ -9883,8 +11655,8 @@
         ]
       }
     },
-    "EmploymentsIdGetParametersSchema": {
-      "name": "EmploymentsIdGetParametersSchema",
+    "EmploymentsGetParametersShowEnumOrigins": {
+      "name": "EmploymentsGetParametersShowEnumOrigins",
       "shape": {
         "type": "enum",
         "values": [
@@ -9936,8 +11708,131 @@
         ]
       }
     },
-    "GroupsGetParametersSchema": {
-      "name": "GroupsGetParametersSchema",
+    "EmploymentsIdGetParametersExpand": {
+      "name": "EmploymentsIdGetParametersExpand",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "employee"
+          },
+          {
+            "value": "employee,pay_group"
+          },
+          {
+            "value": "pay_group"
+          }
+        ]
+      }
+    },
+    "EmploymentsIdGetParametersRemoteFields": {
+      "name": "EmploymentsIdGetParametersRemoteFields",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "employment_type"
+          },
+          {
+            "value": "employment_type,flsa_status"
+          },
+          {
+            "value": "employment_type,flsa_status,pay_frequency"
+          },
+          {
+            "value": "employment_type,flsa_status,pay_frequency,pay_period"
+          },
+          {
+            "value": "employment_type,flsa_status,pay_period"
+          },
+          {
+            "value": "employment_type,pay_frequency"
+          },
+          {
+            "value": "employment_type,pay_frequency,pay_period"
+          },
+          {
+            "value": "employment_type,pay_period"
+          },
+          {
+            "value": "flsa_status"
+          },
+          {
+            "value": "flsa_status,pay_frequency"
+          },
+          {
+            "value": "flsa_status,pay_frequency,pay_period"
+          },
+          {
+            "value": "flsa_status,pay_period"
+          },
+          {
+            "value": "pay_frequency"
+          },
+          {
+            "value": "pay_frequency,pay_period"
+          },
+          {
+            "value": "pay_period"
+          }
+        ]
+      }
+    },
+    "EmploymentsIdGetParametersShowEnumOrigins": {
+      "name": "EmploymentsIdGetParametersShowEnumOrigins",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "employment_type"
+          },
+          {
+            "value": "employment_type,flsa_status"
+          },
+          {
+            "value": "employment_type,flsa_status,pay_frequency"
+          },
+          {
+            "value": "employment_type,flsa_status,pay_frequency,pay_period"
+          },
+          {
+            "value": "employment_type,flsa_status,pay_period"
+          },
+          {
+            "value": "employment_type,pay_frequency"
+          },
+          {
+            "value": "employment_type,pay_frequency,pay_period"
+          },
+          {
+            "value": "employment_type,pay_period"
+          },
+          {
+            "value": "flsa_status"
+          },
+          {
+            "value": "flsa_status,pay_frequency"
+          },
+          {
+            "value": "flsa_status,pay_frequency,pay_period"
+          },
+          {
+            "value": "flsa_status,pay_period"
+          },
+          {
+            "value": "pay_frequency"
+          },
+          {
+            "value": "pay_frequency,pay_period"
+          },
+          {
+            "value": "pay_period"
+          }
+        ]
+      }
+    },
+    "GroupsGetParametersRemoteFields": {
+      "name": "GroupsGetParametersRemoteFields",
       "shape": {
         "type": "enum",
         "values": [
@@ -9947,8 +11842,8 @@
         ]
       }
     },
-    "GroupsIdGetParametersSchema": {
-      "name": "GroupsIdGetParametersSchema",
+    "GroupsGetParametersShowEnumOrigins": {
+      "name": "GroupsGetParametersShowEnumOrigins",
       "shape": {
         "type": "enum",
         "values": [
@@ -9958,8 +11853,30 @@
         ]
       }
     },
-    "IssuesGetParametersSchema": {
-      "name": "IssuesGetParametersSchema",
+    "GroupsIdGetParametersRemoteFields": {
+      "name": "GroupsIdGetParametersRemoteFields",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "type"
+          }
+        ]
+      }
+    },
+    "GroupsIdGetParametersShowEnumOrigins": {
+      "name": "GroupsIdGetParametersShowEnumOrigins",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "type"
+          }
+        ]
+      }
+    },
+    "IssuesGetParametersStatus": {
+      "name": "IssuesGetParametersStatus",
       "shape": {
         "type": "enum",
         "values": [
@@ -9972,8 +11889,8 @@
         ]
       }
     },
-    "LinkedAccountsGetParametersSchema": {
-      "name": "LinkedAccountsGetParametersSchema",
+    "LinkedAccountsGetParametersCategory": {
+      "name": "LinkedAccountsGetParametersCategory",
       "shape": {
         "type": "enum",
         "values": [
@@ -10001,8 +11918,8 @@
         ]
       }
     },
-    "LocationsGetParametersSchema": {
-      "name": "LocationsGetParametersSchema",
+    "LocationsGetParametersRemoteFields": {
+      "name": "LocationsGetParametersRemoteFields",
       "shape": {
         "type": "enum",
         "values": [
@@ -10012,8 +11929,8 @@
         ]
       }
     },
-    "LocationsIdGetParametersSchema": {
-      "name": "LocationsIdGetParametersSchema",
+    "LocationsGetParametersShowEnumOrigins": {
+      "name": "LocationsGetParametersShowEnumOrigins",
       "shape": {
         "type": "enum",
         "values": [
@@ -10023,8 +11940,30 @@
         ]
       }
     },
-    "PayrollRunsGetParametersSchema": {
-      "name": "PayrollRunsGetParametersSchema",
+    "LocationsIdGetParametersRemoteFields": {
+      "name": "LocationsIdGetParametersRemoteFields",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "location_type"
+          }
+        ]
+      }
+    },
+    "LocationsIdGetParametersShowEnumOrigins": {
+      "name": "LocationsIdGetParametersShowEnumOrigins",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "location_type"
+          }
+        ]
+      }
+    },
+    "PayrollRunsGetParametersRemoteFields": {
+      "name": "PayrollRunsGetParametersRemoteFields",
       "shape": {
         "type": "enum",
         "values": [
@@ -10040,8 +11979,31 @@
         ]
       }
     },
-    "PayrollRunsIdGetParametersSchema": {
-      "name": "PayrollRunsIdGetParametersSchema",
+    "PayrollRunsGetParametersRunType": {
+      "name": "PayrollRunsGetParametersRunType",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "CORRECTION"
+          },
+          {
+            "value": "OFF_CYCLE"
+          },
+          {
+            "value": "REGULAR"
+          },
+          {
+            "value": "SIGN_ON_BONUS"
+          },
+          {
+            "value": "TERMINATION"
+          }
+        ]
+      }
+    },
+    "PayrollRunsGetParametersShowEnumOrigins": {
+      "name": "PayrollRunsGetParametersShowEnumOrigins",
       "shape": {
         "type": "enum",
         "values": [
@@ -10057,8 +12019,42 @@
         ]
       }
     },
-    "TeamsGetParametersSchema": {
-      "name": "TeamsGetParametersSchema",
+    "PayrollRunsIdGetParametersRemoteFields": {
+      "name": "PayrollRunsIdGetParametersRemoteFields",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "run_state"
+          },
+          {
+            "value": "run_state,run_type"
+          },
+          {
+            "value": "run_type"
+          }
+        ]
+      }
+    },
+    "PayrollRunsIdGetParametersShowEnumOrigins": {
+      "name": "PayrollRunsIdGetParametersShowEnumOrigins",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "run_state"
+          },
+          {
+            "value": "run_state,run_type"
+          },
+          {
+            "value": "run_type"
+          }
+        ]
+      }
+    },
+    "TeamsGetParametersExpand": {
+      "name": "TeamsGetParametersExpand",
       "shape": {
         "type": "enum",
         "values": [
@@ -10068,8 +12064,8 @@
         ]
       }
     },
-    "TeamsIdGetParametersSchema": {
-      "name": "TeamsIdGetParametersSchema",
+    "TeamsIdGetParametersExpand": {
+      "name": "TeamsIdGetParametersExpand",
       "shape": {
         "type": "enum",
         "values": [
@@ -10079,8 +12075,109 @@
         ]
       }
     },
-    "TimeOffGetParametersSchema": {
-      "name": "TimeOffGetParametersSchema",
+    "TimeOffGetParametersExpand": {
+      "name": "TimeOffGetParametersExpand",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "approver"
+          },
+          {
+            "value": "employee"
+          },
+          {
+            "value": "employee,approver"
+          }
+        ]
+      }
+    },
+    "TimeOffGetParametersRemoteFields": {
+      "name": "TimeOffGetParametersRemoteFields",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "request_type"
+          },
+          {
+            "value": "request_type,status"
+          },
+          {
+            "value": "request_type,status,units"
+          },
+          {
+            "value": "request_type,units"
+          },
+          {
+            "value": "status"
+          },
+          {
+            "value": "status,units"
+          },
+          {
+            "value": "units"
+          }
+        ]
+      }
+    },
+    "TimeOffGetParametersRequestType": {
+      "name": "TimeOffGetParametersRequestType",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "BEREAVEMENT"
+          },
+          {
+            "value": "JURY_DUTY"
+          },
+          {
+            "value": "PERSONAL"
+          },
+          {
+            "value": "SICK"
+          },
+          {
+            "value": "VACATION"
+          },
+          {
+            "value": "VOLUNTEER"
+          }
+        ]
+      }
+    },
+    "TimeOffGetParametersShowEnumOrigins": {
+      "name": "TimeOffGetParametersShowEnumOrigins",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "request_type"
+          },
+          {
+            "value": "request_type,status"
+          },
+          {
+            "value": "request_type,status,units"
+          },
+          {
+            "value": "request_type,units"
+          },
+          {
+            "value": "status"
+          },
+          {
+            "value": "status,units"
+          },
+          {
+            "value": "units"
+          }
+        ]
+      }
+    },
+    "TimeOffGetParametersStatus": {
+      "name": "TimeOffGetParametersStatus",
       "shape": {
         "type": "enum",
         "values": [
@@ -10102,8 +12199,45 @@
         ]
       }
     },
-    "TimeOffBalancesGetParametersSchema": {
-      "name": "TimeOffBalancesGetParametersSchema",
+    "TimeOffBalancesGetParametersExpand": {
+      "name": "TimeOffBalancesGetParametersExpand",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "employee"
+          }
+        ]
+      }
+    },
+    "TimeOffBalancesGetParametersPolicyType": {
+      "name": "TimeOffBalancesGetParametersPolicyType",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "BEREAVEMENT"
+          },
+          {
+            "value": "JURY_DUTY"
+          },
+          {
+            "value": "PERSONAL"
+          },
+          {
+            "value": "SICK"
+          },
+          {
+            "value": "VACATION"
+          },
+          {
+            "value": "VOLUNTEER"
+          }
+        ]
+      }
+    },
+    "TimeOffBalancesGetParametersRemoteFields": {
+      "name": "TimeOffBalancesGetParametersRemoteFields",
       "shape": {
         "type": "enum",
         "values": [
@@ -10113,8 +12247,8 @@
         ]
       }
     },
-    "TimeOffBalancesIdGetParametersSchema": {
-      "name": "TimeOffBalancesIdGetParametersSchema",
+    "TimeOffBalancesGetParametersShowEnumOrigins": {
+      "name": "TimeOffBalancesGetParametersShowEnumOrigins",
       "shape": {
         "type": "enum",
         "values": [
@@ -10124,8 +12258,87 @@
         ]
       }
     },
-    "TimeOffIdGetParametersSchema": {
-      "name": "TimeOffIdGetParametersSchema",
+    "TimeOffBalancesIdGetParametersExpand": {
+      "name": "TimeOffBalancesIdGetParametersExpand",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "employee"
+          }
+        ]
+      }
+    },
+    "TimeOffBalancesIdGetParametersRemoteFields": {
+      "name": "TimeOffBalancesIdGetParametersRemoteFields",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "policy_type"
+          }
+        ]
+      }
+    },
+    "TimeOffBalancesIdGetParametersShowEnumOrigins": {
+      "name": "TimeOffBalancesIdGetParametersShowEnumOrigins",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "policy_type"
+          }
+        ]
+      }
+    },
+    "TimeOffIdGetParametersExpand": {
+      "name": "TimeOffIdGetParametersExpand",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "approver"
+          },
+          {
+            "value": "employee"
+          },
+          {
+            "value": "employee,approver"
+          }
+        ]
+      }
+    },
+    "TimeOffIdGetParametersRemoteFields": {
+      "name": "TimeOffIdGetParametersRemoteFields",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "request_type"
+          },
+          {
+            "value": "request_type,status"
+          },
+          {
+            "value": "request_type,status,units"
+          },
+          {
+            "value": "request_type,units"
+          },
+          {
+            "value": "status"
+          },
+          {
+            "value": "status,units"
+          },
+          {
+            "value": "units"
+          }
+        ]
+      }
+    },
+    "TimeOffIdGetParametersShowEnumOrigins": {
+      "name": "TimeOffIdGetParametersShowEnumOrigins",
       "shape": {
         "type": "enum",
         "values": [
@@ -10477,13 +12690,17 @@
                   {
                     "model_name": "Candidate",
                     "available_operations": [
-                      "foo"
+                      "FETCH",
+                      "CREATE"
                     ],
                     "required_post_parameters": [
-                      "foo"
+                      "remote_user_id"
                     ],
                     "supported_fields": [
-                      "foo"
+                      "first_name",
+                      "last_name",
+                      "company",
+                      "title"
                     ]
                   }
                 ]
@@ -10508,13 +12725,17 @@
                     {
                       "model_name": "Candidate",
                       "available_operations": [
-                        "foo"
+                        "FETCH",
+                        "CREATE"
                       ],
                       "required_post_parameters": [
-                        "foo"
+                        "remote_user_id"
                       ],
                       "supported_fields": [
-                        "foo"
+                        "first_name",
+                        "last_name",
+                        "company",
+                        "title"
                       ]
                     }
                   ]
@@ -10575,7 +12796,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BankInfoGetParametersSchema"
+                  "value": "BankInfoGetParametersAccountType"
                 }
               }
             },
@@ -10653,7 +12874,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BankInfoGetParametersSchema"
+                  "value": "BankInfoGetParametersExpand"
                 }
               }
             },
@@ -10718,7 +12939,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BankInfoGetParametersSchema"
+                  "value": "BankInfoGetParametersOrderBy"
                 }
               }
             },
@@ -10742,7 +12963,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BankInfoGetParametersSchema"
+                  "value": "BankInfoGetParametersRemoteFields"
                 }
               }
             },
@@ -10766,7 +12987,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BankInfoGetParametersSchema"
+                  "value": "BankInfoGetParametersShowEnumOrigins"
                 }
               }
             }
@@ -10830,8 +13051,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/bank-info",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -10857,8 +13080,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/bank-info",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -10929,7 +13154,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BankInfoIdGetParametersSchema"
+                  "value": "BankInfoIdGetParametersExpand"
                 }
               }
             },
@@ -10953,7 +13178,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BankInfoIdGetParametersSchema"
+                  "value": "BankInfoIdGetParametersRemoteFields"
                 }
               }
             },
@@ -10964,7 +13189,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BankInfoIdGetParametersSchema"
+                  "value": "BankInfoIdGetParametersShowEnumOrigins"
                 }
               }
             }
@@ -11024,8 +13249,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/bank-info",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -11045,8 +13272,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/bank-info",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -11160,7 +13389,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BenefitsGetParametersSchema"
+                  "value": "BenefitsGetParametersExpand"
                 }
               }
             },
@@ -11303,8 +13532,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/benefits",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -11331,8 +13562,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/benefits",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -11403,7 +13636,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "BenefitsIdGetParametersSchema"
+                  "value": "BenefitsIdGetParametersExpand"
                 }
               }
             },
@@ -11475,8 +13708,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/benefits",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -11497,8 +13732,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/benefits",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -11720,15 +13957,19 @@
                     "legal_name": "Waystar Royco, Inc.",
                     "display_name": "Waystar Royco",
                     "eins": [
-                      "foo"
+                      "12-3456789",
+                      "12-3451111",
+                      "11-0011000"
                     ],
                     "remote_was_deleted": true,
                     "modified_at": "2021-10-16T00:00:00Z",
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/companies",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -11746,15 +13987,19 @@
                       "legal_name": "Waystar Royco, Inc.",
                       "display_name": "Waystar Royco",
                       "eins": [
-                        "foo"
+                        "12-3456789",
+                        "12-3451111",
+                        "11-0011000"
                       ],
                       "remote_was_deleted": true,
                       "modified_at": "2021-10-16T00:00:00Z",
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/companies",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -11875,15 +14120,19 @@
                 "legal_name": "Waystar Royco, Inc.",
                 "display_name": "Waystar Royco",
                 "eins": [
-                  "foo"
+                  "12-3456789",
+                  "12-3451111",
+                  "11-0011000"
                 ],
                 "remote_was_deleted": true,
                 "modified_at": "2021-10-16T00:00:00Z",
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/companies",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -11895,15 +14144,19 @@
                   "legal_name": "Waystar Royco, Inc.",
                   "display_name": "Waystar Royco",
                   "eins": [
-                    "foo"
+                    "12-3456789",
+                    "12-3451111",
+                    "11-0011000"
                   ],
                   "remote_was_deleted": true,
                   "modified_at": "2021-10-16T00:00:00Z",
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/companies",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -12117,7 +14370,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EmployeePayrollRunsGetParametersSchema"
+                  "value": "EmployeePayrollRunsGetParametersExpand"
                 }
               }
             },
@@ -12299,58 +14552,30 @@
                     "check_date": "2020-11-10T00:00:00Z",
                     "earnings": [
                       {
-                        "id": "babbced6-3a81-4775-8da2-490dc6385259",
-                        "remote_id": "52802",
                         "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                         "amount": 1002.34,
-                        "type": "SALARY",
-                        "remote_was_deleted": true,
-                        "modified_at": "2021-10-16T00:00:00Z",
-                        "field_mappings": {},
-                        "remote_data": [
-                          {
-                            "path": "foo",
-                            "data": {}
-                          }
-                        ]
+                        "type": "SALARY"
+                      },
+                      {
+                        "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                        "amount": 8342.34,
+                        "type": "OVERTIME"
                       }
                     ],
                     "deductions": [
                       {
-                        "id": "5fd439fc-1b64-4755-b275-64918936c365",
-                        "remote_id": "93478612",
                         "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                         "name": "Social Security",
                         "employee_deduction": 34.54,
-                        "company_deduction": 78.78,
-                        "remote_was_deleted": true,
-                        "modified_at": "2021-10-16T00:00:00Z",
-                        "field_mappings": {},
-                        "remote_data": [
-                          {
-                            "path": "foo",
-                            "data": {}
-                          }
-                        ]
+                        "company_deduction": 78.78
                       }
                     ],
                     "taxes": [
                       {
-                        "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
-                        "remote_id": "26806834",
                         "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                         "name": "California State Income Tax",
                         "amount": 100.25,
-                        "employer_tax": "False",
-                        "remote_was_deleted": true,
-                        "modified_at": "2021-10-16T00:00:00Z",
-                        "field_mappings": {},
-                        "remote_data": [
-                          {
-                            "path": "foo",
-                            "data": {}
-                          }
-                        ]
+                        "employer_tax": "False"
                       }
                     ],
                     "remote_was_deleted": true,
@@ -12358,8 +14583,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/employee-payroll",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -12383,58 +14610,30 @@
                       "check_date": "2020-11-10T00:00:00Z",
                       "earnings": [
                         {
-                          "id": "babbced6-3a81-4775-8da2-490dc6385259",
-                          "remote_id": "52802",
                           "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                           "amount": 1002.34,
-                          "type": "SALARY",
-                          "remote_was_deleted": true,
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "field_mappings": {},
-                          "remote_data": [
-                            {
-                              "path": "foo",
-                              "data": {}
-                            }
-                          ]
+                          "type": "SALARY"
+                        },
+                        {
+                          "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                          "amount": 8342.34,
+                          "type": "OVERTIME"
                         }
                       ],
                       "deductions": [
                         {
-                          "id": "5fd439fc-1b64-4755-b275-64918936c365",
-                          "remote_id": "93478612",
                           "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                           "name": "Social Security",
                           "employee_deduction": 34.54,
-                          "company_deduction": 78.78,
-                          "remote_was_deleted": true,
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "field_mappings": {},
-                          "remote_data": [
-                            {
-                              "path": "foo",
-                              "data": {}
-                            }
-                          ]
+                          "company_deduction": 78.78
                         }
                       ],
                       "taxes": [
                         {
-                          "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
-                          "remote_id": "26806834",
                           "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                           "name": "California State Income Tax",
                           "amount": 100.25,
-                          "employer_tax": "False",
-                          "remote_was_deleted": true,
-                          "modified_at": "2021-10-16T00:00:00Z",
-                          "field_mappings": {},
-                          "remote_data": [
-                            {
-                              "path": "foo",
-                              "data": {}
-                            }
-                          ]
+                          "employer_tax": "False"
                         }
                       ],
                       "remote_was_deleted": true,
@@ -12442,8 +14641,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/employee-payroll",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -12514,7 +14715,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EmployeePayrollRunsIdGetParametersSchema"
+                  "value": "EmployeePayrollRunsIdGetParametersExpand"
                 }
               }
             },
@@ -12583,58 +14784,30 @@
                 "check_date": "2020-11-10T00:00:00Z",
                 "earnings": [
                   {
-                    "id": "babbced6-3a81-4775-8da2-490dc6385259",
-                    "remote_id": "52802",
                     "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                     "amount": 1002.34,
-                    "type": "SALARY",
-                    "remote_was_deleted": true,
-                    "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
-                    "remote_data": [
-                      {
-                        "path": "foo",
-                        "data": {}
-                      }
-                    ]
+                    "type": "SALARY"
+                  },
+                  {
+                    "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                    "amount": 8342.34,
+                    "type": "OVERTIME"
                   }
                 ],
                 "deductions": [
                   {
-                    "id": "5fd439fc-1b64-4755-b275-64918936c365",
-                    "remote_id": "93478612",
                     "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                     "name": "Social Security",
                     "employee_deduction": 34.54,
-                    "company_deduction": 78.78,
-                    "remote_was_deleted": true,
-                    "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
-                    "remote_data": [
-                      {
-                        "path": "foo",
-                        "data": {}
-                      }
-                    ]
+                    "company_deduction": 78.78
                   }
                 ],
                 "taxes": [
                   {
-                    "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
-                    "remote_id": "26806834",
                     "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                     "name": "California State Income Tax",
                     "amount": 100.25,
-                    "employer_tax": "False",
-                    "remote_was_deleted": true,
-                    "modified_at": "2021-10-16T00:00:00Z",
-                    "field_mappings": {},
-                    "remote_data": [
-                      {
-                        "path": "foo",
-                        "data": {}
-                      }
-                    ]
+                    "employer_tax": "False"
                   }
                 ],
                 "remote_was_deleted": true,
@@ -12642,8 +14815,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/employee-payroll",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -12661,58 +14836,30 @@
                   "check_date": "2020-11-10T00:00:00Z",
                   "earnings": [
                     {
-                      "id": "babbced6-3a81-4775-8da2-490dc6385259",
-                      "remote_id": "52802",
                       "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                       "amount": 1002.34,
-                      "type": "SALARY",
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
+                      "type": "SALARY"
+                    },
+                    {
+                      "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                      "amount": 8342.34,
+                      "type": "OVERTIME"
                     }
                   ],
                   "deductions": [
                     {
-                      "id": "5fd439fc-1b64-4755-b275-64918936c365",
-                      "remote_id": "93478612",
                       "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                       "name": "Social Security",
                       "employee_deduction": 34.54,
-                      "company_deduction": 78.78,
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
+                      "company_deduction": 78.78
                     }
                   ],
                   "taxes": [
                     {
-                      "id": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
-                      "remote_id": "26806834",
                       "employee_payroll_run": "35347df1-95e7-46e2-93cc-66f1191edca5",
                       "name": "California State Income Tax",
                       "amount": 100.25,
-                      "employer_tax": "False",
-                      "remote_was_deleted": true,
-                      "modified_at": "2021-10-16T00:00:00Z",
-                      "field_mappings": {},
-                      "remote_data": [
-                        {
-                          "path": "foo",
-                          "data": {}
-                        }
-                      ]
+                      "employer_tax": "False"
                     }
                   ],
                   "remote_was_deleted": true,
@@ -12720,8 +14867,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/employee-payroll",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -12848,7 +14997,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EmployeesGetParametersSchema"
+                  "value": "EmployeesGetParametersEmploymentStatus"
                 }
               }
             },
@@ -12859,7 +15008,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EmployeesGetParametersSchema"
+                  "value": "EmployeesGetParametersExpand"
                 }
               }
             },
@@ -13029,7 +15178,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EmployeesGetParametersSchema"
+                  "value": "EmployeesGetParametersRemoteFields"
                 }
               }
             },
@@ -13053,7 +15202,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EmployeesGetParametersSchema"
+                  "value": "EmployeesGetParametersShowEnumOrigins"
                 }
               }
             },
@@ -13213,13 +15362,13 @@
                     "display_full_name": "Cousin Greg Hirsch",
                     "username": "cousingreg",
                     "groups": [
-                      "foo"
+                      "21a54124-397f-494d-985e-3c5b330b8a68"
                     ],
                     "work_email": "greg@merge.dev",
                     "personal_email": "greg@gmail.com",
                     "mobile_phone_number": "+1234567890",
                     "employments": [
-                      "foo"
+                      "17a54124-287f-494d-965e-3c5b330c9a68"
                     ],
                     "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                     "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
@@ -13243,8 +15392,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/people",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -13266,13 +15417,13 @@
                       "display_full_name": "Cousin Greg Hirsch",
                       "username": "cousingreg",
                       "groups": [
-                        "foo"
+                        "21a54124-397f-494d-985e-3c5b330b8a68"
                       ],
                       "work_email": "greg@merge.dev",
                       "personal_email": "greg@gmail.com",
                       "mobile_phone_number": "+1234567890",
                       "employments": [
-                        "foo"
+                        "17a54124-287f-494d-965e-3c5b330c9a68"
                       ],
                       "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                       "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
@@ -13296,8 +15447,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/people",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -13437,13 +15590,13 @@
                   "display_full_name": "Cousin Greg Hirsch",
                   "username": "cousingreg",
                   "groups": [
-                    "foo"
+                    "21a54124-397f-494d-985e-3c5b330b8a68"
                   ],
                   "work_email": "greg@merge.dev",
                   "personal_email": "greg@gmail.com",
                   "mobile_phone_number": "+1234567890",
                   "employments": [
-                    "foo"
+                    "17a54124-287f-494d-965e-3c5b330c9a68"
                   ],
                   "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                   "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
@@ -13467,8 +15620,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/people",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 },
@@ -13517,13 +15672,13 @@
                     "display_full_name": "Cousin Greg Hirsch",
                     "username": "cousingreg",
                     "groups": [
-                      "foo"
+                      "21a54124-397f-494d-985e-3c5b330b8a68"
                     ],
                     "work_email": "greg@merge.dev",
                     "personal_email": "greg@gmail.com",
                     "mobile_phone_number": "+1234567890",
                     "employments": [
-                      "foo"
+                      "17a54124-287f-494d-965e-3c5b330c9a68"
                     ],
                     "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                     "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
@@ -13547,8 +15702,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/people",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   },
@@ -13649,7 +15806,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EmployeesIdGetParametersSchema"
+                  "value": "EmployeesIdGetParametersExpand"
                 }
               }
             },
@@ -13686,7 +15843,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EmployeesIdGetParametersSchema"
+                  "value": "EmployeesIdGetParametersRemoteFields"
                 }
               }
             },
@@ -13697,7 +15854,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EmployeesIdGetParametersSchema"
+                  "value": "EmployeesIdGetParametersShowEnumOrigins"
                 }
               }
             }
@@ -13753,13 +15910,13 @@
                 "display_full_name": "Cousin Greg Hirsch",
                 "username": "cousingreg",
                 "groups": [
-                  "foo"
+                  "21a54124-397f-494d-985e-3c5b330b8a68"
                 ],
                 "work_email": "greg@merge.dev",
                 "personal_email": "greg@gmail.com",
                 "mobile_phone_number": "+1234567890",
                 "employments": [
-                  "foo"
+                  "17a54124-287f-494d-965e-3c5b330c9a68"
                 ],
                 "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                 "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
@@ -13783,8 +15940,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/people",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -13800,13 +15959,13 @@
                   "display_full_name": "Cousin Greg Hirsch",
                   "username": "cousingreg",
                   "groups": [
-                    "foo"
+                    "21a54124-397f-494d-985e-3c5b330b8a68"
                   ],
                   "work_email": "greg@merge.dev",
                   "personal_email": "greg@gmail.com",
                   "mobile_phone_number": "+1234567890",
                   "employments": [
-                    "foo"
+                    "17a54124-287f-494d-965e-3c5b330c9a68"
                   ],
                   "home_location": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                   "work_location": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
@@ -13830,8 +15989,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/people",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -14146,7 +16307,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EmploymentsGetParametersSchema"
+                  "value": "EmploymentsGetParametersExpand"
                 }
               }
             },
@@ -14211,7 +16372,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EmploymentsGetParametersSchema"
+                  "value": "EmploymentsGetParametersOrderBy"
                 }
               }
             },
@@ -14235,7 +16396,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EmploymentsGetParametersSchema"
+                  "value": "EmploymentsGetParametersRemoteFields"
                 }
               }
             },
@@ -14259,7 +16420,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EmploymentsGetParametersSchema"
+                  "value": "EmploymentsGetParametersShowEnumOrigins"
                 }
               }
             }
@@ -14327,8 +16488,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/jobs",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -14358,8 +16521,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/jobs",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -14430,7 +16595,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EmploymentsIdGetParametersSchema"
+                  "value": "EmploymentsIdGetParametersExpand"
                 }
               }
             },
@@ -14454,7 +16619,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EmploymentsIdGetParametersSchema"
+                  "value": "EmploymentsIdGetParametersRemoteFields"
                 }
               }
             },
@@ -14465,7 +16630,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "EmploymentsIdGetParametersSchema"
+                  "value": "EmploymentsIdGetParametersShowEnumOrigins"
                 }
               }
             }
@@ -14529,8 +16694,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/jobs",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -14554,8 +16721,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/jobs",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -14826,7 +16995,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "GroupsGetParametersSchema"
+                  "value": "GroupsGetParametersRemoteFields"
                 }
               }
             },
@@ -14850,7 +17019,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "GroupsGetParametersSchema"
+                  "value": "GroupsGetParametersShowEnumOrigins"
                 }
               }
             },
@@ -14922,8 +17091,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/group",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -14946,8 +17117,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/group",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -15031,7 +17204,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "GroupsIdGetParametersSchema"
+                  "value": "GroupsIdGetParametersRemoteFields"
                 }
               }
             },
@@ -15042,7 +17215,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "GroupsIdGetParametersSchema"
+                  "value": "GroupsIdGetParametersShowEnumOrigins"
                 }
               }
             }
@@ -15098,8 +17271,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/group",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -15116,8 +17291,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/group",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -15334,7 +17511,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "IssuesGetParametersSchema"
+                  "value": "IssuesGetParametersStatus"
                 }
               }
             }
@@ -15376,7 +17553,8 @@
                     "last_incident_time": "2022-12-05T16:19:15.161Z",
                     "is_muted": true,
                     "error_details": [
-                      "foo"
+                      "Missing employee permissions.",
+                      "Missing time off permissions."
                     ]
                   }
                 ]
@@ -15396,7 +17574,8 @@
                       "last_incident_time": "2022-12-05T16:19:15.161Z",
                       "is_muted": true,
                       "error_details": [
-                        "foo"
+                        "Missing employee permissions.",
+                        "Missing time off permissions."
                       ]
                     }
                   ]
@@ -15492,7 +17671,8 @@
                 "last_incident_time": "2022-12-05T16:19:15.161Z",
                 "is_muted": true,
                 "error_details": [
-                  "foo"
+                  "Missing employee permissions.",
+                  "Missing time off permissions."
                 ]
               },
               "responseBodyV3": {
@@ -15506,7 +17686,8 @@
                   "last_incident_time": "2022-12-05T16:19:15.161Z",
                   "is_muted": true,
                   "error_details": [
-                    "foo"
+                    "Missing employee permissions.",
+                    "Missing time off permissions."
                   ]
                 }
               }
@@ -15680,7 +17861,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "LinkedAccountsGetParametersSchema"
+                  "value": "LinkedAccountsGetParametersCategory"
                 }
               }
             },
@@ -15893,13 +18074,17 @@
                         {
                           "model_name": "Candidate",
                           "available_operations": [
-                            "foo"
+                            "FETCH",
+                            "CREATE"
                           ],
                           "required_post_parameters": [
-                            "foo"
+                            "remote_user_id"
                           ],
                           "supported_fields": [
-                            "foo"
+                            "first_name",
+                            "last_name",
+                            "company",
+                            "title"
                           ]
                         }
                       ]
@@ -15937,13 +18122,17 @@
                           {
                             "model_name": "Candidate",
                             "available_operations": [
-                              "foo"
+                              "FETCH",
+                              "CREATE"
                             ],
                             "required_post_parameters": [
-                              "foo"
+                              "remote_user_id"
                             ],
                             "supported_fields": [
-                              "foo"
+                              "first_name",
+                              "last_name",
+                              "company",
+                              "title"
                             ]
                           }
                         ]
@@ -16115,7 +18304,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "LocationsGetParametersSchema"
+                  "value": "LocationsGetParametersRemoteFields"
                 }
               }
             },
@@ -16139,7 +18328,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "LocationsGetParametersSchema"
+                  "value": "LocationsGetParametersShowEnumOrigins"
                 }
               }
             }
@@ -16204,8 +18393,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/locations",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -16234,8 +18425,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/locations",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -16319,7 +18512,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "LocationsIdGetParametersSchema"
+                  "value": "LocationsIdGetParametersRemoteFields"
                 }
               }
             },
@@ -16330,7 +18523,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "LocationsIdGetParametersSchema"
+                  "value": "LocationsIdGetParametersShowEnumOrigins"
                 }
               }
             }
@@ -16392,8 +18585,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/locations",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -16416,8 +18611,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/locations",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -16770,8 +18967,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/pay-group",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -16792,8 +18991,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/pay-group",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -16917,8 +19118,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/pay-group",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -16933,8 +19136,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/pay-group",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -17130,7 +19335,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PayrollRunsGetParametersSchema"
+                  "value": "PayrollRunsGetParametersRemoteFields"
                 }
               }
             },
@@ -17154,7 +19359,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PayrollRunsGetParametersSchema"
+                  "value": "PayrollRunsGetParametersRunType"
                 }
               }
             },
@@ -17165,7 +19370,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PayrollRunsGetParametersSchema"
+                  "value": "PayrollRunsGetParametersShowEnumOrigins"
                 }
               }
             },
@@ -17254,8 +19459,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/payroll",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -17280,8 +19487,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/payroll",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -17365,7 +19574,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PayrollRunsIdGetParametersSchema"
+                  "value": "PayrollRunsIdGetParametersRemoteFields"
                 }
               }
             },
@@ -17376,7 +19585,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "PayrollRunsIdGetParametersSchema"
+                  "value": "PayrollRunsIdGetParametersShowEnumOrigins"
                 }
               }
             }
@@ -17434,8 +19643,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/payroll",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -17454,8 +19665,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/payroll",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -18346,7 +20559,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "TeamsGetParametersSchema"
+                  "value": "TeamsGetParametersExpand"
                 }
               }
             },
@@ -18497,8 +20710,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/teams",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -18520,8 +20735,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/teams",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -18592,7 +20809,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "TeamsIdGetParametersSchema"
+                  "value": "TeamsIdGetParametersExpand"
                 }
               }
             },
@@ -18659,8 +20876,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/teams",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -18676,8 +20895,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/teams",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -18804,7 +21025,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "TimeOffGetParametersSchema"
+                  "value": "TimeOffGetParametersExpand"
                 }
               }
             },
@@ -18882,7 +21103,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "TimeOffGetParametersSchema"
+                  "value": "TimeOffGetParametersRemoteFields"
                 }
               }
             },
@@ -18906,7 +21127,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "TimeOffGetParametersSchema"
+                  "value": "TimeOffGetParametersRequestType"
                 }
               }
             },
@@ -18917,7 +21138,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "TimeOffGetParametersSchema"
+                  "value": "TimeOffGetParametersShowEnumOrigins"
                 }
               }
             },
@@ -18928,7 +21149,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "TimeOffGetParametersSchema"
+                  "value": "TimeOffGetParametersStatus"
                 }
               }
             }
@@ -18996,8 +21217,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/leave",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -19026,8 +21249,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/leave",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -19174,8 +21399,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/leave",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 },
@@ -19231,8 +21458,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/leave",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   },
@@ -19333,7 +21562,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "TimeOffIdGetParametersSchema"
+                  "value": "TimeOffIdGetParametersExpand"
                 }
               }
             },
@@ -19357,7 +21586,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "TimeOffIdGetParametersSchema"
+                  "value": "TimeOffIdGetParametersRemoteFields"
                 }
               }
             },
@@ -19368,7 +21597,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "TimeOffIdGetParametersSchema"
+                  "value": "TimeOffIdGetParametersShowEnumOrigins"
                 }
               }
             }
@@ -19431,8 +21660,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/leave",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -19455,8 +21686,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/leave",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }
@@ -19666,7 +21899,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "TimeOffBalancesGetParametersSchema"
+                  "value": "TimeOffBalancesGetParametersExpand"
                 }
               }
             },
@@ -19744,7 +21977,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "TimeOffBalancesGetParametersSchema"
+                  "value": "TimeOffBalancesGetParametersPolicyType"
                 }
               }
             },
@@ -19755,7 +21988,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "TimeOffBalancesGetParametersSchema"
+                  "value": "TimeOffBalancesGetParametersRemoteFields"
                 }
               }
             },
@@ -19779,7 +22012,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "TimeOffBalancesGetParametersSchema"
+                  "value": "TimeOffBalancesGetParametersShowEnumOrigins"
                 }
               }
             }
@@ -19841,8 +22074,10 @@
                     "field_mappings": {},
                     "remote_data": [
                       {
-                        "path": "foo",
-                        "data": {}
+                        "path": "/leave",
+                        "data": [
+                          "Varies by platform"
+                        ]
                       }
                     ]
                   }
@@ -19866,8 +22101,10 @@
                       "field_mappings": {},
                       "remote_data": [
                         {
-                          "path": "foo",
-                          "data": {}
+                          "path": "/leave",
+                          "data": [
+                            "Varies by platform"
+                          ]
                         }
                       ]
                     }
@@ -19938,7 +22175,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "TimeOffBalancesIdGetParametersSchema"
+                  "value": "TimeOffBalancesIdGetParametersExpand"
                 }
               }
             },
@@ -19962,7 +22199,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "TimeOffBalancesIdGetParametersSchema"
+                  "value": "TimeOffBalancesIdGetParametersRemoteFields"
                 }
               }
             },
@@ -19973,7 +22210,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "TimeOffBalancesIdGetParametersSchema"
+                  "value": "TimeOffBalancesIdGetParametersShowEnumOrigins"
                 }
               }
             }
@@ -20031,8 +22268,10 @@
                 "field_mappings": {},
                 "remote_data": [
                   {
-                    "path": "foo",
-                    "data": {}
+                    "path": "/leave",
+                    "data": [
+                      "Varies by platform"
+                    ]
                   }
                 ]
               },
@@ -20050,8 +22289,10 @@
                   "field_mappings": {},
                   "remote_data": [
                     {
-                      "path": "foo",
-                      "data": {}
+                      "path": "/leave",
+                      "data": [
+                        "Varies by platform"
+                      ]
                     }
                   ]
                 }

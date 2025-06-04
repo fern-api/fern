@@ -16,13 +16,13 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 export class OAuthTokenProviderGenerator {
-    public static OAUTH_TOKEN_PROVIDER_CLASS_NAME = "OAuthTokenProvider";
-    public static OAUTH_TOKEN_PROVIDER_PROPERTY_NAME = "_oauthTokenProvider";
-    public static OAUTH_TOKEN_PROPERTY_NAME = "token";
-    public static OAUTH_GET_TOKEN_METHOD_NAME = "getToken";
-    public static OAUTH_CLIENT_ID_PROPERTY_NAME = "clientId";
-    public static OAUTH_CLIENT_SECRET_PROPERTY_NAME = "clientSecret";
-    public static OAUTH_AUTH_CLIENT_PROPERTY_NAME = "authClient";
+    public static readonly OAUTH_TOKEN_PROVIDER_CLASS_NAME = "OAuthTokenProvider";
+    public static readonly OAUTH_TOKEN_PROVIDER_PROPERTY_NAME = "_oauthTokenProvider";
+    public static readonly OAUTH_TOKEN_PROPERTY_NAME = "token";
+    public static readonly OAUTH_GET_TOKEN_METHOD_NAME = "getToken";
+    public static readonly OAUTH_CLIENT_ID_PROPERTY_NAME = "clientId";
+    public static readonly OAUTH_CLIENT_SECRET_PROPERTY_NAME = "clientSecret";
+    public static readonly OAUTH_AUTH_CLIENT_PROPERTY_NAME = "authClient";
 
     private ir: IntermediateRepresentation;
     private neverThrowErrors: boolean;

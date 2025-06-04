@@ -33,7 +33,12 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     extends AbstractGeneratedType<ObjectTypeDeclaration, Context>
     implements GeneratedObjectType<Context>
 {
+    private readonly allObjectProperties: ObjectProperty[];
     public readonly type = "object";
+    constructor(init: AbstractGeneratedType.Init<ObjectTypeDeclaration, Context>) {
+        super(init);
+        this.allObjectProperties = [...this.shape.properties, ...(this.shape.extendedProperties ?? [])];
+    }
 
     public generateStatements(
         context: Context
@@ -58,7 +63,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                 }
                 return ts.factory.createPropertySignature(
                     undefined,
-                    ts.factory.createIdentifier(name),
+                    ts.factory.createIdentifier(getPropertyKey(name)),
                     hasQuestionToken ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
                     propertyValue
                 );
@@ -130,7 +135,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     }
 
     public getPropertyKey({ propertyWireKey }: { propertyWireKey: string }): string {
-        const property = this.shape.properties.find((property) => property.name.wireValue === propertyWireKey);
+        const property = this.allObjectProperties.find((property) => property.name.wireValue === propertyWireKey);
         if (property == null) {
             throw new Error("Property does not exist: " + propertyWireKey);
         }
@@ -174,7 +179,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                     })
                 });
                 return ts.factory.createPropertyAssignment(
-                    propertyKey,
+                    getPropertyKey(propertyKey),
                     context.type.getGeneratedExample(property.value).build(context, opts)
                 );
             }
@@ -183,7 +188,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
             }
             const key = originalTypeForProperty.getPropertyKey({ propertyWireKey: property.name.wireValue });
             return ts.factory.createPropertyAssignment(
-                key,
+                getPropertyKey(key),
                 context.type.getGeneratedExample(property.value).build(context, opts)
             );
         });

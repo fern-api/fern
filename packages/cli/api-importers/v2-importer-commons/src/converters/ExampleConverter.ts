@@ -244,16 +244,22 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         const resolvedDefault = this.context.isReferenceObject(this.schema)
             ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
                   schemaOrReference: this.schema,
-                  breadcrumbs: this.breadcrumbs,
-                  skipErrorCollector: true
+                  breadcrumbs: this.breadcrumbs
               })?.default
             : this.schema.default;
 
-        if (typeof resolvedDefault === "boolean") {
+        const resolvedConst = this.context.isReferenceObject(this.schema)
+            ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                  schemaOrReference: this.schema,
+                  breadcrumbs: this.breadcrumbs
+              })?.const
+            : this.schema.const;
+
+        if (typeof resolvedDefault === "boolean" || typeof resolvedConst === "boolean") {
             return {
                 isValid: true,
                 coerced: false,
-                validExample: resolvedDefault,
+                validExample: resolvedConst ?? resolvedDefault,
                 errors: []
             };
         }
@@ -469,7 +475,9 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         if (resolvedSchema.items == null) {
             resolvedSchema.items = { type: "string" };
         }
-        const exampleArray = Array.isArray(this.example) ? this.example : [this.example];
+        const usedFallbackExample = this.example == null;
+        const maybeExampleArray = this.example ?? resolvedSchema.example;
+        const exampleArray = Array.isArray(maybeExampleArray) ? maybeExampleArray : [maybeExampleArray];
         const results = exampleArray.map((item) => {
             const exampleConverter = new ExampleConverter({
                 breadcrumbs: [...this.breadcrumbs, "items"],
@@ -483,7 +491,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return exampleConverter.convert();
         });
 
-        const isValid = results.every((result) => result?.isValid ?? false);
+        const isValid = results.every((result) => result?.isValid ?? false) && !usedFallbackExample;
 
         return {
             isValid,

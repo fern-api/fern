@@ -56,7 +56,7 @@ export function validateObjectExample({
 
     // ensure required properties are present, we treat unknown as optional
     const requiredProperties = allPropertiesForObject.filter(
-        (property) => !property.isOptional && property.resolvedPropertyType._type !== "unknown"
+        (property) => !property.isNullable && !property.isOptional && property.resolvedPropertyType._type !== "unknown"
     );
     for (const requiredProperty of requiredProperties) {
         // don't error on literal properties

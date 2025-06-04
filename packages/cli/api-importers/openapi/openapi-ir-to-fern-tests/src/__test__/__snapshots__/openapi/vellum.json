@@ -408,7 +408,6 @@ Perform a search against a document index.
                       "results": [
                         {
                           "document": {
-                            "id": "id",
                             "label": "label",
                           },
                           "keywords": [
@@ -664,11 +663,11 @@ Used to submit feedback regarding the quality of previously generated completion
             "properties": {
               "active_model_version_ids": {
                 "access": "read-only",
-                "type": "list<string>",
+                "type": "optional<list<string>>",
               },
               "created": {
                 "access": "read-only",
-                "type": "datetime",
+                "type": "optional<datetime>",
               },
               "environment": {
                 "docs": "The environment this deployment is used in
@@ -680,7 +679,7 @@ Used to submit feedback regarding the quality of previously generated completion
               },
               "id": {
                 "access": "read-only",
-                "type": "string",
+                "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -760,7 +759,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "id": {
                 "access": "read-only",
                 "docs": "The ID of the document.",
-                "type": "string",
+                "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -790,7 +789,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "document_index_id": {
                 "access": "read-only",
                 "docs": "Vellum-generated ID that uniquely identifies the index this document is included in.",
-                "type": "string",
+                "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -801,7 +800,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "id": {
                 "access": "read-only",
                 "docs": "Vellum-generated ID that uniquely identifies this link.",
-                "type": "string",
+                "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -830,7 +829,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "properties": {
               "created": {
                 "access": "read-only",
-                "type": "datetime",
+                "type": "optional<datetime>",
               },
               "environment": {
                 "docs": "The environment this document index is used in
@@ -842,7 +841,7 @@ Used to submit feedback regarding the quality of previously generated completion
               },
               "id": {
                 "access": "read-only",
-                "type": "string",
+                "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -1282,7 +1281,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "created": {
                 "access": "read-only",
                 "docs": "Timestamp of when this model version was created.",
-                "type": "datetime",
+                "type": "optional<datetime>",
               },
               "exec_config": {
                 "docs": "Configuration used to execute this model version.",
@@ -1301,7 +1300,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "id": {
                 "access": "read-only",
                 "docs": "Vellum-generated ID that uniquely identifies this model version.",
-                "type": "string",
+                "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -2083,7 +2082,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "id": {
                 "access": "read-only",
                 "docs": "Vellum-generated ID that uniquely identifies this document.",
-                "type": "string",
+                "type": "optional<string>",
                 "validation": {
                   "format": "uuid",
                   "maxLength": undefined,
@@ -2877,7 +2876,6 @@ Used to submit feedback regarding the quality of previously generated completion
             body:
               results:
                 - document:
-                    id: id
                     label: label
                   text: text
                   keywords:
@@ -3043,12 +3041,12 @@ types:
   DeploymentRead:
     properties:
       id:
-        type: string
+        type: optional<string>
         validation:
           format: uuid
         access: read-only
       created:
-        type: datetime
+        type: optional<datetime>
         access: read-only
       label:
         type: string
@@ -3084,7 +3082,7 @@ types:
           * `GENERATE` - Generate
           * `CLASSIFY` - Classify
       active_model_version_ids:
-        type: list<string>
+        type: optional<list<string>>
         access: read-only
       last_deployed_on: datetime
     source:
@@ -3103,7 +3101,7 @@ types:
   Document:
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: The ID of the document.
         validation:
           format: uuid
@@ -3125,13 +3123,13 @@ types:
   DocumentDocumentToDocumentIndex:
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Vellum-generated ID that uniquely identifies this link.
         validation:
           format: uuid
         access: read-only
       document_index_id:
-        type: string
+        type: optional<string>
         docs: >-
           Vellum-generated ID that uniquely identifies the index this document
           is included in.
@@ -3159,12 +3157,12 @@ types:
   DocumentIndexRead:
     properties:
       id:
-        type: string
+        type: optional<string>
         validation:
           format: uuid
         access: read-only
       created:
-        type: datetime
+        type: optional<datetime>
         access: read-only
       label:
         type: string
@@ -3473,13 +3471,13 @@ types:
   ModelVersionRead:
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Vellum-generated ID that uniquely identifies this model version.
         validation:
           format: uuid
         access: read-only
       created:
-        type: datetime
+        type: optional<datetime>
         docs: Timestamp of when this model version was created.
         access: read-only
       label:
@@ -3959,7 +3957,7 @@ types:
   SlimDocument:
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Vellum-generated ID that uniquely identifies this document.
         validation:
           format: uuid
@@ -4793,10 +4791,7 @@ Used to list documents. Optionally filter on supported fields.
                       "results": [
                         {
                           "document_to_document_indexes": [
-                            {
-                              "document_index_id": "document_index_id",
-                              "id": "id",
-                            },
+                            {},
                           ],
                           "external_id": "external_id",
                           "id": "id",
@@ -4999,8 +4994,7 @@ service:
                   keywords:
                     - keywords
                   document_to_document_indexes:
-                    - id: id
-                      document_index_id: document_index_id
+                    - {}
     upload:
       path: /v1/upload-document
       method: POST

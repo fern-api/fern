@@ -2723,8 +2723,28 @@
         ]
       }
     },
-    "V0BatchJobsGetParametersSchema": {
-      "name": "V0BatchJobsGetParametersSchema",
+    "V0BatchJobsGetParametersWhen": {
+      "name": "V0BatchJobsGetParametersWhen",
+      "shape": {
+        "type": "object",
+        "extends": [
+          "When"
+        ],
+        "properties": []
+      }
+    },
+    "V0BatchJobsGetParametersSortBy": {
+      "name": "V0BatchJobsGetParametersSortBy",
+      "shape": {
+        "type": "object",
+        "extends": [
+          "SortBy"
+        ],
+        "properties": []
+      }
+    },
+    "V0BatchJobsGetParametersDirection": {
+      "name": "V0BatchJobsGetParametersDirection",
       "shape": {
         "type": "object",
         "extends": [
@@ -4683,70 +4703,80 @@
             "type": {
               "type": "id",
               "value": "AssistantEnd"
-            }
+            },
+            "displayName": "AssistantEnd"
           },
           {
             "typeName": "AssistantMessage",
             "type": {
               "type": "id",
               "value": "AssistantMessage"
-            }
+            },
+            "displayName": "AssistantMessage"
           },
           {
             "typeName": "AudioOutput",
             "type": {
               "type": "id",
               "value": "AudioOutput"
-            }
+            },
+            "displayName": "AudioOutput"
           },
           {
             "typeName": "ChatMetadata",
             "type": {
               "type": "id",
               "value": "ChatMetadata"
-            }
+            },
+            "displayName": "ChatMetadata"
           },
           {
             "typeName": "Error",
             "type": {
               "type": "id",
               "value": "Error"
-            }
+            },
+            "displayName": "Error"
           },
           {
             "typeName": "UserInterruption",
             "type": {
               "type": "id",
               "value": "UserInterruption"
-            }
+            },
+            "displayName": "UserInterruption"
           },
           {
             "typeName": "UserMessage",
             "type": {
               "type": "id",
               "value": "UserMessage"
-            }
+            },
+            "displayName": "UserMessage"
           },
           {
             "typeName": "ToolCallMessage",
             "type": {
               "type": "id",
               "value": "ToolCallMessage"
-            }
+            },
+            "displayName": "ToolCallMessage"
           },
           {
             "typeName": "ToolResponseMessage",
             "type": {
               "type": "id",
               "value": "ToolResponseMessage"
-            }
+            },
+            "displayName": "ToolResponseMessage"
           },
           {
             "typeName": "ToolErrorMessage",
             "type": {
               "type": "id",
               "value": "ToolErrorMessage"
-            }
+            },
+            "displayName": "ToolErrorMessage"
           }
         ]
       }
@@ -4761,56 +4791,64 @@
             "type": {
               "type": "id",
               "value": "AudioInput"
-            }
+            },
+            "displayName": "AudioInput"
           },
           {
             "typeName": "SessionSettings",
             "type": {
               "type": "id",
               "value": "SessionSettings"
-            }
+            },
+            "displayName": "SessionSettings"
           },
           {
             "typeName": "UserInput",
             "type": {
               "type": "id",
               "value": "UserInput"
-            }
+            },
+            "displayName": "UserInput"
           },
           {
             "typeName": "AssistantInput",
             "type": {
               "type": "id",
               "value": "AssistantInput"
-            }
+            },
+            "displayName": "AssistantInput"
           },
           {
             "typeName": "ToolResponseMessage",
             "type": {
               "type": "id",
               "value": "ToolResponseMessage"
-            }
+            },
+            "displayName": "ToolResponseMessage"
           },
           {
             "typeName": "ToolErrorMessage",
             "type": {
               "type": "id",
               "value": "ToolErrorMessage"
-            }
+            },
+            "displayName": "ToolErrorMessage"
           },
           {
             "typeName": "PauseAssistantMessage",
             "type": {
               "type": "id",
               "value": "PauseAssistantMessage"
-            }
+            },
+            "displayName": "PauseAssistantMessage"
           },
           {
             "typeName": "ResumeAssistantMessage",
             "type": {
               "type": "id",
               "value": "ResumeAssistantMessage"
-            }
+            },
+            "displayName": "ResumeAssistantMessage"
           }
         ]
       }
@@ -5307,7 +5345,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V0BatchJobsGetParametersSchema"
+                "value": "V0BatchJobsGetParametersWhen"
               }
             }
           },
@@ -5331,7 +5369,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V0BatchJobsGetParametersSchema"
+                "value": "V0BatchJobsGetParametersSortBy"
               }
             }
           },
@@ -5342,7 +5380,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V0BatchJobsGetParametersSchema"
+                "value": "V0BatchJobsGetParametersDirection"
               }
             }
           }

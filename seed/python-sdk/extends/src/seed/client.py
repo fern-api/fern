@@ -99,6 +99,8 @@ class SeedExtends:
         )
         client.extended_inline_request_body(
             unique="unique",
+            name="name",
+            docs="docs",
         )
         """
         _response = self._raw_client.extended_inline_request_body(
@@ -200,6 +202,8 @@ class AsyncSeedExtends:
         async def main() -> None:
             await client.extended_inline_request_body(
                 unique="unique",
+                name="name",
+                docs="docs",
             )
 
 

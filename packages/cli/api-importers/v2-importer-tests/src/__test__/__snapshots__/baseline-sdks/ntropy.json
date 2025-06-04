@@ -22190,6 +22190,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Fn Call",
               "typeId": "type_:FnCall",
               "type": "named"
             }
@@ -24757,6 +24758,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Fn Call&&",
               "typeId": "type_:FnCall&&",
               "type": "named"
             }
@@ -24786,6 +24788,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Fn Call||",
               "typeId": "type_:FnCall||",
               "type": "named"
             }
@@ -24815,6 +24818,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Fn Call==",
               "typeId": "type_:FnCall==",
               "type": "named"
             }
@@ -24844,6 +24848,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Fn Call+",
               "typeId": "type_:FnCall+",
               "type": "named"
             }
@@ -24873,6 +24878,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Fn Call ",
               "typeId": "type_:FnCall-",
               "type": "named"
             }
@@ -24902,6 +24908,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Fn Call*",
               "typeId": "type_:FnCall*",
               "type": "named"
             }
@@ -24931,6 +24938,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Fn Call/",
               "typeId": "type_:FnCall/",
               "type": "named"
             }
@@ -24960,6 +24968,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Fn Call//",
               "typeId": "type_:FnCall//",
               "type": "named"
             }
@@ -24989,6 +24998,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Fn Call<",
               "typeId": "type_:FnCall<",
               "type": "named"
             }
@@ -25018,6 +25028,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Fn Call<=",
               "typeId": "type_:FnCall<=",
               "type": "named"
             }
@@ -25047,6 +25058,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Fn Call>",
               "typeId": "type_:FnCall>",
               "type": "named"
             }
@@ -25076,6 +25088,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Fn Call>=",
               "typeId": "type_:FnCall>=",
               "type": "named"
             }
@@ -25105,6 +25118,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Fn Call!",
               "typeId": "type_:FnCall!",
               "type": "named"
             }
@@ -25134,6 +25148,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Fn Call Is Substring",
               "typeId": "type_:FnCallIsSubstring",
               "type": "named"
             }
@@ -25163,6 +25178,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Fn Call Starts With",
               "typeId": "type_:FnCallStartsWith",
               "type": "named"
             }
@@ -25192,6 +25208,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Fn Call Ends With",
               "typeId": "type_:FnCallEndsWith",
               "type": "named"
             }
@@ -25221,6 +25238,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Fn Call to Lower",
               "typeId": "type_:FnCallToLower",
               "type": "named"
             }
@@ -25250,6 +25268,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Fn Call to Upper",
               "typeId": "type_:FnCallToUpper",
               "type": "named"
             }
@@ -25279,6 +25298,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Fn Call Has Label",
               "typeId": "type_:FnCallHasLabel",
               "type": "named"
             }
@@ -25308,6 +25328,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Fn Call Has Mcc",
               "typeId": "type_:FnCallHasMcc",
               "type": "named"
             }
@@ -25337,6 +25358,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Fn Call Get",
               "typeId": "type_:FnCallGet",
               "type": "named"
             }
@@ -25405,6 +25427,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "If",
               "typeId": "type_:if",
               "type": "named"
             }
@@ -25434,6 +25457,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Modify Labels",
               "typeId": "type_:ModifyLabels",
               "type": "named"
             }
@@ -25463,6 +25487,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Set",
               "typeId": "type_:set",
               "type": "named"
             }
@@ -26362,6 +26387,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Modify Labels Add Label",
               "typeId": "type_:ModifyLabelsAddLabel",
               "type": "named"
             }
@@ -26391,6 +26417,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Modify Labels Remove Label",
               "typeId": "type_:ModifyLabelsRemoveLabel",
               "type": "named"
             }
@@ -26420,6 +26447,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Modify Labels Set Labels",
               "typeId": "type_:ModifyLabelsSetLabels",
               "type": "named"
             }
@@ -26449,6 +26477,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Modify Labels Add Mcc",
               "typeId": "type_:ModifyLabelsAddMcc",
               "type": "named"
             }
@@ -26478,6 +26507,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Modify Labels Remove Mcc",
               "typeId": "type_:ModifyLabelsRemoveMcc",
               "type": "named"
             }
@@ -26507,6 +26537,7 @@
                 "allParts": [],
                 "packagePath": []
               },
+              "displayName": "Modify Labels Set Mcc",
               "typeId": "type_:ModifyLabelsSetMcc",
               "type": "named"
             }

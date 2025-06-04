@@ -20,7 +20,11 @@ import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 
-import { replaceImagePathsAndUrls, replaceReferencedMarkdown } from "../../docs-markdown-utils/src";
+import {
+    replaceImagePathsAndUrls,
+    replaceReferencedCode,
+    replaceReferencedMarkdown
+} from "../../docs-markdown-utils/src";
 import { FernWorkspace } from "../../workspace/loader/src";
 
 export async function getPreviewDocsDefinition({
@@ -69,7 +73,7 @@ export async function getPreviewDocsDefinition({
             );
 
             // Then replace image paths with file IDs
-            const finalMarkdown = replaceImagePathsAndUrls(
+            let finalMarkdown = replaceImagePathsAndUrls(
                 processedMarkdown,
                 fileIdsMap,
                 {}, // markdownFilesToPathName - empty object since we don't need it for images
@@ -79,6 +83,13 @@ export async function getPreviewDocsDefinition({
                 },
                 context
             );
+
+            finalMarkdown = await replaceReferencedCode({
+                markdown: finalMarkdown,
+                absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                absolutePathToMarkdownFile: absoluteFilePath,
+                context
+            });
 
             previousDocsDefinition.pages[FdrAPI.PageId(relativePath)] = {
                 markdown: finalMarkdown,
@@ -153,7 +164,7 @@ export async function getPreviewDocsDefinition({
         pages: dbDocsDefinition.pages,
         search: { type: "legacyMultiAlgoliaIndex", algoliaIndex: undefined },
         algoliaSearchIndex: undefined,
-        jsFiles: undefined,
+        jsFiles: dbDocsDefinition.jsFiles,
         id: undefined
     };
 }

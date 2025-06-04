@@ -23,6 +23,29 @@ class UserClient:
         """
         return self._raw_client
 
+    def head(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from seed import SeedHttpHead
+
+        client = SeedHttpHead(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.user.head()
+        """
+        _response = self._raw_client.head(request_options=request_options)
+        return _response.data
+
     def list(self, *, limit: int, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
         """
         Parameters
@@ -65,6 +88,37 @@ class AsyncUserClient:
         AsyncRawUserClient
         """
         return self._raw_client
+
+    async def head(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedHttpHead
+
+        client = AsyncSeedHttpHead(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.user.head()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.head(request_options=request_options)
+        return _response.data
 
     async def list(self, *, limit: int, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
         """

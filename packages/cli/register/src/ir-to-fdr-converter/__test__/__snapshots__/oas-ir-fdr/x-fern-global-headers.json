@@ -79,6 +79,130 @@
         {
           "auth": false,
           "method": "POST",
+          "id": "get_stream",
+          "originalEndpointId": "endpoint_user.get_stream",
+          "name": "Get Stream",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "userId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/user/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "userId"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [
+            {
+              "key": "x-api-key",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "key": "my-api-version",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "stream",
+                    "valueType": {
+                      "type": "literal",
+                      "value": {
+                        "type": "booleanLiteral",
+                        "value": true
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "stream",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "StreamUser"
+                }
+              }
+            },
+            "statusCode": 200,
+            "description": "Success!"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "userGetExample",
+              "description": "",
+              "path": "/user/userId",
+              "pathParameters": {
+                "userId": "userId"
+              },
+              "queryParameters": {},
+              "headers": {
+                "x-api-key": "x-api-key",
+                "my-api-version": "my-api-version"
+              },
+              "requestBody": {
+                "stream": true
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "stream": true
+                }
+              },
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        },
+        {
+          "auth": false,
+          "method": "POST",
           "id": "get",
           "originalEndpointId": "endpoint_user.get",
           "name": "Get",
@@ -116,24 +240,6 @@
           "queryParameters": [],
           "headers": [
             {
-              "key": "my-api-key",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            },
-            {
-              "key": "another_header",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            },
-            {
               "key": "x-api-key",
               "type": {
                 "type": "primitive",
@@ -163,12 +269,10 @@
                   {
                     "key": "stream",
                     "valueType": {
-                      "type": "optional",
-                      "itemType": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean"
-                        }
+                      "type": "literal",
+                      "value": {
+                        "type": "booleanLiteral",
+                        "value": false
                       }
                     }
                   }
@@ -178,15 +282,10 @@
           },
           "response": {
             "type": {
-              "type": "stream",
-              "shape": {
-                "type": "reference",
-                "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "User"
               }
             },
             "statusCode": 200,
@@ -203,29 +302,19 @@
               },
               "queryParameters": {},
               "headers": {
-                "my-api-key": "my-api-key",
-                "another_header": "another_header",
                 "x-api-key": "x-api-key",
                 "my-api-version": "my-api-version"
               },
-              "requestBody": {},
+              "requestBody": {
+                "stream": false
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "stream": false
+                }
               },
-              "responseStatusCode": 200,
-              "responseBody": [
-                "foo"
-              ],
-              "responseBodyV3": {
-                "type": "stream",
-                "value": [
-                  {
-                    "type": "json",
-                    "value": "foo"
-                  }
-                ]
-              }
+              "responseStatusCode": 200
             }
           ],
           "protocol": {
@@ -252,5 +341,36 @@
     ]
   },
   "snippetsConfiguration": {},
-  "globalHeaders": []
+  "globalHeaders": [
+    {
+      "key": "my-api-key",
+      "type": {
+        "type": "optional",
+        "itemType": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "key": "another_header",
+      "type": {
+        "type": "primitive",
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "key": "version",
+      "type": {
+        "type": "primitive",
+        "value": {
+          "type": "string"
+        }
+      }
+    }
+  ]
 }

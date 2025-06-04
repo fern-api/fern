@@ -35,6 +35,7 @@ export const HttpEndpoint: core.serialization.ObjectSchema<serializers.HttpEndpo
             method: HttpMethod,
             headers: core.serialization.list(HttpHeader),
             baseUrl: EnvironmentBaseUrlId.optional(),
+            v2BaseUrls: core.serialization.list(EnvironmentBaseUrlId).optional(),
             basePath: HttpPath.optional(),
             path: HttpPath,
             fullPath: HttpPath,
@@ -64,6 +65,7 @@ export declare namespace HttpEndpoint {
         method: HttpMethod.Raw;
         headers: HttpHeader.Raw[];
         baseUrl?: EnvironmentBaseUrlId.Raw | null;
+        v2BaseUrls?: EnvironmentBaseUrlId.Raw[] | null;
         basePath?: HttpPath.Raw | null;
         path: HttpPath.Raw;
         fullPath: HttpPath.Raw;

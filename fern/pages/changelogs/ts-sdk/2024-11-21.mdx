@@ -1,9 +1,22 @@
 ## 0.42.4
-**`(fix):`** Remove extraneous import in pagination snippets
+**`(fix):`** Improve `GeneratedTimeoutSdkError` error to include endpoint name in message.
 
-## 0.42.3
-**`(fix):`** Include endpoint name in GeneratedTimeoutSdkError message
+## 0.42.2
+**`(feat):`** Added documentation for pagination in the README. The snippet below will
+now show up on generated READMEs.
 
-## 0.42.1
-**`(feat):`** Add pagination documentation to README
+```typescript
+// Iterate through all items
+const response = await client.users.list();
+for await (const item of response) {
+  console.log(item);
+}
+
+// Or manually paginate
+let page = await client.users.list();
+while (page.hasNextPage()) {
+  page = await page.getNextPage();
+}
+```
+
 

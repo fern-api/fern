@@ -196,6 +196,7 @@ public partial class ServiceClient
     ///         CastMember = new Actor { Name = "name", Id = "id" },
     ///         ExtendedMovie = new ExtendedMovie
     ///         {
+    ///             Cast = new List&lt;string&gt;() { "cast", "cast" },
     ///             Id = "id",
     ///             Prequel = "prequel",
     ///             Title = "title",
@@ -212,7 +213,6 @@ public partial class ServiceClient
     ///                 },
     ///             },
     ///             Revenue = 1000000,
-    ///             Cast = new List&lt;string&gt;() { "cast", "cast" },
     ///         },
     ///         Entity = new Entity { Type = BasicType.Primitive, Name = "name" },
     ///         Metadata = "metadata",

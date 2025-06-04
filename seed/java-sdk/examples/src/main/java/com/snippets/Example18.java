@@ -51,6 +51,11 @@ public class Example18 {
                 .extendedMovie(
                     ExtendedMovie
                         .builder()
+                        .cast(
+                            new ArrayList<String>(
+                                Arrays.asList("cast", "cast")
+                            )
+                        )
                         .id("id")
                         .title("title")
                         .from("from")
@@ -65,11 +70,6 @@ public class Example18 {
                             }}
                         )
                         .revenue(1000000L)
-                        .cast(
-                            new ArrayList<String>(
-                                Arrays.asList("cast", "cast")
-                            )
-                        )
                         .prequel("prequel")
                         .book("book")
                         .build()

@@ -22,6 +22,10 @@ public class Example18
                     Id = "id"
                 },
                 ExtendedMovie = new ExtendedMovie{
+                    Cast = new List<string>(){
+                        "cast",
+                        "cast",
+                    },
                     Id = "id",
                     Prequel = "prequel",
                     Title = "title",
@@ -34,11 +38,7 @@ public class Example18
                             ["key"] = "value",
                         },
                     },
-                    Revenue = 1000000l,
-                    Cast = new List<string>(){
-                        "cast",
-                        "cast",
-                    }
+                    Revenue = 1000000l
                 },
                 Entity = new Entity{
                     Type = BasicType.Primitive,

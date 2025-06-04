@@ -1,30 +1,5 @@
 {
-  "types": {
-    "TestPostRequestBodyContentMultipartFormDataSchemaMetadata": {
-      "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
-      "name": "TestPostRequestBodyContentMultipartFormDataSchemaMetadata",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [],
-        "extraProperties": {
-          "type": "unknown"
-        }
-      }
-    },
-    "ExamplePostRequestBodyContentApplicationJsonSchemaMetadata": {
-      "description": "Arbitrary object that will be attached as document metadata to the extracted document.",
-      "name": "ExamplePostRequestBodyContentApplicationJsonSchemaMetadata",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [],
-        "extraProperties": {
-          "type": "unknown"
-        }
-      }
-    }
-  },
+  "types": {},
   "subpackages": {},
   "rootPackage": {
     "endpoints": [
@@ -73,8 +48,16 @@
                   "valueType": {
                     "type": "optional",
                     "itemType": {
-                      "type": "id",
-                      "value": "TestPostRequestBodyContentMultipartFormDataSchemaMetadata"
+                      "type": "map",
+                      "keyType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "valueType": {
+                        "type": "unknown"
+                      }
                     }
                   },
                   "contentType": "multipart/form-data",
@@ -230,8 +213,16 @@
                   "valueType": {
                     "type": "optional",
                     "itemType": {
-                      "type": "id",
-                      "value": "ExamplePostRequestBodyContentApplicationJsonSchemaMetadata"
+                      "type": "map",
+                      "keyType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "valueType": {
+                        "type": "unknown"
+                      }
                     }
                   }
                 }
