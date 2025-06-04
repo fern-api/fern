@@ -2496,7 +2496,7 @@
             }
           ]
         },
-        "sdk-output-path": {
+        "path": {
           "oneOf": [
             {
               "type": "string"
