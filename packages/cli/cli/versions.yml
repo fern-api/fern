@@ -7348,7 +7348,7 @@
         \ python): fix envvars scanning by updating the ApiError usage by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/3046\r\n* (feature): OpenAPI importer\
         \ attempts to use tag order to render endpoints if possible by @dsinghvi in\
-        \ https://github.com/fern-##\r\n* (improvement, python): make optional fields\
+        \ https://github.com/fern-api/fern/pull/3048\r\n* (improvement, python): make optional fields\
         \ not required by default by @armandobelardo in https://github.com/fern-api/fern/pull/3041\r\
         \n* (feature): Add pagination (IRv35) by @amckinney in https://github.com/fern-api/fern/pull/2985\r\
         \n* (feature): support asyncapi examples via `x-fern-examples` by @dsinghvi\
