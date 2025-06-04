@@ -10,15 +10,17 @@ export const User: core.serialization.ObjectSchema<serializers.User.Raw, SeedNul
     {
         name: core.serialization.string(),
         id: core.serialization.lazy(() => serializers.UserId),
-        tags: core.serialization.list(core.serialization.string()).optional(),
-        metadata: core.serialization.lazyObject(() => serializers.Metadata).optional(),
+        tags: core.serialization.list(core.serialization.string()).nullable(),
+        metadata: core.serialization.lazyObject(() => serializers.Metadata).optionalNullable(),
         email: core.serialization.lazy(() => serializers.Email),
         favoriteNumber: core.serialization.property(
             "favorite-number",
             core.serialization.lazy(() => serializers.WeirdNumber),
         ),
-        numbers: core.serialization.list(core.serialization.number()).optional(),
-        strings: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
+        numbers: core.serialization.list(core.serialization.number()).optionalNullable(),
+        strings: core.serialization
+            .record(core.serialization.string(), core.serialization.unknown())
+            .optionalNullable(),
     },
 );
 
@@ -26,11 +28,11 @@ export declare namespace User {
     export interface Raw {
         name: string;
         id: serializers.UserId.Raw;
-        tags?: string[] | null;
-        metadata?: serializers.Metadata.Raw | null;
-        email?: serializers.Email.Raw;
+        tags: string[] | null;
+        metadata?: (serializers.Metadata.Raw | null) | null;
+        email: serializers.Email.Raw;
         "favorite-number": serializers.WeirdNumber.Raw;
-        numbers?: number[] | null;
-        strings?: Record<string, unknown> | null;
+        numbers?: (number[] | null) | null;
+        strings?: (Record<string, unknown> | null) | null;
     }
 }
