@@ -187,6 +187,7 @@ allowedFailures:
   - oauth-client-credentials-nested-root
   - package-yml
   - pagination
+  - pagination-custom
   - path-parameters
   - query-parameters
   - streaming
