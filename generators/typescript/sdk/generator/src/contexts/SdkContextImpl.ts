@@ -176,6 +176,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly generateOAuthClients: boolean;
     public readonly omitUndefined: boolean;
     public readonly neverThrowErrors: boolean;
+    public readonly importsManager: ImportsManager;
 
     constructor({
         logger,
@@ -254,6 +255,7 @@ export class SdkContextImpl implements SdkContext {
         this.sourceFile = sourceFile;
         this.npmPackage = npmPackage;
         this.neverThrowErrors = neverThrowErrors;
+        this.importsManager = importsManager;
         this.externalDependencies = createExternalDependencies({
             dependencyManager,
             importsManager

@@ -9,7 +9,6 @@ import * as SeedLiteral from "../../../../index.js";
  *     {
  *         temperature: 10.1,
  *         context: "You're super wise",
- *         aliasedContext: "You're super wise",
  *         maybeContext: "You're super wise",
  *         objectWithLiteral: {
  *             nestedLiteral: {

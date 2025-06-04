@@ -32,7 +32,7 @@
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/ruby-ast": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
-    "@fern-api/dynamic-ir-sdk": "^57.0.0",
+    "@fern-api/dynamic-ir-sdk": "^58.2.0",
     "@types/jest": "^29.5.14",
     "string.prototype.replaceall": "^1.0.10",
     "tsup": "^8.3.5",

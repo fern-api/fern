@@ -165,7 +165,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             return ts.factory.createObjectLiteralExpression(
                 [
                     ts.factory.createPropertyAssignment(
-                        ts.factory.createIdentifier(this.discriminant),
+                        ts.factory.createIdentifier(getPropertyKey(this.discriminant)),
                         singleUnionType.getDiscriminantValueAsExpression()
                     ),
                     ...nonDiscriminantProperties

@@ -3,4 +3,5 @@
 # isort: skip_file
 
 from .resources import Foo, common
+
 __all__ = ["Foo", "common"]

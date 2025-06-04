@@ -19,11 +19,11 @@ export const V58_TO_V57_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "1.2.0",
         [GeneratorName.TYPESCRIPT]: "1.2.0",
         [GeneratorName.TYPESCRIPT_SDK]: "1.2.0",
-        [GeneratorName.TYPESCRIPT_EXPRESS]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.18.0",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA_SDK]: "2.36.5",
+        [GeneratorName.JAVA_SPRING]: "1.6.1",
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_FASTAPI]: "1.7.0",
@@ -37,11 +37,11 @@ export const V58_TO_V57_MIGRATION: IrMigration<
         [GeneratorName.RUBY_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.CSHARP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.CSHARP_SDK]: "1.17.5",
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.SWIFT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PHP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PHP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
+        [GeneratorName.PHP_SDK]: "1.15.1"
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V57.IntermediateRepresentation.jsonOrThrow(ir, {

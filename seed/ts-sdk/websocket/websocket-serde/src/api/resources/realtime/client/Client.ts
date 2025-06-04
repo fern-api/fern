@@ -30,23 +30,23 @@ export class Realtime {
 
     public async connect(args: Realtime.ConnectArgs = {}): Promise<RealtimeSocket> {
         const queryParams: Record<string, unknown> = {};
-        if (args.model != null) {
-            queryParams["model"] = args.model;
+        if (args["model"] != null) {
+            queryParams["model"] = args["model"];
         }
 
-        if (args.temperature != null) {
-            queryParams["temperature"] = args.temperature;
+        if (args["temperature"] != null) {
+            queryParams["temperature"] = args["temperature"];
         }
 
         let websocketHeaders: Record<string, unknown> = {};
         websocketHeaders = {
             ...websocketHeaders,
-            ...args.headers,
+            ...args["headers"],
         };
         const socket = new core.ReconnectingWebSocket(
-            `${(await core.Supplier.get(this._options.baseUrl)) ?? (await core.Supplier.get(this._options.environment))}/realtime/?${qs.stringify(queryParams, { arrayFormat: "repeat" })}`,
+            `${(await core.Supplier.get(this._options["baseUrl"])) ?? (await core.Supplier.get(this._options["environment"]))}/realtime/?${qs.stringify(queryParams, { arrayFormat: "repeat" })}`,
             [],
-            { debug: args.debug ?? false, maxRetries: args.reconnectAttempts ?? 30 },
+            { debug: args["debug"] ?? false, maxRetries: args["reconnectAttempts"] ?? 30 },
             websocketHeaders,
         );
         return new RealtimeSocket({ socket });

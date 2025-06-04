@@ -19,5 +19,11 @@ public interface UserService {
       value = "/users",
       produces = "application/json"
   )
+  void head();
+
+  @GetMapping(
+      value = "/users",
+      produces = "application/json"
+  )
   List<User> list(@RequestParam("limit") Integer limit);
 }

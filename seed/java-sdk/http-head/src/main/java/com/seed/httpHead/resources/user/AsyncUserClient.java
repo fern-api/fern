@@ -27,6 +27,14 @@ public class AsyncUserClient {
         return this.rawClient;
     }
 
+    public CompletableFuture<Void> head() {
+        return this.rawClient.head().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> head(RequestOptions requestOptions) {
+        return this.rawClient.head(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<List<User>> list(ListUsersRequest request) {
         return this.rawClient.list(request).thenApply(response -> response.body());
     }

@@ -1,0 +1,32 @@
+imports:
+  types: ../types.yml
+
+service:
+  auth: true
+  base-path: /
+  endpoints:
+    check:
+      docs: "This endpoint checks the health of a resource."
+      method: GET
+      path: /check/{id}
+      path-parameters:
+        id: 
+          type: string
+          docs: The id to check
+      examples:
+        - name: Example0
+          path-parameters:
+            id: id-2sdx82h
+        - name: Example2
+          path-parameters:
+            id: id-3tey93i
+
+    ping:
+      docs: "This endpoint checks the health of the service."
+      method: GET
+      path: /ping
+      response: boolean
+      examples:
+        - name: Example0
+          response:
+            body: true

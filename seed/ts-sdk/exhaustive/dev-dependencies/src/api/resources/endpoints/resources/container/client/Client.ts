@@ -182,7 +182,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]))
+     *     await client.endpoints.container.getAndReturnSetOfPrimitives(["string"])
      */
     public getAndReturnSetOfPrimitives(
         request: string[],
@@ -250,9 +250,9 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.container.getAndReturnSetOfObjects(new Set([{
+     *     await client.endpoints.container.getAndReturnSetOfObjects([{
      *             string: "string"
-     *         }]))
+     *         }])
      */
     public getAndReturnSetOfObjects(
         request: Fiddle.types.ObjectWithRequiredField[],
