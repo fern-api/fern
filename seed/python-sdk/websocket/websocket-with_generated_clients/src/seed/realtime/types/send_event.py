@@ -11,10 +11,11 @@ from ...core.serialization import FieldMetadata
 class SendEvent(UniversalBaseModel):
     send_text: typing_extensions.Annotated[str, FieldMetadata(alias="sendText")]
     send_param: typing_extensions.Annotated[int, FieldMetadata(alias="sendParam")]
-    
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
+
         class Config:
             frozen = True
             smart_union = True
