@@ -22,6 +22,7 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     files: {},
     filesV2: {},
     config: {
+        aiChatConfig: undefined,
         hideNavLinks: undefined,
         navigation: undefined,
         root: undefined,
@@ -77,9 +78,9 @@ export async function runPreviewServer({
                     "Failed to connect to the docs preview server. Please contact support@buildwithfern.com"
                 );
             }
-            await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true });
+            await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true, tryTar: false });
         } catch (err) {
-            const pathToBundle = getPathToBundleFolder();
+            const pathToBundle = getPathToBundleFolder({});
             if (err instanceof Error) {
                 context.logger.debug(`Failed to download latest docs bundle: ${(err as Error).message}`);
             }
@@ -162,7 +163,7 @@ export async function runPreviewServer({
     docsDefinition = await reloadDocsDefinition();
 
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
-    const bundleRoot = bundlePath ? AbsoluteFilePath.of(path.resolve(bundlePath)) : getPathToBundleFolder();
+    const bundleRoot = bundlePath ? AbsoluteFilePath.of(path.resolve(bundlePath)) : getPathToBundleFolder({});
 
     const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {
         recursive: true,
@@ -230,6 +231,7 @@ export async function runPreviewServer({
             };
             res.send(response);
         } catch (error) {
+            context.logger.error("Stack trace:", (error as Error).stack ?? "");
             context.logger.error("Error loading docs", (error as Error).message);
             res.status(500).send();
         }

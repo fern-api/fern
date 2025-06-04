@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedApi.A;
 using SeedApi.Core;
 using SeedApi.Folder;
@@ -35,23 +35,21 @@ public partial class SeedApiClient
         Folder = new FolderClient(_client);
     }
 
-    public AClient A { get; init; }
+    public AClient A { get; }
 
-    public FolderClient Folder { get; init; }
+    public FolderClient Folder { get; }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.FooAsync();
-    /// </code>
-    /// </example>
-    public async Task FooAsync(
+    /// </code></example>
+    public async global::System.Threading.Tasks.Task FooAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -65,11 +63,13 @@ public partial class SeedApiClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedApiApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

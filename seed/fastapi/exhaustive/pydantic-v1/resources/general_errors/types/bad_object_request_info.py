@@ -2,10 +2,8 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 import pydantic
-
-
 class BadObjectRequestInfo(UniversalBaseModel):
     message: str
-
+    
     class Config:
         extra = pydantic.Extra.forbid

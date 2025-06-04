@@ -1,9 +1,8 @@
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
-import { PhpFile } from "@fern-api/php-codegen";
-import { FileGenerator } from "@fern-api/php-codegen";
-import { php } from "@fern-api/php-codegen";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { FileGenerator, PhpFile } from "@fern-api/php-base";
+import { SELF, php } from "@fern-api/php-codegen";
 
-import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { Name, ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
@@ -30,14 +29,24 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
                 this.context.phpTypeMapper.convertToTraitClassReference(declaredTypeName)
             )
         });
-
-        for (const property of this.objectDeclaration.properties) {
-            clazz.addField(this.toField({ property }));
-        }
+        const { includeGetter, includeSetter } = {
+            includeGetter: this.context.shouldGenerateGetterMethods(),
+            includeSetter: this.context.shouldGenerateSetterMethods()
+        };
         for (const property of this.objectDeclaration.extendedProperties ?? []) {
             clazz.addField(this.toField({ property, inherited: true }));
         }
-
+        for (const property of this.objectDeclaration.properties) {
+            const field = this.toField({ property });
+            if (includeGetter) {
+                clazz.addMethod(this.context.getGetterMethod({ name: property.name.name, field }));
+            }
+            if (includeSetter) {
+                clazz.addMethod(this.context.getSetterMethod({ name: property.name.name, field }));
+            }
+            clazz.addField(field);
+        }
+        clazz.addMethod(this.context.getToStringMethod());
         return new PhpFile({
             clazz,
             rootNamespace: this.context.getRootNamespace(),
@@ -51,7 +60,7 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
         return php.field({
             type: convertedType,
             name: this.context.getPropertyName(property.name.name),
-            access: "public",
+            access: this.context.getPropertyAccess(),
             docs: property.docs,
             attributes: this.context.phpAttributeMapper.convert({
                 type: convertedType,

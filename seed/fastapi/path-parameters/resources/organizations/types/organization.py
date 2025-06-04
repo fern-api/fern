@@ -4,17 +4,12 @@ from ....core.pydantic_utilities import UniversalBaseModel
 import typing
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
-
-
 class Organization(UniversalBaseModel):
     name: str
     tags: typing.List[str]
-
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid

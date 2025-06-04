@@ -25,10 +25,10 @@ import { CallbackQueueImpl } from "./callback-queue/CallbackQueueImpl";
 import { FetcherImpl } from "./fetcher/FetcherImpl";
 import { FormDataUtilsImpl } from "./form-data-utils/FormDataUtilsImpl";
 import { PaginationImpl } from "./pagination/PaginationImpl";
-import { PromiseUtilsImpl } from "./promise/PromiseUtilsImpl";
 import { RuntimeImpl } from "./runtime/RuntimeImpl";
 import { StreamingUtilsImpl } from "./stream-utils/StreamUtilsImpl";
 import { UtilsImpl } from "./utils/UtilsImpl";
+import { WebsocketImpl } from "./websocket/WebsocketImpl";
 import { ZurgImpl } from "./zurg/ZurgImpl";
 
 export declare namespace CoreUtilitiesManager {
@@ -57,7 +57,7 @@ export class CoreUtilitiesManager {
             runtime: new RuntimeImpl({ getReferenceToExport }),
             pagination: new PaginationImpl({ getReferenceToExport }),
             utils: new UtilsImpl({ getReferenceToExport }),
-            promiseUtils: new PromiseUtilsImpl({ getReferenceToExport })
+            websocket: new WebsocketImpl({ getReferenceToExport })
         };
     }
 
@@ -162,9 +162,21 @@ export class CoreUtilitiesManager {
         this.authOverrides[filepath] = content;
     }
 
+    private addManifestAndDependencies(manifest: CoreUtility.Manifest): void {
+        if (this.referencedCoreUtilities[manifest.name] != null) {
+            return;
+        }
+        this.referencedCoreUtilities[manifest.name] = manifest;
+        if (manifest.dependsOn != null) {
+            for (const dependency of manifest.dependsOn) {
+                this.addManifestAndDependencies(dependency);
+            }
+        }
+    }
+
     private createGetReferenceToExport({ sourceFile, importsManager }: CoreUtilitiesManager.getCoreUtilities.Args) {
         return ({ manifest, exportedName }: { manifest: CoreUtility.Manifest; exportedName: string }) => {
-            this.referencedCoreUtilities[manifest.name] = manifest;
+            this.addManifestAndDependencies(manifest);
             return getReferenceToExportViaNamespaceImport({
                 exportedName,
                 filepathInsideNamespaceImport: manifest.pathInCoreUtilities,

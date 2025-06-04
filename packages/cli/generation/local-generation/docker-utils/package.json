@@ -27,6 +27,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
@@ -40,6 +41,6 @@
     "prettier": "^3.4.2",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.9"
   }
 }

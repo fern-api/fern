@@ -40,6 +40,7 @@ export async function convertProtobufToOpenAPI({
     const openAPIAbsoluteFilePath = await generator.generate({
         absoluteFilepathToProtobufRoot: protobufSpec.absoluteFilepathToProtobufRoot,
         absoluteFilepathToProtobufTarget: protobufSpec.absoluteFilepathToProtobufTarget,
+        relativeFilepathToProtobufRoot: protobufSpec.relativeFilepathToProtobufRoot,
         local: protobufSpec.generateLocally
     });
     return {

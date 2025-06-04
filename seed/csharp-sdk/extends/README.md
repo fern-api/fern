@@ -8,7 +8,7 @@ The Seed C# library provides convenient access to the Seed API from C#.
 ## Installation
 
 ```sh
-nuget install SeedExtends
+dotnet add package SeedExtends
 ```
 
 ## Usage
@@ -19,7 +19,14 @@ Instantiate and use the client with the following:
 using SeedExtends;
 
 var client = new SeedExtendsClient();
-await client.ExtendedInlineRequestBodyAsync(new Inlined { Unique = "unique" });
+await client.ExtendedInlineRequestBodyAsync(
+    new Inlined
+    {
+        Unique = "unique",
+        Name = "name",
+        Docs = "docs",
+    }
+);
 ```
 
 ## Exception Handling

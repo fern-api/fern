@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "bc62906f",
+            "id": {
+                "method": "PATCH",
+                "path": "/",
+                "identifier_override": "endpoint_service.patch"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.contentTypes.SeedContentTypesClient;\nimport com.seed.contentTypes.resources.service.requests.PatchProxyRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedContentTypesClient client = SeedContentTypesClient\n            .builder()\n            .build();\n\n        client.service().patch(\n            PatchProxyRequest\n                .builder()\n                .application(\"application\")\n                .requireAuth(true)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.contentTypes.SeedContentTypesClient;\nimport com.seed.contentTypes.resources.service.requests.PatchProxyRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedContentTypesClient client = SeedContentTypesClient\n            .builder()\n            .build();\n\n        client.service().patch(\n            PatchProxyRequest\n                .builder()\n                .application(\"application\")\n                .requireAuth(true)\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

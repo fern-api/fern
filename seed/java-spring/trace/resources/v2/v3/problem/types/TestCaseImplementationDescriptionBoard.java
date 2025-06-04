@@ -102,6 +102,7 @@ public final class TestCaseImplementationDescriptionBoard {
   }
 
   @JsonTypeName("html")
+  @JsonIgnoreProperties("type")
   private static final class HtmlValue implements Value {
     @JsonProperty("value")
     private String value;
@@ -140,6 +141,7 @@ public final class TestCaseImplementationDescriptionBoard {
   }
 
   @JsonTypeName("paramId")
+  @JsonIgnoreProperties("type")
   private static final class ParamIdValue implements Value {
     @JsonProperty("value")
     private ParameterId value;
@@ -177,6 +179,7 @@ public final class TestCaseImplementationDescriptionBoard {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

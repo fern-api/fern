@@ -1,6 +1,7 @@
 {
   "title": "Test extension `x-fern-audiences` alongside `x-fern-streaming`.",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -57,7 +58,7 @@
         "type": "streamingSse"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/completions/chat",
@@ -102,7 +103,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "CreateCompletionRequest": {

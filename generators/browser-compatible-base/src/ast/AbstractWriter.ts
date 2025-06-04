@@ -10,6 +10,8 @@ export class AbstractWriter {
     private indentLevel = 0;
     /* Whether anything has been written to the buffer */
     private hasWrittenAnything = false;
+    /* Whether the last character written was a semi colon */
+    private lastCharacterIsSemicolon = false;
     /* Whether the last character written was a newline */
     private lastCharacterIsNewline = false;
 
@@ -53,6 +55,19 @@ export class AbstractWriter {
     }
 
     /**
+     * Writes a node or string
+     * @param input
+     */
+    public writeNodeOrString(input: AbstractAstNode | string): void {
+        if (typeof input === "string") {
+            this.write(input);
+            return;
+        }
+
+        this.writeNode(input);
+    }
+
+    /**
      * Writes a node but then suffixes with a `;` and new line
      * @param node
      */
@@ -74,8 +89,9 @@ export class AbstractWriter {
     }
 
     /**
-     * Writes text but then suffixes with a `;`
-     * @param node
+     * Starts a control flow block
+     * @param prefix
+     * @param statement
      */
     public controlFlow(prefix: string, statement: AbstractAstNode): void {
         const codeBlock = new CodeBlock(prefix);
@@ -88,12 +104,55 @@ export class AbstractWriter {
     }
 
     /**
-     * Writes text but then suffixes with a `;`
-     * @param node
+     * Starts a control flow block
+     * @param prefix
+     * @param statement
+     */
+    public controlFlowWithoutStatement(prefix: string): void {
+        const codeBlock = new CodeBlock(prefix);
+        codeBlock.write(this);
+        this.write(" {");
+        this.writeNewLineIfLastLineNot();
+        this.indent();
+    }
+
+    /**
+     * Ends a control flow block
      */
     public endControlFlow(): void {
         this.dedent();
         this.writeLine("}");
+    }
+
+    /**
+     * Starts a control flow without a newline from the previous control flow block
+     * @param prefix
+     * @param statement
+     */
+    public contiguousControlFlow(prefix: string, statement: AbstractAstNode): void {
+        this.dedent();
+        this.write("} ");
+        const codeBlock = new CodeBlock(prefix);
+        codeBlock.write(this);
+        this.write(" (");
+        this.writeNode(statement);
+        this.write(") {");
+        this.writeNewLineIfLastLineNot();
+        this.indent();
+    }
+
+    /**
+     * Starts a control flow alternative block
+     * @param prefix
+     */
+    public alternativeControlFlow(prefix: string): void {
+        this.dedent();
+        this.write("} ");
+        const codeBlock = new CodeBlock(prefix);
+        codeBlock.write(this);
+        this.write(" {");
+        this.writeNewLineIfLastLineNot();
+        this.indent();
     }
 
     /**
@@ -134,6 +193,12 @@ export class AbstractWriter {
     /* Always writes newline */
     public newLine(): void {
         this.writeInternal("\n");
+    }
+
+    public writeSemicolonIfLastCharacterIsNot(): void {
+        if (!this.lastCharacterIsSemicolon) {
+            this.writeInternal(";");
+        }
     }
 
     public writeNewLineIfLastLineNot(): void {
@@ -186,6 +251,7 @@ export class AbstractWriter {
         if (text.length > 0) {
             this.hasWrittenAnything = true;
             this.lastCharacterIsNewline = text.endsWith("\n");
+            this.lastCharacterIsSemicolon = text.endsWith(";");
         }
         return (this.buffer += text);
     }

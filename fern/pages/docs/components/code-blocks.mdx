@@ -189,13 +189,13 @@ By default, long lines that exceed the width of the code block become scrollable
 <Tabs>
 <Tab title="Example">
 ```txt title="Without Word Wrap"
-A very very very long line of text that may cause the codeblock to overflow and scroll as a result. 
+A very very very long line of text that may cause the code block to overflow and scroll as a result. 
 ```
 </Tab>
 <Tab title="Markdown">
 ````markdown
 ```txt title="Without Word Wrap"
-A very very very long line of text that may cause the codeblock to overflow and scroll as a result. 
+A very very very long line of text that may cause the code block to overflow and scroll as a result. 
 ```
 ````
 </Tab>
@@ -206,7 +206,7 @@ To disable scrolling and wrap overflow onto the next line, use the `wordWrap` pr
 <Tabs>
 <Tab title="Example">
 ```txt title="With Word Wrap" wordWrap
-A very very very long line of text that may cause the codeblock to overflow and scroll as a result. 
+A very very very long line of text that may cause the code block to overflow and scroll as a result. 
 ```
 </Tab>
 <Tab title="Markdown">
@@ -259,49 +259,164 @@ and a maximum height.
 </Tabs>
 
 
-## Tabbed CodeBlocks
+## Code Blocks with Tabs
 
-The `CodeBlocks` component is used to display multiple code snippets in a tabbed view. It does not take any props.
+The `CodeBlocks` component allows you to display multiple code blocks in a tabbed interface.
 
 <Tabs>
     <Tab title="Example">
         <CodeBlocks>
-        ```javascript title="helloWorld.js"
-        console.log("Hello World");
+        ```ruby title="hello_world.rb"
+        puts "Hello World"
         ```
 
-        ```python title="hello_world.py"
-        print('Hello World!')
+        ```php title="hello_world.php"
+        <?php
+        echo "Hello World";
+        ?>
         ```
 
-        ```java title="HelloWorld.java"
-        class HelloWorld {
-            public static void main(String[] args) {
-                System.out.println("Hello, World!");
-            }
+        ```rust title="hello_world.rs"
+        fn main() {
+            println!("Hello World");
         }
         ```
         </CodeBlocks>
     </Tab>
-    <Tab title = "Markdown">
+    <Tab title="Markdown">
         ````jsx maxLines=0
         <CodeBlocks>
-        ```javascript title="helloWorld.js"
-        console.log("Hello World");
+        ```ruby title="hello_world.rb"
+        puts "Hello World"
         ```
 
-        ```python title="hello_world.py"
-        print('Hello World!')
+        ```php title="hello_world.php"
+        <?php
+        echo "Hello World";
+        ?>
         ```
 
-        ```java title="HelloWorld.java"
-            class HelloWorld {
-                public static void main(String[] args) {
-                    System.out.println("Hello, World!");
-                }
-            }
+        ```rust title="hello_world.rs"
+        fn main() {
+            println!("Hello World");
+        }
         ```
         </CodeBlocks>
+        ````
+    </Tab>
+</Tabs>
+
+## Example of Synchronized Blocks
+
+Multiple `CodeBlocks` on a page automatically synchronize, showing the same language across all blocks.
+
+<CodeBlocks>
+```python title="Python"
+print("First code block!")
+```
+
+```typescript title="TypeScript"
+console.log("First code block!");
+```
+
+```go title="Go"
+fmt.Println("First code block!")
+```
+
+```csharp title="C#"
+Console.WriteLine("First code block!");
+```
+
+```java title="Java"
+System.out.println("First code block!");
+```
+
+```ruby title="Ruby"
+puts "First code block!"
+```
+</CodeBlocks>
+
+<CodeBlocks>
+```python title="Python"
+print("Second code block - syncs with the one above!")
+```
+
+```typescript title="TypeScript"
+console.log("Second code block - syncs with the one above!");
+```
+
+```go title="Go"
+fmt.Println("Second code block - syncs with the one above!")
+```
+
+```csharp title="C#"
+Console.WriteLine("Second code block - syncs with the one above!");
+```
+
+```java title="Java"
+System.out.println("Second code block - syncs with the one above!");
+```
+
+```ruby title="Ruby"
+puts "Second code block - syncs with the one above!"
+```
+</CodeBlocks>
+
+### Override synchronization
+
+You can override the synchronization of code blocks by setting the `for` prop.
+
+<Tabs>
+    <Tab title="Example">
+        <CodeGroup>
+            ```bash title="Install using npm" for="npm"
+            npm install plantstore
+            ```
+            ```bash title="Install using pnpm" for="pnpm"
+            pnpm add plantstore
+            ```
+            ```bash title="Install using yarn" for="yarn"
+            yarn add plantstore
+            ```
+        </CodeGroup>
+        
+        <CodeGroup>
+            ```bash title="Uninstall using npm" for="npm"
+            npm uninstall plantstore
+            ```
+            ```bash title="Uninstall using pnpm" for="pnpm"
+            pnpm remove plantstore
+            ```
+            ```bash title="Uninstall using yarn" for="yarn"
+            yarn remove plantstore
+            ```
+        </CodeGroup>
+    </Tab>
+    <Tab title="Markdown">
+        ````md
+        <CodeGroup>
+            ```bash title="Install using npm" for="npm"
+            npm install plantstore
+            ```
+            ```bash title="Install using pnpm" for="pnpm"
+            pnpm add plantstore
+            ```
+            ```bash title="Install using yarn" for="yarn"
+            yarn add plantstore
+            ```
+        </CodeGroup>
+        
+        <CodeGroup>
+            ```bash title="Uninstall using npm" for="npm"
+            npm uninstall plantstore
+            ```
+            ```bash title="Uninstall using pnpm" for="pnpm"
+            pnpm remove plantstore
+            ```
+            ```bash title="Uninstall using yarn" for="yarn"
+            yarn remove plantstore
+            ```
+        </CodeGroup>
         ````
     </Tab>
 </Tabs>

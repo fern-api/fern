@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
 
@@ -10,7 +8,7 @@ namespace SeedExhaustive.Test.Unit.MockServer;
 public class PostWithNoAuthTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {
@@ -38,12 +36,8 @@ public class PostWithNoAuthTest : BaseMockServerTest
             );
 
         var response = await Client.NoAuth.PostWithNoAuthAsync(
-            new Dictionary<object, object?>() { { "key", "value" } },
-            RequestOptions
+            new Dictionary<object, object?>() { { "key", "value" } }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<bool>(mockResponse)));
     }
 }

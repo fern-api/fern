@@ -10682,18 +10682,18 @@ enterprise connections can be created by an organization.
               "examples": [
                 {
                   "request": {
-                    "type": "waad",
+                    "type": "google_apps",
                   },
                   "response": {
                     "body": {
                       "auth_connection": {
-                        "client_id": "auth_connection",
-                        "client_secret": "auth_connection",
+                        "client_id": "client_id",
+                        "client_secret": "client_secret",
                         "display_name": "auth_connection",
-                        "domain": "auth_connection",
                         "enabled": true,
                         "id": "auth_connection",
-                        "type": "waad",
+                        "tenant_domain": "tenant_domain",
+                        "type": "google_apps",
                       },
                     },
                   },
@@ -10781,13 +10781,13 @@ connections can not be deleted using this method.
                   "response": {
                     "body": {
                       "auth_connection": {
-                        "client_id": "auth_connection",
-                        "client_secret": "auth_connection",
+                        "client_id": "client_id",
+                        "client_secret": "client_secret",
                         "display_name": "auth_connection",
-                        "domain": "auth_connection",
                         "enabled": true,
                         "id": "auth_connection",
-                        "type": "waad",
+                        "tenant_domain": "tenant_domain",
+                        "type": "google_apps",
                       },
                     },
                   },
@@ -10835,13 +10835,13 @@ created by the user.
                     "body": {
                       "auth_connections": [
                         {
-                          "client_id": "auth_connections",
-                          "client_secret": "auth_connections",
+                          "client_id": "client_id",
+                          "client_secret": "client_secret",
                           "display_name": "auth_connections",
-                          "domain": "auth_connections",
                           "enabled": true,
                           "id": "auth_connections",
-                          "type": "waad",
+                          "tenant_domain": "tenant_domain",
+                          "type": "google_apps",
                         },
                       ],
                     },
@@ -10925,18 +10925,18 @@ disabled.
                 {
                   "request": {
                     "id": "string",
-                    "type": "waad",
+                    "type": "google_apps",
                   },
                   "response": {
                     "body": {
                       "auth_connection": {
-                        "client_id": "auth_connection",
-                        "client_secret": "auth_connection",
+                        "client_id": "client_id",
+                        "client_secret": "client_secret",
                         "display_name": "auth_connection",
-                        "domain": "auth_connection",
                         "enabled": true,
                         "id": "auth_connection",
-                        "type": "waad",
+                        "tenant_domain": "tenant_domain",
+                        "type": "google_apps",
                       },
                     },
                   },
@@ -11002,14 +11002,14 @@ service:
         - root.DevOrgAuthConnectionsCreateRequestServiceUnavailableError
       examples:
         - request:
-            type: waad
+            type: google_apps
           response:
             body:
               auth_connection:
-                type: waad
-                client_id: auth_connection
-                client_secret: auth_connection
-                domain: auth_connection
+                client_id: client_id
+                client_secret: client_secret
+                tenant_domain: tenant_domain
+                type: google_apps
                 display_name: auth_connection
                 enabled: true
                 id: auth_connection
@@ -11073,10 +11073,10 @@ service:
           response:
             body:
               auth_connection:
-                type: waad
-                client_id: auth_connection
-                client_secret: auth_connection
-                domain: auth_connection
+                client_id: client_id
+                client_secret: client_secret
+                tenant_domain: tenant_domain
+                type: google_apps
                 display_name: auth_connection
                 enabled: true
                 id: auth_connection
@@ -11106,10 +11106,10 @@ service:
         - response:
             body:
               auth_connections:
-                - type: waad
-                  client_id: auth_connections
-                  client_secret: auth_connections
-                  domain: auth_connections
+                - client_id: client_id
+                  client_secret: client_secret
+                  tenant_domain: tenant_domain
+                  type: google_apps
                   display_name: auth_connections
                   enabled: true
                   id: auth_connections
@@ -11171,15 +11171,15 @@ service:
         - root.DevOrgAuthConnectionsUpdateRequestServiceUnavailableError
       examples:
         - request:
-            type: waad
+            type: google_apps
             id: string
           response:
             body:
               auth_connection:
-                type: waad
-                client_id: auth_connection
-                client_secret: auth_connection
-                domain: auth_connection
+                client_id: client_id
+                client_secret: client_secret
+                tenant_domain: tenant_domain
+                type: google_apps
                 display_name: auth_connection
                 enabled: true
                 id: auth_connection
@@ -11366,16 +11366,16 @@ given Dev organization.
                       "token": {
                         "client_id": "client_id",
                         "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
@@ -11383,16 +11383,16 @@ given Dev organization.
                         "id": "id",
                         "issued_at": "2024-01-15T09:30:00Z",
                         "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
@@ -11451,8 +11451,8 @@ token type issued for a given subject.
                         {
                           "client_id": "client_id",
                           "created_by": {
-                            "id": "created_by",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                           "created_date": "2024-01-15T09:30:00Z",
                           "display_id": "display_id",
@@ -11460,8 +11460,8 @@ token type issued for a given subject.
                           "id": "id",
                           "issued_at": "2024-01-15T09:30:00Z",
                           "modified_by": {
-                            "id": "modified_by",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                           "modified_date": "2024-01-15T09:30:00Z",
                           "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
@@ -11578,16 +11578,16 @@ organization.
                       "token": {
                         "client_id": "client_id",
                         "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
@@ -11595,16 +11595,16 @@ organization.
                         "id": "id",
                         "issued_at": "2024-01-15T09:30:00Z",
                         "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
@@ -11809,28 +11809,28 @@ service:
             body:
               token:
                 created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: created_by
-                  full_name: created_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: modified_by
-                  full_name: modified_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 client_id: client_id
                 expires_at: '2024-01-15T09:30:00Z'
@@ -11886,14 +11886,14 @@ service:
             body:
               tokens:
                 - created_by:
-                    type: sys_user
-                    id: created_by
+                    id: id
+                    type: dev_user
                   created_date: '2024-01-15T09:30:00Z'
                   display_id: display_id
                   id: id
                   modified_by:
-                    type: sys_user
-                    id: modified_by
+                    id: id
+                    type: dev_user
                   modified_date: '2024-01-15T09:30:00Z'
                   client_id: client_id
                   expires_at: '2024-01-15T09:30:00Z'
@@ -11972,28 +11972,28 @@ service:
             body:
               token:
                 created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: created_by
-                  full_name: created_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: modified_by
-                  full_name: modified_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 client_id: client_id
                 expires_at: '2024-01-15T09:30:00Z'
@@ -12040,8 +12040,8 @@ docs: Security token interactions.
                       "dev_users": [
                         {
                           "created_by": {
-                            "id": "created_by",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                           "created_date": "2024-01-15T09:30:00Z",
                           "display_id": "display_id",
@@ -12058,8 +12058,8 @@ docs: Security token interactions.
                           "full_name": "full_name",
                           "id": "id",
                           "modified_by": {
-                            "id": "modified_by",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                           "modified_date": "2024-01-15T09:30:00Z",
                           "phone_numbers": [
@@ -12141,16 +12141,16 @@ used.
                     "body": {
                       "dev_user": {
                         "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
@@ -12168,16 +12168,16 @@ used.
                         "full_name": "full_name",
                         "id": "id",
                         "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "phone_numbers": [
@@ -12268,14 +12268,14 @@ service:
             body:
               dev_users:
                 - created_by:
-                    type: sys_user
-                    id: created_by
+                    id: id
+                    type: dev_user
                   created_date: '2024-01-15T09:30:00Z'
                   display_id: display_id
                   id: id
                   modified_by:
-                    type: sys_user
-                    id: modified_by
+                    id: id
+                    type: dev_user
                   modified_date: '2024-01-15T09:30:00Z'
                   display_name: display_name
                   display_picture:
@@ -12312,28 +12312,28 @@ service:
             body:
               dev_user:
                 created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: created_by
-                  full_name: created_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: modified_by
-                  full_name: modified_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 display_name: display_name
                 display_picture:
@@ -12385,7 +12385,7 @@ docs: Dev user interactions.
                     "parent_part": [
                       "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                     ],
-                    "type": "feature",
+                    "type": "capability",
                   },
                   "response": {
                     "body": {
@@ -12396,39 +12396,39 @@ docs: Dev user interactions.
                           },
                         ],
                         "created_by": {
-                          "display_id": "part",
-                          "display_name": "part",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "part",
-                          "full_name": "part",
-                          "id": "part",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
-                        "description": "part",
-                        "display_id": "part",
-                        "id": "part",
+                        "description": "description",
+                        "display_id": "display_id",
+                        "id": "id",
                         "modified_by": {
-                          "display_id": "part",
-                          "display_name": "part",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "part",
-                          "full_name": "part",
-                          "id": "part",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
-                        "name": "part",
+                        "name": "name",
                         "owned_by": [
                           {
-                            "id": "part",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                         ],
                         "tags": [
@@ -12439,7 +12439,7 @@ docs: Dev user interactions.
                             },
                           },
                         ],
-                        "type": "product",
+                        "type": "capability",
                       },
                     },
                   },
@@ -12541,39 +12541,39 @@ docs: Dev user interactions.
                           },
                         ],
                         "created_by": {
-                          "display_id": "part",
-                          "display_name": "part",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "part",
-                          "full_name": "part",
-                          "id": "part",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
-                        "description": "part",
-                        "display_id": "part",
-                        "id": "part",
+                        "description": "description",
+                        "display_id": "display_id",
+                        "id": "id",
                         "modified_by": {
-                          "display_id": "part",
-                          "display_name": "part",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "part",
-                          "full_name": "part",
-                          "id": "part",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
-                        "name": "part",
+                        "name": "name",
                         "owned_by": [
                           {
-                            "id": "part",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                         ],
                         "tags": [
@@ -12584,7 +12584,7 @@ docs: Dev user interactions.
                             },
                           },
                         ],
-                        "type": "product",
+                        "type": "capability",
                       },
                     },
                   },
@@ -12636,23 +12636,23 @@ docs: Dev user interactions.
                             },
                           ],
                           "created_by": {
-                            "id": "parts",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                           "created_date": "2024-01-15T09:30:00Z",
-                          "description": "parts",
-                          "display_id": "parts",
-                          "id": "parts",
+                          "description": "description",
+                          "display_id": "display_id",
+                          "id": "id",
                           "modified_by": {
-                            "id": "parts",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                           "modified_date": "2024-01-15T09:30:00Z",
-                          "name": "parts",
+                          "name": "name",
                           "owned_by": [
                             {
-                              "id": "parts",
-                              "type": "sys_user",
+                              "id": "id",
+                              "type": "dev_user",
                             },
                           ],
                           "tags": [
@@ -12663,7 +12663,7 @@ docs: Dev user interactions.
                               },
                             },
                           ],
-                          "type": "product",
+                          "type": "capability",
                         },
                       ],
                       "prev_cursor": "prev_cursor",
@@ -12742,7 +12742,8 @@ used.
                 {
                   "request": {
                     "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
-                    "type": "enhancement",
+                    "key": "value",
+                    "type": "capability",
                   },
                   "response": {
                     "body": {
@@ -12753,39 +12754,39 @@ used.
                           },
                         ],
                         "created_by": {
-                          "display_id": "part",
-                          "display_name": "part",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "part",
-                          "full_name": "part",
-                          "id": "part",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
-                        "description": "part",
-                        "display_id": "part",
-                        "id": "part",
+                        "description": "description",
+                        "display_id": "display_id",
+                        "id": "id",
                         "modified_by": {
-                          "display_id": "part",
-                          "display_name": "part",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "part",
-                          "full_name": "part",
-                          "id": "part",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
-                        "name": "part",
+                        "name": "name",
                         "owned_by": [
                           {
-                            "id": "part",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                         ],
                         "tags": [
@@ -12796,7 +12797,7 @@ used.
                             },
                           },
                         ],
-                        "type": "product",
+                        "type": "capability",
                       },
                     },
                   },
@@ -12856,51 +12857,51 @@ service:
         - root.PartsCreateRequestServiceUnavailableError
       examples:
         - request:
-            type: feature
             parent_part:
               - don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
+            type: capability
             name: string
             owned_by:
               - don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>
           response:
             body:
               part:
-                type: product
                 created_by:
-                  type: sys_user
-                  display_id: part
-                  id: part
-                  display_name: part
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: part
-                  full_name: part
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
-                display_id: part
-                id: part
+                display_id: display_id
+                id: id
                 modified_by:
-                  type: sys_user
-                  display_id: part
-                  id: part
-                  display_name: part
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: part
-                  full_name: part
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 artifacts:
                   - id: id
-                description: part
-                name: part
+                description: description
+                name: name
                 owned_by:
-                  - type: sys_user
-                    id: part
+                  - id: id
+                    type: dev_user
                 tags:
                   - tag:
                       id: id
                       name: name
+                type: capability
     delete:
       path: /parts.delete
       method: POST
@@ -12966,42 +12967,42 @@ service:
           response:
             body:
               part:
-                type: product
                 created_by:
-                  type: sys_user
-                  display_id: part
-                  id: part
-                  display_name: part
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: part
-                  full_name: part
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
-                display_id: part
-                id: part
+                display_id: display_id
+                id: id
                 modified_by:
-                  type: sys_user
-                  display_id: part
-                  id: part
-                  display_name: part
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: part
-                  full_name: part
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 artifacts:
                   - id: id
-                description: part
-                name: part
+                description: description
+                name: name
                 owned_by:
-                  - type: sys_user
-                    id: part
+                  - id: id
+                    type: dev_user
                 tags:
                   - tag:
                       id: id
                       name: name
+                type: capability
     list:
       path: /parts.list
       method: GET
@@ -13061,28 +13062,28 @@ service:
             body:
               next_cursor: next_cursor
               parts:
-                - type: product
-                  created_by:
-                    type: sys_user
-                    id: parts
+                - created_by:
+                    id: id
+                    type: dev_user
                   created_date: '2024-01-15T09:30:00Z'
-                  display_id: parts
-                  id: parts
+                  display_id: display_id
+                  id: id
                   modified_by:
-                    type: sys_user
-                    id: parts
+                    id: id
+                    type: dev_user
                   modified_date: '2024-01-15T09:30:00Z'
                   artifacts:
                     - id: id
-                  description: parts
-                  name: parts
+                  description: description
+                  name: name
                   owned_by:
-                    - type: sys_user
-                      id: parts
+                    - id: id
+                      type: dev_user
                   tags:
                     - tag:
                         id: id
                         name: name
+                  type: capability
               prev_cursor: prev_cursor
     update:
       path: /parts.update
@@ -13110,47 +13111,48 @@ service:
         - root.PartsUpdateRequestServiceUnavailableError
       examples:
         - request:
-            type: enhancement
+            key: value
+            type: capability
             id: don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
           response:
             body:
               part:
-                type: product
                 created_by:
-                  type: sys_user
-                  display_id: part
-                  id: part
-                  display_name: part
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: part
-                  full_name: part
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
-                display_id: part
-                id: part
+                display_id: display_id
+                id: id
                 modified_by:
-                  type: sys_user
-                  display_id: part
-                  id: part
-                  display_name: part
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: part
-                  full_name: part
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 artifacts:
                   - id: id
-                description: part
-                name: part
+                description: description
+                name: name
                 owned_by:
-                  - type: sys_user
-                    id: part
+                  - id: id
+                    type: dev_user
                 tags:
                   - tag:
                       id: id
                       name: name
+                type: capability
   source:
     openapi: ../openapi.yml
   display-name: parts
@@ -13191,16 +13193,16 @@ organization.
                     "body": {
                       "rev_org": {
                         "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "description": "description",
@@ -13210,16 +13212,16 @@ organization.
                         "external_ref": "external_ref",
                         "id": "id",
                         "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                       },
@@ -13348,16 +13350,16 @@ records.
                     "body": {
                       "rev_org": {
                         "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "description": "description",
@@ -13367,16 +13369,16 @@ records.
                         "external_ref": "external_ref",
                         "id": "id",
                         "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                       },
@@ -13429,8 +13431,8 @@ to access.
                       "rev_orgs": [
                         {
                           "created_by": {
-                            "id": "created_by",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                           "created_date": "2024-01-15T09:30:00Z",
                           "description": "description",
@@ -13440,8 +13442,8 @@ to access.
                           "external_ref": "external_ref",
                           "id": "id",
                           "modified_by": {
-                            "id": "modified_by",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                           "modified_date": "2024-01-15T09:30:00Z",
                         },
@@ -13544,16 +13546,16 @@ them.
                     "body": {
                       "rev_org": {
                         "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "description": "description",
@@ -13563,16 +13565,16 @@ them.
                         "external_ref": "external_ref",
                         "id": "id",
                         "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                       },
@@ -13700,28 +13702,28 @@ service:
             body:
               rev_org:
                 created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: created_by
-                  full_name: created_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: modified_by
-                  full_name: modified_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 display_name: display_name
                 description: description
@@ -13792,28 +13794,28 @@ service:
             body:
               rev_org:
                 created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: created_by
-                  full_name: created_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: modified_by
-                  full_name: modified_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 display_name: display_name
                 description: description
@@ -13901,14 +13903,14 @@ service:
               prev_cursor: prev_cursor
               rev_orgs:
                 - created_by:
-                    type: sys_user
-                    id: created_by
+                    id: id
+                    type: dev_user
                   created_date: '2024-01-15T09:30:00Z'
                   display_id: display_id
                   id: id
                   modified_by:
-                    type: sys_user
-                    id: modified_by
+                    id: id
+                    type: dev_user
                   modified_date: '2024-01-15T09:30:00Z'
                   display_name: display_name
                   description: description
@@ -13971,28 +13973,28 @@ service:
             body:
               rev_org:
                 created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: created_by
-                  full_name: created_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: modified_by
-                  full_name: modified_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 display_name: display_name
                 description: description
@@ -14041,32 +14043,32 @@ and a logical concept denoted by the tag's name.
                           "allowed_values",
                         ],
                         "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "description": "description",
                         "display_id": "display_id",
                         "id": "id",
                         "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "name": "name",
@@ -14188,32 +14190,32 @@ permitted.
                           "allowed_values",
                         ],
                         "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "description": "description",
                         "display_id": "display_id",
                         "id": "id",
                         "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "name": "name",
@@ -14266,16 +14268,16 @@ permitted.
                             "allowed_values",
                           ],
                           "created_by": {
-                            "id": "created_by",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                           "created_date": "2024-01-15T09:30:00Z",
                           "description": "description",
                           "display_id": "display_id",
                           "id": "id",
                           "modified_by": {
-                            "id": "modified_by",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                           "modified_date": "2024-01-15T09:30:00Z",
                           "name": "name",
@@ -14342,32 +14344,32 @@ used.
                           "allowed_values",
                         ],
                         "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "description": "description",
                         "display_id": "display_id",
                         "id": "id",
                         "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "name": "name",
@@ -14472,28 +14474,28 @@ service:
             body:
               tag:
                 created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: created_by
-                  full_name: created_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: modified_by
-                  full_name: modified_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 allowed_values:
                   - allowed_values
@@ -14564,28 +14566,28 @@ service:
             body:
               tag:
                 created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: created_by
-                  full_name: created_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: modified_by
-                  full_name: modified_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 allowed_values:
                   - allowed_values
@@ -14634,14 +14636,14 @@ service:
               prev_cursor: prev_cursor
               tags:
                 - created_by:
-                    type: sys_user
-                    id: created_by
+                    id: id
+                    type: dev_user
                   created_date: '2024-01-15T09:30:00Z'
                   display_id: display_id
                   id: id
                   modified_by:
-                    type: sys_user
-                    id: modified_by
+                    id: id
+                    type: dev_user
                   modified_date: '2024-01-15T09:30:00Z'
                   allowed_values:
                     - allowed_values
@@ -14691,28 +14693,28 @@ service:
             body:
               tag:
                 created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: created_by
-                  full_name: created_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: modified_by
-                  full_name: modified_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 allowed_values:
                   - allowed_values
@@ -14761,34 +14763,34 @@ docs: DevRev tag interactions.
                             "id": "id",
                           },
                         ],
-                        "body": "timeline_entry",
+                        "body": "body",
                         "body_type": "snap_kit",
                         "created_by": {
-                          "display_id": "timeline_entry",
-                          "display_name": "timeline_entry",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "timeline_entry",
-                          "full_name": "timeline_entry",
-                          "id": "timeline_entry",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
-                        "display_id": "timeline_entry",
-                        "id": "timeline_entry",
+                        "display_id": "display_id",
+                        "id": "id",
                         "modified_by": {
-                          "display_id": "timeline_entry",
-                          "display_name": "timeline_entry",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "timeline_entry",
-                          "full_name": "timeline_entry",
-                          "id": "timeline_entry",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "snap_kit_body": {
@@ -14843,34 +14845,34 @@ docs: DevRev tag interactions.
                             "id": "id",
                           },
                         ],
-                        "body": "timeline_entry",
+                        "body": "body",
                         "body_type": "snap_kit",
                         "created_by": {
-                          "display_id": "timeline_entry",
-                          "display_name": "timeline_entry",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "timeline_entry",
-                          "full_name": "timeline_entry",
-                          "id": "timeline_entry",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
-                        "display_id": "timeline_entry",
-                        "id": "timeline_entry",
+                        "display_id": "display_id",
+                        "id": "id",
                         "modified_by": {
-                          "display_id": "timeline_entry",
-                          "display_name": "timeline_entry",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "timeline_entry",
-                          "full_name": "timeline_entry",
-                          "id": "timeline_entry",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "snap_kit_body": {
@@ -14931,18 +14933,18 @@ docs: DevRev tag interactions.
                               "id": "id",
                             },
                           ],
-                          "body": "timeline_entries",
+                          "body": "body",
                           "body_type": "snap_kit",
                           "created_by": {
-                            "id": "timeline_entries",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                           "created_date": "2024-01-15T09:30:00Z",
-                          "display_id": "timeline_entries",
-                          "id": "timeline_entries",
+                          "display_id": "display_id",
+                          "id": "id",
                           "modified_by": {
-                            "id": "timeline_entries",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                           "modified_date": "2024-01-15T09:30:00Z",
                           "snap_kit_body": {
@@ -15019,34 +15021,34 @@ used.
                             "id": "id",
                           },
                         ],
-                        "body": "timeline_entry",
+                        "body": "body",
                         "body_type": "snap_kit",
                         "created_by": {
-                          "display_id": "timeline_entry",
-                          "display_name": "timeline_entry",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "timeline_entry",
-                          "full_name": "timeline_entry",
-                          "id": "timeline_entry",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
-                        "display_id": "timeline_entry",
-                        "id": "timeline_entry",
+                        "display_id": "display_id",
+                        "id": "id",
                         "modified_by": {
-                          "display_id": "timeline_entry",
-                          "display_name": "timeline_entry",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "timeline_entry",
-                          "full_name": "timeline_entry",
-                          "id": "timeline_entry",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "snap_kit_body": {
@@ -15117,37 +15119,37 @@ service:
           response:
             body:
               timeline_entry:
-                type: timeline_comment
                 created_by:
-                  type: sys_user
-                  display_id: timeline_entry
-                  id: timeline_entry
-                  display_name: timeline_entry
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: timeline_entry
-                  full_name: timeline_entry
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
-                display_id: timeline_entry
-                id: timeline_entry
+                display_id: display_id
+                id: id
                 modified_by:
-                  type: sys_user
-                  display_id: timeline_entry
-                  id: timeline_entry
-                  display_name: timeline_entry
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: timeline_entry
-                  full_name: timeline_entry
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 artifacts:
                   - id: id
-                body: timeline_entry
+                body: body
                 body_type: snap_kit
                 snap_kit_body:
                   key: value
+                type: timeline_comment
     get:
       path: /timeline-entries.get
       method: GET
@@ -15179,37 +15181,37 @@ service:
           response:
             body:
               timeline_entry:
-                type: timeline_comment
                 created_by:
-                  type: sys_user
-                  display_id: timeline_entry
-                  id: timeline_entry
-                  display_name: timeline_entry
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: timeline_entry
-                  full_name: timeline_entry
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
-                display_id: timeline_entry
-                id: timeline_entry
+                display_id: display_id
+                id: id
                 modified_by:
-                  type: sys_user
-                  display_id: timeline_entry
-                  id: timeline_entry
-                  display_name: timeline_entry
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: timeline_entry
-                  full_name: timeline_entry
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 artifacts:
                   - id: id
-                body: timeline_entry
+                body: body
                 body_type: snap_kit
                 snap_kit_body:
                   key: value
+                type: timeline_comment
     list:
       path: /timeline-entries.list
       method: GET
@@ -15260,23 +15262,23 @@ service:
               next_cursor: next_cursor
               prev_cursor: prev_cursor
               timeline_entries:
-                - type: timeline_comment
-                  created_by:
-                    type: sys_user
-                    id: timeline_entries
+                - created_by:
+                    id: id
+                    type: dev_user
                   created_date: '2024-01-15T09:30:00Z'
-                  display_id: timeline_entries
-                  id: timeline_entries
+                  display_id: display_id
+                  id: id
                   modified_by:
-                    type: sys_user
-                    id: timeline_entries
+                    id: id
+                    type: dev_user
                   modified_date: '2024-01-15T09:30:00Z'
                   artifacts:
                     - id: id
-                  body: timeline_entries
+                  body: body
                   body_type: snap_kit
                   snap_kit_body:
                     key: value
+                  type: timeline_comment
     update:
       path: /timeline-entries.update
       method: POST
@@ -15306,37 +15308,37 @@ service:
           response:
             body:
               timeline_entry:
-                type: timeline_comment
                 created_by:
-                  type: sys_user
-                  display_id: timeline_entry
-                  id: timeline_entry
-                  display_name: timeline_entry
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: timeline_entry
-                  full_name: timeline_entry
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
-                display_id: timeline_entry
-                id: timeline_entry
+                display_id: display_id
+                id: id
                 modified_by:
-                  type: sys_user
-                  display_id: timeline_entry
-                  id: timeline_entry
-                  display_name: timeline_entry
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: timeline_entry
-                  full_name: timeline_entry
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 artifacts:
                   - id: id
-                body: timeline_entry
+                body: body
                 body_type: snap_kit
                 snap_kit_body:
                   key: value
+                type: timeline_comment
   source:
     openapi: ../openapi.yml
   display-name: timeline-entries
@@ -15375,16 +15377,16 @@ docs: APIs to manage timeline entries for objects.
                     "body": {
                       "webhook": {
                         "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
@@ -15393,16 +15395,16 @@ docs: APIs to manage timeline entries for objects.
                         ],
                         "id": "id",
                         "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "secret": "secret",
@@ -15530,16 +15532,16 @@ response.
                     "body": {
                       "webhook": {
                         "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
@@ -15548,16 +15550,16 @@ response.
                         ],
                         "id": "id",
                         "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "secret": "secret",
@@ -15607,8 +15609,8 @@ response.
                       "webhooks": [
                         {
                           "created_by": {
-                            "id": "created_by",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                           "created_date": "2024-01-15T09:30:00Z",
                           "display_id": "display_id",
@@ -15617,8 +15619,8 @@ response.
                           ],
                           "id": "id",
                           "modified_by": {
-                            "id": "modified_by",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                           "modified_date": "2024-01-15T09:30:00Z",
                           "secret": "secret",
@@ -15663,16 +15665,16 @@ response.
                     "body": {
                       "webhook": {
                         "created_by": {
-                          "display_id": "created_by",
-                          "display_name": "created_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "created_by",
-                          "full_name": "created_by",
-                          "id": "created_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
@@ -15681,16 +15683,16 @@ response.
                         ],
                         "id": "id",
                         "modified_by": {
-                          "display_id": "modified_by",
-                          "display_name": "modified_by",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "modified_by",
-                          "full_name": "modified_by",
-                          "id": "modified_by",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "secret": "secret",
@@ -15817,28 +15819,28 @@ service:
             body:
               webhook:
                 created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: created_by
-                  full_name: created_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: modified_by
-                  full_name: modified_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 event_types:
                   - part_created
@@ -15910,28 +15912,28 @@ service:
             body:
               webhook:
                 created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: created_by
-                  full_name: created_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: modified_by
-                  full_name: modified_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 event_types:
                   - part_created
@@ -15961,14 +15963,14 @@ service:
             body:
               webhooks:
                 - created_by:
-                    type: sys_user
-                    id: created_by
+                    id: id
+                    type: dev_user
                   created_date: '2024-01-15T09:30:00Z'
                   display_id: display_id
                   id: id
                   modified_by:
-                    type: sys_user
-                    id: modified_by
+                    id: id
+                    type: dev_user
                   modified_date: '2024-01-15T09:30:00Z'
                   event_types:
                     - part_created
@@ -16039,28 +16041,28 @@ service:
             body:
               webhook:
                 created_by:
-                  type: sys_user
-                  display_id: created_by
-                  id: created_by
-                  display_name: created_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: created_by
-                  full_name: created_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
                 display_id: display_id
                 id: id
                 modified_by:
-                  type: sys_user
-                  display_id: modified_by
-                  id: modified_by
-                  display_name: modified_by
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: modified_by
-                  full_name: modified_by
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 event_types:
                   - part_created
@@ -16105,81 +16107,70 @@ docs: Webhook event APIs.
                     "owned_by": [
                       "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>",
                     ],
-                    "rev_org": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
                     "tags": [
                       {
                         "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
                       },
                     ],
                     "title": "string",
-                    "type": "ticket",
+                    "type": "issue",
                   },
                   "response": {
                     "body": {
                       "work": {
                         "applies_to_part": {
-                          "display_id": "work",
-                          "id": "work",
-                          "name": "work",
-                          "type": "product",
+                          "display_id": "display_id",
+                          "id": "id",
+                          "name": "name",
+                          "type": "capability",
                         },
                         "artifacts": [
                           {
                             "id": "id",
                           },
                         ],
-                        "body": "work",
+                        "body": "body",
                         "created_by": {
-                          "display_id": "work",
-                          "display_name": "work",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "work",
-                          "full_name": "work",
-                          "id": "work",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
-                        "display_id": "work",
-                        "group": {
-                          "display_id": "display_id",
-                          "id": "id",
-                        },
-                        "id": "work",
+                        "display_id": "display_id",
+                        "id": "id",
                         "modified_by": {
-                          "display_id": "work",
-                          "display_name": "work",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "work",
-                          "full_name": "work",
-                          "id": "work",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "owned_by": [
                           {
-                            "id": "work",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                         ],
+                        "priority": "p0",
                         "reported_by": [
                           {
-                            "id": "work",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                         ],
-                        "rev_org": {
-                          "display_id": "work",
-                          "display_name": "work",
-                          "id": "work",
-                          "type": "rev_org",
-                        },
-                        "severity": "blocker",
                         "stage": {
                           "name": "name",
                         },
@@ -16192,8 +16183,8 @@ docs: Webhook event APIs.
                           },
                         ],
                         "target_close_date": "2024-01-15T09:30:00Z",
-                        "title": "work",
-                        "type": "ticket",
+                        "title": "title",
+                        "type": "issue",
                       },
                     },
                   },
@@ -16286,48 +16277,41 @@ docs: Webhook event APIs.
                       "works": [
                         {
                           "applies_to_part": {
-                            "id": "works",
-                            "name": "works",
-                            "type": "product",
+                            "id": "id",
+                            "name": "name",
+                            "type": "capability",
                           },
                           "artifacts": [
                             {
                               "id": "id",
                             },
                           ],
-                          "body": "works",
+                          "body": "body",
                           "created_by": {
-                            "id": "works",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                           "created_date": "2024-01-15T09:30:00Z",
-                          "display_id": "works",
-                          "group": {
-                            "id": "id",
-                          },
-                          "id": "works",
+                          "display_id": "display_id",
+                          "id": "id",
                           "modified_by": {
-                            "id": "works",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                           "modified_date": "2024-01-15T09:30:00Z",
                           "owned_by": [
                             {
-                              "id": "works",
-                              "type": "sys_user",
+                              "id": "id",
+                              "type": "dev_user",
                             },
                           ],
+                          "priority": "p0",
                           "reported_by": [
                             {
-                              "id": "works",
-                              "type": "sys_user",
+                              "id": "id",
+                              "type": "dev_user",
                             },
                           ],
-                          "rev_org": {
-                            "id": "works",
-                            "type": "rev_org",
-                          },
-                          "severity": "blocker",
                           "stage": {
                             "name": "name",
                           },
@@ -16340,8 +16324,8 @@ docs: Webhook event APIs.
                             },
                           ],
                           "target_close_date": "2024-01-15T09:30:00Z",
-                          "title": "works",
-                          "type": "ticket",
+                          "title": "title",
+                          "type": "issue",
                         },
                       ],
                     },
@@ -16440,68 +16424,58 @@ organizations.
                     "body": {
                       "work": {
                         "applies_to_part": {
-                          "display_id": "work",
-                          "id": "work",
-                          "name": "work",
-                          "type": "product",
+                          "display_id": "display_id",
+                          "id": "id",
+                          "name": "name",
+                          "type": "capability",
                         },
                         "artifacts": [
                           {
                             "id": "id",
                           },
                         ],
-                        "body": "work",
+                        "body": "body",
                         "created_by": {
-                          "display_id": "work",
-                          "display_name": "work",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "work",
-                          "full_name": "work",
-                          "id": "work",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
-                        "display_id": "work",
-                        "group": {
-                          "display_id": "display_id",
-                          "id": "id",
-                        },
-                        "id": "work",
+                        "display_id": "display_id",
+                        "id": "id",
                         "modified_by": {
-                          "display_id": "work",
-                          "display_name": "work",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "work",
-                          "full_name": "work",
-                          "id": "work",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "owned_by": [
                           {
-                            "id": "work",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                         ],
+                        "priority": "p0",
                         "reported_by": [
                           {
-                            "id": "work",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                         ],
-                        "rev_org": {
-                          "display_id": "work",
-                          "display_name": "work",
-                          "id": "work",
-                          "type": "rev_org",
-                        },
-                        "severity": "blocker",
                         "stage": {
                           "name": "name",
                         },
@@ -16514,8 +16488,8 @@ organizations.
                           },
                         ],
                         "target_close_date": "2024-01-15T09:30:00Z",
-                        "title": "work",
-                        "type": "ticket",
+                        "title": "title",
+                        "type": "issue",
                       },
                     },
                   },
@@ -16562,48 +16536,41 @@ organizations.
                       "works": [
                         {
                           "applies_to_part": {
-                            "id": "works",
-                            "name": "works",
-                            "type": "product",
+                            "id": "id",
+                            "name": "name",
+                            "type": "capability",
                           },
                           "artifacts": [
                             {
                               "id": "id",
                             },
                           ],
-                          "body": "works",
+                          "body": "body",
                           "created_by": {
-                            "id": "works",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                           "created_date": "2024-01-15T09:30:00Z",
-                          "display_id": "works",
-                          "group": {
-                            "id": "id",
-                          },
-                          "id": "works",
+                          "display_id": "display_id",
+                          "id": "id",
                           "modified_by": {
-                            "id": "works",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                           "modified_date": "2024-01-15T09:30:00Z",
                           "owned_by": [
                             {
-                              "id": "works",
-                              "type": "sys_user",
+                              "id": "id",
+                              "type": "dev_user",
                             },
                           ],
+                          "priority": "p0",
                           "reported_by": [
                             {
-                              "id": "works",
-                              "type": "sys_user",
+                              "id": "id",
+                              "type": "dev_user",
                             },
                           ],
-                          "rev_org": {
-                            "id": "works",
-                            "type": "rev_org",
-                          },
-                          "severity": "blocker",
                           "stage": {
                             "name": "name",
                           },
@@ -16616,8 +16583,8 @@ organizations.
                             },
                           ],
                           "target_close_date": "2024-01-15T09:30:00Z",
-                          "title": "works",
-                          "type": "ticket",
+                          "title": "title",
+                          "type": "issue",
                         },
                       ],
                     },
@@ -16723,74 +16690,64 @@ organizations.
                   "request": {
                     "applies_to_part": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                     "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
-                    "type": "ticket",
+                    "type": "issue",
                   },
                   "response": {
                     "body": {
                       "work": {
                         "applies_to_part": {
-                          "display_id": "work",
-                          "id": "work",
-                          "name": "work",
-                          "type": "product",
+                          "display_id": "display_id",
+                          "id": "id",
+                          "name": "name",
+                          "type": "capability",
                         },
                         "artifacts": [
                           {
                             "id": "id",
                           },
                         ],
-                        "body": "work",
+                        "body": "body",
                         "created_by": {
-                          "display_id": "work",
-                          "display_name": "work",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "work",
-                          "full_name": "work",
-                          "id": "work",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "created_date": "2024-01-15T09:30:00Z",
-                        "display_id": "work",
-                        "group": {
-                          "display_id": "display_id",
-                          "id": "id",
-                        },
-                        "id": "work",
+                        "display_id": "display_id",
+                        "id": "id",
                         "modified_by": {
-                          "display_id": "work",
-                          "display_name": "work",
+                          "display_id": "display_id",
+                          "display_name": "display_name",
                           "display_picture": {
                             "id": "id",
                           },
-                          "email": "work",
-                          "full_name": "work",
-                          "id": "work",
+                          "email": "email",
+                          "full_name": "full_name",
+                          "id": "id",
                           "state": "active",
-                          "type": "sys_user",
+                          "type": "dev_user",
                         },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "owned_by": [
                           {
-                            "id": "work",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                         ],
+                        "priority": "p0",
                         "reported_by": [
                           {
-                            "id": "work",
-                            "type": "sys_user",
+                            "id": "id",
+                            "type": "dev_user",
                           },
                         ],
-                        "rev_org": {
-                          "display_id": "work",
-                          "display_name": "work",
-                          "id": "work",
-                          "type": "rev_org",
-                        },
-                        "severity": "blocker",
                         "stage": {
                           "name": "name",
                         },
@@ -16803,8 +16760,8 @@ organizations.
                           },
                         ],
                         "target_close_date": "2024-01-15T09:30:00Z",
-                        "title": "work",
-                        "type": "ticket",
+                        "title": "title",
+                        "type": "issue",
                       },
                     },
                   },
@@ -16866,8 +16823,7 @@ service:
         - root.WorksCreateRequestServiceUnavailableError
       examples:
         - request:
-            type: ticket
-            rev_org: don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>
+            type: issue
             applies_to_part: don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
             owned_by:
               - don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>
@@ -16877,45 +16833,44 @@ service:
           response:
             body:
               work:
-                type: ticket
                 created_by:
-                  type: sys_user
-                  display_id: work
-                  id: work
-                  display_name: work
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: work
-                  full_name: work
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
-                display_id: work
-                id: work
+                display_id: display_id
+                id: id
                 modified_by:
-                  type: sys_user
-                  display_id: work
-                  id: work
-                  display_name: work
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: work
-                  full_name: work
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 applies_to_part:
-                  type: product
-                  display_id: work
-                  id: work
-                  name: work
+                  display_id: display_id
+                  id: id
+                  name: name
+                  type: capability
                 artifacts:
                   - id: id
-                body: work
+                body: body
                 owned_by:
-                  - type: sys_user
-                    id: work
+                  - id: id
+                    type: dev_user
                 reported_by:
-                  - type: sys_user
-                    id: work
+                  - id: id
+                    type: dev_user
                 stage:
                   name: name
                 tags:
@@ -16923,16 +16878,9 @@ service:
                       id: id
                       name: name
                 target_close_date: '2024-01-15T09:30:00Z'
-                title: work
-                group:
-                  display_id: display_id
-                  id: id
-                rev_org:
-                  type: rev_org
-                  display_id: work
-                  id: work
-                  display_name: work
-                severity: blocker
+                title: title
+                priority: p0
+                type: issue
     delete:
       path: /works.delete
       method: POST
@@ -17039,30 +16987,29 @@ service:
         - response:
             body:
               works:
-                - type: ticket
-                  created_by:
-                    type: sys_user
-                    id: works
+                - created_by:
+                    id: id
+                    type: dev_user
                   created_date: '2024-01-15T09:30:00Z'
-                  display_id: works
-                  id: works
+                  display_id: display_id
+                  id: id
                   modified_by:
-                    type: sys_user
-                    id: works
+                    id: id
+                    type: dev_user
                   modified_date: '2024-01-15T09:30:00Z'
                   applies_to_part:
-                    type: product
-                    id: works
-                    name: works
+                    id: id
+                    name: name
+                    type: capability
                   artifacts:
                     - id: id
-                  body: works
+                  body: body
                   owned_by:
-                    - type: sys_user
-                      id: works
+                    - id: id
+                      type: dev_user
                   reported_by:
-                    - type: sys_user
-                      id: works
+                    - id: id
+                      type: dev_user
                   stage:
                     name: name
                   tags:
@@ -17070,13 +17017,9 @@ service:
                         id: id
                         name: name
                   target_close_date: '2024-01-15T09:30:00Z'
-                  title: works
-                  group:
-                    id: id
-                  rev_org:
-                    type: rev_org
-                    id: works
-                  severity: blocker
+                  title: title
+                  priority: p0
+                  type: issue
     get:
       path: /works.get
       method: GET
@@ -17108,45 +17051,44 @@ service:
           response:
             body:
               work:
-                type: ticket
                 created_by:
-                  type: sys_user
-                  display_id: work
-                  id: work
-                  display_name: work
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: work
-                  full_name: work
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
-                display_id: work
-                id: work
+                display_id: display_id
+                id: id
                 modified_by:
-                  type: sys_user
-                  display_id: work
-                  id: work
-                  display_name: work
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: work
-                  full_name: work
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 applies_to_part:
-                  type: product
-                  display_id: work
-                  id: work
-                  name: work
+                  display_id: display_id
+                  id: id
+                  name: name
+                  type: capability
                 artifacts:
                   - id: id
-                body: work
+                body: body
                 owned_by:
-                  - type: sys_user
-                    id: work
+                  - id: id
+                    type: dev_user
                 reported_by:
-                  - type: sys_user
-                    id: work
+                  - id: id
+                    type: dev_user
                 stage:
                   name: name
                 tags:
@@ -17154,16 +17096,9 @@ service:
                       id: id
                       name: name
                 target_close_date: '2024-01-15T09:30:00Z'
-                title: work
-                group:
-                  display_id: display_id
-                  id: id
-                rev_org:
-                  type: rev_org
-                  display_id: work
-                  id: work
-                  display_name: work
-                severity: blocker
+                title: title
+                priority: p0
+                type: issue
     list:
       path: /works.list
       method: GET
@@ -17248,30 +17183,29 @@ service:
               next_cursor: next_cursor
               prev_cursor: prev_cursor
               works:
-                - type: ticket
-                  created_by:
-                    type: sys_user
-                    id: works
+                - created_by:
+                    id: id
+                    type: dev_user
                   created_date: '2024-01-15T09:30:00Z'
-                  display_id: works
-                  id: works
+                  display_id: display_id
+                  id: id
                   modified_by:
-                    type: sys_user
-                    id: works
+                    id: id
+                    type: dev_user
                   modified_date: '2024-01-15T09:30:00Z'
                   applies_to_part:
-                    type: product
-                    id: works
-                    name: works
+                    id: id
+                    name: name
+                    type: capability
                   artifacts:
                     - id: id
-                  body: works
+                  body: body
                   owned_by:
-                    - type: sys_user
-                      id: works
+                    - id: id
+                      type: dev_user
                   reported_by:
-                    - type: sys_user
-                      id: works
+                    - id: id
+                      type: dev_user
                   stage:
                     name: name
                   tags:
@@ -17279,13 +17213,9 @@ service:
                         id: id
                         name: name
                   target_close_date: '2024-01-15T09:30:00Z'
-                  title: works
-                  group:
-                    id: id
-                  rev_org:
-                    type: rev_org
-                    id: works
-                  severity: blocker
+                  title: title
+                  priority: p0
+                  type: issue
     update:
       path: /works.update
       method: POST
@@ -17311,51 +17241,50 @@ service:
         - root.WorksUpdateRequestServiceUnavailableError
       examples:
         - request:
-            type: ticket
+            type: issue
             applies_to_part: don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
             id: don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>
           response:
             body:
               work:
-                type: ticket
                 created_by:
-                  type: sys_user
-                  display_id: work
-                  id: work
-                  display_name: work
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: work
-                  full_name: work
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 created_date: '2024-01-15T09:30:00Z'
-                display_id: work
-                id: work
+                display_id: display_id
+                id: id
                 modified_by:
-                  type: sys_user
-                  display_id: work
-                  id: work
-                  display_name: work
+                  display_id: display_id
+                  id: id
+                  display_name: display_name
                   display_picture:
                     id: id
-                  email: work
-                  full_name: work
+                  email: email
+                  full_name: full_name
                   state: active
+                  type: dev_user
                 modified_date: '2024-01-15T09:30:00Z'
                 applies_to_part:
-                  type: product
-                  display_id: work
-                  id: work
-                  name: work
+                  display_id: display_id
+                  id: id
+                  name: name
+                  type: capability
                 artifacts:
                   - id: id
-                body: work
+                body: body
                 owned_by:
-                  - type: sys_user
-                    id: work
+                  - id: id
+                    type: dev_user
                 reported_by:
-                  - type: sys_user
-                    id: work
+                  - id: id
+                    type: dev_user
                 stage:
                   name: name
                 tags:
@@ -17363,16 +17292,9 @@ service:
                       id: id
                       name: name
                 target_close_date: '2024-01-15T09:30:00Z'
-                title: work
-                group:
-                  display_id: display_id
-                  id: id
-                rev_org:
-                  type: rev_org
-                  display_id: work
-                  id: work
-                  display_name: work
-                severity: blocker
+                title: title
+                priority: p0
+                type: issue
   source:
     openapi: ../openapi.yml
   display-name: works

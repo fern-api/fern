@@ -66,11 +66,13 @@ it.skip("converts to api reference latest node", async () => {
 
     const node = new ApiReferenceNodeConverterLatest(
         apiSection,
-        api,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        api as any,
         slug,
         apiWorkspace,
         docsWorkspace,
         context,
+        new Map(),
         new Map(),
         NodeIdGenerator.init()
     ).get();

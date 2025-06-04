@@ -6,21 +6,14 @@ import typing
 from ...commons.types.language import Language
 from .execution_session_status import ExecutionSessionStatus
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
-
-
 class ExecutionSessionResponse(UniversalBaseModel):
     session_id: str = pydantic.Field(alias="sessionId")
-    execution_session_url: typing.Optional[str] = pydantic.Field(
-        alias="executionSessionUrl", default=None
-    )
+    execution_session_url: typing.Optional[str] = pydantic.Field(alias="executionSessionUrl", default=None)
     language: Language
     status: ExecutionSessionStatus
-
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid

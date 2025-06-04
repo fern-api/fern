@@ -1,6 +1,7 @@
 {
   "title": "Test spec for `uint` types specified as number formats.",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -8,15 +9,15 @@
   "endpoints": [
     {
       "audiences": [],
-      "operationId": "Get",
+      "operationId": "Post",
       "tags": [],
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "GetRequest",
+      "generatedRequestName": "PostRequest",
       "request": {
         "schema": {
-          "generatedName": "GetRequest",
+          "generatedName": "PostRequest",
           "schema": "Request",
           "source": {
             "file": "../openapi.yml",
@@ -36,7 +37,7 @@
       "response": {
         "description": "A simple API response.",
         "schema": {
-          "generatedName": "GetResponse",
+          "generatedName": "PostResponse",
           "schema": "Response",
           "source": {
             "file": "../openapi.yml",
@@ -53,10 +54,10 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
-      "method": "GET",
-      "path": "/get",
+      "method": "POST",
+      "path": "/post",
       "examples": [
         {
           "pathParameters": [],
@@ -99,7 +100,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "Request": {

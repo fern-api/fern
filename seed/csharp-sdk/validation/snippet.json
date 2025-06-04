@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_.create"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "using SeedValidation;\n\nvar client = new SeedValidationClient();\nawait client.CreateAsync(\n    new CreateRequest\n    {\n        Decimal = 2.2,\n        Even = 100,\n        Name = \"foo\",\n        Shape = Shape.Square,\n    }\n);\n"
+                "type": "csharp",
+                "client": "using SeedValidation;\n\nvar client = new SeedValidationClient();\nawait client.CreateAsync(\n    new CreateRequest\n    {\n        Decimal = 2.2,\n        Even = 100,\n        Name = \"fern\",\n        Shape = Shape.Square,\n    }\n);\n"
             }
         },
         {
@@ -21,8 +21,8 @@
                 "identifier_override": "endpoint_.get"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "using SeedValidation;\n\nvar client = new SeedValidationClient();\nawait client.GetAsync(\n    new GetRequest\n    {\n        Decimal = 2.2,\n        Even = 100,\n        Name = \"foo\",\n    }\n);\n"
+                "type": "csharp",
+                "client": "using SeedValidation;\n\nvar client = new SeedValidationClient();\nawait client.GetAsync(\n    new GetRequest\n    {\n        Decimal = 2.2,\n        Even = 100,\n        Name = \"fern\",\n    }\n);\n"
             }
         }
     ]

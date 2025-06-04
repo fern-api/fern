@@ -1,6 +1,7 @@
 {
   "title": "Enum of separator characters",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -52,7 +53,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "PATCH",
       "path": "/settings",
@@ -88,7 +89,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "Settings": {
@@ -113,7 +114,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],

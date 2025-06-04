@@ -11,6 +11,7 @@ public partial class SeedApiClient
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
+                { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedApi" },
                 { "X-Fern-SDK-Version", Version.Current },
@@ -29,5 +30,5 @@ public partial class SeedApiClient
         Imdb = new ImdbClient(_client);
     }
 
-    public ImdbClient Imdb { get; init; }
+    public ImdbClient Imdb { get; }
 }

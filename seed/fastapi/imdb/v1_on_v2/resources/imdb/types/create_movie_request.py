@@ -2,11 +2,9 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 import pydantic.v1
-
-
 class CreateMovieRequest(UniversalBaseModel):
     title: str
     rating: float
-
+    
     class Config:
         extra = pydantic.v1.Extra.forbid

@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
 
@@ -10,7 +8,7 @@ namespace SeedExhaustive.Test.Unit.MockServer;
 public class TestDeleteTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             true
@@ -27,10 +25,7 @@ public class TestDeleteTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Endpoints.HttpMethods.TestDeleteAsync("id", RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.Endpoints.HttpMethods.TestDeleteAsync("id");
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<bool>(mockResponse)));
     }
 }

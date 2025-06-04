@@ -11,57 +11,57 @@ describe("TypeInstantiation", () => {
 
     it("int", async () => {
         TypeInstantiation.int(42).write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("float", async () => {
         TypeInstantiation.float(3.14).write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     describe("bool", () => {
         it("true", async () => {
             TypeInstantiation.bool(true).write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
         });
 
         it("false", async () => {
             TypeInstantiation.bool(false).write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
         });
     });
 
     describe("str", () => {
         it("should render a basic string", async () => {
             TypeInstantiation.str("hello").write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
         });
 
         it("should render a string containing quote", async () => {
             TypeInstantiation.str('She said "hello!"').write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
         });
 
         it("should render a string containing escaped newline characters", async () => {
             TypeInstantiation.str("\n\n####\n\n").write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
         });
 
         it("should render a multiline string", async () => {
             TypeInstantiation.str("\n\n####\n\n", { multiline: true }).write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
         });
 
         it("should render a multiline string containing escaped quotes", async () => {
             TypeInstantiation.str('She said "Hi"\nHe said "bye"\nShe said "okay then"', { multiline: true }).write(
                 writer
             );
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
         });
 
         it("should render a string containing escaped newline characters and quotes", async () => {
             TypeInstantiation.str('She said "Hi"\nHe said "bye"\nShe said "okay then"').write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
         });
 
         it("should render a multiline string containing an escaped quote", async () => {
@@ -73,13 +73,13 @@ describe("TypeInstantiation", () => {
                     multiline: true
                 }
             ).write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
         });
     });
 
     it("bytes", async () => {
         TypeInstantiation.bytes("world").write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     describe("list", () => {
@@ -89,7 +89,7 @@ describe("TypeInstantiation", () => {
                 TypeInstantiation.str("two"),
                 TypeInstantiation.bool(true)
             ]).write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
         });
     });
 
@@ -100,7 +100,7 @@ describe("TypeInstantiation", () => {
                 TypeInstantiation.str("two"),
                 TypeInstantiation.bool(true)
             ]).write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
         });
 
         it("should support trailing comma", async () => {
@@ -108,7 +108,7 @@ describe("TypeInstantiation", () => {
                 [TypeInstantiation.int(1), TypeInstantiation.str("two"), TypeInstantiation.bool(true)],
                 { endWithComma: true }
             ).write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
         });
     });
 
@@ -119,7 +119,7 @@ describe("TypeInstantiation", () => {
                 TypeInstantiation.str("two"),
                 TypeInstantiation.bool(true)
             ]).write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
         });
 
         it("should support trailing comma", async () => {
@@ -127,12 +127,12 @@ describe("TypeInstantiation", () => {
                 [TypeInstantiation.int(1), TypeInstantiation.str("two"), TypeInstantiation.bool(true)],
                 { endWithComma: true }
             ).write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
         });
 
         it("should handle single-element tuple", async () => {
             TypeInstantiation.tuple([TypeInstantiation.int(1)]).write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
         });
     });
 
@@ -142,7 +142,7 @@ describe("TypeInstantiation", () => {
                 { key: TypeInstantiation.str("one"), value: TypeInstantiation.int(1) },
                 { key: TypeInstantiation.str("two"), value: TypeInstantiation.bool(true) }
             ]).write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
         });
 
         it("should correctly write a dict with references", async () => {
@@ -151,7 +151,7 @@ describe("TypeInstantiation", () => {
                 { key: TypeInstantiation.str("two"), value: python.TypeInstantiation.uuid("abc") }
             ]);
             dict.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
             expect(dict.getReferences().length).toBe(2);
         });
 
@@ -163,17 +163,17 @@ describe("TypeInstantiation", () => {
                 ],
                 { endWithComma: true }
             ).write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
         });
     });
 
     it("none", async () => {
         TypeInstantiation.none().write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("uuid", async () => {
         TypeInstantiation.uuid("123e4567-e89b-12d3-a456-426614174000").write(writer);
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 });

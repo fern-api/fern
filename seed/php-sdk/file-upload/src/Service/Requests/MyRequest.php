@@ -80,16 +80,37 @@ class MyRequest extends JsonSerializableType
     public ?string $optionalId;
 
     /**
+     * @var MyObject $aliasObject
+     */
+    #[JsonProperty('alias_object')]
+    public MyObject $aliasObject;
+
+    /**
+     * @var array<MyObject> $listOfAliasObject
+     */
+    #[JsonProperty('list_of_alias_object'), ArrayType([MyObject::class])]
+    public array $listOfAliasObject;
+
+    /**
+     * @var array<MyObject> $aliasListOfObject
+     */
+    #[JsonProperty('alias_list_of_object'), ArrayType([MyObject::class])]
+    public array $aliasListOfObject;
+
+    /**
      * @param array{
-     *   maybeString?: ?string,
      *   integer: int,
      *   file: File,
      *   fileList: array<File>,
+     *   listOfObjects: array<MyObject>,
+     *   aliasObject: MyObject,
+     *   listOfAliasObject: array<MyObject>,
+     *   aliasListOfObject: array<MyObject>,
+     *   maybeString?: ?string,
      *   maybeFile?: ?File,
      *   maybeFileList?: ?array<File>,
      *   maybeInteger?: ?int,
      *   optionalListOfStrings?: ?array<string>,
-     *   listOfObjects: array<MyObject>,
      *   optionalMetadata?: mixed,
      *   optionalObjectType?: ?value-of<ObjectType>,
      *   optionalId?: ?string,
@@ -110,5 +131,8 @@ class MyRequest extends JsonSerializableType
         $this->optionalMetadata = $values['optionalMetadata'] ?? null;
         $this->optionalObjectType = $values['optionalObjectType'] ?? null;
         $this->optionalId = $values['optionalId'] ?? null;
+        $this->aliasObject = $values['aliasObject'];
+        $this->listOfAliasObject = $values['listOfAliasObject'];
+        $this->aliasListOfObject = $values['aliasListOfObject'];
     }
 }

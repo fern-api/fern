@@ -1,13 +1,14 @@
 {
   "title": "Test extension `x-fern-encoding` for schemas",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
   "hasEndpointsMarkedInternal": false,
   "endpoints": [],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "Metadata": {

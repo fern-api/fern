@@ -1,9 +1,13 @@
 ```python
 
 
-client = SeedExtends(base_url="https://yourhost.com/path/to/api", )        
+client = SeedExtends(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.extended_inline_request_body(
-	unique="unique"
+	unique="unique",
+	name="name",
+	docs="docs"
 )
 
 ```

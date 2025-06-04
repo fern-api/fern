@@ -23,4 +23,12 @@ class Conversation extends JsonSerializableType
     ) {
         $this->foo = $values['foo'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "PATCH",
+                "identifier_override": "endpoint_service.patch"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedContentTypesClient } from \"@fern/content-type\";\n\nconst client = new SeedContentTypesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.service.patch({\n    application: \"application\",\n    require_auth: true\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

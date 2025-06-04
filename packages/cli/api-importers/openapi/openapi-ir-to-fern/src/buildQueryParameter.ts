@@ -1,7 +1,6 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { QueryParameter, Schema } from "@fern-api/openapi-ir";
-import { VALID_ENUM_NAME_REGEX, generateEnumNameFromValue } from "@fern-api/openapi-ir";
+import { QueryParameter, Schema, VALID_ENUM_NAME_REGEX, generateEnumNameFromValue } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
 
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
@@ -40,15 +39,6 @@ export function buildQueryParameter({
         queryParameterType = "optional<string>";
     }
 
-    if (
-        queryParameter.description == null &&
-        !typeReference.allowMultiple &&
-        queryParameter.parameterNameOverride == null &&
-        queryParameter.availability == null
-    ) {
-        return queryParameterType;
-    }
-
     const queryParameterSchema: RawSchemas.HttpQueryParameterSchema = {
         type: queryParameterType
     };
@@ -77,6 +67,17 @@ export function buildQueryParameter({
         if (typeReference.value.validation !== undefined) {
             queryParameterSchema.validation = typeReference.value.validation;
         }
+    }
+
+    if (
+        queryParameterSchema.default == null &&
+        queryParameterSchema["allow-multiple"] == null &&
+        queryParameterSchema.docs == null &&
+        queryParameterSchema.name == null &&
+        queryParameterSchema.availability == null &&
+        queryParameterSchema.validation == null
+    ) {
+        return queryParameterType;
     }
 
     return queryParameterSchema;
@@ -114,6 +115,7 @@ function getQueryParameterTypeReference({
                         value: resolvedSchema.value,
                         description: schema.description ?? resolvedSchema.description,
                         availability: schema.availability,
+                        namespace: undefined,
                         groupName: undefined,
                         inline: undefined
                     }),
@@ -128,7 +130,11 @@ function getQueryParameterTypeReference({
         } else if (resolvedSchema.type === "oneOf" && resolvedSchema.value.type === "undiscriminated") {
             // Try to generated enum from literal values
             const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = [];
+            let foundPrimitiveString = false;
             for (const [_, schema] of Object.entries(resolvedSchema.value.schemas)) {
+                if (schema.type === "primitive" && schema.schema.type === "string") {
+                    foundPrimitiveString = true;
+                }
                 if (schema.type === "literal" && schema.value.type === "string") {
                     if (VALID_ENUM_NAME_REGEX.test(schema.value.value)) {
                         potentialEnumValues.push(schema.value.value);
@@ -146,10 +152,31 @@ function getQueryParameterTypeReference({
                     name: schema.generatedName,
                     schema: { enum: potentialEnumValues }
                 });
-                return {
-                    value: schema.generatedName,
-                    allowMultiple: false
-                };
+                if (foundPrimitiveString && context.respectForwardCompatibleEnums) {
+                    context.builder.addType(fileContainingReference, {
+                        name: `${schema.generatedName}OrString`,
+                        schema: {
+                            discriminated: false,
+                            union: [
+                                {
+                                    type: "string"
+                                },
+                                {
+                                    type: schema.generatedName
+                                }
+                            ]
+                        }
+                    });
+                    return {
+                        value: `${schema.generatedName}OrString`,
+                        allowMultiple: false
+                    };
+                } else {
+                    return {
+                        value: schema.generatedName,
+                        allowMultiple: false
+                    };
+                }
             }
 
             if (resolvedSchema.value.schemas.length === 2) {
@@ -168,6 +195,7 @@ function getQueryParameterTypeReference({
                                 value: secondSchema,
                                 description: schema.description,
                                 availability: schema.availability,
+                                namespace: undefined,
                                 groupName: undefined,
                                 inline: undefined
                             }),
@@ -193,6 +221,7 @@ function getQueryParameterTypeReference({
                                 value: firstSchema,
                                 description: schema.description,
                                 availability: schema.availability,
+                                namespace: undefined,
                                 groupName: undefined,
                                 inline: undefined
                             }),
@@ -245,6 +274,7 @@ function getQueryParameterTypeReference({
                             value: resolvedSchema.value,
                             description: schema.description ?? resolvedSchema.description,
                             availability: schema.availability,
+                            namespace: undefined,
                             groupName: undefined,
                             inline: schema.inline
                         }),
@@ -280,6 +310,7 @@ function getQueryParameterTypeReference({
                         value: schema.value.value,
                         description: schema.description,
                         availability: schema.availability,
+                        namespace: undefined,
                         groupName: undefined,
                         inline: schema.inline
                     }),
@@ -293,7 +324,11 @@ function getQueryParameterTypeReference({
         } else if (schema.value.type === "oneOf" && schema.value.value.type === "undiscriminated") {
             // Try to generated enum from literal values
             const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = [];
+            let foundPrimitiveString = false;
             for (const [_, oneOfSchema] of Object.entries(schema.value.value.schemas)) {
+                if (oneOfSchema.type === "primitive" && oneOfSchema.schema.type === "string") {
+                    foundPrimitiveString = true;
+                }
                 if (oneOfSchema.type === "literal" && oneOfSchema.value.type === "string") {
                     if (VALID_ENUM_NAME_REGEX.test(oneOfSchema.value.value)) {
                         potentialEnumValues.push(oneOfSchema.value.value);
@@ -311,10 +346,31 @@ function getQueryParameterTypeReference({
                     name: schema.generatedName,
                     schema: { enum: potentialEnumValues }
                 });
-                return {
-                    value: `optional<${schema.value.value.generatedName}>`,
-                    allowMultiple: false
-                };
+                if (foundPrimitiveString && context.respectForwardCompatibleEnums) {
+                    context.builder.addType(fileContainingReference, {
+                        name: `${schema.generatedName}OrString`,
+                        schema: {
+                            discriminated: false,
+                            union: [
+                                {
+                                    type: "string"
+                                },
+                                {
+                                    type: `optional<${schema.value.value.generatedName}>`
+                                }
+                            ]
+                        }
+                    });
+                    return {
+                        value: `optional<${schema.value.value.generatedName}OrString>`,
+                        allowMultiple: false
+                    };
+                } else {
+                    return {
+                        value: `optional<${schema.value.value.generatedName}>`,
+                        allowMultiple: false
+                    };
+                }
             }
 
             if (schema.value.value.schemas.length === 2) {
@@ -333,6 +389,7 @@ function getQueryParameterTypeReference({
                                 value: secondSchema,
                                 description: schema.description,
                                 availability: schema.availability,
+                                namespace: undefined,
                                 groupName: undefined,
                                 inline: schema.inline
                             }),
@@ -358,6 +415,7 @@ function getQueryParameterTypeReference({
                                 value: firstSchema,
                                 description: schema.description,
                                 availability: schema.availability,
+                                namespace: undefined,
                                 groupName: undefined,
                                 inline: schema.inline
                             }),
@@ -381,6 +439,7 @@ function getQueryParameterTypeReference({
                         value: oneOfSchema,
                         description: undefined,
                         availability: schema.availability,
+                        namespace: undefined,
                         groupName: undefined,
                         inline: schema.inline
                     }),
@@ -427,6 +486,7 @@ function getQueryParameterTypeReference({
                     value: schema.value,
                     description: schema.description,
                     availability: schema.availability,
+                    namespace: undefined,
                     groupName: undefined,
                     inline: schema.inline
                 }),

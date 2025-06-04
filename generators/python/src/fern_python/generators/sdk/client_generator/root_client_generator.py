@@ -2,16 +2,20 @@ import typing
 from dataclasses import dataclass
 from typing import List, Optional
 
-import fern.ir.resources as ir_types
-
+from ..context.sdk_generator_context import SdkGeneratorContext
+from ..environment_generators import (
+    GeneratedEnvironment,
+    MultipleBaseUrlsEnvironmentGenerator,
+    SingleBaseUrlEnvironmentGenerator,
+)
+from .base_wrapped_client_generator import BaseWrappedClientGenerator
+from .endpoint_function_generator import EndpointFunctionGenerator
+from .generated_root_client import GeneratedRootClient, RootClient
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies import HttpX
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadataCollector,
-)
-from fern_python.generators.sdk.client_generator.endpoint_response_code_writer import (
-    EndpointResponseCodeWriter,
 )
 from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
@@ -19,15 +23,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 
-from ..context.sdk_generator_context import SdkGeneratorContext
-from ..environment_generators import (
-    GeneratedEnvironment,
-    MultipleBaseUrlsEnvironmentGenerator,
-    SingleBaseUrlEnvironmentGenerator,
-)
-from .constants import DEFAULT_BODY_PARAMETER_VALUE
-from .endpoint_function_generator import EndpointFunctionGenerator
-from .generated_root_client import GeneratedRootClient, RootClient
+import fern.ir.resources as ir_types
 
 
 @dataclass
@@ -41,7 +37,11 @@ class RootClientConstructorParameter:
     docs: Optional[str] = None
 
 
-class RootClientGenerator:
+class RootClientGenerator(BaseWrappedClientGenerator):
+    ROOT_CLASS_DOCSTRING = (
+        "Use this class to access the different functions within the SDK. "
+        "You can instantiate any number of clients with different configuration that will propagate to these functions."
+    )
     FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME = "follow_redirects"
 
     ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME = "environment"
@@ -53,9 +53,6 @@ class RootClientGenerator:
     BASE_URL_MEMBER_NAME = "_base_url"
 
     HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME = "httpx_client"
-
-    RESPONSE_VARIABLE = EndpointResponseCodeWriter.RESPONSE_VARIABLE
-    RESPONSE_JSON_VARIABLE = EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE
 
     GET_BASEURL_FUNCTION_NAME = "_get_base_url"
     TOKEN_GETTER_PARAM_NAME = "_token_getter_override"
@@ -72,18 +69,24 @@ class RootClientGenerator:
         snippet_writer: SnippetWriter,
         oauth_scheme: Optional[ir_types.OAuthScheme],
         endpoint_metadata_collector: EndpointMetadataCollector,
+        websocket: Optional[ir_types.WebSocketChannel],
     ):
-        self._context = context
-        self._package = package
-        self._class_name = class_name
-        self._async_class_name = async_class_name
-        self._is_default_body_parameter_used = False
-        self._environments_config = self._context.ir.environments
+        super().__init__(
+            context=context,
+            package=package,
+            subpackage_id=None,
+            class_name=class_name,
+            async_class_name=async_class_name,
+            generated_root_client=None,
+            snippet_registry=snippet_registry,
+            snippet_writer=snippet_writer,
+            endpoint_metadata_collector=endpoint_metadata_collector,
+            websocket=websocket,
+        )
+
         self._generated_environment = generated_environment
-        self._snippet_registry = snippet_registry
-        self._snippet_writer = snippet_writer
         self._oauth_scheme = oauth_scheme
-        self._endpoint_metadata_collector = endpoint_metadata_collector
+        self._environments_config = self._context.ir.environments
 
         client_wrapper_generator = ClientWrapperGenerator(
             context=self._context,
@@ -112,7 +115,7 @@ class RootClientGenerator:
                         constructor_parameter_name="client_id",
                         type_hint=AST.TypeHint.str_(),
                         private_member_name="client_id",
-                        instantiation=AST.Expression(f'client_id="YOUR_CLIENT_ID"'),
+                        instantiation=AST.Expression('client_id="YOUR_CLIENT_ID"'),
                         # TODO: support OAuth credentials in templates
                         # template=TemplateGenerator.string_template(
                         #     is_optional=False,
@@ -133,7 +136,7 @@ class RootClientGenerator:
                         constructor_parameter_name="client_secret",
                         type_hint=AST.TypeHint.str_(),
                         private_member_name="client_secret",
-                        instantiation=AST.Expression(f'client_secret="YOUR_CLIENT_SECRET"'),
+                        instantiation=AST.Expression('client_secret="YOUR_CLIENT_SECRET"'),
                         # TODO: support OAuth credentials in templates
                         # template=TemplateGenerator.string_template(
                         #     is_optional=False,
@@ -173,54 +176,30 @@ class RootClientGenerator:
             is_async=False,
             generated_root_client=generated_root_client,
         )
+        async_class_declaration = self._create_class_declaration(
+            is_async=True,
+            generated_root_client=generated_root_client,
+        )
+
         if self._is_default_body_parameter_used:
             source_file.add_arbitrary_code(AST.CodeWriter(self._write_default_param))
+
         source_file.add_class_declaration(
             declaration=class_declaration,
             should_export=False,
         )
         source_file.add_class_declaration(
-            declaration=self._create_class_declaration(
-                is_async=True,
-                generated_root_client=generated_root_client,
-            ),
+            declaration=async_class_declaration,
             should_export=False,
         )
         if self._environments_config is not None:
             environments_union = self._environments_config.environments.get_as_union()
             if environments_union.type == "singleBaseUrl":
-                source_file.add_declaration(
-                    AST.FunctionDeclaration(
-                        name=RootClientGenerator.GET_BASEURL_FUNCTION_NAME,
-                        signature=AST.FunctionSignature(
-                            named_parameters=[
-                                AST.NamedFunctionParameter(
-                                    name=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
-                                    type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
-                                    docs=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_DOCS,
-                                ),
-                                AST.NamedFunctionParameter(
-                                    name=RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
-                                    type_hint=AST.TypeHint(self._context.get_reference_to_environments_class())
-                                    if self._environments_config.default_environment is not None
-                                    else AST.TypeHint.optional(
-                                        AST.TypeHint(self._context.get_reference_to_environments_class())
-                                    ),
-                                    docs="The environment to be used as the base url, can be used in lieu of 'base_url'.",
-                                ),
-                            ],
-                            return_type=AST.TypeHint.str_(),
-                        ),
-                        body=AST.CodeWriter(self._write_get_base_url_function),
-                    ),
-                    should_export=False,
-                )
+                source_file.add_declaration(self._get_base_url_function_declaration(), should_export=False)
         return generated_root_client
 
     def _write_root_class_docstring(self, writer: AST.NodeWriter) -> None:
-        writer.write_line(
-            "Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions."
-        )
+        writer.write_line(self.ROOT_CLASS_DOCSTRING)
 
     def _create_class_declaration(
         self,
@@ -263,40 +242,89 @@ class RootClientGenerator:
         )
 
         if self._package.service is not None:
+            class_declaration.add_method(self._create_with_raw_response_method(is_async=is_async))
             service = self._context.ir.services[self._package.service]
             for endpoint in service.endpoints:
-                endpoint_function_generator = EndpointFunctionGenerator(
-                    context=self._context,
-                    package=self._package,
-                    service=service,
-                    endpoint=endpoint,
-                    idempotency_headers=self._context.ir.idempotency_headers,
-                    client_wrapper_member_name=self._get_client_wrapper_member_name(),
-                    is_async=is_async,
-                    generated_root_client=generated_root_client,
-                    snippet_writer=self._snippet_writer,
-                    endpoint_metadata_collector=self._endpoint_metadata_collector,
-                )
-                generated_endpoint_functions = endpoint_function_generator.generate()
-                for generated_endpoint_function in generated_endpoint_functions:
-                    class_declaration.add_method(generated_endpoint_function.function)
-                    if (
-                        not self._is_default_body_parameter_used
-                        and generated_endpoint_function.is_default_body_parameter_used
-                    ):
-                        self._is_default_body_parameter_used = True
+                # Handle stream parameter endpoints specially to ensure all overloads are included
+                if self._is_stream_parameter_endpoint(endpoint):
+                    endpoint_generator = EndpointFunctionGenerator(
+                        context=self._context,
+                        package=self._package,
+                        service=service,
+                        endpoint=endpoint,
+                        idempotency_headers=self._context.ir.idempotency_headers,
+                        is_async=is_async,
+                        client_wrapper_member_name=f"{self._get_raw_client_member_name()}.{self._get_client_wrapper_member_name()}",
+                        generated_root_client=generated_root_client,
+                        snippet_writer=self._snippet_writer,
+                        endpoint_metadata_collector=self._endpoint_metadata_collector,
+                        is_raw_client=False,
+                    )
 
-                    for val in generated_endpoint_function.snippets or []:
-                        if is_async:
-                            self._snippet_registry.register_async_client_endpoint_snippet(
-                                endpoint=endpoint, expr=val.snippet, example_id=val.example_id
-                            )
-                        else:
-                            self._snippet_registry.register_sync_client_endpoint_snippet(
-                                endpoint=endpoint, expr=val.snippet, example_id=val.example_id
-                            )
+                    # Generate all functions (overloads + implementation)
+                    generated_endpoint_functions = endpoint_generator.generate()
+
+                    # Check if any generated function needs DEFAULT_BODY_PARAMETER
+                    for generated_function in generated_endpoint_functions:
+                        if generated_function.is_default_body_parameter_used:
+                            self._is_default_body_parameter_used = True
+                            break
+
+                    # Add all overloads first
+                    for overload_function in generated_endpoint_functions[:-1]:
+                        class_declaration.add_method(overload_function.function)
+
+                    # Then add the implementation
+                    class_declaration.add_method(generated_endpoint_functions[-1].function)
+                else:
+                    # For non-stream parameter endpoints, use the regular approach
+                    wrapper_method = self._create_wrapper_method(
+                        endpoint=endpoint, is_async=is_async, generated_root_client=generated_root_client
+                    )
+                    class_declaration.add_method(wrapper_method)
 
         return class_declaration
+
+    def _get_base_url_function_declaration(self) -> AST.FunctionDeclaration:
+        return AST.FunctionDeclaration(
+            name=RootClientGenerator.GET_BASEURL_FUNCTION_NAME,
+            signature=AST.FunctionSignature(
+                named_parameters=[
+                    AST.NamedFunctionParameter(
+                        name=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
+                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                        docs=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_DOCS,
+                    ),
+                    AST.NamedFunctionParameter(
+                        name=RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
+                        type_hint=(
+                            AST.TypeHint(self._context.get_reference_to_environments_class())
+                            if self._environments_config.default_environment is not None
+                            else AST.TypeHint.optional(
+                                AST.TypeHint(self._context.get_reference_to_environments_class())
+                            )
+                        ),
+                        docs="The environment to be used as the base url, can be used in lieu of 'base_url'.",
+                    ),
+                ],
+                return_type=AST.TypeHint.str_(),
+            ),
+            body=AST.CodeWriter(self._write_get_base_url_function),
+        )
+
+    def get_raw_client_class_name(self, *, is_async: bool) -> str:
+        return (
+            self._context.get_class_name_for_generated_async_raw_root_client()
+            if is_async
+            else self._context.get_class_name_for_generated_raw_root_client()
+        )
+
+    def get_raw_client_class_reference(self, *, is_async: bool) -> AST.TypeHint:
+        return (
+            self._context.get_async_raw_client_class_reference_for_root_client()
+            if is_async
+            else self._context.get_raw_client_class_reference_for_root_client()
+        )
 
     def _get_constructor_parameters(self, *, is_async: bool) -> List[RootClientConstructorParameter]:
         parameters: List[RootClientConstructorParameter] = []
@@ -352,9 +380,11 @@ class RootClientGenerator:
             parameters.append(
                 RootClientConstructorParameter(
                     constructor_parameter_name=RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
-                    type_hint=AST.TypeHint(self._context.get_reference_to_environments_class())
-                    if environments_config.default_environment is not None
-                    else AST.TypeHint.optional(AST.TypeHint(self._context.get_reference_to_environments_class())),
+                    type_hint=(
+                        AST.TypeHint(self._context.get_reference_to_environments_class())
+                        if environments_config.default_environment is not None
+                        else AST.TypeHint.optional(AST.TypeHint(self._context.get_reference_to_environments_class()))
+                    ),
                     private_member_name=None,
                     initializer=default_environment if default_environment is not None else None,
                     exclude_from_wrapper_construction=True,
@@ -412,27 +442,31 @@ class RootClientGenerator:
                 RootClientConstructorParameter(
                     constructor_parameter_name=param.constructor_parameter_name,
                     type_hint=parm_type_hint,
-                    initializer=AST.Expression(
-                        AST.FunctionInvocation(
-                            function_definition=AST.Reference(
-                                import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                                qualified_name_excluding_import=("getenv",),
-                            ),
-                            args=[AST.Expression(f'"{param.environment_variable}"')],
-                        )
-                    )
-                    if param.environment_variable is not None
-                    else None,
-                    validation_check=AST.Expression(
-                        AST.CodeWriter(
-                            self._get_parameter_validation_writer(
-                                param_name=param.constructor_parameter_name,
-                                environment_variable=param.environment_variable,
+                    initializer=(
+                        AST.Expression(
+                            AST.FunctionInvocation(
+                                function_definition=AST.Reference(
+                                    import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                                    qualified_name_excluding_import=("getenv",),
+                                ),
+                                args=[AST.Expression(f'"{param.environment_variable}"')],
                             )
                         )
-                    )
-                    if add_validation and param.environment_variable is not None
-                    else None,
+                        if param.environment_variable is not None
+                        else None
+                    ),
+                    validation_check=(
+                        AST.Expression(
+                            AST.CodeWriter(
+                                self._get_parameter_validation_writer(
+                                    param_name=param.constructor_parameter_name,
+                                    environment_variable=param.environment_variable,
+                                )
+                            )
+                        )
+                        if add_validation and param.environment_variable is not None
+                        else None
+                    ),
                 )
             )
 
@@ -448,27 +482,31 @@ class RootClientGenerator:
                     RootClientConstructorParameter(
                         constructor_parameter_name="client_id",
                         type_hint=cred_type_hint,
-                        initializer=AST.Expression(
-                            AST.FunctionInvocation(
-                                function_definition=AST.Reference(
-                                    import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                                    qualified_name_excluding_import=("getenv",),
-                                ),
-                                args=[AST.Expression(f'"{oauth.client_id_env_var}"')],
-                            )
-                        )
-                        if oauth.client_id_env_var is not None
-                        else None,
-                        validation_check=AST.Expression(
-                            AST.CodeWriter(
-                                self._get_parameter_validation_writer(
-                                    param_name="client_id",
-                                    environment_variable=oauth.client_id_env_var,
+                        initializer=(
+                            AST.Expression(
+                                AST.FunctionInvocation(
+                                    function_definition=AST.Reference(
+                                        import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                                        qualified_name_excluding_import=("getenv",),
+                                    ),
+                                    args=[AST.Expression(f'"{oauth.client_id_env_var}"')],
                                 )
                             )
-                        )
-                        if add_validation and oauth.client_id_env_var is not None
-                        else None,
+                            if oauth.client_id_env_var is not None
+                            else None
+                        ),
+                        validation_check=(
+                            AST.Expression(
+                                AST.CodeWriter(
+                                    self._get_parameter_validation_writer(
+                                        param_name="client_id",
+                                        environment_variable=oauth.client_id_env_var,
+                                    )
+                                )
+                            )
+                            if add_validation and oauth.client_id_env_var is not None
+                            else None
+                        ),
                     ),
                 )
 
@@ -481,27 +519,31 @@ class RootClientGenerator:
                     RootClientConstructorParameter(
                         constructor_parameter_name="client_secret",
                         type_hint=sec_cred_type_hint,
-                        initializer=AST.Expression(
-                            AST.FunctionInvocation(
-                                function_definition=AST.Reference(
-                                    import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                                    qualified_name_excluding_import=("getenv",),
-                                ),
-                                args=[AST.Expression(f'"{oauth.client_secret_env_var}"')],
-                            )
-                        )
-                        if oauth.client_secret_env_var is not None
-                        else None,
-                        validation_check=AST.Expression(
-                            AST.CodeWriter(
-                                self._get_parameter_validation_writer(
-                                    param_name="client_secret",
-                                    environment_variable=oauth.client_secret_env_var,
+                        initializer=(
+                            AST.Expression(
+                                AST.FunctionInvocation(
+                                    function_definition=AST.Reference(
+                                        import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                                        qualified_name_excluding_import=("getenv",),
+                                    ),
+                                    args=[AST.Expression(f'"{oauth.client_secret_env_var}"')],
                                 )
                             )
-                        )
-                        if sec_add_validation and oauth.client_secret_env_var is not None
-                        else None,
+                            if oauth.client_secret_env_var is not None
+                            else None
+                        ),
+                        validation_check=(
+                            AST.Expression(
+                                AST.CodeWriter(
+                                    self._get_parameter_validation_writer(
+                                        param_name="client_secret",
+                                        environment_variable=oauth.client_secret_env_var,
+                                    )
+                                )
+                            )
+                            if sec_add_validation and oauth.client_secret_env_var is not None
+                            else None
+                        ),
                     ),
                 )
             parameters.append(
@@ -547,18 +589,18 @@ class RootClientGenerator:
         parameters.append(
             RootClientConstructorParameter(
                 constructor_parameter_name=RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME,
-                type_hint=AST.TypeHint.optional(AST.TypeHint(HttpX.CLIENT))
-                if not is_async
-                else AST.TypeHint.optional(AST.TypeHint(HttpX.ASYNC_CLIENT)),
+                type_hint=(
+                    AST.TypeHint.optional(AST.TypeHint(HttpX.CLIENT))
+                    if not is_async
+                    else AST.TypeHint.optional(AST.TypeHint(HttpX.ASYNC_CLIENT))
+                ),
                 private_member_name=None,
                 initializer=AST.Expression(AST.TypeHint.none()),
                 docs="The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.",
             )
         )
+        parameters.extend(self._get_literal_header_parameters())
         return parameters
-
-    def _environment_is_enum(self) -> bool:
-        return self._context.ir.environments is not None
 
     def _get_parameter_validation_writer(self, *, param_name: str, environment_variable: str) -> CodeWriterFunction:
         def _write_parameter_validation(writer: AST.NodeWriter) -> None:
@@ -567,16 +609,32 @@ class RootClientGenerator:
             writer.write("raise ")
             writer.write_node(
                 self._context.core_utilities.instantiate_api_error(
+                    headers=None,
+                    status_code=None,
                     body=AST.Expression(
                         f'"The client must be instantiated be either passing in {param_name} or setting {environment_variable}"'
                     ),
-                    status_code=None,
                 )
             )
             writer.outdent()
             writer.write_newline_if_last_line_not()
 
         return _write_parameter_validation
+
+    def _get_literal_header_parameters(self) -> List[RootClientConstructorParameter]:
+        parameters: List[RootClientConstructorParameter] = []
+        for header in self._context.ir.headers:
+            type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(header.value_type)
+            if not type_hint.is_literal:
+                continue
+            parameters.append(
+                RootClientConstructorParameter(
+                    constructor_parameter_name=header.name.name.snake_case.safe_name,
+                    type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                    initializer=AST.Expression(AST.TypeHint.none()),
+                )
+            )
+        return parameters
 
     def _get_write_constructor_body(
         self, *, is_async: bool, constructor_parameters: List[RootClientConstructorParameter]
@@ -589,10 +647,14 @@ class RootClientGenerator:
                     AST.ConditionalExpression(
                         left=AST.Expression(f"{self._timeout_constructor_parameter_name}"),
                         right=AST.ConditionalExpression(
-                            left=AST.Expression(f"{self._context.custom_config.timeout_in_seconds}")
-                            if isinstance(self._context.custom_config.timeout_in_seconds, int)
-                            else AST.Expression(AST.TypeHint.none()),
-                            right=AST.Expression("None"),
+                            left=(
+                                AST.Expression(f"{self._context.custom_config.timeout_in_seconds}")
+                                if isinstance(self._context.custom_config.timeout_in_seconds, int)
+                                else AST.Expression(AST.TypeHint.none())
+                            ),
+                            right=AST.Expression(
+                                f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}.timeout.read"
+                            ),
                             test=AST.Expression(
                                 f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} is None"
                             ),
@@ -627,11 +689,11 @@ class RootClientGenerator:
                         kwargs=[
                             (
                                 "client_id",
-                                AST.Expression(f"client_id"),
+                                AST.Expression("client_id"),
                             ),
                             (
                                 "client_secret",
-                                AST.Expression(f"client_secret"),
+                                AST.Expression("client_secret"),
                             ),
                             (
                                 "client_wrapper",
@@ -665,10 +727,34 @@ class RootClientGenerator:
                     kwargs=client_wrapper_constructor_kwargs,
                 )
             )
+            if self._package.service is not None:
+                writer.write_newline_if_last_line_not()
+                writer.write_node(
+                    AST.VariableDeclaration(
+                        name=f"self.{self._get_raw_client_member_name()}",
+                        initializer=AST.Expression(
+                            AST.ClassInstantiation(
+                                class_=(
+                                    self._context.get_async_raw_client_class_reference_for_root_client()
+                                    if is_async
+                                    else self._context.get_raw_client_class_reference_for_root_client()
+                                ),
+                                kwargs=[
+                                    (
+                                        "client_wrapper",
+                                        AST.Expression(f"self.{self._get_client_wrapper_member_name()}"),
+                                    ),
+                                ],
+                            )
+                        ),
+                    )
+                )
             writer.write_newline_if_last_line_not()
             for subpackage_id in self._package.subpackages:
                 subpackage = self._context.ir.subpackages[subpackage_id]
-                if subpackage.has_endpoints_in_tree:
+                if subpackage.has_endpoints_in_tree or (
+                    subpackage.websocket is not None and self._context.custom_config.should_generate_websocket_clients
+                ):
                     writer.write_node(AST.Expression(f"self.{subpackage.name.snake_case.safe_name} = "))
                     client_wrapper_constructor_kwargs = [
                         (param.constructor_parameter_name, AST.Expression(f"self.{param.constructor_parameter_name}"))
@@ -680,11 +766,14 @@ class RootClientGenerator:
                             AST.Expression(f"self.{self._get_client_wrapper_member_name()}"),
                         ),
                     )
+                    # TODO: This is where the referencing happens at the root client level.
                     writer.write_node(
                         AST.ClassInstantiation(
-                            class_=self._context.get_reference_to_async_subpackage_service(subpackage_id)
-                            if is_async
-                            else self._context.get_reference_to_subpackage_service(subpackage_id),
+                            class_=(
+                                self._context.get_reference_to_async_subpackage_service(subpackage_id)
+                                if is_async
+                                else self._context.get_reference_to_subpackage_service(subpackage_id)
+                            ),
                             kwargs=[
                                 (
                                     "client_wrapper",
@@ -735,9 +824,10 @@ class RootClientGenerator:
                 )
             )
 
-        for wrapper_param in client_wrapper_generator._get_constructor_info(
+        constructor_info = client_wrapper_generator._get_constructor_info(
             exclude_auth=exclude_auth if exclude_auth else use_oauth_token_provider
-        ).constructor_parameters:
+        )
+        for wrapper_param in constructor_info.constructor_parameters:
             client_wrapper_constructor_kwargs.append(
                 (
                     wrapper_param.constructor_parameter_name,
@@ -834,13 +924,15 @@ class RootClientGenerator:
             )
         )
 
-        return client_wrapper_constructor_kwargs
+        for wrapper_param in constructor_info.literal_headers:
+            client_wrapper_constructor_kwargs.append(
+                (
+                    wrapper_param.header.name.name.snake_case.safe_name,
+                    AST.Expression(wrapper_param.header.name.name.snake_case.safe_name),
+                )
+            )
 
-    def _write_default_param(self, writer: AST.NodeWriter) -> None:
-        writer.write_line("# this is used as the default value for optional parameters")
-        writer.write(f"{DEFAULT_BODY_PARAMETER_VALUE} = ")
-        writer.write_node(AST.TypeHint.cast(AST.TypeHint.any(), AST.Expression("...")))
-        writer.write_newline_if_last_line_not()
+        return client_wrapper_constructor_kwargs
 
     def _write_get_base_url_function(self, writer: AST.NodeWriter) -> None:
         writer.write_line(f"if {RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME} is not None:")
@@ -855,17 +947,6 @@ class RootClientGenerator:
                 'raise Exception("Please pass in either base_url or environment to construct the client")'
             )
         writer.write_newline_if_last_line_not()
-
-    def _get_client_wrapper_constructor_parameter_name(
-        self, params: typing.List[RootClientConstructorParameter]
-    ) -> str:
-        for param in params:
-            if param.constructor_parameter_name == "client_wrapper":
-                return "_client_wrapper"
-        return "client_wrapper"
-
-    def _get_client_wrapper_member_name(self) -> str:
-        return "_client_wrapper"
 
     def _get_timeout_constructor_parameter_name(self, params: typing.List[str]) -> str:
         for param in params:

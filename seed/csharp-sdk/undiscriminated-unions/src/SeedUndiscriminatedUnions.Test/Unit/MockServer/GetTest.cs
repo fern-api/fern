@@ -1,7 +1,6 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
+using OneOf;
 using SeedUndiscriminatedUnions.Core;
 
 namespace SeedUndiscriminatedUnions.Test.Unit.MockServer;
@@ -10,7 +9,7 @@ namespace SeedUndiscriminatedUnions.Test.Unit.MockServer;
 public class GetTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             "string"
@@ -35,10 +34,24 @@ public class GetTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Union.GetAsync("string", RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.Union.GetAsync("string");
+        Assert.That(
+            response.Value,
+            Is.EqualTo(
+                    JsonUtils
+                        .Deserialize<
+                            OneOf<
+                                string,
+                                IEnumerable<string>,
+                                int,
+                                IEnumerable<int>,
+                                IEnumerable<IEnumerable<int>>,
+                                HashSet<string>
+                            >
+                        >(mockResponse)
+                        .Value
+                )
+                .UsingDefaults()
+        );
     }
 }

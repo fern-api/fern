@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -18,8 +18,7 @@ public partial class ProblemClient
     /// <summary>
     /// Creates a problem
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Problem.CreateProblemAsync(
     ///     new CreateProblemRequest
     ///     {
@@ -73,8 +72,7 @@ public partial class ProblemClient
     ///         MethodName = "methodName",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<object> CreateProblemAsync(
         CreateProblemRequest request,
         RequestOptions? options = null,
@@ -82,8 +80,8 @@ public partial class ProblemClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -94,9 +92,9 @@ public partial class ProblemClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<object>(responseBody)!;
@@ -107,18 +105,20 @@ public partial class ProblemClient
             }
         }
 
-        throw new SeedTraceApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Updates a problem
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Problem.UpdateProblemAsync(
     ///     "problemId",
     ///     new CreateProblemRequest
@@ -173,8 +173,7 @@ public partial class ProblemClient
     ///         MethodName = "methodName",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<UpdateProblemResponse> UpdateProblemAsync(
         string problemId,
         CreateProblemRequest request,
@@ -183,21 +182,24 @@ public partial class ProblemClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
-                    Path = $"/problem-crud/update/{problemId}",
+                    Path = string.Format(
+                        "/problem-crud/update/{0}",
+                        ValueConvert.ToPathParameterString(problemId)
+                    ),
                     Body = request,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<UpdateProblemResponse>(responseBody)!;
@@ -208,34 +210,38 @@ public partial class ProblemClient
             }
         }
 
-        throw new SeedTraceApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Soft deletes a problem
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Problem.DeleteProblemAsync("problemId");
-    /// </code>
-    /// </example>
-    public async Task DeleteProblemAsync(
+    /// </code></example>
+    public async global::System.Threading.Tasks.Task DeleteProblemAsync(
         string problemId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
-                    Path = $"/problem-crud/delete/{problemId}",
+                    Path = string.Format(
+                        "/problem-crud/delete/{0}",
+                        ValueConvert.ToPathParameterString(problemId)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -245,19 +251,20 @@ public partial class ProblemClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedTraceApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Returns default starter files for problem
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Problem.GetDefaultStarterFilesAsync(
     ///     new GetDefaultStarterFilesRequest
     ///     {
@@ -270,8 +277,7 @@ public partial class ProblemClient
     ///         MethodName = "methodName",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<GetDefaultStarterFilesResponse> GetDefaultStarterFilesAsync(
         GetDefaultStarterFilesRequest request,
         RequestOptions? options = null,
@@ -279,8 +285,8 @@ public partial class ProblemClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -291,9 +297,9 @@ public partial class ProblemClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<GetDefaultStarterFilesResponse>(responseBody)!;
@@ -304,10 +310,13 @@ public partial class ProblemClient
             }
         }
 
-        throw new SeedTraceApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

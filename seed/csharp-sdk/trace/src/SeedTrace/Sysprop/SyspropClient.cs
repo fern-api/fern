@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -15,12 +15,10 @@ public partial class SyspropClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Sysprop.SetNumWarmInstancesAsync(Language.Java, 1);
-    /// </code>
-    /// </example>
-    public async Task SetNumWarmInstancesAsync(
+    /// </code></example>
+    public async global::System.Threading.Tasks.Task SetNumWarmInstancesAsync(
         Language language,
         int numWarmInstances,
         RequestOptions? options = null,
@@ -28,12 +26,16 @@ public partial class SyspropClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Put,
-                    Path = $"/sysprop/num-warm-instances/{language}/{numWarmInstances}",
+                    Path = string.Format(
+                        "/sysprop/num-warm-instances/{0}/{1}",
+                        ValueConvert.ToPathParameterString(language),
+                        ValueConvert.ToPathParameterString(numWarmInstances)
+                    ),
                     Options = options,
                 },
                 cancellationToken
@@ -43,27 +45,27 @@ public partial class SyspropClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedTraceApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Sysprop.GetNumWarmInstancesAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Dictionary<Language, int>> GetNumWarmInstancesAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
@@ -73,9 +75,9 @@ public partial class SyspropClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<Dictionary<Language, int>>(responseBody)!;
@@ -86,10 +88,13 @@ public partial class SyspropClient
             }
         }
 
-        throw new SeedTraceApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedTraceApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

@@ -3,8 +3,8 @@ import { scrapedNavigationGroup } from "../types/scrapedNavigation";
 export function getFirstTabFromNavigationGroup({ navItem }: { navItem: scrapedNavigationGroup }): string | undefined {
     const findFirstPage = (item: scrapedNavigationGroup): string | undefined => {
         for (const page of item.pages) {
-            if (typeof page === "string") {
-                return page;
+            if (page.type === "page") {
+                return page.slug;
             } else {
                 const firstPage = findFirstPage(page);
                 if (firstPage != null) {

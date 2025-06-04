@@ -1,6 +1,5 @@
-import { RelativeFilePath, join } from "@fern-api/fs-utils";
-import { PhpFile } from "@fern-api/php-codegen";
-import { FileGenerator } from "@fern-api/php-codegen";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
 
 import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
@@ -29,23 +28,30 @@ export class TraitGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
                 this.context.phpTypeMapper.convertToTraitClassReference(declaredTypeName)
             )
         });
-
+        const { includeGetter, includeSetter } = {
+            includeGetter: this.context.shouldGenerateGetterMethods(),
+            includeSetter: this.context.shouldGenerateSetterMethods()
+        };
         for (const property of this.objectDeclaration.properties) {
             const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
-            clazz.addField(
-                php.field({
+            const field = php.field({
+                type: convertedType,
+                name: this.context.getPropertyName(property.name.name),
+                access: this.context.getPropertyAccess(),
+                docs: property.docs,
+                attributes: this.context.phpAttributeMapper.convert({
                     type: convertedType,
-                    name: this.context.getPropertyName(property.name.name),
-                    access: "public",
-                    docs: property.docs,
-                    attributes: this.context.phpAttributeMapper.convert({
-                        type: convertedType,
-                        property
-                    })
+                    property
                 })
-            );
+            });
+            if (includeGetter) {
+                clazz.addMethod(this.context.getGetterMethod({ name: property.name.name, field }));
+            }
+            if (includeSetter) {
+                clazz.addMethod(this.context.getSetterMethod({ name: property.name.name, field }));
+            }
+            clazz.addField(field);
         }
-
         return new PhpFile({
             clazz,
             rootNamespace: this.context.getRootNamespace(),

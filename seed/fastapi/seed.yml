@@ -1,4 +1,4 @@
-irVersion: v53
+irVersion: v57
 displayName: FastAPI
 image: fernapi/fern-fastapi-server
 changelogLocation: ../../generators/python/fastapi/versions.yml
@@ -30,6 +30,24 @@ language: python
 generatorType: Server
 defaultOutputMode: local_files
 fixtures:
+  alias-extends:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
+  circular-references:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
+  circular-references-advanced:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
   exhaustive:
     - customConfig: null
       outputFolder: no-custom-config
@@ -54,6 +72,12 @@ fixtures:
         pydantic_config:
           include_union_utils: true
       outputFolder: include-validators
+  file-download:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
   imdb:
     - customConfig: null
       outputFolder: no-custom-config
@@ -69,8 +93,27 @@ fixtures:
         pydantic_config:
           version: "v1_on_v2"
       outputFolder: v1_on_v2
+  pagination:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
+  simple-fhir:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
+  unions:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_inheritance_for_extended_models: false
+      outputFolder: no-inheritance-for-extended-models
 allowedFailures:
   - auth-environment-variables
+  - bearer-token-environment-variable
   - bytes
   - literal-headers
   - query-parameters

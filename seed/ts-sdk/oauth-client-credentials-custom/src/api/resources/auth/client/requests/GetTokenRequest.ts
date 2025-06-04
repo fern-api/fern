@@ -8,7 +8,7 @@
  *         cid: "cid",
  *         csr: "csr",
  *         scp: "scp",
- *         entityId: "entity_id",
+ *         entity_id: "entity_id",
  *         scope: "scope"
  *     }
  */
@@ -16,6 +16,6 @@ export interface GetTokenRequest {
     cid: string;
     csr: string;
     scp: string;
-    entityId: string;
+    entity_id: string;
     scope?: string;
 }

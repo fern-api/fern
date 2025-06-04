@@ -83,13 +83,38 @@ export class PythonFile extends AstNode {
         writer: Writer;
         uniqueReferences: Map<string, UniqueReferenceValue>;
     }): void {
-        const references: Reference[] = Array.from(uniqueReferences.values()).flatMap(({ references }) => references);
+        // Clone the map so that we can mutate its copy.
+        const referencesToHandle = new Map(uniqueReferences);
 
         // Build up a map of refs to their name overrides, keeping track of names that have been used as we go.
         const completeRefPathsToNameOverrides: Record<string, ImportedName> = {};
         const usedNames = this.getInitialUsedNames();
 
-        references.forEach((reference) => {
+        // First, reserve the names of any references that are defined in the file itself and that don't need importing.
+        const filePath = this.path.join(".");
+        const fileReferences = uniqueReferences.get(filePath);
+        if (fileReferences) {
+            const { references } = fileReferences;
+
+            references.forEach((reference) => {
+                const fullyQualifiedModulePath = reference.getFullyQualifiedModulePath();
+                const name = reference.name;
+
+                completeRefPathsToNameOverrides[fullyQualifiedModulePath] = {
+                    name,
+                    isAlias: false
+                };
+                usedNames.add(reference.name);
+            });
+
+            referencesToHandle.delete(filePath);
+        }
+
+        // Continue on to resolving names for references that must be imported
+        const importedReferences: Reference[] = Array.from(referencesToHandle.values()).flatMap(
+            ({ references }) => references
+        );
+        importedReferences.forEach((reference) => {
             // Skip star imports since we should never override their import alias
             if (reference instanceof StarImport) {
                 return;
@@ -147,6 +172,12 @@ export class PythonFile extends AstNode {
         for (const reference of this.references) {
             const referenceName = reference.name;
             const fullyQualifiedPath = reference.getFullyQualifiedPath();
+
+            // Skip references that don't have a path. It's inferred that they don't need to be imported.
+            if (fullyQualifiedPath === "") {
+                continue;
+            }
+
             const existingRefs = uniqueReferences.get(fullyQualifiedPath);
 
             if (existingRefs) {
@@ -192,8 +223,17 @@ export class PythonFile extends AstNode {
         writer: Writer;
         uniqueReferences: Map<string, { modulePath: ModulePath; references: Reference[] }>;
     }): void {
+        if (uniqueReferences.size === 0) {
+            return;
+        }
         for (const [fullyQualifiedPath, { modulePath, references }] of uniqueReferences) {
             const refModulePath = modulePath;
+
+            // Check to see if the reference is defined in this same file and if so, skip its import
+            if (this.isDefinedInFile(refModulePath)) {
+                continue;
+            }
+
             if (refModulePath[0] === this.path[0]) {
                 // Relativize the import
                 // Calculate the common prefix length
@@ -232,12 +272,12 @@ export class PythonFile extends AstNode {
                         .join(", ")}`
                 );
             }
-
             writer.newLine();
         }
+        writer.newLine();
+    }
 
-        if (Object.keys(uniqueReferences).length > 0) {
-            writer.newLine();
-        }
+    private isDefinedInFile(modulePath: readonly string[]): boolean {
+        return modulePath.length === this.path.length && modulePath.every((part, idx) => part === this.path[idx]);
     }
 }

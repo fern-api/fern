@@ -5,29 +5,23 @@ from ....types.type import Type
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 import pydantic
-
-
 class Entity(UniversalBaseModel):
     """
     Examples
     --------
     from seed.examples import ComplexType
     from seed.examples.resources.types import Entity
-
+    
     Entity(
         type=ComplexType.UNKNOWN,
         name="unknown",
     )
     """
-
     type: Type
     name: str
-
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid

@@ -1,6 +1,6 @@
 import { php } from "@fern-api/php-codegen";
 
-import { HttpEndpoint, SdkRequest, TypeReference } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpService, SdkRequest, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import {
@@ -16,10 +16,11 @@ export class ReferencedEndpointRequest extends EndpointRequest {
     public constructor(
         context: SdkGeneratorContext,
         sdkRequest: SdkRequest,
+        service: HttpService,
         endpoint: HttpEndpoint,
         requestBodyShape: TypeReference
     ) {
-        super(context, sdkRequest, endpoint);
+        super(context, sdkRequest, service, endpoint);
         this.requestBodyShape = requestBodyShape;
     }
 

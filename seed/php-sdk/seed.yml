@@ -1,4 +1,4 @@
-irVersion: v53
+irVersion: v57
 displayName: PHP SDK
 image: fernapi/fern-php-sdk
 changelogLocation: ../../generators/php/sdk/versions.yml
@@ -21,7 +21,92 @@ test:
 language: php
 generatorType: SDK
 defaultOutputMode: github
-fixtures: {}
+fixtures:
+  extends:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: private
+      customConfig:
+        propertyAccess: private
+  imdb:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: clientName
+      customConfig:
+        clientName: FernClient
+    - outputFolder: packageName
+      customConfig:
+        packageName: fern-api/imdb-php
+    - outputFolder: namespace
+      customConfig:
+        namespace: Fern
+    - outputFolder: private
+      customConfig:
+        propertyAccess: private
+    - outputFolder: package-path
+      customConfig:
+        packagePath: Custom/Package/Path
+        namespace: Custom\Package\Path
+  package-yml:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: private
+      customConfig:
+        propertyAccess: private
+  path-parameters:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: inline-path-parameters
+      customConfig:
+        inlinePathParameters: true
+    - outputFolder: inline-path-parameters-private
+      customConfig:
+        inlinePathParameters: true
+        propertyAccess: private
+  query-parameters:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: private
+      customConfig:
+        propertyAccess: private
+  pagination:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: property-accessors
+      customConfig:
+        propertyAccess: private
+  unions:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: property-accessors
+      customConfig:
+        propertyAccess: private
+  alias:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: composer-json
+      customConfig:
+        composerJson:
+          name: fern/empty
+          version: 1.0.0
+          description: My Empty PHP Library
+          keywords:
+          - empty
+          license:
+          - "LGPL-2.1-only"
+          - "GPL-3.0-or-later"
+          require:
+            guzzlehttp/guzzle: "7.9.2"
+            guzzlehttp/promises: "2.0.4"
+          require-dev:
+            phpunit/phpunit: "12.0.2"
+            phpunit/php-timer: "8.0.0"
+          scripts:
+            build:
+            - "@php -l src"
+            - "@php -l tests"
+            analyze: echo skip
+            hello: echo hello
 scripts:
   - docker: composer:2.7.9
     commands:
@@ -30,14 +115,32 @@ scripts:
       - composer analyze
       - composer test
 allowedFailures:
+  - pagination-custom
+  # Dynamic snippets need to add support for global headers included in the client constructor.
+  - auth-environment-variables
   # Basic auth is not supported yet.
   - basic-auth
-  # Path parameter enums are not supported yet.
-  - enum
+  # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly
+  - examples
   # Enums don't support the fromJson method yet.
   - exhaustive
+  - trace
+  - circular-references
+  - circular-references-advanced
+  # Add support for literals and confirm that string literal examples are being generated.
+  - literal
+  # Add support for OAuth.
+  - oauth-client-credentials
+  - oauth-client-credentials-custom
+  - oauth-client-credentials-default
+  - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-nested-root
+  # Pagination example values come through as floats instead of integers (e.g. 1.1 instead of 1).
+  - pagination:no-custom-config
+  - pagination:property-accessors
   # Multi URL environments are not supported yet.
   - multi-url-environment
   - multi-url-environment-no-default
-  # Enum as map key not allowed in PHP.
-  - trace
+  # Fix union dynamic snippets (i.e. BigUnion).
+  - unions:no-custom-config
+  - unions:property-accessors

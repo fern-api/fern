@@ -1,5 +1,5 @@
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { Reference, Zurg, getTextOfTsNode } from "@fern-typescript/commons";
+import { Reference, Zurg, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedUnion, ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, VariableDeclarationKind, ts } from "ts-morph";
 
@@ -84,7 +84,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                 properties: this.baseProperties.map((property) => {
                     const type = context.typeSchema.getReferenceToRawType(property.valueType);
                     return {
-                        name: `"${property.name.wireValue}"`,
+                        name: getPropertyKey(property.name.wireValue),
                         type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                         hasQuestionToken: type.isOptional
                     };

@@ -11248,6 +11248,7 @@ service:
             "inline": undefined,
             "properties": {
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the collection was created",
                 "type": "optional<datetime>",
               },
@@ -11256,14 +11257,17 @@ service:
                 "type": "optional<string>",
               },
               "fields": {
+                "access": "read-only",
                 "docs": "The list of fields in the Collection",
-                "type": "list<CollectionsCreateResponseFieldsItem>",
+                "type": "optional<list<CollectionsCreateResponseFieldsItem>>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for a Collection",
-                "type": "string",
+                "type": "optional<string>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the collection was last updated",
                 "type": "optional<datetime>",
               },
@@ -11293,10 +11297,12 @@ service:
                 "type": "optional<string>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for a Field",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isEditable": {
+                "access": "read-only",
                 "docs": "Define whether the field is editable",
                 "type": "optional<boolean>",
               },
@@ -11344,6 +11350,7 @@ service:
             "inline": undefined,
             "properties": {
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the collection was created",
                 "type": "optional<datetime>",
               },
@@ -11352,14 +11359,17 @@ service:
                 "type": "optional<string>",
               },
               "fields": {
+                "access": "read-only",
                 "docs": "The list of fields in the Collection",
-                "type": "list<CollectionsGetResponseFieldsItem>",
+                "type": "optional<list<CollectionsGetResponseFieldsItem>>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for a Collection",
-                "type": "string",
+                "type": "optional<string>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the collection was last updated",
                 "type": "optional<datetime>",
               },
@@ -11389,10 +11399,12 @@ service:
                 "type": "optional<string>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for a Field",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isEditable": {
+                "access": "read-only",
                 "docs": "Define whether the field is editable",
                 "type": "optional<boolean>",
               },
@@ -11453,6 +11465,7 @@ service:
             "inline": true,
             "properties": {
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the collection was created",
                 "type": "optional<datetime>",
               },
@@ -11461,10 +11474,12 @@ service:
                 "type": "optional<string>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for a Collection",
-                "type": "string",
+                "type": "optional<string>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the collection was last updated",
                 "type": "optional<datetime>",
               },
@@ -11488,8 +11503,9 @@ service:
     docs: A collection object
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for a Collection
+        access: read-only
       displayName:
         type: optional<string>
         docs: Name given to the Collection
@@ -11504,9 +11520,11 @@ service:
       createdOn:
         type: optional<datetime>
         docs: The date the collection was created
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The date the collection was last updated
+        access: read-only
     source:
       openapi: ../openapi.yml
     inline: true
@@ -11540,14 +11558,16 @@ service:
     docs: The details of a field in a collection
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for a Field
+        access: read-only
       isRequired:
         type: boolean
         docs: define whether a field is required in a collection
       isEditable:
         type: optional<boolean>
         docs: Define whether the field is editable
+        access: read-only
       type:
         type: CollectionsCreateResponseFieldsItemType
         docs: Choose these appropriate field type for your collection data
@@ -11569,8 +11589,9 @@ service:
     docs: A collection object
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for a Collection
+        access: read-only
       displayName:
         type: optional<string>
         docs: Name given to the Collection
@@ -11585,12 +11606,15 @@ service:
       createdOn:
         type: optional<datetime>
         docs: The date the collection was created
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The date the collection was last updated
+        access: read-only
       fields:
+        type: optional<list<CollectionsCreateResponseFieldsItem>>
         docs: The list of fields in the Collection
-        type: list<CollectionsCreateResponseFieldsItem>
+        access: read-only
     source:
       openapi: ../openapi.yml
   CollectionsGetResponseFieldsItemType:
@@ -11616,14 +11640,16 @@ service:
     docs: The details of a field in a collection
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for a Field
+        access: read-only
       isRequired:
         type: boolean
         docs: define whether a field is required in a collection
       isEditable:
         type: optional<boolean>
         docs: Define whether the field is editable
+        access: read-only
       type:
         type: CollectionsGetResponseFieldsItemType
         docs: Choose these appropriate field type for your collection data
@@ -11645,8 +11671,9 @@ service:
     docs: A collection object
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for a Collection
+        access: read-only
       displayName:
         type: optional<string>
         docs: Name given to the Collection
@@ -11661,12 +11688,15 @@ service:
       createdOn:
         type: optional<datetime>
         docs: The date the collection was created
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The date the collection was last updated
+        access: read-only
       fields:
+        type: optional<list<CollectionsGetResponseFieldsItem>>
         docs: The list of fields in the Collection
-        type: list<CollectionsGetResponseFieldsItem>
+        access: read-only
     source:
       openapi: ../openapi.yml
 imports:
@@ -12090,10 +12120,12 @@ service:
                 "type": "optional<string>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for a Field",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isEditable": {
+                "access": "read-only",
                 "docs": "Define whether the field is editable",
                 "type": "optional<boolean>",
               },
@@ -12149,10 +12181,12 @@ service:
                 "type": "optional<string>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for a Field",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isEditable": {
+                "access": "read-only",
                 "docs": "Define whether the field is editable",
                 "type": "optional<boolean>",
               },
@@ -12240,14 +12274,16 @@ service:
     docs: The details of a field in a collection
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for a Field
+        access: read-only
       isRequired:
         type: boolean
         docs: define whether a field is required in a collection
       isEditable:
         type: optional<boolean>
         docs: Define whether the field is editable
+        access: read-only
       type:
         type: FieldsCreateResponseType
         docs: Choose these appropriate field type for your collection data
@@ -12287,14 +12323,16 @@ service:
     docs: The details of a field in a collection
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for a Field
+        access: read-only
       isRequired:
         type: boolean
         docs: define whether a field is required in a collection
       isEditable:
         type: optional<boolean>
         docs: Define whether the field is editable
+        access: read-only
       type:
         type: FieldsUpdateResponseType
         docs: Choose these appropriate field type for your collection data
@@ -13459,13 +13497,15 @@ service:
                 "type": "optional<list<string>>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the item was created",
                 "type": "optional<string>",
               },
               "fieldData": "optional<ItemsCreateItemForMultipleLocalesResponseFieldData>",
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Item",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -13478,10 +13518,12 @@ service:
                 "type": "optional<boolean>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the item was last published",
                 "type": "optional<string>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the item was last updated",
                 "type": "optional<string>",
               },
@@ -13536,13 +13578,15 @@ service:
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the item was created",
                 "type": "optional<string>",
               },
               "fieldData": "optional<ItemsCreateItemLiveResponseFieldData>",
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Item",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -13555,10 +13599,12 @@ service:
                 "type": "optional<boolean>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the item was last published",
                 "type": "optional<string>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the item was last updated",
                 "type": "optional<string>",
               },
@@ -13613,13 +13659,15 @@ service:
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the item was created",
                 "type": "optional<string>",
               },
               "fieldData": "optional<ItemsCreateItemResponseFieldData>",
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Item",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -13632,10 +13680,12 @@ service:
                 "type": "optional<boolean>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the item was last published",
                 "type": "optional<string>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the item was last updated",
                 "type": "optional<string>",
               },
@@ -13672,13 +13722,15 @@ service:
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the item was created",
                 "type": "optional<string>",
               },
               "fieldData": "optional<ItemsGetItemLiveResponseFieldData>",
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Item",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -13691,10 +13743,12 @@ service:
                 "type": "optional<boolean>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the item was last published",
                 "type": "optional<string>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the item was last updated",
                 "type": "optional<string>",
               },
@@ -13731,13 +13785,15 @@ service:
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the item was created",
                 "type": "optional<string>",
               },
               "fieldData": "optional<ItemsGetItemResponseFieldData>",
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Item",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -13750,10 +13806,12 @@ service:
                 "type": "optional<boolean>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the item was last published",
                 "type": "optional<string>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the item was last updated",
                 "type": "optional<string>",
               },
@@ -13825,13 +13883,15 @@ service:
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the item was created",
                 "type": "optional<string>",
               },
               "fieldData": "optional<ItemsListItemsLiveResponseItemsItemFieldData>",
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Item",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -13844,10 +13904,12 @@ service:
                 "type": "optional<boolean>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the item was last published",
                 "type": "optional<string>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the item was last updated",
                 "type": "optional<string>",
               },
@@ -13942,13 +14004,15 @@ service:
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the item was created",
                 "type": "optional<string>",
               },
               "fieldData": "optional<ItemsListItemsResponseItemsItemFieldData>",
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Item",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -13961,10 +14025,12 @@ service:
                 "type": "optional<boolean>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the item was last published",
                 "type": "optional<string>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the item was last updated",
                 "type": "optional<string>",
               },
@@ -14053,13 +14119,15 @@ service:
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the item was created",
                 "type": "optional<string>",
               },
               "fieldData": "optional<ItemsUpdateItemLiveResponseFieldData>",
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Item",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -14072,10 +14140,12 @@ service:
                 "type": "optional<boolean>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the item was last published",
                 "type": "optional<string>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the item was last updated",
                 "type": "optional<string>",
               },
@@ -14130,13 +14200,15 @@ service:
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the item was created",
                 "type": "optional<string>",
               },
               "fieldData": "optional<ItemsUpdateItemResponseFieldData>",
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Item",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -14149,10 +14221,12 @@ service:
                 "type": "optional<boolean>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the item was last published",
                 "type": "optional<string>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the item was last updated",
                 "type": "optional<string>",
               },
@@ -14217,20 +14291,24 @@ service:
       items
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Item
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
       lastPublished:
         type: optional<string>
         docs: The date the item was last published
+        access: read-only
       lastUpdated:
         type: optional<string>
         docs: The date the item was last updated
+        access: read-only
       createdOn:
         type: optional<string>
         docs: The date the item was created
+        access: read-only
       isArchived:
         type: optional<boolean>
         docs: Boolean determining if the Item is set to archived
@@ -14304,20 +14382,24 @@ service:
       items
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Item
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
       lastPublished:
         type: optional<string>
         docs: The date the item was last published
+        access: read-only
       lastUpdated:
         type: optional<string>
         docs: The date the item was last updated
+        access: read-only
       createdOn:
         type: optional<string>
         docs: The date the item was created
+        access: read-only
       isArchived:
         type: optional<boolean>
         docs: Boolean determining if the Item is set to archived
@@ -14364,20 +14446,24 @@ service:
       items
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Item
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
       lastPublished:
         type: optional<string>
         docs: The date the item was last published
+        access: read-only
       lastUpdated:
         type: optional<string>
         docs: The date the item was last updated
+        access: read-only
       createdOn:
         type: optional<string>
         docs: The date the item was created
+        access: read-only
       isArchived:
         type: optional<boolean>
         docs: Boolean determining if the Item is set to archived
@@ -14451,20 +14537,24 @@ service:
       items
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Item
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
       lastPublished:
         type: optional<string>
         docs: The date the item was last published
+        access: read-only
       lastUpdated:
         type: optional<string>
         docs: The date the item was last updated
+        access: read-only
       createdOn:
         type: optional<string>
         docs: The date the item was created
+        access: read-only
       isArchived:
         type: optional<boolean>
         docs: Boolean determining if the Item is set to archived
@@ -14512,20 +14602,24 @@ service:
       items
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Item
+        access: read-only
       cmsLocaleIds:
         type: optional<list<string>>
         docs: Array of identifiers for the locales where the item will be created
       lastPublished:
         type: optional<string>
         docs: The date the item was last published
+        access: read-only
       lastUpdated:
         type: optional<string>
         docs: The date the item was last updated
+        access: read-only
       createdOn:
         type: optional<string>
         docs: The date the item was created
+        access: read-only
       isArchived:
         type: optional<boolean>
         docs: Boolean determining if the Item is set to archived
@@ -14559,20 +14653,24 @@ service:
       items
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Item
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
       lastPublished:
         type: optional<string>
         docs: The date the item was last published
+        access: read-only
       lastUpdated:
         type: optional<string>
         docs: The date the item was last updated
+        access: read-only
       createdOn:
         type: optional<string>
         docs: The date the item was created
+        access: read-only
       isArchived:
         type: optional<boolean>
         docs: Boolean determining if the Item is set to archived
@@ -14620,20 +14718,24 @@ service:
       items
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Item
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
       lastPublished:
         type: optional<string>
         docs: The date the item was last published
+        access: read-only
       lastUpdated:
         type: optional<string>
         docs: The date the item was last updated
+        access: read-only
       createdOn:
         type: optional<string>
         docs: The date the item was created
+        access: read-only
       isArchived:
         type: optional<boolean>
         docs: Boolean determining if the Item is set to archived
@@ -14667,20 +14769,24 @@ service:
       items
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Item
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
       lastPublished:
         type: optional<string>
         docs: The date the item was last published
+        access: read-only
       lastUpdated:
         type: optional<string>
         docs: The date the item was last updated
+        access: read-only
       createdOn:
         type: optional<string>
         docs: The date the item was created
+        access: read-only
       isArchived:
         type: optional<boolean>
         docs: Boolean determining if the Item is set to archived
@@ -14728,20 +14834,24 @@ service:
       items
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Item
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
       lastPublished:
         type: optional<string>
         docs: The date the item was last published
+        access: read-only
       lastUpdated:
         type: optional<string>
         docs: The date the item was last updated
+        access: read-only
       createdOn:
         type: optional<string>
         docs: The date the item was created
+        access: read-only
       isArchived:
         type: optional<boolean>
         docs: Boolean determining if the Item is set to archived
@@ -15601,6 +15711,7 @@ Required scope | `ecommerce:read`
             "inline": undefined,
             "properties": {
               "createdOn": {
+                "access": "read-only",
                 "docs": "Date that the Site was created on",
                 "type": "optional<datetime>",
               },
@@ -15609,6 +15720,7 @@ Required scope | `ecommerce:read`
                 "type": "optional<string>",
               },
               "siteId": {
+                "access": "read-only",
                 "docs": "The identifier of the Site",
                 "type": "optional<string>",
               },
@@ -15626,9 +15738,11 @@ Required scope | `ecommerce:read`
       siteId:
         type: optional<string>
         docs: The identifier of the Site
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: Date that the Site was created on
+        access: read-only
       defaultCurrency:
         type: optional<string>
         docs: The three-letter ISO currency code for the Site
@@ -16549,6 +16663,7 @@ service:
         },
         "webhooks": {
           "form_submission": {
+            "audiences": [],
             "display-name": "Form Submission",
             "docs": "Information about a form that was subitted",
             "examples": [
@@ -17240,6 +17355,7 @@ service:
   display-name: Forms
 webhooks:
   form_submission:
+    audiences: []
     method: POST
     display-name: Form Submission
     headers: {}
@@ -17431,6 +17547,7 @@ Required scope | `ecommerce:write`
             "inline": undefined,
             "properties": {
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for a SKU item",
                 "type": "optional<string>",
               },
@@ -17463,6 +17580,7 @@ Required scope | `ecommerce:write`
             "inline": undefined,
             "properties": {
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for a SKU item",
                 "type": "optional<string>",
               },
@@ -17506,6 +17624,7 @@ Required scope | `ecommerce:write`
             "inline": undefined,
             "properties": {
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for a SKU item",
                 "type": "optional<string>",
               },
@@ -17536,6 +17655,7 @@ Required scope | `ecommerce:write`
         },
         "webhooks": {
           "ecomm_inventory_changed": {
+            "audiences": [],
             "display-name": "Updated eComm Inventory",
             "examples": [
               {
@@ -17571,6 +17691,7 @@ Required scope | `ecommerce:write`
       id:
         type: optional<string>
         docs: Unique identifier for a SKU item
+        access: read-only
       quantity:
         type: optional<double>
         docs: >-
@@ -17603,6 +17724,7 @@ Required scope | `ecommerce:write`
       id:
         type: optional<string>
         docs: Unique identifier for a SKU item
+        access: read-only
       quantity:
         type: optional<double>
         docs: >-
@@ -17627,6 +17749,7 @@ Required scope | `ecommerce:write`
       id:
         type: optional<string>
         docs: Unique identifier for a SKU item
+        access: read-only
       quantity:
         type: optional<double>
         docs: >-
@@ -17747,6 +17870,7 @@ service:
   display-name: Inventory
 webhooks:
   ecomm_inventory_changed:
+    audiences: []
     method: POST
     display-name: Updated eComm Inventory
     headers: {}
@@ -17773,13 +17897,15 @@ webhooks:
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the item was created",
                 "type": "optional<string>",
               },
               "fieldData": "optional<CollectionItemChangedPayloadFieldData>",
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Item",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -17792,10 +17918,12 @@ webhooks:
                 "type": "optional<boolean>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the item was last published",
                 "type": "optional<string>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the item was last updated",
                 "type": "optional<string>",
               },
@@ -17832,13 +17960,15 @@ webhooks:
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the item was created",
                 "type": "optional<string>",
               },
               "fieldData": "optional<CollectionItemCreatedPayloadFieldData>",
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Item",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isArchived": {
                 "default": false,
@@ -17851,10 +17981,12 @@ webhooks:
                 "type": "optional<boolean>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the item was last published",
                 "type": "optional<string>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the item was last updated",
                 "type": "optional<string>",
               },
@@ -17968,6 +18100,7 @@ webhooks:
         },
         "webhooks": {
           "collection_item_changed": {
+            "audiences": [],
             "display-name": "Item Updated",
             "examples": [
               {
@@ -18000,6 +18133,7 @@ webhooks:
             },
           },
           "collection_item_created": {
+            "audiences": [],
             "display-name": "Item Created",
             "examples": [
               {
@@ -18032,6 +18166,7 @@ webhooks:
             },
           },
           "collection_item_deleted": {
+            "audiences": [],
             "display-name": "Item Deleted",
             "examples": [
               {
@@ -18053,6 +18188,7 @@ webhooks:
             "payload": "CollectionItemDeletedPayload",
           },
           "collection_item_unpublished": {
+            "audiences": [],
             "display-name": "Item Unpublished",
             "examples": [
               {
@@ -18098,20 +18234,24 @@ webhooks:
       items
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Item
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
       lastPublished:
         type: optional<string>
         docs: The date the item was last published
+        access: read-only
       lastUpdated:
         type: optional<string>
         docs: The date the item was last updated
+        access: read-only
       createdOn:
         type: optional<string>
         docs: The date the item was created
+        access: read-only
       isArchived:
         type: optional<boolean>
         docs: Boolean determining if the Item is set to archived
@@ -18145,20 +18285,24 @@ webhooks:
       items
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Item
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
       lastPublished:
         type: optional<string>
         docs: The date the item was last published
+        access: read-only
       lastUpdated:
         type: optional<string>
         docs: The date the item was last updated
+        access: read-only
       createdOn:
         type: optional<string>
         docs: The date the item was created
+        access: read-only
       isArchived:
         type: optional<boolean>
         docs: Boolean determining if the Item is set to archived
@@ -18228,6 +18372,7 @@ webhooks:
       openapi: ../openapi.yml
 webhooks:
   collection_item_created:
+    audiences: []
     method: POST
     display-name: Item Created
     headers: {}
@@ -18254,6 +18399,7 @@ webhooks:
             featured: true
             color: '#db4b68'
   collection_item_changed:
+    audiences: []
     method: POST
     display-name: Item Updated
     headers: {}
@@ -18280,6 +18426,7 @@ webhooks:
             featured: true
             color: '#db4b68'
   collection_item_deleted:
+    audiences: []
     method: POST
     display-name: Item Deleted
     headers: {}
@@ -18293,6 +18440,7 @@ webhooks:
             workspaceId: 625860a7a6c16d624927122f
             collectionId: 664243617fcc8b464b23c4ee
   collection_item_unpublished:
+    audiences: []
     method: POST
     display-name: Item Unpublished
     headers: {}
@@ -20252,6 +20400,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "orderId": {
+                "access": "read-only",
                 "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.
 ",
                 "type": "optional<string>",
@@ -20645,6 +20794,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<double>",
               },
               "productId": {
+                "access": "read-only",
                 "docs": "The unique identifier for the Product",
                 "type": "optional<string>",
               },
@@ -21228,6 +21378,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "orderId": {
+                "access": "read-only",
                 "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.
 ",
                 "type": "optional<string>",
@@ -21621,6 +21772,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<double>",
               },
               "productId": {
+                "access": "read-only",
                 "docs": "The unique identifier for the Product",
                 "type": "optional<string>",
               },
@@ -22204,6 +22356,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "orderId": {
+                "access": "read-only",
                 "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.
 ",
                 "type": "optional<string>",
@@ -22597,6 +22750,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<double>",
               },
               "productId": {
+                "access": "read-only",
                 "docs": "The unique identifier for the Product",
                 "type": "optional<string>",
               },
@@ -23214,6 +23368,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "orderId": {
+                "access": "read-only",
                 "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.
 ",
                 "type": "optional<string>",
@@ -23607,6 +23762,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<double>",
               },
               "productId": {
+                "access": "read-only",
                 "docs": "The unique identifier for the Product",
                 "type": "optional<string>",
               },
@@ -24223,6 +24379,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "orderId": {
+                "access": "read-only",
                 "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.
 ",
                 "type": "optional<string>",
@@ -24616,6 +24773,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<double>",
               },
               "productId": {
+                "access": "read-only",
                 "docs": "The unique identifier for the Product",
                 "type": "optional<string>",
               },
@@ -25199,6 +25357,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "orderId": {
+                "access": "read-only",
                 "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.
 ",
                 "type": "optional<string>",
@@ -25592,6 +25751,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<double>",
               },
               "productId": {
+                "access": "read-only",
                 "docs": "The unique identifier for the Product",
                 "type": "optional<string>",
               },
@@ -26175,6 +26335,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "orderId": {
+                "access": "read-only",
                 "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.
 ",
                 "type": "optional<string>",
@@ -26568,6 +26729,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<double>",
               },
               "productId": {
+                "access": "read-only",
                 "docs": "The unique identifier for the Product",
                 "type": "optional<string>",
               },
@@ -27151,6 +27313,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<string>",
               },
               "orderId": {
+                "access": "read-only",
                 "docs": "The order id. Will usually be 6 hex characters, but can also be 9 hex characters if the site has a very large number of Orders. Randomly assigned.
 ",
                 "type": "optional<string>",
@@ -27544,6 +27707,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<double>",
               },
               "productId": {
+                "access": "read-only",
                 "docs": "The unique identifier for the Product",
                 "type": "optional<string>",
               },
@@ -28044,6 +28208,7 @@ Required scope | `ecommerce:write`
         },
         "webhooks": {
           "ecomm_new_order": {
+            "audiences": [],
             "display-name": "New eComm Order",
             "examples": [
               {
@@ -28270,6 +28435,7 @@ Required scope | `ecommerce:write`
             "payload": "EcommNewOrderPayload",
           },
           "ecomm_order_changed": {
+            "audiences": [],
             "display-name": "Updated eComm Order",
             "examples": [
               {
@@ -28857,6 +29023,7 @@ Required scope | `ecommerce:write`
       productId:
         type: optional<string>
         docs: The unique identifier for the Product
+        access: read-only
       productName:
         type: optional<string>
         docs: User-facing name of the Product
@@ -29115,6 +29282,7 @@ Required scope | `ecommerce:write`
           The order id. Will usually be 6 hex characters, but can also be 9 hex
           characters if the site has a very large number of Orders. Randomly
           assigned.
+        access: read-only
       status:
         type: optional<OrdersListResponseOrdersItemStatus>
         docs: |
@@ -29618,6 +29786,7 @@ Required scope | `ecommerce:write`
       productId:
         type: optional<string>
         docs: The unique identifier for the Product
+        access: read-only
       productName:
         type: optional<string>
         docs: User-facing name of the Product
@@ -29876,6 +30045,7 @@ Required scope | `ecommerce:write`
           The order id. Will usually be 6 hex characters, but can also be 9 hex
           characters if the site has a very large number of Orders. Randomly
           assigned.
+        access: read-only
       status:
         type: optional<OrdersGetResponseStatus>
         docs: |
@@ -30352,6 +30522,7 @@ Required scope | `ecommerce:write`
       productId:
         type: optional<string>
         docs: The unique identifier for the Product
+        access: read-only
       productName:
         type: optional<string>
         docs: User-facing name of the Product
@@ -30610,6 +30781,7 @@ Required scope | `ecommerce:write`
           The order id. Will usually be 6 hex characters, but can also be 9 hex
           characters if the site has a very large number of Orders. Randomly
           assigned.
+        access: read-only
       status:
         type: optional<OrdersUpdateResponseStatus>
         docs: |
@@ -31086,6 +31258,7 @@ Required scope | `ecommerce:write`
       productId:
         type: optional<string>
         docs: The unique identifier for the Product
+        access: read-only
       productName:
         type: optional<string>
         docs: User-facing name of the Product
@@ -31344,6 +31517,7 @@ Required scope | `ecommerce:write`
           The order id. Will usually be 6 hex characters, but can also be 9 hex
           characters if the site has a very large number of Orders. Randomly
           assigned.
+        access: read-only
       status:
         type: optional<OrdersUpdateFulfillResponseStatus>
         docs: |
@@ -31821,6 +31995,7 @@ Required scope | `ecommerce:write`
       productId:
         type: optional<string>
         docs: The unique identifier for the Product
+        access: read-only
       productName:
         type: optional<string>
         docs: User-facing name of the Product
@@ -32079,6 +32254,7 @@ Required scope | `ecommerce:write`
           The order id. Will usually be 6 hex characters, but can also be 9 hex
           characters if the site has a very large number of Orders. Randomly
           assigned.
+        access: read-only
       status:
         type: optional<OrdersUpdateUnfulfillResponseStatus>
         docs: |
@@ -32564,6 +32740,7 @@ Required scope | `ecommerce:write`
       productId:
         type: optional<string>
         docs: The unique identifier for the Product
+        access: read-only
       productName:
         type: optional<string>
         docs: User-facing name of the Product
@@ -32822,6 +32999,7 @@ Required scope | `ecommerce:write`
           The order id. Will usually be 6 hex characters, but can also be 9 hex
           characters if the site has a very large number of Orders. Randomly
           assigned.
+        access: read-only
       status:
         type: optional<OrdersRefundResponseStatus>
         docs: |
@@ -33298,6 +33476,7 @@ Required scope | `ecommerce:write`
       productId:
         type: optional<string>
         docs: The unique identifier for the Product
+        access: read-only
       productName:
         type: optional<string>
         docs: User-facing name of the Product
@@ -33556,6 +33735,7 @@ Required scope | `ecommerce:write`
           The order id. Will usually be 6 hex characters, but can also be 9 hex
           characters if the site has a very large number of Orders. Randomly
           assigned.
+        access: read-only
       status:
         type: optional<EcommNewOrderPayloadStatus>
         docs: |
@@ -34032,6 +34212,7 @@ Required scope | `ecommerce:write`
       productId:
         type: optional<string>
         docs: The unique identifier for the Product
+        access: read-only
       productName:
         type: optional<string>
         docs: User-facing name of the Product
@@ -34290,6 +34471,7 @@ Required scope | `ecommerce:write`
           The order id. Will usually be 6 hex characters, but can also be 9 hex
           characters if the site has a very large number of Orders. Randomly
           assigned.
+        access: read-only
       status:
         type: optional<EcommOrderChangedPayloadStatus>
         docs: |
@@ -35910,6 +36092,7 @@ service:
   display-name: Orders
 webhooks:
   ecomm_new_order:
+    audiences: []
     method: POST
     display-name: New eComm Order
     headers: {}
@@ -36092,6 +36275,7 @@ webhooks:
               url: >-
                 https://webflow.com/dashboard/download-digital-product?payload=5d93ba5e38c6b0160ab711d3;e7634a;5eb1aac72912ec06f561278c;5e9a5eba75e0ac242e1b6f63:ka2nehxy:4a1ee0a632feaab94294350087215ed89533f2f530903e3b933b638940e921aa
   ecomm_order_changed:
+    audiences: []
     method: POST
     display-name: Updated eComm Order
     headers: {}
@@ -36894,6 +37078,7 @@ Required scope | `pages:write`
                 "type": "optional<map<string, string>>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Node UUID",
                 "type": "optional<string>",
               },
@@ -36973,42 +37158,51 @@ Required scope | `pages:write`
             "inline": undefined,
             "properties": {
               "archived": {
+                "access": "read-only",
                 "default": false,
                 "docs": "Whether the Page has been archived",
                 "type": "optional<boolean>",
               },
               "canBranch": {
+                "access": "read-only",
                 "default": false,
                 "docs": "Indicates whether the Page supports [Page Branching](https://university.webflow.com/lesson/page-branching)",
                 "type": "optional<boolean>",
               },
               "collectionId": {
+                "access": "read-only",
                 "docs": "Unique identifier for a linked Collection, value will be null if the Page is not part of a Collection.",
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the Page was created",
                 "type": "optional<datetime>",
               },
               "draft": {
+                "access": "read-only",
                 "default": false,
                 "docs": "Whether the Page is a draft",
                 "type": "optional<boolean>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Page",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isMembersOnly": {
+                "access": "read-only",
                 "default": false,
                 "docs": "Indicates whether the Page is restricted by [Memberships Controls](https://university.webflow.com/lesson/webflow-memberships-overview#how-to-manage-page-restrictions)",
                 "type": "optional<boolean>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the Page was most recently updated",
                 "type": "optional<datetime>",
               },
               "localeId": {
+                "access": "read-only",
                 "docs": "Unique ID of the page locale",
                 "type": "optional<string>",
               },
@@ -37017,10 +37211,12 @@ Required scope | `pages:write`
                 "type": "optional<PagesGetMetadataResponseOpenGraph>",
               },
               "parentId": {
+                "access": "read-only",
                 "docs": "Identifier of the parent folder",
                 "type": "optional<string>",
               },
               "publishedPath": {
+                "access": "read-only",
                 "docs": "Relative path of the published page URL",
                 "type": "optional<string>",
               },
@@ -37029,6 +37225,7 @@ Required scope | `pages:write`
                 "type": "optional<PagesGetMetadataResponseSeo>",
               },
               "siteId": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Site",
                 "type": "optional<string>",
               },
@@ -37054,6 +37251,7 @@ Required scope | `pages:write`
                 "type": "optional<string>",
               },
               "descriptionCopied": {
+                "access": "read-only",
                 "default": true,
                 "docs": "Indicates the Open Graph description was copied from the SEO description",
                 "type": "optional<boolean>",
@@ -37063,6 +37261,7 @@ Required scope | `pages:write`
                 "type": "optional<string>",
               },
               "titleCopied": {
+                "access": "read-only",
                 "default": true,
                 "docs": "Indicates the Open Graph title was copied from the SEO title",
                 "type": "optional<boolean>",
@@ -37108,42 +37307,51 @@ Required scope | `pages:write`
             "inline": true,
             "properties": {
               "archived": {
+                "access": "read-only",
                 "default": false,
                 "docs": "Whether the Page has been archived",
                 "type": "optional<boolean>",
               },
               "canBranch": {
+                "access": "read-only",
                 "default": false,
                 "docs": "Indicates whether the Page supports [Page Branching](https://university.webflow.com/lesson/page-branching)",
                 "type": "optional<boolean>",
               },
               "collectionId": {
+                "access": "read-only",
                 "docs": "Unique identifier for a linked Collection, value will be null if the Page is not part of a Collection.",
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the Page was created",
                 "type": "optional<datetime>",
               },
               "draft": {
+                "access": "read-only",
                 "default": false,
                 "docs": "Whether the Page is a draft",
                 "type": "optional<boolean>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Page",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isMembersOnly": {
+                "access": "read-only",
                 "default": false,
                 "docs": "Indicates whether the Page is restricted by [Memberships Controls](https://university.webflow.com/lesson/webflow-memberships-overview#how-to-manage-page-restrictions)",
                 "type": "optional<boolean>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the Page was most recently updated",
                 "type": "optional<datetime>",
               },
               "localeId": {
+                "access": "read-only",
                 "docs": "Unique ID of the page locale",
                 "type": "optional<string>",
               },
@@ -37152,10 +37360,12 @@ Required scope | `pages:write`
                 "type": "optional<PagesListResponsePagesItemOpenGraph>",
               },
               "parentId": {
+                "access": "read-only",
                 "docs": "Identifier of the parent folder",
                 "type": "optional<string>",
               },
               "publishedPath": {
+                "access": "read-only",
                 "docs": "Relative path of the published page URL",
                 "type": "optional<string>",
               },
@@ -37164,6 +37374,7 @@ Required scope | `pages:write`
                 "type": "optional<PagesListResponsePagesItemSeo>",
               },
               "siteId": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Site",
                 "type": "optional<string>",
               },
@@ -37189,6 +37400,7 @@ Required scope | `pages:write`
                 "type": "optional<string>",
               },
               "descriptionCopied": {
+                "access": "read-only",
                 "default": true,
                 "docs": "Indicates the Open Graph description was copied from the SEO description",
                 "type": "optional<boolean>",
@@ -37198,6 +37410,7 @@ Required scope | `pages:write`
                 "type": "optional<string>",
               },
               "titleCopied": {
+                "access": "read-only",
                 "default": true,
                 "docs": "Indicates the Open Graph title was copied from the SEO title",
                 "type": "optional<boolean>",
@@ -37254,6 +37467,7 @@ Required scope | `pages:write`
                 "type": "optional<string>",
               },
               "descriptionCopied": {
+                "access": "read-only",
                 "default": true,
                 "docs": "Indicates the Open Graph description was copied from the SEO description",
                 "type": "optional<boolean>",
@@ -37263,6 +37477,7 @@ Required scope | `pages:write`
                 "type": "optional<string>",
               },
               "titleCopied": {
+                "access": "read-only",
                 "default": true,
                 "docs": "Indicates the Open Graph title was copied from the SEO title",
                 "type": "optional<boolean>",
@@ -37294,42 +37509,51 @@ Required scope | `pages:write`
             "inline": undefined,
             "properties": {
               "archived": {
+                "access": "read-only",
                 "default": false,
                 "docs": "Whether the Page has been archived",
                 "type": "optional<boolean>",
               },
               "canBranch": {
+                "access": "read-only",
                 "default": false,
                 "docs": "Indicates whether the Page supports [Page Branching](https://university.webflow.com/lesson/page-branching)",
                 "type": "optional<boolean>",
               },
               "collectionId": {
+                "access": "read-only",
                 "docs": "Unique identifier for a linked Collection, value will be null if the Page is not part of a Collection.",
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the Page was created",
                 "type": "optional<datetime>",
               },
               "draft": {
+                "access": "read-only",
                 "default": false,
                 "docs": "Whether the Page is a draft",
                 "type": "optional<boolean>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Page",
-                "type": "string",
+                "type": "optional<string>",
               },
               "isMembersOnly": {
+                "access": "read-only",
                 "default": false,
                 "docs": "Indicates whether the Page is restricted by [Memberships Controls](https://university.webflow.com/lesson/webflow-memberships-overview#how-to-manage-page-restrictions)",
                 "type": "optional<boolean>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the Page was most recently updated",
                 "type": "optional<datetime>",
               },
               "localeId": {
+                "access": "read-only",
                 "docs": "Unique ID of the page locale",
                 "type": "optional<string>",
               },
@@ -37338,10 +37562,12 @@ Required scope | `pages:write`
                 "type": "optional<UpdatePageSettingsResponseOpenGraph>",
               },
               "parentId": {
+                "access": "read-only",
                 "docs": "Identifier of the parent folder",
                 "type": "optional<string>",
               },
               "publishedPath": {
+                "access": "read-only",
                 "docs": "Relative path of the published page URL",
                 "type": "optional<string>",
               },
@@ -37350,6 +37576,7 @@ Required scope | `pages:write`
                 "type": "optional<UpdatePageSettingsResponseSeo>",
               },
               "siteId": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Site",
                 "type": "optional<string>",
               },
@@ -37375,6 +37602,7 @@ Required scope | `pages:write`
                 "type": "optional<string>",
               },
               "descriptionCopied": {
+                "access": "read-only",
                 "default": true,
                 "docs": "Indicates the Open Graph description was copied from the SEO description",
                 "type": "optional<boolean>",
@@ -37384,6 +37612,7 @@ Required scope | `pages:write`
                 "type": "optional<string>",
               },
               "titleCopied": {
+                "access": "read-only",
                 "default": true,
                 "docs": "Indicates the Open Graph title was copied from the SEO title",
                 "type": "optional<boolean>",
@@ -37443,6 +37672,7 @@ Required scope | `pages:write`
         },
         "webhooks": {
           "page_created": {
+            "audiences": [],
             "display-name": "Page Created",
             "examples": [
               {
@@ -37467,6 +37697,7 @@ Required scope | `pages:write`
             },
           },
           "page_deleted": {
+            "audiences": [],
             "display-name": "Page Deleted",
             "examples": [
               {
@@ -37491,6 +37722,7 @@ Required scope | `pages:write`
             },
           },
           "page_metadata_updated": {
+            "audiences": [],
             "display-name": "Page Metadata Updated",
             "examples": [
               {
@@ -37539,6 +37771,7 @@ Required scope | `pages:write`
         type: optional<boolean>
         docs: Indicates the Open Graph title was copied from the SEO title
         default: true
+        access: read-only
       description:
         type: optional<string>
         docs: The description supplied to Open Graph annotations
@@ -37548,6 +37781,7 @@ Required scope | `pages:write`
           Indicates the Open Graph description was copied from the SEO
           description
         default: true
+        access: read-only
     source:
       openapi: ../openapi.yml
     inline: true
@@ -37555,11 +37789,13 @@ Required scope | `pages:write`
     docs: The Page object
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Page
+        access: read-only
       siteId:
         type: optional<string>
         docs: Unique identifier for the Site
+        access: read-only
       title:
         type: optional<string>
         docs: Title of the Page
@@ -37569,37 +37805,45 @@ Required scope | `pages:write`
       parentId:
         type: optional<string>
         docs: Identifier of the parent folder
+        access: read-only
       collectionId:
         type: optional<string>
         docs: >-
           Unique identifier for a linked Collection, value will be null if the
           Page is not part of a Collection.
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The date the Page was created
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The date the Page was most recently updated
+        access: read-only
       archived:
         type: optional<boolean>
         docs: Whether the Page has been archived
         default: false
+        access: read-only
       draft:
         type: optional<boolean>
         docs: Whether the Page is a draft
         default: false
+        access: read-only
       canBranch:
         type: optional<boolean>
         docs: >-
           Indicates whether the Page supports [Page
           Branching](https://university.webflow.com/lesson/page-branching)
         default: false
+        access: read-only
       isMembersOnly:
         type: optional<boolean>
         docs: >-
           Indicates whether the Page is restricted by [Memberships
           Controls](https://university.webflow.com/lesson/webflow-memberships-overview#how-to-manage-page-restrictions)
         default: false
+        access: read-only
       seo:
         type: optional<PagesListResponsePagesItemSeo>
         docs: SEO-related fields for the Page
@@ -37609,9 +37853,11 @@ Required scope | `pages:write`
       localeId:
         type: optional<string>
         docs: Unique ID of the page locale
+        access: read-only
       publishedPath:
         type: optional<string>
         docs: Relative path of the published page URL
+        access: read-only
     source:
       openapi: ../openapi.yml
     inline: true
@@ -37661,6 +37907,7 @@ Required scope | `pages:write`
         type: optional<boolean>
         docs: Indicates the Open Graph title was copied from the SEO title
         default: true
+        access: read-only
       description:
         type: optional<string>
         docs: The description supplied to Open Graph annotations
@@ -37670,6 +37917,7 @@ Required scope | `pages:write`
           Indicates the Open Graph description was copied from the SEO
           description
         default: true
+        access: read-only
     source:
       openapi: ../openapi.yml
     inline: true
@@ -37677,11 +37925,13 @@ Required scope | `pages:write`
     docs: The Page object
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Page
+        access: read-only
       siteId:
         type: optional<string>
         docs: Unique identifier for the Site
+        access: read-only
       title:
         type: optional<string>
         docs: Title of the Page
@@ -37691,37 +37941,45 @@ Required scope | `pages:write`
       parentId:
         type: optional<string>
         docs: Identifier of the parent folder
+        access: read-only
       collectionId:
         type: optional<string>
         docs: >-
           Unique identifier for a linked Collection, value will be null if the
           Page is not part of a Collection.
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The date the Page was created
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The date the Page was most recently updated
+        access: read-only
       archived:
         type: optional<boolean>
         docs: Whether the Page has been archived
         default: false
+        access: read-only
       draft:
         type: optional<boolean>
         docs: Whether the Page is a draft
         default: false
+        access: read-only
       canBranch:
         type: optional<boolean>
         docs: >-
           Indicates whether the Page supports [Page
           Branching](https://university.webflow.com/lesson/page-branching)
         default: false
+        access: read-only
       isMembersOnly:
         type: optional<boolean>
         docs: >-
           Indicates whether the Page is restricted by [Memberships
           Controls](https://university.webflow.com/lesson/webflow-memberships-overview#how-to-manage-page-restrictions)
         default: false
+        access: read-only
       seo:
         type: optional<PagesGetMetadataResponseSeo>
         docs: SEO-related fields for the Page
@@ -37731,9 +37989,11 @@ Required scope | `pages:write`
       localeId:
         type: optional<string>
         docs: Unique ID of the page locale
+        access: read-only
       publishedPath:
         type: optional<string>
         docs: Relative path of the published page URL
+        access: read-only
     source:
       openapi: ../openapi.yml
   UpdatePageSettingsRequestSeo:
@@ -37758,6 +38018,7 @@ Required scope | `pages:write`
         type: optional<boolean>
         docs: Indicates the Open Graph title was copied from the SEO title
         default: true
+        access: read-only
       description:
         type: optional<string>
         docs: The description supplied to Open Graph annotations
@@ -37767,6 +38028,7 @@ Required scope | `pages:write`
           Indicates the Open Graph description was copied from the SEO
           description
         default: true
+        access: read-only
     source:
       openapi: ../openapi.yml
     inline: true
@@ -37792,6 +38054,7 @@ Required scope | `pages:write`
         type: optional<boolean>
         docs: Indicates the Open Graph title was copied from the SEO title
         default: true
+        access: read-only
       description:
         type: optional<string>
         docs: The description supplied to Open Graph annotations
@@ -37801,6 +38064,7 @@ Required scope | `pages:write`
           Indicates the Open Graph description was copied from the SEO
           description
         default: true
+        access: read-only
     source:
       openapi: ../openapi.yml
     inline: true
@@ -37808,11 +38072,13 @@ Required scope | `pages:write`
     docs: The Page object
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Page
+        access: read-only
       siteId:
         type: optional<string>
         docs: Unique identifier for the Site
+        access: read-only
       title:
         type: optional<string>
         docs: Title of the Page
@@ -37822,37 +38088,45 @@ Required scope | `pages:write`
       parentId:
         type: optional<string>
         docs: Identifier of the parent folder
+        access: read-only
       collectionId:
         type: optional<string>
         docs: >-
           Unique identifier for a linked Collection, value will be null if the
           Page is not part of a Collection.
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The date the Page was created
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The date the Page was most recently updated
+        access: read-only
       archived:
         type: optional<boolean>
         docs: Whether the Page has been archived
         default: false
+        access: read-only
       draft:
         type: optional<boolean>
         docs: Whether the Page is a draft
         default: false
+        access: read-only
       canBranch:
         type: optional<boolean>
         docs: >-
           Indicates whether the Page supports [Page
           Branching](https://university.webflow.com/lesson/page-branching)
         default: false
+        access: read-only
       isMembersOnly:
         type: optional<boolean>
         docs: >-
           Indicates whether the Page is restricted by [Memberships
           Controls](https://university.webflow.com/lesson/webflow-memberships-overview#how-to-manage-page-restrictions)
         default: false
+        access: read-only
       seo:
         type: optional<UpdatePageSettingsResponseSeo>
         docs: SEO-related fields for the Page
@@ -37862,9 +38136,11 @@ Required scope | `pages:write`
       localeId:
         type: optional<string>
         docs: Unique ID of the page locale
+        access: read-only
       publishedPath:
         type: optional<string>
         docs: Relative path of the published page URL
+        access: read-only
     source:
       openapi: ../openapi.yml
   PagesGetContentResponseNodesItemType:
@@ -37907,6 +38183,7 @@ Required scope | `pages:write`
       id:
         type: optional<string>
         docs: Node UUID
+        access: read-only
       type: optional<PagesGetContentResponseNodesItemType>
       text:
         type: optional<PagesGetContentResponseNodesItemText>
@@ -38452,6 +38729,7 @@ service:
   display-name: Pages
 webhooks:
   page_created:
+    audiences: []
     method: POST
     display-name: Page Created
     headers: {}
@@ -38467,6 +38745,7 @@ webhooks:
             pageTitle: Heart of Gold Specs
             createdOn: '2024-07-26T16:32:50Z'
   page_metadata_updated:
+    audiences: []
     method: POST
     display-name: Page Metadata Updated
     headers: {}
@@ -38482,6 +38761,7 @@ webhooks:
             pageTitle: Heart of Gold Specs
             lastUpdated: '2024-07-26T16:32:50Z'
   page_deleted:
+    audiences: []
     method: POST
     display-name: Page Deleted
     headers: {}
@@ -38697,10 +38977,12 @@ webhooks:
             "inline": undefined,
             "properties": {
               "createdOn": {
+                "access": "read-only",
                 "docs": "Date when the Site's scripts were created",
                 "type": "optional<string>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "Date when the Site's scripts were last updated",
                 "type": "optional<string>",
               },
@@ -38794,10 +39076,12 @@ webhooks:
             "inline": undefined,
             "properties": {
               "createdOn": {
+                "access": "read-only",
                 "docs": "Date when the Site's scripts were created",
                 "type": "optional<string>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "Date when the Site's scripts were last updated",
                 "type": "optional<string>",
               },
@@ -38892,9 +39176,11 @@ webhooks:
       lastUpdated:
         type: optional<string>
         docs: Date when the Site's scripts were last updated
+        access: read-only
       createdOn:
         type: optional<string>
         docs: Date when the Site's scripts were created
+        access: read-only
     source:
       openapi: ../openapi.yml
   ScriptsUpsertCustomCodeRequestScriptsItemLocation:
@@ -38971,9 +39257,11 @@ webhooks:
       lastUpdated:
         type: optional<string>
         docs: Date when the Site's scripts were last updated
+        access: read-only
       createdOn:
         type: optional<string>
         docs: Date when the Site's scripts were created
+        access: read-only
     source:
       openapi: ../openapi.yml
 imports:
@@ -40186,10 +40474,12 @@ Required scope | `ecommerce:write`
             "inline": true,
             "properties": {
               "cmsLocaleId": {
+                "access": "read-only",
                 "docs": "Identifier for the locale of the CMS item",
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the Product was created",
                 "type": "optional<datetime>",
               },
@@ -40198,14 +40488,17 @@ Required scope | `ecommerce:write`
                 "type": "optional<ProductsCreateRequestSkuFieldData>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Product",
                 "type": "optional<string>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the Product was last published",
                 "type": "optional<datetime>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the Product was last updated",
                 "type": "optional<datetime>",
               },
@@ -40297,7 +40590,10 @@ Required scope | `ecommerce:write`
                 "docs": "Interval of subscription renewal",
                 "type": "optional<ProductsCreateRequestSkuFieldDataEcSkuSubscriptionPlanInterval>",
               },
-              "plans": "optional<list<ProductsCreateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem>>",
+              "plans": {
+                "access": "read-only",
+                "type": "optional<list<ProductsCreateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem>>",
+              },
               "trial": {
                 "docs": "Number of days of a trial",
                 "type": "optional<double>",
@@ -40392,10 +40688,12 @@ Required scope | `ecommerce:write`
             "inline": true,
             "properties": {
               "cmsLocaleId": {
+                "access": "read-only",
                 "docs": "Identifier for the locale of the CMS item",
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the Product was created",
                 "type": "optional<datetime>",
               },
@@ -40404,6 +40702,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<ProductsCreateResponseProductFieldData>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Product",
                 "type": "optional<string>",
               },
@@ -40418,10 +40717,12 @@ Required scope | `ecommerce:write`
                 "type": "optional<boolean>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the Product was last published",
                 "type": "optional<datetime>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the Product was last updated",
                 "type": "optional<datetime>",
               },
@@ -40657,10 +40958,12 @@ Required scope | `ecommerce:write`
             "inline": true,
             "properties": {
               "cmsLocaleId": {
+                "access": "read-only",
                 "docs": "Identifier for the locale of the CMS item",
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the Product was created",
                 "type": "optional<datetime>",
               },
@@ -40669,14 +40972,17 @@ Required scope | `ecommerce:write`
                 "type": "optional<ProductsCreateResponseSkusItemFieldData>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Product",
                 "type": "optional<string>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the Product was last published",
                 "type": "optional<datetime>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the Product was last updated",
                 "type": "optional<datetime>",
               },
@@ -40768,7 +41074,10 @@ Required scope | `ecommerce:write`
                 "docs": "Interval of subscription renewal",
                 "type": "optional<ProductsCreateResponseSkusItemFieldDataEcSkuSubscriptionPlanInterval>",
               },
-              "plans": "optional<list<ProductsCreateResponseSkusItemFieldDataEcSkuSubscriptionPlanPlansItem>>",
+              "plans": {
+                "access": "read-only",
+                "type": "optional<list<ProductsCreateResponseSkusItemFieldDataEcSkuSubscriptionPlanPlansItem>>",
+              },
               "trial": {
                 "docs": "Number of days of a trial",
                 "type": "optional<double>",
@@ -40858,10 +41167,12 @@ Required scope | `ecommerce:write`
             "inline": true,
             "properties": {
               "cmsLocaleId": {
+                "access": "read-only",
                 "docs": "Identifier for the locale of the CMS item",
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the Product was created",
                 "type": "optional<datetime>",
               },
@@ -40870,14 +41181,17 @@ Required scope | `ecommerce:write`
                 "type": "optional<ProductsCreateSkuRequestSkusItemFieldData>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Product",
                 "type": "optional<string>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the Product was last published",
                 "type": "optional<datetime>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the Product was last updated",
                 "type": "optional<datetime>",
               },
@@ -40969,7 +41283,10 @@ Required scope | `ecommerce:write`
                 "docs": "Interval of subscription renewal",
                 "type": "optional<ProductsCreateSkuRequestSkusItemFieldDataEcSkuSubscriptionPlanInterval>",
               },
-              "plans": "optional<list<ProductsCreateSkuRequestSkusItemFieldDataEcSkuSubscriptionPlanPlansItem>>",
+              "plans": {
+                "access": "read-only",
+                "type": "optional<list<ProductsCreateSkuRequestSkusItemFieldDataEcSkuSubscriptionPlanPlansItem>>",
+              },
               "trial": {
                 "docs": "Number of days of a trial",
                 "type": "optional<double>",
@@ -41057,10 +41374,12 @@ Required scope | `ecommerce:write`
             "inline": true,
             "properties": {
               "cmsLocaleId": {
+                "access": "read-only",
                 "docs": "Identifier for the locale of the CMS item",
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the Product was created",
                 "type": "optional<datetime>",
               },
@@ -41069,14 +41388,17 @@ Required scope | `ecommerce:write`
                 "type": "optional<ProductsCreateSkuResponseSkusItemFieldData>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Product",
                 "type": "optional<string>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the Product was last published",
                 "type": "optional<datetime>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the Product was last updated",
                 "type": "optional<datetime>",
               },
@@ -41168,7 +41490,10 @@ Required scope | `ecommerce:write`
                 "docs": "Interval of subscription renewal",
                 "type": "optional<ProductsCreateSkuResponseSkusItemFieldDataEcSkuSubscriptionPlanInterval>",
               },
-              "plans": "optional<list<ProductsCreateSkuResponseSkusItemFieldDataEcSkuSubscriptionPlanPlansItem>>",
+              "plans": {
+                "access": "read-only",
+                "type": "optional<list<ProductsCreateSkuResponseSkusItemFieldDataEcSkuSubscriptionPlanPlansItem>>",
+              },
               "trial": {
                 "docs": "Number of days of a trial",
                 "type": "optional<double>",
@@ -41263,10 +41588,12 @@ Required scope | `ecommerce:write`
             "inline": true,
             "properties": {
               "cmsLocaleId": {
+                "access": "read-only",
                 "docs": "Identifier for the locale of the CMS item",
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the Product was created",
                 "type": "optional<datetime>",
               },
@@ -41275,6 +41602,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<ProductsGetResponseProductFieldData>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Product",
                 "type": "optional<string>",
               },
@@ -41289,10 +41617,12 @@ Required scope | `ecommerce:write`
                 "type": "optional<boolean>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the Product was last published",
                 "type": "optional<datetime>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the Product was last updated",
                 "type": "optional<datetime>",
               },
@@ -41528,10 +41858,12 @@ Required scope | `ecommerce:write`
             "inline": true,
             "properties": {
               "cmsLocaleId": {
+                "access": "read-only",
                 "docs": "Identifier for the locale of the CMS item",
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the Product was created",
                 "type": "optional<datetime>",
               },
@@ -41540,14 +41872,17 @@ Required scope | `ecommerce:write`
                 "type": "optional<ProductsGetResponseSkusItemFieldData>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Product",
                 "type": "optional<string>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the Product was last published",
                 "type": "optional<datetime>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the Product was last updated",
                 "type": "optional<datetime>",
               },
@@ -41639,7 +41974,10 @@ Required scope | `ecommerce:write`
                 "docs": "Interval of subscription renewal",
                 "type": "optional<ProductsGetResponseSkusItemFieldDataEcSkuSubscriptionPlanInterval>",
               },
-              "plans": "optional<list<ProductsGetResponseSkusItemFieldDataEcSkuSubscriptionPlanPlansItem>>",
+              "plans": {
+                "access": "read-only",
+                "type": "optional<list<ProductsGetResponseSkusItemFieldDataEcSkuSubscriptionPlanPlansItem>>",
+              },
               "trial": {
                 "docs": "Number of days of a trial",
                 "type": "optional<double>",
@@ -41751,10 +42089,12 @@ Required scope | `ecommerce:write`
             "inline": true,
             "properties": {
               "cmsLocaleId": {
+                "access": "read-only",
                 "docs": "Identifier for the locale of the CMS item",
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the Product was created",
                 "type": "optional<datetime>",
               },
@@ -41763,6 +42103,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<ProductsListResponseItemsItemProductFieldData>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Product",
                 "type": "optional<string>",
               },
@@ -41777,10 +42118,12 @@ Required scope | `ecommerce:write`
                 "type": "optional<boolean>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the Product was last published",
                 "type": "optional<datetime>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the Product was last updated",
                 "type": "optional<datetime>",
               },
@@ -42016,10 +42359,12 @@ Required scope | `ecommerce:write`
             "inline": true,
             "properties": {
               "cmsLocaleId": {
+                "access": "read-only",
                 "docs": "Identifier for the locale of the CMS item",
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the Product was created",
                 "type": "optional<datetime>",
               },
@@ -42028,14 +42373,17 @@ Required scope | `ecommerce:write`
                 "type": "optional<ProductsListResponseItemsItemSkusItemFieldData>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Product",
                 "type": "optional<string>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the Product was last published",
                 "type": "optional<datetime>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the Product was last updated",
                 "type": "optional<datetime>",
               },
@@ -42127,7 +42475,10 @@ Required scope | `ecommerce:write`
                 "docs": "Interval of subscription renewal",
                 "type": "optional<ProductsListResponseItemsItemSkusItemFieldDataEcSkuSubscriptionPlanInterval>",
               },
-              "plans": "optional<list<ProductsListResponseItemsItemSkusItemFieldDataEcSkuSubscriptionPlanPlansItem>>",
+              "plans": {
+                "access": "read-only",
+                "type": "optional<list<ProductsListResponseItemsItemSkusItemFieldDataEcSkuSubscriptionPlanPlansItem>>",
+              },
               "trial": {
                 "docs": "Number of days of a trial",
                 "type": "optional<double>",
@@ -42226,10 +42577,12 @@ Required scope | `ecommerce:write`
             "inline": true,
             "properties": {
               "cmsLocaleId": {
+                "access": "read-only",
                 "docs": "Identifier for the locale of the CMS item",
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the Product was created",
                 "type": "optional<datetime>",
               },
@@ -42238,6 +42591,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<ProductsUpdateRequestProductFieldData>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Product",
                 "type": "optional<string>",
               },
@@ -42252,10 +42606,12 @@ Required scope | `ecommerce:write`
                 "type": "optional<boolean>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the Product was last published",
                 "type": "optional<datetime>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the Product was last updated",
                 "type": "optional<datetime>",
               },
@@ -42503,10 +42859,12 @@ Required scope | `ecommerce:write`
             "inline": true,
             "properties": {
               "cmsLocaleId": {
+                "access": "read-only",
                 "docs": "Identifier for the locale of the CMS item",
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the Product was created",
                 "type": "optional<datetime>",
               },
@@ -42515,14 +42873,17 @@ Required scope | `ecommerce:write`
                 "type": "optional<ProductsUpdateRequestSkuFieldData>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Product",
                 "type": "optional<string>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the Product was last published",
                 "type": "optional<datetime>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the Product was last updated",
                 "type": "optional<datetime>",
               },
@@ -42614,7 +42975,10 @@ Required scope | `ecommerce:write`
                 "docs": "Interval of subscription renewal",
                 "type": "optional<ProductsUpdateRequestSkuFieldDataEcSkuSubscriptionPlanInterval>",
               },
-              "plans": "optional<list<ProductsUpdateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem>>",
+              "plans": {
+                "access": "read-only",
+                "type": "optional<list<ProductsUpdateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem>>",
+              },
               "trial": {
                 "docs": "Number of days of a trial",
                 "type": "optional<double>",
@@ -42692,10 +43056,12 @@ Required scope | `ecommerce:write`
             "inline": undefined,
             "properties": {
               "cmsLocaleId": {
+                "access": "read-only",
                 "docs": "Identifier for the locale of the CMS item",
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the Product was created",
                 "type": "optional<datetime>",
               },
@@ -42704,6 +43070,7 @@ Required scope | `ecommerce:write`
                 "type": "optional<ProductsUpdateResponseFieldData>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Product",
                 "type": "optional<string>",
               },
@@ -42718,10 +43085,12 @@ Required scope | `ecommerce:write`
                 "type": "optional<boolean>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the Product was last published",
                 "type": "optional<datetime>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the Product was last updated",
                 "type": "optional<datetime>",
               },
@@ -42969,10 +43338,12 @@ Required scope | `ecommerce:write`
             "inline": true,
             "properties": {
               "cmsLocaleId": {
+                "access": "read-only",
                 "docs": "Identifier for the locale of the CMS item",
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the Product was created",
                 "type": "optional<datetime>",
               },
@@ -42981,14 +43352,17 @@ Required scope | `ecommerce:write`
                 "type": "optional<ProductsUpdateSkuRequestSkuFieldData>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Product",
                 "type": "optional<string>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the Product was last published",
                 "type": "optional<datetime>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the Product was last updated",
                 "type": "optional<datetime>",
               },
@@ -43080,7 +43454,10 @@ Required scope | `ecommerce:write`
                 "docs": "Interval of subscription renewal",
                 "type": "optional<ProductsUpdateSkuRequestSkuFieldDataEcSkuSubscriptionPlanInterval>",
               },
-              "plans": "optional<list<ProductsUpdateSkuRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem>>",
+              "plans": {
+                "access": "read-only",
+                "type": "optional<list<ProductsUpdateSkuRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem>>",
+              },
               "trial": {
                 "docs": "Number of days of a trial",
                 "type": "optional<double>",
@@ -43158,10 +43535,12 @@ Required scope | `ecommerce:write`
             "inline": undefined,
             "properties": {
               "cmsLocaleId": {
+                "access": "read-only",
                 "docs": "Identifier for the locale of the CMS item",
                 "type": "optional<string>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the Product was created",
                 "type": "optional<datetime>",
               },
@@ -43170,14 +43549,17 @@ Required scope | `ecommerce:write`
                 "type": "optional<ProductsUpdateSkuResponseFieldData>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Product",
                 "type": "optional<string>",
               },
               "lastPublished": {
+                "access": "read-only",
                 "docs": "The date the Product was last published",
                 "type": "optional<datetime>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the Product was last updated",
                 "type": "optional<datetime>",
               },
@@ -43269,7 +43651,10 @@ Required scope | `ecommerce:write`
                 "docs": "Interval of subscription renewal",
                 "type": "optional<ProductsUpdateSkuResponseFieldDataEcSkuSubscriptionPlanInterval>",
               },
-              "plans": "optional<list<ProductsUpdateSkuResponseFieldDataEcSkuSubscriptionPlanPlansItem>>",
+              "plans": {
+                "access": "read-only",
+                "type": "optional<list<ProductsUpdateSkuResponseFieldDataEcSkuSubscriptionPlanPlansItem>>",
+              },
               "trial": {
                 "docs": "Number of days of a trial",
                 "type": "optional<double>",
@@ -43502,18 +43887,23 @@ Required scope | `ecommerce:write`
       id:
         type: optional<string>
         docs: Unique identifier for the Product
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
+        access: read-only
       lastPublished:
         type: optional<datetime>
         docs: The date the Product was last published
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The date the Product was last updated
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The date the Product was created
+        access: read-only
       isArchived:
         type: optional<boolean>
         docs: Boolean determining if the Product is set to archived
@@ -43609,8 +43999,10 @@ Required scope | `ecommerce:write`
       trial:
         type: optional<double>
         docs: Number of days of a trial
-      plans: >-
-        optional<list<ProductsListResponseItemsItemSkusItemFieldDataEcSkuSubscriptionPlanPlansItem>>
+      plans:
+        type: >-
+          optional<list<ProductsListResponseItemsItemSkusItemFieldDataEcSkuSubscriptionPlanPlansItem>>
+        access: read-only
     source:
       openapi: ../openapi.yml
     inline: true
@@ -43656,18 +44048,23 @@ Required scope | `ecommerce:write`
       id:
         type: optional<string>
         docs: Unique identifier for the Product
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
+        access: read-only
       lastPublished:
         type: optional<datetime>
         docs: The date the Product was last published
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The date the Product was last updated
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The date the Product was created
+        access: read-only
       fieldData:
         type: optional<ProductsListResponseItemsItemSkusItemFieldData>
         docs: Standard and Custom fields for a SKU
@@ -43962,8 +44359,10 @@ Required scope | `ecommerce:write`
       trial:
         type: optional<double>
         docs: Number of days of a trial
-      plans: >-
-        optional<list<ProductsCreateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem>>
+      plans:
+        type: >-
+          optional<list<ProductsCreateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem>>
+        access: read-only
     source:
       openapi: ../openapi.yml
     inline: true
@@ -44007,18 +44406,23 @@ Required scope | `ecommerce:write`
       id:
         type: optional<string>
         docs: Unique identifier for the Product
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
+        access: read-only
       lastPublished:
         type: optional<datetime>
         docs: The date the Product was last published
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The date the Product was last updated
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The date the Product was created
+        access: read-only
       fieldData:
         type: optional<ProductsCreateRequestSkuFieldData>
         docs: Standard and Custom fields for a SKU
@@ -44181,18 +44585,23 @@ Required scope | `ecommerce:write`
       id:
         type: optional<string>
         docs: Unique identifier for the Product
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
+        access: read-only
       lastPublished:
         type: optional<datetime>
         docs: The date the Product was last published
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The date the Product was last updated
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The date the Product was created
+        access: read-only
       isArchived:
         type: optional<boolean>
         docs: Boolean determining if the Product is set to archived
@@ -44288,8 +44697,10 @@ Required scope | `ecommerce:write`
       trial:
         type: optional<double>
         docs: Number of days of a trial
-      plans: >-
-        optional<list<ProductsCreateResponseSkusItemFieldDataEcSkuSubscriptionPlanPlansItem>>
+      plans:
+        type: >-
+          optional<list<ProductsCreateResponseSkusItemFieldDataEcSkuSubscriptionPlanPlansItem>>
+        access: read-only
     source:
       openapi: ../openapi.yml
     inline: true
@@ -44333,18 +44744,23 @@ Required scope | `ecommerce:write`
       id:
         type: optional<string>
         docs: Unique identifier for the Product
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
+        access: read-only
       lastPublished:
         type: optional<datetime>
         docs: The date the Product was last published
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The date the Product was last updated
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The date the Product was created
+        access: read-only
       fieldData:
         type: optional<ProductsCreateResponseSkusItemFieldData>
         docs: Standard and Custom fields for a SKU
@@ -44517,18 +44933,23 @@ Required scope | `ecommerce:write`
       id:
         type: optional<string>
         docs: Unique identifier for the Product
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
+        access: read-only
       lastPublished:
         type: optional<datetime>
         docs: The date the Product was last published
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The date the Product was last updated
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The date the Product was created
+        access: read-only
       isArchived:
         type: optional<boolean>
         docs: Boolean determining if the Product is set to archived
@@ -44624,8 +45045,10 @@ Required scope | `ecommerce:write`
       trial:
         type: optional<double>
         docs: Number of days of a trial
-      plans: >-
-        optional<list<ProductsGetResponseSkusItemFieldDataEcSkuSubscriptionPlanPlansItem>>
+      plans:
+        type: >-
+          optional<list<ProductsGetResponseSkusItemFieldDataEcSkuSubscriptionPlanPlansItem>>
+        access: read-only
     source:
       openapi: ../openapi.yml
     inline: true
@@ -44669,18 +45092,23 @@ Required scope | `ecommerce:write`
       id:
         type: optional<string>
         docs: Unique identifier for the Product
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
+        access: read-only
       lastPublished:
         type: optional<datetime>
         docs: The date the Product was last published
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The date the Product was last updated
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The date the Product was created
+        access: read-only
       fieldData:
         type: optional<ProductsGetResponseSkusItemFieldData>
         docs: Standard and Custom fields for a SKU
@@ -44862,18 +45290,23 @@ Required scope | `ecommerce:write`
       id:
         type: optional<string>
         docs: Unique identifier for the Product
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
+        access: read-only
       lastPublished:
         type: optional<datetime>
         docs: The date the Product was last published
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The date the Product was last updated
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The date the Product was created
+        access: read-only
       isArchived:
         type: optional<boolean>
         docs: Boolean determining if the Product is set to archived
@@ -44969,8 +45402,10 @@ Required scope | `ecommerce:write`
       trial:
         type: optional<double>
         docs: Number of days of a trial
-      plans: >-
-        optional<list<ProductsUpdateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem>>
+      plans:
+        type: >-
+          optional<list<ProductsUpdateRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem>>
+        access: read-only
     source:
       openapi: ../openapi.yml
     inline: true
@@ -45014,18 +45449,23 @@ Required scope | `ecommerce:write`
       id:
         type: optional<string>
         docs: Unique identifier for the Product
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
+        access: read-only
       lastPublished:
         type: optional<datetime>
         docs: The date the Product was last published
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The date the Product was last updated
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The date the Product was created
+        access: read-only
       fieldData:
         type: optional<ProductsUpdateRequestSkuFieldData>
         docs: Standard and Custom fields for a SKU
@@ -45187,18 +45627,23 @@ Required scope | `ecommerce:write`
       id:
         type: optional<string>
         docs: Unique identifier for the Product
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
+        access: read-only
       lastPublished:
         type: optional<datetime>
         docs: The date the Product was last published
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The date the Product was last updated
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The date the Product was created
+        access: read-only
       isArchived:
         type: optional<boolean>
         docs: Boolean determining if the Product is set to archived
@@ -45302,8 +45747,10 @@ Required scope | `ecommerce:write`
       trial:
         type: optional<double>
         docs: Number of days of a trial
-      plans: >-
-        optional<list<ProductsCreateSkuRequestSkusItemFieldDataEcSkuSubscriptionPlanPlansItem>>
+      plans:
+        type: >-
+          optional<list<ProductsCreateSkuRequestSkusItemFieldDataEcSkuSubscriptionPlanPlansItem>>
+        access: read-only
     source:
       openapi: ../openapi.yml
     inline: true
@@ -45347,18 +45794,23 @@ Required scope | `ecommerce:write`
       id:
         type: optional<string>
         docs: Unique identifier for the Product
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
+        access: read-only
       lastPublished:
         type: optional<datetime>
         docs: The date the Product was last published
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The date the Product was last updated
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The date the Product was created
+        access: read-only
       fieldData:
         type: optional<ProductsCreateSkuRequestSkusItemFieldData>
         docs: Standard and Custom fields for a SKU
@@ -45443,8 +45895,10 @@ Required scope | `ecommerce:write`
       trial:
         type: optional<double>
         docs: Number of days of a trial
-      plans: >-
-        optional<list<ProductsCreateSkuResponseSkusItemFieldDataEcSkuSubscriptionPlanPlansItem>>
+      plans:
+        type: >-
+          optional<list<ProductsCreateSkuResponseSkusItemFieldDataEcSkuSubscriptionPlanPlansItem>>
+        access: read-only
     source:
       openapi: ../openapi.yml
     inline: true
@@ -45489,18 +45943,23 @@ Required scope | `ecommerce:write`
       id:
         type: optional<string>
         docs: Unique identifier for the Product
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
+        access: read-only
       lastPublished:
         type: optional<datetime>
         docs: The date the Product was last published
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The date the Product was last updated
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The date the Product was created
+        access: read-only
       fieldData:
         type: optional<ProductsCreateSkuResponseSkusItemFieldData>
         docs: Standard and Custom fields for a SKU
@@ -45599,8 +46058,10 @@ Required scope | `ecommerce:write`
       trial:
         type: optional<double>
         docs: Number of days of a trial
-      plans: >-
-        optional<list<ProductsUpdateSkuRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem>>
+      plans:
+        type: >-
+          optional<list<ProductsUpdateSkuRequestSkuFieldDataEcSkuSubscriptionPlanPlansItem>>
+        access: read-only
     source:
       openapi: ../openapi.yml
     inline: true
@@ -45644,18 +46105,23 @@ Required scope | `ecommerce:write`
       id:
         type: optional<string>
         docs: Unique identifier for the Product
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
+        access: read-only
       lastPublished:
         type: optional<datetime>
         docs: The date the Product was last published
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The date the Product was last updated
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The date the Product was created
+        access: read-only
       fieldData:
         type: optional<ProductsUpdateSkuRequestSkuFieldData>
         docs: Standard and Custom fields for a SKU
@@ -45740,8 +46206,10 @@ Required scope | `ecommerce:write`
       trial:
         type: optional<double>
         docs: Number of days of a trial
-      plans: >-
-        optional<list<ProductsUpdateSkuResponseFieldDataEcSkuSubscriptionPlanPlansItem>>
+      plans:
+        type: >-
+          optional<list<ProductsUpdateSkuResponseFieldDataEcSkuSubscriptionPlanPlansItem>>
+        access: read-only
     source:
       openapi: ../openapi.yml
     inline: true
@@ -45785,18 +46253,23 @@ Required scope | `ecommerce:write`
       id:
         type: optional<string>
         docs: Unique identifier for the Product
+        access: read-only
       cmsLocaleId:
         type: optional<string>
         docs: Identifier for the locale of the CMS item
+        access: read-only
       lastPublished:
         type: optional<datetime>
         docs: The date the Product was last published
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The date the Product was last updated
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The date the Product was created
+        access: read-only
       fieldData:
         type: optional<ProductsUpdateSkuResponseFieldData>
         docs: Standard and Custom fields for a SKU
@@ -46696,6 +47169,7 @@ service:
                 "type": "optional<boolean>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "Timestamp when the script version was created",
                 "type": "optional<string>",
               },
@@ -46708,6 +47182,7 @@ service:
                 "type": "optional<string>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Human readable id, derived from the user-specified display name",
                 "type": "optional<string>",
               },
@@ -46716,6 +47191,7 @@ service:
                 "type": "optional<string>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "Timestamp when the script version was last updated",
                 "type": "optional<string>",
               },
@@ -46738,6 +47214,7 @@ service:
                 "type": "optional<boolean>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "Timestamp when the script version was created",
                 "type": "optional<string>",
               },
@@ -46750,6 +47227,7 @@ service:
                 "type": "optional<string>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Human readable id, derived from the user-specified display name",
                 "type": "optional<string>",
               },
@@ -46758,6 +47236,7 @@ service:
                 "type": "optional<string>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "Timestamp when the script version was last updated",
                 "type": "optional<string>",
               },
@@ -46780,6 +47259,7 @@ service:
                 "type": "optional<boolean>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "Timestamp when the script version was created",
                 "type": "optional<string>",
               },
@@ -46792,6 +47272,7 @@ service:
                 "type": "optional<string>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Human readable id, derived from the user-specified display name",
                 "type": "optional<string>",
               },
@@ -46800,6 +47281,7 @@ service:
                 "type": "optional<string>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "Timestamp when the script version was last updated",
                 "type": "optional<string>",
               },
@@ -46821,6 +47303,7 @@ service:
       id:
         type: optional<string>
         docs: Human readable id, derived from the user-specified display name
+        access: read-only
       canCopy:
         type: optional<boolean>
         docs: >-
@@ -46843,9 +47326,11 @@ service:
       createdOn:
         type: optional<string>
         docs: Timestamp when the script version was created
+        access: read-only
       lastUpdated:
         type: optional<string>
         docs: Timestamp when the script version was last updated
+        access: read-only
       version:
         type: optional<string>
         docs: A Semantic Version (SemVer) string, denoting the version of the script
@@ -46864,6 +47349,7 @@ service:
       id:
         type: optional<string>
         docs: Human readable id, derived from the user-specified display name
+        access: read-only
       canCopy:
         type: optional<boolean>
         docs: >-
@@ -46886,9 +47372,11 @@ service:
       createdOn:
         type: optional<string>
         docs: Timestamp when the script version was created
+        access: read-only
       lastUpdated:
         type: optional<string>
         docs: Timestamp when the script version was last updated
+        access: read-only
       version:
         type: optional<string>
         docs: A Semantic Version (SemVer) string, denoting the version of the script
@@ -46900,6 +47388,7 @@ service:
       id:
         type: optional<string>
         docs: Human readable id, derived from the user-specified display name
+        access: read-only
       canCopy:
         type: optional<boolean>
         docs: >-
@@ -46922,9 +47411,11 @@ service:
       createdOn:
         type: optional<string>
         docs: Timestamp when the script version was created
+        access: read-only
       lastUpdated:
         type: optional<string>
         docs: Timestamp when the script version was last updated
+        access: read-only
       version:
         type: optional<string>
         docs: A Semantic Version (SemVer) string, denoting the version of the script
@@ -47590,8 +48081,9 @@ service:
             "inline": true,
             "properties": {
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Domain",
-                "type": "string",
+                "type": "optional<string>",
               },
               "url": {
                 "docs": "The registered Domain name",
@@ -47664,8 +48156,9 @@ service:
             "inline": true,
             "properties": {
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Domain",
-                "type": "string",
+                "type": "optional<string>",
               },
               "url": {
                 "docs": "The registered Domain name",
@@ -47847,8 +48340,9 @@ service:
             "inline": true,
             "properties": {
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Domain",
-                "type": "string",
+                "type": "optional<string>",
               },
               "url": {
                 "docs": "The registered Domain name",
@@ -47981,8 +48475,9 @@ service:
             "inline": true,
             "properties": {
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Domain",
-                "type": "string",
+                "type": "optional<string>",
               },
               "url": {
                 "docs": "The registered Domain name",
@@ -47996,6 +48491,7 @@ service:
         },
         "webhooks": {
           "site_publish": {
+            "audiences": [],
             "display-name": "Site Publish",
             "examples": [
               {
@@ -48029,8 +48525,9 @@ service:
   SitesListResponseSitesItemCustomDomainsItem:
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Domain
+        access: read-only
       url:
         type: optional<string>
         docs: The registered Domain name
@@ -48158,8 +48655,9 @@ service:
   SitesGetResponseCustomDomainsItem:
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Domain
+        access: read-only
       url:
         type: optional<string>
         docs: The registered Domain name
@@ -48281,8 +48779,9 @@ service:
   SitesGetCustomDomainResponseCustomDomainsItem:
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Domain
+        access: read-only
       url:
         type: optional<string>
         docs: The registered Domain name
@@ -48297,8 +48796,9 @@ service:
   SitesPublishResponseCustomDomainsItem:
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the Domain
+        access: read-only
       url:
         type: optional<string>
         docs: The registered Domain name
@@ -48621,6 +49121,7 @@ service:
   display-name: Sites
 webhooks:
   site_publish:
+    audiences: []
     method: POST
     display-name: Site Publish
     headers: {}
@@ -49238,10 +49739,12 @@ service:
             "inline": undefined,
             "properties": {
               "createdOn": {
+                "access": "read-only",
                 "docs": "Date when the Site's scripts were created",
                 "type": "optional<string>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "Date when the Site's scripts were last updated",
                 "type": "optional<string>",
               },
@@ -49311,10 +49814,12 @@ service:
             "inline": true,
             "properties": {
               "createdOn": {
+                "access": "read-only",
                 "docs": "The date the Block was created",
                 "type": "optional<datetime>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The date the Block was most recently updated",
                 "type": "optional<datetime>",
               },
@@ -49452,10 +49957,12 @@ service:
             "inline": undefined,
             "properties": {
               "createdOn": {
+                "access": "read-only",
                 "docs": "Date when the Site's scripts were created",
                 "type": "optional<string>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "Date when the Site's scripts were last updated",
                 "type": "optional<string>",
               },
@@ -49550,9 +50057,11 @@ service:
       lastUpdated:
         type: optional<string>
         docs: Date when the Site's scripts were last updated
+        access: read-only
       createdOn:
         type: optional<string>
         docs: Date when the Site's scripts were created
+        access: read-only
     source:
       openapi: ../openapi.yml
   ScriptsUpsertCustomCodeRequestScriptsItemLocation:
@@ -49629,9 +50138,11 @@ service:
       lastUpdated:
         type: optional<string>
         docs: Date when the Site's scripts were last updated
+        access: read-only
       createdOn:
         type: optional<string>
         docs: Date when the Site's scripts were created
+        access: read-only
     source:
       openapi: ../openapi.yml
   ScriptsListCustomCodeBlocksResponseBlocksItemType:
@@ -49696,9 +50207,11 @@ service:
       createdOn:
         type: optional<datetime>
         docs: The date the Block was created
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The date the Block was most recently updated
+        access: read-only
     source:
       openapi: ../openapi.yml
     inline: true
@@ -50779,6 +51292,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "type": "optional<list<UserAccountAddedPayloadPayloadAccessGroupsItem>>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The timestamp the user was created",
                 "type": "optional<datetime>",
               },
@@ -50787,26 +51301,32 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "type": "optional<UserAccountAddedPayloadPayloadData>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the User",
                 "type": "optional<string>",
               },
               "invitedOn": {
+                "access": "read-only",
                 "docs": "The timestamp the user was invited",
                 "type": "optional<datetime>",
               },
               "isEmailVerified": {
+                "access": "read-only",
                 "docs": "Shows whether the user has verified their email address",
                 "type": "optional<boolean>",
               },
               "lastLogin": {
+                "access": "read-only",
                 "docs": "The timestamp the user was logged in",
                 "type": "optional<datetime>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The timestamp the user was updated",
                 "type": "optional<datetime>",
               },
               "status": {
+                "access": "read-only",
                 "docs": "The status of the user",
                 "type": "optional<UserAccountAddedPayloadPayloadStatus>",
               },
@@ -50944,6 +51464,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "type": "optional<list<UserAccountDeletedPayloadPayloadAccessGroupsItem>>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The timestamp the user was created",
                 "type": "optional<datetime>",
               },
@@ -50952,26 +51473,32 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "type": "optional<UserAccountDeletedPayloadPayloadData>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the User",
                 "type": "optional<string>",
               },
               "invitedOn": {
+                "access": "read-only",
                 "docs": "The timestamp the user was invited",
                 "type": "optional<datetime>",
               },
               "isEmailVerified": {
+                "access": "read-only",
                 "docs": "Shows whether the user has verified their email address",
                 "type": "optional<boolean>",
               },
               "lastLogin": {
+                "access": "read-only",
                 "docs": "The timestamp the user was logged in",
                 "type": "optional<datetime>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The timestamp the user was updated",
                 "type": "optional<datetime>",
               },
               "status": {
+                "access": "read-only",
                 "docs": "The status of the user",
                 "type": "optional<UserAccountDeletedPayloadPayloadStatus>",
               },
@@ -51109,6 +51636,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "type": "optional<list<UserAccountUpdatedPayloadPayloadAccessGroupsItem>>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The timestamp the user was created",
                 "type": "optional<datetime>",
               },
@@ -51117,26 +51645,32 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "type": "optional<UserAccountUpdatedPayloadPayloadData>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the User",
                 "type": "optional<string>",
               },
               "invitedOn": {
+                "access": "read-only",
                 "docs": "The timestamp the user was invited",
                 "type": "optional<datetime>",
               },
               "isEmailVerified": {
+                "access": "read-only",
                 "docs": "Shows whether the user has verified their email address",
                 "type": "optional<boolean>",
               },
               "lastLogin": {
+                "access": "read-only",
                 "docs": "The timestamp the user was logged in",
                 "type": "optional<datetime>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The timestamp the user was updated",
                 "type": "optional<datetime>",
               },
               "status": {
+                "access": "read-only",
                 "docs": "The status of the user",
                 "type": "optional<UserAccountUpdatedPayloadPayloadStatus>",
               },
@@ -51256,6 +51790,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "type": "optional<list<UsersGetResponseAccessGroupsItem>>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The timestamp the user was created",
                 "type": "optional<datetime>",
               },
@@ -51264,26 +51799,32 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "type": "optional<UsersGetResponseData>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the User",
                 "type": "optional<string>",
               },
               "invitedOn": {
+                "access": "read-only",
                 "docs": "The timestamp the user was invited",
                 "type": "optional<datetime>",
               },
               "isEmailVerified": {
+                "access": "read-only",
                 "docs": "Shows whether the user has verified their email address",
                 "type": "optional<boolean>",
               },
               "lastLogin": {
+                "access": "read-only",
                 "docs": "The timestamp the user was logged in",
                 "type": "optional<datetime>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The timestamp the user was updated",
                 "type": "optional<datetime>",
               },
               "status": {
+                "access": "read-only",
                 "docs": "The status of the user",
                 "type": "optional<UsersGetResponseStatus>",
               },
@@ -51391,6 +51932,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "type": "optional<list<UsersInviteResponseAccessGroupsItem>>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The timestamp the user was created",
                 "type": "optional<datetime>",
               },
@@ -51399,26 +51941,32 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "type": "optional<UsersInviteResponseData>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the User",
                 "type": "optional<string>",
               },
               "invitedOn": {
+                "access": "read-only",
                 "docs": "The timestamp the user was invited",
                 "type": "optional<datetime>",
               },
               "isEmailVerified": {
+                "access": "read-only",
                 "docs": "Shows whether the user has verified their email address",
                 "type": "optional<boolean>",
               },
               "lastLogin": {
+                "access": "read-only",
                 "docs": "The timestamp the user was logged in",
                 "type": "optional<datetime>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The timestamp the user was updated",
                 "type": "optional<datetime>",
               },
               "status": {
+                "access": "read-only",
                 "docs": "The status of the user",
                 "type": "optional<UsersInviteResponseStatus>",
               },
@@ -51615,6 +52163,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "type": "optional<list<UsersListResponseUsersItemAccessGroupsItem>>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The timestamp the user was created",
                 "type": "optional<datetime>",
               },
@@ -51623,26 +52172,32 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "type": "optional<UsersListResponseUsersItemData>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the User",
                 "type": "optional<string>",
               },
               "invitedOn": {
+                "access": "read-only",
                 "docs": "The timestamp the user was invited",
                 "type": "optional<datetime>",
               },
               "isEmailVerified": {
+                "access": "read-only",
                 "docs": "Shows whether the user has verified their email address",
                 "type": "optional<boolean>",
               },
               "lastLogin": {
+                "access": "read-only",
                 "docs": "The timestamp the user was logged in",
                 "type": "optional<datetime>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The timestamp the user was updated",
                 "type": "optional<datetime>",
               },
               "status": {
+                "access": "read-only",
                 "docs": "The status of the user",
                 "type": "optional<UsersListResponseUsersItemStatus>",
               },
@@ -51774,6 +52329,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "type": "optional<list<UsersUpdateResponseAccessGroupsItem>>",
               },
               "createdOn": {
+                "access": "read-only",
                 "docs": "The timestamp the user was created",
                 "type": "optional<datetime>",
               },
@@ -51782,26 +52338,32 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
                 "type": "optional<UsersUpdateResponseData>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the User",
                 "type": "optional<string>",
               },
               "invitedOn": {
+                "access": "read-only",
                 "docs": "The timestamp the user was invited",
                 "type": "optional<datetime>",
               },
               "isEmailVerified": {
+                "access": "read-only",
                 "docs": "Shows whether the user has verified their email address",
                 "type": "optional<boolean>",
               },
               "lastLogin": {
+                "access": "read-only",
                 "docs": "The timestamp the user was logged in",
                 "type": "optional<datetime>",
               },
               "lastUpdated": {
+                "access": "read-only",
                 "docs": "The timestamp the user was updated",
                 "type": "optional<datetime>",
               },
               "status": {
+                "access": "read-only",
                 "docs": "The status of the user",
                 "type": "optional<UsersUpdateResponseStatus>",
               },
@@ -51902,6 +52464,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
         },
         "webhooks": {
           "user_account_added": {
+            "audiences": [],
             "display-name": "New User Added",
             "examples": [
               {
@@ -51931,6 +52494,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
             "payload": "UserAccountAddedPayload",
           },
           "user_account_deleted": {
+            "audiences": [],
             "display-name": "Account Deleted",
             "examples": [
               {
@@ -51960,6 +52524,7 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
             "payload": "UserAccountDeletedPayload",
           },
           "user_account_updated": {
+            "audiences": [],
             "display-name": "Account Updated",
             "examples": [
               {
@@ -52101,24 +52666,31 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       id:
         type: optional<string>
         docs: Unique identifier for the User
+        access: read-only
       isEmailVerified:
         type: optional<boolean>
         docs: Shows whether the user has verified their email address
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The timestamp the user was updated
+        access: read-only
       invitedOn:
         type: optional<datetime>
         docs: The timestamp the user was invited
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The timestamp the user was created
+        access: read-only
       lastLogin:
         type: optional<datetime>
         docs: The timestamp the user was logged in
+        access: read-only
       status:
         type: optional<UsersListResponseUsersItemStatus>
         docs: The status of the user
+        access: read-only
       accessGroups:
         type: optional<list<UsersListResponseUsersItemAccessGroupsItem>>
         docs: Access groups the user belongs to
@@ -52226,24 +52798,31 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       id:
         type: optional<string>
         docs: Unique identifier for the User
+        access: read-only
       isEmailVerified:
         type: optional<boolean>
         docs: Shows whether the user has verified their email address
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The timestamp the user was updated
+        access: read-only
       invitedOn:
         type: optional<datetime>
         docs: The timestamp the user was invited
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The timestamp the user was created
+        access: read-only
       lastLogin:
         type: optional<datetime>
         docs: The timestamp the user was logged in
+        access: read-only
       status:
         type: optional<UsersGetResponseStatus>
         docs: The status of the user
+        access: read-only
       accessGroups:
         type: optional<list<UsersGetResponseAccessGroupsItem>>
         docs: Access groups the user belongs to
@@ -52345,24 +52924,31 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       id:
         type: optional<string>
         docs: Unique identifier for the User
+        access: read-only
       isEmailVerified:
         type: optional<boolean>
         docs: Shows whether the user has verified their email address
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The timestamp the user was updated
+        access: read-only
       invitedOn:
         type: optional<datetime>
         docs: The timestamp the user was invited
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The timestamp the user was created
+        access: read-only
       lastLogin:
         type: optional<datetime>
         docs: The timestamp the user was logged in
+        access: read-only
       status:
         type: optional<UsersUpdateResponseStatus>
         docs: The status of the user
+        access: read-only
       accessGroups:
         type: optional<list<UsersUpdateResponseAccessGroupsItem>>
         docs: Access groups the user belongs to
@@ -52447,24 +53033,31 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       id:
         type: optional<string>
         docs: Unique identifier for the User
+        access: read-only
       isEmailVerified:
         type: optional<boolean>
         docs: Shows whether the user has verified their email address
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The timestamp the user was updated
+        access: read-only
       invitedOn:
         type: optional<datetime>
         docs: The timestamp the user was invited
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The timestamp the user was created
+        access: read-only
       lastLogin:
         type: optional<datetime>
         docs: The timestamp the user was logged in
+        access: read-only
       status:
         type: optional<UsersInviteResponseStatus>
         docs: The status of the user
+        access: read-only
       accessGroups:
         type: optional<list<UsersInviteResponseAccessGroupsItem>>
         docs: Access groups the user belongs to
@@ -52558,24 +53151,31 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       id:
         type: optional<string>
         docs: Unique identifier for the User
+        access: read-only
       isEmailVerified:
         type: optional<boolean>
         docs: Shows whether the user has verified their email address
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The timestamp the user was updated
+        access: read-only
       invitedOn:
         type: optional<datetime>
         docs: The timestamp the user was invited
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The timestamp the user was created
+        access: read-only
       lastLogin:
         type: optional<datetime>
         docs: The timestamp the user was logged in
+        access: read-only
       status:
         type: optional<UserAccountAddedPayloadPayloadStatus>
         docs: The status of the user
+        access: read-only
       accessGroups:
         type: optional<list<UserAccountAddedPayloadPayloadAccessGroupsItem>>
         docs: Access groups the user belongs to
@@ -52684,24 +53284,31 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       id:
         type: optional<string>
         docs: Unique identifier for the User
+        access: read-only
       isEmailVerified:
         type: optional<boolean>
         docs: Shows whether the user has verified their email address
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The timestamp the user was updated
+        access: read-only
       invitedOn:
         type: optional<datetime>
         docs: The timestamp the user was invited
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The timestamp the user was created
+        access: read-only
       lastLogin:
         type: optional<datetime>
         docs: The timestamp the user was logged in
+        access: read-only
       status:
         type: optional<UserAccountUpdatedPayloadPayloadStatus>
         docs: The status of the user
+        access: read-only
       accessGroups:
         type: optional<list<UserAccountUpdatedPayloadPayloadAccessGroupsItem>>
         docs: Access groups the user belongs to
@@ -52810,24 +53417,31 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
       id:
         type: optional<string>
         docs: Unique identifier for the User
+        access: read-only
       isEmailVerified:
         type: optional<boolean>
         docs: Shows whether the user has verified their email address
+        access: read-only
       lastUpdated:
         type: optional<datetime>
         docs: The timestamp the user was updated
+        access: read-only
       invitedOn:
         type: optional<datetime>
         docs: The timestamp the user was invited
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: The timestamp the user was created
+        access: read-only
       lastLogin:
         type: optional<datetime>
         docs: The timestamp the user was logged in
+        access: read-only
       status:
         type: optional<UserAccountDeletedPayloadPayloadStatus>
         docs: The status of the user
+        access: read-only
       accessGroups:
         type: optional<list<UserAccountDeletedPayloadPayloadAccessGroupsItem>>
         docs: Access groups the user belongs to
@@ -53181,6 +53795,7 @@ service:
     openapi: ../openapi.yml
 webhooks:
   user_account_added:
+    audiences: []
     method: POST
     display-name: New User Added
     headers: {}
@@ -53199,6 +53814,7 @@ webhooks:
               - slug: webflowers
                 type: admin
   user_account_updated:
+    audiences: []
     method: POST
     display-name: Account Updated
     headers: {}
@@ -53217,6 +53833,7 @@ webhooks:
               - slug: webflowers
                 type: admin
   user_account_deleted:
+    audiences: []
     method: POST
     display-name: Account Deleted
     headers: {}
@@ -53562,6 +54179,7 @@ webhooks:
             "inline": undefined,
             "properties": {
               "createdOn": {
+                "access": "read-only",
                 "docs": "Date the Webhook registration was created",
                 "type": "optional<datetime>",
               },
@@ -53570,14 +54188,17 @@ webhooks:
                 "type": "optional<WebhooksCreateResponseFilter>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Webhook registration",
                 "type": "optional<string>",
               },
               "lastTriggered": {
+                "access": "read-only",
                 "docs": "Date the Webhook instance was last triggered",
                 "type": "optional<datetime>",
               },
               "siteId": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Site the Webhook is registered in",
                 "type": "optional<string>",
               },
@@ -53605,6 +54226,7 @@ webhooks:
                 "type": "optional<string>",
               },
               "workspaceId": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Workspace the Webhook is registered in",
                 "type": "optional<string>",
               },
@@ -53670,6 +54292,7 @@ webhooks:
             "inline": undefined,
             "properties": {
               "createdOn": {
+                "access": "read-only",
                 "docs": "Date the Webhook registration was created",
                 "type": "optional<datetime>",
               },
@@ -53678,14 +54301,17 @@ webhooks:
                 "type": "optional<WebhooksGetResponseFilter>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Webhook registration",
                 "type": "optional<string>",
               },
               "lastTriggered": {
+                "access": "read-only",
                 "docs": "Date the Webhook instance was last triggered",
                 "type": "optional<datetime>",
               },
               "siteId": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Site the Webhook is registered in",
                 "type": "optional<string>",
               },
@@ -53713,6 +54339,7 @@ webhooks:
                 "type": "optional<string>",
               },
               "workspaceId": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Workspace the Webhook is registered in",
                 "type": "optional<string>",
               },
@@ -53813,6 +54440,7 @@ webhooks:
             "inline": true,
             "properties": {
               "createdOn": {
+                "access": "read-only",
                 "docs": "Date the Webhook registration was created",
                 "type": "optional<datetime>",
               },
@@ -53821,14 +54449,17 @@ webhooks:
                 "type": "optional<WebhooksListResponseWebhooksItemFilter>",
               },
               "id": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Webhook registration",
                 "type": "optional<string>",
               },
               "lastTriggered": {
+                "access": "read-only",
                 "docs": "Date the Webhook instance was last triggered",
                 "type": "optional<datetime>",
               },
               "siteId": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Site the Webhook is registered in",
                 "type": "optional<string>",
               },
@@ -53856,6 +54487,7 @@ webhooks:
                 "type": "optional<string>",
               },
               "workspaceId": {
+                "access": "read-only",
                 "docs": "Unique identifier for the Workspace the Webhook is registered in",
                 "type": "optional<string>",
               },
@@ -54011,6 +54643,7 @@ webhooks:
       id:
         type: optional<string>
         docs: Unique identifier for the Webhook registration
+        access: read-only
       triggerType:
         type: optional<WebhooksListResponseWebhooksItemTriggerType>
         docs: >
@@ -54061,9 +54694,11 @@ webhooks:
       workspaceId:
         type: optional<string>
         docs: Unique identifier for the Workspace the Webhook is registered in
+        access: read-only
       siteId:
         type: optional<string>
         docs: Unique identifier for the Site the Webhook is registered in
+        access: read-only
       filter:
         type: optional<WebhooksListResponseWebhooksItemFilter>
         docs: >-
@@ -54072,9 +54707,11 @@ webhooks:
       lastTriggered:
         type: optional<datetime>
         docs: Date the Webhook instance was last triggered
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: Date the Webhook registration was created
+        access: read-only
     source:
       openapi: ../openapi.yml
     inline: true
@@ -54235,6 +54872,7 @@ webhooks:
       id:
         type: optional<string>
         docs: Unique identifier for the Webhook registration
+        access: read-only
       triggerType:
         type: optional<WebhooksCreateResponseTriggerType>
         docs: >
@@ -54285,9 +54923,11 @@ webhooks:
       workspaceId:
         type: optional<string>
         docs: Unique identifier for the Workspace the Webhook is registered in
+        access: read-only
       siteId:
         type: optional<string>
         docs: Unique identifier for the Site the Webhook is registered in
+        access: read-only
       filter:
         type: optional<WebhooksCreateResponseFilter>
         docs: >-
@@ -54296,9 +54936,11 @@ webhooks:
       lastTriggered:
         type: optional<datetime>
         docs: Date the Webhook instance was last triggered
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: Date the Webhook registration was created
+        access: read-only
     source:
       openapi: ../openapi.yml
   WebhooksGetResponseTriggerType:
@@ -54378,6 +55020,7 @@ webhooks:
       id:
         type: optional<string>
         docs: Unique identifier for the Webhook registration
+        access: read-only
       triggerType:
         type: optional<WebhooksGetResponseTriggerType>
         docs: >
@@ -54428,9 +55071,11 @@ webhooks:
       workspaceId:
         type: optional<string>
         docs: Unique identifier for the Workspace the Webhook is registered in
+        access: read-only
       siteId:
         type: optional<string>
         docs: Unique identifier for the Site the Webhook is registered in
+        access: read-only
       filter:
         type: optional<WebhooksGetResponseFilter>
         docs: >-
@@ -54439,9 +55084,11 @@ webhooks:
       lastTriggered:
         type: optional<datetime>
         docs: Date the Webhook instance was last triggered
+        access: read-only
       createdOn:
         type: optional<datetime>
         docs: Date the Webhook registration was created
+        access: read-only
     source:
       openapi: ../openapi.yml
 imports:

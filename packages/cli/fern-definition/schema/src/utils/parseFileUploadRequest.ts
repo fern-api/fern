@@ -2,10 +2,13 @@ import { MediaType } from "@fern-api/core-utils";
 
 import {
     AvailabilityUnionSchema,
+    HttpInlineRequestBodyPropertySchema,
     HttpInlineRequestBodySchema,
     HttpRequestSchema,
     ObjectPropertySchema
 } from "../schemas";
+import { isFileInGeneric } from "./generics/isFileInGeneric";
+import { parseGenericNested } from "./generics/parseGenericNested";
 import { isInlineRequestBody } from "./isInlineRequestBody";
 import { parseRawFileType } from "./parseRawFileType";
 
@@ -34,6 +37,7 @@ export declare namespace RawFileUploadRequest {
         availability?: AvailabilityUnionSchema | undefined;
         key: string;
         contentType?: string;
+        style?: "exploded" | "json" | "form";
     }
 }
 
@@ -46,13 +50,11 @@ function isFileUploadRequest(request: HttpRequestSchema | string): request is Ht
         return true;
     }
 
-    if (request.body != null && isInlineRequestBody(request.body)) {
-        if (
-            Object.values(request.body.properties ?? []).some((property) => {
-                const propertyType = typeof property === "string" ? property : property.type;
-                return propertyType === "file";
-            })
-        ) {
+    if (request.body == null) {
+        return false;
+    }
+    if (isInlineRequestBody(request.body)) {
+        if (Object.values(request.body.properties ?? []).some(doesPropertyHaveFile)) {
             return true;
         }
     }
@@ -85,6 +87,7 @@ function createRawFileUploadRequest(
         (acc, [key, propertyType]) => {
             const docs = typeof propertyType !== "string" ? propertyType.docs : undefined;
             const contentType = typeof propertyType !== "string" ? propertyType["content-type"] : undefined;
+            const style = typeof propertyType !== "string" ? propertyType.style : undefined;
             const maybeParsedFileType = parseRawFileType(
                 typeof propertyType === "string" ? propertyType : propertyType.type
             );
@@ -95,10 +98,11 @@ function createRawFileUploadRequest(
                     docs,
                     isOptional: maybeParsedFileType.isOptional,
                     isArray: maybeParsedFileType.isArray,
-                    contentType
+                    contentType,
+                    style
                 });
             } else {
-                acc.push({ isFile: false, key, propertyType, docs, contentType });
+                acc.push({ isFile: false, key, propertyType, docs, contentType, style });
             }
             return acc;
         },
@@ -115,4 +119,21 @@ function createRawFileUploadRequest(
         extends: requestBody.extends,
         properties
     };
+}
+
+function doesPropertyHaveFile(property: HttpInlineRequestBodyPropertySchema): boolean {
+    const propertyType = typeof property === "string" ? property : property.type;
+    if (propertyType === "file") {
+        return true;
+    }
+    if (!propertyType.includes("file")) {
+        // fast check to avoid unnecessary parsing
+        return false;
+    }
+    const generic = parseGenericNested(propertyType);
+    if (generic == null) {
+        return false;
+    }
+
+    return isFileInGeneric(generic);
 }

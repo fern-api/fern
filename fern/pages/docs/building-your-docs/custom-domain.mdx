@@ -8,6 +8,7 @@ Bring Fern Docs to your custom domain.
 You can use:
 - A subdomain on your custom domain, such as `docs.example.com`
 - A subpath on your custom domain, such as `example.com/docs`
+- A root domain, such as `example.com`
 
 <Tip>This feature is available on the Basic plan and above. [Contact us](https://buildwithfern.com/contact) to get set up.</Tip>
 
@@ -93,6 +94,52 @@ If you need to update your Fern Docs site manually, run `fern generate --docs`.
 ### Reach out to us
 
 This feature is available on the Fern Docs Basic plan and above. Reach out to [sales@buildwithfern.com](mailto:sales@buildwithfern.com) to set up your subscription and obtain the configuration for setting up your custom subpath. 
+
+</Steps>
+</Accordion>
+<Accordion title = "Root domain">
+
+To host your documentation on a root domain, i.e. `mydomain.com`, you need to edit your `docs.yml` configuration and then get provider-specific instructions for setting up the domain. Common providers include Cloudflare, AWS Route53 and Cloudfront, Netlify, and Vercel.
+
+<Steps>
+
+### Configure the `url` in `docs.yml`
+
+<CodeBlock title="Root domain">
+```yaml
+instances:
+  - url: example.docs.buildwithfern.com
+    custom-domain: www.example.com
+```
+</CodeBlock>
+
+[Here's an example.](https://github.com/dannysheridan/katiedanny/blob/2fcf5769e2994af29e31d00904e04788b188a18b/fern/docs.yml#L3-L5)
+
+### Configure your DNS settings
+
+You'll need two DNS records configured for your root domain.
+
+<CodeBlock title="WWW DNS Record">
+```
+Type    Name    Value
+CNAME   www     cname.vercel-dns.com.
+```
+</CodeBlock>
+
+<CodeBlock title="Apex Domain DNS Record">
+```
+Type    Name    Value
+A       @       76.76.21.21
+```
+</CodeBlock>
+
+This redirects `mydomain.com` to `www.mydomain.com`.
+
+Contact Fern Support after adding these records and we will provision a SSL certificate.
+
+### Verify the setup
+
+Once we've completed the setup re-generate your docs by running `fern generate --docs`. Within two minutes, you should be able to access your documentation at `mydomain.com`.
 
 </Steps>
 </Accordion>

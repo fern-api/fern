@@ -9,7 +9,7 @@
                 "identifier_override": "endpoint_tasktest.hello"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedCsharpNamespaceConflict;\n\nvar client = new SeedCsharpNamespaceConflictClient();\nawait client.Tasktest.HelloAsync();\n"
             }
         }

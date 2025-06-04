@@ -117,6 +117,13 @@ export class EndpointSnippetGenerator {
                 });
             }
         }
+
+        this.context.errors.scope(Scope.PathParameters);
+        if (this.context.ir.pathParameters != null) {
+            fields.push(...this.getPathParameters({ namedParameters: this.context.ir.pathParameters, snippet }));
+        }
+        this.context.errors.unscope();
+
         this.context.errors.scope(Scope.Headers);
         if (this.context.ir.headers != null && snippet.headers != null) {
             fields.push(
@@ -231,6 +238,15 @@ export class EndpointSnippetGenerator {
                     return [];
                 }
                 return this.getConstructorHeaderAuthArgs({ auth, values });
+            case "oauth":
+                if (values.type !== "oauth") {
+                    this.context.errors.add({
+                        severity: Severity.Critical,
+                        message: this.context.newAuthMismatchError({ auth, values }).message
+                    });
+                    return [];
+                }
+                return this.getConstructorOAuthArgs({ auth, values });
             default:
                 assertNever(auth);
         }
@@ -284,6 +300,25 @@ export class EndpointSnippetGenerator {
                     typeReference: auth.header.typeReference,
                     value: values.value
                 })
+            }
+        ];
+    }
+
+    private getConstructorOAuthArgs({
+        auth,
+        values
+    }: {
+        auth: FernIr.dynamic.OAuth;
+        values: FernIr.dynamic.OAuthValues;
+    }): ts.ObjectField[] {
+        return [
+            {
+                name: this.context.getPropertyName(auth.clientId),
+                value: ts.TypeLiteral.string(values.clientId)
+            },
+            {
+                name: this.context.getPropertyName(auth.clientSecret),
+                value: ts.TypeLiteral.string(values.clientSecret)
             }
         ];
     }
@@ -369,9 +404,11 @@ export class EndpointSnippetGenerator {
         const args: ts.TypeLiteral[] = [];
 
         this.context.errors.scope(Scope.PathParameters);
-        if (request.pathParameters != null) {
-            const pathParameterFields = this.getPathParameters({ namedParameters: request.pathParameters, snippet });
-            args.push(...pathParameterFields.map((field) => field.value));
+        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
+        if (pathParameters.length > 0) {
+            args.push(
+                ...this.getPathParameters({ namedParameters: pathParameters, snippet }).map((field) => field.value)
+            );
         }
         this.context.errors.unscope();
 
@@ -638,7 +675,11 @@ export class EndpointSnippetGenerator {
 
         const pathParameters = this.context.associateByWireValue({
             parameters: namedParameters,
-            values: snippet.pathParameters ?? {}
+            values: snippet.pathParameters ?? {},
+
+            // Path parameters are distributed across the client constructor
+            // and the request method, so we ignore missing parameters here.
+            ignoreMissingParameters: true
         });
         for (const parameter of pathParameters) {
             args.push({

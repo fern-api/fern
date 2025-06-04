@@ -6,22 +6,14 @@ import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 from ....core.pydantic_utilities import update_forward_refs
-
-
 class MapType(UniversalBaseModel):
     key_type: "VariableType" = pydantic.Field(alias="keyType")
     value_type: "VariableType" = pydantic.Field(alias="valueType")
-
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid
-
-
-from .variable_type import VariableType  # noqa: E402
-
+from .variable_type import VariableType # noqa: E402, F401, I001
 update_forward_refs(MapType)

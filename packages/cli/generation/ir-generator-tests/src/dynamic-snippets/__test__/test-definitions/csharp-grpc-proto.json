@@ -61,7 +61,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:UserModel": {
             "type": "object",
@@ -247,7 +248,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:Metadata": {
             "type": "undiscriminatedUnion",
@@ -653,8 +655,11 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

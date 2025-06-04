@@ -19,6 +19,7 @@ class NodeWriterImpl(AST.NodeWriter, WriterImpl):
     ):
         super().__init__(
             should_format=should_format,
+            should_sort_imports=True,
             should_format_as_snippet=should_format_as_snippet,
             should_include_header=should_include_header,
             whitelabel=whitelabel,

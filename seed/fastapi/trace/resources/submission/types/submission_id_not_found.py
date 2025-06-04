@@ -5,16 +5,11 @@ from .submission_id import SubmissionId
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
-
-
 class SubmissionIdNotFound(UniversalBaseModel):
     missing_submission_id: SubmissionId = pydantic.Field(alias="missingSubmissionId")
-
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid

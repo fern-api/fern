@@ -117,7 +117,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_inlined:SomeAliasedLiteral": {
             "type": "alias",
@@ -288,7 +289,8 @@
                         "value": "type_inlined:ANestedLiteral"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_inlined:ANestedLiteral": {
             "type": "object",
@@ -388,7 +390,225 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
+        },
+        "type_inlined:DiscriminatedLiteral": {
+            "type": "discriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "DiscriminatedLiteral",
+                    "camelCase": {
+                        "unsafeName": "discriminatedLiteral",
+                        "safeName": "discriminatedLiteral"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "discriminated_literal",
+                        "safeName": "discriminated_literal"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "DISCRIMINATED_LITERAL",
+                        "safeName": "DISCRIMINATED_LITERAL"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "DiscriminatedLiteral",
+                        "safeName": "DiscriminatedLiteral"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "inlined",
+                            "camelCase": {
+                                "unsafeName": "inlined",
+                                "safeName": "inlined"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "inlined",
+                                "safeName": "inlined"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "INLINED",
+                                "safeName": "INLINED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Inlined",
+                                "safeName": "Inlined"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "inlined",
+                        "camelCase": {
+                            "unsafeName": "inlined",
+                            "safeName": "inlined"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "inlined",
+                            "safeName": "inlined"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "INLINED",
+                            "safeName": "INLINED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Inlined",
+                            "safeName": "Inlined"
+                        }
+                    }
+                }
+            },
+            "discriminant": {
+                "name": {
+                    "originalName": "type",
+                    "camelCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TYPE",
+                        "safeName": "TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Type",
+                        "safeName": "Type"
+                    }
+                },
+                "wireValue": "type"
+            },
+            "types": {
+                "customName": {
+                    "type": "singleProperty",
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "customName",
+                            "camelCase": {
+                                "unsafeName": "customName",
+                                "safeName": "customName"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "custom_name",
+                                "safeName": "custom_name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CUSTOM_NAME",
+                                "safeName": "CUSTOM_NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "CustomName",
+                                "safeName": "CustomName"
+                            }
+                        },
+                        "wireValue": "customName"
+                    },
+                    "properties": null
+                },
+                "defaultName": {
+                    "type": "singleProperty",
+                    "typeReference": {
+                        "type": "literal",
+                        "value": {
+                            "type": "string",
+                            "value": "Bob"
+                        }
+                    },
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "defaultName",
+                            "camelCase": {
+                                "unsafeName": "defaultName",
+                                "safeName": "defaultName"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "default_name",
+                                "safeName": "default_name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DEFAULT_NAME",
+                                "safeName": "DEFAULT_NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "DefaultName",
+                                "safeName": "DefaultName"
+                            }
+                        },
+                        "wireValue": "defaultName"
+                    },
+                    "properties": null
+                },
+                "george": {
+                    "type": "singleProperty",
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "BOOLEAN"
+                    },
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "george",
+                            "camelCase": {
+                                "unsafeName": "george",
+                                "safeName": "george"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "george",
+                                "safeName": "george"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "GEORGE",
+                                "safeName": "GEORGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "George",
+                                "safeName": "George"
+                            }
+                        },
+                        "wireValue": "george"
+                    },
+                    "properties": null
+                },
+                "literalGeorge": {
+                    "type": "singleProperty",
+                    "typeReference": {
+                        "type": "literal",
+                        "value": {
+                            "type": "boolean",
+                            "value": true
+                        }
+                    },
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "literalGeorge",
+                            "camelCase": {
+                                "unsafeName": "literalGeorge",
+                                "safeName": "literalGeorge"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "literal_george",
+                                "safeName": "literal_george"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LITERAL_GEORGE",
+                                "safeName": "LITERAL_GEORGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "LiteralGeorge",
+                                "safeName": "LiteralGeorge"
+                            }
+                        },
+                        "wireValue": "literalGeorge"
+                    },
+                    "properties": null
+                }
+            }
         },
         "type_inlined:UndiscriminatedLiteral": {
             "type": "undiscriminatedUnion",
@@ -467,6 +687,31 @@
                         "type": "string",
                         "value": "$ending"
                     }
+                },
+                {
+                    "type": "literal",
+                    "value": {
+                        "type": "string",
+                        "value": "10 non-alphanumeric string literals you're going to love & why (number 8 will surprise you)"
+                    }
+                },
+                {
+                    "type": "literal",
+                    "value": {
+                        "type": "boolean",
+                        "value": true
+                    }
+                },
+                {
+                    "type": "literal",
+                    "value": {
+                        "type": "boolean",
+                        "value": false
+                    }
+                },
+                {
+                    "type": "primitive",
+                    "value": "BOOLEAN"
                 }
             ]
         },
@@ -893,7 +1138,8 @@
                         "value": "type_reference:ContainerObject"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_reference:ContainerObject": {
             "type": "object",
@@ -993,7 +1239,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_reference:NestedObjectWithLiterals": {
             "type": "object",
@@ -1152,7 +1399,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_reference:SomeLiteral": {
             "type": "alias",
@@ -1536,7 +1784,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_inlined.send": {
             "auth": null,
@@ -1931,7 +2180,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_path.send": {
             "auth": null,
@@ -2042,7 +2292,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_query.send": {
             "auth": null,
@@ -2468,7 +2719,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_reference.send": {
             "auth": null,
@@ -2553,8 +2805,11 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

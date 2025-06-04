@@ -41,4 +41,12 @@ class Moment extends JsonSerializableType
         $this->date = $values['date'];
         $this->datetime = $values['datetime'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

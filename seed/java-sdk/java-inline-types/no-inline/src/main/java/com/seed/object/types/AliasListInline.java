@@ -5,9 +5,10 @@ package com.seed.object.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.seed.object.core.WrappedAlias;
 import java.util.List;
 
-public final class AliasListInline {
+public final class AliasListInline implements WrappedAlias {
     private final List<AliasInlineValue> value;
 
     private AliasListInline(List<AliasInlineValue> value) {

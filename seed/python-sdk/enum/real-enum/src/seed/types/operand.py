@@ -23,7 +23,7 @@ class Operand(str, enum.Enum):
     LESS_THAN = "less_than"
     """
     The name and value should be similar
-    are similar for less than. 
+    are similar for less than.
     """
 
     def visit(

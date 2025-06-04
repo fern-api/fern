@@ -5,14 +5,12 @@ import pydantic
 from .user import User
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
-
-
 class NestedUser(UniversalBaseModel):
     """
     Examples
     --------
     from seed.mixed_case.resources.service import NestedUser, User
-
+    
     NestedUser(
         name="username",
         nested_user=User(
@@ -22,15 +20,11 @@ class NestedUser(UniversalBaseModel):
         ),
     )
     """
-
     name: str = pydantic.Field(alias="Name")
     nested_user: User = pydantic.Field(alias="NestedUser")
-
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid

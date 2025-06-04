@@ -24,9 +24,10 @@
     "lint:style": "stylelint 'packages/**/src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
     "lint:spelling": "cspell **",
-    "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
+    "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore --cache \"**\"",
     "format:fix": "pnpm format --ignore-path ./shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
+    "format:fix:diff": "git diff --name-only --diff-filter=ACMR | xargs prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore --cache",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ./shared/.prettierignore --cache \"**\"",
     "add-workspace": "yarn mrlint add-workspace",
     "depcheck": "pnpm -r --no-bail depcheck",
     "codegen:local": "pnpm fern:local generate",
@@ -44,6 +45,7 @@
     "package-yml:jsonschema": "pnpm fern jsonschema package-yml.schema.json --api fern-definition --type file.PackageMarkerFileSchema && pnpm fern jsonschema packages/cli/workspace/lazy-fern-workspace/src/package-yml.schema.json --api fern-definition --type file.PackageMarkerFileSchema",
     "docs-yml:jsonschema": "pnpm fern jsonschema docs-yml.schema.json --api docs-yml --type docs.DocsConfiguration && pnpm fern jsonschema packages/cli/workspace/loader/src/docs-yml.schema.json --api docs-yml --type docs.DocsConfiguration",
     "versions-yml:jsonschema": "pnpm fern jsonschema packages/cli/yaml/docs-validator/src/docsAst/versions-yml.schema.json --api docs-yml --type docs.VersionFileConfig",
+    "products-yml:jsonschema": "pnpm fern jsonschema packages/cli/yaml/docs-validator/src/docsAst/products-yml.schema.json --api docs-yml --type docs.ProductFileConfig",
     "generators-yml:jsonschema": "pnpm fern jsonschema generators-yml.schema.json --api generators-yml --type generators.GeneratorsConfigurationSchema",
     "check-cli-release-blockers": "pnpm fern-script check-cli-release-blockers",
     "check-docs-release-blockers": "pnpm fern-script check-docs-release-blockers",
@@ -99,19 +101,20 @@
     "ts-node": "^10.9.2",
     "turbo": "^2.3.4",
     "typescript": "5.7.2",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.9"
   },
   "resolutions": {
     "@babel/traverse": "7.23.2",
     "cross-spawn": "7.0.5",
     "json5": "2.2.2",
+    "katex": "0.16.21",
     "micromatch": "4.0.8",
     "nanoid": "3.3.8",
     "yaml": "2.3.3"
   },
   "dependencies": {
     "@fern-api/logging-execa": "workspace:*",
-    "@fern-fern/generator-exec-sdk": "^0.0.816",
+    "@fern-fern/generator-exec-sdk": "^0.0.1045",
     "@fern-fern/ir-v39-sdk": "^0.0.1",
     "import-local": "^3.2.0",
     "terminal-link": "^3.0.0"

@@ -6,6 +6,8 @@ use Seed\Core\Json\JsonSerializableType;
 use DateTime;
 use Seed\Core\Json\JsonProperty;
 use Seed\Core\Types\Date;
+use Seed\Core\Types\ArrayType;
+use Seed\Core\Types\Union;
 
 class Metadata extends JsonSerializableType
 {
@@ -34,11 +36,25 @@ class Metadata extends JsonSerializableType
     public ?bool $activated;
 
     /**
+     * @var Status $status
+     */
+    #[JsonProperty('status')]
+    public Status $status;
+
+    /**
+     * @var ?array<string, ?string> $values
+     */
+    #[JsonProperty('values'), ArrayType(['string' => new Union('string', 'null')])]
+    public ?array $values;
+
+    /**
      * @param array{
      *   createdAt: DateTime,
      *   updatedAt: DateTime,
+     *   status: Status,
      *   avatar?: ?string,
      *   activated?: ?bool,
+     *   values?: ?array<string, ?string>,
      * } $values
      */
     public function __construct(
@@ -48,5 +64,15 @@ class Metadata extends JsonSerializableType
         $this->updatedAt = $values['updatedAt'];
         $this->avatar = $values['avatar'] ?? null;
         $this->activated = $values['activated'] ?? null;
+        $this->status = $values['status'];
+        $this->values = $values['values'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

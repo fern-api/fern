@@ -10,3 +10,5 @@ export * from "./sdk-inlined-request-body-schema";
 export { type SdkContext } from "./SdkContext";
 export * from "./timeout-sdk-error";
 export * from "./version";
+export * from "./websocket-class";
+export * from "./websocket-type-schema";

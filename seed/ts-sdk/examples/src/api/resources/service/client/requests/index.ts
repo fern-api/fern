@@ -1,1 +1,0 @@
-export { GetMetadataRequest } from "./GetMetadataRequest";

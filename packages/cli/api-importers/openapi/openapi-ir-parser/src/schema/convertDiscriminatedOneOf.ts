@@ -26,10 +26,10 @@ export function convertDiscriminatedOneOf({
     wrapAsNullable,
     discriminator,
     context,
+    namespace,
     groupName,
     encoding,
-    source,
-    namespace
+    source
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -42,10 +42,10 @@ export function convertDiscriminatedOneOf({
     wrapAsNullable: boolean;
     discriminator: OpenAPIV3.DiscriminatorObject;
     context: SchemaParserContext;
+    namespace: string | undefined;
     groupName: SdkGroupName | undefined;
     encoding: Encoding | undefined;
     source: Source;
-    namespace: string | undefined;
 }): SchemaWithExample {
     const discriminant = discriminator.propertyName;
     const unionSubTypes = Object.fromEntries(
@@ -100,6 +100,7 @@ export function convertDiscriminatedOneOf({
         availability,
         discriminant,
         subtypes: unionSubTypes,
+        namespace,
         groupName,
         source
     });
@@ -118,10 +119,10 @@ export function convertDiscriminatedOneOfWithVariants({
     discriminant,
     variants,
     context,
+    namespace,
     groupName,
     encoding,
-    source,
-    namespace
+    source
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -135,10 +136,10 @@ export function convertDiscriminatedOneOfWithVariants({
     discriminant: string;
     variants: Record<string, OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>;
     context: SchemaParserContext;
+    namespace: string | undefined;
     groupName: SdkGroupName | undefined;
     encoding: Encoding | undefined;
     source: Source;
-    namespace: string | undefined;
 }): SchemaWithExample {
     const unionSubTypes = Object.fromEntries(
         Object.entries(variants).map(([discriminantValue, schema]) => {
@@ -198,6 +199,7 @@ export function convertDiscriminatedOneOfWithVariants({
         availability,
         discriminant,
         subtypes: unionSubTypes,
+        namespace,
         groupName,
         source
     });
@@ -213,6 +215,7 @@ export function wrapDiscriminatedOneOf({
     availability,
     discriminant,
     subtypes,
+    namespace,
     groupName,
     source
 }: {
@@ -225,6 +228,7 @@ export function wrapDiscriminatedOneOf({
     availability: Availability | undefined;
     discriminant: string;
     subtypes: Record<string, SchemaWithExample>;
+    namespace: string | undefined;
     groupName: SdkGroupName | undefined;
     source: Source;
 }): SchemaWithExample {
@@ -243,12 +247,14 @@ export function wrapDiscriminatedOneOf({
                     title,
                     schemas: subtypes,
                     commonProperties: properties,
+                    namespace,
                     groupName,
                     encoding: undefined,
                     source,
                     inline: undefined
                 })
             ),
+            namespace,
             groupName,
             description,
             availability,
@@ -265,6 +271,7 @@ export function wrapDiscriminatedOneOf({
             title,
             schemas: subtypes,
             commonProperties: properties,
+            namespace,
             groupName,
             encoding: undefined,
             source,

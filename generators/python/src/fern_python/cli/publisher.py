@@ -1,10 +1,10 @@
 import subprocess
 from typing import Dict, List, Optional
 
+from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+
 from fern.generator_exec import logging
 from fern.generator_exec.config import GeneratorConfig, GeneratorPublishConfig
-
-from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
 
 class Publisher:
@@ -13,20 +13,37 @@ class Publisher:
     def __init__(
         self,
         *,
+        should_fix: bool,
         should_format: bool,
         generator_exec_wrapper: GeneratorExecWrapper,
         generator_config: GeneratorConfig,
     ):
+        self._should_fix = should_fix
         self._should_format = should_format
         self._generator_exec_wrapper = generator_exec_wrapper
         self._generator_config = generator_config
 
-    def run_ruff_format(self) -> None:
-        self._run_command(
-            command=["poetry", "run", "ruff", "format", "--cache-dir", "../.ruffcache"],
-            safe_command="poetry run ruff format",
-            cwd=None,
-        )
+    def run_ruff_check_fix(self, path: Optional[str] = None, *, cwd: Optional[str] = None) -> None:
+        if self._should_fix:
+            command = ["poetry", "run", "ruff", "check", "--fix", "--no-cache"]
+            if path is not None:
+                command.append(path)
+            self._run_command(
+                command=command,
+                safe_command=" ".join(command),
+                cwd=cwd,
+            )
+
+    def run_ruff_format(self, path: Optional[str] = None, *, cwd: Optional[str] = None) -> None:
+        if self._should_format:
+            command = ["poetry", "run", "ruff", "format", "--no-cache"]
+            if path is not None:
+                command.append(path)
+            self._run_command(
+                command=command,
+                safe_command=" ".join(command),
+                cwd=cwd,
+            )
 
     def run_poetry_install(self) -> None:
         self._run_command(

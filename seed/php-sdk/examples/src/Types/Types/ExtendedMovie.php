@@ -19,23 +19,22 @@ class ExtendedMovie extends JsonSerializableType
 
     /**
      * @param array{
-     *   cast: array<string>,
      *   id: string,
-     *   prequel?: ?string,
      *   title: string,
      *   from: string,
      *   rating: float,
-     *   type: string,
+     *   type: 'movie',
      *   tag: string,
-     *   book?: ?string,
      *   metadata: array<string, mixed>,
      *   revenue: int,
+     *   cast: array<string>,
+     *   prequel?: ?string,
+     *   book?: ?string,
      * } $values
      */
     public function __construct(
         array $values,
     ) {
-        $this->cast = $values['cast'];
         $this->id = $values['id'];
         $this->prequel = $values['prequel'] ?? null;
         $this->title = $values['title'];
@@ -46,5 +45,14 @@ class ExtendedMovie extends JsonSerializableType
         $this->book = $values['book'] ?? null;
         $this->metadata = $values['metadata'];
         $this->revenue = $values['revenue'];
+        $this->cast = $values['cast'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

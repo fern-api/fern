@@ -216,7 +216,7 @@ paths:
       x-fern-streaming: true
       servers:
         - url: https://predict.vellum.ai
-          x-name: Predict
+          x-fern-server-name: Predict
   /v1/generate:
     post:
       operationId: generate
@@ -269,7 +269,7 @@ paths:
           description: ""
       servers:
         - url: https://predict.vellum.ai
-          x-name: Predict
+          x-fern-server-name: Predict
   /v1/generate-stream:
     post:
       operationId: generate_stream
@@ -323,7 +323,7 @@ paths:
       x-fern-streaming: true
       servers:
         - url: https://predict.vellum.ai
-          x-name: Predict
+          x-fern-server-name: Predict
   /v1/model-versions/{id}:
     get:
       operationId: model_versions_retrieve
@@ -562,7 +562,7 @@ paths:
           description: ""
       servers:
         - url: https://predict.vellum.ai
-          x-name: Predict
+          x-fern-server-name: Predict
   /v1/submit-completion-actuals:
     post:
       operationId: submit_completion_actuals
@@ -605,7 +605,7 @@ paths:
           description: ""
       servers:
         - url: https://predict.vellum.ai
-          x-name: Predict
+          x-fern-server-name: Predict
   /v1/test-suites/{id}/test-cases:
     post:
       operationId: upsert_test_suite_test_case
@@ -721,7 +721,7 @@ paths:
           description: ""
       servers:
         - url: https://documents.vellum.ai
-          x-name: Documents
+          x-fern-server-name: Documents
 components:
   schemas:
     BlockTypeEnum:
@@ -2885,4 +2885,4 @@ components:
 servers:
   - url: https://api.vellum.ai
     description: Default Server
-    x-name: Default
+    x-fern-server-name: Default

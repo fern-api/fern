@@ -1,3 +1,8 @@
+## 0.46.19
+**`(fix):`** If a schema in OpenAPI or AsyncAPI has `additionalProperties: true` then the Fern CLI will now respect bringing in
+example properties that are not defined in the schema. Previously, the CLI would skip them.
+
+
 ## 0.46.18
 **`(fix):`** If an object or request is annotated with `extra-properties: true` then the user can provide an example that includes
 extra properties that are no longer in the schema.

@@ -66,40 +66,19 @@ type CallParams struct {
 
 // Call issues an API call according to the given call parameters.
 func (c *Caller) Call(ctx context.Context, params *CallParams) error {
-	url := buildURL(params.URL, params.QueryParameters)
-	req, err := newRequest(
+	resp, err := c.CallRaw(
 		ctx,
-		url,
-		params.Method,
-		params.Headers,
-		params.Request,
-		params.BodyProperties,
-	)
-	if err != nil {
-		return err
-	}
-
-	// If the call has been cancelled, don't issue the request.
-	if err := ctx.Err(); err != nil {
-		return err
-	}
-
-	client := c.client
-	if params.Client != nil {
-		// Use the HTTP client scoped to the request.
-		client = params.Client
-	}
-
-	var retryOptions []RetryOption
-	if params.MaxAttempts > 0 {
-		retryOptions = append(retryOptions, WithMaxAttempts(params.MaxAttempts))
-	}
-
-	resp, err := c.retrier.Run(
-		client.Do,
-		req,
-		params.ErrorDecoder,
-		retryOptions...,
+		&CallRawParams{
+			URL:             params.URL,
+			Method:          params.Method,
+			MaxAttempts:     params.MaxAttempts,
+			Headers:         params.Headers,
+			BodyProperties:  params.BodyProperties,
+			QueryParameters: params.QueryParameters,
+			Client:          params.Client,
+			Request:         params.Request,
+			ErrorDecoder:    params.ErrorDecoder,
+		},
 	)
 	if err != nil {
 		return err
@@ -108,17 +87,6 @@ func (c *Caller) Call(ctx context.Context, params *CallParams) error {
 	// Close the response body after we're done.
 	defer resp.Body.Close()
 
-	// Check if the call was cancelled before we return the error
-	// associated with the call and/or unmarshal the response data.
-	if err := ctx.Err(); err != nil {
-		return err
-	}
-
-	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		return decodeError(resp, params.ErrorDecoder)
-	}
-
-	// Mutate the response parameter in-place.
 	if params.Response != nil {
 		if writer, ok := params.Response.(io.Writer); ok {
 			_, err = io.Copy(writer, resp.Body)
@@ -139,6 +107,75 @@ func (c *Caller) Call(ctx context.Context, params *CallParams) error {
 	}
 
 	return nil
+}
+
+// CallRawParams represents the parameters used to issue an API call.
+type CallRawParams struct {
+	URL             string
+	Method          string
+	MaxAttempts     uint
+	Headers         http.Header
+	BodyProperties  map[string]interface{}
+	QueryParameters url.Values
+	Client          core.HTTPClient
+	Request         interface{}
+	ErrorDecoder    ErrorDecoder
+}
+
+// CallRaw issues an API call according to the given call parameters and returns the raw HTTP response.
+// The caller is responsible for closing the response body.
+func (c *Caller) CallRaw(ctx context.Context, params *CallRawParams) (*http.Response, error) {
+	url := buildURL(params.URL, params.QueryParameters)
+	req, err := newRequest(
+		ctx,
+		url,
+		params.Method,
+		params.Headers,
+		params.Request,
+		params.BodyProperties,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	// If the call has been cancelled, don't issue the request.
+	if err := ctx.Err(); err != nil {
+		return nil, err
+	}
+
+	client := c.client
+	if params.Client != nil {
+		client = params.Client
+	}
+
+	var retryOptions []RetryOption
+	if params.MaxAttempts > 0 {
+		retryOptions = append(retryOptions, WithMaxAttempts(params.MaxAttempts))
+	}
+
+	resp, err := c.retrier.Run(
+		client.Do,
+		req,
+		params.ErrorDecoder,
+		retryOptions...,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	// Check if the call was cancelled before we return the error
+	// associated with the call and/or unmarshal the response data.
+	if err := ctx.Err(); err != nil {
+		defer resp.Body.Close()
+		return nil, err
+	}
+
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		defer resp.Body.Close()
+		return nil, decodeError(resp, params.ErrorDecoder)
+	}
+
+	return resp, nil
 }
 
 // buildURL constructs the final URL by appending the given query parameters (if any).

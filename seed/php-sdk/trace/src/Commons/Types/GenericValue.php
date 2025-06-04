@@ -21,8 +21,8 @@ class GenericValue extends JsonSerializableType
 
     /**
      * @param array{
-     *   stringifiedType?: ?string,
      *   stringifiedValue: string,
+     *   stringifiedType?: ?string,
      * } $values
      */
     public function __construct(
@@ -30,5 +30,13 @@ class GenericValue extends JsonSerializableType
     ) {
         $this->stringifiedType = $values['stringifiedType'] ?? null;
         $this->stringifiedValue = $values['stringifiedValue'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

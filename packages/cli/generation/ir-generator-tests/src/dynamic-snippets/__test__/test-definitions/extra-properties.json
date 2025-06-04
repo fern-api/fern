@@ -61,7 +61,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": true
         },
         "type_user:User": {
             "type": "object",
@@ -158,7 +159,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": true
         }
     },
     "headers": [],
@@ -404,8 +406,11 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

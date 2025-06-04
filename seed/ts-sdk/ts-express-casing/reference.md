@@ -32,8 +32,8 @@ Add a movie to the database
 ```typescript
 await client.imdb.createMovie({
     id: "id",
-    movieTitle: "movie_title",
-    movieRating: 1.1,
+    movie_title: "movie_title",
+    movie_rating: 1.1,
 });
 ```
 

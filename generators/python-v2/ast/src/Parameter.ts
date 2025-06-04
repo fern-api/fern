@@ -7,17 +7,17 @@ export declare namespace Parameter {
     interface Args {
         /* The name of the parameter */
         name: string;
-        /* The type of the parameter */
-        type: Type;
+        /* The type of the parameter. Set to undefined if you explicitly do not want a type hint. */
+        type: Type | undefined;
         /* The initializer for the parameter */
-        initializer?: CodeBlock;
+        initializer?: AstNode;
     }
 }
 
 export class Parameter extends AstNode {
     public readonly name: string;
-    public readonly initializer: CodeBlock | undefined;
-    public readonly type: Type;
+    public readonly initializer: AstNode | undefined;
+    public readonly type: Type | undefined;
 
     constructor({ name, type, initializer }: Parameter.Args) {
         super();
@@ -28,8 +28,11 @@ export class Parameter extends AstNode {
 
     public write(writer: Writer): void {
         writer.write(this.name);
-        writer.write(": ");
-        this.type.write(writer);
+
+        if (this.type) {
+            writer.write(": ");
+            this.type.write(writer);
+        }
 
         if (this.initializer !== undefined) {
             writer.write(" = ");

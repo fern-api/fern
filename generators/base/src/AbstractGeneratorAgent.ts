@@ -19,21 +19,34 @@ export declare namespace AbstractGeneratorAgent {
         featureConfig: FernGeneratorCli.FeatureConfig;
         endpointSnippets: FernGeneratorExec.Endpoint[];
     }
+
+    interface GitHubConfigArgs<GeneratorContext extends AbstractGeneratorContext> {
+        context: GeneratorContext;
+    }
 }
 
 export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGeneratorContext> {
     public README_FILENAME = "README.md";
+    public SNIPPET_FILENAME = "snippet.json";
     public REFERENCE_FILENAME = "reference.md";
 
     private logger: Logger;
     private config: FernGeneratorExec.GeneratorConfig;
     private cli: GeneratorAgentClient;
-
-    public constructor({ logger, config }: { logger: Logger; config: FernGeneratorExec.GeneratorConfig }) {
+    public constructor({
+        logger,
+        config,
+        selfHosted = false
+    }: {
+        logger: Logger;
+        config: FernGeneratorExec.GeneratorConfig;
+        selfHosted?: boolean;
+    }) {
         this.logger = logger;
         this.config = config;
         this.cli = new GeneratorAgentClient({
-            logger
+            logger,
+            selfHosted
         });
     }
 
@@ -57,6 +70,15 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
     }
 
     /**
+     * Runs the GitHub action using the given generator context.
+     * TODO: Maybe rename to `triggerGitHub` since nothing is generated per se?
+     */
+    public async pushToGitHub({ context }: { context: GeneratorContext }): Promise<string> {
+        const githubConfig = this.getGitHubConfig({ context });
+        return this.cli.pushToGitHub({ githubConfig });
+    }
+
+    /**
      * Generates the reference.md content using the given builder.
      */
     public async generateReference(builder: ReferenceConfigBuilder): Promise<string> {
@@ -75,6 +97,13 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
     protected abstract getReadmeConfig(
         args: AbstractGeneratorAgent.ReadmeConfigArgs<GeneratorContext>
     ): FernGeneratorCli.ReadmeConfig;
+
+    /**
+     * Gets the GitHub configuration.
+     */
+    protected abstract getGitHubConfig(
+        args: AbstractGeneratorAgent.GitHubConfigArgs<GeneratorContext>
+    ): FernGeneratorCli.GitHubConfig;
 
     private async readFeatureConfig(): Promise<FernGeneratorCli.FeatureConfig> {
         this.logger.debug("Reading feature configuration ...");

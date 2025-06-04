@@ -101,6 +101,12 @@ public final class AliasGenerator extends AbstractTypeGenerator {
     protected TypeSpec getTypeSpecWithoutInlineTypes() {
         TypeSpec.Builder aliasTypeSpecBuilder =
                 TypeSpec.classBuilder(className).addModifiers(Modifier.PUBLIC, Modifier.FINAL);
+
+        if (generatorContext.getType().equals(AbstractGeneratorContext.GeneratorType.SDK)) {
+            aliasTypeSpecBuilder.addSuperinterface(
+                    generatorContext.getPoetClassNameFactory().getWrappedAliasClassName());
+        }
+
         PoetTypeNameMapper poetTypeNameMapper;
         if (generatorContext.getCustomConfig().enableInlineTypes()) {
             poetTypeNameMapper =
@@ -152,10 +158,16 @@ public final class AliasGenerator extends AbstractTypeGenerator {
     }
 
     private MethodSpec getGetMethod(TypeName aliasTypeName) {
+        TypeName returnType = aliasTypeName;
+
+        if (generatorContext.getType().equals(AbstractGeneratorContext.GeneratorType.SDK)) {
+            returnType = aliasTypeName.isPrimitive() ? aliasTypeName.box() : aliasTypeName;
+        }
+
         return MethodSpec.methodBuilder("get")
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(JsonValue.class)
-                .returns(aliasTypeName)
+                .returns(returnType)
                 .addStatement("return this.$L", VALUE_FIELD_NAME)
                 .build();
     }
@@ -281,7 +293,7 @@ public final class AliasGenerator extends AbstractTypeGenerator {
 
         @Override
         public CodeBlock visitUint() {
-            return CodeBlock.of("return $T.$L($L)", Long.class, "toString", VALUE_FIELD_NAME);
+            return CodeBlock.of("return $T.$L($L)", Integer.class, "toString", VALUE_FIELD_NAME);
         }
 
         @Override

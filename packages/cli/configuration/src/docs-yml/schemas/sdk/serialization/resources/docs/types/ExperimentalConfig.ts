@@ -16,6 +16,7 @@ export const ExperimentalConfig: core.serialization.ObjectSchema<
     ),
     disableStreamToggle: core.serialization.property("disable-stream-toggle", core.serialization.boolean().optional()),
     openapiParserV2: core.serialization.property("openapi-parser-v2", core.serialization.boolean().optional()),
+    openapiParserV3: core.serialization.property("openapi-parser-v3", core.serialization.boolean().optional()),
 });
 
 export declare namespace ExperimentalConfig {
@@ -23,5 +24,6 @@ export declare namespace ExperimentalConfig {
         "mdx-components"?: string[] | null;
         "disable-stream-toggle"?: boolean | null;
         "openapi-parser-v2"?: boolean | null;
+        "openapi-parser-v3"?: boolean | null;
     }
 }

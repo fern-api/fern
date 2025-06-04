@@ -162,6 +162,7 @@ public final class SubmissionResponse {
   }
 
   @JsonTypeName("serverInitialized")
+  @JsonIgnoreProperties("type")
   private static final class ServerInitializedValue implements Value {
     @JsonCreator(
         mode = JsonCreator.Mode.PROPERTIES
@@ -187,6 +188,7 @@ public final class SubmissionResponse {
   }
 
   @JsonTypeName("problemInitialized")
+  @JsonIgnoreProperties("type")
   private static final class ProblemInitializedValue implements Value {
     @JsonProperty("value")
     private ProblemId value;
@@ -225,6 +227,7 @@ public final class SubmissionResponse {
   }
 
   @JsonTypeName("workspaceInitialized")
+  @JsonIgnoreProperties("type")
   private static final class WorkspaceInitializedValue implements Value {
     @JsonCreator(
         mode = JsonCreator.Mode.PROPERTIES
@@ -250,6 +253,7 @@ public final class SubmissionResponse {
   }
 
   @JsonTypeName("serverErrored")
+  @JsonIgnoreProperties("type")
   private static final class ServerErroredValue implements Value {
     @JsonUnwrapped
     private ExceptionInfo value;
@@ -291,6 +295,7 @@ public final class SubmissionResponse {
   }
 
   @JsonTypeName("codeExecutionUpdate")
+  @JsonIgnoreProperties("type")
   private static final class CodeExecutionUpdateValue implements Value {
     @JsonProperty("value")
     private CodeExecutionUpdate value;
@@ -329,6 +334,7 @@ public final class SubmissionResponse {
   }
 
   @JsonTypeName("terminated")
+  @JsonIgnoreProperties("type")
   private static final class TerminatedValue implements Value {
     @JsonUnwrapped
     private TerminatedResponse value;
@@ -369,6 +375,7 @@ public final class SubmissionResponse {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

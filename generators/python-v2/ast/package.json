@@ -25,19 +25,16 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck"
   },
-  "dependencies": {
-    "@fern-api/core-utils": "workspace:*",
-    "@fern-api/base-generator": "workspace:*",
-    "@wasm-fmt/ruff_fmt": "^0.6.1"
-  },
   "devDependencies": {
+    "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "eslint": "^8.56.0",
     "prettier": "^3.4.2",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.9"
   }
 }

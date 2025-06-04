@@ -5,6 +5,100 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v58.2.0] - 2024-05-29
+
+- Feature: Add support for named code samples in HTTP endpoints.
+
+## [v58.1.0] - 2024-05-22
+
+- Feature: Add support for github mode but disabling actual push of the contents.
+
+## [v58.0.0] - 2024-05-22
+
+- Feature: Add support for `HEAD` method.
+
+## [v57.15.0] - 2024-05-05
+
+- Feature: Enable stream HTTP examples.
+
+## [v57.14.0] - 2024-05-05
+
+- Feature: Enable v2Examples for HttpRequestBodyReference.
+
+## [v57.13.0] - 2024-05-05
+
+- Feature: Add v2Examples and displayName property for Errors.
+
+## [v57.12.0] - 2024-05-04
+
+- Feature: Add a top level selfHosted attribute to the IR.
+
+## [v57.11.0] - 2024-05-01
+
+- Feature: Add support for GitHub publishing configuration in the IR, for self-hosted.
+
+## [v57.10.0] - 2024-04-23
+
+- Fix: `examples.yml` cannot have any recursive reference to `http.yml` in fern otherwise the Python SDK will not build.
+
+## [v57.8.0] - 2024-04-23
+
+- Feature: Add content type to file upload endpoints (multipart/form-data).
+
+## [v57.7.0] - 2024-04-14
+
+- Feature: Align Request v2Example shape with FDR shape.
+
+## [v57.6.0] - 2024-04-14
+
+- Feature: Add support for requestBody and response examples.
+
+## [v57.5.0] - 2024-04-04
+
+- Feature: Update support for property–, schema–, and parameter-level examples.
+
+## [v57.4.0] - 2024-04-04
+
+- Feature: Support property–, schema–, and parameter-level examples.
+
+
+## [v57.3.0] - 2024-04-04
+
+- Feature: HTTP and Websocket endpoints now support storing lightweight examples.
+
+## [v57.2.0] - 2024-04-01
+
+- Feature: HTTP Endpoints now support storing dynamic snippet requests as examples. (In the future, this will be the only path.)
+
+## [v57.1.0] - 2024-03-05
+
+- Feature: File properties can now support descriptions.
+
+## [v57.0.0] - 2024-03-03
+
+- Feature: The IR now supports the full generator-exec config.
+- Feature: The Dynamic IR now supports the generator config, OAuth, additional properties, and root path parameters.
+
+## [v56.0.0] - 2024-02-28
+
+- Feature: Add custom pagination schema
+
+## [v55.4.0] - 2024-02-26
+
+- Feature: ObjectProperty declarations now contain an optional `propertyAccess` field (i.e. for `readOnly` or `writeOnly` properties).
+
+## [v55.3.0] - 2024-02-19
+
+- Feature: The Dynamic IR now supports optional list of examples in each endpoint.
+
+## [v55.2.0] - 2024-02-18
+
+- Feature: Add support for configuring a websocket channel URL.
+
+## [v55.1.0] - 2024-02-18
+
+- Feature: Support form encoding in multipart requests.
+
 ## [v55.0.0] - 2024-01-13
 
 - Feature: The IR now supports `nullable<T>` types to distinguish if a property should support explicit `null` values.

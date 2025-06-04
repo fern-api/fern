@@ -16,6 +16,7 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { RemoteTaskHandler } from "./RemoteTaskHandler";
 import { SourceUploader } from "./SourceUploader";
 import { createAndStartJob } from "./createAndStartJob";
+import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
 
 export async function runRemoteGenerationForGenerator({
@@ -51,18 +52,40 @@ export async function runRemoteGenerationForGenerator({
 
     const packageName = generatorsYml.getPackageName({ generatorInvocation });
 
+    /** Sugar to substitute templated env vars in a standard way */
+    const isPreview = absolutePathToPreview != null;
+
+    const substituteEnvVars = <T>(stringOrObject: T) =>
+        replaceEnvVariables(
+            stringOrObject,
+            { onError: (e) => interactiveTaskContext.failAndThrow(e) },
+            { substituteAsEmpty: isPreview }
+        );
+
+    const generatorInvocationWithEnvVarSubstitutions = substituteEnvVars(generatorInvocation);
+
+    const dynamicGeneratorConfig = getDynamicGeneratorConfig({
+        apiName: workspace.definition.rootApiFile.contents.name,
+        organization,
+        generatorInvocation: generatorInvocationWithEnvVarSubstitutions
+    });
+
     const ir = generateIntermediateRepresentation({
         workspace,
         generationLanguage: generatorInvocation.language,
         keywords: generatorInvocation.keywords,
         smartCasing: generatorInvocation.smartCasing,
-        exampleGeneration: { disabled: generatorInvocation.disableExamples },
+        exampleGeneration: {
+            disabled: generatorInvocation.disableExamples,
+            skipAutogenerationIfManualExamplesExist: true
+        },
         audiences,
         readme,
         packageName,
         version: version ?? (await computeSemanticVersion({ fdr, packageName, generatorInvocation })),
         context: interactiveTaskContext,
-        sourceResolver: new SourceResolverImpl(interactiveTaskContext, workspace)
+        sourceResolver: new SourceResolverImpl(interactiveTaskContext, workspace),
+        dynamicGeneratorConfig
     });
 
     const sources = workspace.getSources();
@@ -73,7 +96,8 @@ export async function runRemoteGenerationForGenerator({
             pythonSdk: undefined,
             javaSdk: undefined,
             rubySdk: undefined,
-            goSdk: undefined
+            goSdk: undefined,
+            csharpSdk: undefined
         }
     });
     const response = await fdr.api.v1.register.registerApiDefinition({
@@ -109,17 +133,6 @@ export async function runRemoteGenerationForGenerator({
         interactiveTaskContext.logger.debug("Setting IR source configuration ...");
         ir.sourceConfig = sourceConfig;
     }
-
-    /** Sugar to substitute templated env vars in a standard way */
-    const isPreview = absolutePathToPreview != null;
-    const substituteEnvVars = <T>(stringOrObject: T) =>
-        replaceEnvVariables(
-            stringOrObject,
-            { onError: (e) => interactiveTaskContext.failAndThrow(e) },
-            { substituteAsEmpty: isPreview }
-        );
-
-    const generatorInvocationWithEnvVarSubstitutions = substituteEnvVars(generatorInvocation);
 
     const job = await createAndStartJob({
         projectConfig,
@@ -263,4 +276,16 @@ function convertToFdrApiDefinitionSources(
             }
         ])
     );
+}
+
+/**
+ * Type guard to check if a GitHub configuration is a self-hosted configuration
+ */
+function isGithubSelfhosted(
+    github: generatorsYml.GithubConfigurationSchema | undefined
+): github is generatorsYml.GithubSelfhostedSchema {
+    if (github == null) {
+        return false;
+    }
+    return "uri" in github && "token" in github;
 }

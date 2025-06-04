@@ -77,19 +77,30 @@ export function buildEndpoint({
 
     let pagination: RawSchemas.PaginationSchema | undefined = undefined;
     if (endpoint.pagination != null) {
-        if (endpoint.pagination.type === "cursor") {
-            pagination = {
-                cursor: endpoint.pagination.cursor,
-                next_cursor: endpoint.pagination.nextCursor,
-                results: endpoint.pagination.results
-            };
-        } else {
-            pagination = {
-                offset: endpoint.pagination.offset,
-                step: endpoint.pagination.step,
-                results: endpoint.pagination.results,
-                "has-next-page": endpoint.pagination.hasNextPage
-            };
+        switch (endpoint.pagination.type) {
+            case "cursor":
+                pagination = {
+                    cursor: endpoint.pagination.cursor,
+                    next_cursor: endpoint.pagination.nextCursor,
+                    results: endpoint.pagination.results
+                };
+                break;
+            case "offset":
+                pagination = {
+                    offset: endpoint.pagination.offset,
+                    step: endpoint.pagination.step,
+                    results: endpoint.pagination.results,
+                    "has-next-page": endpoint.pagination.hasNextPage
+                };
+                break;
+            case "custom":
+                pagination = {
+                    type: "custom",
+                    results: endpoint.pagination.results
+                };
+                break;
+            default:
+                assertNever(endpoint.pagination);
         }
     }
 
@@ -114,9 +125,13 @@ export function buildEndpoint({
     }
 
     const headers: Record<string, RawSchemas.HttpHeaderSchema> = {};
-    const globalHeaderNames = context.builder.getGlobalHeaderNames();
+    const alreadyUsedHeaders = context.builder.getGlobalHeaderNames();
+    const authHeaderName = context.builder.getAuthHeaderName();
+    if (authHeaderName != null) {
+        alreadyUsedHeaders.add(authHeaderName);
+    }
     const endpointSpecificHeaders = endpoint.headers.filter((header) => {
-        return !globalHeaderNames.has(header.name);
+        return !alreadyUsedHeaders.has(header.name);
     });
     for (const header of endpointSpecificHeaders) {
         const headerSchema = buildHeader({
@@ -230,6 +245,13 @@ export function buildEndpoint({
                     "status-code": fileResponse.statusCode
                 };
             },
+            bytes: (bytesResponse) => {
+                convertedEndpoint.response = {
+                    docs: bytesResponse.description ?? undefined,
+                    type: "bytes",
+                    "status-code": bytesResponse.statusCode
+                };
+            },
             streamingText: (textResponse) => {
                 convertedEndpoint["response-stream"] = {
                     docs: textResponse.description ?? undefined,
@@ -251,7 +273,7 @@ export function buildEndpoint({
 
     if (context.builder.getEnvironmentType() === "multi") {
         const defaultServer = context.getDefaultServerName();
-        const serverOverride = endpoint.server[0];
+        const serverOverride = endpoint.servers[0];
         if (serverOverride == null) {
             if (defaultServer != null) {
                 convertedEndpoint.url = defaultServer;
@@ -531,16 +553,19 @@ function getRequest({
                     return [property.key, typeReference];
                 })
         );
-        const extendedSchemas: string[] = resolvedSchema.allOf.map((referencedSchema) => {
-            const allOfTypeReference = buildTypeReference({
-                schema: Schema.reference(referencedSchema),
-                fileContainingReference: declarationFile,
-                context,
-                namespace,
-                declarationDepth: 0
-            });
-            return getTypeFromTypeReference(allOfTypeReference);
-        });
+        const extendedSchemas: string[] = resolvedSchema.allOf
+            .map((referencedSchema) => {
+                const allOfTypeReference = buildTypeReference({
+                    schema: Schema.reference(referencedSchema),
+                    fileContainingReference: declarationFile,
+                    context,
+                    namespace,
+                    declarationDepth: 0
+                });
+                return getTypeFromTypeReference(allOfTypeReference);
+            })
+            .filter((schema) => schema !== "unknown");
+
         const requestBodySchema: RawSchemas.HttpRequestBodySchema = {
             properties
         };
@@ -606,15 +631,24 @@ function getRequest({
                         namespace,
                         declarationDepth: 1 // 1 level deep for request body properties
                     });
-                    if (property.contentType != null) {
-                        if (typeof propertyTypeReference === "string") {
-                            propertyTypeReference = {
-                                type: propertyTypeReference,
-                                "content-type": property.contentType
-                            };
-                        } else {
-                            propertyTypeReference["content-type"] = property.contentType;
+
+                    if (property.contentType != null || property.exploded || property.encoding === "form") {
+                        const propertySchema: RawSchemas.HttpInlineRequestBodyPropertySchema =
+                            typeof propertyTypeReference === "string"
+                                ? { type: propertyTypeReference }
+                                : propertyTypeReference;
+
+                        if (property.contentType != null) {
+                            propertySchema["content-type"] = property.contentType;
                         }
+
+                        if (property.encoding === "form") {
+                            propertySchema.style = "form";
+                        } else if (property.exploded) {
+                            propertySchema.style = "exploded";
+                        }
+
+                        propertyTypeReference = propertySchema;
                     }
                     return [property.key, propertyTypeReference];
                 }

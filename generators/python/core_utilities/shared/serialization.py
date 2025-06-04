@@ -2,9 +2,8 @@ import collections
 import inspect
 import typing
 
-import typing_extensions
-
 import pydantic
+import typing_extensions
 
 
 class FieldMetadata:
@@ -159,7 +158,12 @@ def _convert_mapping(
     direction: typing.Literal["read", "write"],
 ) -> typing.Mapping[str, object]:
     converted_object: typing.Dict[str, object] = {}
-    annotations = typing_extensions.get_type_hints(expected_type, include_extras=True)
+    try:
+        annotations = typing_extensions.get_type_hints(expected_type, include_extras=True)
+    except NameError:
+        # The TypedDict contains a circular reference, so
+        # we use the __annotations__ attribute directly.
+        annotations = getattr(expected_type, "__annotations__", {})
     aliases_to_field_names = _get_alias_to_field_name(annotations)
     for key, value in object_.items():
         if direction == "read" and key in aliases_to_field_names:
@@ -179,9 +183,9 @@ def _convert_mapping(
                 object_=value, annotation=type_, direction=direction
             )
         else:
-            converted_object[
-                _alias_key(key, type_, direction, aliases_to_field_names)
-            ] = convert_and_respect_annotation_metadata(object_=value, annotation=type_, direction=direction)
+            converted_object[_alias_key(key, type_, direction, aliases_to_field_names)] = (
+                convert_and_respect_annotation_metadata(object_=value, annotation=type_, direction=direction)
+            )
     return converted_object
 
 

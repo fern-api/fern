@@ -1,11 +1,6 @@
 from typing import List, Optional
 
-import fern.ir.resources as ir_types
-
-from fern_python.codegen import AST, SourceFile
-from fern_python.snippet import SnippetWriter
-
-from ....context import PydanticGeneratorContext
+from ....context.pydantic_generator_context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig
 from ...fern_aware_pydantic_model import FernAwarePydanticModel
 from ..object_generator import (
@@ -13,6 +8,10 @@ from ..object_generator import (
     AbstractObjectSnippetGenerator,
     ObjectProperty,
 )
+from fern_python.codegen import AST, SourceFile
+from fern_python.snippet import SnippetWriter
+
+import fern.ir.resources as ir_types
 
 
 class PydanticModelObjectGenerator(AbstractObjectGenerator):
@@ -42,17 +41,40 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
         )
 
     def generate(self) -> None:
+        if self._custom_config.use_inheritance_for_extended_models:
+            extends = self._extends
+            properties = self._properties
+        else:
+            extends = []
+            # NOTE: we inline the properties from extended types here to avoid inheritance, which causes potential circular
+            #       reference issues in particular cases with forward refs.
+            properties = list(self._properties)
+            if self._name is not None:
+                for extended_properties in self._extends:
+                    properties.extend(
+                        [
+                            ObjectProperty(
+                                name=extended_property.name,
+                                value_type=extended_property.value_type,
+                                docs=extended_property.docs,
+                            )
+                            for extended_property in self._context.get_all_properties_including_extensions(
+                                extended_properties.type_id
+                            )
+                        ]
+                    )
+
         with FernAwarePydanticModel(
             class_name=self._class_name,
             type_name=self._name,
-            extends=self._extends,
+            extends=extends,
             context=self._context,
             custom_config=self._custom_config,
             source_file=self._source_file,
             docstring=self._docs,
             snippet=self._snippet,
         ) as pydantic_model:
-            for property in self._properties:
+            for property in properties:
                 pydantic_model.add_field(
                     name=property.name.name.snake_case.safe_name,
                     pascal_case_field_name=property.name.name.pascal_case.safe_name,

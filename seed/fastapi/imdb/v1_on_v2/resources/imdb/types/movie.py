@@ -3,8 +3,6 @@
 from ....core.pydantic_utilities import UniversalBaseModel
 from .movie_id import MovieId
 import pydantic.v1
-
-
 class Movie(UniversalBaseModel):
     id: MovieId
     title: str
@@ -12,6 +10,7 @@ class Movie(UniversalBaseModel):
     """
     The rating scale is one to five stars
     """
-
+    
+    
     class Config:
         extra = pydantic.v1.Extra.forbid

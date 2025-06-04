@@ -205,6 +205,7 @@ function visitEndpoint({
                                                     validation: property.validation
                                                 });
                                             },
+                                            style: noop,
                                             "content-type": noop,
                                             audiences: noop,
                                             encoding: noop,

@@ -1,0 +1,57 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "c275d271",
+            "id": {
+                "method": "GET",
+                "path": "/resource/{ResourceID}",
+                "identifier_override": "endpoint_service.getResource"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.mixedCase.SeedMixedCaseClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedCaseClient client = SeedMixedCaseClient\n            .builder()\n            .build();\n\n        client.service().getResource(\"rsc-xyz\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.mixedCase.SeedMixedCaseClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedCaseClient client = SeedMixedCaseClient\n            .builder()\n            .build();\n\n        client.service().getResource(\"rsc-xyz\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "f0dbd40f",
+            "id": {
+                "method": "GET",
+                "path": "/resource/{ResourceID}",
+                "identifier_override": "endpoint_service.getResource"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.mixedCase.SeedMixedCaseClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedCaseClient client = SeedMixedCaseClient\n            .builder()\n            .build();\n\n        client.service().getResource(\"ResourceID\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.mixedCase.SeedMixedCaseClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedCaseClient client = SeedMixedCaseClient\n            .builder()\n            .build();\n\n        client.service().getResource(\"ResourceID\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "One",
+            "id": {
+                "method": "GET",
+                "path": "/resource",
+                "identifier_override": "endpoint_service.listResources"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.mixedCase.SeedMixedCaseClient;\nimport com.seed.mixedCase.resources.service.requests.ListResourcesRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedCaseClient client = SeedMixedCaseClient\n            .builder()\n            .build();\n\n        client.service().listResources(\n            ListResourcesRequest\n                .builder()\n                .pageLimit(10)\n                .beforeDate(\"2023-01-01\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.mixedCase.SeedMixedCaseClient;\nimport com.seed.mixedCase.resources.service.requests.ListResourcesRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedCaseClient client = SeedMixedCaseClient\n            .builder()\n            .build();\n\n        client.service().listResources(\n            ListResourcesRequest\n                .builder()\n                .pageLimit(10)\n                .beforeDate(\"2023-01-01\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "fcfa2cb6",
+            "id": {
+                "method": "GET",
+                "path": "/resource",
+                "identifier_override": "endpoint_service.listResources"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.mixedCase.SeedMixedCaseClient;\nimport com.seed.mixedCase.resources.service.requests.ListResourcesRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedCaseClient client = SeedMixedCaseClient\n            .builder()\n            .build();\n\n        client.service().listResources(\n            ListResourcesRequest\n                .builder()\n                .pageLimit(1)\n                .beforeDate(\"2023-01-15\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.mixedCase.SeedMixedCaseClient;\nimport com.seed.mixedCase.resources.service.requests.ListResourcesRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedCaseClient client = SeedMixedCaseClient\n            .builder()\n            .build();\n\n        client.service().listResources(\n            ListResourcesRequest\n                .builder()\n                .pageLimit(1)\n                .beforeDate(\"2023-01-15\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

@@ -5,6 +5,7 @@
       "url": "/"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {
       "action-menu": {
@@ -181,7 +182,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/action-menu/{conn_id}/close",
@@ -282,7 +283,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/action-menu/{conn_id}/fetch",
@@ -385,7 +386,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/action-menu/{conn_id}/perform",
@@ -516,7 +517,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/action-menu/{conn_id}/request",
@@ -636,7 +637,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/action-menu/{conn_id}/send-menu",
@@ -1033,7 +1034,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/connections",
@@ -1459,7 +1460,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connections/create-invitation",
@@ -1698,7 +1699,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connections/create-static",
@@ -2065,7 +2066,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connections/receive-invitation",
@@ -2342,7 +2343,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/connections/{conn_id}",
@@ -2552,7 +2553,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/connections/{conn_id}",
@@ -2719,7 +2720,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connections/{conn_id}/accept-invitation",
@@ -2952,7 +2953,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connections/{conn_id}/accept-request",
@@ -3162,7 +3163,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/connections/{conn_id}/endpoints",
@@ -3277,7 +3278,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connections/{conn_id}/establish-inbound/{ref_id}",
@@ -3410,7 +3411,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/connections/{conn_id}/metadata",
@@ -3513,7 +3514,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connections/{conn_id}/metadata",
@@ -3625,7 +3626,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connections/{conn_id}/send-message",
@@ -3757,7 +3758,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connections/{conn_id}/send-ping",
@@ -3899,7 +3900,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/connections/{conn_id}/start-introduction",
@@ -4056,7 +4057,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/credential-definitions",
@@ -4290,7 +4291,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/credential-definitions/created",
@@ -4384,7 +4385,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/credential-definitions/{cred_def_id}",
@@ -4524,7 +4525,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/credential-definitions/{cred_def_id}/write_record",
@@ -4663,7 +4664,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/credential/mime-types/{credential_id}",
@@ -4811,7 +4812,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/credential/revoked/{credential_id}",
@@ -4903,7 +4904,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/credential/w3c/{credential_id}",
@@ -5122,7 +5123,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/credential/w3c/{credential_id}",
@@ -5223,7 +5224,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/credential/{credential_id}",
@@ -5361,7 +5362,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/credential/{credential_id}",
@@ -5512,7 +5513,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/credentials",
@@ -5776,7 +5777,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/credentials/w3c",
@@ -6380,7 +6381,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/didexchange/create-request",
@@ -6679,7 +6680,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/didexchange/receive-request",
@@ -6948,7 +6949,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/didexchange/{conn_id}/accept-invitation",
@@ -7203,7 +7204,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/didexchange/{conn_id}/accept-request",
@@ -7460,7 +7461,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/discover-features-2.0/queries",
@@ -7538,7 +7539,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/discover-features-2.0/records",
@@ -7900,7 +7901,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/discover-features/query",
@@ -8028,7 +8029,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/discover-features/records",
@@ -8217,7 +8218,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/issue-credential-2.0/create",
@@ -8481,7 +8482,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/issue-credential-2.0/create-offer",
@@ -8891,7 +8892,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/issue-credential-2.0/records",
@@ -9197,7 +9198,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/issue-credential-2.0/records/{cred_ex_id}",
@@ -9391,7 +9392,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/issue-credential-2.0/records/{cred_ex_id}",
@@ -9512,7 +9513,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/issue-credential-2.0/records/{cred_ex_id}/issue",
@@ -9737,7 +9738,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/issue-credential-2.0/records/{cred_ex_id}/problem-report",
@@ -9870,7 +9871,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/issue-credential-2.0/records/{cred_ex_id}/send-offer",
@@ -10068,7 +10069,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/issue-credential-2.0/records/{cred_ex_id}/send-request",
@@ -10274,7 +10275,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/issue-credential-2.0/records/{cred_ex_id}/store",
@@ -10481,7 +10482,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/issue-credential-2.0/send",
@@ -10759,7 +10760,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/issue-credential-2.0/send-offer",
@@ -11037,7 +11038,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/issue-credential-2.0/send-proposal",
@@ -11315,7 +11316,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/issue-credential-2.0/send-request",
@@ -11662,7 +11663,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/issue-credential/create",
@@ -12002,7 +12003,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/issue-credential/create-offer",
@@ -12453,7 +12454,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/issue-credential/records",
@@ -12797,7 +12798,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/issue-credential/records/{cred_ex_id}",
@@ -13010,7 +13011,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/issue-credential/records/{cred_ex_id}",
@@ -13131,7 +13132,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/issue-credential/records/{cred_ex_id}/issue",
@@ -13375,7 +13376,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/issue-credential/records/{cred_ex_id}/problem-report",
@@ -13508,7 +13509,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/issue-credential/records/{cred_ex_id}/send-offer",
@@ -13725,7 +13726,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/issue-credential/records/{cred_ex_id}/send-request",
@@ -13957,7 +13958,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/issue-credential/records/{cred_ex_id}/store",
@@ -14183,7 +14184,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/issue-credential/send",
@@ -14530,7 +14531,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/issue-credential/send-offer",
@@ -14849,7 +14850,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/issue-credential/send-proposal",
@@ -15196,7 +15197,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/jsonld/sign",
@@ -15319,7 +15320,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/jsonld/verify",
@@ -15483,7 +15484,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/ledger/did-endpoint",
@@ -15576,7 +15577,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/ledger/did-verkey",
@@ -15669,7 +15670,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/ledger/get-nym-role",
@@ -15741,7 +15742,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/ledger/multiple/config",
@@ -15883,7 +15884,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/ledger/multiple/get-write-ledger",
@@ -16094,7 +16095,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/ledger/register-nym",
@@ -16179,7 +16180,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PATCH",
       "path": "/ledger/rotate-public-did-keypair",
@@ -16252,7 +16253,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/ledger/taa",
@@ -16422,7 +16423,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/ledger/taa/accept",
@@ -16521,7 +16522,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/mediation/default-mediator",
@@ -16684,7 +16685,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/mediation/default-mediator",
@@ -16909,7 +16910,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/mediation/keylists",
@@ -17175,7 +17176,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/mediation/keylists/{mediation_id}/send-keylist-query",
@@ -17298,7 +17299,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/mediation/keylists/{mediation_id}/send-keylist-update",
@@ -17495,7 +17496,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/mediation/request/{conn_id}",
@@ -17828,7 +17829,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/mediation/requests",
@@ -18130,7 +18131,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/mediation/requests/{mediation_id}",
@@ -18322,7 +18323,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/mediation/requests/{mediation_id}",
@@ -18533,7 +18534,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/mediation/requests/{mediation_id}/deny",
@@ -18714,7 +18715,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/mediation/requests/{mediation_id}/grant",
@@ -18858,7 +18859,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/mediation/update-keylist/{conn_id}",
@@ -19007,7 +19008,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/mediation/{mediation_id}/default-mediator",
@@ -19200,7 +19201,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/multitenancy/wallet",
@@ -19384,7 +19385,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/multitenancy/wallet/{wallet_id}",
@@ -19520,7 +19521,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/multitenancy/wallet/{wallet_id}",
@@ -19698,7 +19699,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/multitenancy/wallet/{wallet_id}/remove",
@@ -19829,7 +19830,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/multitenancy/wallet/{wallet_id}/token",
@@ -19938,7 +19939,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/multitenancy/wallets",
@@ -20136,7 +20137,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/out-of-band/create-invitation",
@@ -20469,7 +20470,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/out-of-band/receive-invitation",
@@ -21490,7 +21491,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/plugins",
@@ -21585,7 +21586,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/present-proof-2.0/create-request",
@@ -21913,7 +21914,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/present-proof-2.0/records",
@@ -22199,7 +22200,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/present-proof-2.0/records/{pres_ex_id}",
@@ -22383,7 +22384,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/present-proof-2.0/records/{pres_ex_id}",
@@ -22578,7 +22579,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/present-proof-2.0/records/{pres_ex_id}/credentials",
@@ -22707,7 +22708,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/present-proof-2.0/records/{pres_ex_id}/problem-report",
@@ -22840,7 +22841,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/present-proof-2.0/records/{pres_ex_id}/send-presentation",
@@ -23055,7 +23056,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/present-proof-2.0/records/{pres_ex_id}/send-request",
@@ -23258,7 +23259,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/present-proof-2.0/records/{pres_ex_id}/verify-presentation",
@@ -23443,7 +23444,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/present-proof-2.0/send-proposal",
@@ -23654,7 +23655,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/present-proof-2.0/send-request",
@@ -23865,7 +23866,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/present-proof/create-request",
@@ -24381,7 +24382,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/present-proof/records",
@@ -24673,7 +24674,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/present-proof/records/{pres_ex_id}",
@@ -24860,7 +24861,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/present-proof/records/{pres_ex_id}",
@@ -25055,7 +25056,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/present-proof/records/{pres_ex_id}/credentials",
@@ -25184,7 +25185,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/present-proof/records/{pres_ex_id}/problem-report",
@@ -25317,7 +25318,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/present-proof/records/{pres_ex_id}/send-presentation",
@@ -25613,7 +25614,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/present-proof/records/{pres_ex_id}/send-request",
@@ -25819,7 +25820,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/present-proof/records/{pres_ex_id}/verify-presentation",
@@ -26007,7 +26008,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/present-proof/send-proposal",
@@ -26379,7 +26380,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/present-proof/send-request",
@@ -26772,7 +26773,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/resolver/resolve/{did}",
@@ -26866,7 +26867,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/revocation/active-registry/{cred_def_id}",
@@ -27075,7 +27076,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/revocation/clear-pending-revocations",
@@ -27216,7 +27217,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/revocation/create-registry",
@@ -27481,7 +27482,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/revocation/credential-record",
@@ -27625,7 +27626,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/revocation/publish-revocations",
@@ -27824,7 +27825,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/revocation/registries/created",
@@ -27945,7 +27946,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/revocation/registry/delete-tails-file",
@@ -28027,7 +28028,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}",
@@ -28254,7 +28255,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PATCH",
       "path": "/revocation/registry/{rev_reg_id}",
@@ -28517,7 +28518,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/revocation/registry/{rev_reg_id}/definition",
@@ -28773,7 +28774,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/revocation/registry/{rev_reg_id}/entry",
@@ -28998,7 +28999,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/revocation/registry/{rev_reg_id}/fix-revocation-entry-state",
@@ -29094,7 +29095,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}/issued",
@@ -29187,7 +29188,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}/issued/details",
@@ -29414,7 +29415,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}/issued/indy_recs",
@@ -29544,7 +29545,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PATCH",
       "path": "/revocation/registry/{rev_reg_id}/set-state",
@@ -29750,7 +29751,7 @@
         "type": "file"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}/tails-file-less-deets",
@@ -29799,7 +29800,7 @@
         "type": "file"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}/tails-file",
@@ -29858,7 +29859,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/revocation/registry/{rev_reg_id}/tails-file",
@@ -29961,7 +29962,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/revocation/revoke",
@@ -30161,7 +30162,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/schemas",
@@ -30343,7 +30344,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/schemas/created",
@@ -30437,7 +30438,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/schemas/{schema_id}",
@@ -30582,7 +30583,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/schemas/{schema_id}/write_record",
@@ -30709,7 +30710,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/shutdown",
@@ -30782,7 +30783,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/status",
@@ -30853,7 +30854,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/status/config",
@@ -30909,7 +30910,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/status/live",
@@ -30973,7 +30974,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/status/ready",
@@ -31037,7 +31038,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/status/reset",
@@ -31127,7 +31128,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/transaction/{tran_id}/resend",
@@ -31364,7 +31365,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/transactions",
@@ -31831,7 +31832,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/transactions/create-request",
@@ -32135,7 +32136,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/transactions/{conn_id}/set-endorser-info",
@@ -32285,7 +32286,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/transactions/{conn_id}/set-endorser-role",
@@ -32378,7 +32379,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/transactions/{tran_id}",
@@ -32632,7 +32633,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/transactions/{tran_id}/cancel",
@@ -32908,7 +32909,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/transactions/{tran_id}/endorse",
@@ -33162,7 +33163,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/transactions/{tran_id}/refuse",
@@ -33416,7 +33417,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/transactions/{tran_id}/write",
@@ -33805,7 +33806,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/wallet/did",
@@ -33954,7 +33955,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/wallet/did/create",
@@ -34082,7 +34083,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PATCH",
       "path": "/wallet/did/local/rotate-keypair",
@@ -34166,7 +34167,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/wallet/did/public",
@@ -34338,7 +34339,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/wallet/did/public",
@@ -34458,7 +34459,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/wallet/get-did-endpoint",
@@ -34602,7 +34603,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/wallet/set-did-endpoint",
@@ -34669,7 +34670,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "AMLRecord": {
@@ -34788,7 +34789,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -35274,7 +35276,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -35462,7 +35465,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -35546,7 +35550,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -35628,7 +35633,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -37350,7 +37356,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -38464,7 +38471,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -38487,7 +38495,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -38551,7 +38560,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -39069,7 +39079,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -39299,7 +39310,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -39462,7 +39474,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -39525,7 +39538,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -39840,7 +39854,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -40064,7 +40079,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -40440,7 +40456,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -40771,7 +40788,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -40881,7 +40899,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -40936,7 +40955,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -41262,7 +41282,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -41385,7 +41406,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -41424,7 +41446,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -41440,7 +41463,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -41707,7 +41731,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -42562,7 +42587,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -42821,7 +42847,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -42844,7 +42871,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -43493,7 +43521,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -44435,7 +44464,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -44540,7 +44570,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -44563,7 +44594,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -44735,7 +44767,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -44876,7 +44909,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -44899,7 +44933,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -44989,7 +45024,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -45155,7 +45191,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -45385,7 +45422,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -46225,7 +46263,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -46353,7 +46392,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -46442,7 +46482,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -46522,7 +46563,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -46682,7 +46724,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -46835,7 +46878,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -47414,7 +47458,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -47614,7 +47659,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -48112,7 +48158,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -48135,7 +48182,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -48453,7 +48501,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -48789,7 +48838,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -48805,7 +48855,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -48895,7 +48946,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -50619,7 +50671,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -50790,7 +50843,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -50940,7 +50994,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -51182,7 +51237,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -51425,7 +51481,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -52469,7 +52526,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -53284,7 +53342,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -53458,7 +53517,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -53625,7 +53685,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -53781,7 +53842,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -54010,7 +54072,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -54417,7 +54480,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -54440,7 +54504,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -54463,7 +54528,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -54602,7 +54668,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -55226,7 +55293,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -55249,7 +55317,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -55288,7 +55357,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -55311,7 +55381,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -55373,7 +55444,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -55412,7 +55484,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -55435,7 +55508,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -55474,7 +55548,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -55497,7 +55572,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -55666,7 +55742,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -55783,7 +55860,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -55906,7 +55984,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -56189,7 +56268,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -56278,7 +56358,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -56300,7 +56381,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -56322,7 +56404,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -56344,7 +56427,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -56470,7 +56554,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -56833,7 +56918,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -57044,7 +57130,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -57304,7 +57391,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -57597,7 +57685,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -57641,7 +57730,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -57824,7 +57914,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -58027,7 +58118,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -58071,7 +58163,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -58093,7 +58186,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -58115,7 +58209,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -58464,7 +58559,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -58581,7 +58677,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -58774,7 +58871,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -58796,7 +58894,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -58898,7 +58997,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -58914,7 +59014,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -59065,7 +59166,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -59154,7 +59256,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -59176,7 +59279,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -59198,7 +59302,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -59220,7 +59325,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -59242,7 +59348,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -59660,7 +59767,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -59682,7 +59790,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -59704,7 +59813,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -60153,7 +60263,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -60175,7 +60286,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -60364,7 +60476,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -60761,7 +60874,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -60935,7 +61049,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -60951,7 +61066,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -61095,7 +61211,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -61111,7 +61228,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -61304,7 +61422,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -61583,7 +61702,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -61789,7 +61909,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -61873,7 +61994,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -61918,7 +62040,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -62097,7 +62220,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -62113,7 +62237,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -62366,7 +62491,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -62468,7 +62594,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -62591,7 +62718,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -62635,7 +62763,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -62657,7 +62786,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -63267,7 +63397,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -63289,7 +63420,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -63385,7 +63517,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -63595,7 +63728,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -63617,7 +63751,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -63712,7 +63847,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -63771,7 +63907,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -63793,7 +63930,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -64252,7 +64390,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},

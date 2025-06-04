@@ -2,6 +2,7 @@
 title: 'Commands'
 description: 'Complete reference for all Fern CLI commands for generating SDKs and developer documentation.'
 subtitle: 'Learn about the Fern CLI commands.'
+hideOnThisPage: true
 ---
 
 | Command | Description |
@@ -113,6 +114,9 @@ subtitle: 'Learn about the Fern CLI commands.'
     ```
 
     ### readme
+
+    The `fern init` command supports importing Readme generated docs sites. This requires having a local chromium browser instance installed.
+    You can ensure this is installed by installing the `fern` cli from source, following the instructions [here](https://github.com/fern-api/fern/blob/main/CONTRIBUTING.md).
 
     By adding `--readme URL_TO_README_DOCS_SITE`, the CLI will automatically convert the Readme generated docs site into a Fern docs site.
 
@@ -460,9 +464,28 @@ subtitle: 'Learn about the Fern CLI commands.'
     - Update the generator versions to their latest compatible releases
     - Maintain compatibility with your current Fern compiler version
 
+    Here's what you might see when updates are available:
+
+    ```plaintext
+    ┌───────────────────────────────────────────────────────────────────────────────────┐
+    │                                                                                   │
+    │                                Upgrades available                                 │
+    │                                                                                   │
+    │                                                                                   │
+    │             C# SDK (API: openapi, Group: csharp-sdk) 1.9.11 → 1.9.15              │
+    │              Java SDK (API: openapi, Group: java-sdk) 2.2.0 → 2.11.3              │
+    │           Python SDK (API: openapi, Group: python-sdk) 4.3.10 → 4.3.11            │
+    │                                                                                   │
+    │              Run fern generator upgrade to upgrade your generators.               │
+    │   Run fern generator upgrade --list to see the full list of generator upgrades    │
+    │                                    available.                                     │
+    │                                                                                   │
+    └───────────────────────────────────────────────────────────────────────────────────┘
+    ```
+
     ### list
 
-    Use `--list` to see all available generator upgrades without applying them.
+    Use `--list` to see the full list of generator upgrades available.
 
     ```bash
     fern generator upgrade --list

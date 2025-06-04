@@ -1,6 +1,6 @@
 import { ts } from "ts-morph";
 
-export type ExpressHttpVerb = "get" | "post" | "put" | "patch" | "delete";
+export type ExpressHttpVerb = "get" | "post" | "put" | "patch" | "delete" | "head";
 
 export interface Express {
     Express: () => ts.TypeNode;

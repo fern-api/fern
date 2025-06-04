@@ -43,10 +43,13 @@ export async function initializeAPI({
             cliVersion: versionOfCli,
             context
         });
+
+        context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
     } else {
         await createFernWorkspace({ directoryOfWorkspace, cliVersion: versionOfCli, context });
+
+        context.logger.info(chalk.green("Created new fern folder"));
     }
-    context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
 }
 
 async function getDirectoryOfNewAPIWorkspace({

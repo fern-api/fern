@@ -1,0 +1,85 @@
+## Introducing Global Language Sync: Code Language Preferences That Follow You
+
+Starting today, when you select a programming language in any `<CodeBlocks>` or `<Tabs>`, that preference will automatically sync across all documentation pages. This means no more manually switching languages as you navigate through different sections of our docs. Whether you're viewing implementation examples, debugging guides, or API references, your preferred language follows you. Language preference is kept in client-side local storage. 
+
+This behavior is automatically enabled for all `<CodeBlocks>`. To add language preferences to a `<Tab>`, you can add the `language` property. Check out language sync in the example below:
+
+<Tabs>
+<Tab title="Example">
+<Tabs>
+<Tab title="TypeScript" language="typescript">
+This is content specific to TypeScript. 
+</Tab>
+<Tab title="Python" language="python">
+This is content specific to Python. 
+</Tab>
+<Tab title="Java" language="java">
+This is content specific to Java. 
+</Tab>
+</Tabs>
+
+<CodeBlocks>
+```typescript
+console.log("Hello, world!");
+```
+```python
+print("Hello, world!")
+```
+```java
+System.out.println("Hello, world!");
+```
+</CodeBlocks>
+
+<CodeBlocks>
+```typescript
+console.log("This content is synced!");
+```
+```python
+print("This content is synced!");
+```
+```java
+System.out.println("This content is synced!");
+```
+</CodeBlocks>
+  
+</Tab>
+<Tab title="Markdown">
+````md
+<Tabs>
+<Tab title="TypeScript" language="typescript">
+This is content specific to TypeScript. 
+</Tab>
+<Tab title="Python" language="python">
+This is content specific to Python. 
+</Tab>
+<Tab title="Java" language="java">
+This is content specific to Java. 
+</Tab>
+</Tabs>
+
+<CodeBlocks>
+```typescript
+console.log("Hello, world!");
+```
+```python
+print("Hello, world!")
+```
+```java
+System.out.println("Hello, world!");
+```
+</CodeBlocks>
+
+<CodeBlocks>
+```typescript
+console.log("This content is synced!");
+```
+```python
+print("This content is synced!");
+```
+```java
+System.out.println("This content is synced!");
+```
+</CodeBlocks>
+````
+</Tab>
+</Tabs>

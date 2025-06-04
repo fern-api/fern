@@ -6,17 +6,12 @@ from .node_id import NodeId
 from .binary_tree_node_value import BinaryTreeNodeValue
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
-
-
 class BinaryTreeValue(UniversalBaseModel):
     root: typing.Optional[NodeId] = None
     nodes: typing.Dict[NodeId, BinaryTreeNodeValue]
-
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid

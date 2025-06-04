@@ -107,7 +107,8 @@ For example, to embed a video, use the following Markdown:
 
 <embed src="../../../../fern/assets/changelogs/docs/embed-fern-waving.mp4" type="video/mp4" width="640px" height="360px" />
 
-## Embedding videos
+### Local videos
+
 
 You can embed videos in your documentation using the HTML `<video>` tag. This gives you control over video playback settings like autoplay, looping, and muting.
 
@@ -156,6 +157,38 @@ Common video attributes:
 <Note>
 For more details about the HTML video element and its attributes, see the [MDN documentation on the video element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video).
 </Note>
+
+## Embed YouTube or Loom videos
+
+You can embed videos from YouTube, Loom, Vimeo, and other streaming platforms using an `<iframe>` element.
+
+<Tabs>
+  <Tab title="YouTube">
+    ```mdx
+    <iframe
+      width="100%"
+      height="450px"
+      src="https://www.youtube.com/embed/jqBPmGWwt8c?si=3SNDLqnTDqOD-c1P"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen
+    ></iframe>
+    ```
+  </Tab>
+  <Tab title="Loom">
+    ```mdx
+    <iframe
+      src="https://www.loom.com/embed/2e7f038de6894c69bf9c0d2525b0ad7f?sid=8bb327d2-8ba6-413c-a832-8d80282ad527"
+      width="100%"
+      height="450px"
+      frameborder="0"
+    ></iframe>
+    ```
+  </Tab>
+</Tabs>
+
+See an example of [Markdown](https://github.com/elevenlabs/elevenlabs-docs/blob/6dba2b35a68edd8285762e18b4c7684c04bdf1ca/fern/conversational-ai/pages/guides/zendesk.mdx?plain=1#L14-L23) used for embedding videos and [how it renders](https://elevenlabs.io/docs/conversational-ai/guides/integrations/zendesk#demo-video) on the corresponding docs page from the ElevenLabs documentation.
 
 ## LaTeX
 

@@ -5,6 +5,7 @@ package com.seed.object;
 
 import com.seed.object.core.ClientOptions;
 import com.seed.object.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedObjectClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -17,10 +18,26 @@ public final class SeedObjectClientBuilder {
     }
 
     /**
-     * Sets the timeout (in seconds) for the client
+     * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
      */
     public SeedObjectClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the maximum number of retries for the client. Defaults to 2 retries.
+     */
+    public SeedObjectClientBuilder maxRetries(int maxRetries) {
+        this.clientOptionsBuilder.maxRetries(maxRetries);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedObjectClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

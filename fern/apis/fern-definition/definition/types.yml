@@ -109,7 +109,24 @@ types:
       properties: optional<map<string, ObjectPropertySchema>>
       extra-properties: optional<boolean>
 
-  ObjectPropertySchema: TypeReferenceDeclarationWithNameSchema
+  ObjectPropertySchema:
+    discriminated: false
+    union:
+      - string
+      - ObjectPropertyWithAccessSchema
+
+  ObjectPropertyWithAccessSchema:
+    extends:
+      - TypeReferenceDeclarationWithName
+    properties:
+      access: optional<ObjectPropertyAccess>
+
+  ObjectPropertyAccess:
+    enum:
+      - value: read-only
+        name: ReadOnly
+      - value: write-only
+        name: WriteOnly
 
   ObjectExtendsSchema:
     discriminated: false
@@ -220,5 +237,7 @@ types:
     extends:
       - commons.WithDocsSchema
       - commons.WithDisplayName
+      - commons.WithValidation
+
     properties:
       type: string

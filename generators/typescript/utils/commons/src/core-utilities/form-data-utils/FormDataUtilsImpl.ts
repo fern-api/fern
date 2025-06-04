@@ -4,6 +4,7 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { DependencyManager } from "../../dependency-manager/DependencyManager";
 import { CoreUtility } from "../CoreUtility";
+import { MANIFEST as RuntimeManifest } from "../runtime/RuntimeImpl";
 import { FormDataUtils } from "./FormDataUtils";
 
 export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
@@ -24,7 +25,8 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
             dependencyManager.addDependency("form-data", "^4.0.0");
             dependencyManager.addDependency("form-data-encoder", "^4.0.2");
             dependencyManager.addDependency("formdata-node", "^6.0.3");
-        }
+        },
+        dependsOn: [RuntimeManifest]
     };
 
     public readonly newFormData = this.withExportedName(
@@ -33,20 +35,27 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
             ts.factory.createAwaitExpression(ts.factory.createCallExpression(fdw.getExpression(), undefined, []))
     );
 
+    public readonly encodeAsFormParameter = this.withExportedName(
+        "encodeAsFormParameter",
+        (encodeAsFormParameter) =>
+            ({ referenceToArgument }: { referenceToArgument: ts.Expression }): ts.CallExpression =>
+                ts.factory.createCallExpression(encodeAsFormParameter.getExpression(), undefined, [referenceToArgument])
+    );
+
     public readonly append = ({
         referenceToFormData,
         key,
         value
     }: {
         referenceToFormData: ts.Expression;
-        key: string;
+        key: string | ts.Expression;
         value: ts.Expression;
     }): ts.Statement => {
         return ts.factory.createExpressionStatement(
             ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(referenceToFormData, ts.factory.createIdentifier("append")),
                 undefined,
-                [ts.factory.createStringLiteral(key), value]
+                [typeof key === "string" ? ts.factory.createStringLiteral(key) : key, value]
             )
         );
     };

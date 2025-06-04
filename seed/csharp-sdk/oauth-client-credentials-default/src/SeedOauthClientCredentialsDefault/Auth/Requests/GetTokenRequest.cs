@@ -12,8 +12,9 @@ public record GetTokenRequest
     public required string ClientSecret { get; set; }
 
     [JsonPropertyName("grant_type")]
-    public required string GrantType { get; set; }
+    public string GrantType { get; set; } = "client_credentials";
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return JsonUtils.Serialize(this);

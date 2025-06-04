@@ -1,6 +1,7 @@
 {
   "title": "Test content-type parsing.",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -105,10 +106,12 @@
             "schema": {
               "isOptional": false,
               "isArray": false,
+              "description": "Binary file contents. The file name of the file will be used as the document ID.",
               "type": "file"
             },
             "description": "Binary file contents. The file name of the file will be used as the document ID.",
-            "contentType": "application/octet-stream, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.oasis.opendocument.text, application/epub+zip, application/rtf, text/html, text/plain, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation, text/markdown"
+            "contentType": "application/octet-stream, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.oasis.opendocument.text, application/epub+zip, application/rtf, text/html, text/plain, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation, text/markdown",
+            "exploded": false
           }
         ],
         "source": {
@@ -136,7 +139,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Test multipart request with different content types.\n",
       "authed": false,
       "method": "POST",
@@ -277,7 +280,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "Test request with dual content types.\n",
       "authed": false,
       "method": "POST",
@@ -323,7 +326,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {},
     "namespacedSchemas": {}

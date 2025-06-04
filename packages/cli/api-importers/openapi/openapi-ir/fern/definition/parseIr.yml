@@ -54,7 +54,7 @@ types:
         docs: |
           Expected error status codes for this endpoint, and their corresponding schema and examples.
           SDK generators will only read the StatusCodes. Docs generators will read the HttpError schema.
-      server: list<finalIr.HttpEndpointServer>
+      servers: list<finalIr.HttpEndpointServer>
       examples:
         type: list<finalIr.EndpointExample>
         docs: |
@@ -68,6 +68,7 @@ types:
       - commons.WithSource
       - commons.WithNamespace
     properties:
+      audiences: list<string>
       sdkName: optional<finalIr.EndpointSdkName>
       method: finalIr.WebhookHttpMethod
       summary: optional<string>
@@ -112,6 +113,7 @@ types:
       file: finalIr.FileResponse
       json: JsonResponseWithExample
       text: finalIr.TextResponse
+      bytes: finalIr.BytesResponse
       streamingSse: JsonResponseWithExample
       streamingText: finalIr.TextResponse
       streamingJson:
@@ -186,6 +188,7 @@ types:
   ArraySchemaWithExample:
     extends:
       - commons.WithSdkGroupName
+      - commons.WithNamespace
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
@@ -198,6 +201,7 @@ types:
   MapSchemaWithExample:
     extends:
       - commons.WithSdkGroupName
+      - commons.WithNamespace
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
@@ -212,6 +216,7 @@ types:
   OptionalSchemaWithExample:
     extends:
       - commons.WithSdkGroupName
+      - commons.WithNamespace
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
@@ -223,6 +228,7 @@ types:
   NullableSchemaWithExample:
     extends:
       - commons.WithSdkGroupName
+      - commons.WithNamespace
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
@@ -233,9 +239,10 @@ types:
 
   EnumSchemaWithExample:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithSource
       - commons.WithTitle
@@ -248,6 +255,7 @@ types:
   UnknownSchemaWithExample:
     extends:
       - commons.WithSdkGroupName
+      - commons.WithNamespace
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
@@ -257,9 +265,10 @@ types:
 
   ObjectSchemaWithExample:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithSource
       - commons.WithTitle
@@ -278,6 +287,7 @@ types:
       key: string
       schema: SchemaWithExample
       readonly: optional<boolean>
+      writeonly: optional<boolean>
       audiences: list<string>
       conflict:
         type: map<commons.SchemaId, finalIr.ObjectPropertyConflictInfo>
@@ -298,9 +308,10 @@ types:
 
   DiscriminatedOneOfSchemaWithExample:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithEncoding
       - commons.WithSource
@@ -318,9 +329,10 @@ types:
 
   UnDiscriminatedOneOfSchemaWithExample:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithEncoding
       - commons.WithSource
@@ -331,9 +343,10 @@ types:
 
   PrimitiveSchemaWithExample:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithTitle
     properties:

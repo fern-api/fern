@@ -1,4 +1,4 @@
-import { inferParsedObject, inferRawObject, ObjectSchema } from "../object";
+import { ObjectSchema, inferParsedObject, inferRawObject } from "../object";
 import { Discriminant } from "./discriminant";
 
 export type UnionSubtypes<DiscriminantValues extends string | number | symbol> = {

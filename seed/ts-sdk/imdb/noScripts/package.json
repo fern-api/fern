@@ -3,12 +3,34 @@
     "version": "0.0.1",
     "private": false,
     "repository": "https://github.com/imdb/fern",
-    "main": "./index.js",
-    "types": "./index.d.ts",
+    "type": "commonjs",
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.mjs",
+    "types": "./dist/cjs/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/cjs/index.d.ts",
+            "import": {
+                "types": "./dist/esm/index.d.mts",
+                "default": "./dist/esm/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/index.d.ts",
+                "default": "./dist/cjs/index.js"
+            },
+            "default": "./dist/cjs/index.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "files": [
+        "dist",
+        "reference.md"
+    ],
     "scripts": {
         "format": "prettier . --write --ignore-unknown",
-        "build": "tsc",
-        "prepack": "cp -rv dist/. .",
+        "build": "yarn build:cjs && yarn build:esm",
+        "build:cjs": "tsc --project ./tsconfig.cjs.json",
+        "build:esm": "tsc --project ./tsconfig.esm.json && node scripts/rename-to-esm-files.js dist/esm",
         "test": "jest"
     },
     "dependencies": {
@@ -19,7 +41,7 @@
         "qs": "^6.13.1",
         "readable-stream": "^4.5.2",
         "js-base64": "3.7.7",
-        "dummy": "dummy"
+        "lodash": "4.17.21"
     },
     "devDependencies": {
         "@types/url-join": "4.0.1",
@@ -40,5 +62,6 @@
         "fs": false,
         "os": false,
         "path": false
-    }
+    },
+    "packageManager": "yarn@1.22.22"
 }

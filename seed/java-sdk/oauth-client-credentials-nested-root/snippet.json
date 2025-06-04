@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "7e19fd78",
+            "id": {
+                "method": "POST",
+                "path": "/token",
+                "identifier_override": "endpoint_auth.getToken"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;\nimport com.seed.oauthClientCredentials.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient\n            .builder()\n            .build();\n\n        client.auth().getToken(\n            GetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .audience(\"https://api.example.com\")\n                .grantType(\"client_credentials\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;\nimport com.seed.oauthClientCredentials.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient\n            .builder()\n            .build();\n\n        client.auth().getToken(\n            GetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .audience(\"https://api.example.com\")\n                .grantType(\"client_credentials\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

@@ -74,9 +74,21 @@ navigation:
 
 As the final step, trigger your docs generation by running `fern generate --docs` locally or in CI/CD (i.e., GitHub Actions). The SDK snippets will now appear via a drop-down!
 
-### Set default snippet 
+### Set default snippet language
 
-To set the default snippet shown in the API Reference drop-down, specify the `default-language` in your `docs.yml`. 
+SDK code snippets support several languages. Our development work is driven by customer requests, so please request support for languages not listed here by [opening an issue](https://github.com/fern-api/fern/issues/new/choose).
+
+* csharp
+* curl
+* dotnet
+* go
+* java
+* javascript
+* python
+* ruby
+* typescript
+
+To set the default snippet language, use the `default-language` key at the top indentation level of `docs.yml`.
 
 <CodeBlock title="docs.yml">
 ```yaml {1}
@@ -90,13 +102,9 @@ navigation:
 ```
 </CodeBlock>
 
-## Language support
-
-TypeScript, Python, Go, and Ruby are the supported SDK code snippet languages. Our development work is driven by customer requests, so please request support for another language by [opening an issue](https://github.com/fern-api/fern/issues/new/choose).
-
 ## Access via API
 
-If you'd like to bring SDK snippets into your own documentation, you can use the [Snippets API](/learn/cli-api/api-reference/snippets/get). API access requires a [SDK Business plan](https://buildwithfern.com/pricing) or above.
+If you'd like to bring SDK snippets into your own documentation, you can use the [Snippets API](/learn/api-reference/snippets/get). API access requires a [SDK Business plan](https://buildwithfern.com/pricing) or above.
 
 Merge.dev is an example of a Fern customer that uses the Snippets API to bring Python code samples [into their API Reference](https://docs.merge.dev/hris/employees/#employees_list).
 

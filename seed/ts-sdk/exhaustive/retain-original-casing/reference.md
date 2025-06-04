@@ -105,7 +105,7 @@ await client.endpoints.container.getAndReturnListOfObjects([
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfPrimitives</a>({ ...params }) -> Set<string></code></summary>
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfPrimitives</a>({ ...params }) -> string[]</code></summary>
 <dl>
 <dd>
 
@@ -134,7 +134,7 @@ await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"])
 <dl>
 <dd>
 
-**request:** `Set<string>`
+**request:** `string[]`
 
 </dd>
 </dl>
@@ -1283,7 +1283,7 @@ await client.endpoints.params.getWithPath("param");
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePath</a>(param, { ...params }) -> string</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePath</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -1311,7 +1311,9 @@ GET with path param
 <dd>
 
 ```typescript
-await client.endpoints.params.getWithInlinePath("param");
+await client.endpoints.params.getWithInlinePath({
+    param: "param",
+});
 ```
 
 </dd>
@@ -1323,14 +1325,6 @@ await client.endpoints.params.getWithInlinePath("param");
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**param:** `string`
-
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -1559,7 +1553,7 @@ await client.endpoints.params.getWithPathAndQuery("param", {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePathAndQuery</a>(param, { ...params }) -> void</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePathAndQuery</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -1587,7 +1581,8 @@ GET with path and query params
 <dd>
 
 ```typescript
-await client.endpoints.params.getWithInlinePathAndQuery("param", {
+await client.endpoints.params.getWithInlinePathAndQuery({
+    param: "param",
     query: "query",
 });
 ```
@@ -1601,14 +1596,6 @@ await client.endpoints.params.getWithInlinePathAndQuery("param", {
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**param:** `string`
-
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -1703,7 +1690,7 @@ await client.endpoints.params.modifyWithPath("param", "string");
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">modifyWithInlinePath</a>(param, { ...params }) -> string</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">modifyWithInlinePath</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -1731,7 +1718,8 @@ PUT to update with path param
 <dd>
 
 ```typescript
-await client.endpoints.params.modifyWithInlinePath("param", {
+await client.endpoints.params.modifyWithInlinePath({
+    param: "param",
     body: "string",
 });
 ```
@@ -1745,14 +1733,6 @@ await client.endpoints.params.modifyWithInlinePath("param", {
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**param:** `string`
-
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -2018,7 +1998,7 @@ await client.endpoints.primitive.getAndReturnBool(true);
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDatetime</a>({ ...params }) -> Date</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDatetime</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -2047,7 +2027,7 @@ await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z");
 <dl>
 <dd>
 
-**request:** `Date`
+**request:** `string`
 
 </dd>
 </dl>
@@ -2200,6 +2180,58 @@ await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh");
 <dd>
 
 **requestOptions:** `Primitive.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## Endpoints Put
+
+<details><summary><code>client.endpoints.put.<a href="/src/api/resources/endpoints/resources/put/client/Client.ts">add</a>({ ...params }) -> SeedExhaustive.PutResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.put.add({
+    id: "id",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.endpoints.PutRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Put.RequestOptions`
 
 </dd>
 </dl>

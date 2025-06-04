@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
@@ -52,6 +53,16 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
     private static final FieldSpec HEADERS_FIELD = FieldSpec.builder(
                     ParameterizedTypeName.get(Map.class, String.class, String.class),
                     "headers",
+                    Modifier.PRIVATE,
+                    Modifier.FINAL)
+            .build();
+
+    private static final FieldSpec HEADER_SUPPLIERS_FIELD = FieldSpec.builder(
+                    ParameterizedTypeName.get(
+                            ClassName.get(Map.class),
+                            ClassName.get(String.class),
+                            ParameterizedTypeName.get(Supplier.class, String.class)),
+                    "headerSuppliers",
                     Modifier.PRIVATE,
                     Modifier.FINAL)
             .build();
@@ -164,6 +175,28 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 .addStatement("return this")
                 .returns(builderClassName)
                 .build());
+
+        addHeaderBuilder(builderTypeSpec);
+        addHeaderSupplierBuilder(builderTypeSpec);
+
+        requestOptionsTypeSpec.addField(HEADERS_FIELD);
+        requestOptionsTypeSpec.addField(HEADER_SUPPLIERS_FIELD);
+
+        builderTypeSpec.addField(HEADERS_FIELD.toBuilder()
+                .initializer(CodeBlock.of("new $T<>()", HashMap.class))
+                .build());
+        builderTypeSpec.addField(HEADER_SUPPLIERS_FIELD.toBuilder()
+                .initializer(CodeBlock.of("new $T<>()", HashMap.class))
+                .build());
+
+        fields.add(new RequestOption(HEADERS_FIELD, HEADERS_FIELD));
+        fields.add(new RequestOption(HEADER_SUPPLIERS_FIELD, HEADER_SUPPLIERS_FIELD));
+
+        getHeadersCodeBlock
+                .addStatement("headers.putAll(this.$L)", HEADERS_FIELD.name)
+                .beginControlFlow("this.$L.forEach((key, supplier) -> ", HEADER_SUPPLIERS_FIELD.name)
+                .addStatement("headers.put(key, supplier.get())")
+                .endControlFlow(")");
 
         String constructorArgs =
                 fields.stream().map(field -> field.builderField.name).collect(Collectors.joining(", "));
@@ -325,6 +358,28 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
         }
     }
 
+    private void addHeaderBuilder(TypeSpec.Builder builder) {
+        builder.addMethod(MethodSpec.methodBuilder("addHeader")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(builderClassName)
+                .addParameter(String.class, "key")
+                .addParameter(String.class, "value")
+                .addStatement("this.$L.put($L, $L)", HEADERS_FIELD.name, "key", "value")
+                .addStatement("return this")
+                .build());
+    }
+
+    private void addHeaderSupplierBuilder(TypeSpec.Builder builder) {
+        builder.addMethod(MethodSpec.methodBuilder("addHeader")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(builderClassName)
+                .addParameter(String.class, "key")
+                .addParameter(ParameterizedTypeName.get(Supplier.class, String.class), "value")
+                .addStatement("this.$L.put($L, $L)", HEADER_SUPPLIERS_FIELD.name, "key", "value")
+                .addStatement("return this")
+                .build());
+    }
+
     private static class RequestOption {
         private final FieldSpec builderField;
         private final FieldSpec requestOptionsField;
@@ -461,23 +516,14 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                     .build();
             requestOptionsTypeSpec.addField(requestOptionsField);
 
+            String headerValue = "this." + headerName.getName().getCamelCase().getSafeName();
+            if (headerPrefix.isPresent()) {
+                headerValue = String.format("\"%s\" + %s", headerPrefix.get(), headerValue);
+            }
+
             getHeadersCodeBlock
                     .beginControlFlow("if (this.$N != null)", requestOptionsField)
-                    .addStatement(
-                            "$N.put($S, $L)",
-                            HEADERS_FIELD,
-                            headerName.getWireValue(),
-                            headerPrefix
-                                    .map(prefix -> "\"" + prefix + " \"" + "this."
-                                            + headerName
-                                                    .getName()
-                                                    .getCamelCase()
-                                                    .getSafeName())
-                                    .orElseGet(() -> "this."
-                                            + headerName
-                                                    .getName()
-                                                    .getCamelCase()
-                                                    .getSafeName()))
+                    .addStatement("$N.put($S, $L)", HEADERS_FIELD, headerName.getWireValue(), headerValue)
                     .endControlFlow();
 
             return new RequestOption(builderField, requestOptionsField);

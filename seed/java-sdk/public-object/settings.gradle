@@ -1,0 +1,3 @@
+rootProject.name = 'public-object'
+
+include 'sample-app'

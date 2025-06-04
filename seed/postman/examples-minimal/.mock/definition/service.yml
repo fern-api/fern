@@ -1,0 +1,18 @@
+imports:
+  types: types.yml
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    getMovie:
+      method: POST
+      path: /movie
+      request: types.ExtendedMovie
+      response: types.Test
+    
+    createBigEntity:
+      method: POST
+      path: /big-entity
+      request: types.Test
+      response: types.Test

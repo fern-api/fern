@@ -42,4 +42,12 @@ class TokenResponse extends JsonSerializableType
         $this->expiresIn = $values['expiresIn'];
         $this->refreshToken = $values['refreshToken'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

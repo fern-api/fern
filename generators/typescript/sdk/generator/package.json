@@ -31,10 +31,10 @@
     "@fern-api/typescript-ast": "workspace:*",
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/logger": "workspace:*",
-    "@fern-fern/generator-cli-sdk": "0.0.17",
-    "@fern-fern/generator-exec-sdk": "^0.0.898",
-    "@fern-fern/ir-sdk": "55.0.0",
-    "@fern-fern/snippet-sdk": "^0.0.5526",
+    "@fern-fern/generator-cli-sdk": "0.0.23",
+    "@fern-fern/generator-exec-sdk": "^0.0.1045",
+    "@fern-fern/ir-sdk": "58.0.0",
+    "@fern-fern/snippet-sdk": "^0.0.6434",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/endpoint-error-union-generator": "workspace:*",
@@ -47,6 +47,7 @@
     "@fern-typescript/sdk-error-generator": "workspace:*",
     "@fern-typescript/sdk-error-schema-generator": "workspace:*",
     "@fern-typescript/sdk-inlined-request-schema-generator": "workspace:*",
+    "@fern-typescript/websocket-type-schema-generator": "workspace:*",
     "@fern-typescript/type-generator": "workspace:*",
     "@fern-typescript/type-reference-converters": "workspace:*",
     "@fern-typescript/type-reference-example-generator": "workspace:*",
@@ -69,6 +70,6 @@
     "prettier": "^3.4.2",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.9"
   }
 }

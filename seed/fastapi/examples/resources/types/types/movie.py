@@ -6,14 +6,12 @@ import typing
 import pydantic
 from ...commons.resources.types.types.tag import Tag
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
-
-
 class Movie(UniversalBaseModel):
     """
     Examples
     --------
     from seed.examples.resources.types import Movie
-
+    
     Movie(
         id="movie-c06a4ad7",
         prequel="movie-cv9b914f",
@@ -29,7 +27,6 @@ class Movie(UniversalBaseModel):
         revenue=1000000,
     )
     """
-
     id: MovieId
     prequel: typing.Optional[MovieId] = None
     title: str
@@ -38,18 +35,15 @@ class Movie(UniversalBaseModel):
     """
     The rating scale is one to five stars
     """
-
+    
     type: typing.Literal["movie"] = "movie"
     tag: Tag
     book: typing.Optional[str] = None
     metadata: typing.Dict[str, typing.Optional[typing.Any]]
     revenue: int
-
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid

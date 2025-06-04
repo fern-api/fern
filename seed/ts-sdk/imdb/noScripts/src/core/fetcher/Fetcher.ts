@@ -1,11 +1,12 @@
-import { toJson } from "../json";
-import { APIResponse } from "./APIResponse";
-import { createRequestUrl } from "./createRequestUrl";
-import { getFetchFn } from "./getFetchFn";
-import { getRequestBody } from "./getRequestBody";
-import { getResponseBody } from "./getResponseBody";
-import { makeRequest } from "./makeRequest";
-import { requestWithRetries } from "./requestWithRetries";
+import { toJson } from "../json.js";
+import { APIResponse } from "./APIResponse.js";
+import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.js";
+import { createRequestUrl } from "./createRequestUrl.js";
+import { getFetchFn } from "./getFetchFn.js";
+import { getRequestBody } from "./getRequestBody.js";
+import { getResponseBody } from "./getResponseBody.js";
+import { makeRequest } from "./makeRequest.js";
+import { requestWithRetries } from "./requestWithRetries.js";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 
@@ -93,7 +94,8 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
             return {
                 ok: true,
                 body: responseBody as R,
-                headers: response.headers
+                headers: response.headers,
+                rawResponse: toRawResponse(response)
             };
         } else {
             return {
@@ -102,7 +104,8 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     reason: "status-code",
                     statusCode: response.status,
                     body: responseBody
-                }
+                },
+                rawResponse: toRawResponse(response)
             };
         }
     } catch (error) {
@@ -112,14 +115,16 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 error: {
                     reason: "unknown",
                     errorMessage: "The user aborted a request"
-                }
+                },
+                rawResponse: abortRawResponse
             };
         } else if (error instanceof Error && error.name === "AbortError") {
             return {
                 ok: false,
                 error: {
                     reason: "timeout"
-                }
+                },
+                rawResponse: abortRawResponse
             };
         } else if (error instanceof Error) {
             return {
@@ -127,7 +132,8 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 error: {
                     reason: "unknown",
                     errorMessage: error.message
-                }
+                },
+                rawResponse: unknownRawResponse
             };
         }
 
@@ -136,7 +142,8 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
             error: {
                 reason: "unknown",
                 errorMessage: toJson(error)
-            }
+            },
+            rawResponse: unknownRawResponse
         };
     }
 }

@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedExhaustive.Core;
 
 namespace SeedExhaustive;
@@ -14,8 +14,7 @@ public partial class ReqWithHeadersClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.ReqWithHeaders.GetWithCustomHeaderAsync(
     ///     new ReqWithHeaders
     ///     {
@@ -24,9 +23,8 @@ public partial class ReqWithHeadersClient
     ///         Body = "string",
     ///     }
     /// );
-    /// </code>
-    /// </example>
-    public async Task GetWithCustomHeaderAsync(
+    /// </code></example>
+    public async global::System.Threading.Tasks.Task GetWithCustomHeaderAsync(
         ReqWithHeaders request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -40,8 +38,8 @@ public partial class ReqWithHeadersClient
             }
         );
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -57,11 +55,13 @@ public partial class ReqWithHeadersClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedExhaustiveApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

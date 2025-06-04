@@ -1,48 +1,33 @@
 # nopycln: file
 import datetime as dt
-import typing
 from collections import defaultdict
-
-import typing_extensions
+from typing import Any, Callable, Dict, List, Mapping, Optional, Set, Tuple, Type, TypeVar, Union, cast
 
 import pydantic
-
 from .datetime_utils import serialize_datetime
 from .serialization import convert_and_respect_annotation_metadata
+from pydantic.datetime_parse import parse_date as parse_date
+from pydantic.datetime_parse import parse_datetime as parse_datetime
+from pydantic.fields import ModelField as ModelField  # type: ignore[attr-defined]
+from pydantic.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore[attr-defined]
+from pydantic.typing import get_args as get_args
+from pydantic.typing import get_origin as get_origin
+from pydantic.typing import is_literal_type as is_literal_type
+from pydantic.typing import is_union as is_union
+from typing_extensions import TypeAlias
 
-IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
+T = TypeVar("T")
+Model = TypeVar("Model", bound=pydantic.BaseModel)
 
-from pydantic.datetime_parse import (
-    parse_date as parse_date,  # type: ignore # Pydantic v1
-)
-from pydantic.datetime_parse import (
-    parse_datetime as parse_datetime,  # type: ignore # Pydantic v1
-)
-from pydantic.fields import ModelField as ModelField  # type: ignore # Pydantic v1
-from pydantic.json import (
-    ENCODERS_BY_TYPE as encoders_by_type,  # type: ignore # Pydantic v1
-)
-from pydantic.typing import get_args as get_args  # type: ignore # Pydantic v1
-from pydantic.typing import get_origin as get_origin  # type: ignore # Pydantic v1
-from pydantic.typing import (
-    is_literal_type as is_literal_type,  # type: ignore # Pydantic v1
-)
-from pydantic.typing import is_union as is_union  # type: ignore # Pydantic v1
-
-# isort: on
-
-T = typing.TypeVar("T")
-Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
+PydanticField = Union[ModelField, pydantic.fields.FieldInfo]
 
 
-def parse_obj_as(type_: typing.Type[T], object_: typing.Any) -> T:
+def parse_obj_as(type_: Type[T], object_: Any) -> T:
     dealiased_object = convert_and_respect_annotation_metadata(object_=object_, annotation=type_, direction="read")
     return pydantic.v1.parse_obj_as(type_, dealiased_object)
 
 
-def to_jsonable_with_fallback(
-    obj: typing.Any, fallback_serializer: typing.Callable[[typing.Any], typing.Any]
-) -> typing.Any:
+def to_jsonable_with_fallback(obj: Any, fallback_serializer: Callable[[Any], Any]) -> Any:
     return fallback_serializer(obj)
 
 
@@ -52,28 +37,24 @@ class UniversalBaseModel(pydantic.v1.BaseModel):
         json_encoders = {dt.datetime: serialize_datetime}
 
     @classmethod
-    def model_construct(
-        cls: typing.Type["Model"], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
-    ) -> "Model":
+    def model_construct(cls: Type["Model"], _fields_set: Optional[Set[str]] = None, **values: Any) -> "Model":  # type: ignore[misc]
         dealiased_object = convert_and_respect_annotation_metadata(object_=values, annotation=cls, direction="read")
         return cls.construct(_fields_set, **dealiased_object)
 
     @classmethod
-    def construct(
-        cls: typing.Type["Model"], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
-    ) -> "Model":
+    def construct(cls: Type["Model"], _fields_set: Optional[Set[str]] = None, **values: Any) -> "Model":  # type: ignore[misc]
         dealiased_object = convert_and_respect_annotation_metadata(object_=values, annotation=cls, direction="read")
-        return super().construct(_fields_set, **dealiased_object)
+        return super().construct(_fields_set, **dealiased_object)  # type: ignore[misc]
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {
+    def json(self, **kwargs: Any) -> str:
+        kwargs_with_defaults = {
             "by_alias": True,
             "exclude_unset": True,
             **kwargs,
         }
         return super().json(**kwargs_with_defaults)
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+    def dict(self, **kwargs: Any) -> Dict[str, Any]:
         """
         Override the default dict method to `exclude_unset` by default. This function patches
         `exclude_unset` to work include fields within non-None default values.
@@ -85,7 +66,7 @@ class UniversalBaseModel(pydantic.v1.BaseModel):
         # that we have less control over, and this is less intrusive than custom serializers for now.
         _fields_set = self.__fields_set__.copy()
 
-        fields = _get_model_fields(self.__class__)
+        fields = _get_model_fields(self.__class__)  # type: ignore[type-var]
         for name, field in fields.items():
             if name not in _fields_set:
                 default = _get_field_default(field)
@@ -99,7 +80,7 @@ class UniversalBaseModel(pydantic.v1.BaseModel):
                     if default is not None:
                         self.__fields_set__.add(name)
 
-        kwargs_with_defaults_exclude_unset_include_fields: typing.Any = {
+        kwargs_with_defaults_exclude_unset_include_fields = {
             "by_alias": True,
             "exclude_unset": True,
             "include": _fields_set,
@@ -111,12 +92,13 @@ class UniversalBaseModel(pydantic.v1.BaseModel):
         return convert_and_respect_annotation_metadata(object_=dict_dump, annotation=self.__class__, direction="write")
 
 
-def _union_list_of_pydantic_dicts(
-    source: typing.List[typing.Any], destination: typing.List[typing.Any]
-) -> typing.List[typing.Any]:
-    converted_list: typing.List[typing.Any] = []
+UniversalRootModel: TypeAlias = UniversalBaseModel
+
+
+def _union_list_of_pydantic_dicts(source: List[Any], destination: List[Any]) -> List[Any]:
+    converted_list: List[Any] = []
     for i, item in enumerate(source):
-        destination_value = destination[i]  # type: ignore
+        destination_value = destination[i]
         if isinstance(item, dict):
             converted_list.append(deep_union_pydantic_dicts(item, destination_value))
         elif isinstance(item, list):
@@ -126,9 +108,7 @@ def _union_list_of_pydantic_dicts(
     return converted_list
 
 
-def deep_union_pydantic_dicts(
-    source: typing.Dict[str, typing.Any], destination: typing.Dict[str, typing.Any]
-) -> typing.Dict[str, typing.Any]:
+def deep_union_pydantic_dicts(source: Dict[str, Any], destination: Dict[str, Any]) -> Dict[str, Any]:
     for key, value in source.items():
         node = destination.setdefault(key, {})
         if isinstance(value, dict):
@@ -144,13 +124,8 @@ def deep_union_pydantic_dicts(
     return destination
 
 
-UniversalRootModel: typing_extensions.TypeAlias = UniversalBaseModel  # type: ignore
-
-
-def encode_by_type(o: typing.Any) -> typing.Any:
-    encoders_by_class_tuples: typing.Dict[
-        typing.Callable[[typing.Any], typing.Any], typing.Tuple[typing.Any, ...]
-    ] = defaultdict(tuple)
+def encode_by_type(o: Any) -> Any:
+    encoders_by_class_tuples: Dict[Callable[[Any], Any], Tuple[Any, ...]] = defaultdict(tuple)
     for type_, encoder in encoders_by_type.items():
         encoders_by_class_tuples[encoder] += (type_,)
 
@@ -161,42 +136,35 @@ def encode_by_type(o: typing.Any) -> typing.Any:
             return encoder(o)
 
 
-def update_forward_refs(model: typing.Type["Model"], **localns: typing.Any) -> None:
+def update_forward_refs(model: Type["Model"], **localns: Any) -> None:
     model.update_forward_refs(**localns)
 
 
 # Mirrors Pydantic's internal typing
-AnyCallable = typing.Callable[..., typing.Any]
+AnyCallable = Callable[..., Any]
 
 
-def universal_root_validator(
-    pre: bool = False,
-) -> typing.Callable[[AnyCallable], AnyCallable]:
+def universal_root_validator(pre: bool = False) -> Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
-        return pydantic.v1.root_validator(pre=pre)(func)  # type: ignore # Pydantic v1
+        return cast(AnyCallable, pydantic.v1.root_validator(pre=pre)(func))
 
     return decorator
 
 
-def universal_field_validator(field_name: str, pre: bool = False) -> typing.Callable[[AnyCallable], AnyCallable]:
+def universal_field_validator(field_name: str, pre: bool = False) -> Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
-        return pydantic.v1.validator(field_name, pre=pre)(func)  # type: ignore # Pydantic v1
+        return cast(AnyCallable, pydantic.v1.validator(field_name, pre=pre)(func))
 
     return decorator
 
 
-PydanticField = typing.Union[ModelField, pydantic.fields.FieldInfo]
+def _get_model_fields(model: Type["Model"]) -> Mapping[str, PydanticField]:
+    return cast(Mapping[str, PydanticField], model.__fields__)
 
 
-def _get_model_fields(
-    model: typing.Type["Model"],
-) -> typing.Mapping[str, PydanticField]:
-    return model.__fields__  # type: ignore # Pydantic v1
-
-
-def _get_field_default(field: PydanticField) -> typing.Any:
+def _get_field_default(field: PydanticField) -> Any:
     try:
-        value = field.get_default()  # type: ignore # Pydantic < v1.10.15
+        value = field.get_default()  # type: ignore[union-attr]
     except:
         value = field.default
     return value

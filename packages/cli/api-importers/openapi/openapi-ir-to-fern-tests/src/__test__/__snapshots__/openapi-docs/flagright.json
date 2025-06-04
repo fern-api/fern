@@ -328,27 +328,22 @@ Calling `GET /business/user/{userId}` will return the entire User payload and ru
                       "riskLevel": "VERY_HIGH",
                       "savedPaymentDetails": [
                         {
-                          "checkIdentifier": "savedPaymentDetails",
-                          "checkNumber": "savedPaymentDetails",
-                          "deliveryStatus": "COMPLETED",
-                          "etaTimestamp": 1.1,
-                          "method": "CHECK",
-                          "name": "savedPaymentDetails",
-                          "shippingAddress": {
-                            "addressLines": [
-                              "Klara-Franke Str 20",
-                            ],
-                            "city": "Berlin",
-                            "country": "Germany",
-                            "postcode": "10557",
-                            "state": "Berlin",
-                            "tags": [
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                            ],
+                          "3dsDone": true,
+                          "cardAuthenticated": true,
+                          "cardBrand": "VISA",
+                          "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                          "cardFunding": "CREDIT",
+                          "cardIssuedCountry": "TR",
+                          "cardLast4Digits": "cardLast4Digits",
+                          "cardType": "VIRTUAL",
+                          "method": "CARD",
+                          "nameOnCard": {
+                            "firstName": "Baran",
+                            "lastName": "Ozkan",
+                            "middleName": "Realblood",
                           },
+                          "paymentChannel": "paymentChannel",
+                          "transactionReferenceField": "Deposit",
                         },
                       ],
                       "shareHolders": [
@@ -510,27 +505,35 @@ Calling `GET /transactions/{transactionId}` will return the entire transaction p
                         "transactionCurrency": "INR",
                       },
                       "destinationPaymentDetails": {
-                        "checkIdentifier": "destinationPaymentDetails",
-                        "checkNumber": "destinationPaymentDetails",
-                        "deliveryStatus": "COMPLETED",
-                        "etaTimestamp": 1.1,
-                        "method": "CHECK",
-                        "name": "destinationPaymentDetails",
-                        "shippingAddress": {
-                          "addressLines": [
-                            "Klara-Franke Str 20",
-                          ],
-                          "city": "Berlin",
-                          "country": "Germany",
-                          "postcode": "10557",
-                          "state": "Berlin",
-                          "tags": [
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
+                        "3dsDone": true,
+                        "cardAuthenticated": true,
+                        "cardBrand": "VISA",
+                        "cardExpiry": {
+                          "month": 1.1,
+                          "year": 1.1,
                         },
+                        "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                        "cardFunding": "CREDIT",
+                        "cardIssuedCountry": "TR",
+                        "cardLast4Digits": "cardLast4Digits",
+                        "cardType": "VIRTUAL",
+                        "merchantDetails": {
+                          "MCC": "MCC",
+                          "category": "category",
+                          "city": "city",
+                          "country": "country",
+                          "id": "id",
+                          "postCode": "postCode",
+                          "state": "state",
+                        },
+                        "method": "CARD",
+                        "nameOnCard": {
+                          "firstName": "Baran",
+                          "lastName": "Ozkan",
+                          "middleName": "Realblood",
+                        },
+                        "paymentChannel": "paymentChannel",
+                        "transactionReferenceField": "Deposit",
                       },
                       "destinationUserId": "9350a2611e0771cba03310f74bf6",
                       "deviceData": {
@@ -579,27 +582,35 @@ Calling `GET /transactions/{transactionId}` will return the entire transaction p
                         "transactionCurrency": "EUR",
                       },
                       "originPaymentDetails": {
-                        "checkIdentifier": "originPaymentDetails",
-                        "checkNumber": "originPaymentDetails",
-                        "deliveryStatus": "COMPLETED",
-                        "etaTimestamp": 1.1,
-                        "method": "CHECK",
-                        "name": "originPaymentDetails",
-                        "shippingAddress": {
-                          "addressLines": [
-                            "Klara-Franke Str 20",
-                          ],
-                          "city": "Berlin",
-                          "country": "Germany",
-                          "postcode": "10557",
-                          "state": "Berlin",
-                          "tags": [
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
+                        "3dsDone": true,
+                        "cardAuthenticated": true,
+                        "cardBrand": "VISA",
+                        "cardExpiry": {
+                          "month": 1.1,
+                          "year": 1.1,
                         },
+                        "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                        "cardFunding": "CREDIT",
+                        "cardIssuedCountry": "TR",
+                        "cardLast4Digits": "cardLast4Digits",
+                        "cardType": "VIRTUAL",
+                        "merchantDetails": {
+                          "MCC": "MCC",
+                          "category": "category",
+                          "city": "city",
+                          "country": "country",
+                          "id": "id",
+                          "postCode": "postCode",
+                          "state": "state",
+                        },
+                        "method": "CARD",
+                        "nameOnCard": {
+                          "firstName": "Baran",
+                          "lastName": "Ozkan",
+                          "middleName": "Realblood",
+                        },
+                        "paymentChannel": "paymentChannel",
+                        "transactionReferenceField": "Deposit",
                       },
                       "originUserId": "8650a2611d0771cba03310f74bf6",
                       "productType": "productType",
@@ -1119,27 +1130,22 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "riskLevel": "VERY_HIGH",
                       "savedPaymentDetails": [
                         {
-                          "checkIdentifier": "savedPaymentDetails",
-                          "checkNumber": "savedPaymentDetails",
-                          "deliveryStatus": "COMPLETED",
-                          "etaTimestamp": 1.1,
-                          "method": "CHECK",
-                          "name": "savedPaymentDetails",
-                          "shippingAddress": {
-                            "addressLines": [
-                              "Klara-Franke Str 20",
-                            ],
-                            "city": "Berlin",
-                            "country": "Germany",
-                            "postcode": "10557",
-                            "state": "Berlin",
-                            "tags": [
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                            ],
+                          "3dsDone": true,
+                          "cardAuthenticated": true,
+                          "cardBrand": "VISA",
+                          "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                          "cardFunding": "CREDIT",
+                          "cardIssuedCountry": "TR",
+                          "cardLast4Digits": "cardLast4Digits",
+                          "cardType": "VIRTUAL",
+                          "method": "CARD",
+                          "nameOnCard": {
+                            "firstName": "Baran",
+                            "lastName": "Ozkan",
+                            "middleName": "Realblood",
                           },
+                          "paymentChannel": "paymentChannel",
+                          "transactionReferenceField": "Deposit",
                         },
                       ],
                       "shareHolders": [
@@ -1355,22 +1361,11 @@ Here are some of the most used payload fields explained (you can find the full p
                       "transactionCurrency": "INR",
                     },
                     "destinationPaymentDetails": {
-                      "method": "CHECK",
-                      "shippingAddress": {
-                        "addressLines": [
-                          "Klara-Franke Str 20",
-                        ],
-                        "city": "Berlin",
-                        "country": "Germany",
-                        "postcode": "10557",
-                        "state": "Berlin",
-                        "tags": [
-                          {
-                            "key": "customKey",
-                            "value": "customValue",
-                          },
-                        ],
-                      },
+                      "3dsDone": true,
+                      "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                      "cardIssuedCountry": "TR",
+                      "method": "CARD",
+                      "transactionReferenceField": "Deposit",
                     },
                     "destinationUserId": "9350a2611e0771cba03310f74bf6",
                     "deviceData": {
@@ -1392,22 +1387,11 @@ Here are some of the most used payload fields explained (you can find the full p
                       "transactionCurrency": "EUR",
                     },
                     "originPaymentDetails": {
-                      "method": "CHECK",
-                      "shippingAddress": {
-                        "addressLines": [
-                          "Klara-Franke Str 20",
-                        ],
-                        "city": "Berlin",
-                        "country": "Germany",
-                        "postcode": "10557",
-                        "state": "Berlin",
-                        "tags": [
-                          {
-                            "key": "customKey",
-                            "value": "customValue",
-                          },
-                        ],
-                      },
+                      "3dsDone": true,
+                      "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                      "cardIssuedCountry": "TR",
+                      "method": "CARD",
+                      "transactionReferenceField": "Deposit",
                     },
                     "originUserId": "8650a2611d0771cba03310f74bf6",
                     "promotionCodeUsed": true,
@@ -1706,27 +1690,22 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                           "transactionCurrency": "INR",
                         },
                         "destinationPaymentDetails": {
-                          "checkIdentifier": "destinationPaymentDetails",
-                          "checkNumber": "destinationPaymentDetails",
-                          "deliveryStatus": "COMPLETED",
-                          "etaTimestamp": 1.1,
-                          "method": "CHECK",
-                          "name": "destinationPaymentDetails",
-                          "shippingAddress": {
-                            "addressLines": [
-                              "Klara-Franke Str 20",
-                            ],
-                            "city": "Berlin",
-                            "country": "Germany",
-                            "postcode": "10557",
-                            "state": "Berlin",
-                            "tags": [
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                            ],
+                          "3dsDone": true,
+                          "cardAuthenticated": true,
+                          "cardBrand": "VISA",
+                          "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                          "cardFunding": "CREDIT",
+                          "cardIssuedCountry": "TR",
+                          "cardLast4Digits": "cardLast4Digits",
+                          "cardType": "VIRTUAL",
+                          "method": "CARD",
+                          "nameOnCard": {
+                            "firstName": "Baran",
+                            "lastName": "Ozkan",
+                            "middleName": "Realblood",
                           },
+                          "paymentChannel": "paymentChannel",
+                          "transactionReferenceField": "Deposit",
                         },
                         "destinationUserId": "9350a2611e0771cba03310f74bf6",
                         "deviceData": {
@@ -1748,27 +1727,22 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                           "transactionCurrency": "EUR",
                         },
                         "originPaymentDetails": {
-                          "checkIdentifier": "originPaymentDetails",
-                          "checkNumber": "originPaymentDetails",
-                          "deliveryStatus": "COMPLETED",
-                          "etaTimestamp": 1.1,
-                          "method": "CHECK",
-                          "name": "originPaymentDetails",
-                          "shippingAddress": {
-                            "addressLines": [
-                              "Klara-Franke Str 20",
-                            ],
-                            "city": "Berlin",
-                            "country": "Germany",
-                            "postcode": "10557",
-                            "state": "Berlin",
-                            "tags": [
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                            ],
+                          "3dsDone": true,
+                          "cardAuthenticated": true,
+                          "cardBrand": "VISA",
+                          "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                          "cardFunding": "CREDIT",
+                          "cardIssuedCountry": "TR",
+                          "cardLast4Digits": "cardLast4Digits",
+                          "cardType": "VIRTUAL",
+                          "method": "CARD",
+                          "nameOnCard": {
+                            "firstName": "Baran",
+                            "lastName": "Ozkan",
+                            "middleName": "Realblood",
                           },
+                          "paymentChannel": "paymentChannel",
+                          "transactionReferenceField": "Deposit",
                         },
                         "originUserId": "8650a2611d0771cba03310f74bf6",
                         "productType": "productType",
@@ -4592,7 +4566,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "publishedAt": "optional<string>",
+              "publishedAt": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -7567,7 +7544,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       openapi: ../openapi.yml
   Thing:
     properties:
-      publishedAt: optional<string>
+      publishedAt:
+        type: optional<string>
+        access: read-only
     source:
       openapi: ../openapi.yml
 errors:
@@ -7781,29 +7760,17 @@ service:
               transactionCurrency: INR
               country: IN
             originPaymentDetails:
-              method: CHECK
-              shippingAddress:
-                addressLines:
-                  - Klara-Franke Str 20
-                postcode: '10557'
-                city: Berlin
-                state: Berlin
-                country: Germany
-                tags:
-                  - key: customKey
-                    value: customValue
+              cardFingerprint: 20ac00fed8ef913aefb17cfae1097cce
+              cardIssuedCountry: TR
+              transactionReferenceField: Deposit
+              3dsDone: true
+              method: CARD
             destinationPaymentDetails:
-              method: CHECK
-              shippingAddress:
-                addressLines:
-                  - Klara-Franke Str 20
-                postcode: '10557'
-                city: Berlin
-                state: Berlin
-                country: Germany
-                tags:
-                  - key: customKey
-                    value: customValue
+              cardFingerprint: 20ac00fed8ef913aefb17cfae1097cce
+              cardIssuedCountry: TR
+              transactionReferenceField: Deposit
+              3dsDone: true
+              method: CARD
             promotionCodeUsed: true
             reference: loan repayment
             deviceData:
@@ -7897,39 +7864,59 @@ service:
                 transactionCurrency: INR
                 country: IN
               originPaymentDetails:
-                method: CHECK
-                checkNumber: originPaymentDetails
-                checkIdentifier: originPaymentDetails
-                name: originPaymentDetails
-                deliveryStatus: COMPLETED
-                etaTimestamp: 1.1
-                shippingAddress:
-                  addressLines:
-                    - Klara-Franke Str 20
-                  postcode: '10557'
-                  city: Berlin
-                  state: Berlin
-                  country: Germany
-                  tags:
-                    - key: customKey
-                      value: customValue
+                cardFingerprint: 20ac00fed8ef913aefb17cfae1097cce
+                cardIssuedCountry: TR
+                transactionReferenceField: Deposit
+                3dsDone: true
+                nameOnCard:
+                  firstName: Baran
+                  middleName: Realblood
+                  lastName: Ozkan
+                cardExpiry:
+                  month: 1.1
+                  year: 1.1
+                cardLast4Digits: cardLast4Digits
+                cardBrand: VISA
+                cardFunding: CREDIT
+                cardAuthenticated: true
+                paymentChannel: paymentChannel
+                cardType: VIRTUAL
+                merchantDetails:
+                  id: id
+                  category: category
+                  MCC: MCC
+                  city: city
+                  country: country
+                  state: state
+                  postCode: postCode
+                method: CARD
               destinationPaymentDetails:
-                method: CHECK
-                checkNumber: destinationPaymentDetails
-                checkIdentifier: destinationPaymentDetails
-                name: destinationPaymentDetails
-                deliveryStatus: COMPLETED
-                etaTimestamp: 1.1
-                shippingAddress:
-                  addressLines:
-                    - Klara-Franke Str 20
-                  postcode: '10557'
-                  city: Berlin
-                  state: Berlin
-                  country: Germany
-                  tags:
-                    - key: customKey
-                      value: customValue
+                cardFingerprint: 20ac00fed8ef913aefb17cfae1097cce
+                cardIssuedCountry: TR
+                transactionReferenceField: Deposit
+                3dsDone: true
+                nameOnCard:
+                  firstName: Baran
+                  middleName: Realblood
+                  lastName: Ozkan
+                cardExpiry:
+                  month: 1.1
+                  year: 1.1
+                cardLast4Digits: cardLast4Digits
+                cardBrand: VISA
+                cardFunding: CREDIT
+                cardAuthenticated: true
+                paymentChannel: paymentChannel
+                cardType: VIRTUAL
+                merchantDetails:
+                  id: id
+                  category: category
+                  MCC: MCC
+                  city: city
+                  country: country
+                  state: state
+                  postCode: postCode
+                method: CARD
               relatedTransactionIds:
                 - relatedTransactionIds
               productType: productType
@@ -8116,39 +8103,37 @@ service:
                   transactionCurrency: INR
                   country: IN
                 originPaymentDetails:
-                  method: CHECK
-                  checkNumber: originPaymentDetails
-                  checkIdentifier: originPaymentDetails
-                  name: originPaymentDetails
-                  deliveryStatus: COMPLETED
-                  etaTimestamp: 1.1
-                  shippingAddress:
-                    addressLines:
-                      - Klara-Franke Str 20
-                    postcode: '10557'
-                    city: Berlin
-                    state: Berlin
-                    country: Germany
-                    tags:
-                      - key: customKey
-                        value: customValue
+                  cardFingerprint: 20ac00fed8ef913aefb17cfae1097cce
+                  cardIssuedCountry: TR
+                  transactionReferenceField: Deposit
+                  3dsDone: true
+                  nameOnCard:
+                    firstName: Baran
+                    middleName: Realblood
+                    lastName: Ozkan
+                  cardLast4Digits: cardLast4Digits
+                  cardBrand: VISA
+                  cardFunding: CREDIT
+                  cardAuthenticated: true
+                  paymentChannel: paymentChannel
+                  cardType: VIRTUAL
+                  method: CARD
                 destinationPaymentDetails:
-                  method: CHECK
-                  checkNumber: destinationPaymentDetails
-                  checkIdentifier: destinationPaymentDetails
-                  name: destinationPaymentDetails
-                  deliveryStatus: COMPLETED
-                  etaTimestamp: 1.1
-                  shippingAddress:
-                    addressLines:
-                      - Klara-Franke Str 20
-                    postcode: '10557'
-                    city: Berlin
-                    state: Berlin
-                    country: Germany
-                    tags:
-                      - key: customKey
-                        value: customValue
+                  cardFingerprint: 20ac00fed8ef913aefb17cfae1097cce
+                  cardIssuedCountry: TR
+                  transactionReferenceField: Deposit
+                  3dsDone: true
+                  nameOnCard:
+                    firstName: Baran
+                    middleName: Realblood
+                    lastName: Ozkan
+                  cardLast4Digits: cardLast4Digits
+                  cardBrand: VISA
+                  cardFunding: CREDIT
+                  cardAuthenticated: true
+                  paymentChannel: paymentChannel
+                  cardType: VIRTUAL
+                  method: CARD
                 relatedTransactionIds:
                   - relatedTransactionIds
                 productType: productType
@@ -8690,22 +8675,21 @@ service:
                   - childUserIds
               acquisitionChannel: ORGANIC
               savedPaymentDetails:
-                - method: CHECK
-                  checkNumber: savedPaymentDetails
-                  checkIdentifier: savedPaymentDetails
-                  name: savedPaymentDetails
-                  deliveryStatus: COMPLETED
-                  etaTimestamp: 1.1
-                  shippingAddress:
-                    addressLines:
-                      - Klara-Franke Str 20
-                    postcode: '10557'
-                    city: Berlin
-                    state: Berlin
-                    country: Germany
-                    tags:
-                      - key: customKey
-                        value: customValue
+                - cardFingerprint: 20ac00fed8ef913aefb17cfae1097cce
+                  cardIssuedCountry: TR
+                  transactionReferenceField: Deposit
+                  3dsDone: true
+                  nameOnCard:
+                    firstName: Baran
+                    middleName: Realblood
+                    lastName: Ozkan
+                  cardLast4Digits: cardLast4Digits
+                  cardBrand: VISA
+                  cardFunding: CREDIT
+                  cardAuthenticated: true
+                  paymentChannel: paymentChannel
+                  cardType: VIRTUAL
+                  method: CARD
               mccDetails:
                 code: 1.1
                 description: description
@@ -9164,22 +9148,21 @@ service:
                   - childUserIds
               acquisitionChannel: ORGANIC
               savedPaymentDetails:
-                - method: CHECK
-                  checkNumber: savedPaymentDetails
-                  checkIdentifier: savedPaymentDetails
-                  name: savedPaymentDetails
-                  deliveryStatus: COMPLETED
-                  etaTimestamp: 1.1
-                  shippingAddress:
-                    addressLines:
-                      - Klara-Franke Str 20
-                    postcode: '10557'
-                    city: Berlin
-                    state: Berlin
-                    country: Germany
-                    tags:
-                      - key: customKey
-                        value: customValue
+                - cardFingerprint: 20ac00fed8ef913aefb17cfae1097cce
+                  cardIssuedCountry: TR
+                  transactionReferenceField: Deposit
+                  3dsDone: true
+                  nameOnCard:
+                    firstName: Baran
+                    middleName: Realblood
+                    lastName: Ozkan
+                  cardLast4Digits: cardLast4Digits
+                  cardBrand: VISA
+                  cardFunding: CREDIT
+                  cardAuthenticated: true
+                  paymentChannel: paymentChannel
+                  cardType: VIRTUAL
+                  method: CARD
               mccDetails:
                 code: 1.1
                 description: description

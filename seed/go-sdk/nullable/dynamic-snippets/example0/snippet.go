@@ -29,7 +29,14 @@ func do() () {
                     true,
                 ),
             },
-            Tags: []*string{},
+            Tags: []*string{
+                fern.String(
+                    "tags",
+                ),
+            },
+            Extra: fern.Bool(
+                true,
+            ),
         },
     )
 }

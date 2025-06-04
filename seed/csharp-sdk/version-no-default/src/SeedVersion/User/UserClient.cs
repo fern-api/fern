@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedVersion.Core;
 
 namespace SeedVersion;
@@ -15,11 +14,9 @@ public partial class UserClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.GetUserAsync("userId");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<User> GetUserAsync(
         string userId,
         RequestOptions? options = null,
@@ -27,20 +24,20 @@ public partial class UserClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/users/{userId}",
+                    Path = string.Format("/users/{0}", ValueConvert.ToPathParameterString(userId)),
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<User>(responseBody)!;
@@ -51,10 +48,13 @@ public partial class UserClient
             }
         }
 
-        throw new SeedVersionApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedVersionApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

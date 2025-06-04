@@ -1,6 +1,5 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedPlainText.Core;
 
 namespace SeedPlainText;
@@ -14,19 +13,17 @@ public partial class ServiceClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Service.GetTextAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> GetTextAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -36,15 +33,18 @@ public partial class ServiceClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             return responseBody;
         }
-        throw new SeedPlainTextApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedPlainTextApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

@@ -103,6 +103,7 @@ public final class CreateProblemResponse {
   }
 
   @JsonTypeName("success")
+  @JsonIgnoreProperties("type")
   private static final class SuccessValue implements Value {
     @JsonProperty("value")
     private ProblemId value;
@@ -141,6 +142,7 @@ public final class CreateProblemResponse {
   }
 
   @JsonTypeName("error")
+  @JsonIgnoreProperties("type")
   private static final class ErrorValue implements Value {
     @JsonProperty("value")
     private CreateProblemError value;
@@ -178,6 +180,7 @@ public final class CreateProblemResponse {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

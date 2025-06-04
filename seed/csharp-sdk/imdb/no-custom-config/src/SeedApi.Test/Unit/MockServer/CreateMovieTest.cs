@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedApi;
 using SeedApi.Core;
@@ -11,7 +9,7 @@ namespace SeedApi.Test.Unit.MockServer;
 public class CreateMovieTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {
@@ -40,12 +38,8 @@ public class CreateMovieTest : BaseMockServerTest
             );
 
         var response = await Client.Imdb.CreateMovieAsync(
-            new CreateMovieRequest { Title = "title", Rating = 1.1 },
-            RequestOptions
+            new CreateMovieRequest { Title = "title", Rating = 1.1 }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 }

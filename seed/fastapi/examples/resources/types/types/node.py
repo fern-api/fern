@@ -6,14 +6,12 @@ import typing
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 from ....core.pydantic_utilities import update_forward_refs
-
-
 class Node(UniversalBaseModel):
     """
     Examples
     --------
     from seed.examples.resources.types import Node, Tree
-
+    
     Node(
         name="root",
         nodes=[
@@ -38,21 +36,14 @@ class Node(UniversalBaseModel):
         ],
     )
     """
-
     name: str
     nodes: typing.Optional[typing.List["Node"]] = None
     trees: typing.Optional[typing.List["Tree"]] = None
-
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid
-
-
-from .tree import Tree  # noqa: E402
-
+from .tree import Tree # noqa: E402, F401, I001
 update_forward_refs(Node)

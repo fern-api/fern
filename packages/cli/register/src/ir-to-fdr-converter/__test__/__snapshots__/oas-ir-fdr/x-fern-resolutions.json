@@ -1,0 +1,180 @@
+{
+  "types": {
+    "getUser_Response_200": {
+      "name": "getUser_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "UsersGetResponsesContentApplicationJsonSchemaItems": {
+      "name": "UsersGetResponsesContentApplicationJsonSchemaItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {},
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "method": "GET",
+        "id": "getUser",
+        "originalEndpointId": "endpoint_.getUser",
+        "name": "Get User",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/user"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "getUser_Response_200"
+            }
+          },
+          "statusCode": 200,
+          "description": "Success"
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "getUserExample",
+            "description": "",
+            "path": "/user",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": {
+              "id": "foo"
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "id": "foo"
+              }
+            }
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      },
+      {
+        "auth": false,
+        "method": "GET",
+        "id": "getUsers",
+        "originalEndpointId": "endpoint_.getUsers",
+        "name": "Get Users",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/users"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "UsersGetResponsesContentApplicationJsonSchemaItems"
+              }
+            }
+          },
+          "statusCode": 200,
+          "description": "Success"
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "getUsersExample",
+            "description": "",
+            "path": "/users",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": [
+              {
+                "id": "foo"
+              }
+            ],
+            "responseBodyV3": {
+              "type": "json",
+              "value": [
+                {
+                  "id": "foo"
+                }
+              ]
+            }
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      }
+    ],
+    "webhooks": [],
+    "websockets": [],
+    "types": [],
+    "subpackages": []
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

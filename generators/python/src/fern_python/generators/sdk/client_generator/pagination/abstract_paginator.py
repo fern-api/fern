@@ -1,10 +1,11 @@
 from abc import abstractmethod
 from typing import List, Optional
 
-import fern.ir.resources as ir_types
-
 from fern_python.codegen import AST
+from fern_python.generators.sdk.client_generator.constants import RESPONSE_VARIABLE
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
+
+import fern.ir.resources as ir_types
 
 
 # Duplicative of snippets,
@@ -47,28 +48,22 @@ class Paginator:
         self._config = config
 
     @abstractmethod
-    def init_custom_vars_pre_next(self, *, writer: AST.NodeWriter) -> None:
-        ...
+    def init_custom_vars_pre_next(self, *, writer: AST.NodeWriter) -> None: ...
 
     @abstractmethod
-    def init_custom_vars_after_next(self, *, writer: AST.NodeWriter) -> None:
-        ...
+    def init_custom_vars_after_next(self, *, writer: AST.NodeWriter) -> None: ...
 
     @abstractmethod
-    def get_next_none_safe_condition(self) -> Optional[str]:
-        ...
+    def get_next_none_safe_condition(self) -> Optional[str]: ...
 
     @abstractmethod
-    def init_has_next(self) -> str:
-        ...
+    def init_has_next(self) -> str: ...
 
     @abstractmethod
-    def init_get_next(self, *, writer: AST.NodeWriter) -> None:
-        ...
+    def init_get_next(self, *, writer: AST.NodeWriter) -> None: ...
 
     @abstractmethod
-    def get_results_property(self) -> ir_types.ResponseProperty:
-        ...
+    def get_results_property(self) -> ir_types.ResponseProperty: ...
 
     def init_parsed_response(self, writer: AST.NodeWriter) -> None:
         writer.write(f"{Paginator.PARSED_RESPONSE_VARIABLE} = ")
@@ -81,6 +76,29 @@ class Paginator:
     def write(self, *, writer: AST.NodeWriter) -> None:
         self.init_parsed_response(writer=writer)
 
+        items_non_safe_condition = self._get_none_safe_property_condition(self.get_results_property())
+        results_property = f"{Paginator.PARSED_RESPONSE_VARIABLE}.{self.access_results_property_path()}"
+        if items_non_safe_condition is not None:
+            writer.write_node(
+                AST.VariableDeclaration(
+                    name=Paginator.PAGINATION_ITEMS_VARIABLE,
+                    initializer=AST.Expression(
+                        AST.ConditionalExpression(
+                            test=AST.Expression(items_non_safe_condition),
+                            left=AST.Expression(results_property),
+                            right=AST.Expression("[]"),
+                        )
+                    ),
+                )
+            )
+        else:
+            writer.write_node(
+                AST.VariableDeclaration(
+                    name=Paginator.PAGINATION_ITEMS_VARIABLE,
+                    initializer=AST.Expression(results_property),
+                )
+            )
+
         def init_vars(writer: AST.NodeWriter) -> None:
             # Step 1: Initialize custom variables
             self.init_custom_vars_after_next(writer=writer)
@@ -89,39 +107,41 @@ class Paginator:
             writer.write_line(f"{Paginator.PAGINATION_HAS_NEXT_VARIABLE} = {self.init_has_next()}")
 
             # Step 3: Initialize get_next
-            writer.write(f"{Paginator.PAGINATION_GET_NEXT_VARIABLE} =")
             self.init_get_next(writer=writer)
 
         next_none_safe_condition = self.get_next_none_safe_condition()
         if next_none_safe_condition is not None:
             self.init_custom_vars_pre_next(writer=writer)
-            writer.write_line(next_none_safe_condition)
+            writer.write_line(f"if {next_none_safe_condition}:")
             with writer.indent():
                 init_vars(writer=writer)
         else:
             init_vars(writer=writer)
 
-        # Step 4: Get items
-        items_non_safe_condition = self._get_none_safe_property_condition(self.get_results_property())
-        results_property = f"{Paginator.PARSED_RESPONSE_VARIABLE}.{self.access_results_property_path()}"
-        if items_non_safe_condition is not None:
-            writer.write_line(f"{Paginator.PAGINATION_ITEMS_VARIABLE} = []")
-            writer.write_line(items_non_safe_condition)
-            with writer.indent():
-                writer.write_line(f"{Paginator.PAGINATION_ITEMS_VARIABLE} = {results_property}")
-        else:
-            writer.write_line(f"{Paginator.PAGINATION_ITEMS_VARIABLE} = {results_property}")
-
-        # Step 5: Instantiate paginator
-        writer.write("return ")
-        writer.write_node(
-            self._context.core_utilities.instantiate_paginator(
-                items=AST.Expression(Paginator.PAGINATION_ITEMS_VARIABLE),
-                has_next=AST.Expression(Paginator.PAGINATION_HAS_NEXT_VARIABLE),
-                get_next=AST.Expression(Paginator.PAGINATION_GET_NEXT_VARIABLE),
-                is_async=self._is_async,
-            )
+        # Step 4: Instantiate paginator
+        paginator_expr = self._context.core_utilities.instantiate_paginator(
+            items=AST.Expression(Paginator.PAGINATION_ITEMS_VARIABLE),
+            has_next=AST.Expression(Paginator.PAGINATION_HAS_NEXT_VARIABLE),
+            get_next=AST.Expression(Paginator.PAGINATION_GET_NEXT_VARIABLE),
+            response=AST.Expression(
+                AST.ClassInstantiation(
+                    class_=AST.ClassReference(
+                        qualified_name_excluding_import=(),
+                        import_=AST.ReferenceImport(
+                            module=AST.Module.local(*self._context.core_utilities._module_path, "pagination"),
+                            named_import="BaseHttpResponse",
+                        ),
+                    ),
+                    kwargs=[
+                        ("response", AST.Expression(RESPONSE_VARIABLE)),
+                    ],
+                )
+            ),
+            is_async=self._is_async,
         )
+
+        writer.write_node(AST.ReturnStatement(value=paginator_expr))
+        writer.write_newline_if_last_line_not()
 
     def _get_none_safe_property_condition(self, response_property: ir_types.ResponseProperty) -> Optional[str]:
         if response_property.property_path is None or len(response_property.property_path) == 0:
@@ -135,7 +155,7 @@ class Paginator:
                 condition += " and "
             built_path += f"{property.snake_case.safe_name}"
             condition += f"{built_path} is not None"
-        return f"if {condition}:"
+        return condition
 
     # Need to do null-safe dereferencing here, with some fallback value
     def _response_property_to_dot_access(self, response_property: ir_types.ResponseProperty) -> str:

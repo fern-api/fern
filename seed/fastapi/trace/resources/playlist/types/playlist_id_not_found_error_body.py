@@ -7,63 +7,40 @@ from ....core.pydantic_utilities import UniversalRootModel
 import typing
 from ....core.pydantic_utilities import UniversalBaseModel
 from ....core.pydantic_utilities import update_forward_refs
-
 T_Result = typing.TypeVar("T_Result")
-
-
 class _Factory:
-    def playlist_id(
-        self, value: resources_playlist_types_playlist_id_PlaylistId
-    ) -> PlaylistIdNotFoundErrorBody:
+    
+    def playlist_id(self, value: resources_playlist_types_playlist_id_PlaylistId) -> PlaylistIdNotFoundErrorBody:
         if IS_PYDANTIC_V2:
-            return PlaylistIdNotFoundErrorBody(
-                root=_PlaylistIdNotFoundErrorBody.PlaylistId(
-                    type="playlistId", value=value
-                )
-            )  # type: ignore
+            return PlaylistIdNotFoundErrorBody(root=_PlaylistIdNotFoundErrorBody.PlaylistId(type="playlistId", value=value))  # type: ignore
         else:
-            return PlaylistIdNotFoundErrorBody(
-                __root__=_PlaylistIdNotFoundErrorBody.PlaylistId(
-                    type="playlistId", value=value
-                )
-            )  # type: ignore
-
-
+            return PlaylistIdNotFoundErrorBody(__root__=_PlaylistIdNotFoundErrorBody.PlaylistId(type="playlistId", value=value))  # type: ignore
 class PlaylistIdNotFoundErrorBody(UniversalRootModel):
     factory: typing.ClassVar[_Factory] = _Factory()
-
+    
     if IS_PYDANTIC_V2:
         root: typing.Union[_PlaylistIdNotFoundErrorBody.PlaylistId]
-
         def get_as_union(self) -> typing.Union[_PlaylistIdNotFoundErrorBody.PlaylistId]:
             return self.root
     else:
         __root__: typing.Union[_PlaylistIdNotFoundErrorBody.PlaylistId]
-
         def get_as_union(self) -> typing.Union[_PlaylistIdNotFoundErrorBody.PlaylistId]:
             return self.__root__
-
+    
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
         if IS_PYDANTIC_V2:
             return self.root.dict(**kwargs)
         else:
             return self.__root__.dict(**kwargs)
-
-    def visit(
-        self,
-        playlist_id: typing.Callable[
-            [resources_playlist_types_playlist_id_PlaylistId], T_Result
-        ],
-    ) -> T_Result:
+    
+    def visit(self, playlist_id: typing.Callable[[resources_playlist_types_playlist_id_PlaylistId], T_Result]) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "playlistId":
-            return playlist_id(unioned_value.value)
-
-
+            return playlist_id(
+            unioned_value.value)
 class _PlaylistIdNotFoundErrorBody:
+    
     class PlaylistId(UniversalBaseModel):
         type: typing.Literal["playlistId"] = "playlistId"
         value: resources_playlist_types_playlist_id_PlaylistId
-
-
 update_forward_refs(PlaylistIdNotFoundErrorBody)

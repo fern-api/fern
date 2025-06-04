@@ -5,16 +5,14 @@ from .shape import Shape
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 import pydantic
-
-
 class Type(UniversalBaseModel):
     """
     Defines properties with default values and validation rules.
-
+    
     Examples
     --------
     from seed.validation import Shape, Type
-
+    
     Type(
         decimal=1.1,
         even=2,
@@ -22,17 +20,13 @@ class Type(UniversalBaseModel):
         shape=Shape.SQUARE,
     )
     """
-
     decimal: float
     even: int
     name: str
     shape: Shape
-
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid

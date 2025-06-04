@@ -25,4 +25,12 @@ class GetFunctionSignatureResponse extends JsonSerializableType
     ) {
         $this->functionByLanguage = $values['functionByLanguage'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

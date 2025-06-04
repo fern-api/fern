@@ -3,10 +3,10 @@ name: ci
 on: [push]
 jobs:
   compile:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up python
         uses: actions/setup-python@v4
         with:
@@ -19,10 +19,10 @@ jobs:
       - name: Compile
         run: poetry run mypy .
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up python
         uses: actions/setup-python@v4
         with:
@@ -33,18 +33,16 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
-      - name: Install Fern
-        run: npm install -g fern-api
       - name: Test
-        run: fern test --command "poetry run pytest -rP ."
+        run: poetry run pytest -rP .
 
   publish:
     needs: [compile, test]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up python
         uses: actions/setup-python@v4
         with:

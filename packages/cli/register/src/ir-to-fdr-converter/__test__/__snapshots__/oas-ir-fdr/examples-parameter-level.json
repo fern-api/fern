@@ -1,0 +1,115 @@
+{
+  "types": {},
+  "subpackages": {},
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "method": "GET",
+        "id": "get",
+        "originalEndpointId": "endpoint_.get",
+        "name": "Simple endpoint",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "some-path-param",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/simple"
+            }
+          ]
+        },
+        "queryParameters": [
+          {
+            "key": "some-query-param",
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "some-query-param-ref-examples",
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "headers": [
+          {
+            "key": "some-header",
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "statusCode": 200,
+          "description": "Success"
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "getExample",
+            "description": "",
+            "path": "/simple",
+            "pathParameters": {
+              "some-path-param": "def"
+            },
+            "queryParameters": {
+              "some-query-param": "test-some-query-param",
+              "some-query-param-ref-examples": "washington"
+            },
+            "headers": {
+              "some-header": "foo"
+            },
+            "responseStatusCode": 200,
+            "responseBody": "foo",
+            "responseBodyV3": {
+              "type": "json",
+              "value": "foo"
+            }
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      }
+    ],
+    "webhooks": [],
+    "websockets": [],
+    "types": [],
+    "subpackages": []
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

@@ -31,4 +31,12 @@ class SinglyLinkedListNodeAndListValue extends JsonSerializableType
         $this->nodeId = $values['nodeId'];
         $this->fullList = $values['fullList'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

@@ -1,10 +1,6 @@
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import {
-    constructCasingsGenerator,
-    constructFernFileContext,
-    convertToFernFilepath,
-    parseInlineType
-} from "@fern-api/ir-generator";
+import { constructFernFileContext, convertToFernFilepath, parseInlineType } from "@fern-api/ir-generator";
 import { ContainerType, serialization as IrSerialization, TypeReference } from "@fern-api/ir-sdk";
 
 describe("parse inline types", () => {
@@ -42,15 +38,16 @@ describe("parse inline types", () => {
                             }),
                             name: casingsGenerator.generateName(dummyTypeName),
                             default: undefined,
-                            inline: undefined
+                            inline: undefined,
+                            displayName: undefined
                         })
                     )
                 )
             )
         );
 
-        const parsedTypeReferenceJson = await IrSerialization.TypeReference.jsonOrThrow(parsedTypeReference);
-        const expectedTypeReferenceJson = await IrSerialization.TypeReference.jsonOrThrow(expectedTypeReference);
+        const parsedTypeReferenceJson = IrSerialization.TypeReference.jsonOrThrow(parsedTypeReference);
+        const expectedTypeReferenceJson = IrSerialization.TypeReference.jsonOrThrow(expectedTypeReference);
 
         expect(parsedTypeReferenceJson).toEqual(expectedTypeReferenceJson);
     });

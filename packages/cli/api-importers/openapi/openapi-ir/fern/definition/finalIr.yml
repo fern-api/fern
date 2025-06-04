@@ -15,6 +15,7 @@ types:
       description: optional<string>
       basePath: optional<string>
       servers: list<commons.Server>
+      websocketServers: list<commons.Server>
       groups:
         docs: |
           Top level group information populated through `x-fern-groups`.
@@ -23,7 +24,7 @@ types:
       hasEndpointsMarkedInternal: boolean
       endpoints: list<Endpoint>
       webhooks: list<Webhook>
-      channel: list<WebsocketChannel>
+      channels: map<string, WebsocketChannel>
       groupedSchemas: Schemas
       variables: map<string, PrimitiveSchema>
       nonRequestReferencedSchemas:
@@ -84,6 +85,7 @@ types:
       - commons.WithSource
       - commons.WithNamespace
     properties:
+      audiences: list<string>
       sdkName: optional<EndpointSdkName>
       method: WebhookHttpMethod
       summary: optional<string>
@@ -113,9 +115,20 @@ types:
       groupName: commons.SdkGroupName
       summary: optional<string>
       handshake: WebsocketHandshake
-      publish: optional<Schema>
-      subscribe: optional<Schema>
+      messages: list<WebsocketMessageSchema>
+      servers: list<WebsocketServer>
       examples: list<WebsocketSessionExample>
+  
+  WebsocketMessageSchema:
+    properties:
+      name: string
+      origin: WebsocketMessageOrigin
+      body: Schema
+      
+  WebsocketMessageOrigin:
+    enum:
+      - client
+      - server
 
   WebsocketHandshake:
     properties:
@@ -189,7 +202,7 @@ types:
         docs: |
           Expected error status codes for this endpoint, and their corresponding schema and examples.
           SDK generators will only read the StatusCodes. Docs generators will read the HttpError schema.
-      server: list<HttpEndpointServer>
+      servers: list<HttpEndpointServer>
       examples: list<EndpointExample>
       pagination: optional<Pagination>
 
@@ -201,10 +214,16 @@ types:
       url: optional<string>
       audiences: optional<list<string>>
 
+  WebsocketServer:
+    properties:
+      name: string
+      url: string
+
   Pagination:
     union:
       cursor: CursorPagination
       offset: OffsetPagination
+      custom: CustomPagination
 
   CursorPagination:
     properties:
@@ -218,6 +237,17 @@ types:
       results: string
       step: optional<string>
       hasNextPage: optional<string>
+
+  CustomPagination:
+    docs: |
+      Pagination where the SDK author is responsible for implementing the pagination
+      logic in the SDK.
+    properties:
+      results:
+        docs: |
+          The response property is used to determine the results response type
+          generated in the endpoint.
+        type: string
 
   CustomCodeSample:
     availability: in-development
@@ -424,8 +454,17 @@ types:
       key: string
       schema: MultipartSchema
       contentType: optional<string>
+      exploded: optional<boolean>
+      encoding: optional<MultipartRequestPropertyEncoding>
+
+  MultipartRequestPropertyEncoding:
+    enum:
+      - json
+      - form
 
   FileSchema:
+    extends:
+      - commons.WithDescription
     properties:
       isOptional: boolean
       isArray: boolean
@@ -440,6 +479,7 @@ types:
       file: FileResponse
       json: JsonResponse
       text: TextResponse
+      bytes: BytesResponse
       streamingSse: JsonResponse
       streamingText: TextResponse
       streamingJson:
@@ -447,6 +487,12 @@ types:
         docs: Checks if `x-fern-streaming` is present and is true.
 
   FileResponse:
+    extends:
+      - commons.WithDescription
+      - commons.WithSource
+      - commons.WithStatusCode
+
+  BytesResponse:
     extends:
       - commons.WithDescription
       - commons.WithSource
@@ -483,9 +529,10 @@ types:
 
   PrimitiveSchema:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithTitle
     properties:
@@ -560,9 +607,10 @@ types:
 
   LiteralSchema:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithTitle
     properties:
@@ -575,9 +623,10 @@ types:
 
   ObjectSchema:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithSource
       - commons.WithTitle
@@ -608,6 +657,7 @@ types:
       key: string
       schema: Schema
       readonly: optional<boolean>
+      writeonly: optional<boolean>
       conflict:
         type: map<commons.SchemaId, ObjectPropertyConflictInfo>
         docs: The schemas that conflict with this property
@@ -627,9 +677,10 @@ types:
 
   ArraySchema:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithTitle
       - commons.WithInline
@@ -638,9 +689,10 @@ types:
 
   MapSchema:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithEncoding
       - commons.WithTitle
@@ -651,9 +703,10 @@ types:
 
   OptionalSchema:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithTitle
       - commons.WithInline
@@ -662,9 +715,10 @@ types:
 
   NullableSchema:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithTitle
       - commons.WithInline
@@ -673,9 +727,10 @@ types:
 
   EnumSchema:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithSource
       - commons.WithTitle
@@ -709,9 +764,10 @@ types:
 
   ReferencedSchema:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithSource
       - commons.WithTitle
@@ -725,9 +781,10 @@ types:
 
   DiscriminatedOneOfSchema:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithEncoding
       - commons.WithSource
@@ -745,9 +802,10 @@ types:
 
   UnDiscriminatedOneOfSchema:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithEncoding
       - commons.WithSource

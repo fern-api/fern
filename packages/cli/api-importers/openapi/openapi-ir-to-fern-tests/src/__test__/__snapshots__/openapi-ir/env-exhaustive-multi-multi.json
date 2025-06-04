@@ -1,0 +1,406 @@
+{
+  "title": "Test API",
+  "servers": [
+    {
+      "url": "http://prod.api.com",
+      "name": "Prod"
+    },
+    {
+      "url": "http://dev.api.com",
+      "name": "Dev"
+    },
+    {
+      "url": "http://prod2.api.com",
+      "name": "Prod"
+    },
+    {
+      "url": "http://dev2.api.com",
+      "name": "Dev"
+    }
+  ],
+  "websocketServers": [
+    {
+      "name": "websocket",
+      "url": "wss://api.async.com"
+    },
+    {
+      "name": "websocket2",
+      "url": "wss://api2.async.com"
+    },
+    {
+      "name": "betawebsocket",
+      "url": "wss://api.async2.com"
+    },
+    {
+      "name": "betawebsocket2",
+      "url": "wss://api2.async2.com"
+    }
+  ],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "list",
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "alpha"
+        ],
+        "methodName": "listPets"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "AlphaListPetsRequest",
+      "response": {
+        "description": "A response",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "AlphaListPetsResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi1.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [
+        {
+          "url": "http://debug.api.com",
+          "name": "Debug"
+        }
+      ],
+      "authed": false,
+      "method": "GET",
+      "path": "/pets",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi1.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "list",
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "beta"
+        ],
+        "methodName": "listPets"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "BetaListPetsRequest",
+      "response": {
+        "description": "A response",
+        "schema": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "BetaListPetsResponse",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi2.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [
+        {
+          "url": "http://debug2.api.com",
+          "name": "Debug"
+        }
+      ],
+      "authed": false,
+      "method": "GET",
+      "path": "/pets",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi2.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {
+    "testChannel": {
+      "audiences": [],
+      "handshake": {
+        "headers": [],
+        "queryParameters": [],
+        "pathParameters": []
+      },
+      "groupName": [
+        "testChannel"
+      ],
+      "messages": [
+        {
+          "origin": "client",
+          "name": "testChannel_sendMessage",
+          "body": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "TestChannelSendMessage",
+            "groupName": [],
+            "type": "primitive"
+          }
+        }
+      ],
+      "servers": [
+        {
+          "name": "websocket",
+          "url": "wss://api.async.com"
+        }
+      ],
+      "path": "/test",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": [
+            {
+              "messageType": "testChannel_sendMessage",
+              "payload": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
+        }
+      ],
+      "source": {
+        "file": "../asyncapi1.yml",
+        "type": "openapi"
+      }
+    },
+    "testChannel2": {
+      "audiences": [],
+      "handshake": {
+        "headers": [],
+        "queryParameters": [],
+        "pathParameters": []
+      },
+      "groupName": [
+        "testChannel2"
+      ],
+      "messages": [
+        {
+          "origin": "client",
+          "name": "testChannel2_sendMessage",
+          "body": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "TestChannel2SendMessage",
+            "groupName": [],
+            "type": "primitive"
+          }
+        }
+      ],
+      "servers": [
+        {
+          "name": "websocket2",
+          "url": "wss://api2.async.com"
+        }
+      ],
+      "path": "/test2",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": [
+            {
+              "messageType": "testChannel2_sendMessage",
+              "payload": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
+        }
+      ],
+      "source": {
+        "file": "../asyncapi1.yml",
+        "type": "openapi"
+      }
+    },
+    "testChannels": {
+      "audiences": [],
+      "handshake": {
+        "headers": [],
+        "queryParameters": [],
+        "pathParameters": []
+      },
+      "groupName": [
+        "testChannels"
+      ],
+      "messages": [
+        {
+          "origin": "client",
+          "name": "testChannels_sendMessage",
+          "body": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "TestChannelsSendMessage",
+            "groupName": [],
+            "type": "primitive"
+          }
+        }
+      ],
+      "servers": [
+        {
+          "name": "betawebsocket",
+          "url": "wss://api.async2.com"
+        }
+      ],
+      "path": "/test",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": [
+            {
+              "messageType": "testChannels_sendMessage",
+              "payload": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
+        }
+      ],
+      "source": {
+        "file": "../asyncapi2.yml",
+        "type": "openapi"
+      }
+    },
+    "testChannels2": {
+      "audiences": [],
+      "handshake": {
+        "headers": [],
+        "queryParameters": [],
+        "pathParameters": []
+      },
+      "groupName": [
+        "testChannels2"
+      ],
+      "messages": [
+        {
+          "origin": "client",
+          "name": "testChannels2_sendMessage",
+          "body": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "TestChannels2SendMessage",
+            "groupName": [],
+            "type": "primitive"
+          }
+        }
+      ],
+      "servers": [
+        {
+          "name": "betawebsocket2",
+          "url": "wss://api2.async2.com"
+        }
+      ],
+      "path": "/test2",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": [
+            {
+              "messageType": "testChannels2_sendMessage",
+              "payload": {
+                "value": {
+                  "value": "string",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ]
+        }
+      ],
+      "source": {
+        "file": "../asyncapi2.yml",
+        "type": "openapi"
+      }
+    }
+  },
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

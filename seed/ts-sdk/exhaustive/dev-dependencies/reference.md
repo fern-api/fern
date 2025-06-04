@@ -105,7 +105,7 @@ await client.endpoints.container.getAndReturnListOfObjects([
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfPrimitives</a>({ ...params }) -> core.APIResponse<Set<string>, Fiddle.endpoints.container.getAndReturnSetOfPrimitives.Error></code></summary>
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfPrimitives</a>({ ...params }) -> core.APIResponse<string[], Fiddle.endpoints.container.getAndReturnSetOfPrimitives.Error></code></summary>
 <dl>
 <dd>
 
@@ -134,7 +134,7 @@ await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"])
 <dl>
 <dd>
 
-**request:** `Set<string>`
+**request:** `string[]`
 
 </dd>
 </dl>
@@ -1002,7 +1002,7 @@ await client.endpoints.object.getAndReturnWithMapOfMap({
 ```typescript
 await client.endpoints.object.getAndReturnNestedWithOptionalField({
     string: "string",
-    nestedObject: {
+    NestedObject: {
         string: "string",
         integer: 1,
         long: 1000000,
@@ -1069,7 +1069,7 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
 ```typescript
 await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
     string: "string",
-    nestedObject: {
+    NestedObject: {
         string: "string",
         integer: 1,
         long: 1000000,
@@ -1145,7 +1145,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
 await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([
     {
         string: "string",
-        nestedObject: {
+        NestedObject: {
             string: "string",
             integer: 1,
             long: 1000000,
@@ -1165,7 +1165,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([
     },
     {
         string: "string",
-        nestedObject: {
+        NestedObject: {
             string: "string",
             integer: 1,
             long: 1000000,
@@ -1283,7 +1283,7 @@ await client.endpoints.params.getWithPath("param");
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePath</a>(param, { ...params }) -> core.APIResponse<string, Fiddle.endpoints.params.getWithInlinePath.Error></code></summary>
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePath</a>({ ...params }) -> core.APIResponse<string, Fiddle.endpoints.params.getWithInlinePath.Error></code></summary>
 <dl>
 <dd>
 
@@ -1311,7 +1311,9 @@ GET with path param
 <dd>
 
 ```typescript
-await client.endpoints.params.getWithInlinePath("param");
+await client.endpoints.params.getWithInlinePath({
+    param: "param",
+});
 ```
 
 </dd>
@@ -1323,14 +1325,6 @@ await client.endpoints.params.getWithInlinePath("param");
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**param:** `string`
-
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -1559,7 +1553,7 @@ await client.endpoints.params.getWithPathAndQuery("param", {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePathAndQuery</a>(param, { ...params }) -> core.APIResponse<void, Fiddle.endpoints.params.getWithInlinePathAndQuery.Error></code></summary>
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePathAndQuery</a>({ ...params }) -> core.APIResponse<void, Fiddle.endpoints.params.getWithInlinePathAndQuery.Error></code></summary>
 <dl>
 <dd>
 
@@ -1587,7 +1581,8 @@ GET with path and query params
 <dd>
 
 ```typescript
-await client.endpoints.params.getWithInlinePathAndQuery("param", {
+await client.endpoints.params.getWithInlinePathAndQuery({
+    param: "param",
     query: "query",
 });
 ```
@@ -1601,14 +1596,6 @@ await client.endpoints.params.getWithInlinePathAndQuery("param", {
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**param:** `string`
-
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -1703,7 +1690,7 @@ await client.endpoints.params.modifyWithPath("param", "string");
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">modifyWithInlinePath</a>(param, { ...params }) -> core.APIResponse<string, Fiddle.endpoints.params.modifyWithInlinePath.Error></code></summary>
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">modifyWithInlinePath</a>({ ...params }) -> core.APIResponse<string, Fiddle.endpoints.params.modifyWithInlinePath.Error></code></summary>
 <dl>
 <dd>
 
@@ -1731,7 +1718,8 @@ PUT to update with path param
 <dd>
 
 ```typescript
-await client.endpoints.params.modifyWithInlinePath("param", {
+await client.endpoints.params.modifyWithInlinePath({
+    param: "param",
     body: "string",
 });
 ```
@@ -1745,14 +1733,6 @@ await client.endpoints.params.modifyWithInlinePath("param", {
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**param:** `string`
-
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -2018,7 +1998,7 @@ await client.endpoints.primitive.getAndReturnBool(true);
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDatetime</a>({ ...params }) -> core.APIResponse<Date, Fiddle.endpoints.primitive.getAndReturnDatetime.Error></code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDatetime</a>({ ...params }) -> core.APIResponse<string, Fiddle.endpoints.primitive.getAndReturnDatetime.Error></code></summary>
 <dl>
 <dd>
 
@@ -2047,7 +2027,7 @@ await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z");
 <dl>
 <dd>
 
-**request:** `Date`
+**request:** `string`
 
 </dd>
 </dl>
@@ -2210,6 +2190,58 @@ await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh");
 </dl>
 </details>
 
+## Endpoints Put
+
+<details><summary><code>client.endpoints.put.<a href="/src/api/resources/endpoints/resources/put/client/Client.ts">add</a>({ ...params }) -> core.APIResponse<Fiddle.PutResponse, Fiddle.endpoints.put.add.Error></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.put.add({
+    id: "id",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Fiddle.endpoints.PutRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Put.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Union
 
 <details><summary><code>client.endpoints.union.<a href="/src/api/resources/endpoints/resources/union/client/Client.ts">getAndReturnUnion</a>({ ...params }) -> core.APIResponse<Fiddle.Animal, Fiddle.endpoints.union.getAndReturnUnion.Error></code></summary>
@@ -2225,12 +2257,11 @@ await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh");
 <dd>
 
 ```typescript
-await client.endpoints.union.getAndReturnUnion(
-    Fiddle.Animal.dog({
-        name: "name",
-        likesToWoof: true,
-    }),
-);
+await client.endpoints.union.getAndReturnUnion({
+    animal: "dog",
+    name: "name",
+    likesToWoof: true,
+});
 ```
 
 </dd>
@@ -2298,7 +2329,7 @@ POST with custom object in request body, response is an object
 await client.inlinedRequests.postWithObjectBodyandResponse({
     string: "string",
     integer: 1,
-    nestedObject: {
+    NestedObject: {
         string: "string",
         integer: 1,
         long: 1000000,
@@ -2515,8 +2546,8 @@ await client.noReqBody.postWithNoRequestBody();
 
 ```typescript
 await client.reqWithHeaders.getWithCustomHeader({
-    xTestServiceHeader: "X-TEST-SERVICE-HEADER",
-    xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+    "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
+    "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
     body: "string",
 });
 ```

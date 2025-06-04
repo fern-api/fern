@@ -23,7 +23,7 @@ Instantiate and use the client with the following:
 import { SeedUnionsClient } from "@fern/unions";
 
 const client = new SeedUnionsClient({ environment: "YOUR_BASE_URL" });
-await client.union.get("id");
+await client.bigunion.get("id");
 ```
 
 ## Exception Handling
@@ -35,12 +35,13 @@ will be thrown.
 import { SeedUnionsError } from "@fern/unions";
 
 try {
-    await client.union.get(...);
+    await client.bigunion.get(...);
 } catch (err) {
     if (err instanceof SeedUnionsError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
+        console.log(err.rawResponse);
     }
 }
 ```
@@ -52,7 +53,7 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-const response = await client.union.get(..., {
+const response = await client.bigunion.get(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -74,7 +75,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.union.get(..., {
+const response = await client.bigunion.get(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -84,7 +85,7 @@ const response = await client.union.get(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.union.get(..., {
+const response = await client.bigunion.get(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -95,10 +96,22 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.union.get(..., {
+const response = await client.bigunion.get(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
+```
+
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `.withRawResponse()` method.
+The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
+
+```typescript
+const { data, rawResponse } = await client.bigunion.get(...).withRawResponse();
+
+console.log(data);
+console.log(rawResponse.headers['X-My-Header']);
 ```
 
 ### Runtime Compatibility
@@ -115,7 +128,7 @@ runtimes:
 
 ### Customizing Fetch Client
 
-The SDK provides a way for your to customize the underlying HTTP client / Fetch function. If you're running in an
+The SDK provides a way for you to customize the underlying HTTP client / Fetch function. If you're running in an
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript

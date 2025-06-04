@@ -1,0 +1,106 @@
+{
+  "types": {
+    "GenerateContentResponse": {
+      "name": "GenerateContentResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "bar",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {
+    "subpackage_generativelanguage": {
+      "subpackageId": "subpackage_generativelanguage",
+      "name": "generativelanguage",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "POST",
+          "defaultEnvironment": "https://ai.com",
+          "environments": [
+            {
+              "id": "https://ai.com",
+              "baseUrl": "https://ai.com"
+            }
+          ],
+          "id": "GenerateContent",
+          "originalEndpointId": "endpoint_generativelanguage.GenerateContent",
+          "name": "Generate Content",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "model",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/generateContent"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "generateContentExample",
+              "description": "",
+              "path": "/generateContent",
+              "pathParameters": {
+                "model": "model"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [
+      "GenerateContentResponse"
+    ],
+    "subpackages": [
+      "subpackage_generativelanguage"
+    ]
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

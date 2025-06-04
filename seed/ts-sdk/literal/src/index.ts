@@ -1,4 +1,3 @@
-export * as SeedLiteral from "./api";
-export { SeedLiteralClient } from "./Client";
-export { SeedLiteralError, SeedLiteralTimeoutError } from "./errors";
-export * as serialization from "./serialization";
+export * as SeedLiteral from "./api/index.js";
+export { SeedLiteralClient } from "./Client.js";
+export { SeedLiteralError, SeedLiteralTimeoutError } from "./errors/index.js";

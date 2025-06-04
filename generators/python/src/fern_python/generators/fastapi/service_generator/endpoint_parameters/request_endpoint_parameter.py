@@ -1,10 +1,9 @@
-import fern.ir.resources as ir_types
-
+from ...context import FastApiGeneratorContext
+from .endpoint_parameter import EndpointParameter
 from fern_python.codegen import AST
 from fern_python.external_dependencies import FastAPI
 
-from ...context import FastApiGeneratorContext
-from .endpoint_parameter import EndpointParameter
+import fern.ir.resources as ir_types
 
 
 class RequestEndpointParameter(EndpointParameter):

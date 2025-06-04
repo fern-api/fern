@@ -29,17 +29,17 @@ class GetSubmissionStateResponse extends JsonSerializableType
     public string $language;
 
     /**
-     * @var mixed $submissionTypeState
+     * @var SubmissionTypeState $submissionTypeState
      */
     #[JsonProperty('submissionTypeState')]
-    public mixed $submissionTypeState;
+    public SubmissionTypeState $submissionTypeState;
 
     /**
      * @param array{
-     *   timeSubmitted?: ?DateTime,
      *   submission: string,
      *   language: value-of<Language>,
-     *   submissionTypeState: mixed,
+     *   submissionTypeState: SubmissionTypeState,
+     *   timeSubmitted?: ?DateTime,
      * } $values
      */
     public function __construct(
@@ -49,5 +49,13 @@ class GetSubmissionStateResponse extends JsonSerializableType
         $this->submission = $values['submission'];
         $this->language = $values['language'];
         $this->submissionTypeState = $values['submissionTypeState'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

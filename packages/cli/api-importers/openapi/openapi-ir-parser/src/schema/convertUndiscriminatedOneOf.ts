@@ -30,6 +30,52 @@ export interface UndiscriminatedOneOfPrefixName {
 
 export type UndiscriminatedOneOfPrefix = UndiscriminatedOneOfPrefixName | UndiscriminatedOneOfPrefixNotFound;
 
+export function constructUndiscriminatedOneOf({
+    nameOverride,
+    generatedName,
+    title,
+    description,
+    availability,
+    wrapAsNullable,
+    context,
+    subtypes,
+    namespace,
+    groupName,
+    encoding,
+    source
+}: {
+    nameOverride: string | undefined;
+    generatedName: string;
+    title: string | undefined;
+    breadcrumbs: string[];
+    description: string | undefined;
+    availability: Availability | undefined;
+    wrapAsNullable: boolean;
+    context: SchemaParserContext;
+    subtypes: SchemaWithExample[];
+    namespace: string | undefined;
+    groupName: SdkGroupName | undefined;
+    encoding: Encoding | undefined;
+    source: Source;
+    subtypePrefixOverrides?: UndiscriminatedOneOfPrefix[];
+}): SchemaWithExample {
+    const uniqueSubtypes = deduplicateSubtypes(subtypes);
+    return processSubtypes({
+        uniqueSubtypes,
+        nameOverride,
+        generatedName,
+        title,
+        wrapAsNullable,
+        description,
+        availability,
+        namespace,
+        groupName,
+        context,
+        encoding,
+        source
+    });
+}
+
 export function convertUndiscriminatedOneOf({
     nameOverride,
     generatedName,
@@ -40,11 +86,11 @@ export function convertUndiscriminatedOneOf({
     wrapAsNullable,
     context,
     subtypes,
+    namespace,
     groupName,
     encoding,
     source,
-    subtypePrefixOverrides,
-    namespace
+    subtypePrefixOverrides
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -55,10 +101,10 @@ export function convertUndiscriminatedOneOf({
     wrapAsNullable: boolean;
     context: SchemaParserContext;
     subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[];
+    namespace: string | undefined;
     groupName: SdkGroupName | undefined;
     encoding: Encoding | undefined;
     source: Source;
-    namespace: string | undefined;
     subtypePrefixOverrides?: UndiscriminatedOneOfPrefix[];
 }): SchemaWithExample {
     const derivedSubtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
@@ -76,6 +122,7 @@ export function convertUndiscriminatedOneOf({
                     generatedName: getGeneratedTypeName([generatedName, enumValue], context.options.preserveSchemaIds),
                     title: undefined,
                     value: LiteralSchemaValue.string(String(enumValue)),
+                    namespace,
                     groupName: undefined,
                     description: undefined,
                     availability: enumValue.availability
@@ -94,12 +141,30 @@ export function convertUndiscriminatedOneOf({
         ];
     });
 
+    const uniqueSubtypes = deduplicateSubtypes(convertedSubtypes);
+    return processSubtypes({
+        uniqueSubtypes,
+        nameOverride,
+        generatedName,
+        title,
+        wrapAsNullable,
+        description,
+        availability,
+        namespace,
+        groupName,
+        context,
+        encoding,
+        source
+    });
+}
+
+function deduplicateSubtypes(subtypes: SchemaWithExample[]): SchemaWithExample[] {
     const uniqueSubtypes: SchemaWithExample[] = [];
-    for (let i = 0; i < convertedSubtypes.length; ++i) {
-        const a = convertedSubtypes[i];
+    for (let i = 0; i < subtypes.length; ++i) {
+        const a = subtypes[i];
         let isDuplicate = false;
-        for (let j = i + 1; j < convertedSubtypes.length; ++j) {
-            const b = convertedSubtypes[j];
+        for (let j = i + 1; j < subtypes.length; ++j) {
+            const b = subtypes[j];
             if (a != null && b != null && isSchemaEqual(a, b)) {
                 isDuplicate = true;
                 break;
@@ -109,7 +174,36 @@ export function convertUndiscriminatedOneOf({
             uniqueSubtypes.push(a);
         }
     }
+    return uniqueSubtypes;
+}
 
+function processSubtypes({
+    uniqueSubtypes,
+    nameOverride,
+    generatedName,
+    title,
+    wrapAsNullable,
+    description,
+    availability,
+    namespace,
+    groupName,
+    context,
+    encoding,
+    source
+}: {
+    uniqueSubtypes: SchemaWithExample[];
+    nameOverride: string | undefined;
+    generatedName: string;
+    title: string | undefined;
+    wrapAsNullable: boolean;
+    description: string | undefined;
+    availability: Availability | undefined;
+    namespace: string | undefined;
+    groupName: SdkGroupName | undefined;
+    context: SchemaParserContext;
+    encoding: Encoding | undefined;
+    source: Source;
+}): SchemaWithExample {
     const everySubTypeIsLiteral = Object.entries(uniqueSubtypes).every(([_, schema]) => {
         return schema.type === "literal";
     });
@@ -137,6 +231,7 @@ export function convertUndiscriminatedOneOf({
             enumVarNames: undefined,
             enumValues,
             _default: undefined,
+            namespace,
             groupName,
             context,
             source,
@@ -156,6 +251,7 @@ export function convertUndiscriminatedOneOf({
         description,
         availability,
         subtypes: uniqueSubtypes,
+        namespace,
         groupName,
         encoding,
         source
@@ -170,11 +266,11 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
     availability,
     wrapAsNullable,
     context,
+    namespace,
     groupName,
     discriminator,
     encoding,
-    source,
-    namespace
+    source
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -183,11 +279,11 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
     availability: Availability | undefined;
     wrapAsNullable: boolean;
     context: SchemaParserContext;
+    namespace: string | undefined;
     groupName: SdkGroupName | undefined;
     discriminator: OpenAPIV3.DiscriminatorObject;
     encoding: Encoding | undefined;
     source: Source;
-    namespace: string | undefined;
 }): SchemaWithExample {
     const convertedSubtypes = Object.entries(discriminator.mapping ?? {}).map(([discriminantValue, schema], index) => {
         const subtypeReferenceSchema = {
@@ -215,6 +311,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
                     ),
                     title: undefined,
                     value: LiteralSchemaValue.string(discriminantValue),
+                    namespace: undefined,
                     groupName: undefined,
                     description: undefined,
                     availability: undefined
@@ -271,6 +368,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
             enumVarNames: undefined,
             enumValues,
             _default: undefined,
+            namespace,
             groupName,
             context,
             source,
@@ -290,6 +388,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
         description,
         availability,
         subtypes: uniqueSubtypes,
+        namespace,
         groupName,
         encoding,
         source
@@ -363,6 +462,7 @@ export function wrapUndiscriminatedOneOf({
     description,
     availability,
     subtypes,
+    namespace,
     groupName,
     encoding,
     source
@@ -374,6 +474,7 @@ export function wrapUndiscriminatedOneOf({
     description: string | undefined;
     availability: Availability | undefined;
     subtypes: SchemaWithExample[];
+    namespace: string | undefined;
     groupName: SdkGroupName | undefined;
     encoding: Encoding | undefined;
     source: Source;
@@ -391,6 +492,7 @@ export function wrapUndiscriminatedOneOf({
                     generatedName,
                     title,
                     schemas: subtypes,
+                    namespace,
                     groupName,
                     encoding,
                     source,
@@ -399,6 +501,7 @@ export function wrapUndiscriminatedOneOf({
             ),
             description,
             availability,
+            namespace,
             groupName,
             inline: undefined
         });
@@ -411,6 +514,7 @@ export function wrapUndiscriminatedOneOf({
             generatedName,
             title,
             schemas: subtypes,
+            namespace,
             groupName,
             encoding,
             source,

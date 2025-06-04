@@ -21,6 +21,9 @@ export const SUPPORTED_MEDIA_EXTENSIONS = [
 ];
 
 export async function downloadImage(src: string): Promise<Result<[string, string]>> {
+    if (!src) {
+        return { success: false, data: undefined };
+    }
     if (src.startsWith("data:image/")) {
         return { success: true, data: [src, src] };
     }

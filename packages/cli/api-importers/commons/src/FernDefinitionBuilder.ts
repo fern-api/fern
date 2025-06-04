@@ -6,6 +6,8 @@ import { AbsoluteFilePath, RelativeFilePath, basename, dirname, join, relative }
 
 import { FernDefinitionDirectory } from "./utils/FernDefinitionDirectory";
 
+const BASE_MULTI_URL_ENVIRONMENT_NAME = "Production";
+
 export type HttpServiceInfo = Partial<
     Pick<RawSchemas.HttpServiceSchema, "auth" | "base-path" | "display-name"> & { docs?: string }
 >;
@@ -20,6 +22,8 @@ export interface FernDefinitionBuilder {
     setAuth(name: RawSchemas.ApiAuthSchema): void;
 
     getGlobalHeaderNames(): Set<string>;
+
+    getAuthHeaderName(): string | undefined;
 
     addGlobalHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void;
 
@@ -226,6 +230,19 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         return new Set(headerNames);
     }
 
+    public getAuthHeaderName(): string | undefined {
+        // Get header from auth schemes
+        if (this.rootApiFile["auth-schemes"] != null) {
+            for (const scheme of Object.values(this.rootApiFile["auth-schemes"])) {
+                if (isHeaderAuthScheme(scheme)) {
+                    return scheme.header;
+                }
+            }
+            return "Authorization";
+        }
+        return undefined;
+    }
+
     public addGlobalHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void {
         const maybeVersionHeader = this.getVersionHeader();
         if (maybeVersionHeader != null && maybeVersionHeader === name) {
@@ -298,6 +315,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         file: RelativeFilePath,
         { name, schema }: { name: string; schema: RawSchemas.TypeDeclarationSchema }
     ): void {
+        // No-op for types in api.yml
+        if (file === RelativeFilePath.of(ROOT_API_FILENAME)) {
+            return;
+        }
         const fernFile = this.getOrCreateFile(file);
         if (fernFile.types == null) {
             fernFile.types = {};

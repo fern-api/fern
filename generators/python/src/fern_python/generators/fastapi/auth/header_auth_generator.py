@@ -1,10 +1,9 @@
-import fern.ir.resources as ir_types
-
+from ..context import FastApiGeneratorContext
+from .abstract_auth_generator import AbstractAuthGenerator
 from fern_python.codegen import AST
 from fern_python.external_dependencies import FastAPI
 
-from ..context import FastApiGeneratorContext
-from .abstract_auth_generator import AbstractAuthGenerator
+import fern.ir.resources as ir_types
 
 
 class HeaderAuthGenerator(AbstractAuthGenerator):

@@ -329,7 +329,7 @@ const client = new SeedExhaustiveClient({
 });
 await client.endpoints.object.getAndReturnNestedWithOptionalField({
   string: "string",
-  nestedObject: {
+  NestedObject: {
     string: "string",
     integer: 1,
     long: 1000000,
@@ -360,7 +360,7 @@ const client = new SeedExhaustiveClient({
 });
 await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
   string: "string",
-  nestedObject: {
+  NestedObject: {
     string: "string",
     integer: 1,
     long: 1000000,
@@ -391,7 +391,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(
 		[
 			{
 				string: "string",
-				nestedObject: {
+				NestedObject: {
 					string: "string",
 					integer: 1,
 					long: 1000000,
@@ -409,7 +409,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(
 			},
 			{
 				string: "string",
-				nestedObject: {
+				NestedObject: {
 					string: "string",
 					integer: 1,
 					long: 1000000,
@@ -662,6 +662,18 @@ await client.endpoints.primitive.getAndReturnBase64(
 ```typescript
 import { SeedExhaustiveClient } from "@fern/exhaustive";
 
+const client = new SeedExhaustiveClient({
+  environment: "YOUR_BASE_URL",
+  token: "YOUR_TOKEN",
+});
+await client.endpoints.put.add("id");
+
+```
+
+
+```typescript
+import { SeedExhaustiveClient } from "@fern/exhaustive";
+
 const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.endpoints.union.getAndReturnUnion(
 	{
@@ -686,7 +698,7 @@ const client = new SeedExhaustiveClient({
 await client.inlinedRequests.postWithObjectBodyandResponse({
   string: "string",
   integer: 1,
-  nestedObject: {
+  NestedObject: {
     string: "string",
     integer: 1,
     long: 1000000,
@@ -751,7 +763,7 @@ import { SeedExhaustiveClient } from "@fern/exhaustive";
 const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });        
 await client.reqWithHeaders.getWithCustomHeader(
 	{
-		xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+		X-TEST-ENDPOINT-HEADER: "X-TEST-ENDPOINT-HEADER",
 		"string"
 	}
 )

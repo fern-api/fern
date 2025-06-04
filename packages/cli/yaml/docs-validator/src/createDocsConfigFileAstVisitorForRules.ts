@@ -33,7 +33,7 @@ export function createDocsConfigFileAstVisitorForRules({
                         ruleViolations.map((violation) => ({
                             name: violation.name,
                             severity: violation.severity,
-                            relativeFilepath,
+                            relativeFilepath: violation.relativeFilepath ?? RelativeFilePath.of(""),
                             nodePath,
                             message: violation.message
                         }))
@@ -51,6 +51,7 @@ export function createDocsConfigFileAstVisitorForRules({
         ...createAstNodeVisitor("markdownPage"),
         ...createAstNodeVisitor("versionFile"),
         ...createAstNodeVisitor("apiSection"),
-        ...createAstNodeVisitor("permissions")
+        ...createAstNodeVisitor("permissions"),
+        ...createAstNodeVisitor("productFile")
     };
 }

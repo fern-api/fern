@@ -9,5 +9,5 @@ export interface GeneratorsOpenApiObjectSchema {
     origin?: string;
     overrides?: string;
     "disable-examples"?: boolean;
-    settings: FernDefinition.ApiDefinitionSettingsSchema;
+    settings: FernDefinition.OpenApiSettingsSchema;
 }

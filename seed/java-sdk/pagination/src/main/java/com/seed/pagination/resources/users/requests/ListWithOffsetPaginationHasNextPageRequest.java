@@ -113,6 +113,9 @@ public final class ListWithOffsetPaginationHasNextPageRequest {
             return this;
         }
 
+        /**
+         * <p>Defaults to first page</p>
+         */
         @JsonSetter(value = "page", nulls = Nulls.SKIP)
         public Builder page(Optional<Integer> page) {
             this.page = page;
@@ -124,6 +127,11 @@ public final class ListWithOffsetPaginationHasNextPageRequest {
             return this;
         }
 
+        /**
+         * <p>The maximum number of elements to return.
+         * This is also used as the step size in this
+         * paginated endpoint.</p>
+         */
         @JsonSetter(value = "limit", nulls = Nulls.SKIP)
         public Builder limit(Optional<Integer> limit) {
             this.limit = limit;

@@ -20,7 +20,12 @@ import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 
-import { replaceReferencedMarkdown } from "../../docs-markdown-utils/src";
+import {
+    replaceImagePathsAndUrls,
+    replaceReferencedCode,
+    replaceReferencedMarkdown
+} from "../../docs-markdown-utils/src";
+import { FernWorkspace } from "../../workspace/loader/src";
 
 export async function getPreviewDocsDefinition({
     domain,
@@ -60,8 +65,34 @@ export async function getPreviewDocsDefinition({
                 continue;
             }
 
+            const fileIdsMap = new Map(
+                Object.entries(previousDocsDefinition.filesV2 ?? {}).map(([id, file]) => {
+                    const path = "/" + file.url.replace("/_local/", "");
+                    return [AbsoluteFilePath.of(path), id];
+                })
+            );
+
+            // Then replace image paths with file IDs
+            let finalMarkdown = replaceImagePathsAndUrls(
+                processedMarkdown,
+                fileIdsMap,
+                {}, // markdownFilesToPathName - empty object since we don't need it for images
+                {
+                    absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                    absolutePathToMarkdownFile: absoluteFilePath
+                },
+                context
+            );
+
+            finalMarkdown = await replaceReferencedCode({
+                markdown: finalMarkdown,
+                absolutePathToFernFolder: docsWorkspace.absoluteFilePath,
+                absolutePathToMarkdownFile: absoluteFilePath,
+                context
+            });
+
             previousDocsDefinition.pages[FdrAPI.PageId(relativePath)] = {
-                markdown: processedMarkdown,
+                markdown: finalMarkdown,
                 editThisPageUrl: previousValue.editThisPageUrl
             };
         }
@@ -71,15 +102,18 @@ export async function getPreviewDocsDefinition({
         }
     }
 
-    const fernWorkspaces = await Promise.all(
-        apiWorkspaces.map(
-            async (workspace) =>
-                await workspace.toFernWorkspace(
-                    { context },
-                    { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false, preserveSchemaIds: true }
-                )
-        )
-    );
+    let fernWorkspaces: FernWorkspace[] = [];
+    if (!project.docsWorkspaces?.config.experimental?.openapiParserV3) {
+        fernWorkspaces = await Promise.all(
+            apiWorkspaces.map(
+                async (workspace) =>
+                    await workspace.toFernWorkspace(
+                        { context },
+                        { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false, preserveSchemaIds: true }
+                    )
+            )
+        );
+    }
 
     const ossWorkspaces = await filterOssWorkspaces(project);
 
@@ -130,7 +164,7 @@ export async function getPreviewDocsDefinition({
         pages: dbDocsDefinition.pages,
         search: { type: "legacyMultiAlgoliaIndex", algoliaIndex: undefined },
         algoliaSearchIndex: undefined,
-        jsFiles: undefined,
+        jsFiles: dbDocsDefinition.jsFiles,
         id: undefined
     };
 }
@@ -194,8 +228,15 @@ class ReferencedAPICollectorV2 {
 
     constructor(private readonly context: TaskContext) {}
 
-    public addReferencedAPI({ api }: { api: FdrAPI.api.latest.ApiDefinition }): APIDefinitionID {
+    public addReferencedAPI({
+        api,
+        snippetsConfig
+    }: {
+        api: FdrAPI.api.latest.ApiDefinition;
+        snippetsConfig: APIV1Write.SnippetsConfig;
+    }): APIDefinitionID {
         try {
+            api.snippetsConfiguration = snippetsConfig;
             this.apis[api.id] = api;
             return api.id;
         } catch (e) {

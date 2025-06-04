@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
@@ -16,11 +15,9 @@ public partial class HttpMethodsClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.HttpMethods.TestGetAsync("id");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> TestGetAsync(
         string id,
         RequestOptions? options = null,
@@ -28,20 +25,23 @@ public partial class HttpMethodsClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"/http-methods/{id}",
+                    Path = string.Format(
+                        "/http-methods/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<string>(responseBody)!;
@@ -52,18 +52,19 @@ public partial class HttpMethodsClient
             }
         }
 
-        throw new SeedExhaustiveApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.HttpMethods.TestPostAsync(new ObjectWithRequiredField { String = "string" });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<ObjectWithOptionalField> TestPostAsync(
         ObjectWithRequiredField request,
         RequestOptions? options = null,
@@ -71,8 +72,8 @@ public partial class HttpMethodsClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -83,9 +84,9 @@ public partial class HttpMethodsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
@@ -96,21 +97,22 @@ public partial class HttpMethodsClient
             }
         }
 
-        throw new SeedExhaustiveApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.HttpMethods.TestPutAsync(
     ///     "id",
     ///     new ObjectWithRequiredField { String = "string" }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<ObjectWithOptionalField> TestPutAsync(
         string id,
         ObjectWithRequiredField request,
@@ -119,21 +121,24 @@ public partial class HttpMethodsClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Put,
-                    Path = $"/http-methods/{id}",
+                    Path = string.Format(
+                        "/http-methods/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Body = request,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
@@ -144,15 +149,17 @@ public partial class HttpMethodsClient
             }
         }
 
-        throw new SeedExhaustiveApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.HttpMethods.TestPatchAsync(
     ///     "id",
     ///     new ObjectWithOptionalField
@@ -172,8 +179,7 @@ public partial class HttpMethodsClient
     ///         Bigint = "1000000",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<ObjectWithOptionalField> TestPatchAsync(
         string id,
         ObjectWithOptionalField request,
@@ -182,21 +188,24 @@ public partial class HttpMethodsClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethodExtensions.Patch,
-                    Path = $"/http-methods/{id}",
+                    Path = string.Format(
+                        "/http-methods/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Body = request,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
@@ -207,18 +216,19 @@ public partial class HttpMethodsClient
             }
         }
 
-        throw new SeedExhaustiveApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.HttpMethods.TestDeleteAsync("id");
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<bool> TestDeleteAsync(
         string id,
         RequestOptions? options = null,
@@ -226,20 +236,23 @@ public partial class HttpMethodsClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
-                    Path = $"/http-methods/{id}",
+                    Path = string.Format(
+                        "/http-methods/{0}",
+                        ValueConvert.ToPathParameterString(id)
+                    ),
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<bool>(responseBody)!;
@@ -250,10 +263,13 @@ public partial class HttpMethodsClient
             }
         }
 
-        throw new SeedExhaustiveApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

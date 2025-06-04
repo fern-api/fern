@@ -7,12 +7,14 @@ import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { GithubPublish } from "./GithubPublish";
 import { DirectPublish } from "./DirectPublish";
+import { Filesystem } from "./Filesystem";
 
 export const PublishingConfig: core.serialization.Schema<serializers.PublishingConfig.Raw, FernIr.PublishingConfig> =
     core.serialization
         .union("type", {
             github: GithubPublish,
             direct: DirectPublish,
+            filesystem: Filesystem,
         })
         .transform<FernIr.PublishingConfig>({
             transform: (value) => {
@@ -21,6 +23,8 @@ export const PublishingConfig: core.serialization.Schema<serializers.PublishingC
                         return FernIr.PublishingConfig.github(value);
                     case "direct":
                         return FernIr.PublishingConfig.direct(value);
+                    case "filesystem":
+                        return FernIr.PublishingConfig.filesystem(value);
                     default:
                         return value as FernIr.PublishingConfig;
                 }
@@ -29,7 +33,7 @@ export const PublishingConfig: core.serialization.Schema<serializers.PublishingC
         });
 
 export declare namespace PublishingConfig {
-    export type Raw = PublishingConfig.Github | PublishingConfig.Direct;
+    export type Raw = PublishingConfig.Github | PublishingConfig.Direct | PublishingConfig.Filesystem;
 
     export interface Github extends GithubPublish.Raw {
         type: "github";
@@ -37,5 +41,9 @@ export declare namespace PublishingConfig {
 
     export interface Direct extends DirectPublish.Raw {
         type: "direct";
+    }
+
+    export interface Filesystem extends Filesystem.Raw {
+        type: "filesystem";
     }
 }

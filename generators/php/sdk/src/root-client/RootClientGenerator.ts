@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
-import { FileGenerator, PhpFile, php } from "@fern-api/php-codegen";
+import { FileGenerator, PhpFile } from "@fern-api/php-base";
+import { php } from "@fern-api/php-codegen";
 
 import {
     AuthScheme,
@@ -34,6 +35,9 @@ interface ConstructorParameter {
 interface LiteralParameter {
     name: string;
     value: Literal;
+    docs?: string;
+    header?: HeaderInfo;
+    environmentVariable?: string;
 }
 
 interface HeaderInfo {
@@ -72,7 +76,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             php.field({
                 name: `$${this.context.getClientOptionsName()}`,
                 access: "private",
-                type: php.Type.optional(this.context.getClientOptionsType())
+                type: this.context.getClientOptionsType()
             })
         );
         class_.addField(this.context.rawClient.getField());
@@ -94,11 +98,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         if (rootServiceId != null) {
             const service = this.context.getHttpServiceOrThrow(rootServiceId);
             for (const endpoint of service.endpoints) {
-                const method = this.context.endpointGenerator.generate({
+                const methods = this.context.endpointGenerator.generate({
                     serviceId: rootServiceId,
+                    service,
                     endpoint
                 });
-                class_.addMethod(method);
+                class_.addMethods(methods);
             }
         }
 
@@ -126,10 +131,19 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 })
             );
         }
+        for (const param of constructorParameters.literal) {
+            parameters.push(
+                php.parameter({
+                    name: param.name,
+                    type: this.getLiteralRootClientParameterType({ literal: param.value }),
+                    docs: param.docs
+                })
+            );
+        }
 
         parameters.push(
             php.parameter({
-                name: `$${this.context.getClientOptionsName()}`,
+                name: this.context.getClientOptionsName(),
                 type: php.Type.optional(this.context.getClientOptionsType()),
                 initializer: php.codeblock("null")
             })
@@ -155,10 +169,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         }
 
         for (const param of constructorParameters.literal) {
-            headerEntries.push({
-                key: php.codeblock(`'${param.name}'`),
-                value: php.codeblock(this.context.getLiteralAsString(param.value))
-            });
+            if (param.header != null) {
+                headerEntries.push({
+                    key: php.codeblock(`'${param.header.name}'`),
+                    value: php.codeblock(this.context.getLiteralAsString(param.value))
+                });
+            }
         }
 
         const platformHeaders = this.context.ir.sdkConfig.platformHeaders;
@@ -176,10 +192,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 value: php.codeblock(`'${this.context.version}'`)
             });
         }
-        if (platformHeaders.userAgent != null) {
+        const userAgent = this.context.getUserAgent();
+        if (userAgent != null) {
             headerEntries.push({
-                key: php.codeblock(`'${platformHeaders.userAgent.header}'`),
-                value: php.codeblock(`'${platformHeaders.userAgent.value}'`)
+                key: php.codeblock(`'${userAgent.header}'`),
+                value: php.codeblock(`'${userAgent.value}'`)
             });
         }
         const headers = php.map({
@@ -219,13 +236,23 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         writer.endControlFlow();
                     }
                 }
+                for (const param of constructorParameters.literal) {
+                    if (param.header != null) {
+                        writer.controlFlow("if", php.codeblock(`$${param.name} != null`));
+                        writer.write(`$defaultHeaders['${param.header.name}'] = `);
+                        writer.writeNodeStatement(
+                            this.getHeaderValue({ prefix: param.header.prefix, parameterName: param.name })
+                        );
+                        writer.endControlFlow();
+                    }
+                }
                 writer.writeLine();
 
-                writer.write(`$this->${this.context.getClientOptionsName()} = `);
                 writer.writeNodeStatement(
                     php.codeblock((writer) => {
-                        writer.write(`$${this.context.getClientOptionsName()} ?? `);
-                        writer.writeNode(php.codeblock("[]"));
+                        writer.write(`$this->${this.context.getClientOptionsName()} = `);
+                        writer.writeNode(php.variable(this.context.getClientOptionsName()));
+                        writer.write(" ?? []");
                     })
                 );
                 writer.write(
@@ -269,7 +296,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     writer.writeNodeStatement(
                         php.instantiateClass({
                             classReference: this.context.getSubpackageClassReference(subpackage),
-                            arguments_: [php.codeblock(`$this->${this.context.rawClient.getFieldName()}`)]
+                            arguments_: [
+                                php.codeblock(`$this->${this.context.rawClient.getFieldName()}`),
+                                php.codeblock(`$this->${this.context.getClientOptionsName()}`)
+                            ]
                         })
                     );
                 }
@@ -323,9 +353,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             const literal = this.context.maybeLiteral(param.typeReference);
             if (literal != null) {
                 literalParameters.push({
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    name: param.header!.name,
-                    value: literal
+                    name: param.name,
+                    value: literal,
+                    docs: param.docs,
+                    header: param.header,
+                    environmentVariable: param.environmentVariable
                 });
                 continue;
             }
@@ -431,7 +463,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
     private getParameterForHeader(header: HttpHeader): ConstructorParameter {
         return {
-            name: `$${header.name.name.camelCase.safeName}`,
+            name: this.context.getParameterName(header.name.name),
             header: {
                 name: header.name.wireValue
             },
@@ -465,6 +497,17 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         return envVar != null || isOptional
             ? TypeReference.container(ContainerType.optional(typeReference))
             : typeReference;
+    }
+
+    private getLiteralRootClientParameterType({ literal }: { literal: Literal }): php.Type {
+        switch (literal.type) {
+            case "string":
+                return php.Type.optional(php.Type.string());
+            case "boolean":
+                return php.Type.optional(php.Type.bool());
+            default:
+                assertNever(literal);
+        }
     }
 
     private getAuthParameterDocs({ docs, name }: { docs: string | undefined; name: string }): string {

@@ -40,4 +40,12 @@ class StackFrame extends JsonSerializableType
         $this->lineNumber = $values['lineNumber'];
         $this->scopes = $values['scopes'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

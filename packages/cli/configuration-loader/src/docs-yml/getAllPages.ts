@@ -19,7 +19,7 @@ async function loadBatch({
     const pairs = await Promise.all(
         files.map(async (file) => {
             const content = await readFile(file, "utf-8");
-            return [await relativize(absolutePathToFernFolder, file), content];
+            return [relativize(absolutePathToFernFolder, file), content];
         })
     );
     return Object.fromEntries(pairs);
@@ -82,6 +82,13 @@ function getAllPagesFromNavigationConfig(navigation: docsYml.DocsNavigationConfi
                 return getAllPages({
                     landingPage: version.landingPage,
                     navigation: version.navigation
+                });
+            });
+        case "productgroup":
+            return navigation.products.flatMap((product) => {
+                return getAllPages({
+                    landingPage: product.landingPage,
+                    navigation: product.navigation
                 });
             });
         default:

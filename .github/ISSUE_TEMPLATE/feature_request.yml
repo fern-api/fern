@@ -1,12 +1,7 @@
 name: "✨ Feature Request"
 description: "How can we make Fern even more awesome?"
-title: "[Feature]: "
-labels: ["enhancement"]
-assignees: [dsheridan]
+type: "feature"
 body:
-  - type: markdown
-    attributes:
-      value: "### 🚀 Thanks for helping make Fern better! Please fill out the details below."
 
   - type: dropdown
     id: product
@@ -54,10 +49,13 @@ body:
     validations:
       required: false
 
-  - type: textarea
-    id: additional-context
+  - type: dropdown
+    id: contribute
     attributes:
-      label: "Anything else? (Optional)"
-      placeholder: "Links, screenshots, or related issues..."
+      label: "Are you interested in contributing this feature?"
+      description: "If this feature is in line with the project's goals, the maintainers are happy to support with guidance and review."
+      options:
+        - "No"
+        - "Yes"
     validations:
-      required: false
+      required: true

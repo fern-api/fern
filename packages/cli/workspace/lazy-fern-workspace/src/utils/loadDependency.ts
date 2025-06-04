@@ -297,8 +297,9 @@ async function getAreRootApiFilesEquivalent(
 ): Promise<{ equal: boolean; differences: string[] }> {
     let areRootApiFilesEquivalent = true as boolean;
     const differences: string[] = [];
-    await visitObject(rootApiFile, {
+    visitObject(rootApiFile, {
         version: noop,
+        product: noop,
         name: noop,
         imports: noop,
         "default-url": noop,

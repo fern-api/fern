@@ -2,6 +2,7 @@
   "title": "Tree API",
   "description": "API for working with tree data structures",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -36,7 +37,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/tree",
@@ -71,7 +72,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "TreeNode": {
@@ -118,7 +119,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -140,7 +142,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],

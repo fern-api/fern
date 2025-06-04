@@ -21,6 +21,7 @@
         },
         "webhooks": {
           "CreatePet": {
+            "audiences": [],
             "display-name": undefined,
             "examples": [
               {
@@ -41,6 +42,7 @@
       },
       "rawContents": "webhooks:
   CreatePet:
+    audiences: []
     method: POST
     headers: {}
     payload: Pet

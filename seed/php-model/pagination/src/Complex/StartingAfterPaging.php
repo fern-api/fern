@@ -31,4 +31,12 @@ class StartingAfterPaging extends JsonSerializableType
         $this->perPage = $values['perPage'];
         $this->startingAfter = $values['startingAfter'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

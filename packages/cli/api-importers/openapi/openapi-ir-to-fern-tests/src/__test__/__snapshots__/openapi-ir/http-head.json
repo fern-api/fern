@@ -1,0 +1,232 @@
+{
+  "title": "Test HEAD method",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "List users",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "name": "limit",
+          "schema": {
+            "generatedName": "GetUsersRequestLimit",
+            "value": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "GetUsersRequestLimit",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "generatedRequestName": "GetUsersRequest",
+      "response": {
+        "description": "User retrieved successfully",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "getUsersResponseUsers",
+              "key": "users",
+              "schema": {
+                "generatedName": "getUsersResponseUsers",
+                "value": {
+                  "value": {
+                    "generatedName": "GetUsersResponseUsersItem",
+                    "schema": "User",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  },
+                  "generatedName": "GetUsersResponseUsers",
+                  "groupName": [],
+                  "type": "array"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "GetUsersResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/users",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "users": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": "id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "name": {
+                          "value": {
+                            "value": "name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "HEAD methods should not define a response body.",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "HeadUsersRequest",
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "HEAD",
+      "path": "/users",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "User": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "userId",
+            "key": "id",
+            "schema": {
+              "generatedName": "userId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "UserId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userName",
+            "key": "name",
+            "schema": {
+              "generatedName": "userName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "UserName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "User",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

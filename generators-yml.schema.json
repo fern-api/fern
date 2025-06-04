@@ -673,6 +673,16 @@
               "type": "null"
             }
           ]
+        },
+        "idiomatic-request-names": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -735,10 +745,10 @@
     "generators.ProtobufDefinitionSchema": {
       "type": "object",
       "properties": {
-        "root": {
+        "target": {
           "type": "string"
         },
-        "target": {
+        "root": {
           "type": "string"
         },
         "overrides": {
@@ -763,8 +773,8 @@
         }
       },
       "required": [
-        "root",
-        "target"
+        "target",
+        "root"
       ],
       "additionalProperties": false
     },
@@ -1282,6 +1292,13 @@
         }
       ]
     },
+    "generators.FormParameterEncoding": {
+      "type": "string",
+      "enum": [
+        "form",
+        "json"
+      ]
+    },
     "generators.OpenAPIFilterSchema": {
       "type": "object",
       "properties": {
@@ -1346,6 +1363,16 @@
     "generators.OpenAPISettingsSchema": {
       "type": "object",
       "properties": {
+        "respect-nullable-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "title-as-schema-name": {
           "oneOf": [
             {
@@ -1367,6 +1394,36 @@
           ]
         },
         "coerce-enums-to-literals": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "idiomatic-request-names": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "only-include-referenced-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inline-path-parameters": {
           "oneOf": [
             {
               "type": "boolean"
@@ -1406,7 +1463,7 @@
             }
           ]
         },
-        "respect-nullable-schemas": {
+        "respect-forward-compatible-enums": {
           "oneOf": [
             {
               "type": "boolean"
@@ -1416,7 +1473,7 @@
             }
           ]
         },
-        "only-include-referenced-schemas": {
+        "use-bytes-for-binary-response": {
           "oneOf": [
             {
               "type": "boolean"
@@ -1426,10 +1483,10 @@
             }
           ]
         },
-        "inline-path-parameters": {
+        "default-form-parameter-encoding": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/generators.FormParameterEncoding"
             },
             {
               "type": "null"
@@ -1450,6 +1507,26 @@
           "oneOf": [
             {
               "$ref": "#/definitions/generators.OpenAPIExampleGenerationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "additional-properties-defaults-to": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "type-dates-as-strings": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -1514,6 +1591,16 @@
     "generators.AsyncAPISettingsSchema": {
       "type": "object",
       "properties": {
+        "respect-nullable-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "title-as-schema-name": {
           "oneOf": [
             {
@@ -1544,10 +1631,20 @@
             }
           ]
         },
-        "respect-nullable-schemas": {
+        "idiomatic-request-names": {
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "message-naming": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.MessageNamingSettingsSchema"
             },
             {
               "type": "null"
@@ -1557,7 +1654,7 @@
       },
       "additionalProperties": false
     },
-    "generators.AsyncAPISchema": {
+    "generators.AsyncAPISpecSchema": {
       "type": "object",
       "properties": {
         "asyncapi": {
@@ -1609,13 +1706,63 @@
       ],
       "additionalProperties": false
     },
-    "generators.AsyncAPIOrOpenAPISpecSchema": {
+    "generators.ProtobufSpecSchema": {
+      "type": "object",
+      "properties": {
+        "proto": {
+          "$ref": "#/definitions/generators.ProtobufDefinitionSchema"
+        }
+      },
+      "required": [
+        "proto"
+      ],
+      "additionalProperties": false
+    },
+    "generators.OpenRPCSpecSchema": {
+      "type": "object",
+      "properties": {
+        "openrpc": {
+          "type": "string"
+        },
+        "overrides": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "namespace": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "openrpc"
+      ],
+      "additionalProperties": false
+    },
+    "generators.SpecSchema": {
       "anyOf": [
         {
           "$ref": "#/definitions/generators.OpenAPISpecSchema"
         },
         {
-          "$ref": "#/definitions/generators.AsyncAPISchema"
+          "$ref": "#/definitions/generators.AsyncAPISpecSchema"
+        },
+        {
+          "$ref": "#/definitions/generators.ProtobufSpecSchema"
+        },
+        {
+          "$ref": "#/definitions/generators.OpenRPCSpecSchema"
         }
       ]
     },
@@ -1636,7 +1783,7 @@
         {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/generators.AsyncAPIOrOpenAPISpecSchema"
+            "$ref": "#/definitions/generators.SpecSchema"
           }
         },
         {
@@ -2271,6 +2418,22 @@
         }
       ]
     },
+    "group.GithubSelfhostedSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri",
+        "token"
+      ],
+      "additionalProperties": false
+    },
     "license.GithubLicenseType": {
       "type": "string",
       "enum": [
@@ -2468,6 +2631,9 @@
     "group.GithubConfigurationSchema": {
       "anyOf": [
         {
+          "$ref": "#/definitions/group.GithubSelfhostedSchema"
+        },
+        {
           "$ref": "#/definitions/group.GithubCommitAndReleaseSchema"
         },
         {
@@ -2549,6 +2715,16 @@
     "group.GeneratorAPISettingsSchema": {
       "type": "object",
       "properties": {
+        "auth": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fernDefinition.auth.ApiAuthSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "settings": {
           "oneOf": [
             {
@@ -2777,7 +2953,7 @@
           ]
         },
         "settings": {
-          "$ref": "#/definitions/generators.APIDefinitionSettingsSchema"
+          "$ref": "#/definitions/generators.OpenAPISettingsSchema"
         }
       },
       "required": [

@@ -4,28 +4,22 @@ from .json import Json
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 import pydantic
-
-
 class NestedType(Json):
     """
     Examples
     --------
     from seed.extends import NestedType
-
+    
     NestedType(
         docs="This is an example nested type.",
         name="NestedExample",
         raw='{"nested": "example"}',
     )
     """
-
     name: str
-
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid

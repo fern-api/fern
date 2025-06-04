@@ -1,4 +1,4 @@
-import { Zurg, getTextOfTsNode } from "@fern-typescript/commons";
+import { Zurg, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { AbstractRawSingleUnionType } from "@fern-typescript/union-schema-generator";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
@@ -39,7 +39,7 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
 
         return [
             {
-                name: `"${this.discriminationStrategy.contentProperty.wireValue}"`,
+                name: getPropertyKey(this.discriminationStrategy.contentProperty.wireValue),
                 type: getTextOfTsNode(type)
             }
         ];

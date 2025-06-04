@@ -212,6 +212,7 @@ service:
                 The object that contains the offset used for pagination
                 in order to fetch the next page of results.
       response: ListUsersPaginationResponse
+
     listWithOffsetStepPagination:
       pagination:
         offset: $request.page
@@ -301,6 +302,7 @@ service:
               The cursor used for pagination in order to fetch
               the next page of results.
       response: root.UsernameCursor
+
 
     listWithGlobalConfig:
       method: GET

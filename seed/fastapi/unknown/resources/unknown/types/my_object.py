@@ -4,26 +4,20 @@ from ....core.pydantic_utilities import UniversalBaseModel
 import typing
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
-
-
 class MyObject(UniversalBaseModel):
     """
     Examples
     --------
     from seed.unknown_as_any.resources.unknown import MyObject
-
+    
     MyObject(
         unknown={"boolVal": True, "strVal": "string"},
     )
     """
-
     unknown: typing.Optional[typing.Any] = None
-
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid

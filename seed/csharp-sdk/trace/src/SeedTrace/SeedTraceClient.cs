@@ -16,6 +16,7 @@ public partial class SeedTraceClient
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
+                { "Authorization", $"Bearer {token}" },
                 { "X-Random-Header", xRandomHeader },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedTrace" },
@@ -44,23 +45,23 @@ public partial class SeedTraceClient
         Sysprop = new SyspropClient(_client);
     }
 
-    public V2Client V2 { get; init; }
+    public V2Client V2 { get; }
 
-    public AdminClient Admin { get; init; }
+    public AdminClient Admin { get; }
 
-    public CommonsClient Commons { get; init; }
+    public CommonsClient Commons { get; }
 
-    public HomepageClient Homepage { get; init; }
+    public HomepageClient Homepage { get; }
 
-    public LangServerClient LangServer { get; init; }
+    public LangServerClient LangServer { get; }
 
-    public MigrationClient Migration { get; init; }
+    public MigrationClient Migration { get; }
 
-    public PlaylistClient Playlist { get; init; }
+    public PlaylistClient Playlist { get; }
 
-    public ProblemClient Problem { get; init; }
+    public ProblemClient Problem { get; }
 
-    public SubmissionClient Submission { get; init; }
+    public SubmissionClient Submission { get; }
 
-    public SyspropClient Sysprop { get; init; }
+    public SyspropClient Sysprop { get; }
 }

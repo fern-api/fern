@@ -127,7 +127,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_user:NestedUser": {
             "type": "object",
@@ -252,7 +253,8 @@
                         "value": "type_user:User"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
@@ -822,8 +824,11 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

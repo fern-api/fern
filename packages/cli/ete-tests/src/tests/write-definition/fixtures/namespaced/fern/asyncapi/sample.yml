@@ -96,6 +96,7 @@ channels:
           - maticusd
           - injusd
           - sushiusd
+        location: $message.payload#/symbol
         description: >
           Symbols are formatted as CCY1CCY2 where prices are in CCY2 and
           quantities are in CCY1. To read more click

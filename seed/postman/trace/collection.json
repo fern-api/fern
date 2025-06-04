@@ -1852,7 +1852,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"playlist_id\": \"playlist_id\",\n    \"owner-id\": \"owner-id\"\n}",
+              "body": "{\n    \"playlist_id\": \"playlist_id\",\n    \"owner-id\": \"owner-id\",\n    \"name\": \"name\",\n    \"problems\": [\n        \"problems\",\n        \"problems\"\n    ]\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -1984,7 +1984,7 @@
                 "body": null
               },
               "description": null,
-              "body": "[\n    {\n        \"playlist_id\": \"playlist_id\",\n        \"owner-id\": \"owner-id\"\n    },\n    {\n        \"playlist_id\": \"playlist_id\",\n        \"owner-id\": \"owner-id\"\n    }\n]",
+              "body": "[\n    {\n        \"playlist_id\": \"playlist_id\",\n        \"owner-id\": \"owner-id\",\n        \"name\": \"name\",\n        \"problems\": [\n            \"problems\",\n            \"problems\"\n        ]\n    },\n    {\n        \"playlist_id\": \"playlist_id\",\n        \"owner-id\": \"owner-id\",\n        \"name\": \"name\",\n        \"problems\": [\n            \"problems\",\n            \"problems\"\n        ]\n    }\n]",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -2074,7 +2074,7 @@
                 "body": null
               },
               "description": null,
-              "body": "{\n    \"playlist_id\": \"playlist_id\",\n    \"owner-id\": \"owner-id\"\n}",
+              "body": "{\n    \"playlist_id\": \"playlist_id\",\n    \"owner-id\": \"owner-id\",\n    \"name\": \"name\",\n    \"problems\": [\n        \"problems\",\n        \"problems\"\n    ]\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -2180,7 +2180,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"playlist_id\": \"playlist_id\",\n    \"owner-id\": \"owner-id\"\n}",
+              "body": "{\n    \"playlist_id\": \"playlist_id\",\n    \"owner-id\": \"owner-id\",\n    \"name\": \"name\",\n    \"problems\": [\n        \"problems\",\n        \"problems\"\n    ]\n}",
               "_postman_previewlanguage": "json"
             }
           ]

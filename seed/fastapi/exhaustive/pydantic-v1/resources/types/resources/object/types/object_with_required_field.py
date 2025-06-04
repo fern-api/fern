@@ -2,10 +2,8 @@
 
 from ......core.pydantic_utilities import UniversalBaseModel
 import pydantic
-
-
 class ObjectWithRequiredField(UniversalBaseModel):
     string: str
-
+    
     class Config:
         extra = pydantic.Extra.forbid

@@ -31,4 +31,12 @@ class CustomTestCasesUnsupported extends JsonSerializableType
         $this->problemId = $values['problemId'];
         $this->submissionId = $values['submissionId'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

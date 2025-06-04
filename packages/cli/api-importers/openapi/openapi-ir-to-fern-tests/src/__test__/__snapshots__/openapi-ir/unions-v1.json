@@ -1,13 +1,14 @@
 {
   "title": "Test setting to disable usage of title param",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
   "hasEndpointsMarkedInternal": false,
   "endpoints": [],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "Shape": {

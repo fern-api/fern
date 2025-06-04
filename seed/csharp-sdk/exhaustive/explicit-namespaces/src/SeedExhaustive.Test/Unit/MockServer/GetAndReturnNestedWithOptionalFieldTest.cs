@@ -1,7 +1,5 @@
 using System.Globalization;
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types.Object;
@@ -12,7 +10,7 @@ namespace SeedExhaustive.Test.Unit.MockServer;
 public class GetAndReturnNestedWithOptionalFieldTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {
@@ -109,12 +107,12 @@ public class GetAndReturnNestedWithOptionalFieldTest : BaseMockServerTest
                     Map = new Dictionary<int, string>() { { 1, "map" } },
                     Bigint = "1000000",
                 },
-            },
-            RequestOptions
+            }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<NestedObjectWithOptionalField>(mockResponse))
+                .UsingDefaults()
+        );
     }
 }

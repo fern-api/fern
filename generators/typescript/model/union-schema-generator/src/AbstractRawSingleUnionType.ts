@@ -1,4 +1,4 @@
-import { Zurg, getTextOfTsNode } from "@fern-typescript/commons";
+import { Zurg, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
 import { NameAndWireValue } from "@fern-fern/ir-sdk/api";
@@ -31,7 +31,7 @@ export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUn
             extends: this.getExtends(context).map(getTextOfTsNode),
             properties: [
                 {
-                    name: `"${this.discriminant.wireValue}"`,
+                    name: getPropertyKey(this.discriminant.wireValue),
                     type: `"${this.discriminantValue}"`
                 },
                 ...this.getNonDiscriminantPropertiesForInterface(context)

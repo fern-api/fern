@@ -2,7 +2,6 @@
 
 import typing
 from .key import Key
-
 """
 from seed.undiscriminated_unions.resources.union import KeyType
 

@@ -7,21 +7,14 @@ from ...commons.types.language import Language
 import typing
 from .submission_file_info import SubmissionFileInfo
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
-
-
 class WorkspaceSubmitRequest(UniversalBaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
     language: Language
-    submission_files: typing.List[SubmissionFileInfo] = pydantic.Field(
-        alias="submissionFiles"
-    )
+    submission_files: typing.List[SubmissionFileInfo] = pydantic.Field(alias="submissionFiles")
     user_id: typing.Optional[str] = pydantic.Field(alias="userId", default=None)
-
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid

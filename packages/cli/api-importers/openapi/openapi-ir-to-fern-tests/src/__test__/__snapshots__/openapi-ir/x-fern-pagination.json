@@ -1,6 +1,7 @@
 {
   "title": "Test extension `x-fern-pagination`",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -56,7 +57,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": false,
       "method": "GET",
@@ -208,7 +209,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "description": "",
       "authed": false,
       "method": "GET",
@@ -294,7 +295,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "Meta": {
@@ -352,7 +353,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},

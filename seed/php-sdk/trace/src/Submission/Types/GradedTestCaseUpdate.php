@@ -14,15 +14,15 @@ class GradedTestCaseUpdate extends JsonSerializableType
     public string $testCaseId;
 
     /**
-     * @var mixed $grade
+     * @var TestCaseGrade $grade
      */
     #[JsonProperty('grade')]
-    public mixed $grade;
+    public TestCaseGrade $grade;
 
     /**
      * @param array{
      *   testCaseId: string,
-     *   grade: mixed,
+     *   grade: TestCaseGrade,
      * } $values
      */
     public function __construct(
@@ -30,5 +30,13 @@ class GradedTestCaseUpdate extends JsonSerializableType
     ) {
         $this->testCaseId = $values['testCaseId'];
         $this->grade = $values['grade'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

@@ -29,8 +29,8 @@ class GetExecutionSessionStateResponse extends JsonSerializableType
     /**
      * @param array{
      *   states: array<string, ExecutionSessionState>,
-     *   numWarmingInstances?: ?int,
      *   warmingSessionIds: array<string>,
+     *   numWarmingInstances?: ?int,
      * } $values
      */
     public function __construct(
@@ -39,5 +39,13 @@ class GetExecutionSessionStateResponse extends JsonSerializableType
         $this->states = $values['states'];
         $this->numWarmingInstances = $values['numWarmingInstances'] ?? null;
         $this->warmingSessionIds = $values['warmingSessionIds'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

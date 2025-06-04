@@ -31,4 +31,12 @@ class Cat extends JsonSerializableType
         $this->name = $values['name'];
         $this->likesToMeow = $values['likesToMeow'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

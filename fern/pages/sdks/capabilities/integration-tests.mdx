@@ -3,10 +3,7 @@ title: Integration Tests
 description: Test your SDK against a mock server
 ---
 
-<Warning title='Pro Feature'>
-  This feature is only available on paid plans. Please schedule a [demo](https://buildwithfern.com/contact)
-  or [email us](mailto:support@buildwithfern.com) to get started.
-</Warning>
+<Markdown src="/snippets/pro-callout.mdx" />
 
 To make sure that your SDK works in production, Fern will auto-generate
 integration tests that run before release. The release will only take place
@@ -59,7 +56,7 @@ add the test files to your `.fernignore` file to prevent them from being
 overwritten by Fern.
 
 <Tabs>
-  <Tab title="TypeScript">
+  <Tab title="TypeScript" language="typescript">
     <Steps>
       ### Create `tests/custom.test.ts`
       ```typescript
@@ -88,7 +85,7 @@ overwritten by Fern.
       ```
     </Steps>
   </Tab>
-    <Tab title="Python">
+    <Tab title="Python" language="python">
       <Steps>
           ### Create `tests/test_custom.py`
           ```python
@@ -114,7 +111,7 @@ overwritten by Fern.
           ```
         </Steps>
   </Tab>
-      <Tab title="Java">
+      <Tab title="Java" language="java">
       <Steps>
           ### Create `src/test/java/com/example/MyClientTest.java`
 

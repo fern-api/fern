@@ -23,4 +23,12 @@ class DoubleOptional extends JsonSerializableType
     ) {
         $this->optionalAlias = $values['optionalAlias'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

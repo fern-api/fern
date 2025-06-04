@@ -32,4 +32,12 @@ class GradedResponse extends JsonSerializableType
         $this->submissionId = $values['submissionId'];
         $this->testCases = $values['testCases'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

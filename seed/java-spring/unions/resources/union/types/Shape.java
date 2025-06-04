@@ -103,6 +103,7 @@ public final class Shape {
   }
 
   @JsonTypeName("circle")
+  @JsonIgnoreProperties("type")
   private static final class CircleValue implements Value {
     @JsonUnwrapped
     private Circle value;
@@ -144,6 +145,7 @@ public final class Shape {
   }
 
   @JsonTypeName("square")
+  @JsonIgnoreProperties("type")
   private static final class SquareValue implements Value {
     @JsonUnwrapped
     private Square value;
@@ -184,6 +186,7 @@ public final class Shape {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

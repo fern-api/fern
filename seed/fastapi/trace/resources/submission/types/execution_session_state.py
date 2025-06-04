@@ -6,27 +6,20 @@ import pydantic
 from ...commons.types.language import Language
 from .execution_session_status import ExecutionSessionStatus
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
-
-
 class ExecutionSessionState(UniversalBaseModel):
-    last_time_contacted: typing.Optional[str] = pydantic.Field(
-        alias="lastTimeContacted", default=None
-    )
+    last_time_contacted: typing.Optional[str] = pydantic.Field(alias="lastTimeContacted", default=None)
     session_id: str = pydantic.Field(alias="sessionId")
     """
     The auto-generated session id. Formatted as a uuid.
     """
-
+    
     is_warm_instance: bool = pydantic.Field(alias="isWarmInstance")
     aws_task_id: typing.Optional[str] = pydantic.Field(alias="awsTaskId", default=None)
     language: Language
     status: ExecutionSessionStatus
-
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid

@@ -29,7 +29,9 @@ module SeedNullableClient
     #  nullable.nullable.get_users(
     #    usernames: "usernames",
     #    avatar: "avatar",
-    #    activated: true
+    #    activated: true,
+    #    tags: "tags",
+    #    extra: true
     #  )
     def get_users(usernames: nil, avatar: nil, activated: nil, tags: nil, extra: nil, request_options: nil)
       response = @request_client.conn.get do |req|
@@ -66,6 +68,8 @@ module SeedNullableClient
     #   * :updated_at (DateTime)
     #   * :avatar (String)
     #   * :activated (Boolean)
+    #   * :status (Hash)
+    #   * :values (Hash{String => String})
     # @param avatar [String]
     # @param request_options [SeedNullableClient::RequestOptions]
     # @return [SeedNullableClient::Nullable::User]
@@ -74,7 +78,7 @@ module SeedNullableClient
     #  nullable.nullable.create_user(
     #    username: "username",
     #    tags: ["tags", "tags"],
-    #    metadata: { created_at: DateTime.parse("2024-01-15T09:30:00.000Z"), updated_at: DateTime.parse("2024-01-15T09:30:00.000Z"), avatar: "avatar", activated: true },
+    #    metadata: { created_at: DateTime.parse("2024-01-15T09:30:00.000Z"), updated_at: DateTime.parse("2024-01-15T09:30:00.000Z"), avatar: "avatar", activated: true, values: { "values": "values" } },
     #    avatar: "avatar"
     #  )
     def create_user(username:, tags: nil, metadata: nil, avatar: nil, request_options: nil)
@@ -146,7 +150,9 @@ module SeedNullableClient
     #  nullable.nullable.get_users(
     #    usernames: "usernames",
     #    avatar: "avatar",
-    #    activated: true
+    #    activated: true,
+    #    tags: "tags",
+    #    extra: true
     #  )
     def get_users(usernames: nil, avatar: nil, activated: nil, tags: nil, extra: nil, request_options: nil)
       Async do
@@ -185,6 +191,8 @@ module SeedNullableClient
     #   * :updated_at (DateTime)
     #   * :avatar (String)
     #   * :activated (Boolean)
+    #   * :status (Hash)
+    #   * :values (Hash{String => String})
     # @param avatar [String]
     # @param request_options [SeedNullableClient::RequestOptions]
     # @return [SeedNullableClient::Nullable::User]
@@ -193,7 +201,7 @@ module SeedNullableClient
     #  nullable.nullable.create_user(
     #    username: "username",
     #    tags: ["tags", "tags"],
-    #    metadata: { created_at: DateTime.parse("2024-01-15T09:30:00.000Z"), updated_at: DateTime.parse("2024-01-15T09:30:00.000Z"), avatar: "avatar", activated: true },
+    #    metadata: { created_at: DateTime.parse("2024-01-15T09:30:00.000Z"), updated_at: DateTime.parse("2024-01-15T09:30:00.000Z"), avatar: "avatar", activated: true, values: { "values": "values" } },
     #    avatar: "avatar"
     #  )
     def create_user(username:, tags: nil, metadata: nil, avatar: nil, request_options: nil)

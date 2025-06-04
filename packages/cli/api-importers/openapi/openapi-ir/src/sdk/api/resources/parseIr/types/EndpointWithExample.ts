@@ -37,7 +37,7 @@ export interface EndpointWithExample
      * SDK generators will only read the StatusCodes. Docs generators will read the HttpError schema.
      */
     errors: Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpErrorWithExample>;
-    server: FernOpenapiIr.HttpEndpointServer[];
+    servers: FernOpenapiIr.HttpEndpointServer[];
     /**
      * Populated by `x-fern-examples` on a path object.
      * Also migrated from `x-readme.code-samples` if present.

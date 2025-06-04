@@ -3,11 +3,9 @@
 from ......core.pydantic_utilities import UniversalBaseModel
 from .object_with_optional_field import ObjectWithOptionalField
 import pydantic
-
-
 class NestedObjectWithRequiredField(UniversalBaseModel):
     string: str
     nested_object: ObjectWithOptionalField = pydantic.Field(alias="NestedObject")
-
+    
     class Config:
         extra = pydantic.Extra.forbid

@@ -40,9 +40,9 @@ class RecordingResponseNotification extends JsonSerializableType
     /**
      * @param array{
      *   submissionId: string,
-     *   testCaseId?: ?string,
      *   lineNumber: int,
      *   lightweightStackInfo: LightweightStackframeInformation,
+     *   testCaseId?: ?string,
      *   tracedFile?: ?TracedFile,
      * } $values
      */
@@ -54,5 +54,13 @@ class RecordingResponseNotification extends JsonSerializableType
         $this->lineNumber = $values['lineNumber'];
         $this->lightweightStackInfo = $values['lightweightStackInfo'];
         $this->tracedFile = $values['tracedFile'] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

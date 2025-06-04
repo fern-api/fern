@@ -1,6 +1,7 @@
 {
   "title": "API with Default Values",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -266,7 +267,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/test",
@@ -322,7 +323,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {},
     "namespacedSchemas": {}

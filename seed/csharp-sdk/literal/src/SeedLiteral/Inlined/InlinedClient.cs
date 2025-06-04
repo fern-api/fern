@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedLiteral.Core;
 
 namespace SeedLiteral;
@@ -15,8 +14,7 @@ public partial class InlinedClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Inlined.SendAsync(
     ///     new SendLiteralsInlinedRequest
     ///     {
@@ -33,8 +31,7 @@ public partial class InlinedClient
     ///         Query = "What is the weather today",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<SendResponse> SendAsync(
         SendLiteralsInlinedRequest request,
         RequestOptions? options = null,
@@ -42,8 +39,8 @@ public partial class InlinedClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -54,9 +51,9 @@ public partial class InlinedClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<SendResponse>(responseBody)!;
@@ -67,10 +64,13 @@ public partial class InlinedClient
             }
         }
 
-        throw new SeedLiteralApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedLiteralApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

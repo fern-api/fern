@@ -2,8 +2,14 @@ from __future__ import annotations
 
 import os
 import re
+import textwrap
 from abc import ABC, abstractmethod
 from typing import Literal, Optional, Sequence, Tuple, cast
+
+from .publisher import Publisher
+from fern_python.codegen.project import Project, ProjectConfig
+from fern_python.external_dependencies.ruff import RUFF_DEPENDENCY
+from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
 import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorConfig, PypiMetadata
@@ -13,12 +19,6 @@ from fern.generator_exec.config import (
     OutputMode,
     PypiGithubPublishInfo,
 )
-
-from fern_python.codegen.project import Project, ProjectConfig
-from fern_python.external_dependencies.ruff import RUFF_DEPENDENCY
-from fern_python.generator_exec_wrapper import GeneratorExecWrapper
-
-from .publisher import Publisher
 
 
 class AbstractGenerator(ABC):
@@ -39,6 +39,10 @@ class AbstractGenerator(ABC):
             ),
             github=lambda github_output_mode: self._get_github_publish_config(generator_config, github_output_mode),
         )
+        if ir.publish_config is not None: 
+            ir_publish_config = ir.publish_config.get_as_union()
+            if ir_publish_config.type == "filesystem" and ir_publish_config.generate_full_project: 
+                project_config = ProjectConfig(package_name=generator_config.organization, package_version="0.0.0")
         maybe_github_output_mode = generator_config.output.mode.visit(
             download_files=lambda: None,
             publish=lambda _: None,
@@ -51,6 +55,14 @@ class AbstractGenerator(ABC):
         user_defined_toml = None
         if generator_config.custom_config is not None and "pyproject_toml" in generator_config.custom_config:
             user_defined_toml = generator_config.custom_config.get("pyproject_toml")
+
+        exclude_types_from_init_exports = False
+        if (
+            generator_config.custom_config is not None
+            and "exclude_types_from_init_exports" in generator_config.custom_config
+        ):
+            exclude_types_from_init_exports = generator_config.custom_config.get("exclude_types_from_init_exports")
+
         with Project(
             filepath=generator_config.output.path,
             relative_path_to_project=os.path.join(
@@ -70,6 +82,7 @@ class AbstractGenerator(ABC):
             github_output_mode=maybe_github_output_mode,
             license_=generator_config.license,
             user_defined_toml=user_defined_toml,
+            exclude_types_from_init_exports=exclude_types_from_init_exports,
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper,
@@ -80,17 +93,25 @@ class AbstractGenerator(ABC):
 
             project.add_dev_dependency(dependency=RUFF_DEPENDENCY)
 
+            include_legacy_wire_tests = (
+                generator_config.custom_config is not None
+                and generator_config.custom_config.get("include_legacy_wire_tests", False)
+            )
+
             generator_config.output.mode.visit(
                 download_files=lambda: None,
                 github=lambda github_output_mode: self._write_files_for_github_repo(
                     project=project,
                     output_mode=github_output_mode,
-                    write_unit_tests=(self.project_type() == "sdk" and generator_config.write_unit_tests),
+                    write_unit_tests=(
+                        self.project_type() == "sdk" and include_legacy_wire_tests and generator_config.write_unit_tests
+                    ),
                 ),
                 publish=lambda x: None,
             )
 
         publisher = Publisher(
+            should_fix=self.should_fix_files(),
             should_format=self.should_format_files(generator_config=generator_config),
             generator_exec_wrapper=generator_exec_wrapper,
             generator_config=generator_config,
@@ -102,18 +123,21 @@ class AbstractGenerator(ABC):
         if output_mode_union.type == "downloadFiles":
             # since download files does not contain a pyproject.toml
             # we run ruff using the fern_python poetry.toml (copied into the docker)
-            publisher._run_command(
-                command=["poetry", "run", "ruff", "format", "/fern/output"],
-                safe_command="poetry run ruff format /fern/output",
-                cwd="/",
-            )
+            publisher.run_ruff_check_fix("/fern/output", cwd="/")
+            publisher.run_ruff_format("/fern/output", cwd="/")
         elif output_mode_union.type == "github":
             publisher.run_poetry_install()
+            publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
         elif output_mode_union.type == "publish":
             publisher.run_poetry_install()
+            publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
             publisher.publish_package(publish_config=output_mode_union)
+
+        self.postrun(
+            generator_exec_wrapper=generator_exec_wrapper,
+        )
 
     # We're trying not to change the casing more than we need to, so here
     # we're using the same casing as is given but just removing `-` and other special characters as
@@ -149,20 +173,6 @@ class AbstractGenerator(ABC):
             else None,
         )
 
-    def _poetry_install_and_format(
-        self,
-        *,
-        generator_exec_wrapper: GeneratorExecWrapper,
-        generator_config: GeneratorConfig,
-    ) -> None:
-        publisher = Publisher(
-            should_format=self.should_format_files(generator_config=generator_config),
-            generator_exec_wrapper=generator_exec_wrapper,
-            generator_config=generator_config,
-        )
-        publisher.run_poetry_install()
-        publisher.run_ruff_format()
-
     def _publish(
         self,
         generator_exec_wrapper: GeneratorExecWrapper,
@@ -170,6 +180,7 @@ class AbstractGenerator(ABC):
         generator_config: GeneratorConfig,
     ) -> None:
         publisher = Publisher(
+            should_fix=self.should_fix_files(),
             should_format=self.should_format_files(generator_config=generator_config),
             generator_exec_wrapper=generator_exec_wrapper,
             generator_config=generator_config,
@@ -181,12 +192,15 @@ class AbstractGenerator(ABC):
     ) -> None:
         project.add_file(
             ".gitignore",
-            """dist/
-.mypy_cache/
-__pycache__/
-poetry.toml
-.ruff_cache/
-""",
+            textwrap.dedent(
+                """\
+                .mypy_cache/
+                .ruff_cache/
+                __pycache__/
+                dist/
+                poetry.toml
+                """
+            ),
         )
         project.add_file(
             ".github/workflows/ci.yml",
@@ -195,15 +209,15 @@ poetry.toml
         project.add_file("tests/custom/test_client.py", self._get_client_test())
 
     def _get_github_workflow(self, output_mode: GithubOutputMode, write_unit_tests: bool) -> str:
-        workflow_yaml = f"""name: ci
+        workflow_yaml = """name: ci
 
 on: [push]
 jobs:
   compile:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up python
         uses: actions/setup-python@v4
         with:
@@ -216,10 +230,10 @@ jobs:
       - name: Compile
         run: poetry run mypy .
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up python
         uses: actions/setup-python@v4
         with:
@@ -255,10 +269,10 @@ jobs:
   publish:
     needs: [compile, test]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up python
         uses: actions/setup-python@v4
         with:
@@ -284,12 +298,11 @@ jobs:
 # Get started with writing tests with pytest at https://docs.pytest.org
 @pytest.mark.skip(reason="Unimplemented")
 def test_client() -> None:
-    assert True == True
+    assert True
 """
 
     @abstractmethod
-    def project_type(self) -> Literal["sdk", "pydantic", "fastapi"]:
-        ...
+    def project_type(self) -> Literal["sdk", "pydantic", "fastapi"]: ...
 
     @abstractmethod
     def run(
@@ -299,16 +312,24 @@ def test_client() -> None:
         ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
         project: Project,
-    ) -> None:
-        ...
+    ) -> None: ...
+
+    @abstractmethod
+    def postrun(
+        self,
+        *,
+        generator_exec_wrapper: GeneratorExecWrapper,
+    ) -> None: ...
+
+    @abstractmethod
+    def should_fix_files(self) -> bool: ...
 
     @abstractmethod
     def should_format_files(
         self,
         *,
         generator_config: GeneratorConfig,
-    ) -> bool:
-        ...
+    ) -> bool: ...
 
     @abstractmethod
     def get_relative_path_to_project_for_publish(
@@ -316,17 +337,14 @@ def test_client() -> None:
         *,
         generator_config: GeneratorConfig,
         ir: ir_types.IntermediateRepresentation,
-    ) -> Tuple[str, ...]:
-        ...
+    ) -> Tuple[str, ...]: ...
 
     @abstractmethod
     def is_flat_layout(
         self,
         *,
         generator_config: GeneratorConfig,
-    ) -> bool:
-        ...
+    ) -> bool: ...
 
     @abstractmethod
-    def get_sorted_modules(self) -> Optional[Sequence[str]]:
-        ...
+    def get_sorted_modules(self) -> Optional[Sequence[str]]: ...

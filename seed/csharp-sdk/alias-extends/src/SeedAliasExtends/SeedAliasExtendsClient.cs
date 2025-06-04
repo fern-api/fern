@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedAliasExtends.Core;
 
 namespace SeedAliasExtends;
@@ -31,20 +31,20 @@ public partial class SeedAliasExtendsClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example>
-    /// <code>
-    /// await client.ExtendedInlineRequestBodyAsync(new InlinedChildRequest { Child = "child" });
-    /// </code>
-    /// </example>
-    public async Task ExtendedInlineRequestBodyAsync(
+    /// <example><code>
+    /// await client.ExtendedInlineRequestBodyAsync(
+    ///     new InlinedChildRequest { Child = "child", Parent = "parent" }
+    /// );
+    /// </code></example>
+    public async global::System.Threading.Tasks.Task ExtendedInlineRequestBodyAsync(
         InlinedChildRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -59,11 +59,13 @@ public partial class SeedAliasExtendsClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedAliasExtendsApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedAliasExtendsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

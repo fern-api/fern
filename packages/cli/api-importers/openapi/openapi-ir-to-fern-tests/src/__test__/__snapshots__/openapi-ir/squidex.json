@@ -5,6 +5,7 @@
       "url": "https://localhost:5001"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -154,7 +155,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/user-management",
@@ -441,7 +442,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/user-management",
@@ -689,7 +690,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/user-management/{id}",
@@ -969,7 +970,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/user-management/{id}",
@@ -1282,7 +1283,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/user-management/{id}",
@@ -1498,7 +1499,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/user-management/{id}/lock",
@@ -1799,7 +1800,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/user-management/{id}/unlock",
@@ -1991,7 +1992,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api",
@@ -2159,7 +2160,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Search the user by query that contains the email address or the part of the email address.",
       "authed": true,
       "method": "GET",
@@ -2368,7 +2369,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/users/{id}",
@@ -2579,7 +2580,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/users/{id}/picture",
@@ -2744,7 +2745,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/translations",
@@ -2889,7 +2890,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/templates",
@@ -3127,7 +3128,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/templates/{name}",
@@ -3315,7 +3316,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/teams/{team}/contributors",
@@ -3642,7 +3643,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/teams/{team}/contributors",
@@ -3962,7 +3963,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/teams/{team}/contributors/me",
@@ -4286,7 +4287,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/teams/{team}/contributors/{id}",
@@ -4540,7 +4541,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can only retrieve the list of teams when you are authenticated as a user (OpenID implicit flow).\nYou will retrieve all teams, where you are assigned as a contributor.",
       "authed": true,
       "method": "GET",
@@ -4821,7 +4822,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can only create an team when you are authenticated as a user (OpenID implicit flow).\nYou will be assigned as owner of the new team automatically.",
       "authed": true,
       "method": "POST",
@@ -5046,7 +5047,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/teams/{team}",
@@ -5328,7 +5329,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/teams/{team}",
@@ -5564,7 +5565,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/usages/log",
@@ -5750,7 +5751,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/usages/calls/{fromDate}/{toDate}",
@@ -6053,7 +6054,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/teams/{team}/usages/calls/{fromDate}/{toDate}",
@@ -6323,7 +6324,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/usages/storage/today",
@@ -6481,7 +6482,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/teams/{team}/usages/storage/today",
@@ -6679,7 +6680,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/usages/storage/{fromDate}/{toDate}",
@@ -6908,7 +6909,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/teams/{team}/usages/storage/{fromDate}/{toDate}",
@@ -7126,7 +7127,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/search",
@@ -7439,7 +7440,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/schemas/{schema}/fields",
@@ -7483,17 +7484,10 @@
                   "value": {
                     "fieldType": {
                       "value": {
-                        "value": "UI",
+                        "value": "Array",
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "editor": {
-                      "value": {
-                        "value": "Separator",
-                        "type": "string"
-                      },
-                      "type": "literal"
                     },
                     "isRequired": {
                       "value": {
@@ -7895,17 +7889,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -8007,17 +7994,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -8310,7 +8290,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested",
@@ -8364,17 +8344,10 @@
                   "value": {
                     "fieldType": {
                       "value": {
-                        "value": "UI",
+                        "value": "Array",
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "editor": {
-                      "value": {
-                        "value": "Separator",
-                        "type": "string"
-                      },
-                      "type": "literal"
                     },
                     "isRequired": {
                       "value": {
@@ -8776,17 +8749,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -8888,17 +8854,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -9135,7 +9094,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/ui",
@@ -9540,17 +9499,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -9652,17 +9604,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -9899,7 +9844,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/ordering",
@@ -10317,17 +10262,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -10429,17 +10367,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -10692,7 +10623,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/ordering",
@@ -11120,17 +11051,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -11232,17 +11156,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -11495,7 +11412,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
@@ -11542,17 +11459,10 @@
                   "value": {
                     "fieldType": {
                       "value": {
-                        "value": "UI",
+                        "value": "Array",
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "editor": {
-                      "value": {
-                        "value": "Separator",
-                        "type": "string"
-                      },
-                      "type": "literal"
                     },
                     "isRequired": {
                       "value": {
@@ -11954,17 +11864,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -12066,17 +11969,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -12310,7 +12206,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
@@ -12721,17 +12617,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -12833,17 +12722,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -13112,7 +12994,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
@@ -13169,17 +13051,10 @@
                   "value": {
                     "fieldType": {
                       "value": {
-                        "value": "UI",
+                        "value": "Array",
                         "type": "string"
                       },
                       "type": "primitive"
-                    },
-                    "editor": {
-                      "value": {
-                        "value": "Separator",
-                        "type": "string"
-                      },
-                      "type": "literal"
                     },
                     "isRequired": {
                       "value": {
@@ -13581,17 +13456,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -13693,17 +13561,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -13953,7 +13814,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
@@ -14374,17 +14235,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -14486,17 +14340,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -14730,7 +14577,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "A locked field cannot be updated or deleted.",
       "authed": true,
       "method": "PUT",
@@ -15142,17 +14989,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -15254,17 +15094,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -15514,7 +15347,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "A locked field cannot be edited or deleted.",
       "authed": true,
       "method": "PUT",
@@ -15936,17 +15769,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -16048,17 +15874,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -16292,7 +16111,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
       "authed": true,
       "method": "PUT",
@@ -16704,17 +16523,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -16816,17 +16628,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -17076,7 +16881,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
       "authed": true,
       "method": "PUT",
@@ -17498,17 +17303,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -17610,17 +17408,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -17854,7 +17645,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
       "authed": true,
       "method": "PUT",
@@ -18266,17 +18057,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -18378,17 +18162,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -18638,7 +18415,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
       "authed": true,
       "method": "PUT",
@@ -19060,17 +18837,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -19172,17 +18942,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -19416,7 +19179,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
       "authed": true,
       "method": "PUT",
@@ -19828,17 +19591,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -19940,17 +19696,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -20200,7 +19949,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
       "authed": true,
       "method": "PUT",
@@ -20622,17 +20371,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -20734,17 +20476,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -20978,7 +20713,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
       "authed": true,
       "method": "PUT",
@@ -21390,17 +21125,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -21502,17 +21230,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -21762,7 +21483,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
       "authed": true,
       "method": "PUT",
@@ -22184,17 +21905,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -22296,17 +22010,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -22468,7 +22175,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/schemas",
@@ -22796,17 +22503,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -23055,7 +22755,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/schemas",
@@ -23476,17 +23176,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -23588,17 +23281,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -23776,7 +23462,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/schemas/{schema}",
@@ -24177,17 +23863,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -24289,17 +23968,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -24536,7 +24208,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}",
@@ -24949,17 +24621,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -25061,17 +24726,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -25270,7 +24928,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/schemas/{schema}",
@@ -25492,7 +25150,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/sync",
@@ -25919,17 +25577,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -26031,17 +25682,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -26278,7 +25922,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/category",
@@ -26683,17 +26327,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -26795,17 +26432,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -27042,7 +26672,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/preview-urls",
@@ -27461,17 +27091,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -27573,17 +27196,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -27820,7 +27436,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/scripts",
@@ -28225,17 +27841,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -28337,17 +27946,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -28584,7 +28186,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/rules",
@@ -28989,17 +28591,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -29101,17 +28696,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -29329,7 +28917,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/publish",
@@ -29730,17 +29318,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -29842,17 +29423,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -30070,7 +29644,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/unpublish",
@@ -30471,17 +30045,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -30583,17 +30150,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -30738,7 +30298,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/rules/actions",
@@ -30967,7 +30527,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/rules",
@@ -31122,15 +30682,8 @@
                             "value": {
                               "triggerType": {
                                 "value": {
-                                  "value": "Usage",
+                                  "value": "AssetChanged",
                                   "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "limit": {
-                                "value": {
-                                  "value": 1,
-                                  "type": "int"
                                 },
                                 "type": "primitive"
                               }
@@ -31142,48 +30695,44 @@
                         "action": {
                           "value": {
                             "value": {
+                              "appId": {
+                                "value": {
+                                  "value": "appId",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "apiKey": {
+                                "value": {
+                                  "value": "apiKey",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "indexName": {
+                                "value": {
+                                  "value": "indexName",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "document": {
+                                "value": {
+                                  "value": "document",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "delete": {
+                                "value": {
+                                  "value": "delete",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
                               "actionType": {
                                 "value": {
-                                  "value": "Webhook",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "url": {
-                                "value": {
-                                  "value": "action",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "method": {
-                                "value": "POST",
-                                "type": "enum"
-                              },
-                              "payload": {
-                                "value": {
-                                  "value": "action",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "payloadType": {
-                                "value": {
-                                  "value": "action",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "headers": {
-                                "value": {
-                                  "value": "action",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
-                              },
-                              "sharedSecret": {
-                                "value": {
-                                  "value": "action",
+                                  "value": "Algolia",
                                   "type": "string"
                                 },
                                 "type": "primitive"
@@ -31408,7 +30957,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/rules",
@@ -31435,15 +30984,8 @@
                   "value": {
                     "triggerType": {
                       "value": {
-                        "value": "Usage",
+                        "value": "AssetChanged",
                         "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "limit": {
-                      "value": {
-                        "value": 1,
-                        "type": "int"
                       },
                       "type": "primitive"
                     }
@@ -31455,48 +30997,44 @@
               "action": {
                 "value": {
                   "value": {
+                    "appId": {
+                      "value": {
+                        "value": "appId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "apiKey": {
+                      "value": {
+                        "value": "apiKey",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "indexName": {
+                      "value": {
+                        "value": "indexName",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "document": {
+                      "value": {
+                        "value": "document",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "delete": {
+                      "value": {
+                        "value": "delete",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
                     "actionType": {
                       "value": {
-                        "value": "Webhook",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "url": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "method": {
-                      "value": "POST",
-                      "type": "enum"
-                    },
-                    "payload": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "payloadType": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "headers": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "sharedSecret": {
-                      "value": {
-                        "value": "action",
+                        "value": "Algolia",
                         "type": "string"
                       },
                       "type": "primitive"
@@ -31608,24 +31146,17 @@
                 "trigger": {
                   "value": {
                     "value": {
-                      "triggerType": {
+                      "condition": {
                         "value": {
-                          "value": "Usage",
+                          "value": "condition",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "limit": {
+                      "triggerType": {
                         "value": {
-                          "value": 1,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      },
-                      "numDays": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
+                          "value": "AssetChanged",
+                          "type": "string"
                         },
                         "type": "primitive"
                       }
@@ -31637,48 +31168,44 @@
                 "action": {
                   "value": {
                     "value": {
+                      "appId": {
+                        "value": {
+                          "value": "appId",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "apiKey": {
+                        "value": {
+                          "value": "apiKey",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "indexName": {
+                        "value": {
+                          "value": "indexName",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "document": {
+                        "value": {
+                          "value": "document",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "delete": {
+                        "value": {
+                          "value": "delete",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
                       "actionType": {
                         "value": {
-                          "value": "Webhook",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "url": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "method": {
-                        "value": "POST",
-                        "type": "enum"
-                      },
-                      "payload": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "payloadType": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "headers": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "sharedSecret": {
-                        "value": {
-                          "value": "action",
+                          "value": "Algolia",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -31840,7 +31367,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/rules/run",
@@ -32052,7 +31579,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/rules/{id}",
@@ -32185,24 +31712,17 @@
                 "trigger": {
                   "value": {
                     "value": {
-                      "triggerType": {
+                      "condition": {
                         "value": {
-                          "value": "Usage",
+                          "value": "condition",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "limit": {
+                      "triggerType": {
                         "value": {
-                          "value": 1,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      },
-                      "numDays": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
+                          "value": "AssetChanged",
+                          "type": "string"
                         },
                         "type": "primitive"
                       }
@@ -32214,48 +31734,44 @@
                 "action": {
                   "value": {
                     "value": {
+                      "appId": {
+                        "value": {
+                          "value": "appId",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "apiKey": {
+                        "value": {
+                          "value": "apiKey",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "indexName": {
+                        "value": {
+                          "value": "indexName",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "document": {
+                        "value": {
+                          "value": "document",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "delete": {
+                        "value": {
+                          "value": "delete",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
                       "actionType": {
                         "value": {
-                          "value": "Webhook",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "url": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "method": {
-                        "value": "POST",
-                        "type": "enum"
-                      },
-                      "payload": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "payloadType": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "headers": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "sharedSecret": {
-                        "value": {
-                          "value": "action",
+                          "value": "Algolia",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -32445,7 +31961,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/rules/{id}",
@@ -32648,7 +32164,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/rules/{id}/enable",
@@ -32777,24 +32293,17 @@
                 "trigger": {
                   "value": {
                     "value": {
-                      "triggerType": {
+                      "condition": {
                         "value": {
-                          "value": "Usage",
+                          "value": "condition",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "limit": {
+                      "triggerType": {
                         "value": {
-                          "value": 1,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      },
-                      "numDays": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
+                          "value": "AssetChanged",
+                          "type": "string"
                         },
                         "type": "primitive"
                       }
@@ -32806,48 +32315,44 @@
                 "action": {
                   "value": {
                     "value": {
+                      "appId": {
+                        "value": {
+                          "value": "appId",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "apiKey": {
+                        "value": {
+                          "value": "apiKey",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "indexName": {
+                        "value": {
+                          "value": "indexName",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "document": {
+                        "value": {
+                          "value": "document",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "delete": {
+                        "value": {
+                          "value": "delete",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
                       "actionType": {
                         "value": {
-                          "value": "Webhook",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "url": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "method": {
-                        "value": "POST",
-                        "type": "enum"
-                      },
-                      "payload": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "payloadType": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "headers": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "sharedSecret": {
-                        "value": {
-                          "value": "action",
+                          "value": "Algolia",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -33056,7 +32561,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/rules/{id}/disable",
@@ -33185,24 +32690,17 @@
                 "trigger": {
                   "value": {
                     "value": {
-                      "triggerType": {
+                      "condition": {
                         "value": {
-                          "value": "Usage",
+                          "value": "condition",
                           "type": "string"
                         },
                         "type": "primitive"
                       },
-                      "limit": {
+                      "triggerType": {
                         "value": {
-                          "value": 1,
-                          "type": "int"
-                        },
-                        "type": "primitive"
-                      },
-                      "numDays": {
-                        "value": {
-                          "value": 1,
-                          "type": "int"
+                          "value": "AssetChanged",
+                          "type": "string"
                         },
                         "type": "primitive"
                       }
@@ -33214,48 +32712,44 @@
                 "action": {
                   "value": {
                     "value": {
+                      "appId": {
+                        "value": {
+                          "value": "appId",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "apiKey": {
+                        "value": {
+                          "value": "apiKey",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "indexName": {
+                        "value": {
+                          "value": "indexName",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "document": {
+                        "value": {
+                          "value": "document",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "delete": {
+                        "value": {
+                          "value": "delete",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
                       "actionType": {
                         "value": {
-                          "value": "Webhook",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "url": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "method": {
-                        "value": "POST",
-                        "type": "enum"
-                      },
-                      "payload": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "payloadType": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "headers": {
-                        "value": {
-                          "value": "action",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      },
-                      "sharedSecret": {
-                        "value": {
-                          "value": "action",
+                          "value": "Algolia",
                           "type": "string"
                         },
                         "type": "primitive"
@@ -33445,7 +32939,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/rules/{id}/trigger",
@@ -33640,7 +33134,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/rules/{id}/run",
@@ -33812,7 +33306,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/rules/{id}/events",
@@ -34018,7 +33512,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/rules/simulate",
@@ -34045,15 +33539,8 @@
                   "value": {
                     "triggerType": {
                       "value": {
-                        "value": "Usage",
+                        "value": "AssetChanged",
                         "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "limit": {
-                      "value": {
-                        "value": 1,
-                        "type": "int"
                       },
                       "type": "primitive"
                     }
@@ -34065,48 +33552,44 @@
               "action": {
                 "value": {
                   "value": {
+                    "appId": {
+                      "value": {
+                        "value": "appId",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "apiKey": {
+                      "value": {
+                        "value": "apiKey",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "indexName": {
+                      "value": {
+                        "value": "indexName",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "document": {
+                      "value": {
+                        "value": "document",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "delete": {
+                      "value": {
+                        "value": "delete",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
                     "actionType": {
                       "value": {
-                        "value": "Webhook",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "url": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "method": {
-                      "value": "POST",
-                      "type": "enum"
-                    },
-                    "payload": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "payloadType": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "headers": {
-                      "value": {
-                        "value": "action",
-                        "type": "string"
-                      },
-                      "type": "primitive"
-                    },
-                    "sharedSecret": {
-                      "value": {
-                        "value": "action",
+                        "value": "Algolia",
                         "type": "string"
                       },
                       "type": "primitive"
@@ -34401,7 +33884,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/rules/{id}/simulate",
@@ -34763,7 +34246,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/rules/events",
@@ -35058,7 +34541,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/rules/events",
@@ -35232,7 +34715,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/rules/events/{id}",
@@ -35416,7 +34899,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/rules/events/{id}",
@@ -35537,7 +35020,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/rules/eventtypes",
@@ -35672,7 +35155,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/rules/eventtypes/{type}",
@@ -35830,7 +35313,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/plans",
@@ -36172,7 +35655,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/plan",
@@ -36335,7 +35818,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/teams/{team}/plans",
@@ -36676,7 +36159,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/teams/{team}/plan",
@@ -36810,7 +36293,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/info",
@@ -36908,7 +36391,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Can be used to test, if the Squidex API is alive and responding.",
       "authed": true,
       "method": "GET",
@@ -37004,7 +36487,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Can be used to test, if the Squidex API is alive and responding.",
       "authed": true,
       "method": "GET",
@@ -37135,7 +36618,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/news/features",
@@ -37275,7 +36758,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Provide a list of supported language codes, following the ISO2Code standard.",
       "authed": true,
       "method": "GET",
@@ -37463,7 +36946,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/history",
@@ -37681,7 +37164,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/teams/{team}/history",
@@ -37843,7 +37326,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/event-consumers",
@@ -38135,7 +37618,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/event-consumers/{consumerName}/start",
@@ -38398,7 +37881,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/event-consumers/{consumerName}/stop",
@@ -38661,7 +38144,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/event-consumers/{consumerName}/reset",
@@ -38876,7 +38359,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/diagnostics/dump",
@@ -38993,7 +38476,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/diagnostics/gcdump",
@@ -39178,7 +38661,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "GET",
@@ -39552,17 +39035,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -39901,7 +39377,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "POST",
@@ -40307,17 +39783,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -40592,7 +40061,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "POST",
@@ -40970,17 +40439,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -41235,7 +40697,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "GET",
@@ -41578,17 +41040,10 @@
                             "value": {
                               "fieldType": {
                                 "value": {
-                                  "value": "UI",
+                                  "value": "Array",
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              },
-                              "editor": {
-                                "value": {
-                                  "value": "Separator",
-                                  "type": "string"
-                                },
-                                "type": "literal"
                               },
                               "isRequired": {
                                 "value": {
@@ -41690,17 +41145,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -42031,7 +41479,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "POST",
@@ -42447,17 +41895,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -42748,7 +42189,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "PUT",
@@ -43164,17 +42605,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -43470,7 +42904,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can create an generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "DELETE",
@@ -43719,7 +43153,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "PATCH",
@@ -44135,17 +43569,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -44398,7 +43825,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "GET",
@@ -44610,7 +44037,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "GET",
@@ -44994,17 +44421,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -45258,7 +44678,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "GET",
@@ -45642,17 +45062,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -45890,7 +45303,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "availability": "Deprecated",
@@ -46090,7 +45503,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "availability": "Deprecated",
@@ -46447,7 +45860,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "POST",
@@ -46786,7 +46199,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "PUT",
@@ -47182,17 +46595,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -47464,7 +46870,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "DELETE",
@@ -47848,17 +47254,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -48130,7 +47529,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "POST",
@@ -48514,17 +47913,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -48796,7 +48188,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
       "method": "DELETE",
@@ -49180,17 +48572,10 @@
                                     "value": {
                                       "fieldType": {
                                         "value": {
-                                          "value": "UI",
+                                          "value": "Array",
                                           "type": "string"
                                         },
                                         "type": "primitive"
-                                      },
-                                      "editor": {
-                                        "value": {
-                                          "value": "Separator",
-                                          "type": "string"
-                                        },
-                                        "type": "literal"
                                       },
                                       "isRequired": {
                                         "value": {
@@ -49415,7 +48800,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/watching/{resource}",
@@ -49606,7 +48991,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "When passing in a version you can retrieve all updates since then.",
       "authed": true,
       "method": "GET",
@@ -49946,7 +49331,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/comments/{commentsId}",
@@ -50220,7 +49605,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/comments/{commentsId}/{commentId}",
@@ -50442,7 +49827,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/comments/{commentsId}/{commentId}",
@@ -50609,7 +49994,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "When passing in a version you can retrieve all updates since then.",
       "authed": true,
       "method": "GET",
@@ -50900,7 +50285,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/users/{userId}/notifications/{commentId}",
@@ -51053,7 +50438,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/backups/{id}",
@@ -51208,7 +50593,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/backups/{id}",
@@ -51388,7 +50773,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/backups/{id}",
@@ -51506,7 +50891,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/backups",
@@ -51788,7 +51173,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/backups",
@@ -51895,7 +51280,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/restore",
@@ -52076,7 +51461,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/restore",
@@ -52536,7 +51921,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/assets/{app}/{idOrSlug}/{more}",
@@ -52938,7 +52323,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "availability": "Deprecated",
       "method": "GET",
@@ -53100,7 +52485,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get all asset folders for the app.",
       "authed": true,
       "method": "GET",
@@ -53485,7 +52870,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/assets/folders",
@@ -53782,7 +53167,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/assets/folders/{id}",
@@ -54051,7 +53436,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/assets/folders/{id}",
@@ -54273,7 +53658,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/assets/folders/{id}/parent",
@@ -54509,7 +53894,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get all tags for assets.",
       "authed": true,
       "method": "GET",
@@ -54755,7 +54140,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/assets/tags/{name}",
@@ -55083,7 +54468,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get all assets for the app.",
       "authed": true,
       "method": "GET",
@@ -55501,7 +54886,8 @@
               "isOptional": true,
               "isArray": false,
               "type": "file"
-            }
+            },
+            "exploded": false
           }
         ],
         "source": {
@@ -55663,7 +55049,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can only upload one file at a time. The mime type of the file is not calculated by Squidex and is required correctly.",
       "authed": true,
       "method": "POST",
@@ -56098,7 +55484,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Get all assets for the app.",
       "authed": true,
       "method": "POST",
@@ -56537,7 +55923,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/assets/{id}",
@@ -56912,7 +56298,8 @@
               "isOptional": true,
               "isArray": false,
               "type": "file"
-            }
+            },
+            "exploded": false
           }
         ],
         "source": {
@@ -57074,7 +56461,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can only upload one file at a time. The mime type of the file is not calculated by Squidex and is required correctly.",
       "authed": true,
       "method": "POST",
@@ -57535,7 +56922,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/assets/{id}",
@@ -58000,7 +57387,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/assets/{id}",
@@ -58211,7 +57598,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/assets/bulk",
@@ -58389,7 +57776,8 @@
               "isOptional": true,
               "isArray": false,
               "type": "file"
-            }
+            },
+            "exploded": false
           }
         ],
         "source": {
@@ -58551,7 +57939,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Use multipart request to upload an asset.",
       "authed": true,
       "method": "PUT",
@@ -59012,7 +58400,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/assets/{id}/parent",
@@ -59397,7 +58785,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/assets/scripts",
@@ -59694,7 +59082,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/assets/scripts",
@@ -59936,7 +59324,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Gets all configured clients for the app with the specified name.",
       "authed": true,
       "method": "GET",
@@ -60267,7 +59655,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create a new client for the app with the specified name.\nThe client secret is auto generated on the server and returned. The client does not expire, the access token is valid for 30 days.",
       "authed": true,
       "method": "POST",
@@ -60626,7 +60014,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Only the display name can be changed, create a new client if necessary.",
       "authed": true,
       "method": "PUT",
@@ -60968,7 +60356,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "The application that uses this client credentials cannot access the API after it has been revoked.",
       "authed": true,
       "method": "DELETE",
@@ -61250,7 +60638,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/contributors",
@@ -61578,7 +60966,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/contributors",
@@ -61899,7 +61287,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/contributors/me",
@@ -62224,7 +61612,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/contributors/{id}",
@@ -62493,7 +61881,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/image",
@@ -62546,7 +61934,8 @@
               "isOptional": true,
               "isArray": false,
               "type": "file"
-            }
+            },
+            "exploded": false
           }
         ],
         "source": {
@@ -62668,7 +62057,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/image",
@@ -63004,7 +62393,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/image",
@@ -63296,7 +62685,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/languages",
@@ -63617,7 +63006,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/languages",
@@ -63966,7 +63355,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/languages/{language}",
@@ -64298,7 +63687,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/languages/{language}",
@@ -64570,7 +63959,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/roles",
@@ -64912,7 +64301,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/roles",
@@ -65211,7 +64600,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/roles/permissions",
@@ -65438,7 +64827,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/roles/{roleName}",
@@ -65804,7 +65193,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/roles/{roleName}",
@@ -66072,7 +65461,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can only retrieve the list of apps when you are authenticated as a user (OpenID implicit flow).\nYou will retrieve all apps, where you are assigned as a contributor.",
       "authed": true,
       "method": "GET",
@@ -66421,7 +65810,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can only create an app when you are authenticated as a user (OpenID implicit flow).\nYou will be assigned as owner of the new app automatically.",
       "authed": true,
       "method": "POST",
@@ -66707,7 +66096,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "You can only retrieve the list of apps when you are authenticated as a user (OpenID implicit flow).\nYou will retrieve all apps, where you are assigned as a contributor.",
       "authed": true,
       "method": "GET",
@@ -66998,7 +66387,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}",
@@ -67349,7 +66738,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}",
@@ -67666,7 +67055,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}",
@@ -67862,7 +67251,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/team",
@@ -68158,7 +67547,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/settings",
@@ -68475,7 +67864,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/settings",
@@ -68786,7 +68175,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "GET",
       "path": "/api/apps/{app}/workflows",
@@ -69127,7 +68516,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "POST",
       "path": "/api/apps/{app}/workflows",
@@ -69496,7 +68885,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "PUT",
       "path": "/api/apps/{app}/workflows/{id}",
@@ -69871,7 +69260,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "authed": true,
       "method": "DELETE",
       "path": "/api/apps/{app}/workflows/{id}",
@@ -70057,7 +69446,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "ErrorDto": {
@@ -70495,7 +69884,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -70655,7 +70045,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -71046,7 +70437,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -71477,7 +70869,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -71499,7 +70892,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -71864,7 +71258,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -72081,7 +71476,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -72139,7 +71535,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -72397,7 +71794,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -72518,7 +71916,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -72540,7 +71939,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -72642,7 +72042,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -72728,7 +72129,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -72884,7 +72286,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -72979,7 +72382,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -73124,7 +72528,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -73228,7 +72633,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -73627,7 +73033,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -73644,7 +73051,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -73790,7 +73198,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -73936,7 +73345,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -73994,7 +73404,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -74122,7 +73533,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -74507,7 +73919,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -74772,7 +74185,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -74820,7 +74234,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -74894,7 +74309,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -75169,7 +74585,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -75185,7 +74602,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -75659,7 +75077,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -76043,7 +75462,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -76872,7 +76292,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -77045,7 +76466,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -77088,7 +76510,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -77182,7 +76605,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -77714,7 +77138,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -77857,7 +77282,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -77998,7 +77424,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -78101,7 +77528,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -78154,7 +77582,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -78176,7 +77605,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -78507,7 +77937,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -78632,7 +78063,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -79187,7 +78619,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -79604,7 +79037,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -79621,7 +79055,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -81522,7 +80957,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -81863,7 +81299,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -81995,7 +81432,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -82012,7 +81450,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -82074,7 +81513,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -82096,7 +81536,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -82664,7 +82105,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -82681,7 +82123,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -82886,7 +82329,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -82903,7 +82347,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -84484,7 +83929,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -84624,7 +84070,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -85475,7 +84922,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -85572,7 +85020,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -85840,7 +85289,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},

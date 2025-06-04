@@ -49,4 +49,12 @@ class TestSubmissionStatusV2 extends JsonSerializableType
         $this->problemVersion = $values['problemVersion'];
         $this->problemInfo = $values['problemInfo'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

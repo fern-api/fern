@@ -6,17 +6,12 @@ import pydantic
 from .test_submission_update_info import TestSubmissionUpdateInfo
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
-
-
 class TestSubmissionUpdate(UniversalBaseModel):
     update_time: dt.datetime = pydantic.Field(alias="updateTime")
     update_info: TestSubmissionUpdateInfo = pydantic.Field(alias="updateInfo")
-
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid

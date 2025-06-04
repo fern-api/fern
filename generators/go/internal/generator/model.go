@@ -95,7 +95,8 @@ func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 		if useEnumWireValue {
 			enumName = t.typeName + enumValue.Name.WireValue
 		}
-		t.writer.P(enumName, " ", t.typeName, fmt.Sprintf(" = %q", enumValue.Name.WireValue))
+		escapedWireValue := strings.Replace(enumValue.Name.WireValue, `"`, `\"`, -1)
+		t.writer.P(enumName, " ", t.typeName, fmt.Sprintf(" = %q", escapedWireValue))
 	}
 	t.writer.P(")")
 	t.writer.P()
@@ -108,7 +109,8 @@ func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 		if useEnumWireValue {
 			enumName = t.typeName + enumValue.Name.WireValue
 		}
-		t.writer.P("case \"", enumValue.Name.WireValue, "\":")
+		escapedWireValue := strings.Replace(enumValue.Name.WireValue, `"`, `\"`, -1)
+		t.writer.P("case \"", escapedWireValue, "\":")
 		t.writer.P("return ", enumName, ", nil")
 	}
 	t.writer.P("}")
@@ -982,8 +984,23 @@ func (u *undiscriminatedUnionContainerTypeVisitor) VisitMap(mapType *ir.MapType)
 	return nil
 }
 
-func (u *undiscriminatedUnionContainerTypeVisitor) VisitOptional(optional *ir.TypeReference) error {
-	u.value = fmt.Sprintf("%sOptional", typeReferenceToUndiscriminatedUnionField(optional, u.types, u.scope))
+func (u *undiscriminatedUnionContainerTypeVisitor) VisitNullable(nullable *ir.TypeReference) error {
+	// We treat nullable the same as optional, so we can just delegate to the visit implementation for optional.
+	u.VisitOptional(nullable)
+	return nil
+}
+
+func (u *undiscriminatedUnionContainerTypeVisitor) VisitOptional(optionalOrNullable *ir.TypeReference) error {
+	// Collapse optional<nullable<...>> or nullable<optional<...>> into a single optional<...>.
+	// We can assume there aren't arbitrary depth nestings. The node being visited is optional or nullable, so we
+	// only need to check if its container is optional or nullable.
+	optionalOrNullableContainer := getOptionalOrNullableContainer(optionalOrNullable)
+	if optionalOrNullableContainer != nil {
+		u.value = typeReferenceToUndiscriminatedUnionField(optionalOrNullable, u.types, u.scope)
+		return nil
+	}
+
+	u.value = fmt.Sprintf("%sOptional", typeReferenceToUndiscriminatedUnionField(optionalOrNullable, u.types, u.scope))
 	return nil
 }
 
@@ -1245,21 +1262,42 @@ func (c *containerTypeVisitor) VisitMap(mapType *ir.MapType) error {
 	return nil
 }
 
-func (c *containerTypeVisitor) VisitOptional(optional *ir.TypeReference) error {
+func (c *containerTypeVisitor) VisitNullable(nullable *ir.TypeReference) error {
+	// We treat nullable the same as optional, so we can just delegate to the visit implementation for optional.
+	c.VisitOptional(nullable)
+	return nil
+}
+
+func (c *containerTypeVisitor) VisitOptional(optionalOrNullable *ir.TypeReference) error {
 	// Trim all of the preceding pointers from the underlying type so that we don't
 	// unnecessarily generate double pointers for objects and unions (e.g. '**Foo)').
 	//
 	// We also don't want to specify pointers for any container types because those
 	// values are already nil-able.
-	value := strings.TrimLeft(typeReferenceToGoType(optional, c.types, c.scope, c.baseImportPath, c.importPath, c.includeOptionals, c.packageLayout), "*")
+	value := strings.TrimLeft(typeReferenceToGoType(optionalOrNullable, c.types, c.scope, c.baseImportPath, c.importPath, c.includeOptionals, c.packageLayout), "*")
 	if c.includeOptionals {
 		c.value = fmt.Sprintf("*core.Optional[%s]", value)
 		return nil
 	}
-	if optional.Unknown != nil || (optional.Container != nil && optional.Container.Literal == nil) {
+
+	// Collapse optional<nullable<...>> or nullable<optional<...>> into a single optional<...>.
+	// We can assume there aren't arbitrary depth nestings. The node being visited is optional or nullable, so we
+	// only need to check if its container is optional or nullable.
+	optionalOrNullableContainer := getOptionalOrNullableContainer(optionalOrNullable)
+	if optionalOrNullableContainer != nil {
+		if !(isTypeReferencePointerRequired(optionalOrNullableContainer)) {
+			c.value = value
+			return nil
+		}
+		c.value = fmt.Sprintf("*%s", value)
+		return nil
+	}
+
+	if !(isTypeReferencePointerRequired(optionalOrNullable)) {
 		c.value = value
 		return nil
 	}
+
 	c.value = fmt.Sprintf("*%s", value)
 	return nil
 }
@@ -1911,8 +1949,9 @@ func maybeDateProperty(valueType *ir.TypeReference, name *ir.NameAndWireValue, i
 			IsDateTime:      true,
 		}
 	}
-	if valueType.Container != nil && valueType.Container.Optional != nil {
-		return maybeDateProperty(valueType.Container.Optional, name, true)
+	optionalOrNullableContainer := getOptionalOrNullableContainer(valueType)
+	if optionalOrNullableContainer != nil {
+		return maybeDateProperty(optionalOrNullableContainer, name, true)
 	}
 	return nil
 }
@@ -1958,8 +1997,9 @@ func maybeDate(valueType *ir.TypeReference, isOptional bool) *date {
 			IsDateTime:      true,
 		}
 	}
-	if valueType.Container != nil && valueType.Container.Optional != nil {
-		return maybeDate(valueType.Container.Optional, true)
+	optionalOrNullableContainer := getOptionalOrNullableContainer(valueType)
+	if optionalOrNullableContainer != nil {
+		return maybeDate(optionalOrNullableContainer, true)
 	}
 	return nil
 }
@@ -1979,6 +2019,8 @@ func maybeFormatStructTag(valueType *ir.TypeReference) string {
 		return maybeFormatStructTag(valueType.Container.List)
 	case "map":
 		return maybeFormatStructTag(valueType.Container.Map.ValueType)
+	case "nullable":
+		return maybeFormatStructTag(valueType.Container.Nullable)
 	case "optional":
 		return maybeFormatStructTag(valueType.Container.Optional)
 	case "set":
@@ -2023,6 +2065,10 @@ func defaultValueForTypeDeclaration(typeDeclaration *ir.TypeDeclaration, types m
 		return ""
 	}
 	return "nil"
+}
+
+func isTypeReferencePointerRequired(typeReference *ir.TypeReference) bool {
+	return !(typeReference.Unknown != nil || (typeReference.Container != nil && typeReference.Container.Literal == nil))
 }
 
 func defaultValueForPrimitiveType(primitiveType *ir.PrimitiveType) string {

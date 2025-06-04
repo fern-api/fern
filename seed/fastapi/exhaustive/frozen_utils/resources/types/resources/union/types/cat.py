@@ -4,18 +4,13 @@ from ......core.pydantic_utilities import UniversalBaseModel
 import pydantic
 from ......core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
-
-
 class Cat(UniversalBaseModel):
     name: str
     likes_to_meow: bool = pydantic.Field(alias="likesToMeow")
-
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid", frozen=True
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid", frozen=True)  # type: ignore # Pydantic v2
     else:
-
         class Config:
             frozen = True
             extra = pydantic.Extra.forbid

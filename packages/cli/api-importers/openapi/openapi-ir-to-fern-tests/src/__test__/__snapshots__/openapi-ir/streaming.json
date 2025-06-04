@@ -1,6 +1,7 @@
 {
   "title": "Streaming API",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -93,7 +94,7 @@
         "type": "streamingJson"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/v1/users",
@@ -228,7 +229,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/v1/users",
@@ -360,7 +361,7 @@
         "type": "streamingJson"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/v2/users",
@@ -509,7 +510,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/v2/users",
@@ -719,7 +720,7 @@
         "type": "streamingJson"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/v3/users",
@@ -912,7 +913,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/v3/users",
@@ -966,7 +967,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "User": {

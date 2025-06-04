@@ -1,0 +1,6 @@
+## 1.4.7-rc0
+**`(fix):`** When leveraging the `include_union_utils` configuration flag, the Pydantic models will no longer include transitive dependencies within
+`update_forward_ref` calls, since these should not be necessary. This effectively scopes back the changes introduced in 4.0.0-rc5, which included
+changes to improve circular reference handling in Pydantic models.
+
+

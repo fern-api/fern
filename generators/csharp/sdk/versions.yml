@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # - version: 2.0.0
 #   createdAt: '2024-10-09'
 #   changelogEntry:
@@ -6,12 +7,748 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+- version: 1.17.4
+  changelogEntry:
+    - summary: Mock the OAuth endpoint for the wire tests.
+      type: fix
+  createdAt: '2025-05-16'
+  irVersion: 57
+- version: 1.17.3
+  changelogEntry:
+    - summary: |
+        Add support for the custom introduction setting in the generated README.md.
+      type: fix
+  createdAt: '2025-05-13'
+  irVersion: 57
+- version: 1.17.2
+  changelogEntry:
+    - summary: |
+        Install the generator-cli at build time as a fallback if runtime installation fails. 
+      type: fix
+  createdAt: '2025-05-01'
+  irVersion: 57
+- version: 1.17.1
+  createdAt: "2025-05-04"
+  irVersion: 57
+  changelogEntry:
+    - type: chore
+      summary: Self hosted github user defaults to `fern-api[bot]`.
+- version: 1.17.0
+  createdAt: "2025-05-04"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: Added support for pushing to GitHub.
+- version: 1.16.3
+  createdAt: "2025-04-23"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: Upgrade Csharpier formatter to `1.*` for faster and better formatting.
+- version: 1.16.2
+  createdAt: "2025-04-22"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add `root-client-class-access` configuration option to control the access modifier of the root client class.
+        `root-client-class-access` defaults to `public`, but can be set to `internal` to make the root client class internal.
+    - type: fix
+      summary: Pin `csharpier` formatter to `0.*` to avoid breaking changes in the formatter.
+- version: 1.16.1
+  createdAt: "2025-04-11"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: Make minor improvements to the ReadOnlyAdditionalProperties and AdditionalProperties properties for internal usage.
+- version: 1.16.0
+  createdAt: "2025-04-10"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add read-only and writeable additional properties for request and response types.
+
+        Example:
+        ```csharp
+        var request = new FooRequest
+        {
+            Id = "123",
+            AdditionalProperties =
+            {
+                ["extra1"] = new { value = 42 },
+                ["extra2"] = DateTime.Now,
+                ["extra3"] = 99
+            }
+        };
+
+        var response = await client.Foo.CreateAsync(request);
+
+        Dictionary<string, JsonElement> jsonElements = response.AdditionalProperties.ToJsonElementDictionary();
+        Dictionary<string, int> extra1 = jsonElements["extra1"].Deserialize<Dictionary<string, int>>();
+        DateTime extra2 = jsonElements["extra2"].GetDateTime();
+        int extra3 = jsonElements["extra3"].GetInt32();
+        ````
+
+        To enable this feature, configure `experimental-additional-properties: true` in the `config` section of your C# generator in generators.yml.
+        This will become the default in the future.
+
+- version: 1.15.14
+  createdAt: "2025-04-07"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Fix issue where read-only list properties wouldn't deserialize correctly.
+
+- version: 1.15.13
+  createdAt: "2025-04-01"
+  irVersion: 57
+  changelogEntry:
+    - type: chore
+      summary: |
+        Mark `AdditionalProperties` property as experiment using XML docs.
+
+- version: 1.15.12
+  createdAt: "2025-03-31"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fallback from `init` to `set` on .NET Framework & .NET Standard 2.0 for public and protected properties.
+        This ensures the properties can be set on older TFMs without compilation errors.
+
+- version: 1.15.11
+  createdAt: "2025-03-25"
+  irVersion: 57
+  changelogEntry:
+    - type: chore
+      summary: Restructure internal HTTP classes to allow for more granular Fern ignoring.
+
+- version: 1.15.10
+  createdAt: "2025-03-22"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix generated tests that fail because of types containing OneOf or ReadOnlyMemory properties.
+
+- version: 1.15.9
+  createdAt: "2025-03-21"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Significantly improve performance of the generator itself by asynchronously formatting snippets in parallel.
+        For example, Square's SDK generates in less than 20 seconds as opposed to more than 3 minutes previously.
+
+- version: 1.15.8
+  createdAt: "2025-03-21"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Fix issue where the `FileParameter` class was not generated in projects with gRPC/proto endpoints.
+
+- version: 1.15.6
+  createdAt: "2025-03-19"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Make tests pass that compare JSON strings regardless of how it is formatted by ignoring whitespace.
+
+- version: 1.15.5
+  createdAt: "2025-03-19"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Fix issue where headers were shared across different client instantiations when they should maintain their own state.
+
+- version: 1.15.4
+  createdAt: "2025-03-18"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: Make `FileParameter` disposable.
+
+- version: 1.15.3
+  createdAt: "2025-03-18"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Fix multipart form tests and add charset tests for multipart form tests.
+
+- version: 1.15.2
+  createdAt: "2025-03-18"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Fix a compilation error when using typed idempotency headers.
+
+- version: 1.15.1
+  createdAt: "2025-03-17"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: If a Content-Type header does not include charset, make sure the charset is also not included in the HTTP request.
+
+- version: 1.15.0
+  createdAt: "2025-03-17"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: Add `AdditionalHeaders` to client and request options. This lets users add and override headers for each request.
+
+- version: 1.14.3
+  createdAt: "2025-03-14"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Escape summary node contents in XML doc comments to prevent XML parsing errors.
+
+- version: 1.14.2
+  createdAt: "2025-03-13"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Fix issue a NullReferenceException for generated root clients with typed headers in client options.
+
+- version: 1.14.1
+  createdAt: "2025-03-13"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Fix issue where a type is written but conflicts with the namespace it is written in.
+
+- version: 1.14.0
+  createdAt: "2025-03-13"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        The SDK now supports the `AdditionalBodyProperties` and `AdditionalQueryParameters` request options, which
+        can be used to add arbitrary properties to the request. This is useful for interacting
+        with alpha or undocumented functionality.
+
+        ```csharp
+        var response = await client.Users.Create(
+          ...,
+          new RequestOptions {
+            AdditionalBodyProperties = new Dictionary<string, object> {
+              { "key", "value" }
+            },
+          }
+        );
+        ```
+
+- version: 1.13.2
+  createdAt: "2025-03-13"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Fix issue where MultipartFormTests wouldn't pass because the timezone on the local machine is different than the timezone on the CI machine.
+
+- version: 1.13.1
+  createdAt: "2025-03-13"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Forward compatible enums has a static method `Custom(string value)` that allows you to create a new instance of the enum with a custom value.
+        "Custom" is a commonly used enum value, and we want to avoid conflicts with the static method, so we're renaming the static method to `FromCustom(string value)`.
+        This feature is gated behind the `experimental-enable-forward-compatible-enums` configuration option, so we're accepting this as a breaking change without a major version bump.
+    - type: feat
+      summary: |
+        Forward compatible enums can be explicitly casted from and to strings.
+        ```csharp
+        string myEnumAsString = (string)MyEnum.Enum1;
+        MyEnum myEnum = (MyEnum)"custom-value";
+        ```
+        Note: We're not supporting implicit casts here because it could lead to behavior the user doesn't expect.
+
+- version: 1.13.0
+  createdAt: "2025-03-13"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for multipartform requests with file and non-file parameters.
+        This is useful when you want to send a file along with other form data in a single request.
+
+        For example, you can use the following code to upload a file with a description and some metadata:
+        ```csharp
+        await client.UploadAsync(
+            new UploadRequest
+            {
+                File = new FileParameter { Stream = fileStream, FileName = "file.txt" },
+                Description = "This is a test file",
+                Meta = new Meta {
+                    Key1 = "value1",
+                    Key2 = "value2"
+                }
+            }
+        );
+        ```
+
+- version: 1.12.0-rc18
+  createdAt: "2025-03-10"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Make the behavior between a wrapped request with body properties and normal body request consistent.
+        Previously, a wrapped request with body properties would not omit `null` values even if the JSON configuration is configured to omit `null` values.
+    - type: fix
+      summary: |
+        Fix a bug where required properties that were `[JsonIgnore]` threw an error during serialization.
+    - type: feat
+      summary: Improve performance of query string value to string conversion by relying less on `JsonSerializer` and more on `ToString()`.
+
+- version: 1.12.0-rc17
+  createdAt: "2025-03-09"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Generate snippets for unions when `use-discriminated-unions` is `true` in the generator configuration.
+
+- version: 1.12.0-rc16
+  createdAt: "2025-03-09"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: Remove hardcoded namespace import from JsonElementComparer.cs
+
+- version: 1.12.0-rc15
+  createdAt: "2025-03-09"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Generate **discriminated unions** with:
+        - Type safety with compile-time checking
+        - Exhaustive discriminant value matching
+        - JSON serialization support
+
+        Here's a simple example how to use a shape discriminated union:
+        ```csharp
+        var shape = new Shape(new Circle { Radius = 5 });
+
+        // Type checking
+        if (shape.IsCircle) {
+            Console.WriteLine($"Radius: {circle.AsCircle().Radius}");
+        }
+
+        // Discriminant value matching
+        var area = shape.Match(
+            circle => Math.PI * circle.Radius * circle.Radius,
+            square => square.Length * square.Length,
+            (type, _) => throw new NotSupportedException($"Unknown: {type}")
+        );
+
+        // TryAs pattern
+        if (shape.TryAsCircle(out var circle)) {
+            Console.WriteLine($"Radius: {circle.Radius}");
+        }
+        ```
+
+        This feature is off by default for backward compatibility.
+        To enable it, set `use-discriminated-unions` to `true` in the generator configuration.
+
+    - type: feat
+      summary: Improved serialization tests for generated classes for normal objects and discriminated unions.
+    - type: feat
+      summary: Generated classes now follow the C# convention for odering consts, fields, constructors, properties, methods, operators, and inner classes.
+
+- version: 1.12.0-rc14
+  createdAt: "2025-03-07"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for overriding literal global headers via the `ClientOptions` class.
+
+- version: 1.12.0-rc13
+  createdAt: "2025-03-07"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for receiving additional properties in object types with the new `AdditionalProperties` field.
+        This is useful when you want to parse an object that has properties that are not available in the SDK
+        (e.g. alpha and/or undocumented properties).
+
+        ```csharp
+        // Call the endpoint.
+        var response = await client.GetUser(...);
+
+        // Print the additional properties.
+        Console.WriteLine(response.AdditionalProperties);
+        ```
+
+- version: 1.12.0-rc12
+  createdAt: "2025-03-05"
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Don't rely on the `FluentAssertions.Json` package to test serialization and deserialization.
+
+- version: 1.12.0-rc11
+  createdAt: "2025-03-04"
+  irVersion: 57
+  changelogEntry:
+    - type: internal
+      summary: |
+        Update the IR to v57.
+
+- version: 1.12.0-rc10
+  createdAt: "2025-03-04"
+  irVersion: 56
+  changelogEntry:
+    - type: feat
+      summary: |
+        Compare .NET objects instead of JSON strings when comparing objects in mock wire tests.
+        With this change, we can remove the dependency on the FluentAssertions.Json package (and implicitly on the Newtonsoft.Json package).
+    - type: chore
+      summary: |
+        Update dependencies in generated test project:
+        - `Microsoft.NET.Test.Sdk`: 17.12.0 => 17.13.0
+        - `NUnit`: 4.2.2 => 4.3.2
+        - `NUnit3TestAdapter`: 4.6.0 => 5.0.0
+        - `NUnit.Analyzers`: 4.4.0 => 4.6.0
+        - `coverlet.collector`: 6.0.2 => 6.0.4
+        - `WireMock.Net`: 1.6.8 => 1.7.4
+    - type: fix
+      summary: |
+        Compare .NET objects instead of JSON strings when comparing objects in mock wire tests,
+        which fixes bugs where JSON deserialization and serialization would cause differences in the JSON strings.
+
+- version: 1.12.0-rc9
+  createdAt: "2025-03-03"
+  irVersion: 56
+  changelogEntry:
+    - type: fix
+      summary: Fix inline path parameters with pagination endpoints.
+
+- version: 1.12.0-rc8
+  createdAt: "2025-03-03"
+  irVersion: 56
+  changelogEntry:
+    - type: feat
+      summary: |
+        Several class names are computed differently:
+        - Environment class name:
+          - Use `environment-class-name` if configured,
+          - otherwise, fall back to `exported-client-class-name` if configured, with `Environment` suffix,
+          - otherwise, fall back to `client-class-name` if configured, with `Environment` suffix,
+          - otherwise, fall back to the computed client name, with `Environment` suffix.
+        - Base exception class name:
+          - Use `base-exception-class-name` if configured,
+          - otherwise, fall back to `exported-client-class-name` if configured, with `Exception` suffix,
+          - otherwise, fall back to `client-class-name` if configured, with `Exception` suffix,
+          - otherwise, fall back to the computed client name, with `Exception` suffix.
+        - Base API exception class name:
+          - Use `base-api-exception-class-name` if configured,
+          - otherwise, fall back to `exported-client-class-name` if configured, with `ApiException` suffix,
+          - otherwise, fall back to `client-class-name` if configured, with `ApiException` suffix,
+          - otherwise, fall back to the computed client name, with `ApiException` suffix.
+
+- version: 1.12.0-rc7
+  createdAt: "2025-03-03"
+  irVersion: 56
+  changelogEntry:
+    - type: internal
+      summary: Move exception handler into client options as an internal property for SDK authors to configure.
+
+- version: 1.12.0-rc6
+  createdAt: "2025-03-03"
+  irVersion: 56
+  changelogEntry:
+    - type: fix
+      summary: Fix bug where a lambda for sending HTTP requests would use the HTTP request from the outer scope instead of the local scope.
+
+- version: 1.12.0-rc5
+  createdAt: "2025-03-03"
+  irVersion: 56
+  changelogEntry:
+    - type: fix
+      summary: Fix hardcoded namespace for Pager.cs
+
+- version: 1.12.0-rc4
+  createdAt: "2025-03-03"
+  irVersion: 56
+  changelogEntry:
+    - type: feat
+      summary: Add .editorconfig file to the generated SDK.
+
+- version: 1.12.0-rc3
+  createdAt: "2025-03-02"
+  irVersion: 56
+  changelogEntry:
+    - type: feat
+      summary: Add support for schema properties with write-only and read-only access.
+    - type: feat
+      summary: The JSON serializer will write with indentation during debugging, and without in production.
+
+- version: 1.12.0-rc2
+  createdAt: "2025-03-02"
+  irVersion: 56
+  changelogEntry:
+    - type: feat
+      summary: |
+        Pager and BiPager now have consistent properties and methods.
+        As part of this change, pagers are now generated asynchronously which is a breaking change for the endpoint methods.
+
+        ```csharp
+        // Before:
+        var pager = client.GetItemsAsync(...);
+
+        // After:
+        var pager = await client.GetItemsAsync(...);
+        ```
+    - type: fix
+      summary: |
+        Fixed an issue where generated code for setting UUIDs in a query string parameter would generate uncompilable code.
+    - type: feat
+      summary: Extend support for offset pagination to float, double, and decimal types.
+
+- version: 1.12.0-rc1
+  createdAt: "2025-03-02"
+  irVersion: 56
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for the `include-exception-handler` configuration option, which generates an `ExceptionHandler` interface for the SDK.
+        This is useful when you want to act upon all exceptions thrown by the SDK (e.g. report them to a monitoring service).
+
+        You can configure this feature with the following:
+
+        ```yaml
+        # generators.yml
+        - name: fern-api/fern-csharp-sdk
+          version: 1.12.0-rc1
+          config:
+            include-exception-handler: true
+        ```
+    - type: fix
+      summary: |
+        Fixes a regression for mapping `ReadOnlyMemory` values in the generated Protobuf mapper.
+
+- version: 1.12.0-rc0
+  createdAt: "2025-02-28"
+  irVersion: 56
+  changelogEntry:
+    - type: feat
+      summary: Add support for custom pagination.
+
+- version: 1.11.0
+  createdAt: "2025-02-27"
+  irVersion: 55
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for the `inline-path-parameters` configuration option, which generates
+        path parameters in the generated request type (if any) instead of as separate
+        positional parameters.
+
+        ```yaml
+        # generators.yml
+
+        - name: fern-api/fern-csharp-sdk
+          version: 1.11.0
+          config:
+            inline-path-parameters: true
+        ```
+    - type: fix
+      summary: |
+        Fix an issue where the `JsonIgnore` attribute was not included for query parameter or header properties.
+
+- version: 1.10.1
+  createdAt: "2025-02-27"
+  irVersion: 55
+  changelogEntry:
+    - type: internal
+      summary: |
+        Update the IR to v55.
+
+- version: 1.10.0
+  createdAt: "2025-02-26"
+  irVersion: 53
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for `exported-client-class-name` to allow you to export the client class name.
+        This is useful when you want to use a custom client class name for code snippets.
+
+- version: 1.9.33
+  createdAt: "2025-02-24"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: Upload C# snippets to the registry.
+
+- version: 1.9.32
+  createdAt: "2025-02-24"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: JSON serialize `DateOnly` to `yyyy-MM-dd` format.
+    - type: internal
+      summary: Add test for serializing and deserializing `DateOnly` abd `DateTime`.
+
+- version: 1.9.31
+  createdAt: "2025-02-15"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Use `global::System` instead of `System` to avoid conflicts when a type named `System` exists in the current namespace.
+
+- version: 1.9.30
+  createdAt: "2025-02-15"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        The Protobuf enum mapper now handles every enum variant.
+
+- version: 1.9.29
+  createdAt: "2025-02-15"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        The Protobuf package aliases now include the package name to avoid conflicts when multiple
+        Protobuf packages are used. For example, `com.acme.users.v1` would be aliased as `ProtoUsersV1`
+        instead of just `Proto`.
+
+- version: 1.9.28
+  createdAt: "2025-02-15"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix the Protobuf mappers for the google.protobuf.Any type.
+    - type: fix
+      summary: |
+        The Protobuf mappers now refer to the original name of the Protobuf type instead
+        of the PascalCase name.
+
+- version: 1.9.27
+  createdAt: "2025-02-14"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix the Protobuf mappers for enum and timestamp types.
+
+- version: 1.9.26
+  createdAt: "2025-02-14"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Use `global::System.Type` instead of `System.Type` in `OneOfSerializer`
+        when a type named `System` exists in the current namespace.
+
+- version: 1.9.25
+  createdAt: "2025-02-14"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Use `global::System.Type` instead of `System.Type` in generated code to avoid potential naming conflicts
+        when a type named `System` exists in the current namespace.
+
+- version: 1.9.24
+  createdAt: "2025-02-14"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Use the original gRPC service name in the generated client reference instead of applying any casing transformations.
+
+- version: 1.9.23
+  createdAt: "2025-02-14"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix method return types to use unqualified `Task<T>` instead of `System.Threading.Tasks.Task<T>`
+        when the method returns a response.
+
+- version: 1.9.22
+  createdAt: "2025-02-14"
+  irVersion: 53
+  changelogEntry:
+    - type: feat
+      summary: |
+        Generate a pagination section to the generated README.md file.
+    - type: feat
+      summary: |
+        You can now `foreach(var item in page)` on `Page<T>` instances.
+- version: 1.9.21
+  createdAt: "2025-02-06"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Support literals in query parameters and headers. For example, if a field in a wrapped request has a literal value of "foo", we will now set that value as the default value for the field.
+        Note that wrapped requests are just a bag of properties that include body properties.
+- version: 1.9.20
+  createdAt: "2025-02-06"
+  irVersion: 53
+  changelogEntry:
+    - type: fix
+      summary: |
+        Support literals in wrapped requests (). For example, if a field in a wrapped request has a literal value of "foo", we will now set that value as the default value for the field.
+        Note that wrapped requests are just a bag of properties that include body properties.
+- version: 1.9.19
+  createdAt: "2025-02-06"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix serialization of enum path parameters. Previously, enum path parameters were serialized using their C# enum name, but now they are
+        correctly serialized using their wire value.
+  irVersion: 53
+- version: 1.9.18
+  createdAt: "2025-02-06"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix serialization of enum path parameters. Previously, enum path parameters were serialized using their C# enum name, but now they are
+        correctly serialized using their wire value.
+  irVersion: 53
+- version: 1.9.17
+  createdAt: "2025-02-06"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Support required literals. For example, if a field has a literal value of "foo", we will now set that value as the default value for the field.
+  irVersion: 53
+- version: 1.9.16
+  createdAt: "2025-02-06"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Required client parameters that are headers are now sent when making API requests. For example if a bearer token is required to
+        instantiate the client, we will ensure that it is sent when making API requests.
+  irVersion: 53
+- version: 1.9.15
+  createdAt: "2025-02-06"
+  changelogEntry:
+    - type: fix
+      summary: Change unpaged endpoints from internal to private to avoid ambiguous references in test projects who have access to internals.
+    - type: fix
+      summary: |
+        Fix an issue where enum values named `Equals` would always have be converted to `"Equals"` instead of their correct wire value.
+    - type: feat
+      summary: Increase test performance by parallelizing tests and setting HTTP request retry delay to 0.
+  irVersion: 53
 - version: 1.9.14
   createdAt: "2025-02-03"
   changelogEntry:
     - type: fix
       summary: |
-        Add support for nullable undiscriminated unions (OneOf<X, Y, Z>?), and add tests for undiscriminated unions.
+        Add support for nullable undiscriminated unions (`OneOf<X, Y, Z>?`), and add tests for undiscriminated unions.
   irVersion: 53
 - version: 1.9.13
   createdAt: "2025-02-02"

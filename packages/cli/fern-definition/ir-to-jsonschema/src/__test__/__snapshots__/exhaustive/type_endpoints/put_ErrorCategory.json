@@ -1,0 +1,9 @@
+{
+  "type": "string",
+  "enum": [
+    "API_ERROR",
+    "AUTHENTICATION_ERROR",
+    "INVALID_REQUEST_ERROR"
+  ],
+  "definitions": {}
+}

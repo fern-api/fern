@@ -2,6 +2,7 @@ import {
     GetReferenceOpts,
     TypeReferenceNode,
     generateInlinePropertiesModule,
+    getPropertyKey,
     getTextOfTsNode,
     maybeAddDocsStructure
 } from "@fern-typescript/commons";
@@ -32,7 +33,12 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     extends AbstractGeneratedType<ObjectTypeDeclaration, Context>
     implements GeneratedObjectType<Context>
 {
+    private readonly allObjectProperties: ObjectProperty[];
     public readonly type = "object";
+    constructor(init: AbstractGeneratedType.Init<ObjectTypeDeclaration, Context>) {
+        super(init);
+        this.allObjectProperties = [...this.shape.properties, ...(this.shape.extendedProperties ?? [])];
+    }
 
     public generateStatements(
         context: Context
@@ -69,7 +75,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         return this.generatePropertiesInternal(context).map(({ name, type, hasQuestionToken, docs }) => {
             const propertyNode: PropertySignatureStructure = {
                 kind: StructureKind.PropertySignature,
-                name,
+                name: getPropertyKey(name),
                 type: getTextOfTsNode(type),
                 hasQuestionToken,
                 docs: docs != null ? [{ description: docs }] : undefined
@@ -83,7 +89,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         const props = this.shape.properties.map((property) => {
             const value = this.getTypeForObjectProperty(context, property);
             const propertyNode: Property = {
-                name: `"${this.getPropertyKeyFromProperty(property)}"`,
+                name: getPropertyKey(this.getPropertyKeyFromProperty(property)),
                 type: this.noOptionalProperties ? value.typeNode : value.typeNodeWithoutUndefined,
                 hasQuestionToken: !this.noOptionalProperties && value.isOptional,
                 docs: property.docs,
@@ -129,7 +135,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
     }
 
     public getPropertyKey({ propertyWireKey }: { propertyWireKey: string }): string {
-        const property = this.shape.properties.find((property) => property.name.wireValue === propertyWireKey);
+        const property = this.allObjectProperties.find((property) => property.name.wireValue === propertyWireKey);
         if (property == null) {
             throw new Error("Property does not exist: " + propertyWireKey);
         }

@@ -35,9 +35,9 @@ class ExecutionSessionResponse extends JsonSerializableType
     /**
      * @param array{
      *   sessionId: string,
-     *   executionSessionUrl?: ?string,
      *   language: value-of<Language>,
      *   status: value-of<ExecutionSessionStatus>,
+     *   executionSessionUrl?: ?string,
      * } $values
      */
     public function __construct(
@@ -47,5 +47,13 @@ class ExecutionSessionResponse extends JsonSerializableType
         $this->executionSessionUrl = $values['executionSessionUrl'] ?? null;
         $this->language = $values['language'];
         $this->status = $values['status'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

@@ -16,15 +16,15 @@ class TestSubmissionUpdate extends JsonSerializableType
     public DateTime $updateTime;
 
     /**
-     * @var mixed $updateInfo
+     * @var TestSubmissionUpdateInfo $updateInfo
      */
     #[JsonProperty('updateInfo')]
-    public mixed $updateInfo;
+    public TestSubmissionUpdateInfo $updateInfo;
 
     /**
      * @param array{
      *   updateTime: DateTime,
-     *   updateInfo: mixed,
+     *   updateInfo: TestSubmissionUpdateInfo,
      * } $values
      */
     public function __construct(
@@ -32,5 +32,13 @@ class TestSubmissionUpdate extends JsonSerializableType
     ) {
         $this->updateTime = $values['updateTime'];
         $this->updateInfo = $values['updateInfo'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

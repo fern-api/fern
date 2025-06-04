@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedAuthEnvironmentVariables.Core;
 
 namespace SeedAuthEnvironmentVariables;
@@ -18,19 +17,17 @@ public partial class ServiceClient
     /// <summary>
     /// GET request with custom api key
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Service.GetWithApiKeyAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> GetWithApiKeyAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
@@ -40,9 +37,9 @@ public partial class ServiceClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<string>(responseBody)!;
@@ -56,23 +53,24 @@ public partial class ServiceClient
             }
         }
 
-        throw new SeedAuthEnvironmentVariablesApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedAuthEnvironmentVariablesApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// GET request with custom api key
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Service.GetWithHeaderAsync(
     ///     new HeaderAuthRequest { XEndpointHeader = "X-Endpoint-Header" }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> GetWithHeaderAsync(
         HeaderAuthRequest request,
         RequestOptions? options = null,
@@ -83,8 +81,8 @@ public partial class ServiceClient
             new Dictionary<string, string>() { { "X-Endpoint-Header", request.XEndpointHeader } }
         );
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
@@ -95,9 +93,9 @@ public partial class ServiceClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<string>(responseBody)!;
@@ -111,10 +109,13 @@ public partial class ServiceClient
             }
         }
 
-        throw new SeedAuthEnvironmentVariablesApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedAuthEnvironmentVariablesApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

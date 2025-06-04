@@ -1,12 +1,8 @@
 name: "📖 Documentation Improvement"
 description: "Something missing or incorrect in our docs (buildwithfern.com/learn)?"
-title: "[Docs]: "
 labels: ["documentation"]
-assignees: [dsheridan]
+type: "task"
 body:
-  - type: markdown
-    attributes:
-      value: "### 📖 Thanks for helping improve the docs! Please provide details below."
 
   - type: dropdown
     id: issue-type
@@ -53,18 +49,10 @@ body:
   - type: dropdown
     id: contribute
     attributes:
-      label: "Are you interested in contributing this docs improvement?"
+      label: "Are you interested in contributing this improvement?"
+      description: "If aligned with the project's goals, the maintainers are happy to support with guidance and review."
       options:
-        - "Yes, I'd love to!"
-        - "No, just reporting the issue."
+        - "No"
+        - "Yes"
     validations:
-      required: false
-
-  - type: textarea
-    id: file-attachment
-    attributes:
-      label: "Attach Files (Optional)"
-      description: "Screenshots or relevant files to clarify the issue."
-      placeholder: "Drag and drop files or paste links here..."
-    validations:
-      required: false
+      required: true

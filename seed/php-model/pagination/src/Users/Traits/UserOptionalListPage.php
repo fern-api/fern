@@ -5,6 +5,10 @@ namespace Seed\Users\Traits;
 use Seed\Users\UserOptionalListContainer;
 use Seed\Core\Json\JsonProperty;
 
+/**
+ * @property UserOptionalListContainer $data
+ * @property ?string $next
+ */
 trait UserOptionalListPage
 {
     /**

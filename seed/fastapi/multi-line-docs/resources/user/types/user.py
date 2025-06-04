@@ -4,15 +4,12 @@ from ....core.pydantic_utilities import UniversalBaseModel
 import pydantic
 import typing
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
-
-
 class User(UniversalBaseModel):
     """
     A user object. This type is used throughout the following APIs:
       - createUser
       - getUser
     """
-
     id: str
     name: str = pydantic.Field()
     """
@@ -21,17 +18,15 @@ class User(UniversalBaseModel):
      - Bob
      - Charlie
     """
-
+    
     age: typing.Optional[int] = pydantic.Field(default=None)
     """
     The user's age.
     """
-
+    
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid

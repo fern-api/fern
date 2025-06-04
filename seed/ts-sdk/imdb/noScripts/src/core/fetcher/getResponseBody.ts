@@ -1,4 +1,4 @@
-import { chooseStreamWrapper } from "./stream-wrappers/chooseStreamWrapper";
+import { chooseStreamWrapper } from "./stream-wrappers/chooseStreamWrapper.js";
 
 export async function getResponseBody(response: Response, responseType?: string): Promise<unknown> {
     if (response.body != null && responseType === "blob") {

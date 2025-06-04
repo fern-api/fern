@@ -1,7 +1,5 @@
 using System.Globalization;
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedNullable;
 using SeedNullable.Core;
@@ -12,7 +10,7 @@ namespace SeedNullable.Test.Unit.MockServer;
 public class CreateUserTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string requestJson = """
             {
@@ -25,7 +23,13 @@ public class CreateUserTest : BaseMockServerTest
                 "createdAt": "2024-01-15T09:30:00.000Z",
                 "updatedAt": "2024-01-15T09:30:00.000Z",
                 "avatar": "avatar",
-                "activated": true
+                "activated": true,
+                "status": {
+                  "type": "active"
+                },
+                "values": {
+                  "values": "values"
+                }
               },
               "avatar": "avatar"
             }
@@ -34,6 +38,7 @@ public class CreateUserTest : BaseMockServerTest
         const string mockResponse = """
             {
               "name": "name",
+              "id": "id",
               "tags": [
                 "tags",
                 "tags"
@@ -42,7 +47,24 @@ public class CreateUserTest : BaseMockServerTest
                 "createdAt": "2024-01-15T09:30:00.000Z",
                 "updatedAt": "2024-01-15T09:30:00.000Z",
                 "avatar": "avatar",
-                "activated": true
+                "activated": true,
+                "status": {
+                  "type": "active"
+                },
+                "values": {
+                  "values": "values"
+                }
+              },
+              "email": "email",
+              "favorite-number": 1,
+              "numbers": [
+                1,
+                1
+              ],
+              "strings": {
+                "strings": {
+                  "key": "value"
+                }
               }
             }
             """;
@@ -81,14 +103,15 @@ public class CreateUserTest : BaseMockServerTest
                     ),
                     Avatar = "avatar",
                     Activated = true,
+                    Status = "no-properties-union",
+                    Values = new Dictionary<string, string?>() { { "values", "values" } },
                 },
                 Avatar = "avatar",
-            },
-            RequestOptions
+            }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<User>(mockResponse)).UsingDefaults()
+        );
     }
 }

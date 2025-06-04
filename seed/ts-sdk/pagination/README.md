@@ -25,8 +25,8 @@ import { SeedPaginationClient } from "@fern/pagination";
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 const response = await client.complex.search({
     pagination: {
-        perPage: 1,
-        startingAfter: "starting_after",
+        per_page: 1,
+        starting_after: "starting_after",
     },
     query: {
         field: "field",
@@ -41,8 +41,8 @@ for await (const item of response) {
 // Or you can manually iterate page-by-page
 const page = await client.complex.search({
     pagination: {
-        perPage: 1,
-        startingAfter: "starting_after",
+        per_page: 1,
+        starting_after: "starting_after",
     },
     query: {
         field: "field",
@@ -83,6 +83,7 @@ try {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
+        console.log(err.rawResponse);
     }
 }
 ```
@@ -97,8 +98,8 @@ import { SeedPaginationClient } from "@fern/pagination";
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 const response = await client.complex.search({
     pagination: {
-        perPage: 1,
-        startingAfter: "starting_after",
+        per_page: 1,
+        starting_after: "starting_after",
     },
     query: {
         field: "field",
@@ -113,8 +114,8 @@ for await (const item of response) {
 // Or you can manually iterate page-by-page
 const page = await client.complex.search({
     pagination: {
-        perPage: 1,
-        startingAfter: "starting_after",
+        per_page: 1,
+        starting_after: "starting_after",
     },
     query: {
         field: "field",
@@ -183,6 +184,18 @@ const response = await client.complex.search(..., {
 controller.abort(); // aborts the request
 ```
 
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `.withRawResponse()` method.
+The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
+
+```typescript
+const { data, rawResponse } = await client.complex.search(...).withRawResponse();
+
+console.log(data);
+console.log(rawResponse.headers['X-My-Header']);
+```
+
 ### Runtime Compatibility
 
 The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
@@ -197,7 +210,7 @@ runtimes:
 
 ### Customizing Fetch Client
 
-The SDK provides a way for your to customize the underlying HTTP client / Fetch function. If you're running in an
+The SDK provides a way for you to customize the underlying HTTP client / Fetch function. If you're running in an
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript

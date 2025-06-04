@@ -1,9 +1,80 @@
 package com.fern.java.utils;
 
 import com.fern.ir.model.types.*;
+import com.fern.java.AbstractGeneratorContext;
 import java.util.Optional;
 
 public class TypeReferenceUtils {
+
+    public static class IsCollectionType implements TypeReference.Visitor<Boolean>, ContainerType.Visitor<Boolean> {
+
+        private final AbstractGeneratorContext<?, ?> context;
+
+        public IsCollectionType(AbstractGeneratorContext<?, ?> context) {
+            this.context = context;
+        }
+
+        @Override
+        public Boolean visitContainer(ContainerType containerType) {
+            return containerType.visit(this);
+        }
+
+        @Override
+        public Boolean visitNamed(NamedType namedType) {
+            TypeDeclaration declaration = context.getTypeDeclaration(namedType.getTypeId());
+            if (declaration.getShape().isAlias()) {
+                ResolvedTypeReference resolved =
+                        declaration.getShape().getAlias().get().getResolvedType();
+                return resolved.isContainer() && resolved.getContainer().get().visit(this);
+            }
+            return false;
+        }
+
+        @Override
+        public Boolean visitPrimitive(PrimitiveType primitiveType) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitUnknown() {
+            return false;
+        }
+
+        @Override
+        public Boolean visitList(TypeReference typeReference) {
+            return true;
+        }
+
+        @Override
+        public Boolean visitMap(MapType mapType) {
+            return true;
+        }
+
+        @Override
+        public Boolean visitNullable(TypeReference typeReference) {
+            return typeReference.visit(this);
+        }
+
+        @Override
+        public Boolean visitOptional(TypeReference typeReference) {
+            return typeReference.visit(this);
+        }
+
+        @Override
+        public Boolean visitSet(TypeReference typeReference) {
+            return true;
+        }
+
+        @Override
+        public Boolean visitLiteral(Literal literal) {
+            return false;
+        }
+
+        @Override
+        public Boolean _visitUnknown(Object o) {
+            return false;
+        }
+    }
 
     public static Optional<ContainerTypeEnum> toContainerType(TypeReference typeReference) {
         return typeReference.getContainer().map(containerType -> containerType.visit(new ToContainerTypeEnum()));
@@ -19,6 +90,11 @@ public class TypeReferenceUtils {
         @Override
         public ContainerTypeEnum visitMap(MapType map) {
             return ContainerTypeEnum.MAP;
+        }
+
+        @Override
+        public ContainerTypeEnum visitNullable(TypeReference typeReference) {
+            return ContainerTypeEnum.NULLABLE;
         }
 
         @Override
@@ -83,6 +159,11 @@ public class TypeReferenceUtils {
         }
 
         @Override
+        public TypeReference visitNullable(TypeReference nullable) {
+            return nullable;
+        }
+
+        @Override
         public TypeReference visitOptional(TypeReference optional) {
             return optional;
         }
@@ -114,6 +195,11 @@ public class TypeReferenceUtils {
         public String visitMap(MapType map) {
             return "MapOf" + map.getKeyType().visit(new TypeReferenceToName()) + "To"
                     + map.getValueType().visit(new TypeReferenceToName());
+        }
+
+        @Override
+        public String visitNullable(TypeReference nullable) {
+            return "Nullable" + nullable.visit(new TypeReferenceToName());
         }
 
         @Override
@@ -167,7 +253,7 @@ public class TypeReferenceUtils {
 
         @Override
         public String visitUint() {
-            return "Long";
+            return "Integer";
         }
 
         @Override
@@ -216,6 +302,253 @@ public class TypeReferenceUtils {
         MAP,
         OPTIONAL,
         SET,
-        LITERAL
+        LITERAL,
+        NULLABLE,
+    }
+
+    public static class TypeReferenceIsOptional implements com.fern.ir.model.types.TypeReference.Visitor<Boolean> {
+
+        private final boolean visitNamedType;
+        private final AbstractGeneratorContext<?, ?> clientGeneratorContext;
+
+        public TypeReferenceIsOptional(boolean visitNamedType, AbstractGeneratorContext<?, ?> clientGeneratorContext) {
+            this.visitNamedType = visitNamedType;
+            this.clientGeneratorContext = clientGeneratorContext;
+        }
+
+        @Override
+        public Boolean visitContainer(com.fern.ir.model.types.ContainerType container) {
+            return container.isOptional();
+        }
+
+        @Override
+        public Boolean visitNamed(NamedType named) {
+            if (visitNamedType) {
+                TypeDeclaration typeDeclaration =
+                        clientGeneratorContext.getTypeDeclarations().get(named.getTypeId());
+                return typeDeclaration.getShape().visit(new TypeDeclarationIsOptional(clientGeneratorContext));
+            }
+            return false;
+        }
+
+        @Override
+        public Boolean visitPrimitive(PrimitiveType primitive) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitUnknown() {
+            return false;
+        }
+
+        @Override
+        public Boolean _visitUnknown(Object unknownType) {
+            return false;
+        }
+    }
+
+    public static class TypeDeclarationIsOptional implements Type.Visitor<Boolean> {
+
+        private final AbstractGeneratorContext<?, ?> clientGeneratorContext;
+
+        public TypeDeclarationIsOptional(AbstractGeneratorContext<?, ?> clientGeneratorContext) {
+            this.clientGeneratorContext = clientGeneratorContext;
+        }
+
+        @Override
+        public Boolean visitAlias(AliasTypeDeclaration alias) {
+            return alias.getAliasOf().visit(new TypeReferenceIsOptional(true, clientGeneratorContext));
+        }
+
+        @Override
+        public Boolean visitEnum(EnumTypeDeclaration _enum) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitObject(ObjectTypeDeclaration object) {
+            boolean allPropertiesOptional = object.getProperties().stream().allMatch(objectProperty -> objectProperty
+                    .getValueType()
+                    .visit(new TypeReferenceIsOptional(false, clientGeneratorContext)));
+            boolean allExtendsAreOptional = object.getExtends().stream().allMatch(declaredTypeName -> {
+                TypeDeclaration typeDeclaration =
+                        clientGeneratorContext.getTypeDeclarations().get(declaredTypeName.getTypeId());
+                return typeDeclaration.getShape().visit(new TypeDeclarationIsOptional(clientGeneratorContext));
+            });
+            return allPropertiesOptional && allExtendsAreOptional;
+        }
+
+        @Override
+        public Boolean visitUnion(UnionTypeDeclaration union) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitUndiscriminatedUnion(UndiscriminatedUnionTypeDeclaration undiscriminatedUnion) {
+            return false;
+        }
+
+        @Override
+        public Boolean _visitUnknown(Object unknownType) {
+            return false;
+        }
+    }
+
+    public static boolean isString(TypeReference typeReference) {
+        return typeReference
+                .getPrimitive()
+                .map(primitive -> primitive.getV1())
+                .map(v1 -> v1.visit(new PrimitiveTypeV1.Visitor<Boolean>() {
+
+                    @Override
+                    public Boolean visitInteger() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitLong() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitUint() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitUint64() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitFloat() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitDouble() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitBoolean() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitString() {
+                        return true;
+                    }
+
+                    @Override
+                    public Boolean visitDate() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitDateTime() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitUuid() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitBase64() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitBigInteger() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitUnknown(String s) {
+                        return false;
+                    }
+                }))
+                .orElse(false);
+    }
+
+    public static boolean isBoolean(TypeReference typeReference) {
+        return typeReference
+                .getPrimitive()
+                .map(primitive -> primitive.getV1())
+                .map(v1 -> v1.visit(new PrimitiveTypeV1.Visitor<Boolean>() {
+
+                    @Override
+                    public Boolean visitInteger() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitLong() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitUint() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitUint64() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitFloat() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitDouble() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitBoolean() {
+                        return true;
+                    }
+
+                    @Override
+                    public Boolean visitString() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitDate() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitDateTime() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitUuid() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitBase64() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitBigInteger() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitUnknown(String s) {
+                        return false;
+                    }
+                }))
+                .orElse(false);
     }
 }

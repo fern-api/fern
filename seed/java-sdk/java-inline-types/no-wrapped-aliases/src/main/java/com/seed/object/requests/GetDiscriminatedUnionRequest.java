@@ -225,6 +225,7 @@ public final class GetDiscriminatedUnionRequest {
         }
 
         @JsonTypeName("type1")
+        @JsonIgnoreProperties("type")
         private static final class Type1Value implements Value {
             @JsonUnwrapped
             private Type1 value;
@@ -263,6 +264,7 @@ public final class GetDiscriminatedUnionRequest {
         }
 
         @JsonTypeName("type2")
+        @JsonIgnoreProperties("type")
         private static final class Type2Value implements Value {
             @JsonUnwrapped
             private Type2 value;
@@ -301,6 +303,7 @@ public final class GetDiscriminatedUnionRequest {
         }
 
         @JsonTypeName("ref")
+        @JsonIgnoreProperties("type")
         private static final class RefValue implements Value {
             @JsonUnwrapped
             private ReferenceType value;
@@ -338,6 +341,7 @@ public final class GetDiscriminatedUnionRequest {
             }
         }
 
+        @JsonIgnoreProperties("type")
         private static final class _UnknownValue implements Value {
             private String type;
 
@@ -445,16 +449,25 @@ public final class GetDiscriminatedUnionRequest {
             }
 
             public interface FooStage {
+                /**
+                 * lorem ipsum
+                 */
                 BarStage foo(@NotNull String foo);
 
                 Builder from(Type1 other);
             }
 
             public interface BarStage {
+                /**
+                 * lorem ipsum
+                 */
                 RefStage bar(@NotNull Bar_ bar);
             }
 
             public interface RefStage {
+                /**
+                 * lorem ipsum
+                 */
                 _FinalStage ref(@NotNull ReferenceType ref);
             }
 
@@ -484,7 +497,7 @@ public final class GetDiscriminatedUnionRequest {
                 }
 
                 /**
-                 * <p>lorem ipsum</p>
+                 * lorem ipsum<p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
                 @java.lang.Override
@@ -495,7 +508,7 @@ public final class GetDiscriminatedUnionRequest {
                 }
 
                 /**
-                 * <p>lorem ipsum</p>
+                 * lorem ipsum<p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
                 @java.lang.Override
@@ -506,7 +519,7 @@ public final class GetDiscriminatedUnionRequest {
                 }
 
                 /**
-                 * <p>lorem ipsum</p>
+                 * lorem ipsum<p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
                 @java.lang.Override
@@ -583,12 +596,18 @@ public final class GetDiscriminatedUnionRequest {
                 }
 
                 public interface FooStage {
+                    /**
+                     * lorem ipsum
+                     */
                     RefStage foo(@NotNull String foo);
 
                     Builder from(Bar_ other);
                 }
 
                 public interface RefStage {
+                    /**
+                     * lorem ipsum
+                     */
                     _FinalStage ref(@NotNull ReferenceType ref);
                 }
 
@@ -615,7 +634,7 @@ public final class GetDiscriminatedUnionRequest {
                     }
 
                     /**
-                     * <p>lorem ipsum</p>
+                     * lorem ipsum<p>lorem ipsum</p>
                      * @return Reference to {@code this} so that method calls can be chained together.
                      */
                     @java.lang.Override
@@ -626,7 +645,7 @@ public final class GetDiscriminatedUnionRequest {
                     }
 
                     /**
-                     * <p>lorem ipsum</p>
+                     * lorem ipsum<p>lorem ipsum</p>
                      * @return Reference to {@code this} so that method calls can be chained together.
                      */
                     @java.lang.Override
@@ -705,12 +724,18 @@ public final class GetDiscriminatedUnionRequest {
             }
 
             public interface BazStage {
+                /**
+                 * lorem ipsum
+                 */
                 RefStage baz(@NotNull String baz);
 
                 Builder from(Type2 other);
             }
 
             public interface RefStage {
+                /**
+                 * lorem ipsum
+                 */
                 _FinalStage ref(@NotNull ReferenceType ref);
             }
 
@@ -737,7 +762,7 @@ public final class GetDiscriminatedUnionRequest {
                 }
 
                 /**
-                 * <p>lorem ipsum</p>
+                 * lorem ipsum<p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
                 @java.lang.Override
@@ -748,7 +773,7 @@ public final class GetDiscriminatedUnionRequest {
                 }
 
                 /**
-                 * <p>lorem ipsum</p>
+                 * lorem ipsum<p>lorem ipsum</p>
                  * @return Reference to {@code this} so that method calls can be chained together.
                  */
                 @java.lang.Override

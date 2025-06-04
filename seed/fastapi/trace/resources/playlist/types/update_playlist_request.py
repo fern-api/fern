@@ -5,20 +5,16 @@ import typing
 from ...commons.types.problem_id import ProblemId
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
-
-
 class UpdatePlaylistRequest(UniversalBaseModel):
     name: str
     problems: typing.List[ProblemId] = pydantic.Field()
     """
     The problems that make up the playlist.
     """
-
+    
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid

@@ -1,12 +1,21 @@
-import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { assertNever } from "@fern-api/core-utils";
+import { CSharpFile, FileGenerator, convertExampleTypeReferenceToTypeReference } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
-import { ExampleEndpointCall, ExampleTypeReference, HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
+import {
+    ExampleEndpointCall,
+    ExampleResponse,
+    ExampleTypeReference,
+    HttpEndpoint,
+    ServiceId
+} from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
 import { MOCK_SERVER_TEST_FOLDER, SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator";
 import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody";
+import { MockEndpointGenerator } from "./MockEndpointGenerator";
 
 export declare namespace TestClass {
     interface TestInput {
@@ -16,8 +25,9 @@ export declare namespace TestClass {
 }
 
 export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
-    private classReference: csharp.ClassReference;
+    private readonly classReference: csharp.ClassReference;
     private readonly endpointGenerator: HttpEndpointGenerator;
+    private readonly mockEndpointGenerator: MockEndpointGenerator;
 
     constructor(
         context: SdkGeneratorContext,
@@ -31,6 +41,14 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
             namespace: this.context.getMockServerTestNamespace()
         });
         this.endpointGenerator = new HttpEndpointGenerator({ context });
+        this.mockEndpointGenerator = new MockEndpointGenerator(context);
+    }
+
+    public override shouldGenerate(): boolean {
+        if (this.endpoint.pagination?.type === "custom") {
+            return false;
+        }
+        return true;
     }
 
     protected doGenerate(): CSharpFile {
@@ -49,72 +67,13 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 jsonExampleResponse = example.response.value.value?.jsonExample;
             }
             const responseBodyType = this.endpoint.response?.body?.type;
-            // where or not we support this response type in this generator; the example json may
+            // whether or not we support this response type in this generator; the example json may
             // have a response that we can return, but our generated method actually returns void
             responseSupported =
                 jsonExampleResponse != null && (responseBodyType === "json" || responseBodyType === "text");
             const methodBody = csharp.codeblock((writer) => {
-                if (example.request != null) {
-                    writer.writeLine('const string requestJson = """');
-                    writer.writeLine(JSON.stringify(this.normalizeDatetimes(example.request.jsonExample), null, 2));
-                    writer.writeTextStatement('"""');
-                }
-                writer.newLine();
+                writer.writeNode(this.mockEndpointGenerator.generateForExample(this.endpoint, example));
 
-                if (jsonExampleResponse != null) {
-                    if (responseBodyType === "json") {
-                        writer.writeLine('const string mockResponse = """');
-                        writer.writeLine(JSON.stringify(this.normalizeDatetimes(jsonExampleResponse), null, 2));
-                        writer.writeTextStatement('"""');
-                    } else if (responseBodyType === "text") {
-                        writer.writeTextStatement(`const string mockResponse = "${jsonExampleResponse as string}"`);
-                    }
-                }
-
-                writer.newLine();
-
-                writer.write("Server.Given(WireMock.RequestBuilders.Request.Create()");
-                writer.write(`.WithPath("${example.url || "/"}")`);
-
-                for (const parameter of example.queryParameters) {
-                    const maybeParameterValue = this.exampleToQueryOrHeaderValue(parameter);
-                    if (maybeParameterValue != null) {
-                        writer.write(`.WithParam("${parameter.name.wireValue}", "${maybeParameterValue}")`);
-                    }
-                }
-                for (const header of [...example.serviceHeaders, ...example.endpointHeaders]) {
-                    const maybeHeaderValue = this.exampleToQueryOrHeaderValue(header);
-                    if (maybeHeaderValue != null) {
-                        writer.write(`.WithHeader("${header.name.wireValue}", "${maybeHeaderValue}")`);
-                    }
-                }
-                const requestContentType = getContentTypeFromRequestBody(this.endpoint);
-                if (requestContentType) {
-                    writer.write(`.WithHeader("Content-Type", "${requestContentType}")`);
-                }
-
-                writer.write(
-                    `.Using${
-                        this.endpoint.method.charAt(0).toUpperCase() + this.endpoint.method.slice(1).toLowerCase()
-                    }()`
-                );
-                if (example.request != null) {
-                    if (typeof example.request.jsonExample !== "object") {
-                        // Not entirely sure why we can't use BodyAsJson here, but it causes test failure
-                        writer.write(".WithBody(requestJson)");
-                    } else {
-                        writer.write(".WithBodyAsJson(requestJson)");
-                    }
-                }
-                writer.writeLine(")");
-                writer.newLine();
-                writer.writeLine(".RespondWith(WireMock.ResponseBuilders.Response.Create()");
-                writer.writeLine(".WithStatusCode(200)");
-                if (responseSupported) {
-                    writer.writeTextStatement(".WithBody(mockResponse))");
-                } else {
-                    writer.writeTextStatement(")");
-                }
                 writer.newLine();
 
                 const endpointSnippet = this.endpointGenerator.generateEndpointSnippet({
@@ -123,9 +82,6 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     clientVariableName: "Client",
                     serviceId: this.serviceId,
                     getResult: true,
-                    requestOptions: this.endpoint.idempotent
-                        ? csharp.codeblock("IdempotentRequestOptions")
-                        : csharp.codeblock("RequestOptions"),
                     parseDatetimes: true
                 });
                 if (endpointSnippet == null) {
@@ -155,13 +111,44 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         writer.write(";");
                         writer.newLine();
                         if (responseBodyType === "json") {
-                            writer.addReference(this.context.getFluentAssetionsJsonClassReference());
-                            writer.writeNode(this.context.getJTokenClassReference());
-                            writer.write(".Parse(mockResponse).Should().BeEquivalentTo(");
-                            writer.writeNode(this.context.getJTokenClassReference());
-                            writer.write(".Parse(");
-                            writer.writeNode(this.context.getJsonUtilsClassReference());
-                            writer.writeTextStatement(".Serialize(response)))");
+                            const responseType = this.getCsharpTypeFromResponse(example.response);
+                            const deserializeResponseNode = csharp.invokeMethod({
+                                on: this.context.getJsonUtilsClassReference(),
+                                method: "Deserialize",
+                                generics: [responseType],
+                                arguments_: [csharp.codeblock("mockResponse")]
+                            });
+                            switch (responseType.unwrapIfOptional().internalType.type) {
+                                case "object":
+                                case "reference":
+                                case "coreReference":
+                                case "listType":
+                                case "set":
+                                case "map":
+                                case "list":
+                                case "array":
+                                    writer.writeLine(`Assert.That(
+                                        response,
+                                        Is.EqualTo(`);
+                                    writer.writeNode(deserializeResponseNode);
+                                    writer.writeLine(").UsingDefaults()");
+                                    break;
+                                case "oneOf":
+                                case "oneOfBase":
+                                    writer.writeLine(`Assert.That(
+                                        response.Value,
+                                        Is.EqualTo(`);
+                                    writer.writeNode(deserializeResponseNode);
+                                    writer.writeLine(".Value).UsingDefaults()");
+                                    break;
+                                default:
+                                    writer.writeLine(`Assert.That(
+                                        response,
+                                        Is.EqualTo(`);
+                                    writer.writeNode(deserializeResponseNode);
+                                    writer.writeLine(")");
+                            }
+                            writer.writeTextStatement(")");
                         } else if (responseBodyType === "text") {
                             writer.writeTextStatement("Assert.That(response, Is.EqualTo(mockResponse))");
                         }
@@ -264,5 +251,32 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
     isValidDateString(dateString: string): boolean {
         const date = new Date(dateString);
         return !isNaN(date.getTime());
+    }
+
+    getCsharpTypeFromResponse(exampleResponse: ExampleResponse): csharp.Type {
+        switch (exampleResponse.type) {
+            case "ok":
+                if (exampleResponse.value.type === "body") {
+                    if (exampleResponse.value.value) {
+                        const typeReference = convertExampleTypeReferenceToTypeReference(exampleResponse.value.value);
+                        const type = this.context.csharpTypeMapper.convert({
+                            reference: typeReference
+                        });
+                        return type;
+                    }
+                }
+                throw new Error("Internal error; could not convert example response to C# type");
+            case "error":
+                if (exampleResponse.body) {
+                    const typeReference = convertExampleTypeReferenceToTypeReference(exampleResponse.body);
+                    const type = this.context.csharpTypeMapper.convert({
+                        reference: typeReference
+                    });
+                    return type;
+                }
+                throw new Error("Internal error; could not convert example response to C# type");
+            default:
+                assertNever(exampleResponse);
+        }
     }
 }

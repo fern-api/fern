@@ -1,0 +1,16 @@
+openapi: 3.1.0
+info:
+  title: Test `json-string` example
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        metadata: 
+          type: string
+          format: json-string

@@ -1,8 +1,8 @@
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { docsYml, parseDocsConfiguration } from "@fern-api/configuration-loader";
+import { parseDocsConfiguration } from "@fern-api/configuration-loader";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
-import { IdGenerator, generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader";
 
@@ -82,11 +82,12 @@ it.skip("converts to api reference node", async () => {
         apiSection,
         apiDefinition,
         slug,
-        apiWorkspace,
         docsWorkspace,
         context,
         new Map(),
-        NodeIdGenerator.init()
+        new Map(),
+        NodeIdGenerator.init(),
+        apiWorkspace
     ).get();
 
     expect(node).toMatchSnapshot();

@@ -5,8 +5,6 @@ on:
     branches:
       - main
   pull_request:
-    branches:
-      - main
 
 # Cancel previous workflows on previous push
 concurrency:
@@ -44,19 +42,6 @@ jobs:
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
 
-  compile:
-    if: github.repository == 'fern-api/fern'
-    runs-on: CLI
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Compile
-        run: pnpm compile
-
   eslint:
     runs-on: ubuntu-latest
     steps:
@@ -86,9 +71,10 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: "stable"
+          cache-dependency-path: generators/go/go.sum
 
       - name: Install protoc-gen-openapi
-        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
+        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: Run tests
         run: pnpm test
@@ -96,9 +82,9 @@ jobs:
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
 
-  ete-tests:
+  test-ete:
     if: github.repository == 'fern-api/fern'
-    runs-on: CLI
+    runs-on: Test
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -106,8 +92,17 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Compile
-        run: pnpm compile
+      - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+          cache-dependency-path: generators/go/go.sum
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: Run ETE tests
         env:
@@ -139,6 +134,83 @@ jobs:
           pnpm --filter @fern-api/cli dist:cli:dev
           cli_path="$(pwd)/packages/cli/cli/dist/dev/cli.cjs" 
           ./scripts/live-test.sh "$cli_path" "$FERN_ORG_TOKEN_DEV"
+
+  generate-docs-test-windows:
+    environment: Fern Dev
+    if: ${{ github.repository == 'fern-api/fern' }}
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+
+      - name: Assert docs are generated
+        env:
+          FORCE_COLOR: "2"
+          FERN_TOKEN: ${{ secrets.FERN_ORG_TOKEN_DEV }}
+          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+        run: |
+          pnpm --filter @fern-api/cli dist:cli:dev
+          $cliPath = Join-Path $env:GITHUB_WORKSPACE "packages\cli\cli\dist\dev\cli.cjs"
+          if (-not (Test-Path $cliPath)) {
+            Write-Error "CLI path does not exist: $cliPath"
+            exit 1
+          }
+          cd windows
+          node $cliPath generate --docs --log-level trace
+          if ($LASTEXITCODE -ne 0) {
+            Write-Error "Command failed with exit code $LASTEXITCODE"
+            exit $LASTEXITCODE
+          }
+
+  docs-dev-test-windows:
+    environment: Fern Dev
+    if: ${{ github.repository == 'fern-api/fern' }}
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+
+      - name: Assert docs dev command succeeds
+        env:
+          FORCE_COLOR: "2"
+          FERN_TOKEN: ${{ secrets.FERN_ORG_TOKEN_DEV }}
+          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+        run: |
+          pnpm --filter @fern-api/cli dist:cli:dev
+          $cliPath = Join-Path $env:GITHUB_WORKSPACE "packages\cli\cli\dist\dev\cli.cjs"
+          if (-not (Test-Path $cliPath)) {
+            Write-Error "CLI path does not exist: $cliPath"
+            exit 1
+          }
+          cd windows
+          $process = Start-Process node -ArgumentList "$cliPath", "docs", "dev", "--log-level", "trace" -PassThru -RedirectStandardOutput "output.txt" -RedirectStandardError "error.txt"
+          Start-Sleep -Seconds 10
+          if (-not $process.HasExited) {
+            Stop-Process -Id $process.Id -Force
+          }
+          $output = Get-Content "output.txt", "error.txt" -Raw
+          if ($output -match "Failed to download docs preview bundle") {
+            Write-Error "Found 'Failed to download docs preview bundle' in output"
+            exit 1
+          }
 
   live-test-dev-windows:
     environment: Fern Dev

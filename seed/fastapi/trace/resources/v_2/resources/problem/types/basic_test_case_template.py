@@ -7,21 +7,14 @@ from .test_case_implementation_description import TestCaseImplementationDescript
 from .parameter_id import ParameterId
 from ......core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
-
-
 class BasicTestCaseTemplate(UniversalBaseModel):
     template_id: TestCaseTemplateId = pydantic.Field(alias="templateId")
     name: str
     description: TestCaseImplementationDescription
-    expected_value_parameter_id: ParameterId = pydantic.Field(
-        alias="expectedValueParameterId"
-    )
-
+    expected_value_parameter_id: ParameterId = pydantic.Field(alias="expectedValueParameterId")
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid

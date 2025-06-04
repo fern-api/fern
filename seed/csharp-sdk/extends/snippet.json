@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_.extendedInlineRequestBody"
             },
             "snippet": {
-                "type": "typescript",
-                "client": "using SeedExtends;\n\nvar client = new SeedExtendsClient();\nawait client.ExtendedInlineRequestBodyAsync(new Inlined { Unique = \"unique\" });\n"
+                "type": "csharp",
+                "client": "using SeedExtends;\n\nvar client = new SeedExtendsClient();\nawait client.ExtendedInlineRequestBodyAsync(\n    new Inlined\n    {\n        Unique = \"unique\",\n        Name = \"name\",\n        Docs = \"docs\",\n    }\n);\n"
             }
         }
     ]

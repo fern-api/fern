@@ -1,0 +1,1 @@
+export { SeedPaginationError } from "./SeedPaginationError";

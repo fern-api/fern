@@ -5,6 +5,7 @@ package com.seed.literal;
 
 import com.seed.literal.core.ClientOptions;
 import com.seed.literal.core.Environment;
+import okhttp3.OkHttpClient;
 
 public final class SeedLiteralClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
@@ -15,16 +16,48 @@ public final class SeedLiteralClientBuilder {
 
     private Environment environment;
 
+    /**
+     * Sets version
+     */
+    public SeedLiteralClientBuilder version(String version) {
+        this.version = version;
+        return this;
+    }
+
+    /**
+     * Sets auditLogging
+     */
+    public SeedLiteralClientBuilder auditLogging(String auditLogging) {
+        this.auditLogging = auditLogging;
+        return this;
+    }
+
     public SeedLiteralClientBuilder url(String url) {
         this.environment = Environment.custom(url);
         return this;
     }
 
     /**
-     * Sets the timeout (in seconds) for the client
+     * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
      */
     public SeedLiteralClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the maximum number of retries for the client. Defaults to 2 retries.
+     */
+    public SeedLiteralClientBuilder maxRetries(int maxRetries) {
+        this.clientOptionsBuilder.maxRetries(maxRetries);
+        return this;
+    }
+
+    /**
+     * Sets the underlying OkHttp client
+     */
+    public SeedLiteralClientBuilder httpClient(OkHttpClient httpClient) {
+        this.clientOptionsBuilder.httpClient(httpClient);
         return this;
     }
 

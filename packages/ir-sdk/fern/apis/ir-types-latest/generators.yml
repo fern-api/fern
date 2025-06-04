@@ -16,7 +16,7 @@ groups:
       - dynamic
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.38.6
+        version: 0.45.1
         output:
           location: npm
           package-name: "@fern-api/dynamic-ir-sdk"
@@ -27,7 +27,7 @@ groups:
   node:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.38.6
+        version: 0.51.4
         output:
           location: npm
           url: npm.buildwithfern.com
@@ -42,7 +42,7 @@ groups:
         output:
           location: maven
           url: maven.buildwithfern.com
-          coordinate: com.fern.fern:irV55
+          coordinate: com.fern.fern:irV58
         config:
           wrapped-aliases: true
           enable-forward-compatible-enums: true
@@ -53,7 +53,7 @@ groups:
         output:
           location: pypi
           url: pypi.buildwithfern.com
-          package-name: fern_fern_ir_v55
+          package-name: fern_fern_ir_v58
         config:
           # wrapped_aliases: true
           include_union_utils: true

@@ -5,22 +5,17 @@ import typing
 import pydantic
 from .trace_response import TraceResponse
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
-
-
 class TraceResponsesPage(UniversalBaseModel):
     offset: typing.Optional[int] = pydantic.Field(default=None)
     """
     If present, use this to load subsequent pages.
     The offset is the id of the next trace response to load.
     """
-
+    
     trace_responses: typing.List[TraceResponse] = pydantic.Field(alias="traceResponses")
-
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid

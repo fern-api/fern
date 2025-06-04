@@ -19,6 +19,7 @@ public partial class SeedAuthEnvironmentVariablesClient
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
+                { "X-Another-Header", xAnotherHeader },
                 { "X-FERN-API-KEY", apiKey },
                 { "X-API-Version", "01-01-2000" },
                 { "X-Fern-Language", "C#" },
@@ -28,6 +29,10 @@ public partial class SeedAuthEnvironmentVariablesClient
             }
         );
         clientOptions ??= new ClientOptions();
+        if (clientOptions.XApiVersion != null)
+        {
+            defaultHeaders["X-API-Version"] = clientOptions.XApiVersion;
+        }
         foreach (var header in defaultHeaders)
         {
             if (!clientOptions.Headers.ContainsKey(header.Key))
@@ -39,7 +44,7 @@ public partial class SeedAuthEnvironmentVariablesClient
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; init; }
+    public ServiceClient Service { get; }
 
     private static string GetFromEnvironmentOrThrow(string env, string message)
     {

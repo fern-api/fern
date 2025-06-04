@@ -1,0 +1,2 @@
+httpx>=0.21.2
+pydantic>= 1.9.2

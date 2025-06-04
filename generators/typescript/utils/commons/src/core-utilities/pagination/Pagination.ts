@@ -10,6 +10,7 @@ export interface Pagination {
             responseType: ts.TypeNode;
             itemType: ts.TypeNode;
             response: ts.Expression;
+            rawResponse: ts.Expression;
             hasNextPage: ts.Expression;
             getItems: ts.Expression;
             loadPage: ts.Expression;

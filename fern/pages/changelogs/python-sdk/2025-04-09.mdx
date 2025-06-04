@@ -1,0 +1,27 @@
+## 4.13.0
+**`(feat):`** Adds support for overriding literal global headers in the client constructor (e.g. `version`).
+
+```python
+client = Acme(
+  ...
+  version="1.0.0",
+)
+```
+
+
+## 4.12.1
+**`(fix):`** Fixes an issue where dictionary types defined within TypedDicts incorrectly used the
+`typing_extensions.NotRequired` type.
+
+
+**`(fix):`** Fixes an issue where optional `core.File` parameters would cause `mypy` failures.
+
+
+**`(fix):`** Fixes a regression introduced in 4.12.0, where the non raw response client endpoints
+did not respect the allowed method keywords (e.g. `list` was generated as `list_`).
+
+
+## 4.12.0
+**`(fix):`** Resolve issues with paginated endpoints generating incorrect endpoint return types.
+
+

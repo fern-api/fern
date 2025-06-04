@@ -1,6 +1,7 @@
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
-import { constructCasingsGenerator, constructFernFileContext } from "@fern-api/ir-generator";
+import { constructFernFileContext } from "@fern-api/ir-generator";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 
@@ -41,14 +42,14 @@ describe("SourceResolver", () => {
         });
 
         const sourceResolver = new SourceResolverImpl(context, workspace);
-        await expect(async () => {
-            await sourceResolver.resolveSourceOrThrow({
+        expect(() => {
+            sourceResolver.resolveSourceOrThrow({
                 source: {
                     proto: "proto/cool-spec.proto"
                 },
                 relativeFilepath: fernFileContext.relativeFilepath
             });
-        }).rejects.toThrow(new Error("Cannot resolve source proto/cool-spec.proto from file foo.yml"));
+        }).toThrow(new Error("Cannot resolve source proto/cool-spec.proto from file foo.yml"));
     });
 
     it("non-existant oas source does not throw", async () => {
@@ -87,7 +88,7 @@ describe("SourceResolver", () => {
         });
 
         const sourceResolver = new SourceResolverImpl(context, workspace);
-        const resolved = await sourceResolver.resolveSourceOrThrow({
+        const resolved = sourceResolver.resolveSourceOrThrow({
             source: {
                 openapi: "openapi/openapi.yaml"
             },

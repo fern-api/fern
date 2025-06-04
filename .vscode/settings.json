@@ -31,7 +31,7 @@
     "./packages",
     "./generators"
   ],
-  "prettier.prettierPath": "node_modules/prettier/index.js",
+  "prettier.prettierPath": "node_modules/prettier/index.cjs",
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "editor.formatOnSave": false,
@@ -43,6 +43,8 @@
   "python.analysis.typeCheckingMode": "basic",
   "dotnet.automaticallyCreateSolutionInWorkspace": false,
   "dotnet.testWindow.disableAutoDiscovery": true,
+  "dotnet.defaultSolution": "disable",
+  "dotnet.projects.enableAutomaticRestore": false,
   "cSpell.import": [
     "cspell.json"
   ]

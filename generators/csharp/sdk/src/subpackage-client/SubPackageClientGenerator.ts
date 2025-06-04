@@ -1,4 +1,5 @@
-import { CSharpFile, FileGenerator, csharp } from "@fern-api/csharp-codegen";
+import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
+import { csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
@@ -83,19 +84,9 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         }
 
         class_.addConstructor(this.getConstructorMethod());
-
         if (this.service != null && this.serviceId != null) {
-            for (const endpoint of this.service.endpoints) {
-                const methods = this.context.endpointGenerator.generate({
-                    serviceId: this.serviceId,
-                    endpoint,
-                    rawClientReference: CLIENT_MEMBER_NAME,
-                    rawClient: this.rawClient,
-                    rawGrpcClientReference: GRPC_CLIENT_MEMBER_NAME,
-                    grpcClientInfo: this.grpcClientInfo
-                });
-                class_.addMethods(methods);
-            }
+            const methods = this.generateEndpoints();
+            class_.addMethods(methods);
         }
 
         return new CSharpFile({
@@ -108,15 +99,37 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         });
     }
 
+    private generateEndpoints(): csharp.Method[] {
+        const service = this.service;
+        if (!service) {
+            throw new Error("Internal error; Service is not defined");
+        }
+        const serviceId = this.serviceId;
+        if (!serviceId) {
+            throw new Error("Internal error; ServiceId is not defined");
+        }
+        return service.endpoints.flatMap((endpoint) => {
+            return this.context.endpointGenerator.generate({
+                serviceId,
+                endpoint,
+                rawClientReference: CLIENT_MEMBER_NAME,
+                rawClient: this.rawClient,
+                rawGrpcClientReference: GRPC_CLIENT_MEMBER_NAME,
+                grpcClientInfo: this.grpcClientInfo
+            });
+        });
+    }
+
     private getConstructorMethod(): csharp.Class.Constructor {
+        const parameters: csharp.Parameter[] = [
+            csharp.parameter({
+                name: "client",
+                type: csharp.Type.reference(this.context.getRawClientClassReference())
+            })
+        ];
         return {
             access: csharp.Access.Internal,
-            parameters: [
-                csharp.parameter({
-                    name: "client",
-                    type: csharp.Type.reference(this.context.getRawClientClassReference())
-                })
-            ],
+            parameters,
             body: csharp.codeblock((writer) => {
                 writer.writeLine("_client = client;");
 
@@ -132,12 +145,13 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
                     );
                 }
 
+                const arguments_ = [csharp.codeblock("_client")];
                 for (const subpackage of this.getSubpackages()) {
                     writer.writeLine(`${subpackage.name.pascalCase.safeName} = `);
                     writer.writeNodeStatement(
                         csharp.instantiateClass({
                             classReference: this.context.getSubpackageClassReference(subpackage),
-                            arguments_: [csharp.codeblock("_client")]
+                            arguments_
                         })
                     );
                 }

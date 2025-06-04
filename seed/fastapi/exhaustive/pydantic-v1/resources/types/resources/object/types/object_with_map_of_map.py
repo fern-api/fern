@@ -3,10 +3,8 @@
 from ......core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
-
-
 class ObjectWithMapOfMap(UniversalBaseModel):
     map_: typing.Dict[str, typing.Dict[str, str]] = pydantic.Field(alias="map")
-
+    
     class Config:
         extra = pydantic.Extra.forbid

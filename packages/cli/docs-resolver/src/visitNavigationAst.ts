@@ -23,14 +23,14 @@ export declare namespace visitNavigationAst {
     interface Args {
         navigation: docsYml.RawSchemas.NavigationConfig;
         visitor: Partial<DocsConfigFileAstVisitor>;
-        fernWorkspaces: FernWorkspace[];
+        apiWorkspaces: AbstractAPIWorkspace<unknown>[];
         context: TaskContext;
     }
 }
 
 export async function visitNavigationAst({
     navigation,
-    fernWorkspaces,
+    apiWorkspaces,
     visitor,
     context
 }: visitNavigationAst.Args): Promise<void> {
@@ -43,7 +43,7 @@ export async function visitNavigationAst({
                             await visitNavigationItem({
                                 navigationItem: item,
                                 visitor,
-                                fernWorkspaces,
+                                apiWorkspaces,
                                 context
                             });
                         })
@@ -57,7 +57,7 @@ export async function visitNavigationAst({
                 await visitNavigationItem({
                     navigationItem: item,
                     visitor,
-                    fernWorkspaces,
+                    apiWorkspaces,
                     context
                 });
             })
@@ -67,12 +67,12 @@ export async function visitNavigationAst({
 async function visitNavigationItem({
     navigationItem,
     visitor,
-    fernWorkspaces,
+    apiWorkspaces,
     context
 }: {
     navigationItem: docsYml.RawSchemas.NavigationItem;
     visitor: Partial<DocsConfigFileAstVisitor>;
-    fernWorkspaces: FernWorkspace[];
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     context: TaskContext;
 }): Promise<void> {
     await visitObjectAsync(navigationItem, {
@@ -95,6 +95,7 @@ async function visitNavigationItem({
         path: noop,
         page: noop,
         featureFlag: noop,
+        openrpc: noop,
         contents: async (items: docsYml.RawSchemas.NavigationItem[] | undefined): Promise<void> => {
             if (items == null) {
                 return;
@@ -104,7 +105,7 @@ async function visitNavigationItem({
                     await visitNavigationItem({
                         navigationItem: item,
                         visitor,
-                        fernWorkspaces,
+                        apiWorkspaces,
                         context
                     });
                 })
@@ -115,7 +116,7 @@ async function visitNavigationItem({
     });
 
     if (navigationItemIsApi(navigationItem)) {
-        const workspace = fernWorkspaces.find((workspace) => workspace.workspaceName === navigationItem.apiName);
+        const workspace = apiWorkspaces.find((workspace) => workspace.workspaceName === navigationItem.apiName);
         if (workspace != null) {
             await visitor.apiSection?.({
                 config: navigationItem,

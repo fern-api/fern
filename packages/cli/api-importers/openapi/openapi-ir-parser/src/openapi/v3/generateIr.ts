@@ -156,6 +156,7 @@ export function generateIr({
     const schemasWithExample: Record<string, SchemaWithExample> = Object.fromEntries(
         Object.entries(openApi.components?.schemas ?? {})
             .map(([key, schema]) => {
+                const schemaNamespace = getExtension<string>(schema, FernOpenAPIExtension.SDK_NAMESPACE);
                 if (!isReferenceObject(schema)) {
                     const ignoreSchema = getExtension<boolean>(schema, FernOpenAPIExtension.IGNORE);
                     if (ignoreSchema != null && ignoreSchema) {
@@ -171,12 +172,12 @@ export function generateIr({
                                 context,
                                 [key],
                                 source,
-                                namespace
+                                schemaNamespace ?? namespace
                             )
                         ];
                     }
                 }
-                return [key, convertSchema(schema, false, context, [key], source, namespace)];
+                return [key, convertSchema(schema, false, context, [key], source, schemaNamespace ?? namespace)];
             })
             .filter((entry) => entry.length > 0)
     );
@@ -361,7 +362,7 @@ export function generateIr({
             document: openApi
         }),
         basePath: getFernBasePath(openApi),
-        title: openApi.info.title,
+        title: openApi.info.title ?? "",
         description: openApi.info.description,
         groups: Object.fromEntries(
             Object.entries(groupInfo ?? {}).map(([key, value]) => {
@@ -369,6 +370,7 @@ export function generateIr({
             })
         ),
         servers: (openApi.servers ?? []).map((server) => convertServer(server)),
+        websocketServers: [],
         tags: {
             tagsById: Object.fromEntries(
                 (openApi.tags ?? []).map((tag) => {
@@ -379,7 +381,7 @@ export function generateIr({
         },
         endpoints,
         webhooks,
-        channel: [],
+        channels: {},
         groupedSchemas: getSchemas(namespace, schemas),
         securitySchemes,
         hasEndpointsMarkedInternal: endpoints.some((endpoint) => endpoint.internal),
@@ -480,6 +482,7 @@ function maybeAddBackDiscriminantsFromSchemas(
                             ),
                             title: undefined,
                             value: LiteralSchemaValue.string(discriminantValue),
+                            namespace: undefined,
                             groupName: undefined,
                             description: undefined,
                             availability: schema.availability
@@ -532,6 +535,7 @@ function getAudiences({ operation }: { operation: ConvertedOperation }): string[
             endpointAudiences = operation.streaming.audiences;
             break;
         case "webhook":
+            endpointAudiences = operation.value.audiences;
             break;
         default:
             assertNever(operation);

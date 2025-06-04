@@ -6,18 +6,11 @@ from .......commons.types.language import Language
 from .function_implementation import FunctionImplementation
 import pydantic
 from ........core.pydantic_utilities import IS_PYDANTIC_V2
-
-
 class FunctionImplementationForMultipleLanguages(UniversalBaseModel):
-    code_by_language: typing.Dict[Language, FunctionImplementation] = pydantic.Field(
-        alias="codeByLanguage"
-    )
-
+    code_by_language: typing.Dict[Language, FunctionImplementation] = pydantic.Field(alias="codeByLanguage")
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid

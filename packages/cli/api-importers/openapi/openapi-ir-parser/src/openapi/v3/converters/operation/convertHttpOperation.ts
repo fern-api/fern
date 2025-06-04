@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from "openapi-types";
 
-import { EndpointWithExample, Source } from "@fern-api/openapi-ir";
+import { EndpointWithExample, PrimitiveSchemaValueWithExample, SchemaWithExample, Source } from "@fern-api/openapi-ir";
 
 import { getExtension } from "../../../../getExtension";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
@@ -47,6 +47,47 @@ export function convertHttpOperation({
         httpMethod: method,
         source
     });
+
+    // Parse path parameters from URL
+    const PATH_PARAM_REGEX = /{([^}]+)}/g;
+    const pathParams = [...path.matchAll(PATH_PARAM_REGEX)].map((match) => match[1]);
+
+    // Check if any path parameters are missing from convertedParameters
+    const missingPathParams = pathParams.filter(
+        (param) => !convertedParameters.pathParameters.some((p) => p.name === param)
+    );
+
+    // Add missing path parameters
+    if (missingPathParams.length > 0) {
+        for (const param of missingPathParams) {
+            convertedParameters.pathParameters.push({
+                name: param ?? "",
+                variableReference: undefined,
+                parameterNameOverride: undefined,
+                availability: undefined,
+                source,
+                schema: SchemaWithExample.primitive({
+                    schema: PrimitiveSchemaValueWithExample.string({
+                        default: undefined,
+                        example: undefined,
+                        format: undefined,
+                        maxLength: undefined,
+                        minLength: undefined,
+                        pattern: undefined
+                    }),
+                    description: undefined,
+                    generatedName: "",
+                    nameOverride: undefined,
+                    namespace: undefined,
+                    groupName: undefined,
+                    availability: undefined,
+                    title: undefined
+                }),
+                description: undefined
+            });
+        }
+    }
+
     let convertedRequest =
         operation.requestBody != null
             ? convertRequest({
@@ -104,6 +145,11 @@ export function convertHttpOperation({
         source
     });
 
+    // Fern doesn't support GET requests with bodies
+    if (operationContext.method === "GET") {
+        convertedRequest = undefined;
+    }
+
     const availability = getFernAvailability(operation);
     const examples = getExamplesFromExtension(operationContext, operation, context);
     const serverName = getExtension<string>(operation, FernOpenAPIExtension.SERVER_NAME_V2);
@@ -127,7 +173,7 @@ export function convertHttpOperation({
         request: convertedRequest,
         response: convertedResponse.value,
         errors: convertedResponse.errors,
-        server:
+        servers:
             serverName != null
                 ? [{ name: serverName, url: undefined, audiences: undefined }]
                 : (operation.servers ?? []).map((server) => convertServer(server)),

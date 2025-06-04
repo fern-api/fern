@@ -471,6 +471,7 @@ This error response may have one of the following `type` values:
                 },
               },
               "nextPage_url": {
+                "access": "read-only",
                 "docs": "The URL of the next page of resources. If this URL is omitted, there are no more resources in the collection.",
                 "type": "optional<string>",
                 "validation": {
@@ -494,8 +495,9 @@ This error response may have one of the following `type` values:
             "inline": undefined,
             "properties": {
               "allows": {
+                "access": "read-only",
                 "docs": "Flags which indicate the permissions the current authorized user has on this account resource.",
-                "type": "FullAccountPermissions",
+                "type": "optional<FullAccountPermissions>",
               },
               "electronicStatements": {
                 "docs": "If `true`, the customer has opted in to receive account statements electronically.",
@@ -567,14 +569,17 @@ This error response may have one of the following `type` values:
             "inline": undefined,
             "properties": {
               "available": {
+                "access": "read-only",
                 "docs": "The available balance: the funds available for use. This is the string representation of the exact decimal amount.",
                 "type": "optional<CreditOrDebitValue>",
               },
               "current": {
+                "access": "read-only",
                 "docs": "The current balance. This is the balance at the end of the previous business day. This is the string representation of the exact decimal amount.",
                 "type": "optional<CreditOrDebitValue>",
               },
               "currentWithPending": {
+                "access": "read-only",
                 "docs": "The current balance, with posted transactions. This is the string representation of the exact decimal amount.",
                 "type": "optional<CreditOrDebitValue>",
               },
@@ -620,8 +625,9 @@ This error response may have one of the following `type` values:
                 "type": "ReadOnlyResourceId",
               },
               "label": {
+                "access": "read-only",
                 "docs": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`.",
-                "type": "string",
+                "type": "optional<string>",
                 "validation": {
                   "format": undefined,
                   "maxLength": 80,
@@ -663,6 +669,7 @@ This error response may have one of the following `type` values:
                 "type": "optional<ReadOnlyResourceId>",
               },
               "label": {
+                "access": "read-only",
                 "docs": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`.",
                 "type": "optional<string>",
                 "validation": {
@@ -812,8 +819,9 @@ Account transfers are only allowed between `internal` and `external` accounts. A
                 },
               },
               "items": {
+                "access": "read-only",
                 "docs": "The array of items in this page of accounts. This array may be empty.",
-                "type": "list<AccountItem>",
+                "type": "optional<list<AccountItem>>",
               },
               "limit": {
                 "default": 100,
@@ -828,6 +836,7 @@ Account transfers are only allowed between `internal` and `external` accounts. A
                 },
               },
               "nextPage_url": {
+                "access": "read-only",
                 "docs": "The URL of the next page of accounts. If this URL is omitted, there are no more accounts.",
                 "type": "optional<string>",
                 "validation": {
@@ -1380,8 +1389,9 @@ The client can use this value to localize the `items[].time` values to the local
                 },
               },
               "maximumOverdraftAccounts": {
+                "access": "read-only",
                 "docs": "The maximum number of overdraft protection accounts that may be linked to the account.",
-                "type": "integer",
+                "type": "optional<integer>",
                 "validation": {
                   "exclusiveMax": undefined,
                   "exclusiveMin": undefined,
@@ -1391,6 +1401,7 @@ The client can use this value to localize the `items[].time` values to the local
                 },
               },
               "nextPage_url": {
+                "access": "read-only",
                 "docs": "The URL of the next page of eligible accounts. If this URL is omitted, there are no more accounts.",
                 "type": "optional<string>",
                 "validation": {
@@ -1715,6 +1726,7 @@ The client can use this value to localize the `items[].time` values to the local
                 "type": "optional<ResourceId>",
               },
               "label": {
+                "access": "read-only",
                 "docs": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`.",
                 "type": "optional<string>",
                 "validation": {
@@ -1745,8 +1757,9 @@ The client can use this value to localize the `items[].time` values to the local
             "inline": undefined,
             "properties": {
               "maximumOverdraftAccounts": {
+                "access": "read-only",
                 "docs": "The maximum number of overdraft protection accounts that may be linked to the account.",
-                "type": "integer",
+                "type": "optional<integer>",
                 "validation": {
                   "exclusiveMax": undefined,
                   "exclusiveMin": undefined,
@@ -1979,10 +1992,12 @@ The client can use this value to localize the `items[].time` values to the local
             "inline": undefined,
             "properties": {
               "createdAt": {
+                "access": "read-only",
                 "docs": "The date-time when this resource was created, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC. This is derived and immutable.",
                 "type": "optional<datetime>",
               },
               "updatedAt": {
+                "access": "read-only",
                 "docs": "The date-time when the resource was last updated, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC. This is derived and immutable.",
                 "type": "optional<datetime>",
               },
@@ -2009,8 +2024,9 @@ The client can use this value to localize the `items[].time` values to the local
             "inline": undefined,
             "properties": {
               "id": {
+                "access": "read-only",
                 "docs": "The unique ID of this transaction's category.",
-                "type": "string",
+                "type": "optional<string>",
                 "validation": {
                   "format": undefined,
                   "maxLength": 32,
@@ -2143,6 +2159,7 @@ The client can use this value to localize the `items[].time` values to the local
                 "type": "optional<TransactionCheck>",
               },
               "createdOn": {
+                "access": "read-only",
                 "availability": "deprecated",
                 "docs": "The date when the transaction occurred in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.<br>**Warning**: The property `createdOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `createdOn` will be removed on version `v3.0.0` of the schema.",
                 "type": "optional<string>",
@@ -2164,8 +2181,9 @@ The client can use this value to localize the `items[].time` values to the local
                 },
               },
               "id": {
+                "access": "read-only",
                 "docs": "This transaction's unique identifier.",
-                "type": "string",
+                "type": "optional<string>",
                 "validation": {
                   "format": undefined,
                   "maxLength": 128,
@@ -2187,8 +2205,9 @@ The client can use this value to localize the `items[].time` values to the local
                 "type": "optional<TransactionMerchant>",
               },
               "occurredOn": {
+                "access": "read-only",
                 "docs": "The date of the transaction in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.",
-                "type": "string",
+                "type": "optional<string>",
                 "validation": {
                   "format": "date",
                   "maxLength": undefined,
@@ -2201,6 +2220,7 @@ The client can use this value to localize the `items[].time` values to the local
                 "type": "optional<boolean>",
               },
               "postedOn": {
+                "access": "read-only",
                 "availability": "deprecated",
                 "docs": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date `YYYY-MM-DD` format, UTC. This is derived and immutable and only present if `posted` is `true`.<br>**Warning**: The property `postedOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `postedOn` will be removed on version `v3.0.0` of the schema.",
                 "type": "optional<string>",
@@ -2663,6 +2683,7 @@ The response may include dates prior to requested the start date, as that is use
                 "type": "ReadOnlyResourceId",
               },
               "processedAt": {
+                "access": "read-only",
                 "docs": "The date/time the transfer was processed.",
                 "type": "optional<datetime>",
               },
@@ -2671,10 +2692,12 @@ The response may include dates prior to requested the start date, as that is use
                 "type": "TransferItemSchedule",
               },
               "state": {
+                "access": "read-only",
                 "docs": "The state of this transfer resource.",
-                "type": "TransferState",
+                "type": "optional<TransferState>",
               },
               "updatedBy": {
+                "access": "read-only",
                 "docs": "The full name of the banking customer who last updated the transfer.",
                 "type": "optional<string>",
                 "validation": {
@@ -2697,6 +2720,7 @@ The response may include dates prior to requested the start date, as that is use
             "inline": undefined,
             "properties": {
               "creditsOn": {
+                "access": "read-only",
                 "docs": "The effective the transfer is scheduled to credit the target account, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived from the `scheduledOn` date, based on the financial institution's transfer rules.",
                 "type": "optional<string>",
                 "validation": {
@@ -2707,6 +2731,7 @@ The response may include dates prior to requested the start date, as that is use
                 },
               },
               "debitsOn": {
+                "access": "read-only",
                 "docs": "The effective date the transfer is scheduled to debit the source account, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived from the `scheduledOn` date, based on the financial institution's transfer rules.",
                 "type": "optional<string>",
                 "validation": {
@@ -3563,10 +3588,11 @@ types:
     docs: An internal customer account.
     properties:
       allows:
-        type: FullAccountPermissions
+        type: optional<FullAccountPermissions>
         docs: >-
           Flags which indicate the permissions the current authorized user has
           on this account resource.
+        access: read-only
       electronicStatements:
         type: boolean
         docs: >-
@@ -3594,6 +3620,7 @@ types:
           `product.label` concatenated with the `maskedNumber`.
         validation:
           maxLength: 80
+        access: read-only
       maskedNumber:
         type: optional<MaskedAccountNumber>
     source:
@@ -3610,12 +3637,13 @@ types:
     properties:
       items: unknown
       maximumOverdraftAccounts:
-        type: integer
+        type: optional<integer>
         docs: >-
           The maximum number of overdraft protection accounts that may be linked
           to the account.
         validation:
           max: 4
+        access: read-only
       nextPage_url:
         type: optional<string>
         docs: >-
@@ -3623,6 +3651,7 @@ types:
           there are no more accounts.
         validation:
           maxLength: 256
+        access: read-only
       start:
         type: optional<string>
         docs: >-
@@ -3661,12 +3690,13 @@ types:
       `{accountId}`.
     properties:
       maximumOverdraftAccounts:
-        type: integer
+        type: optional<integer>
         docs: >-
           The maximum number of overdraft protection accounts that may be linked
           to the account.
         validation:
           max: 4
+        access: read-only
     extends:
       - AbstractBody
       - OverdraftProtectionFields
@@ -3681,8 +3711,9 @@ types:
       `accounts`, `externalAccounts` or `outsideAccounts` collections.
     properties:
       items:
+        type: optional<list<AccountItem>>
         docs: The array of items in this page of accounts. This array may be empty.
-        type: list<AccountItem>
+        access: read-only
       count:
         type: optional<integer>
         docs: >-
@@ -3704,6 +3735,7 @@ types:
           are no more accounts.
         validation:
           maxLength: 256
+        access: read-only
       start:
         type: optional<string>
         docs: >-
@@ -3746,13 +3778,14 @@ types:
           The unique identifier for this account resource. This is an immutable
           opaque string.
       label:
-        type: string
+        type: optional<string>
         docs: >-
           The human-readable label for this account. This is either the
           `nickname` (if assigned for the current customer), or the
           `product.label` concatenated with the `maskedNumber`.
         validation:
           maxLength: 80
+        access: read-only
       nickname:
         type: optional<AccountNickname>
       maskedNumber:
@@ -3780,6 +3813,7 @@ types:
           `product.label` concatenated with the `maskedNumber`.
         validation:
           maxLength: 80
+        access: read-only
       nickname: optional<AccountNickname>
       maskedNumber: optional<MaskedAccountNumber>
       allows:
@@ -3916,12 +3950,14 @@ types:
         docs: >-
           The available balance: the funds available for use. This is the string
           representation of the exact decimal amount.
+        access: read-only
       current:
         type: optional<CreditOrDebitValue>
         docs: >-
           The current balance. This is the balance at the end of the previous
           business day. This is the string representation of the exact decimal
           amount.
+        access: read-only
       updatedAt:
         type: optional<ReadOnlyTimestamp>
         docs: >-
@@ -3932,6 +3968,7 @@ types:
         docs: >-
           The current balance, with posted transactions. This is the string
           representation of the exact decimal amount.
+        access: read-only
       incomplete:
         type: boolean
         docs: >-
@@ -4504,12 +4541,13 @@ types:
       schemas.
     properties:
       id:
-        type: string
+        type: optional<string>
         docs: This transaction's unique identifier.
         validation:
           pattern: ^[-_:,.~$a-zA-Z0-9]{6,128}$
           minLength: 6
           maxLength: 128
+        access: read-only
       type:
         type: TransactionType
         docs: >-
@@ -4519,13 +4557,14 @@ types:
         type: TransactionSubType
         docs: The transaction's kind of debit or credit.
       occurredOn:
-        type: string
+        type: optional<string>
         docs: >-
           The date of the transaction in `YYYY-MM-DD` [RFC
           3339](https://tools.ietf.org/html/rfc3339) `date` format. This is
           derived and immutable.
         validation:
           format: date
+        access: read-only
       createdOn:
         type: optional<string>
         docs: >-
@@ -4538,6 +4577,7 @@ types:
         validation:
           format: date
         availability: deprecated
+        access: read-only
       postedOn:
         type: optional<string>
         docs: >-
@@ -4551,6 +4591,7 @@ types:
         validation:
           format: date
         availability: deprecated
+        access: read-only
       amount:
         type: CreditOrDebitValue
         docs: >-
@@ -4642,12 +4683,13 @@ types:
       label:
         type: TransactionCategoryLabel
       id:
-        type: string
+        type: optional<string>
         docs: The unique ID of this transaction's category.
         validation:
           pattern: ^[-_:.~$a-zA-Z0-9]{1,32}$
           minLength: 1
           maxLength: 32
+        access: read-only
     source:
       openapi: ../openapi.yml
   TransactionCategoryLabel:
@@ -4893,6 +4935,7 @@ types:
           institution's transfer rules.
         validation:
           format: date
+        access: read-only
       creditsOn:
         type: optional<string>
         docs: >-
@@ -4902,6 +4945,7 @@ types:
           financial institution's transfer rules.
         validation:
           format: date
+        access: read-only
     extends:
       - TransferSchedule
     source:
@@ -5025,16 +5069,19 @@ types:
         type: TransferItemSchedule
         docs: When the transfer should occur and any recurrence.
       state:
-        type: TransferState
+        type: optional<TransferState>
         docs: The state of this transfer resource.
+        access: read-only
       processedAt:
         type: optional<datetime>
         docs: The date/time the transfer was processed.
+        access: read-only
       updatedBy:
         type: optional<string>
         docs: The full name of the banking customer who last updated the transfer.
         validation:
           maxLength: 48
+        access: read-only
     extends:
       - TransferFields
       - TimestampFields
@@ -5486,12 +5533,14 @@ types:
           The date-time when this resource was created, in [RFC
           3339](https://tools.ietf.org/html/rfc3339) date-time
           `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC. This is derived and immutable.
+        access: read-only
       updatedAt:
         type: optional<datetime>
         docs: >-
           The date-time when the resource was last updated, in [RFC
           3339](https://tools.ietf.org/html/rfc3339) date-time
           `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC. This is derived and immutable.
+        access: read-only
     source:
       openapi: ../openapi.yml
   ApiProblem:
@@ -5686,6 +5735,7 @@ types:
           are no more resources in the collection.
         validation:
           maxLength: 8000
+        access: read-only
     source:
       openapi: ../openapi.yml
   AddressFields:
@@ -8213,7 +8263,6 @@ The default response lists only recent transactions. Normally, this is transacti
                           "amount": "0.00",
                           "balance": "8509.38",
                           "category": {
-                            "id": "id",
                             "label": "label",
                           },
                           "check": {
@@ -8582,7 +8631,6 @@ service:
                   description: description
                   category:
                     label: label
-                    id: id
                   check:
                     number: 1
                 - id: 88f5bf17-ecc4

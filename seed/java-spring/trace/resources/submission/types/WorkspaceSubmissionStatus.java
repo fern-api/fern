@@ -150,6 +150,7 @@ public final class WorkspaceSubmissionStatus {
   }
 
   @JsonTypeName("stopped")
+  @JsonIgnoreProperties("type")
   private static final class StoppedValue implements Value {
     @JsonCreator(
         mode = JsonCreator.Mode.PROPERTIES
@@ -175,6 +176,7 @@ public final class WorkspaceSubmissionStatus {
   }
 
   @JsonTypeName("errored")
+  @JsonIgnoreProperties("type")
   private static final class ErroredValue implements Value {
     @JsonProperty("value")
     private ErrorInfo value;
@@ -213,6 +215,7 @@ public final class WorkspaceSubmissionStatus {
   }
 
   @JsonTypeName("running")
+  @JsonIgnoreProperties("type")
   private static final class RunningValue implements Value {
     @JsonProperty("value")
     private RunningSubmissionState value;
@@ -251,6 +254,7 @@ public final class WorkspaceSubmissionStatus {
   }
 
   @JsonTypeName("ran")
+  @JsonIgnoreProperties("type")
   private static final class RanValue implements Value {
     @JsonUnwrapped
     private WorkspaceRunDetails value;
@@ -292,6 +296,7 @@ public final class WorkspaceSubmissionStatus {
   }
 
   @JsonTypeName("traced")
+  @JsonIgnoreProperties("type")
   private static final class TracedValue implements Value {
     @JsonUnwrapped
     private WorkspaceRunDetails value;
@@ -332,6 +337,7 @@ public final class WorkspaceSubmissionStatus {
     }
   }
 
+  @JsonIgnoreProperties("type")
   private static final class _UnknownValue implements Value {
     private String type;
 

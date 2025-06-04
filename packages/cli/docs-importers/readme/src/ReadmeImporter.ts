@@ -1,381 +1,396 @@
+import { mkdir, writeFile } from "fs/promises";
 import type { Root as HastRoot } from "hast";
-import { join } from "path";
-import traverse from "traverse";
 
 import { docsYml } from "@fern-api/configuration";
-import { DocsImporter, FernDocsBuilder, FernDocsNavigationBuilder, TabInfo } from "@fern-api/docs-importer-commons";
-import { DEFAULT_LAYOUT } from "@fern-api/docs-importer-commons";
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { DEFAULT_LAYOUT, DocsImporter, FernDocsBuilder } from "@fern-api/docs-importer-commons";
+import { AbsoluteFilePath, RelativeFilePath, dirname, join as fsUtilsJoin, relativize } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
+import { TaskContext } from "@fern-api/task-context";
 
-import { isReadmeDeployment } from "./assert";
-import { defaultColors } from "./constants";
-import { convertNavigationItem } from "./converters/convertNavigationItem";
 import { getFavicon } from "./extract/favicon";
-import { getFirstTabFromNavigationGroup } from "./extract/navGroup";
-import { getTitle, getTitleFromLink } from "./extract/title";
-import { parsePageGroup } from "./parse/parsePageGroup";
+import { getTitle } from "./extract/title";
+import { parsePage } from "./parse/parsePage";
 import { retrieveRootNavElement } from "./parse/parseRootNav";
 import { parseSidebar } from "./parse/parseSidebar";
 import { parseTabLinks } from "./parse/parseTabs";
-import { ScrapeResult } from "./types/scrapeResults";
-import { scrapedNavigation, scrapedNavigationGroup } from "./types/scrapedNavigation";
-import type { scrapedTab } from "./types/scrapedTab";
+import { scrapedNavigationGroup, scrapedNavigationPage, scrapedNavigationSection } from "./types/scrapedNavigation";
 import { getColors } from "./utils/colors";
 import { getLogos } from "./utils/files/logo";
 import { htmlToHast } from "./utils/hast";
-import { iterateOverNavItems } from "./utils/iterate";
 import { fetchPageHtml, startPuppeteer } from "./utils/network";
-import { GROUP_NAMES, getReservedName } from "./utils/reserved";
-import { normalizePath, removeLeadingSlash, removeTrailingSlash } from "./utils/strings";
 
 export declare namespace ReadmeImporter {
     interface Args {
-        readmeUrl: string;
-        organization: string;
+        context: TaskContext;
+        url: string;
+        /**
+         * Absolute path to the Fern directory where the imported docs will be stored
+         */
+        absolutePathToFernDirectory: AbsoluteFilePath;
+
+        builder: FernDocsBuilder;
     }
 }
 
-export class ReadmeImporter extends DocsImporter<ReadmeImporter.Args> {
-    private documentationTab: TabInfo | undefined = undefined;
-    private tabUrlToInfo: Record<string, TabInfo> = {};
+export class ReadmeImporter extends DocsImporter<object> {
+    private readonly url: URL;
+    private readonly logger: Logger;
+    private readonly absolutePathToFernDirectory: AbsoluteFilePath;
 
-    public async import({ args, builder }: { args: ReadmeImporter.Args; builder: FernDocsBuilder }): Promise<void> {
-        const urlObj = new URL(args.readmeUrl);
-        const html = await fetchPageHtml({ url: urlObj });
-        const absolutePathToOutput: AbsoluteFilePath = AbsoluteFilePath.of(join(process.cwd(), "fern"));
-        this.context.logger.debug("Successfully fetched HTML from Readme Docs Site");
-
-        const hast = htmlToHast(html);
-        const isReadme = isReadmeDeployment(hast);
-        if (!isReadme) {
-            this.context.logger.error("The provided URL is not a Readme Docs Site");
-            return;
-        }
-        const result = await this.scrapeAllSiteTabs(html, urlObj);
-        const scrapeData = result.data;
-        if (!scrapeData) {
-            this.context.logger.error("Failed to scrape site tabs");
-            return;
-        }
-        this.context.logger.debug("Successfully scraped all site tabs");
-
-        if (scrapeData.logo) {
-            builder.setLogo({ logo: scrapeData.logo });
-        }
-
-        const relativePathToFavicon = RelativeFilePath.of(scrapeData.favicon.substring(1));
-        builder.setFavicon({ favicon: relativePathToFavicon });
-
-        if (scrapeData.colors != null) {
-            builder.setColors({ colors: scrapeData.colors });
-        }
-
-        builder.setLayout({ layout: DEFAULT_LAYOUT });
-
-        for (const tab of scrapeData.tabs ?? []) {
-            const tabSlug = removeLeadingSlash(tab.url);
-            if (tab.name === "API Reference") {
-                continue;
-            }
-            this.tabUrlToInfo[tabSlug] = {
-                name: tab.name,
-                url: tabSlug,
-                navigationBuilder: builder.getNavigationBuilder({
-                    tabId: tabSlug,
-                    tabConfig: { slug: tabSlug, displayName: tab.name }
-                })
-            };
-        }
-
-        for (const navItem of scrapeData.navigation) {
-            const section = await convertNavigationItem({
-                absolutePathToOutput,
-                item: navItem,
-                builder,
-                context: this.context
-            });
-            const nav = await this.getNavigationBuilder({ navItem, builder });
-            if (section != null) {
-                nav.addItem({ item: section });
-            }
-        }
-
-        const instanceUrl = builder.setInstance({ companyName: args.organization });
-        this.context.logger.debug(`Added instance ${instanceUrl} to docs.yml`);
+    constructor(args: ReadmeImporter.Args) {
+        super({ context: args.context });
+        this.url = typeof args.url === "string" ? new URL(args.url) : args.url;
+        this.logger = args.context.logger;
+        this.absolutePathToFernDirectory = args.absolutePathToFernDirectory;
     }
 
-    private async scrapeAllSiteTabs(html: string, url: string | URL): Promise<ScrapeResult> {
-        this.context.logger.debug(`Initializing site scraper from URL: ${url}`);
-        const urlObj = new URL(url);
-        const hast = htmlToHast(html);
+    public async import({ args, builder }: { args: object; builder: FernDocsBuilder }): Promise<void> {
+        builder.setLayout({ layout: DEFAULT_LAYOUT });
 
-        const links = parseTabLinks(hast);
-        if (!links || !links.length || (links.length === 1 && links[0] && links[0].url === urlObj.pathname)) {
-            return this.scrapeSite(html, urlObj, { hast });
+        const hast = await this.getHastForUrl(this.url);
+        const tabs = parseTabLinks(hast) ?? [];
+
+        if (tabs.length === 0) {
+            this.logger.debug("No tabs found on the page");
+        } else {
+            this.logger.debug(`Found ${tabs.length} tabs:`);
+            for (const tab of tabs) {
+                this.logger.debug(`  - Tab: ${tab.name} (${tab.url})`);
+            }
         }
 
-        if (!links.find((link) => urlObj.pathname.startsWith(link.url))) {
-            links.push({
-                name: getTitleFromLink(urlObj.pathname),
-                url: urlObj.pathname
+        for (const tab of tabs) {
+            const sidebar = await this.scrapeTab({
+                name: tab.name,
+                url: tab.url
             });
+            if (!sidebar) {
+                continue;
+            }
+            const nav = builder.getNavigationBuilder({
+                tabId: this.kebabCaseWithoutEmojis(tab.name),
+                tabConfig: {
+                    slug: tab.url,
+                    displayName: tab.name
+                }
+            });
+            const absolutePathToOutputDirectory = fsUtilsJoin(
+                this.absolutePathToFernDirectory,
+                RelativeFilePath.of(this.kebabCaseWithoutEmojis(tab.name))
+            );
+            // await this.downloadMarkdownPages({
+            //     absolutePathToOutputDirectory,
+            //     sections: sidebar
+            // });
+            const navigationItems = await this.getNavigationItems({ absolutePathToOutputDirectory, sections: sidebar });
+            for (const item of navigationItems) {
+                nav.addItem({ item });
+            }
         }
-
-        const results = await Promise.all(
-            links.map(async (tabEntry) => {
-                if (tabEntry.url.startsWith("/reference")) {
-                    return { success: false, data: undefined };
-                }
-                const newUrl = new URL(url);
-                newUrl.pathname = tabEntry.url;
-                try {
-                    const newHtml = await fetchPageHtml({ url: newUrl });
-                    return await this.scrapeSite(newHtml, newUrl, { tabs: [tabEntry] });
-                } catch (error) {
-                    return { success: false, data: undefined };
-                }
-            })
-        );
-
-        const navigation: scrapedNavigation = [];
-        const tabs: Array<scrapedTab> = [];
-        let colors: docsYml.RawSchemas.ColorsConfiguration = defaultColors;
-        let favicon = "/favicon.svg";
-
-        const successes = results.filter((result) => result.success);
-        successes.forEach((result) => {
-            this.context.logger.debug(`Successfully scraped tab: ${result.data?.name}`);
-            if (!result.data) {
-                return;
-            }
-            navigation.push(...result.data.navigation);
-            if (result.data.tabs) {
-                tabs.push(...result.data.tabs);
-            }
-            if (result.data.favicon !== "/favicon.svg") {
-                favicon = result.data.favicon;
-            }
-            if (result.data.colors !== defaultColors) {
-                colors = result.data.colors;
-            }
-        });
-
-        const failures = results.filter((result) => !result.success);
-        failures.forEach((result) => {
-            this.context.logger.info(`Failed to scrape tab: ${result.message}`);
-        });
 
         const browser = await startPuppeteer();
-        const logo = await getLogos(urlObj, browser);
-        const name = await getTitle(hast);
+
+        const logo = await getLogos(this.url, browser);
+        if (logo != null) {
+            builder.setLogo({ logo });
+        }
+
+        const title = await getTitle(hast);
+        builder.setTitle({ title });
+
+        const favicon = await getFavicon(hast);
+        if (favicon != null) {
+            const assetsDirectory = await this.getAndCreateAssetsDirectory();
+            const response = await fetch(favicon);
+            if (response.ok) {
+                const imageBuffer = Buffer.from(await response.arrayBuffer());
+                const faviconPath = fsUtilsJoin(assetsDirectory, RelativeFilePath.of("favicon"));
+                await writeFile(faviconPath, new Uint8Array(imageBuffer));
+                builder.setFavicon({ favicon: relativize(this.absolutePathToFernDirectory, faviconPath) });
+            }
+        }
+
+        const colors = await getColors(hast);
+        builder.setColors({ colors });
+
         if (browser) {
             await browser.close();
         }
 
-        return {
-            success: true,
-            data: {
-                name,
-                logo,
-                navigation,
-                tabs,
-                favicon,
-                colors
-            }
-        };
+        builder.build({ outputDirectory: this.absolutePathToFernDirectory });
     }
 
-    private async scrapeSite(
-        html: string,
-        url: string | URL,
-        opts: { hast?: HastRoot; tabs?: Array<scrapedTab> } = {}
-    ): Promise<ScrapeResult> {
-        this.context.logger.debug(`Scraping site with URL: ${url}`);
-        let siteHast = opts.hast;
-        if (!siteHast) {
-            siteHast = htmlToHast(html);
-        }
+    /**
+     * Gets the assets directory path and creates it if it doesn't exist
+     * @returns The absolute path to the assets directory
+     */
+    private async getAndCreateAssetsDirectory(): Promise<AbsoluteFilePath> {
+        const assetsDirectory = fsUtilsJoin(this.absolutePathToFernDirectory, RelativeFilePath.of("assets"));
 
-        const urlObj = new URL(url);
-        const origin = urlObj.origin;
-        if (origin === "") {
-            return { success: false, message: `Invalid URL: ${url}` };
-        }
-        const sidebar = retrieveRootNavElement(siteHast);
-        if (!sidebar) {
-            return { success: false, message: `${url.toString()}: Failed to find sidebar element` };
-        }
-        const navItems = parseSidebar(sidebar);
-        const flatNavItems = navItems.flatMap((section) => section.pages);
-        const listOfLinks = iterateOverNavItems(flatNavItems, origin);
-        if (listOfLinks.length === 0) {
-            return { success: false, message: `No navigation items found for URL: ${url}` };
-        }
+        // Create the directory if it doesn't exist
+        await mkdir(assetsDirectory, { recursive: true });
 
-        const externalLinks = listOfLinks.filter((url: URL) => url.origin !== origin);
-        const internalLinks = listOfLinks.filter(
-            (url: URL) => url.origin === origin && removeTrailingSlash(url.toString()) !== origin
-        );
-        const rootLinks = listOfLinks.filter(
-            (url: URL) => url.origin === origin && removeTrailingSlash(url.toString()) === origin
-        );
-
-        const allPathnames = [
-            ...internalLinks.map((url: URL) => url.toString()),
-            ...rootLinks.map((url: URL) => url.toString())
-        ];
-
-        const rootPaths = rootLinks.map(() => {
-            const name = getReservedName(GROUP_NAMES, allPathnames);
-            allPathnames.push(name);
-            return name;
-        });
-
-        try {
-            const extResults = await parsePageGroup(this.context, externalLinks, { externalLinks: true });
-            const intResults = await parsePageGroup(this.context, internalLinks);
-            const rootResults = await parsePageGroup(this.context, rootLinks, { externalLinks: false, rootPaths });
-
-            const externalLinkReplaceMap = new Map(
-                extResults.filter((r) => r.success).map((r) => r.data as [string, string])
-            );
-            const rootPathReplaceMap = new Map(
-                rootResults.filter((r) => r.success).map((r) => r.data as [string, string])
-            );
-
-            const replaceLinks = (value: string | string[], map: Map<string, string>) => {
-                if (typeof value === "string") {
-                    return map.get(value) ?? value;
-                }
-                if (Array.isArray(value)) {
-                    return value.map((item) => map.get(item) ?? item);
-                }
-                return value;
-            };
-
-            for (const section of navItems) {
-                traverse(section.pages).forEach(function (value) {
-                    if (
-                        externalLinkReplaceMap.has(value) ||
-                        (Array.isArray(value) && value.some((item) => externalLinkReplaceMap.has(item)))
-                    ) {
-                        this.update(replaceLinks(value, externalLinkReplaceMap));
-                    } else if (
-                        rootPathReplaceMap.has(value) ||
-                        (Array.isArray(value) && value.some((item) => rootPathReplaceMap.has(item)))
-                    ) {
-                        this.update(replaceLinks(value, rootPathReplaceMap));
-                    }
-                });
-            }
-
-            for (const section of navItems) {
-                traverse(section.pages).forEach(function (value) {
-                    if (typeof value === "string") {
-                        this.update(value.replace("/overview", ""));
-                    } else if (Array.isArray(value)) {
-                        this.update(
-                            value.map((item) => (typeof item === "string" ? item.replace("/overview", "") : item))
-                        );
-                    }
-                });
-            }
-
-            const failedPaths = [...extResults, ...intResults, ...rootResults]
-                .filter((r) => !r.success)
-                .map((r) => r.data?.[0])
-                .filter(Boolean)
-                .map((url) => normalizePath(new URL(url as string).pathname));
-
-            const cleanNavigation = (items: scrapedNavigationGroup[]) => {
-                traverse(items).forEach(function (value) {
-                    if (typeof value === "string" && failedPaths.includes(value)) {
-                        this.remove();
-                    } else if (Array.isArray(value)) {
-                        this.update(value.filter((item) => !(typeof item === "string" && failedPaths.includes(item))));
-                    }
-
-                    if (typeof value === "string" && /^https?:\/\//.test(value)) {
-                        this.remove();
-                    } else if (Array.isArray(value)) {
-                        this.update(value.filter((item) => !(typeof item === "string" && /^https?:\/\//.test(item))));
-                    }
-                });
-
-                let hasEmptyGroups = true;
-                while (hasEmptyGroups) {
-                    hasEmptyGroups = false;
-                    traverse(items).forEach(function (value) {
-                        if (Array.isArray(value) && value.filter(Boolean).length === 0) {
-                            hasEmptyGroups = true;
-                            this.parent ? this.parent.remove() : this.remove();
-                        }
-                    });
-                }
-            };
-
-            cleanNavigation(navItems);
-
-            const browser = await startPuppeteer();
-            const favicon = await getFavicon(siteHast);
-            const colors = await getColors(siteHast);
-            const logo = await getLogos(url, browser);
-            const name = await getTitle(siteHast);
-
-            return {
-                success: true,
-                data: {
-                    name,
-                    logo,
-                    colors,
-                    favicon,
-                    navigation: navItems as scrapedNavigation,
-                    tabs: opts.tabs || []
-                }
-            };
-        } catch (error) {
-            if (error instanceof Error) {
-                return { success: false, message: error.message };
-            }
-            return {
-                success: false,
-                message: "An unknown error occurred when scraping this site. Please try again."
-            };
-        }
+        return assetsDirectory;
     }
 
-    private async getNavigationBuilder({
-        navItem,
-        builder
+    /**
+     * Scrapes a single tab from the Readme docs site
+     * @param tab The tab to scrape
+     * @returns The scraped content for the tab
+     */
+    private async scrapeTab({
+        name,
+        url
     }: {
-        navItem: scrapedNavigationGroup;
-        builder: FernDocsBuilder;
-    }): Promise<FernDocsNavigationBuilder> {
-        if (Object.keys(this.tabUrlToInfo).length > 0) {
-            const tabUrl = getFirstTabFromNavigationGroup({ navItem });
-            if (tabUrl === "reference") {
-                return builder.getNavigationBuilder();
+        name: string;
+        url: string;
+    }): Promise<Array<scrapedNavigationSection> | undefined> {
+        try {
+            this.logger.debug(`Scraping tab: ${name} (${url})`);
+
+            const tabUrl = new URL(url, this.url);
+            const hast = await this.getHastForUrl(tabUrl);
+            const sidebar = retrieveRootNavElement(hast);
+
+            if (!sidebar) {
+                this.logger.debug(`No sidebar element found for tab: ${name} (${url})`);
+                return;
             }
-            if (tabUrl == null) {
-                return this.context.failAndThrow(`Failed to assign navigation item to a tab group: ${navItem.group}`);
+
+            const navItems = parseSidebar(sidebar);
+            this.logger.debug(`Successfully scraped tab: ${name}`);
+
+            return navItems;
+        } catch (error) {
+            this.logger.error(
+                `Failed to scrape tab ${name}: ${error instanceof Error ? error.message : String(error)}`
+            );
+            if (error instanceof Error && error.stack) {
+                this.logger.error(`Stack trace: ${error.stack}`);
             }
-            const tab = this.tabUrlToInfo[tabUrl] ?? this.getDefaultDocumentationTab(builder);
-            return tab.navigationBuilder;
         }
-        return builder.getNavigationBuilder();
+        return undefined;
     }
 
-    private getDefaultDocumentationTab(builder: FernDocsBuilder): TabInfo {
-        if (this.documentationTab == null) {
-            this.documentationTab = {
-                name: "Documentation",
-                url: "documentation",
-                navigationBuilder: builder.getNavigationBuilder({
-                    tabId: "documentation",
-                    tabConfig: { displayName: "Documentation", slug: "documentation" }
-                })
-            };
+    /**
+     * Fetches HTML content from a URL and converts it to a HAST (HTML Abstract Syntax Tree)
+     * @param url The URL to fetch and parse
+     * @returns The HAST representation of the HTML content
+     */
+    private async getHastForUrl(url: URL | string): Promise<HastRoot> {
+        const html = await fetchPageHtml({ url });
+        return htmlToHast(html);
+    }
+
+    /**
+     * Recursively downloads markdown content for all navigation items
+     * @param sections The navigation sections to process
+     * @returns A map of URLs to their downloaded markdown content
+     */
+    private async downloadMarkdownPages({
+        absolutePathToOutputDirectory,
+        sections
+    }: {
+        absolutePathToOutputDirectory: AbsoluteFilePath;
+        sections: Array<scrapedNavigationSection>;
+    }): Promise<void> {
+        for (const section of sections) {
+            this.logger.debug(`Processing section: ${section.group}`);
+            const absolutePathToOutputDirectoryForSection = this.getAbsolutePathToOutputDirectoryForSection({
+                absolutePathToOutputDirectory,
+                section
+            });
+
+            await mkdir(absolutePathToOutputDirectoryForSection, { recursive: true });
+
+            await Promise.all(
+                section.pages
+                    .filter((page): page is scrapedNavigationPage => page.type === "page")
+                    .map(async (page) => {
+                        const url = new URL(page.slug.toString(), this.url);
+                        this.logger.debug(`Fetching page: ${url.toString()}`);
+                        const html = await fetchPageHtml({ url });
+
+                        // Parse the HTML content into MDX using parsePage
+                        const result = await parsePage({
+                            logger: this.logger,
+                            html,
+                            url
+                        });
+
+                        // If parsing was successful, use the MDX content instead of raw HTML
+                        if (result.success && result.data) {
+                            const absolutePathForPage = this.getAbsolutePathToOutputFileForPage({
+                                absolutePathToOutputDirectoryForSection,
+                                page: page.slug
+                            });
+
+                            await writeFile(absolutePathForPage, result.data.mdx);
+
+                            // Download and save images used in the page
+                            if (result.data.images.imageURLs.length > 0) {
+                                this.logger.debug(
+                                    `Found ${result.data.images.imageURLs.length} images to download for ${url.toString()}`
+                                );
+
+                                // Download each image
+                                await Promise.all(
+                                    Object.entries(result.data.images.imageURLToFilename).map(
+                                        async ([imageUrl, filename]) => {
+                                            try {
+                                                const response = await fetch(imageUrl);
+                                                if (!response.ok) {
+                                                    this.logger.warn(
+                                                        `Failed to download image ${imageUrl}, status: ${response.status}`
+                                                    );
+                                                    return;
+                                                }
+
+                                                const imageBuffer = Buffer.from(await response.arrayBuffer());
+                                                const imagePath = fsUtilsJoin(
+                                                    absolutePathToOutputDirectoryForSection,
+                                                    RelativeFilePath.of(filename)
+                                                );
+
+                                                // Ensure the directory exists for the image
+                                                const imageDir = dirname(imagePath);
+                                                await mkdir(imageDir, { recursive: true });
+
+                                                await writeFile(imagePath, new Uint8Array(imageBuffer));
+                                                this.logger.debug(`Saved image to ${imagePath}`);
+                                            } catch (error) {
+                                                this.logger.warn(`Error downloading image ${imageUrl}: ${error}`);
+                                            }
+                                        }
+                                    )
+                                );
+                            }
+                        } else {
+                            this.logger.warn(`Failed to parse page ${url.toString()}, skipping`);
+                        }
+                    })
+            );
+
+            // Process nested navigation groups recursively
+            await Promise.all(
+                section.pages
+                    .filter((page): page is scrapedNavigationGroup => page.type === "group")
+                    .map(async (nestedGroup) => {
+                        this.logger.debug(`Processing nested group: ${nestedGroup.group}`);
+                        await this.downloadMarkdownPages({
+                            absolutePathToOutputDirectory: absolutePathToOutputDirectoryForSection,
+                            sections: [{ type: "group", group: nestedGroup.group, pages: nestedGroup.pages }]
+                        });
+                    })
+            );
         }
-        return this.documentationTab;
+    }
+
+    private async getNavigationItems({
+        absolutePathToOutputDirectory,
+        sections
+    }: {
+        absolutePathToOutputDirectory: AbsoluteFilePath;
+        sections: Array<scrapedNavigationSection>;
+    }): Promise<docsYml.RawSchemas.NavigationItem[]> {
+        const navigationItems: docsYml.RawSchemas.NavigationItem[] = [];
+
+        for (const section of sections) {
+            const absolutePathToOutputDirectoryForSection = this.getAbsolutePathToOutputDirectoryForSection({
+                absolutePathToOutputDirectory,
+                section
+            });
+
+            // Create a navigation item for the section
+            const sectionItem: docsYml.RawSchemas.SectionConfiguration = {
+                section: section.group,
+                contents: [],
+                slug: this.kebabCaseWithoutEmojis(section.group)
+            };
+
+            for (const page of section.pages) {
+                if (page.type === "page") {
+                    sectionItem.contents.push({
+                        page: page.page,
+                        path: relativize(
+                            this.absolutePathToFernDirectory,
+                            this.getAbsolutePathToOutputFileForPage({
+                                absolutePathToOutputDirectoryForSection,
+                                page: page.slug
+                            })
+                        )
+                    });
+                } else {
+                    const nestedItems = await this.getNavigationItems({
+                        absolutePathToOutputDirectory: absolutePathToOutputDirectoryForSection,
+                        sections: [page]
+                    });
+                    sectionItem.contents.push(...nestedItems);
+                }
+            }
+
+            navigationItems.push(sectionItem);
+        }
+
+        return navigationItems;
+    }
+
+    /**
+     * Gets the absolute path to the output file for a page
+     * @param absolutePathToOutputDirectoryForSection The absolute path to the output directory for the section
+     * @param page The page name or path
+     * @returns The absolute path to the output file for the page
+     */
+    private getAbsolutePathToOutputFileForPage({
+        absolutePathToOutputDirectoryForSection,
+        page
+    }: {
+        absolutePathToOutputDirectoryForSection: AbsoluteFilePath;
+        page: string;
+    }): AbsoluteFilePath {
+        return fsUtilsJoin(
+            absolutePathToOutputDirectoryForSection,
+            RelativeFilePath.of(`${this.kebabCaseWithoutEmojis(page.split("/").pop() || page)}.mdx`)
+        );
+    }
+
+    /**
+     * Creates the absolute path to the output directory for a section
+     * @param params The parameters for creating the output directory path
+     * @returns The absolute path to the output directory for the section
+     */
+    private getAbsolutePathToOutputDirectoryForSection({
+        absolutePathToOutputDirectory,
+        section
+    }: {
+        absolutePathToOutputDirectory: AbsoluteFilePath;
+        section: scrapedNavigationSection;
+    }): AbsoluteFilePath {
+        return fsUtilsJoin(
+            absolutePathToOutputDirectory,
+            RelativeFilePath.of(this.kebabCaseWithoutEmojis(section.group))
+        );
+    }
+
+    /**
+     * Converts a string to kebab-case and removes any emoji characters
+     * @param str The string to convert
+     * @returns The kebab-cased string without emojis
+     */
+    private kebabCaseWithoutEmojis(str: string): string {
+        // Remove emojis using a regex that matches emoji unicode ranges
+        const withoutEmojis = str.replace(
+            /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F700}-\u{1F77F}\u{1F780}-\u{1F7FF}\u{1F800}-\u{1F8FF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA6F}\u{1FA70}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu,
+            ""
+        );
+
+        // Convert to kebab case: lowercase, replace spaces and special chars with hyphens
+        return withoutEmojis
+            .toLowerCase()
+            .trim()
+            .replace(/[^\w\s-]/g, "") // Remove special characters except hyphens
+            .replace(/[\s_]+/g, "-") // Replace spaces and underscores with hyphens
+            .replace(/-+/g, "-") // Replace multiple hyphens with a single hyphen
+            .replace(/^-+|-+$/g, ""); // Remove leading and trailing hyphens
     }
 }

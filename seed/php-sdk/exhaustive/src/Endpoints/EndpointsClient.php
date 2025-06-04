@@ -9,7 +9,9 @@ use Seed\Endpoints\HttpMethods\HttpMethodsClient;
 use Seed\Endpoints\Object\ObjectClient;
 use Seed\Endpoints\Params\ParamsClient;
 use Seed\Endpoints\Primitive\PrimitiveClient;
+use Seed\Endpoints\Put\PutClient;
 use Seed\Endpoints\Union\UnionClient;
+use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class EndpointsClient
@@ -50,9 +52,25 @@ class EndpointsClient
     public PrimitiveClient $primitive;
 
     /**
+     * @var PutClient $put
+     */
+    public PutClient $put;
+
+    /**
      * @var UnionClient $union
      */
     public UnionClient $union;
+
+    /**
+     * @var array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     * } $options
+     */
+    private array $options;
 
     /**
      * @var RawClient $client
@@ -61,18 +79,28 @@ class EndpointsClient
 
     /**
      * @param RawClient $client
+     * @param ?array{
+     *   baseUrl?: string,
+     *   client?: ClientInterface,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     * } $options
      */
     public function __construct(
         RawClient $client,
+        ?array $options = null,
     ) {
         $this->client = $client;
-        $this->container = new ContainerClient($this->client);
-        $this->contentType = new ContentTypeClient($this->client);
-        $this->enum = new EnumClient($this->client);
-        $this->httpMethods = new HttpMethodsClient($this->client);
-        $this->object = new ObjectClient($this->client);
-        $this->params = new ParamsClient($this->client);
-        $this->primitive = new PrimitiveClient($this->client);
-        $this->union = new UnionClient($this->client);
+        $this->options = $options ?? [];
+        $this->container = new ContainerClient($this->client, $this->options);
+        $this->contentType = new ContentTypeClient($this->client, $this->options);
+        $this->enum = new EnumClient($this->client, $this->options);
+        $this->httpMethods = new HttpMethodsClient($this->client, $this->options);
+        $this->object = new ObjectClient($this->client, $this->options);
+        $this->params = new ParamsClient($this->client, $this->options);
+        $this->primitive = new PrimitiveClient($this->client, $this->options);
+        $this->put = new PutClient($this->client, $this->options);
+        $this->union = new UnionClient($this->client, $this->options);
     }
 }

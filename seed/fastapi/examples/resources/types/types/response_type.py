@@ -5,16 +5,11 @@ from ....types.type import Type
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 import pydantic
-
-
 class ResponseType(UniversalBaseModel):
     type: Type
-
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid

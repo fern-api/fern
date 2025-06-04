@@ -18,6 +18,7 @@ public partial class SeedExhaustiveClient
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
+                { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
                 { "X-Fern-SDK-Name", "SeedExhaustive" },
                 { "X-Fern-SDK-Version", Version.Current },
@@ -42,17 +43,17 @@ public partial class SeedExhaustiveClient
         Types = new TypesClient(_client);
     }
 
-    public EndpointsClient Endpoints { get; init; }
+    public EndpointsClient Endpoints { get; }
 
-    public GeneralErrorsClient GeneralErrors { get; init; }
+    public GeneralErrorsClient GeneralErrors { get; }
 
-    public InlinedRequestsClient InlinedRequests { get; init; }
+    public InlinedRequestsClient InlinedRequests { get; }
 
-    public NoAuthClient NoAuth { get; init; }
+    public NoAuthClient NoAuth { get; }
 
-    public NoReqBodyClient NoReqBody { get; init; }
+    public NoReqBodyClient NoReqBody { get; }
 
-    public ReqWithHeadersClient ReqWithHeaders { get; init; }
+    public ReqWithHeadersClient ReqWithHeaders { get; }
 
-    public TypesClient Types { get; init; }
+    public TypesClient Types { get; }
 }

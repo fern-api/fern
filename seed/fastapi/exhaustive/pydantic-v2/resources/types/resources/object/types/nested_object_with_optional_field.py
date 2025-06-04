@@ -4,14 +4,8 @@ from ......core.pydantic_utilities import UniversalBaseModel
 import typing
 from .object_with_optional_field import ObjectWithOptionalField
 import pydantic
-
-
 class NestedObjectWithOptionalField(UniversalBaseModel):
     string: typing.Optional[str] = None
-    nested_object: typing.Optional[ObjectWithOptionalField] = pydantic.Field(
-        alias="NestedObject", default=None
-    )
-
-    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-        extra="forbid"
-    )  # type: ignore # Pydantic v2
+    nested_object: typing.Optional[ObjectWithOptionalField] = pydantic.Field(alias="NestedObject", default=None)
+    
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

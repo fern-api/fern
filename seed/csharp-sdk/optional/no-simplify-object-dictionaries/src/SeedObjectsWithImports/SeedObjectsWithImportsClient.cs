@@ -29,5 +29,5 @@ public partial class SeedObjectsWithImportsClient
         Optional = new OptionalClient(_client);
     }
 
-    public OptionalClient Optional { get; init; }
+    public OptionalClient Optional { get; }
 }

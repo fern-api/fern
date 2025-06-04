@@ -16,7 +16,7 @@
                     "from seed import SeedMultiLineDocs"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedMultiLineDocs(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedMultiLineDocs(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -55,7 +55,7 @@
                         "from seed import AsyncSeedMultiLineDocs"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedMultiLineDocs(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedMultiLineDocs(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -106,7 +106,7 @@
                     "from seed import SeedMultiLineDocs"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedMultiLineDocs(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedMultiLineDocs(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -161,7 +161,7 @@
                         "from seed import AsyncSeedMultiLineDocs"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedMultiLineDocs(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedMultiLineDocs(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

@@ -40,7 +40,7 @@
     "@types/lodash": "^4.17.4",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "endent": "^2.1.0",
-    "esbuild": "^0.24.0",
+    "esbuild": "^0.25.0",
     "lodash": "^4.17.21",
     "tsup": "^8.3.5",
     "zod": "^3.22.3",
@@ -51,6 +51,6 @@
     "prettier": "^3.4.2",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.9"
   }
 }

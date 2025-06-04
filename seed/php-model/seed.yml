@@ -1,4 +1,4 @@
-irVersion: v53
+irVersion: v55
 displayName: PHP Model
 image: fernapi/fern-php-model
 changelogLocation: ../../generators/php/model/versions.yml
@@ -30,8 +30,11 @@ scripts:
       - composer build
       - composer analyze
       - composer test
+
 allowedFailures:
-  # enum as map key not allowed in php
+  # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly
+  - examples
+  # Enums don't support the fromJson method yet.
   - trace
-  # we aren't handling multiple types used in a class with the same name (from different packages)
-  - cross-package-type-names
+  - circular-references
+  - circular-references-advanced

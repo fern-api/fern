@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using SeedValidation.Core;
 
 namespace SeedValidation;
@@ -32,19 +31,17 @@ public partial class SeedValidationClient
         _client = new RawClient(clientOptions);
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.CreateAsync(
     ///     new CreateRequest
     ///     {
     ///         Decimal = 2.2,
     ///         Even = 100,
-    ///         Name = "foo",
+    ///         Name = "fern",
     ///         Shape = Shape.Square,
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Type> CreateAsync(
         CreateRequest request,
         RequestOptions? options = null,
@@ -52,8 +49,8 @@ public partial class SeedValidationClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -64,9 +61,9 @@ public partial class SeedValidationClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<Type>(responseBody)!;
@@ -77,25 +74,26 @@ public partial class SeedValidationClient
             }
         }
 
-        throw new SeedValidationApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedValidationApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.GetAsync(
     ///     new GetRequest
     ///     {
     ///         Decimal = 2.2,
     ///         Even = 100,
-    ///         Name = "foo",
+    ///         Name = "fern",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Type> GetAsync(
         GetRequest request,
         RequestOptions? options = null,
@@ -107,8 +105,8 @@ public partial class SeedValidationClient
         _query["even"] = request.Even.ToString();
         _query["name"] = request.Name;
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
@@ -119,9 +117,9 @@ public partial class SeedValidationClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<Type>(responseBody)!;
@@ -132,10 +130,13 @@ public partial class SeedValidationClient
             }
         }
 
-        throw new SeedValidationApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedValidationApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

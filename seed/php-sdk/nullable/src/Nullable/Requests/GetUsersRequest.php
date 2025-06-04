@@ -7,9 +7,9 @@ use Seed\Core\Json\JsonSerializableType;
 class GetUsersRequest extends JsonSerializableType
 {
     /**
-     * @var array<?string> $usernames
+     * @var ?array<string> $usernames
      */
-    public array $usernames;
+    public ?array $usernames;
 
     /**
      * @var ?string $avatar
@@ -17,14 +17,14 @@ class GetUsersRequest extends JsonSerializableType
     public ?string $avatar;
 
     /**
-     * @var array<?bool> $activated
+     * @var ?array<bool> $activated
      */
-    public array $activated;
+    public ?array $activated;
 
     /**
-     * @var array<?string> $tags
+     * @var ?array<?string> $tags
      */
-    public array $tags;
+    public ?array $tags;
 
     /**
      * @var ?bool $extra
@@ -33,20 +33,20 @@ class GetUsersRequest extends JsonSerializableType
 
     /**
      * @param array{
-     *   usernames: array<?string>,
+     *   usernames?: ?array<string>,
      *   avatar?: ?string,
-     *   activated: array<?bool>,
-     *   tags: array<?string>,
+     *   activated?: ?array<bool>,
+     *   tags?: ?array<?string>,
      *   extra?: ?bool,
      * } $values
      */
     public function __construct(
-        array $values,
+        array $values = [],
     ) {
-        $this->usernames = $values['usernames'];
+        $this->usernames = $values['usernames'] ?? null;
         $this->avatar = $values['avatar'] ?? null;
-        $this->activated = $values['activated'];
-        $this->tags = $values['tags'];
+        $this->activated = $values['activated'] ?? null;
+        $this->tags = $values['tags'] ?? null;
         $this->extra = $values['extra'] ?? null;
     }
 }

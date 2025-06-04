@@ -91,7 +91,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"data\": {\n        \"id\": \"id\",\n        \"name\": \"name\"\n    }\n}",
+              "body": "{\n    \"data\": {\n        \"id\": \"id\",\n        \"name\": \"name\"\n    },\n    \"metadata\": {\n        \"metadata\": \"metadata\"\n    },\n    \"docs\": \"docs\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -169,7 +169,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"data\": {\n        \"id\": \"id\",\n        \"name\": \"name\"\n    }\n}",
+              "body": "{\n    \"data\": {\n        \"id\": \"id\",\n        \"name\": \"name\"\n    },\n    \"metadata\": {\n        \"metadata\": \"metadata\"\n    },\n    \"docs\": \"docs\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -325,7 +325,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"data\": {\n        \"id\": \"id\",\n        \"name\": \"name\"\n    }\n}",
+              "body": "{\n    \"data\": {\n        \"id\": \"id\",\n        \"name\": \"name\"\n    },\n    \"metadata\": {\n        \"metadata\": \"metadata\"\n    },\n    \"docs\": \"docs\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -403,7 +403,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"data\": {\n        \"id\": \"id\",\n        \"name\": \"name\"\n    }\n}",
+              "body": "{\n    \"data\": {\n        \"id\": \"id\",\n        \"name\": \"name\"\n    },\n    \"metadata\": {\n        \"metadata\": \"metadata\"\n    },\n    \"docs\": \"docs\"\n}",
               "_postman_previewlanguage": "json"
             }
           ]

@@ -15,15 +15,15 @@ class GradedResponseV2 extends JsonSerializableType
     public string $submissionId;
 
     /**
-     * @var array<string, mixed> $testCases
+     * @var array<string, TestCaseGrade> $testCases
      */
-    #[JsonProperty('testCases'), ArrayType(['string' => 'mixed'])]
+    #[JsonProperty('testCases'), ArrayType(['string' => TestCaseGrade::class])]
     public array $testCases;
 
     /**
      * @param array{
      *   submissionId: string,
-     *   testCases: array<string, mixed>,
+     *   testCases: array<string, TestCaseGrade>,
      * } $values
      */
     public function __construct(
@@ -31,5 +31,13 @@ class GradedResponseV2 extends JsonSerializableType
     ) {
         $this->submissionId = $values['submissionId'];
         $this->testCases = $values['testCases'];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

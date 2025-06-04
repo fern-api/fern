@@ -16,7 +16,7 @@
                     "from seed import SeedApiWideBasePath"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedApiWideBasePath(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedApiWideBasePath(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -71,7 +71,7 @@
                         "from seed import AsyncSeedApiWideBasePath"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedApiWideBasePath(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedApiWideBasePath(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

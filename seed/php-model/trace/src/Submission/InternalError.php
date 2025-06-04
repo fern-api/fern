@@ -23,4 +23,12 @@ class InternalError extends JsonSerializableType
     ) {
         $this->exceptionInfo = $values['exceptionInfo'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

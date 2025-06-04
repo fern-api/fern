@@ -16,6 +16,8 @@ func do() () {
     client.ExtendedInlineRequestBody(
         context.TODO(),
         &fern.Inlined{
+            Name: "name",
+            Docs: "docs",
             Unique: "unique",
         },
     )

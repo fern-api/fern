@@ -2,5 +2,4 @@
 
 import typing
 from .key_type import KeyType
-
 Key = typing.Union[KeyType, typing.Literal["default"]]

@@ -41,4 +41,12 @@ class Directory extends JsonSerializableType
         $this->files = $values['files'] ?? null;
         $this->directories = $values['directories'] ?? null;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->toJson();
+    }
 }

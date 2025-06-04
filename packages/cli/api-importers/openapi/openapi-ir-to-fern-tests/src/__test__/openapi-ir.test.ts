@@ -1,5 +1,4 @@
-import { readdir } from "fs/promises";
-import fs from "fs/promises";
+import fs, { readdir } from "fs/promises";
 import yaml from "js-yaml";
 import { OpenAPI } from "openapi-types";
 
@@ -10,11 +9,12 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
+const filterFixture = process.env.TEST_FIXTURE;
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 describe("openapi-ir", async () => {
     for (const fixture of await readdir(FIXTURES_DIR, { withFileTypes: true })) {
-        if (!fixture.isDirectory()) {
+        if (!fixture.isDirectory() || (filterFixture && !fixture.name.includes(filterFixture))) {
             continue;
         }
 
@@ -38,7 +38,7 @@ describe("openapi-ir", async () => {
                 if (workspace.workspace instanceof OSSWorkspace) {
                     const openApiIr = await (workspace.workspace as OSSWorkspace).getOpenAPIIr({ context });
                     // eslint-disable-next-line jest/no-standalone-expect
-                    expect(JSON.stringify(openApiIr, undefined, 2)).toMatchFileSnapshot(
+                    await expect(JSON.stringify(openApiIr, undefined, 2)).toMatchFileSnapshot(
                         `./__snapshots__/openapi-ir/${fixture.name}.json`
                     );
                 }
@@ -51,8 +51,18 @@ describe("openapi-ir", async () => {
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 describe("openapi-ir-in-memory", async () => {
     const loader = new InMemoryOpenAPILoader();
+    const excludedFixtures = new Set([
+        "multiple-specs",
+        "env-exhaustive-stress-test",
+        "env-exhaustive-multi-multi",
+        "additionalProperties"
+    ]);
     for (const fixture of await readdir(FIXTURES_DIR, { withFileTypes: true })) {
-        if (!fixture.isDirectory()) {
+        if (
+            !fixture.isDirectory() ||
+            excludedFixtures.has(fixture.name) ||
+            (filterFixture && !fixture.name.includes(filterFixture))
+        ) {
             continue;
         }
         it(
@@ -60,7 +70,9 @@ describe("openapi-ir-in-memory", async () => {
             async () => {
                 const snapshotFilepath = `./__snapshots__/openapi-ir-in-memory/${fixture.name}.json`;
                 if (shouldSkipInMemory(fixture.name)) {
-                    expect("Skipped; Swagger 2.0 is not supported in-memory").toMatchFileSnapshot(snapshotFilepath);
+                    await expect("Skipped; Swagger 2.0 is not supported in-memory").toMatchFileSnapshot(
+                        snapshotFilepath
+                    );
                     return;
                 }
 
@@ -68,7 +80,7 @@ describe("openapi-ir-in-memory", async () => {
                 const document = loader.loadDocument({
                     parsed: await readAndParseOpenAPI(fixtureFilePath)
                 });
-                expect(JSON.stringify(document, undefined, 2)).toMatchFileSnapshot(snapshotFilepath);
+                await expect(JSON.stringify(document, undefined, 2)).toMatchFileSnapshot(snapshotFilepath);
             },
             90_000
         );

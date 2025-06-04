@@ -13,5 +13,5 @@
 export interface Moment {
     id: string;
     date: string;
-    datetime: Date;
+    datetime: string;
 }

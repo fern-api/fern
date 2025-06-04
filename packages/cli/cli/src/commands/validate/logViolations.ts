@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import { eq } from "lodash-es";
 
 import { formatLog } from "@fern-api/cli-logger";
 import { assertNever } from "@fern-api/core-utils";
@@ -15,23 +16,54 @@ export function logViolations({
     context,
     violations,
     logWarnings,
-    logSummary = true
+    logSummary = true,
+    logBreadcrumbs = true,
+    elapsedMillis = 0
 }: {
     context: TaskContext;
     violations: ValidationViolation[];
     logWarnings: boolean;
     logSummary?: boolean;
+    logBreadcrumbs?: boolean;
+    elapsedMillis?: number;
 }): LogViolationsResponse {
-    const stats = getViolationStats(violations);
-    if (logSummary) {
-        logViolationsSummary({ context, stats, logWarnings });
+    // dedupe violations before processing
+    const deduplicatedViolations: ValidationViolation[] = [];
+    const record: Record<string, ValidationViolation[]> = {};
+    for (const violation of violations) {
+        const key = JSON.stringify(violation.nodePath);
+        const existingViolations = record[key] ?? [];
+        const isDuplicate = existingViolations.some(
+            (existingViolation) =>
+                existingViolation.message === violation.message &&
+                existingViolation.nodePath.length === violation.nodePath.length &&
+                existingViolation.nodePath.every((item, index) => eq(item, violation.nodePath[index])) &&
+                existingViolation.relativeFilepath === violation.relativeFilepath &&
+                existingViolation.severity === violation.severity
+        );
+        if (!isDuplicate) {
+            deduplicatedViolations.push(violation);
+            record[key] = [...existingViolations, violation];
+        }
     }
+    violations = deduplicatedViolations;
 
+    const stats = getViolationStats(violations);
     const violationsByNodePath = groupViolationsByNodePath(violations);
 
-    for (const [nodePath, violations] of violationsByNodePath) {
-        const relativeFilepath = violations[0]?.relativeFilepath ?? "";
-        logViolationsGroup({ logWarnings, relativeFilepath, nodePath, violations, context });
+    // log the violations in sorted order so that output across runs is easier
+    // to compare and ete test snapshots work
+    for (const nodePath of Array.from(violationsByNodePath.keys()).sort()) {
+        const violations = violationsByNodePath.get(nodePath);
+        if (violations) {
+            const configRelativeFilepath = violations[0]?.relativeFilepath ?? "";
+            logViolationsGroup({ logWarnings, logBreadcrumbs, configRelativeFilepath, nodePath, violations, context });
+        }
+    }
+
+    // log the summary at the end so that it's not pushed out of view by the violations
+    if (logSummary) {
+        logViolationsSummary({ context, stats, logWarnings, elapsedMillis });
     }
 
     return {
@@ -40,22 +72,26 @@ export function logViolations({
 }
 
 function groupViolationsByNodePath(violations: ValidationViolation[]): Map<NodePath, ValidationViolation[]> {
-    const map = new Map<NodePath, ValidationViolation[]>();
+    const record: Record<string, ValidationViolation[]> = {};
     for (const violation of violations) {
-        map.set(violation.nodePath, [...(map.get(violation.nodePath) ?? []), violation]);
+        const key = JSON.stringify(violation.nodePath);
+        const existingViolations = record[key] ?? [];
+        record[key] = [...existingViolations, violation];
     }
-    return map;
+    return new Map(Object.entries(record).map(([key, violations]) => [JSON.parse(key), violations]));
 }
 
 function logViolationsGroup({
     logWarnings,
-    relativeFilepath,
+    logBreadcrumbs,
+    configRelativeFilepath,
     nodePath,
     violations,
     context
 }: {
     logWarnings: boolean;
-    relativeFilepath: string;
+    logBreadcrumbs: boolean;
+    configRelativeFilepath: string;
     nodePath: NodePath;
     violations: ValidationViolation[];
     context: TaskContext;
@@ -64,10 +100,14 @@ function logViolationsGroup({
     if (severity === "warning" && !logWarnings) {
         return;
     }
+    let title = "";
     const violationMessages = violations
         .map((violation) => {
             if (violation.severity === "warning" && !logWarnings) {
                 return null;
+            }
+            if (title === "") {
+                title = violation.relativeFilepath;
             }
             return violation.message;
         })
@@ -76,18 +116,21 @@ function logViolationsGroup({
     context.logger.log(
         getLogLevelForSeverity(severity),
         formatLog({
-            breadcrumbs: [
-                relativeFilepath,
-                ...nodePath.map((nodePathItem) => {
-                    let itemStr = typeof nodePathItem === "string" ? nodePathItem : nodePathItem.key;
-                    if (typeof nodePathItem !== "string" && nodePathItem.arrayIndex != null) {
-                        itemStr += `[${nodePathItem.arrayIndex}]`;
-                    }
-                    return itemStr;
-                })
-            ],
-            title: violationMessages
-        })
+            breadcrumbs: logBreadcrumbs
+                ? [
+                      configRelativeFilepath,
+                      ...nodePath.map((nodePathItem) => {
+                          let itemStr = typeof nodePathItem === "string" ? nodePathItem : nodePathItem.key;
+                          if (typeof nodePathItem !== "string" && nodePathItem.arrayIndex != null) {
+                              itemStr += `[${nodePathItem.arrayIndex}]`;
+                          }
+                          return itemStr;
+                      })
+                  ]
+                : [],
+            title,
+            subtitle: violationMessages
+        }) + "\n" // empty line to separate each group
     );
 }
 
@@ -104,7 +147,7 @@ function getLogLevelForSeverity(severity: ValidationViolation["severity"]) {
         case "fatal":
             return LogLevel.Error;
         case "error":
-            return LogLevel.Warn;
+            return LogLevel.Error;
         case "warning":
             return LogLevel.Warn;
         default:
@@ -115,22 +158,25 @@ function getLogLevelForSeverity(severity: ValidationViolation["severity"]) {
 function logViolationsSummary({
     stats,
     context,
-    logWarnings
+    logWarnings,
+    elapsedMillis = 0
 }: {
     stats: ViolationStats;
     context: TaskContext;
     logWarnings: boolean;
+    elapsedMillis?: number;
 }): void {
     const { numFatal, numErrors, numWarnings } = stats;
 
-    let message = `Found ${numFatal} errors and ${numErrors + numWarnings} warnings.`;
+    const suffix = elapsedMillis > 0 ? ` in ${(elapsedMillis / 1000).toFixed(3)} seconds.` : ".";
+    let message = `Found ${numFatal + numErrors} errors and ${numWarnings} warnings` + suffix;
     if (!logWarnings && numWarnings > 0) {
         message += " Run fern check --warnings to print out the warnings not shown.";
     }
 
-    if (numFatal > 0) {
+    if (numFatal + numErrors > 0) {
         context.logger.error(message);
-    } else if (numErrors + numWarnings > 0) {
+    } else if (numWarnings > 0) {
         context.logger.warn(message);
     } else {
         context.logger.info(chalk.green("✓ All checks passed"));

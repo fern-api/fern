@@ -4,14 +4,12 @@ from .movie import Movie
 import typing
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
-
-
 class ExtendedMovie(Movie):
     """
     Examples
     --------
     from seed.examples.resources.types import ExtendedMovie
-
+    
     ExtendedMovie(
         id="movie-sda231x",
         title="Pulp Fiction",
@@ -27,14 +25,10 @@ class ExtendedMovie(Movie):
         revenue=1000000,
     )
     """
-
     cast: typing.List[str]
-
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid

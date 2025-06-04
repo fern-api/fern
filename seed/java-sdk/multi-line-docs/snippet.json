@@ -1,0 +1,31 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "bec8d744",
+            "id": {
+                "method": "GET",
+                "path": "/users/{userId}",
+                "identifier_override": "endpoint_user.getUser"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.multiLineDocs.SeedMultiLineDocsClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMultiLineDocsClient client = SeedMultiLineDocsClient\n            .builder()\n            .build();\n\n        client.user().getUser(\"userId\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.multiLineDocs.SeedMultiLineDocsClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMultiLineDocsClient client = SeedMultiLineDocsClient\n            .builder()\n            .build();\n\n        client.user().getUser(\"userId\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "25697ac4",
+            "id": {
+                "method": "POST",
+                "path": "/users",
+                "identifier_override": "endpoint_user.createUser"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.multiLineDocs.SeedMultiLineDocsClient;\nimport com.seed.multiLineDocs.resources.user.requests.CreateUserRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMultiLineDocsClient client = SeedMultiLineDocsClient\n            .builder()\n            .build();\n\n        client.user().createUser(\n            CreateUserRequest\n                .builder()\n                .name(\"name\")\n                .age(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.multiLineDocs.SeedMultiLineDocsClient;\nimport com.seed.multiLineDocs.resources.user.requests.CreateUserRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMultiLineDocsClient client = SeedMultiLineDocsClient\n            .builder()\n            .build();\n\n        client.user().createUser(\n            CreateUserRequest\n                .builder()\n                .name(\"name\")\n                .age(1)\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

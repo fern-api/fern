@@ -1,15 +1,5 @@
 from typing import List
 
-import fern.ir.resources as ir_types
-from typing_extensions import Never
-
-from fern_python.codegen import AST
-from fern_python.external_dependencies import FastAPI
-from fern_python.external_dependencies.starlette import Starlette
-from fern_python.generators.fastapi.service_generator.endpoint_parameters.request.file_upload_request_endpoint_parameter import (
-    FileUploadRequestEndpointParameters,
-)
-
 from ..context import FastApiGeneratorContext
 from ..custom_config import FastAPICustomConfig
 from .endpoint_parameters import (
@@ -21,6 +11,15 @@ from .endpoint_parameters import (
     QueryEndpointParameter,
     ReferencedRequestEndpointParameter,
 )
+from fern_python.codegen import AST
+from fern_python.external_dependencies import FastAPI
+from fern_python.external_dependencies.starlette import Starlette
+from fern_python.generators.fastapi.service_generator.endpoint_parameters.request.file_upload_request_endpoint_parameter import (
+    FileUploadRequestEndpointParameters,
+)
+from typing_extensions import Never
+
+import fern.ir.resources as ir_types
 
 
 class EndpointGenerator:
@@ -105,6 +104,7 @@ class EndpointGenerator:
             json=lambda json_response: True,
             streaming=lambda _: True,
             stream_parameter=lambda _: True,
+            bytes=lambda _: False,
         )
 
     def _get_return_type(self) -> AST.TypeHint:
@@ -368,6 +368,7 @@ class EndpointGenerator:
             text=lambda _: AST.TypeHint.str_(),
             streaming=lambda _: raise_streaming_unsupported(),
             stream_parameter=lambda _: raise_stream_parameter_unsupported(),
+            bytes=lambda _: raise_bytes_response_unsupported(),
         )
 
     def _get_json_response_body_type(
@@ -403,6 +404,10 @@ def raise_streaming_unsupported() -> Never:
 
 def raise_bytes_unsupported() -> Never:
     raise RuntimeError("bytes request is not supported")
+
+
+def raise_bytes_response_unsupported() -> Never:
+    raise RuntimeError("bytes response is not supported")
 
 
 def raise_json_nested_property_as_response_unsupported() -> Never:

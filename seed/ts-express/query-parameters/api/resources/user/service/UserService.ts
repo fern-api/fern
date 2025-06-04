@@ -73,7 +73,9 @@ export class UserService {
                     },
                     next,
                 );
-                next();
+                if (res.writableEnded) {
+                    next();
+                }
             } catch (error) {
                 if (error instanceof errors.SeedQueryParametersError) {
                     console.warn(

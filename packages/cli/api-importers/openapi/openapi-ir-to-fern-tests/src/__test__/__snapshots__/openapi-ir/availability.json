@@ -1,6 +1,7 @@
 {
   "title": "Deprecated params and fields",
   "servers": [],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -272,7 +273,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "GET",
       "path": "/collection/{id}/{active_id}/{deprecated_ref_id}/{x-fern-availability_path_param}",
@@ -392,7 +393,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/success-ref",
@@ -521,7 +522,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "method": "POST",
       "path": "/success-inline-property-deprecation",
@@ -629,7 +630,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "availability": "Deprecated",
       "method": "POST",
@@ -738,7 +739,7 @@
         "type": "json"
       },
       "errors": {},
-      "server": [],
+      "servers": [],
       "authed": false,
       "availability": "Beta",
       "method": "POST",
@@ -778,7 +779,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "DeprecatedParam": {

@@ -5,7 +5,7 @@ namespace SeedTrace.Test.Unit.MockServer;
 [TestFixture]
 public class DeleteProblemTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         Server
@@ -17,8 +17,6 @@ public class DeleteProblemTest : BaseMockServerTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () => await Client.Problem.DeleteProblemAsync("problemId", RequestOptions)
-        );
+        Assert.DoesNotThrowAsync(async () => await Client.Problem.DeleteProblemAsync("problemId"));
     }
 }

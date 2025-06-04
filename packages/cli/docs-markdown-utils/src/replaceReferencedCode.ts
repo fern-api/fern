@@ -28,8 +28,7 @@ export async function replaceReferencedCode({
         return markdown;
     }
 
-    // TODO: add support for other props, such as title, language, line height, etc
-    const regex = /([ \t]*)<Code\s+src={?['"]([^'"]+)['"](?! \+)}?\s*\/>/g;
+    const regex = /([ \t]*)<Code(?:\s+[^>]*?)?\s+src={?['"]([^'"]+)['"](?! \+)}?((?:\s+[^>]*)?)\/>/g;
 
     let newMarkdown = markdown;
 
@@ -58,7 +57,36 @@ export async function replaceReferencedCode({
             }
             const title = filepath.split("/").pop();
             if (title != null) {
-                metastring += ` title="${title}"`;
+                metastring += ` title={"${title}"}`;
+            }
+
+            // Extract
+            const additionalProps = match[3]?.trim() || "";
+            if (additionalProps) {
+                // Parse and add any additional props to the metastring
+                const propsRegex = /(\w+)=(?:{([^}]+)}|"([^"]+)")/g;
+                let propMatch;
+                while ((propMatch = propsRegex.exec(additionalProps)) !== null) {
+                    const propName = propMatch[1];
+                    const propValue = propMatch[2] || propMatch[3];
+                    if (propName && propValue && propName !== "src") {
+                        metastring += ` ${propName}=${propValue.includes("{") ? propValue : `{${propValue}}`}`;
+                    }
+                }
+            }
+
+            // Extract props before src
+            const beforeSrcProps = matchString?.split("src=")[0]?.trim() ?? "";
+            if (beforeSrcProps) {
+                const beforePropsRegex = /(\w+)=(?:{([^}]+)}|"([^"]+)")/g;
+                let beforePropMatch;
+                while ((beforePropMatch = beforePropsRegex.exec(beforeSrcProps)) !== null) {
+                    const propName = beforePropMatch[1];
+                    const propValue = beforePropMatch[2] || beforePropMatch[3];
+                    if (propName && propValue && propName !== "src") {
+                        metastring += ` ${propName}=${propValue.includes("{") ? propValue : `{${propValue}}`}`;
+                    }
+                }
             }
 
             // TODO: if the code content includes ```, add more backticks to avoid conflicts
@@ -69,11 +97,10 @@ export async function replaceReferencedCode({
                 .join("\n");
             replacement = replacement + "\n"; // add newline after the code block
             newMarkdown = newMarkdown.replace(matchString, replacement);
+
+            context.logger.error(`Generated markdown:\n${newMarkdown}`);
         } catch (e) {
-            context.failAndThrow(
-                `Failed to read markdown file "${src}" referenced in ${absolutePathToMarkdownFile}`,
-                e
-            );
+            context.logger.warn(`Failed to read markdown file "${src}" referenced in ${absolutePathToMarkdownFile}`);
             break;
         }
     }

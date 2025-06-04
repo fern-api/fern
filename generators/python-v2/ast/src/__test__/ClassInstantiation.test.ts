@@ -17,7 +17,7 @@ describe("ClassInstantiation", () => {
         const writer = new Writer();
         invocation.write(writer);
 
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("should write a class instantiation with one positional arg", async () => {
@@ -29,7 +29,7 @@ describe("ClassInstantiation", () => {
         const writer = new Writer();
         invocation.write(writer);
 
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("should write a class instantiation with one positional arg and one kwarg", async () => {
@@ -44,7 +44,7 @@ describe("ClassInstantiation", () => {
         const writer = new Writer();
         invocation.write(writer);
 
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("should write a class instantiation with multiple positional and kwarg args", async () => {
@@ -61,7 +61,7 @@ describe("ClassInstantiation", () => {
         const writer = new Writer();
         invocation.write(writer);
 
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 
     it("should write a class instantiation with a parent", async () => {
@@ -76,6 +76,6 @@ describe("ClassInstantiation", () => {
         const writer = new Writer();
         invocation.write(writer);
 
-        expect(await writer.toStringFormatted()).toMatchSnapshot();
+        expect(writer.toString()).toMatchSnapshot();
     });
 });

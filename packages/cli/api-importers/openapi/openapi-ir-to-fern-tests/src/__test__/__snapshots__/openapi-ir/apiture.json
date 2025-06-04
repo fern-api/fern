@@ -6,6 +6,7 @@
       "url": "https://api.apiture.com/banking"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {
       "Accounts": {
@@ -763,7 +764,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Return a paginated list of the customer's accounts, consisting of internal accounts at this financial institution and accounts at other financial institutions, if any.",
       "authed": true,
       "method": "GET",
@@ -1529,7 +1530,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Return details of the customer's internal account.",
       "authed": true,
       "method": "GET",
@@ -2439,7 +2440,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Return a list of the requested internal accounts' balances. The `accounts` query parameter is a list of account IDs which typically comes from the `getAccounts` operation response. The returned list does not include external accounts. The caller must have entitlements to view each account's details, as indicated by a `true` value for `account.allows.view`. Requests to list balances for accounts the user is not allowed to read results in a 403 Forbidden response.\n\nThe response may be incomplete. Given a `Retry-After` response header, the client can retry the operation after a short delay, requesting only the accounts which are incomplete; see the 202 Accepted response for details.",
       "authed": true,
       "method": "GET",
@@ -3156,7 +3157,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Return a collection of account joint owners. The user must have the `account.manageJointOwners` permission to use this operation.",
       "authed": true,
       "method": "GET",
@@ -3899,7 +3900,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Return a paginated list of a customer's accounts that are eligible for ACH transfers based on allowed privileges.\n\nOptionally, an agent can access a business customer's ACH accounts when acting on behalf of that business customer via the optional `customerId` query parameter.",
       "authed": true,
       "method": "GET",
@@ -4683,7 +4684,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Return a paginated list of a customer's accounts that are eligible to serve as overdraft protection accounts for the given account. An overdraft protection account is a deposit account that the financial institution can transfer funds from to prevent the account balance from going negative and incurring non-sufficient funds fees.\n\nThe user must have the `allows.manageOverdraftAccounts` permission on the account to use this operation.\n\nTo obtain available balances for these accounts, use [`listAccountBalances`](#op-listAccountBalances).",
       "authed": true,
       "method": "GET",
@@ -5302,7 +5303,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Return the JSON representation of this account's overdraft protection settings.",
       "authed": true,
       "method": "GET",
@@ -6109,7 +6110,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Perform a partial update of the overdraft accounts. Only fields in the request body are updated on the resource; fields which are omitted are not updated. To add, replace, or remove an overdraft account, add, replace, or remove the corresponding account item from the `items` array. Only the account `id` in the items is significant.\n\nThe user must have the `allows.manageOverdraftAccounts` permission on the account to use this operation.",
       "authed": true,
       "method": "PATCH",
@@ -6920,7 +6921,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create and send an invitation to another person to become a joint owner of the account. The invitation will be sent to the invitee's email address. The invitation directs the invitee to a web page to verify and accept the invitation, and if necessary, enroll in digital banking.\n\nThe authenticated user must have the `account.allows.manageJointOwners` permission to use this operation.",
       "authed": true,
       "method": "POST",
@@ -7696,7 +7697,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Look up a financial institution by their country code and either [American Bankers Association routing number](https://www.aba.com/about-us/routing-number), by [International Bank Account Number (IBAN)](https://www.ecbs.org/iban.htm), or by [SWIFT Business Identifier Code (BIC) code](https://www.swift.com/standards/data-standards/bic-business-identifier-code). Optionally, include a list of intermediary institutions that may be necessary to complete international wire transfers.",
       "authed": true,
       "method": "GET",
@@ -8742,7 +8743,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Return a transfer schedule list for this institution.",
       "authed": true,
       "method": "GET",
@@ -9838,7 +9839,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Return daily cutoff times for different money movement processes at a financial institution. Money movement requests (account to account transfers, ACH, wire transfers, etc.) must be submitted before the cutoff time in order for the financial institution to begin processing the request that day. Some [cutoff time types](#schema-cutoffTimeType) may have multiple cutoff times per day.\n\nCutoff times are very slowly changing data. This is a _conditional operation_ when the `If-None-Match` header is used. If the client has a `getCutoffTimes` response and the `ETag` returned from a previous call to this operation, this operation returns a 304 Not Modified when called again if the cutoff times have not changed.",
       "authed": true,
       "method": "GET",
@@ -10777,7 +10778,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Return the transfer date restrictions for a date range and transfer parameters. The result is a list of days and dates that the financial institution does not allow scheduling specific types of transfers.\n\nThis information provides hints to clients, allowing bank customers to select transfer dates from a calendar picker. However, these dates are not strictly enforced; a transfer can still be scheduled to occur on restricted dates but the financial institution may shift the date when funds are drafted to account for holidays, closures, or to adjust based on the risk level of the funding account.",
       "authed": true,
       "method": "GET",
@@ -12603,7 +12604,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Return a [paginated](https://dx.apiture.com/docs/api-documentation/concepts/pagination) collection of transaction history for this internal account. The [`nextPage_url`](https://dx.apiture.com/docs/api-documentation/concepts/links) link in the response, if present, is a pagination link to the next page of transactions for the given filters.\n\nThis operation returns a 403 Forbidden error if the customer does not have `view` permissions in the `account.allows` object, or a 422 Unprocessable Entity if called on an external account.\n\nThe default response lists only recent transactions. Normally, this is transactions for the most recent 30 days, although for high-volume accounts, it may be a shorter period.",
       "authed": true,
       "method": "GET",
@@ -12779,13 +12780,6 @@
                             "label": {
                               "value": {
                                 "value": "label",
-                                "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "id": {
-                              "value": {
-                                "value": "id",
                                 "type": "string"
                               },
                               "type": "primitive"
@@ -13575,7 +13569,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Return a collection of transaction categories. The response is limited to 1,000 categories.\n\nThis is a _conditional operation_ when the `If-None-Match` header is used. If the client has a `transactionCategories` response and the `ETag` returned from a previous call, this operation returns a 304 Not Modified if called again when the categories collection has not changed.",
       "authed": true,
       "method": "GET",
@@ -14335,7 +14329,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Return a [paginated](https://dx.apiture.com/docs/api-documentation/concepts/pagination) collection of transfers. The [nextPage_url](https://dx.apiture.com/docs/api-documentation/concepts/links) in the response is a pagination link.",
       "authed": true,
       "method": "GET",
@@ -15345,7 +15339,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Create a new transfer within the transfers collection. If all the necessary properties are set, the transfer is queued for processing. If the request omits the `schedule.scheduledOn` date, the transfer remains pending/unscheduled until the user sets it via the [`patchTransfer`](#op-patchTransfer) operation.\n\nNote: This operation requires an identity challenge if the financial institution requires the user to proove their identity for some types of transfers. See the \"Challenges API\".",
       "authed": true,
       "method": "POST",
@@ -16058,7 +16052,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Return the JSON representation of this transfer resource.",
       "authed": true,
       "method": "GET",
@@ -16830,7 +16824,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Delete this transfer resource and any resources that are owned by it. Only transfers that have not been processed may be deleted.",
       "authed": true,
       "method": "DELETE",
@@ -17626,7 +17620,7 @@
           ]
         }
       },
-      "server": [],
+      "servers": [],
       "description": "Perform a partial update of this transfer as per [JSON Merge Patch](https://datatracker.ietf.org/doc/html/rfc7396) format and processing rules. Only fields in the request body are updated on the resource; fields which are omitted are not updated.\n\nNote: This operation requires an identity challenge if the financial institution requires the user to prove their identity for some types of transfers. See the \"Challenges API\".",
       "authed": true,
       "method": "PATCH",
@@ -17868,7 +17862,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "accountIds": {
@@ -18139,15 +18133,20 @@
             "generatedName": "accountAllows",
             "key": "allows",
             "schema": {
-              "description": "Flags which indicate the permissions the current authorized user has on this account resource.",
-              "generatedName": "AccountAllows",
-              "schema": "fullAccountPermissions",
-              "groupName": [],
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "generatedName": "accountAllows",
+              "value": {
+                "description": "Flags which indicate the permissions the current authorized user has on this account resource.",
+                "generatedName": "AccountAllows",
+                "schema": "fullAccountPermissions",
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "groupName": [],
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -18204,7 +18203,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -18250,7 +18250,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -18304,14 +18305,19 @@
             "generatedName": "eligibleOverdraftAccountsMaximumOverdraftAccounts",
             "key": "maximumOverdraftAccounts",
             "schema": {
-              "description": "The maximum number of overdraft protection accounts that may be linked to the account.",
-              "schema": {
-                "maximum": 4,
-                "type": "int"
+              "generatedName": "eligibleOverdraftAccountsMaximumOverdraftAccounts",
+              "value": {
+                "description": "The maximum number of overdraft protection accounts that may be linked to the account.",
+                "schema": {
+                  "maximum": 4,
+                  "type": "int"
+                },
+                "generatedName": "EligibleOverdraftAccountsMaximumOverdraftAccounts",
+                "groupName": [],
+                "type": "primitive"
               },
-              "generatedName": "EligibleOverdraftAccountsMaximumOverdraftAccounts",
               "groupName": [],
-              "type": "primitive"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -18427,14 +18433,19 @@
             "generatedName": "overdraftProtectionMaximumOverdraftAccounts",
             "key": "maximumOverdraftAccounts",
             "schema": {
-              "description": "The maximum number of overdraft protection accounts that may be linked to the account.",
-              "schema": {
-                "maximum": 4,
-                "type": "int"
+              "generatedName": "overdraftProtectionMaximumOverdraftAccounts",
+              "value": {
+                "description": "The maximum number of overdraft protection accounts that may be linked to the account.",
+                "schema": {
+                  "maximum": 4,
+                  "type": "int"
+                },
+                "generatedName": "OverdraftProtectionMaximumOverdraftAccounts",
+                "groupName": [],
+                "type": "primitive"
               },
-              "generatedName": "OverdraftProtectionMaximumOverdraftAccounts",
               "groupName": [],
-              "type": "primitive"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -18504,19 +18515,24 @@
             "generatedName": "accountsItems",
             "key": "items",
             "schema": {
-              "description": "The array of items in this page of accounts. This array may be empty.",
+              "generatedName": "accountsItems",
               "value": {
-                "generatedName": "AccountsItemsItem",
-                "schema": "accountItem",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "The array of items in this page of accounts. This array may be empty.",
+                "value": {
+                  "generatedName": "AccountsItemsItem",
+                  "schema": "accountItem",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "generatedName": "AccountsItems",
+                "groupName": [],
+                "type": "array"
               },
-              "generatedName": "AccountsItems",
               "groupName": [],
-              "type": "array"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -18562,7 +18578,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {
@@ -18658,15 +18675,21 @@
             "generatedName": "accountFieldsLabel",
             "key": "label",
             "schema": {
-              "description": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`.",
-              "schema": {
-                "maxLength": 80,
-                "example": "Checking *1008",
-                "type": "string"
+              "generatedName": "accountFieldsLabel",
+              "title": "Account Fields (v1.0.1)",
+              "value": {
+                "description": "The human-readable label for this account. This is either the `nickname` (if assigned for the current customer), or the `product.label` concatenated with the `maskedNumber`.",
+                "schema": {
+                  "maxLength": 80,
+                  "example": "Checking *1008",
+                  "type": "string"
+                },
+                "generatedName": "AccountFieldsLabel",
+                "groupName": [],
+                "type": "primitive"
               },
-              "generatedName": "AccountFieldsLabel",
               "groupName": [],
-              "type": "primitive"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -18691,7 +18714,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -18707,7 +18731,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -18723,7 +18748,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -18844,7 +18870,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {
@@ -18869,7 +18896,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -18885,7 +18913,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {
@@ -18910,7 +18939,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {
@@ -19129,7 +19159,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -19179,7 +19210,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -19250,7 +19282,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -19331,7 +19364,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -19598,7 +19632,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -19675,7 +19710,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -19708,7 +19744,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -19821,7 +19858,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -19890,7 +19928,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -19956,7 +19995,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -20360,7 +20400,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -20440,16 +20481,22 @@
             "generatedName": "transactionFieldsId",
             "key": "id",
             "schema": {
-              "description": "This transaction's unique identifier.",
-              "schema": {
-                "pattern": "^[-_:,.~$a-zA-Z0-9]{6,128}$",
-                "minLength": 6,
-                "maxLength": 128,
-                "type": "string"
+              "generatedName": "transactionFieldsId",
+              "title": "Transaction Fields (v2.1.1)",
+              "value": {
+                "description": "This transaction's unique identifier.",
+                "schema": {
+                  "pattern": "^[-_:,.~$a-zA-Z0-9]{6,128}$",
+                  "minLength": 6,
+                  "maxLength": 128,
+                  "type": "string"
+                },
+                "generatedName": "TransactionFieldsId",
+                "groupName": [],
+                "type": "primitive"
               },
-              "generatedName": "TransactionFieldsId",
               "groupName": [],
-              "type": "primitive"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -20469,7 +20516,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -20486,22 +20534,29 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
             "generatedName": "transactionFieldsOccurredOn",
             "key": "occurredOn",
             "schema": {
-              "description": "The date of the transaction in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.",
-              "schema": {
-                "format": "date",
-                "example": "2023-05-18",
-                "type": "string"
+              "generatedName": "transactionFieldsOccurredOn",
+              "title": "Transaction Fields (v2.1.1)",
+              "value": {
+                "description": "The date of the transaction in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.",
+                "schema": {
+                  "format": "date",
+                  "example": "2023-05-18",
+                  "type": "string"
+                },
+                "generatedName": "TransactionFieldsOccurredOn",
+                "groupName": [],
+                "type": "primitive"
               },
-              "generatedName": "TransactionFieldsOccurredOn",
               "groupName": [],
-              "type": "primitive"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -20575,7 +20630,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -20619,7 +20675,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -20686,7 +20743,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -20708,7 +20766,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -20730,7 +20789,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -20924,23 +20984,30 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
             "generatedName": "transactionCategorizationId",
             "key": "id",
             "schema": {
-              "description": "The unique ID of this transaction's category.",
-              "schema": {
-                "pattern": "^[-_:.~$a-zA-Z0-9]{1,32}$",
-                "minLength": 1,
-                "maxLength": 32,
-                "type": "string"
+              "generatedName": "transactionCategorizationId",
+              "title": "Transaction Categorization (v1.2.1)",
+              "value": {
+                "description": "The unique ID of this transaction's category.",
+                "schema": {
+                  "pattern": "^[-_:.~$a-zA-Z0-9]{1,32}$",
+                  "minLength": 1,
+                  "maxLength": 32,
+                  "type": "string"
+                },
+                "generatedName": "TransactionCategorizationId",
+                "groupName": [],
+                "type": "primitive"
               },
-              "generatedName": "TransactionCategorizationId",
               "groupName": [],
-              "type": "primitive"
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -21230,7 +21297,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -21325,7 +21393,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -21341,7 +21410,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -21409,7 +21479,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -21512,7 +21583,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -21558,7 +21630,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -21581,7 +21654,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -21620,7 +21694,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -21643,7 +21718,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -21666,7 +21742,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -21745,7 +21822,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -21802,7 +21880,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -21919,22 +21998,28 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
             "generatedName": "transferItemState",
             "key": "state",
             "schema": {
-              "description": "The state of this transfer resource.",
-              "generatedName": "TransferItemState",
-              "schema": "transferState",
-              "groupName": [],
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "generatedName": "transferItemState",
+              "value": {
+                "description": "The state of this transfer resource.",
+                "generatedName": "TransferItemState",
+                "schema": "transferState",
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "groupName": [],
+              "type": "optional"
             },
             "audiences": [],
             "readonly": true
@@ -22422,7 +22507,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -22866,7 +22952,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -22889,7 +22976,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -23069,7 +23157,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -23086,7 +23175,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -23288,7 +23378,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},
@@ -23337,7 +23428,8 @@
               "type": "optional"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           }
         ],
         "allOfPropertyConflicts": [],
@@ -23445,7 +23537,8 @@
               "type": "reference"
             },
             "audiences": [],
-            "readonly": false
+            "readonly": false,
+            "writeonly": false
           },
           {
             "conflict": {},

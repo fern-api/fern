@@ -14,6 +14,7 @@ import { HttpMethodsService as endpoints_HttpMethodsService } from "./api/resour
 import { ObjectService as endpoints_ObjectService } from "./api/resources/endpoints/resources/object/service/ObjectService";
 import { ParamsService as endpoints_ParamsService } from "./api/resources/endpoints/resources/params/service/ParamsService";
 import { PrimitiveService as endpoints_PrimitiveService } from "./api/resources/endpoints/resources/primitive/service/PrimitiveService";
+import { PutService as endpoints_PutService } from "./api/resources/endpoints/resources/put/service/PutService";
 import { UnionService as endpoints_UnionService } from "./api/resources/endpoints/resources/union/service/UnionService";
 
 export function register(
@@ -31,6 +32,7 @@ export function register(
             object: endpoints_ObjectService;
             params: endpoints_ParamsService;
             primitive: endpoints_PrimitiveService;
+            put: endpoints_PutService;
             union: endpoints_UnionService;
         };
     },
@@ -42,6 +44,7 @@ export function register(
     (expressApp as any).use("/object", services.endpoints.object.toRouter());
     (expressApp as any).use("/params", services.endpoints.params.toRouter());
     (expressApp as any).use("/primitive", services.endpoints.primitive.toRouter());
+    (expressApp as any).use("", services.endpoints.put.toRouter());
     (expressApp as any).use("/union", services.endpoints.union.toRouter());
     (expressApp as any).use("/req-bodies", services.inlinedRequests.toRouter());
     (expressApp as any).use("/no-auth", services.noAuth.toRouter());

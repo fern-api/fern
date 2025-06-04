@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../../fern-versions-yml.schema.json
 - changelogEntry:
   - summary: |
       Introduces a `collection-name` configuration that allows you to control 

@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using SeedOauthClientCredentialsDefault;
 
 namespace SeedOauthClientCredentialsDefault.Core;
@@ -8,6 +7,8 @@ public partial class OAuthTokenProvider
     private const double BufferInMinutes = 2;
 
     private string? _accessToken;
+
+    private DateTime? _expiresAt;
 
     private string _clientId;
 
@@ -24,7 +25,7 @@ public partial class OAuthTokenProvider
 
     public async Task<string> GetAccessTokenAsync()
     {
-        if (_accessToken == null)
+        if (_accessToken == null || DateTime.UtcNow >= _expiresAt)
         {
             var tokenResponse = await _client
                 .GetTokenAsync(
@@ -32,6 +33,9 @@ public partial class OAuthTokenProvider
                 )
                 .ConfigureAwait(false);
             _accessToken = tokenResponse.AccessToken;
+            _expiresAt = DateTime
+                .UtcNow.AddSeconds(tokenResponse.ExpiresIn)
+                .AddMinutes(-BufferInMinutes);
         }
         return $"Bearer {_accessToken}";
     }

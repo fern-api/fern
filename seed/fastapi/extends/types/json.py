@@ -4,27 +4,21 @@ from .docs import Docs
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 import pydantic
-
-
 class Json(Docs):
     """
     Examples
     --------
     from seed.extends import Json
-
+    
     Json(
         docs="Types extend this type to include a docs and json property.",
         raw='{"docs": true, "json": true}',
     )
     """
-
     raw: str
-
+    
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="forbid"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
     else:
-
         class Config:
             extra = pydantic.Extra.forbid

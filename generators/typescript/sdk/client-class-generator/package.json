@@ -27,15 +27,17 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/ir-sdk": "55.0.0",
+    "@fern-fern/ir-sdk": "58.0.0",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",
+    "lodash-es": "^4.17.21",
     "ts-morph": "^15.1.0",
     "ts-poet": "^6.7.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
+    "@types/lodash-es": "^4.17.12",
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
@@ -43,6 +45,6 @@
     "prettier": "^3.4.2",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "typescript": "5.7.2",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.9"
   }
 }

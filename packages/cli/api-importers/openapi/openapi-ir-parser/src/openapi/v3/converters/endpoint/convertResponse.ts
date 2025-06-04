@@ -96,6 +96,7 @@ export function convertResponse({
                     value: convertedResponse,
                     errors
                 };
+            case "bytes":
             case "file":
             case "text":
             case "streamingText":
@@ -136,7 +137,7 @@ function convertResolvedResponse({
     const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
 
     if (resolvedResponse.content != null) {
-        const isDownloadFile = Object.entries(resolvedResponse.content).find(([_, mediaObject]) => {
+        const binaryContent = Object.entries(resolvedResponse.content).find(([_, mediaObject]) => {
             if (mediaObject.schema == null) {
                 return false;
             }
@@ -145,8 +146,12 @@ function convertResolvedResponse({
                 : mediaObject.schema;
             return resolvedSchema.type === "string" && resolvedSchema.format === "binary";
         });
-        if (isDownloadFile) {
-            return ResponseWithExample.file({ description: resolvedResponse.description, source, statusCode });
+        if (binaryContent) {
+            if (context.options.useBytesForBinaryResponse && streamFormat == null) {
+                return ResponseWithExample.bytes({ description: resolvedResponse.description, source, statusCode });
+            } else {
+                return ResponseWithExample.file({ description: resolvedResponse.description, source, statusCode });
+            }
         }
     }
 

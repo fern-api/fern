@@ -1,10 +1,8 @@
 from typing import Literal, Optional
 
-from typing_extensions import Self
-
 import pydantic
-
 from ...external_dependencies.pydantic import PydanticVersionCompatibility
+from typing_extensions import Self
 
 UnionNamingVersions = Literal["v0", "v1"]
 
@@ -43,6 +41,11 @@ class BasePydanticModelCustomConfig(pydantic.BaseModel):
         settings:
           unions: v1
     ```
+    """
+
+    use_inheritance_for_extended_models: bool = True
+    """
+    Whether to generate Pydantic models that implement inheritance when a model utilizes the Fern `extends` keyword.
     """
 
     use_pydantic_field_aliases: bool = True

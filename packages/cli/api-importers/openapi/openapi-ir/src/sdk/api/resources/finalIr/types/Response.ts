@@ -8,6 +8,7 @@ export type Response =
     | FernOpenapiIr.Response.File_
     | FernOpenapiIr.Response.Json
     | FernOpenapiIr.Response.Text
+    | FernOpenapiIr.Response.Bytes
     | FernOpenapiIr.Response.StreamingSse
     | FernOpenapiIr.Response.StreamingText
     /**
@@ -25,6 +26,10 @@ export namespace Response {
 
     export interface Text extends FernOpenapiIr.TextResponse, _Utils {
         type: "text";
+    }
+
+    export interface Bytes extends FernOpenapiIr.BytesResponse, _Utils {
+        type: "bytes";
     }
 
     export interface StreamingSse extends FernOpenapiIr.JsonResponse, _Utils {
@@ -47,6 +52,7 @@ export namespace Response {
         file: (value: FernOpenapiIr.FileResponse) => _Result;
         json: (value: FernOpenapiIr.JsonResponse) => _Result;
         text: (value: FernOpenapiIr.TextResponse) => _Result;
+        bytes: (value: FernOpenapiIr.BytesResponse) => _Result;
         streamingSse: (value: FernOpenapiIr.JsonResponse) => _Result;
         streamingText: (value: FernOpenapiIr.TextResponse) => _Result;
         streamingJson: (value: FernOpenapiIr.JsonResponse) => _Result;
@@ -87,6 +93,19 @@ export const Response = {
             type: "text",
             _visit: function <_Result>(
                 this: FernOpenapiIr.Response.Text,
+                visitor: FernOpenapiIr.Response._Visitor<_Result>,
+            ) {
+                return FernOpenapiIr.Response._visit(this, visitor);
+            },
+        };
+    },
+
+    bytes: (value: FernOpenapiIr.BytesResponse): FernOpenapiIr.Response.Bytes => {
+        return {
+            ...value,
+            type: "bytes",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.Response.Bytes,
                 visitor: FernOpenapiIr.Response._Visitor<_Result>,
             ) {
                 return FernOpenapiIr.Response._visit(this, visitor);
@@ -141,6 +160,8 @@ export const Response = {
                 return visitor.json(value);
             case "text":
                 return visitor.text(value);
+            case "bytes":
+                return visitor.bytes(value);
             case "streamingSse":
                 return visitor.streamingSse(value);
             case "streamingText":

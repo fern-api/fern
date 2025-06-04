@@ -34,10 +34,8 @@ export async function loadSingleNamespaceAPIWorkspace({
                 ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overrides))
                 : undefined;
         if (definition.schema.type === "protobuf") {
-            const absoluteFilepathToProtobufRoot = join(
-                absolutePathToWorkspace,
-                RelativeFilePath.of(definition.schema.root)
-            );
+            const relativeFilepathToProtobufRoot = RelativeFilePath.of(definition.schema.root);
+            const absoluteFilepathToProtobufRoot = join(absolutePathToWorkspace, relativeFilepathToProtobufRoot);
             if (!(await doesPathExist(absoluteFilepathToProtobufRoot))) {
                 return {
                     didSucceed: false,
@@ -69,12 +67,14 @@ export async function loadSingleNamespaceAPIWorkspace({
                 absoluteFilepathToProtobufRoot,
                 absoluteFilepathToProtobufTarget,
                 absoluteFilepathToOverrides,
+                relativeFilepathToProtobufRoot,
                 generateLocally: definition.schema.localGeneration,
                 settings: {
                     audiences: definition.audiences ?? [],
                     useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? true,
                     shouldUseUndiscriminatedUnionsWithLiterals:
                         definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
+                    shouldUseIdiomaticRequestNames: definition.settings?.shouldUseIdiomaticRequestNames ?? false,
                     optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
                     coerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
                     objectQueryParameters: definition.settings?.objectQueryParameters ?? false,
@@ -87,11 +87,29 @@ export async function loadSingleNamespaceAPIWorkspace({
                     preserveSchemaIds: false,
                     asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1",
                     filter: definition.settings?.filter,
-                    exampleGeneration: undefined
+                    exampleGeneration: undefined,
+                    defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding,
+                    useBytesForBinaryResponse: definition.settings?.useBytesForBinaryResponse ?? false,
+                    respectForwardCompatibleEnums: definition.settings?.respectForwardCompatibleEnums ?? false,
+                    additionalPropertiesDefaultsTo: definition.settings?.additionalPropertiesDefaultsTo ?? false,
+                    typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? true
                 }
             });
             continue;
         }
+
+        if (definition.schema.type === "openrpc") {
+            const relativeFilepathToOpenRpc = RelativeFilePath.of(definition.schema.path);
+            const absoluteFilepathToOpenRpc = join(absolutePathToWorkspace, relativeFilepathToOpenRpc);
+            specs.push({
+                type: "openrpc",
+                absoluteFilepath: absoluteFilepathToOpenRpc,
+                absoluteFilepathToOverrides,
+                namespace
+            });
+            continue;
+        }
+
         const absoluteFilepath = join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.path));
         if (!(await doesPathExist(absoluteFilepath))) {
             return {
@@ -126,6 +144,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                 useTitlesAsName: definition.settings?.shouldUseTitleAsName ?? true,
                 shouldUseUndiscriminatedUnionsWithLiterals:
                     definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
+                shouldUseIdiomaticRequestNames: definition.settings?.shouldUseIdiomaticRequestNames ?? false,
                 optionalAdditionalProperties: definition.settings?.shouldUseOptionalAdditionalProperties ?? true,
                 coerceEnumsToLiterals: definition.settings?.coerceEnumsToLiterals ?? true,
                 objectQueryParameters: definition.settings?.objectQueryParameters ?? false,
@@ -138,7 +157,12 @@ export async function loadSingleNamespaceAPIWorkspace({
                 preserveSchemaIds: false,
                 asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1",
                 filter: definition.settings?.filter,
-                exampleGeneration: definition.settings?.exampleGeneration
+                exampleGeneration: definition.settings?.exampleGeneration,
+                defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding,
+                useBytesForBinaryResponse: definition.settings?.useBytesForBinaryResponse ?? false,
+                respectForwardCompatibleEnums: definition.settings?.respectForwardCompatibleEnums ?? false,
+                additionalPropertiesDefaultsTo: definition.settings?.additionalPropertiesDefaultsTo ?? false,
+                typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? true
             },
             source: {
                 type: "openapi",
@@ -234,7 +258,8 @@ export async function loadAPIWorkspace({
         return {
             didSucceed: true,
             workspace: new OSSWorkspace({
-                specs,
+                specs: specs.filter((spec) => spec.type !== "openrpc"),
+                allSpecs: specs,
                 workspaceName,
                 absoluteFilePath: absolutePathToWorkspace,
                 generatorsConfiguration,

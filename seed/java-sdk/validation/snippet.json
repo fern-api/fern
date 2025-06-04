@@ -1,0 +1,31 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "e49cafdd",
+            "id": {
+                "method": "POST",
+                "path": "/create",
+                "identifier_override": "endpoint_.create"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.validation.SeedValidationClient;\nimport com.seed.validation.requests.CreateRequest;\nimport com.seed.validation.types.Shape;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedValidationClient client = SeedValidationClient\n            .builder()\n            .build();\n\n        client.create(\n            CreateRequest\n                .builder()\n                .decimal(2.2)\n                .even(100)\n                .name(\"fern\")\n                .shape(Shape.SQUARE)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.validation.SeedValidationClient;\nimport com.seed.validation.requests.CreateRequest;\nimport com.seed.validation.types.Shape;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedValidationClient client = SeedValidationClient\n            .builder()\n            .build();\n\n        client.create(\n            CreateRequest\n                .builder()\n                .decimal(2.2)\n                .even(100)\n                .name(\"fern\")\n                .shape(Shape.SQUARE)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "47e06797",
+            "id": {
+                "method": "GET",
+                "path": "/",
+                "identifier_override": "endpoint_.get"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.validation.SeedValidationClient;\nimport com.seed.validation.requests.GetRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedValidationClient client = SeedValidationClient\n            .builder()\n            .build();\n\n        client.get(\n            GetRequest\n                .builder()\n                .decimal(2.2)\n                .even(100)\n                .name(\"fern\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.validation.SeedValidationClient;\nimport com.seed.validation.requests.GetRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedValidationClient client = SeedValidationClient\n            .builder()\n            .build();\n\n        client.get(\n            GetRequest\n                .builder()\n                .decimal(2.2)\n                .even(100)\n                .name(\"fern\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

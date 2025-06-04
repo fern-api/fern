@@ -1,0 +1,1936 @@
+{
+  "types": {
+    "type_dataservice:IndexType": {
+      "name": "IndexType",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "INDEX_TYPE_INVALID"
+          },
+          {
+            "value": "INDEX_TYPE_DEFAULT"
+          },
+          {
+            "value": "INDEX_TYPE_STRICT"
+          }
+        ]
+      }
+    },
+    "type_:Column": {
+      "name": "Column",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "values",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "double"
+                }
+              }
+            }
+          },
+          {
+            "key": "metadata",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_:Metadata"
+              }
+            }
+          },
+          {
+            "key": "indexedData",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_:IndexedData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:DeleteResponse": {
+      "name": "DeleteResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "type_:DescribeResponse": {
+      "name": "DescribeResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "namespaces",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "id",
+                  "value": "type_:NamespaceSummary"
+                }
+              }
+            }
+          },
+          {
+            "key": "dimension",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "uint"
+                }
+              }
+            }
+          },
+          {
+            "key": "fullness",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "double"
+                }
+              }
+            }
+          },
+          {
+            "key": "totalCount",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "uint"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:FetchResponse": {
+      "name": "FetchResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "columns",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "id",
+                  "value": "type_:Column"
+                }
+              }
+            }
+          },
+          {
+            "key": "namespace",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "usage",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_:Usage"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:FieldBehavior": {
+      "name": "FieldBehavior",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "FIELD_BEHAVIOR_UNSPECIFIED"
+          },
+          {
+            "value": "OPTIONAL"
+          },
+          {
+            "value": "REQUIRED"
+          },
+          {
+            "value": "OUTPUT_ONLY"
+          },
+          {
+            "value": "INPUT_ONLY"
+          },
+          {
+            "value": "IMMUTABLE"
+          },
+          {
+            "value": "UNORDERED_LIST"
+          },
+          {
+            "value": "NON_EMPTY_DEFAULT"
+          },
+          {
+            "value": "IDENTIFIER"
+          }
+        ]
+      }
+    },
+    "type_:IndexedData": {
+      "name": "IndexedData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "indices",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "uint"
+                }
+              }
+            }
+          },
+          {
+            "key": "values",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "double"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:ListElement": {
+      "name": "ListElement",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:ListResponse": {
+      "name": "ListResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "columns",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_:ListElement"
+                }
+              }
+            }
+          },
+          {
+            "key": "pagination",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_:Pagination"
+              }
+            }
+          },
+          {
+            "key": "namespace",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "usage",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_:Usage"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:NamespaceSummary": {
+      "name": "NamespaceSummary",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "count",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "uint"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:Pagination": {
+      "name": "Pagination",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "next",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:QueryColumn": {
+      "name": "QueryColumn",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "values",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "double"
+                }
+              }
+            }
+          },
+          {
+            "key": "topK",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "uint"
+                }
+              }
+            }
+          },
+          {
+            "key": "namespace",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "filter",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_:Metadata"
+              }
+            }
+          },
+          {
+            "key": "indexedData",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_:IndexedData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:QueryResponse": {
+      "name": "QueryResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "results",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_:QueryResult"
+                }
+              }
+            }
+          },
+          {
+            "key": "matches",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_:ScoredColumn"
+                }
+              }
+            }
+          },
+          {
+            "key": "namespace",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "usage",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_:Usage"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:QueryResult": {
+      "name": "QueryResult",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "matches",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_:ScoredColumn"
+                }
+              }
+            }
+          },
+          {
+            "key": "namespace",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:ScoredColumn": {
+      "name": "ScoredColumn",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "score",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "double"
+                }
+              }
+            }
+          },
+          {
+            "key": "values",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "metadata",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_:Metadata"
+              }
+            }
+          },
+          {
+            "key": "indexedData",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_:IndexedData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:UpdateResponse": {
+      "name": "UpdateResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "updatedAt",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "datetime"
+                }
+              }
+            }
+          },
+          {
+            "key": "indexType",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_dataservice:IndexType"
+              }
+            }
+          },
+          {
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_:Any"
+              }
+            }
+          },
+          {
+            "key": "indexTypes",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_dataservice:IndexType"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:UploadResponse": {
+      "name": "UploadResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "count",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "uint"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:Usage": {
+      "name": "Usage",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "units",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "uint"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:Any": {
+      "name": "Any",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "map",
+          "keyType": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          },
+          "valueType": {
+            "type": "unknown"
+          }
+        }
+      }
+    },
+    "type_:Metadata": {
+      "name": "Metadata",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "id",
+                "value": "type_:MetadataValue"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_:MetadataValue": {
+      "name": "MetadataValue",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "double"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {
+    "subpackage_dataservice": {
+      "subpackageId": "subpackage_dataservice",
+      "displayName": "DataService",
+      "name": "dataservice",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "POST",
+          "defaultEnvironment": "Default",
+          "environments": [
+            {
+              "id": "Default",
+              "baseUrl": "https://localhost"
+            }
+          ],
+          "id": "foo",
+          "originalEndpointId": "endpoint_dataservice.foo",
+          "name": "Foo",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/foo"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
+              }
+            },
+            "statusCode": 200
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/foo",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "key": "value"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "key": "value"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "defaultEnvironment": "Default",
+          "environments": [
+            {
+              "id": "Default",
+              "baseUrl": "https://localhost"
+            }
+          ],
+          "id": "upload",
+          "originalEndpointId": "endpoint_dataservice.upload",
+          "name": "Upload",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/data"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "columns",
+                    "valueType": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_:Column"
+                      }
+                    }
+                  },
+                  {
+                    "key": "namespace",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_:UploadResponse"
+              }
+            },
+            "statusCode": 200,
+            "description": "OK"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/data",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "columns": [
+                  {
+                    "id": "id",
+                    "values": [
+                      1.1
+                    ]
+                  }
+                ]
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "columns": [
+                    {
+                      "id": "id",
+                      "values": [
+                        1.1
+                      ]
+                    }
+                  ]
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "count": 1
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "count": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "defaultEnvironment": "Default",
+          "environments": [
+            {
+              "id": "Default",
+              "baseUrl": "https://localhost"
+            }
+          ],
+          "id": "delete",
+          "originalEndpointId": "endpoint_dataservice.delete",
+          "name": "Delete",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/data/delete"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "ids",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "list",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "deleteAll",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "namespace",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "filter",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_:Metadata"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_:DeleteResponse"
+              }
+            },
+            "statusCode": 200,
+            "description": "OK"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/data/delete",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 200,
+              "responseBody": {},
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "defaultEnvironment": "Default",
+          "environments": [
+            {
+              "id": "Default",
+              "baseUrl": "https://localhost"
+            }
+          ],
+          "id": "describe",
+          "originalEndpointId": "endpoint_dataservice.describe",
+          "name": "Describe",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/data/describe"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "filter",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_:Metadata"
+                      }
+                    }
+                  },
+                  {
+                    "key": "after",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "datetime"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_:DescribeResponse"
+              }
+            },
+            "statusCode": 200,
+            "description": "OK"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/data/describe",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "namespaces": {
+                  "key": {
+                    "count": 1
+                  }
+                },
+                "dimension": 1,
+                "fullness": 1.1,
+                "totalCount": 1
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "namespaces": {
+                    "key": {
+                      "count": 1
+                    }
+                  },
+                  "dimension": 1,
+                  "fullness": 1.1,
+                  "totalCount": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "GET",
+          "defaultEnvironment": "Default",
+          "environments": [
+            {
+              "id": "Default",
+              "baseUrl": "https://localhost"
+            }
+          ],
+          "id": "fetch",
+          "originalEndpointId": "endpoint_dataservice.fetch",
+          "name": "Fetch",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/data/fetch"
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "key": "ids",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "key": "namespace",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_:FetchResponse"
+              }
+            },
+            "statusCode": 200,
+            "description": "OK"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/data/fetch",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "columns": {
+                  "key": {
+                    "id": "id",
+                    "values": [
+                      1.1
+                    ],
+                    "metadata": {
+                      "key": 1.1
+                    },
+                    "indexedData": {
+                      "indices": [
+                        1
+                      ],
+                      "values": [
+                        1.1
+                      ]
+                    }
+                  }
+                },
+                "namespace": "namespace",
+                "usage": {
+                  "units": 1
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "columns": {
+                    "key": {
+                      "id": "id",
+                      "values": [
+                        1.1
+                      ],
+                      "metadata": {
+                        "key": 1.1
+                      },
+                      "indexedData": {
+                        "indices": [
+                          1
+                        ],
+                        "values": [
+                          1.1
+                        ]
+                      }
+                    }
+                  },
+                  "namespace": "namespace",
+                  "usage": {
+                    "units": 1
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "GET",
+          "defaultEnvironment": "Default",
+          "environments": [
+            {
+              "id": "Default",
+              "baseUrl": "https://localhost"
+            }
+          ],
+          "id": "list",
+          "originalEndpointId": "endpoint_dataservice.list",
+          "name": "List",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/data/list"
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "key": "prefix",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "key": "limit",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "uint"
+                  }
+                }
+              }
+            },
+            {
+              "key": "paginationToken",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            {
+              "key": "namespace",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_:ListResponse"
+              }
+            },
+            "statusCode": 200,
+            "description": "OK"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/data/list",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "columns": [
+                  {
+                    "id": "id"
+                  }
+                ],
+                "pagination": {
+                  "next": "next"
+                },
+                "namespace": "namespace",
+                "usage": {
+                  "units": 1
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "columns": [
+                    {
+                      "id": "id"
+                    }
+                  ],
+                  "pagination": {
+                    "next": "next"
+                  },
+                  "namespace": "namespace",
+                  "usage": {
+                    "units": 1
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "defaultEnvironment": "Default",
+          "environments": [
+            {
+              "id": "Default",
+              "baseUrl": "https://localhost"
+            }
+          ],
+          "id": "query",
+          "originalEndpointId": "endpoint_dataservice.query",
+          "name": "Query",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/data/query"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "namespace",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "topK",
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "uint"
+                      }
+                    }
+                  },
+                  {
+                    "key": "filter",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_:Metadata"
+                      }
+                    }
+                  },
+                  {
+                    "key": "includeValues",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "includeMetadata",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "queries",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "list",
+                        "itemType": {
+                          "type": "id",
+                          "value": "type_:QueryColumn"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "column",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "list",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "id",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "indexedData",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_:IndexedData"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_:QueryResponse"
+              }
+            },
+            "statusCode": 200,
+            "description": "OK"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/data/query",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "topK": 1
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "topK": 1
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "results": [
+                  {
+                    "matches": [
+                      {
+                        "id": "id"
+                      }
+                    ],
+                    "namespace": "namespace"
+                  }
+                ],
+                "matches": [
+                  {
+                    "id": "id",
+                    "score": 1.1,
+                    "values": [
+                      1.1
+                    ],
+                    "metadata": {
+                      "key": 1.1
+                    },
+                    "indexedData": {
+                      "indices": [
+                        1
+                      ],
+                      "values": [
+                        1.1
+                      ]
+                    }
+                  }
+                ],
+                "namespace": "namespace",
+                "usage": {
+                  "units": 1
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "results": [
+                    {
+                      "matches": [
+                        {
+                          "id": "id"
+                        }
+                      ],
+                      "namespace": "namespace"
+                    }
+                  ],
+                  "matches": [
+                    {
+                      "id": "id",
+                      "score": 1.1,
+                      "values": [
+                        1.1
+                      ],
+                      "metadata": {
+                        "key": 1.1
+                      },
+                      "indexedData": {
+                        "indices": [
+                          1
+                        ],
+                        "values": [
+                          1.1
+                        ]
+                      }
+                    }
+                  ],
+                  "namespace": "namespace",
+                  "usage": {
+                    "units": 1
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "defaultEnvironment": "Default",
+          "environments": [
+            {
+              "id": "Default",
+              "baseUrl": "https://localhost"
+            }
+          ],
+          "id": "update",
+          "originalEndpointId": "endpoint_dataservice.update",
+          "name": "Update",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/data/update"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "id",
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  {
+                    "key": "values",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "list",
+                        "itemType": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "setMetadata",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_:Metadata"
+                      }
+                    }
+                  },
+                  {
+                    "key": "namespace",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "indexedData",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_:IndexedData"
+                      }
+                    }
+                  },
+                  {
+                    "key": "indexType",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_dataservice:IndexType"
+                      }
+                    }
+                  },
+                  {
+                    "key": "details",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_:Any"
+                      }
+                    }
+                  },
+                  {
+                    "key": "indexTypes",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "list",
+                        "itemType": {
+                          "type": "id",
+                          "value": "type_dataservice:IndexType"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_:UpdateResponse"
+              }
+            },
+            "statusCode": 200,
+            "description": "OK"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/data/update",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "id": "id"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": "id"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "updatedAt": "2024-01-15T09:30:00Z",
+                "indexType": "INDEX_TYPE_INVALID",
+                "details": {
+                  "key": "value"
+                },
+                "indexTypes": [
+                  "INDEX_TYPE_INVALID"
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "updatedAt": "2024-01-15T09:30:00Z",
+                  "indexType": "INDEX_TYPE_INVALID",
+                  "details": {
+                    "key": "value"
+                  },
+                  "indexTypes": [
+                    "INDEX_TYPE_INVALID"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [
+        "type_dataservice:IndexType"
+      ],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [
+      "type_:Column",
+      "type_:DeleteResponse",
+      "type_:DescribeResponse",
+      "type_:FetchResponse",
+      "type_:FieldBehavior",
+      "type_:IndexedData",
+      "type_:ListElement",
+      "type_:ListResponse",
+      "type_:NamespaceSummary",
+      "type_:Pagination",
+      "type_:QueryColumn",
+      "type_:QueryResponse",
+      "type_:QueryResult",
+      "type_:ScoredColumn",
+      "type_:UpdateResponse",
+      "type_:UploadResponse",
+      "type_:Usage",
+      "type_:Any",
+      "type_:Metadata",
+      "type_:MetadataValue"
+    ],
+    "subpackages": [
+      "subpackage_dataservice"
+    ]
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

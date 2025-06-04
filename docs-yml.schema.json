@@ -76,6 +76,19 @@
         }
       ]
     },
+    "products": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.ProductConfig"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "landing-page": {
       "oneOf": [
         {
@@ -133,6 +146,26 @@
       "oneOf": [
         {
           "$ref": "#/definitions/docs.ProgrammingLanguage"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ai-chat": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.AIChatConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ai-search": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.AIChatConfig"
         },
         {
           "type": "null"
@@ -796,6 +829,105 @@
       ],
       "additionalProperties": false
     },
+    "docs.ProductConfig": {
+      "type": "object",
+      "properties": {
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "display-name": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "subtitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "icon": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "image": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "versions": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.VersionConfig"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "display-name",
+        "path"
+      ],
+      "additionalProperties": false
+    },
     "docs.PageConfiguration": {
       "type": "object",
       "properties": {
@@ -856,6 +988,16 @@
           ]
         },
         "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noindex": {
           "oneOf": [
             {
               "type": "boolean"
@@ -1054,6 +1196,16 @@
           ]
         },
         "ruby": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SnippetLanguageConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "csharp": {
           "oneOf": [
             {
               "$ref": "#/definitions/docs.SnippetLanguageConfiguration"
@@ -2433,6 +2585,16 @@
               "type": "null"
             }
           ]
+        },
+        "openapi-parser-v3": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -2455,6 +2617,40 @@
         "ts",
         "js"
       ]
+    },
+    "docs.AIChatModel": {
+      "type": "string",
+      "enum": [
+        "claude-3.5",
+        "claude-3.7",
+        "command-a"
+      ]
+    },
+    "docs.AIChatConfig": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.AIChatModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "system-prompt": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
     },
     "docs.TwitterCardSetting": {
       "type": "string",

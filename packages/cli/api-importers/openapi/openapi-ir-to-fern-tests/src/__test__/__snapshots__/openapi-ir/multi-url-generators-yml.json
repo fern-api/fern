@@ -6,6 +6,7 @@
       "url": "https://a.com"
     }
   ],
+  "websocketServers": [],
   "tags": {
     "tagsById": {}
   },
@@ -64,7 +65,7 @@
           }
         }
       },
-      "server": [],
+      "servers": [],
       "description": "List information about all users",
       "authed": false,
       "method": "GET",
@@ -188,7 +189,7 @@
           }
         }
       },
-      "server": [
+      "servers": [
         {
           "name": "user"
         }
@@ -299,7 +300,7 @@
           }
         }
       },
-      "server": [
+      "servers": [
         {
           "name": "auth"
         }
@@ -353,7 +354,7 @@
     }
   ],
   "webhooks": [],
-  "channel": [],
+  "channels": {},
   "groupedSchemas": {
     "rootSchemas": {
       "User": {

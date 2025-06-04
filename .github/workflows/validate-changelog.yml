@@ -4,9 +4,17 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "packages/seed/src/commands/validate/**/*"
+      - "packages/cli/cli/versions.yml"
+      - "generators/**/versions.yml"
   pull_request:
     branches:
       - main
+    paths:
+      - "packages/seed/src/commands/validate/**/*"
+      - "packages/cli/cli/versions.yml"
+      - "generators/**/versions.yml"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -30,26 +38,7 @@ jobs:
           pnpm seed:local validate cli --log-level debug
 
   validate-generators:
-    strategy:
-      matrix:
-        generator: [
-            fastapi,
-            pydantic,
-            python-sdk,
-            go-sdk,
-            ruby-sdk,
-            postman,
-            openapi,
-            java-sdk,
-            java-model,
-            java-spring,
-            ts-express,
-            csharp-sdk,
-            csharp-model
-            php-sdk,
-            php-model
-          ]
-    name: ${{ matrix.generator }}
+    name: Validate Generators
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo at current ref
@@ -60,6 +49,28 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Validate changelog
+      - name: Build seed
+        run: pnpm seed:build
+
+      - name: Validate changelog for all generators
         run: |
-          pnpm seed:local validate generator ${{ matrix.generator }} --log-level debug
+          generators=(
+            fastapi
+            pydantic
+            python-sdk
+            go-sdk
+            ruby-sdk
+            postman
+            openapi
+            java-sdk
+            java-model
+            java-spring
+            ts-express
+            csharp-sdk
+            csharp-model
+            php-sdk
+            php-model
+          )
+          for generator in "${generators[@]}"; do
+            pnpm seed validate generator "$generator" --log-level debug
+          done

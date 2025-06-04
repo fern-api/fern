@@ -26,13 +26,13 @@ class RefreshTokenRequest extends JsonSerializableType
     public string $refreshToken;
 
     /**
-     * @var string $audience
+     * @var 'https://api.example.com' $audience
      */
     #[JsonProperty('audience')]
     public string $audience;
 
     /**
-     * @var string $grantType
+     * @var 'refresh_token' $grantType
      */
     #[JsonProperty('grant_type')]
     public string $grantType;
@@ -48,8 +48,8 @@ class RefreshTokenRequest extends JsonSerializableType
      *   clientId: string,
      *   clientSecret: string,
      *   refreshToken: string,
-     *   audience: string,
-     *   grantType: string,
+     *   audience: 'https://api.example.com',
+     *   grantType: 'refresh_token',
      *   scope?: ?string,
      * } $values
      */

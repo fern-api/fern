@@ -31,6 +31,7 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 		config.AlwaysSendRequiredProperties,
 		config.InlinePathParameters,
 		config.InlineFileProperties,
+		config.UseReaderForBytesRequest,
 		config.Organization,
 		config.Version,
 		config.IrFilepath,

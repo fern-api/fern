@@ -7,6 +7,12 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import List, Optional, Set, cast
 
+from fern_python.codegen.ast.dependency.dependency import (
+    Dependency,
+    DependencyCompatibility,
+)
+from fern_python.codegen.dependency_manager import DependencyManager
+
 from fern.generator_exec import (
     BasicLicense,
     GithubOutputMode,
@@ -14,12 +20,6 @@ from fern.generator_exec import (
     LicenseId,
     PypiMetadata,
 )
-
-from fern_python.codegen.ast.dependency.dependency import (
-    Dependency,
-    DependencyCompatibility,
-)
-from fern_python.codegen.dependency_manager import DependencyManager
 
 
 @dataclass(frozen=True)
@@ -79,7 +79,7 @@ name = "{self._name}"
             content += block.to_string()
 
         if len(self._extras) > 0:
-            content += f"""
+            content += """
 [tool.poetry.extras]
 """
             for key, vals in self._extras.items():
@@ -201,16 +201,19 @@ packages = [
             for dep in sorted(dependencies, key=lambda dep: dep.name):
                 compatibility = dep.compatibility
                 is_optional = dep.optional
+                has_python_version = dep.python is not None
                 version = dep.version
                 extras = dep.extras
                 name = dep.name.replace(".", "-")
                 if compatibility == DependencyCompatibility.GREATER_THAN_OR_EQUAL:
                     version = f">={dep.version}"
 
-                if is_optional or dep.extras is not None:
+                if is_optional or has_python_version or dep.extras is not None:
                     deps += f'{name} = {{ version = "{version}"'
                     if is_optional:
                         deps += ", optional = true"
+                    if has_python_version:
+                        deps += f', python = "{dep.python}"'
                     if extras is not None:
                         deps += f", extras = {json.dumps(list(extras))}"
                     deps += "}\n"
@@ -221,16 +224,12 @@ packages = [
         def to_string(self) -> str:
             deps = self.deps_to_string(self.dependencies)
             dev_deps = self.deps_to_string(self.dev_dependencies)
-            # Note mypy and pydantic don't play well together, we either needed
-            # to use an old mypy version (1.0.1) or bump the pydantic version (1.10.7)
-            # I couldn't confirm bumping the pydantic version worked, so we lower mypy for now
-            # https://github.com/pydantic/pydantic/issues/5070
             return f"""
 [tool.poetry.dependencies]
 python = "{self.python_version}"
 {deps}
-[tool.poetry.dev-dependencies]
-mypy = "1.0.1"
+[tool.poetry.group.dev.dependencies]
+mypy = "==1.13.0"
 pytest = "^7.4.0"
 pytest-asyncio = "^0.23.5"
 python-dateutil = "^2.9.0"
@@ -251,6 +250,26 @@ plugins = ["pydantic.mypy"]
 [tool.ruff]
 line-length = 120
 
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "F",  # pyflakes
+    "I",  # isort
+]
+ignore = [
+    "E402",  # Module level import not at top of file
+    "E501",  # Line too long
+    "E711",  # Comparison to `None` should be `cond is not None`
+    "E712",  # Avoid equality comparisons to `True`; use `if ...:` checks
+    "E721",  # Use `is` and `is not` for type comparisons, or `isinstance()` for insinstance checks
+    "E722",  # Do not use bare `except`
+    "E731",  # Do not assign a `lambda` expression, use a `def`
+    "F821",  # Undefined name
+    "F841"   # Local variable ... is assigned to but never used
+]
+
+[tool.ruff.lint.isort]
+section-order = ["future", "standard-library", "third-party", "first-party"]
 """
 
     @dataclass(frozen=True)

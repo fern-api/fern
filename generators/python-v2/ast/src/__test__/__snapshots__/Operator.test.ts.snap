@@ -1,21 +1,19 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Operator > writes and operators correctly 1`] = `
-"True and False
-"
-`;
+exports[`Operator > writes addition operators correctly 1`] = `"5 + 3"`;
 
-exports[`Operator > writes bitwise left shift operators correctly 1`] = `
-"1 << 2
-"
-`;
+exports[`Operator > writes and operators correctly 1`] = `"True and False"`;
 
-exports[`Operator > writes bitwise right shift operators correctly 1`] = `
-"8 >> 1
-"
-`;
+exports[`Operator > writes bitwise left shift operators correctly 1`] = `"1 << 2"`;
 
-exports[`Operator > writes or operators correctly 1`] = `
-"True or False
-"
-`;
+exports[`Operator > writes bitwise right shift operators correctly 1`] = `"8 >> 1"`;
+
+exports[`Operator > writes division operators correctly 1`] = `"15 / 3"`;
+
+exports[`Operator > writes modulo operators correctly 1`] = `"17 % 5"`;
+
+exports[`Operator > writes multiplication operators correctly 1`] = `"6 * 7"`;
+
+exports[`Operator > writes or operators correctly 1`] = `"True or False"`;
+
+exports[`Operator > writes subtraction operators correctly 1`] = `"10 - 4"`;

@@ -127,7 +127,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
@@ -342,7 +343,8 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         },
         "endpoint_dummy.generate": {
             "auth": null,
@@ -554,8 +556,11 @@
             },
             "response": {
                 "type": "json"
-            }
+            },
+            "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

@@ -1,8 +1,6 @@
 import os
 from typing import Any, Dict, Optional, Tuple, Union
 
-import fern.ir.resources as ir_types
-
 from fern_python.codegen import AST
 from fern_python.codegen.ast.nodes.reference_node.reference_node import ReferenceNode
 from fern_python.codegen.ast.references.module import Module
@@ -29,6 +27,8 @@ from fern_python.generators.sdk.environment_generators.single_base_url_environme
 )
 from fern_python.snippet.snippet_writer import SnippetWriter
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
+
+import fern.ir.resources as ir_types
 
 
 class SnippetTestFactory:
@@ -278,6 +278,9 @@ class SnippetTestFactory:
                 optional=lambda item_type: self._generate_type_expectations_for_type_reference(item_type.optional)
                 if item_type.optional is not None
                 else None,
+                nullable=lambda item_type: self._generate_type_expectations_for_type_reference(item_type.nullable)
+                if item_type.nullable is not None
+                else None,
                 map_=lambda map_type: (
                     "dict",
                     dict(
@@ -345,7 +348,11 @@ class SnippetTestFactory:
                 maybe_stringify_expectations = f"'{expectations}'" if type(expectations) is str else expectations
 
                 writer.write(f"{type_expectation_name}: ")
-                writer.write_node(AST.Expression(AST.TypeHint.tuple_(AST.TypeHint.any(), AST.TypeHint.any())) if isinstance(expectations, Tuple) else AST.Expression(AST.TypeHint.any()))  # type: ignore
+                writer.write_node(
+                    AST.Expression(AST.TypeHint.tuple_(AST.TypeHint.any(), AST.TypeHint.any()))
+                    if isinstance(expectations, tuple)
+                    else AST.Expression(AST.TypeHint.any())
+                )
                 writer.write_line(f" = {maybe_stringify_expectations}")
             if sync_expression:
                 if response_json is not None:
@@ -361,9 +368,9 @@ class SnippetTestFactory:
                     )
                 else:
                     writer.write_line(
-                        f"# Type ignore to avoid mypy complaining about the function not being meant to return a value"
+                        "# Type ignore to avoid mypy complaining about the function not being meant to return a value"
                     )
-                    writer.write(f"assert (")
+                    writer.write("assert (")
                     with writer.indent():
                         writer.write_node(sync_expression)
                         writer.write(" # type: ignore[func-returns-value]")
@@ -374,9 +381,9 @@ class SnippetTestFactory:
                         and endpoint.response.body.get_as_union().type == "text"
                     ):
                         # HttpX returns an empty string for text responses that are empty/no content
-                        writer.write(f" == ''")
+                        writer.write(" == ''")
                     else:
-                        writer.write(f" is None")
+                        writer.write(" is None")
                     writer.write_line(")")
                 if async_expression:
                     writer.write_line("\n\n")
@@ -395,9 +402,9 @@ class SnippetTestFactory:
                 else:
                     if sync_expression is None:
                         writer.write_line(
-                            f"# Type ignore to avoid mypy complaining about the function not being meant to return a value"
+                            "# Type ignore to avoid mypy complaining about the function not being meant to return a value"
                         )
-                    writer.write(f"assert (")
+                    writer.write("assert (")
                     with writer.indent():
                         writer.write_node(async_expression)
                         writer.write(" # type: ignore[func-returns-value]")
@@ -408,9 +415,9 @@ class SnippetTestFactory:
                         and endpoint.response.body.get_as_union().type == "text"
                     ):
                         # HttpX returns an empty string for text responses that are empty/no content
-                        writer.write(f" == ''")
+                        writer.write(" == ''")
                     else:
-                        writer.write(f" is None")
+                        writer.write(" is None")
                     writer.write_line(")")
             writer.write_newline_if_last_line_not()
 
@@ -484,7 +491,9 @@ class SnippetTestFactory:
                     and endpoint.response.body
                     and (
                         endpoint.response.body.get_as_union().type == "json"
-                        and endpoint.response.body.get_as_union().value.get_as_union().type == "nestedPropertyAsResponse"  # type: ignore
+                        and hasattr(endpoint.response.body.get_as_union(), "value")
+                        and endpoint.response.body.get_as_union().value.get_as_union().type  # type: ignore
+                        == "nestedPropertyAsResponse"
                     )
                 )
             ):

@@ -1,6 +1,6 @@
 using OneOf;
 using SeedApi.Core;
-using Proto = Google.Protobuf.WellKnownTypes;
+using WellKnownProto = Google.Protobuf.WellKnownTypes;
 
 namespace SeedApi;
 
@@ -8,41 +8,42 @@ public sealed class MetadataValue(
     OneOf<string, double, bool, IEnumerable<MetadataValue?>, Metadata> value
 ) : OneOfBase<string, double, bool, IEnumerable<MetadataValue?>, Metadata>(value)
 {
-    public override string ToString()
+    internal static MetadataValue? FromProto(WellKnownProto.Value value)
     {
-        return JsonUtils.Serialize(this);
+        return value.KindCase switch
+        {
+            WellKnownProto.Value.KindOneofCase.StringValue => value.StringValue,
+            WellKnownProto.Value.KindOneofCase.NumberValue => value.NumberValue,
+            WellKnownProto.Value.KindOneofCase.BoolValue => value.BoolValue,
+            WellKnownProto.Value.KindOneofCase.ListValue => value
+                .ListValue.Values.Select(FromProto)
+                .ToList(),
+            WellKnownProto.Value.KindOneofCase.StructValue => Metadata.FromProto(value.StructValue),
+            _ => null,
+        };
     }
 
-    internal Proto.Value ToProto()
+    internal WellKnownProto.Value ToProto()
     {
-        return Match<Proto.Value>(
-            Proto.Value.ForString,
-            Proto.Value.ForNumber,
-            Proto.Value.ForBool,
-            list => new Proto.Value
+        return Match<WellKnownProto.Value>(
+            WellKnownProto.Value.ForString,
+            WellKnownProto.Value.ForNumber,
+            WellKnownProto.Value.ForBool,
+            list => new WellKnownProto.Value
             {
-                ListValue = new Proto.ListValue
+                ListValue = new WellKnownProto.ListValue
                 {
                     Values = { list.Select(item => item?.ToProto()) },
                 },
             },
-            nested => new Proto.Value { StructValue = nested.ToProto() }
+            nested => new WellKnownProto.Value { StructValue = nested.ToProto() }
         );
     }
 
-    internal static MetadataValue? FromProto(Proto.Value value)
+    /// <inheritdoc />
+    public override string ToString()
     {
-        return value.KindCase switch
-        {
-            Proto.Value.KindOneofCase.StringValue => value.StringValue,
-            Proto.Value.KindOneofCase.NumberValue => value.NumberValue,
-            Proto.Value.KindOneofCase.BoolValue => value.BoolValue,
-            Proto.Value.KindOneofCase.ListValue => value
-                .ListValue.Values.Select(FromProto)
-                .ToList(),
-            Proto.Value.KindOneofCase.StructValue => Metadata.FromProto(value.StructValue),
-            _ => null,
-        };
+        return JsonUtils.Serialize(this);
     }
 
     public static implicit operator MetadataValue(string value) => new(value);

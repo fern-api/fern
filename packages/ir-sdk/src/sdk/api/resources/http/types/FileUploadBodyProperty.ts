@@ -4,6 +4,6 @@
 
 import * as FernIr from "../../../index";
 
-export interface FileUploadBodyProperty extends FernIr.InlinedRequestBodyProperty {
-    contentType: string | undefined;
+export interface FileUploadBodyProperty extends FernIr.InlinedRequestBodyProperty, FernIr.WithContentType {
+    style: FernIr.FileUploadBodyPropertyEncoding | undefined;
 }
