@@ -2,6 +2,7 @@ import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { FernIr, TypeReference } from "@fern-api/ir-sdk";
 import { AbstractConverterContext, DisplayNameOverrideSource } from "@fern-api/v2-importer-commons";
+import { SchemaConverter } from "@fern-api/v2-importer-commons/src/converters/schema";
 
 /**
  * Context class for converting OpenAPI 3.1 specifications
@@ -35,7 +36,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
         breadcrumbs?: string[];
         displayNameOverride?: string | undefined;
         displayNameOverrideSource?: DisplayNameOverrideSource;
-    }): { ok: true; reference: TypeReference } | { ok: false } {
+    }): { ok: true; reference: TypeReference; inlinedTypes?: Record<string, SchemaConverter.ConvertedSchema> } | { ok: false } {
         const typeId = this.getTypeIdFromSchemaReference(reference);
         if (typeId == null) {
             return { ok: false };
@@ -56,6 +57,24 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
             displayName = resolvedReference.value.title ?? displayNameOverride;
         }
 
+        let inlinedTypes: Record<string, SchemaConverter.ConvertedSchema> | undefined;
+
+        // If the typeId has a "/" then we can assume that it is actually a reference to 
+        // an inlined schema ($ref: /components/schemas/MySchema/properties/foo). 
+        // In this case we want to create an inlined type for the schema of the property foo.
+        if (typeId.includes("/")) {
+            const schemaConverter = new SchemaConverter({
+                context: this,
+                breadcrumbs: breadcrumbs ?? [],
+                schema: resolvedReference.value,
+                id: typeId,
+            });
+            const convertedSchema = schemaConverter.convert();
+            if (convertedSchema != null) {
+                inlinedTypes = { [typeId]: convertedSchema.convertedSchema };
+            }
+        }
+
         return {
             ok: true,
             reference: TypeReference.named({
@@ -69,7 +88,8 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
                 default: undefined,
                 inline: false,
                 displayName
-            })
+            }),
+            inlinedTypes
         };
     }
 

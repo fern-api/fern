@@ -93,7 +93,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         breadcrumbs?: string[];
         displayNameOverride?: string | undefined;
         displayNameOverrideSource?: DisplayNameOverrideSource;
-    }): { ok: true; reference: TypeReference } | { ok: false };
+    }): { ok: true; reference: TypeReference; inlinedTypes?: Record<string, SchemaConverter.ConvertedSchema> } | { ok: false };
 
     /**
      * Converts breadcrumbs into a schema name or type id
