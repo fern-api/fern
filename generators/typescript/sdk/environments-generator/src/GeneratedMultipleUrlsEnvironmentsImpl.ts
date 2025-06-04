@@ -61,7 +61,7 @@ export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironme
                                 );
                             }
                             return ts.factory.createPropertyAssignment(
-                                this.getNameOfBaseUrl(baseUrl),
+                                getPropertyKey(this.getNameOfBaseUrl(baseUrl)),
                                 ts.factory.createStringLiteral(url)
                             );
                         }),

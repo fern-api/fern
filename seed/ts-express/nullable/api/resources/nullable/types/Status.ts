@@ -13,7 +13,7 @@ export namespace Status {
 
     export interface Archived {
         type: "archived";
-        value?: Date;
+        value: Date | null;
     }
 
     export interface SoftDeleted {

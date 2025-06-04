@@ -3,5 +3,5 @@
  */
 
 export interface DeleteUserRequest {
-    username?: string;
+    username?: string | null;
 }

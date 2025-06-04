@@ -3,6 +3,7 @@ import {
     GetReferenceOpts,
     PackageId,
     getParameterNameForPositionalPathParameter,
+    getPropertyKey,
     getTextOfTsNode
 } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
@@ -313,7 +314,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                 ts.factory.createSpreadAssignment(ts.factory.createParenthesizedExpression(serializeExpression)),
                 ...literalProperties.map((property) => {
                     return ts.factory.createPropertyAssignment(
-                        property.propertyWireKey,
+                        getPropertyKey(property.propertyWireKey),
                         typeof property.propertyValue === "string"
                             ? ts.factory.createStringLiteral(property.propertyValue)
                             : property.propertyValue

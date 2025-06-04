@@ -10,11 +10,11 @@ export const DeleteUserRequest: core.serialization.Schema<
     serializers.DeleteUserRequest.Raw,
     SeedNullable.DeleteUserRequest
 > = core.serialization.object({
-    username: core.serialization.string().optional(),
+    username: core.serialization.string().optionalNullable(),
 });
 
 export declare namespace DeleteUserRequest {
     export interface Raw {
-        username?: string | null;
+        username?: (string | null) | null;
     }
 }
