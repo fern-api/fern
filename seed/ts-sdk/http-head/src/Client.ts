@@ -4,12 +4,15 @@
 
 import * as core from "./core/index.js";
 import { User } from "./api/resources/user/client/Client.js";
+import { mergeHeaders } from "core/mergeHeaders.js";
 
 export declare namespace SeedHttpHeadClient {
     export interface Options {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in the request. */
+        headers?: Record<string, string>;
     }
 
     export interface RequestOptions {
@@ -26,10 +29,28 @@ export declare namespace SeedHttpHeadClient {
 
 export class SeedHttpHeadClient {
     protected _user: User | undefined;
+    protected _options: SeedHttpHeadClient.Options;
+    protected _subPackageOptions: SeedHttpHeadClient.Options;
 
-    constructor(protected readonly _options: SeedHttpHeadClient.Options) {}
+    constructor(_options: SeedHttpHeadClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(_options.headers, {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/http-head",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/http-head/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            }),
+        };
+        this._subPackageOptions = {
+            ..._options,
+            headers: mergeHeaders(_options.headers, {}),
+        };
+    }
 
     public get user(): User {
-        return (this._user ??= new User(this._options));
+        return (this._user ??= new User(this._subPackageOptions));
     }
 }

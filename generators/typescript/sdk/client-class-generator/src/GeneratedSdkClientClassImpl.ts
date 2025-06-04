@@ -26,7 +26,7 @@ import {
     StructureKind,
     ts
 } from "ts-morph";
-import { code } from "ts-poet";
+import { Code, code } from "ts-poet";
 
 import { SetRequired, assertNever } from "@fern-api/core-utils";
 
@@ -39,6 +39,7 @@ import {
     HttpEndpoint,
     HttpHeader,
     HttpResponseBody,
+    HttpService,
     IntermediateRepresentation,
     OAuthScheme,
     Package,
@@ -92,44 +93,46 @@ export declare namespace GeneratedSdkClientClassImpl {
 }
 
 export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
-    private static REQUEST_OPTIONS_INTERFACE_NAME = "RequestOptions";
-    private static IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME = "IdempotentRequestOptions";
-    private static TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME = "timeoutInSeconds";
-    private static ABORT_SIGNAL_PROPERTY_NAME = "abortSignal";
-    private static MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME = "maxRetries";
-    private static CUSTOM_FETCHER_PROPERTY_NAME = "fetcher";
-    public static BASE_URL_OPTION_PROPERTY_NAME = "baseUrl";
-    public static ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
-    public static OPTIONS_INTERFACE_NAME = "Options";
-    public static OPTIONS_PRIVATE_MEMBER = "_options";
-    public static AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getAuthorizationHeader";
-    public static CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getCustomAuthorizationHeaders";
+    private static readonly REQUEST_OPTIONS_INTERFACE_NAME = "RequestOptions";
+    private static readonly IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME = "IdempotentRequestOptions";
+    private static readonly TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME = "timeoutInSeconds";
+    private static readonly ABORT_SIGNAL_PROPERTY_NAME = "abortSignal";
+    private static readonly MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME = "maxRetries";
+    private static readonly CUSTOM_FETCHER_PROPERTY_NAME = "fetcher";
+    public static readonly BASE_URL_OPTION_PROPERTY_NAME = "baseUrl";
+    public static readonly ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
+    public static readonly OPTIONS_INTERFACE_NAME = "Options";
+    public static readonly OPTIONS_PRIVATE_MEMBER = "_options";
+    public static readonly SUBPACKAGE_OPTIONS_PRIVATE_MEMBER = "_subpackageOptions";
+    public static readonly AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getAuthorizationHeader";
+    public static readonly CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getCustomAuthorizationHeaders";
 
-    private isRoot: boolean;
-    private intermediateRepresentation: IntermediateRepresentation;
-    private serviceClassName: string;
-    private package_: Package;
-    private generatedEndpointImplementations: GeneratedEndpointImplementation[];
-    private generatedWebsocketImplementation: GeneratedWebsocketImplementation | undefined;
-    private generatedWrappedServices: GeneratedWrappedService[];
-    private allowCustomFetcher: boolean;
-    private shouldGenerateWebsocketClients: boolean;
-    private packageResolver: PackageResolver;
-    private requireDefaultEnvironment: boolean;
-    private npmPackage: NpmPackage | undefined;
-    private targetRuntime: JavaScriptRuntime;
-    private packageId: PackageId;
-    private retainOriginalCasing: boolean;
-    private inlineFileProperties: boolean;
-    private includeSerdeLayer: boolean;
-    private omitUndefined: boolean;
-    private allowExtraFields: boolean;
-    private importsManager: ImportsManager;
-    private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
-    oauthAuthScheme: OAuthScheme | undefined;
-    bearerAuthScheme: BearerAuthScheme | undefined;
-    basicAuthScheme: BasicAuthScheme | undefined;
-    authHeaders: HeaderAuthScheme[];
+    private readonly isRoot: boolean;
+    private readonly intermediateRepresentation: IntermediateRepresentation;
+    private readonly serviceClassName: string;
+    private readonly package_: Package;
+    private readonly generatedEndpointImplementations: GeneratedEndpointImplementation[];
+    private readonly generatedWebsocketImplementation: GeneratedWebsocketImplementation | undefined;
+    private readonly generatedWrappedServices: GeneratedWrappedService[];
+    private readonly allowCustomFetcher: boolean;
+    private readonly shouldGenerateWebsocketClients: boolean;
+    private readonly packageResolver: PackageResolver;
+    private readonly requireDefaultEnvironment: boolean;
+    private readonly npmPackage: NpmPackage | undefined;
+    private readonly targetRuntime: JavaScriptRuntime;
+    private readonly packageId: PackageId;
+    private readonly retainOriginalCasing: boolean;
+    private readonly inlineFileProperties: boolean;
+    private readonly includeSerdeLayer: boolean;
+    private readonly omitUndefined: boolean;
+    private readonly allowExtraFields: boolean;
+    private readonly importsManager: ImportsManager;
+    private readonly oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
+    private oauthAuthScheme: OAuthScheme | undefined;
+    private bearerAuthScheme: BearerAuthScheme | undefined;
+    private basicAuthScheme: BasicAuthScheme | undefined;
+    private readonly authHeaders: HeaderAuthScheme[];
+    private readonly service: HttpService | undefined;
 
     constructor({
         isRoot,
@@ -177,6 +180,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.package_ = package_;
 
         const service = packageResolver.getServiceDeclaration(packageId);
+        this.service = service;
         const websocketChannel = packageResolver.getWebSocketChannelDeclaration(packageId);
         const websocketChannelId = this.package_.websocket ?? undefined;
 
@@ -515,6 +519,20 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         };
         maybeAddDocsStructure(serviceClass, this.package_.docs);
 
+        serviceClass.properties.push({
+            kind: StructureKind.Property,
+            name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
+            type: getTextOfTsNode(
+                ts.factory.createTypeReferenceNode(
+                    ts.factory.createQualifiedName(
+                        ts.factory.createIdentifier(serviceModule.name),
+                        ts.factory.createIdentifier(optionsInterface.name)
+                    )
+                )
+            ),
+            scope: Scope.Protected,
+            isReadonly: true
+        });
         if (this.isRoot && context.generateOAuthClients) {
             serviceClass.properties.push({
                 kind: StructureKind.Property,
@@ -594,8 +612,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             const parameters = [
                 {
                     name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
-                    isReadonly: true,
-                    scope: Scope.Protected,
                     type: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode(
                             ts.factory.createQualifiedName(
@@ -648,6 +664,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 ${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME}: this._options.${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME}
             `;
             const statements = code`
+                ${this.getHeadersStatements(context)}
                 ${readClientId}
 
                 ${readClientSecret}
@@ -666,11 +683,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         } else {
             serviceClass.ctors.push({
+                statements: this.getHeadersStatements(context).toString({ dprintOptions: { indentWidth: 4 } }),
                 parameters: [
                     {
                         name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
-                        isReadonly: true,
-                        scope: Scope.Protected,
                         type: getTextOfTsNode(
                             ts.factory.createTypeReferenceNode(
                                 ts.factory.createQualifiedName(
@@ -843,6 +859,29 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         context.sourceFile.addClass(serviceClass);
     }
 
+    private getHeadersStatements(context: SdkContext): Code {
+        const rootHeaders = this.isRoot ? this.getRootHeaders(context) : [];
+        const shouldGenerateRootHeaders = this.isRoot && rootHeaders.length > 0;
+        return code`
+                ${
+                    shouldGenerateRootHeaders
+                        ? code`this._options = {
+                                    ..._options,
+                                    headers: mergeHeaders(${getTextOfTsNode(
+                                        ts.factory.createObjectLiteralExpression(
+                                            rootHeaders.map(({ header, value }) =>
+                                                ts.factory.createPropertyAssignment(
+                                                    ts.factory.createStringLiteral(header),
+                                                    value
+                                                )
+                                            )
+                                        )
+                                    )}, _options.headers ?? {}),
+                                };`
+                        : code`this._options = _options;`
+                }`;
+    }
+
     public shouldGenerateAuthorizationHeaderHelperMethod(): boolean {
         if (this.generatedEndpointImplementations.length === 0 && this.generatedWebsocketImplementation == null) {
             return false;
@@ -931,7 +970,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
     }
 
-    public getHeaders(context: SdkContext): GeneratedHeader[] {
+    private getRootHeaders(context: SdkContext): GeneratedHeader[] {
         const headers: GeneratedHeader[] = [
             ...this.intermediateRepresentation.headers
                 // auth headers are handled separately
@@ -1099,6 +1138,27 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         );
 
         return headers;
+    }
+
+    private getServiceHeaders(context: SdkContext): GeneratedHeader[] {
+        if (!this.service?.headers) {
+            return [];
+        }
+        return this.service.headers
+            .filter((header) => isLiteralHeader(header, context))
+            .map((header): GeneratedHeader | undefined => {
+                const literalValue = getLiteralValueForHeader(header, context);
+
+                if (literalValue != null) {
+                    return {
+                        header: header.name.wireValue,
+                        value: ts.factory.createStringLiteral(literalValue.toString())
+                    };
+                } else {
+                    return undefined;
+                }
+            })
+            .filter((header): header is GeneratedHeader => header != null);
     }
 
     /*******************
@@ -1490,6 +1550,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 docs: [`Override the ${header.name.wireValue} header`]
             });
         }
+
+        properties.push({
+            docs: ["Additional headers to include in requests."],
+            name: "headers",
+            type: "Record<string, string>",
+            hasQuestionToken: true
+        });
 
         if (this.allowCustomFetcher) {
             properties.push({

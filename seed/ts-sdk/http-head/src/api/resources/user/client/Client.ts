@@ -6,12 +6,14 @@ import * as core from "../../../../core/index.js";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 import * as SeedHttpHead from "../../../index.js";
+import { mergeHeaders } from "core/mergeHeaders.js";
 
 export declare namespace User {
     export interface Options {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        headers?: Record<string, string>;
     }
 
     export interface RequestOptions {
@@ -27,7 +29,23 @@ export declare namespace User {
 }
 
 export class User {
-    constructor(protected readonly _options: User.Options) {}
+    private _options: User.Options;
+    constructor(_options: User.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/http-head",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/http-head/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options.headers,
+            ),
+        };
+    }
 
     /**
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
@@ -47,15 +65,7 @@ export class User {
                 "/users",
             ),
             method: "HEAD",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/http-head",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/http-head/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(this._options.headers, requestOptions?.headers),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

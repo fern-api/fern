@@ -38,8 +38,6 @@ export function generateHeaders({
         });
     }
 
-    elements.push(...generatedSdkClientClass.getHeaders(context));
-
     for (const header of [...service.headers, ...endpoint.headers]) {
         elements.push({
             header: header.name.wireValue,
@@ -58,8 +56,14 @@ export function generateHeaders({
 
     elements.push(...additionalHeaders);
 
-    const objectToReturn: ts.ObjectLiteralElementLike[] = elements.map(({ header, value }) =>
-        ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(header), value)
+    const objectToReturn: ts.ObjectLiteralElementLike[] = [];
+
+    objectToReturn.push(getServiceOptionsHeaders());
+
+    objectToReturn.push(
+        ...elements.map(({ header, value }) =>
+            ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(header), value)
+        )
     );
 
     const customAuthorizationHeaderValue = generatedSdkClientClass.getCustomAuthorizationHeadersValue();
@@ -122,6 +126,20 @@ function getValueExpressionForIdempotencyHeader({
             { includeNullCheckIfOptional: true }
         );
     }
+}
+
+function getServiceOptionsHeaders(): ts.SpreadAssignment {
+    return ts.factory.createSpreadAssignment(
+        ts.factory.createPropertyAccessChain(
+            ts.factory.createPropertyAccessChain(
+                ts.factory.createIdentifier("this"),
+                undefined,
+                GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
+            ),
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier("headers")
+        )
+    );
 }
 
 function getRequestOptionsHeaders(): ts.SpreadAssignment {
