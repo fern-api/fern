@@ -94,6 +94,7 @@ types:
       repository: string
       license: optional<license.GithubLicenseSchema>
       mode: optional<GithubCommitAndReleaseMode>
+      path: optional<string>
       # Add properties for commit and release configuration
   
   GithubCommitAndReleaseMode:
