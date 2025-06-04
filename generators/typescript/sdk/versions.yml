@@ -6,7 +6,7 @@
         You can turn of these tests by setting `generateWireTests` to `false` in the `config` of your generator configuration.
       type: feat
   createdAt: '2025-06-03'
-  irVersion: 57
+  irVersion: 58
   
 - version: 1.1.1
   changelogEntry:
