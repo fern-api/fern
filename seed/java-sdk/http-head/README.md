@@ -12,7 +12,6 @@ Instantiate and use the client with the following:
 package com.example.usage;
 
 import com.seed.httpHead.SeedHttpHeadClient;
-import com.seed.httpHead.resources.user.requests.ListUsersRequest;
 
 public class Example {
     public static void main(String[] args) {
@@ -20,12 +19,7 @@ public class Example {
             .builder()
             .build();
 
-        client.user().list(
-            ListUsersRequest
-                .builder()
-                .limit(1)
-                .build()
-        );
+        client.user().head();
     }
 }
 ```
@@ -51,7 +45,7 @@ When the API returns a non-success status code (4xx or 5xx response), an API exc
 import com.seed.httpHead.core.SeedHttpHeadApiException;
 
 try {
-    client.user().list(...);
+    client.user().head(...);
 } catch (SeedHttpHeadApiException e) {
     // Do something with the API exception...
 }
@@ -114,7 +108,7 @@ SeedHttpHeadClient client = SeedHttpHeadClient
     .build();
 
 // Request level
-client.user().list(
+client.user().head(
     ...,
     RequestOptions
         .builder()

@@ -3,4 +3,5 @@
 # isort: skip_file
 
 from .token_response import TokenResponse
+
 __all__ = ["TokenResponse"]

@@ -6,4 +6,5 @@ from .data import Data
 from .event_info import EventInfo
 from .metadata import Metadata
 from .tag import Tag
+
 __all__ = ["Data", "EventInfo", "Metadata", "Tag"]

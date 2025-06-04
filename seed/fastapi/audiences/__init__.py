@@ -2,5 +2,30 @@
 
 # isort: skip_file
 
-from .resources import FilteredType, Imported, ImportingType, OptionalString, commons, folder_a, folder_b, folder_c, folder_d, foo
-__all__ = ["FilteredType", "Imported", "ImportingType", "OptionalString", "commons", "folder_a", "folder_b", "folder_c", "folder_d", "foo"]
+from .resources import (
+    FilteredType,
+    FindRequest,
+    Imported,
+    ImportingType,
+    OptionalString,
+    commons,
+    folder_a,
+    folder_b,
+    folder_c,
+    folder_d,
+    foo,
+)
+
+__all__ = [
+    "FilteredType",
+    "FindRequest",
+    "Imported",
+    "ImportingType",
+    "OptionalString",
+    "commons",
+    "folder_a",
+    "folder_b",
+    "folder_c",
+    "folder_d",
+    "foo",
+]

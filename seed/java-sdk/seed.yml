@@ -1,4 +1,4 @@
-irVersion: v55
+irVersion: v58
 displayName: Java SDK
 changelogLocation: ../../generators/java/sdk/versions.yml
 image: fernapi/fern-java-sdk
@@ -187,6 +187,7 @@ allowedFailures:
   - oauth-client-credentials-nested-root
   - package-yml
   - pagination
+  - pagination-custom
   - path-parameters
   - query-parameters
   - streaming

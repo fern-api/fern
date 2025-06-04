@@ -1,10 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
-    - summary: Implicitly interpert a request body as a multipart-form if it contains a property with a file, list of files, and optional file.
+    - summary: | 
+        The v3 OpenAPI parser now appropriately creates inlined types for references to 
+        inlined schemas like `$ref: /components/schemas/MySchema/properties/foo`
       type: fix
+    - summary: Bump all generators to IR v58.
+      type: internal
   irVersion: 58
-  createdAt: "2025-05-30"
-  version: 0.63.26
+  createdAt: "2025-06-03"
+  version: 0.63.29
 
 - changelogEntry:
     - summary: |
@@ -23,6 +27,8 @@
   version: 0.63.27
 
 - changelogEntry:
+    - summary: Implicitly interpert a request body as a multipart-form if it contains a property with a file, list of files, and optional file.
+      type: fix
     - summary: |
         Multiple auth schemes in the same API from difference spec files will be merged and deduplicated.
       type: fix
@@ -7348,7 +7354,7 @@
         \ python): fix envvars scanning by updating the ApiError usage by @armandobelardo\
         \ in https://github.com/fern-api/fern/pull/3046\r\n* (feature): OpenAPI importer\
         \ attempts to use tag order to render endpoints if possible by @dsinghvi in\
-        \ https://github.com/fern-##\r\n* (improvement, python): make optional fields\
+        \ https://github.com/fern-api/fern/pull/3048\r\n* (improvement, python): make optional fields\
         \ not required by default by @armandobelardo in https://github.com/fern-api/fern/pull/3041\r\
         \n* (feature): Add pagination (IRv35) by @amckinney in https://github.com/fern-api/fern/pull/2985\r\
         \n* (feature): support asyncapi examples via `x-fern-examples` by @dsinghvi\
@@ -7494,7 +7500,7 @@
 - changelogEntry:
     - summary: "## What's Changed\r\n* (feature): support whitelabeling SDKs  by @dsinghvi\
         \ in https://github.com/fern-api/fern/pull/2928\r\n* (feature): css + js + measure\
-        \ img size by @abvthecity in https://github.com/fern-api/fern/pull/2872api/fern/pull/2937\r\
+        \ img size by @abvthecity in https://github.com/fern-api/fern/pull/2872\r\
         \n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.17.7...0.17.8"
       type: chore
   createdAt: "2024-02-11"

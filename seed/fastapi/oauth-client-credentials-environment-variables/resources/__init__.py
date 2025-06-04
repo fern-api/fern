@@ -3,5 +3,6 @@
 # isort: skip_file
 
 from . import auth
-from .auth import TokenResponse
-__all__ = ["TokenResponse", "auth"]
+from .auth import GetTokenRequest, RefreshTokenRequest, TokenResponse
+
+__all__ = ["GetTokenRequest", "RefreshTokenRequest", "TokenResponse", "auth"]

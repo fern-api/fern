@@ -64,6 +64,11 @@ public final class SpringHttpMethodToAnnotationSpec implements HttpMethod.Visito
     }
 
     @Override
+    public AnnotationSpec visitHead() {
+        return build(AnnotationSpec.builder(GetMapping.class).addMember("value", "$S", path));
+    }
+
+    @Override
     public AnnotationSpec visitUnknown(String unknownType) {
         throw new RuntimeException("Encountered unknown HttpMethod: " + unknownType);
     }

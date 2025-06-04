@@ -4,4 +4,5 @@
 
 from .resources import Event, events
 from .types import User
+
 __all__ = ["Event", "User", "events"]
