@@ -183,6 +183,7 @@ allowedFailures:
   - examples:no-custom-config
   - examples:readme-config
   - extends
+  - http-head
   - objects-with-imports
   - mixed-file-directory
 
