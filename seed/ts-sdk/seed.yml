@@ -6,8 +6,6 @@ publish:
   workingDirectory: generators/typescript
   versionSubstitution: $VERSION
   command:
-    - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:browser $VERSION
-    - docker push fernapi/fern-typescript-browser-sdk:$VERSION
     - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:node $VERSION
     - docker push fernapi/fern-typescript-node-sdk:$VERSION
 test:
