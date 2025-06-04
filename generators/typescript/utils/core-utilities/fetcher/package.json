@@ -45,7 +45,7 @@
     "form-data": "4.0.1",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
-    "multer": "^1.4.5-lts.1",
+    "multer": "^2.0.0",
     "ts-jest": "^29.2.4",
     "ts-loader": "^9.3.1",
     "webpack": "^5.94.0",
