@@ -2,19 +2,24 @@
 
 import enum
 import typing
+
 T_Result = typing.TypeVar("T_Result")
+
+
 class Shape(str, enum.Enum):
     SQUARE = "SQUARE"
     CIRCLE = "CIRCLE"
     TRIANGLE = "TRIANGLE"
-    
-    def visit(self, square: typing.Callable[[], T_Result], circle: typing.Callable[[], T_Result], triangle: typing.Callable[[], T_Result]) -> T_Result:
+
+    def visit(
+        self,
+        square: typing.Callable[[], T_Result],
+        circle: typing.Callable[[], T_Result],
+        triangle: typing.Callable[[], T_Result],
+    ) -> T_Result:
         if self is Shape.SQUARE:
-            return square(
-            )
+            return square()
         if self is Shape.CIRCLE:
-            return circle(
-            )
+            return circle()
         if self is Shape.TRIANGLE:
-            return triangle(
-            )
+            return triangle()
