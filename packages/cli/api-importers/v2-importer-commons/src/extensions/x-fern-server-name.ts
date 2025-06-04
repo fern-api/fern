@@ -18,11 +18,14 @@ export class ServerNameExtension extends AbstractExtension<string | undefined> {
     }
 
     public convert(): string | undefined {
-        const extensionValue = this.getExtensionValue(this.server, "x-name");
-        if (extensionValue == null || typeof extensionValue !== "string") {
-            return undefined;
+        const xNameExtensionValue = this.getExtensionValue(this.server, "x-name");
+        if (xNameExtensionValue != null && typeof xNameExtensionValue === "string") {
+            return xNameExtensionValue;
         }
-
-        return extensionValue;
+        const nameExtensionValue = this.getExtensionValue(this.server, "name");
+        if (nameExtensionValue != null && typeof nameExtensionValue === "string") {
+            return nameExtensionValue;
+        }
+        return undefined;
     }
 }
