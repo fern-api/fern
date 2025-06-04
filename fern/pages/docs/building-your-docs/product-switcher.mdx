@@ -9,8 +9,9 @@ subtitle: Allow users to seamlessly navigate between different products you offe
 
 <Card href="https://developers.webflow.com/data/docs/getting-started-apps">
   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', height: '1.5em' }}>
-    <img src="logos/Webflow.svg" alt="Webflow" width="24px" height="24px" class="logo-icon" style={{ marginRight: '10px', marginLeft: '0' }} />
-    <div className="text-body text-base font-semibold" style={{ color: 'var(--color-black)'}}>View Webflow's Product Switcher</div>
+    <img src="logos/webflow-light.svg" alt="Webflow" width="24px" height="24px" class="logo-icon dark:hidden" style={{ marginRight: '10px', marginLeft: '0' }} />
+    <img src="logos/webflow-dark.svg" alt="Webflow" width="24px" height="24px" class="logo-icon hidden dark:block" style={{ marginRight: '10px', marginLeft: '0' }} />
+    <div className="text-body text-base font-semibold" style={{ color: 'var(--grayscale-a12)'}}>View Webflow's Product Switcher</div>
   </div>
 </Card>
 
@@ -145,22 +146,65 @@ If your `docs.yml` file includes a `navigation` field or a `tabs` field, be sure
 
 You can directly customize the appearance of the product and version selectors by targeting their CSS classes:
 
-- `fern-product-selector` - Controls the styling of the product dropdown
-- `fern-version-selector` - Controls the styling of the version dropdown
+- `fern-product-selector` - Controls the styling of the product selector
+- `fern-version-selector` - Controls the styling of the version selector
+
+<Frame>
+  <img src="webflow-dropdown-selector.avif" alt="Example of a styled product selector" />
+</Frame>
 
 ### Common Styling Adjustments
 
 **Adjusting line height and positioning:**
-Use `transform: translateY(4px)` to adjust the vertical positioning of the selectors. This ensures that the product and version selectors match the line height of your logo for better visual alignment.
+Use `transform: translateY(Npx)` to adjust the vertical positioning of the selectors. This ensures that the product and version selectors match the line height of your logo for better visual alignment.
 
 **Enhancing visual prominence:**
-You can modify the border radius and add borders to make the selectors more prominent and better integrated with your site's design aesthetic.
+You can modify the border radius and add borders to make the selectors more prominent and better integrated with your site's design aesthetic with `border: 1px solid var(--border);`.
 
 ```css
-.fern-product-selector,
-.fern-version-selector {
-  transform: translateY(4px);
+.fern-product-selector {
+  transform: translateY(2px);
   border-radius: 8px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
 }
+
+.fern-version-selector {
+  transform: translateY(1px);
+  border-radius: 1000px;
+  border: 1px solid var(--border);
+}
+```
+
+## Customizing Dropdown Styling
+
+You can directly customize the appearance of the product and version selectors by targeting their CSS classes:
+
+- `fern-product-selector-radio-group"` - Controls the styling of the product dropdown
+- `fern-version-selector-radio-group` - Controls the styling of the version dropdown
+
+<Tabs>
+  <Tab title="Product Selector">
+    <Frame>
+      <img src="webflow-product-selector.avif" alt="Example of a styled product selector" />
+    </Frame>
+  </Tab>
+  <Tab title="Version Selector">
+    <Frame>
+      <img src="webflow-version-selector.avif" alt="Example of a styled version selector" />
+    </Frame>
+  </Tab>
+</Tabs>
+
+
+### Common Styling Adjustments
+
+**Enable a grid layout for the dropdown**
+Use `display: grid;` to enable a grid layout with `grid-template-columns: repeat(N, 1fr);` where `N` is the number of columns in the grid.
+
+```css
+.fern-product-selector-radio-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}  
 ```

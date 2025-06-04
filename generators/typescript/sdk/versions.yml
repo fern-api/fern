@@ -1,12 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 1.2.0
+- version: 1.2.4
   changelogEntry:
     - summary: |
         Generate tests to verify the SDK sends and receives HTTP requests as expected.
         You can turn of these tests by setting `generateWireTests` to `false` in the `config` of your generator configuration.
       type: feat
   createdAt: '2025-06-03'
-  irVersion: 57
+  irVersion: 58
   
 - version: 1.1.1
   changelogEntry:
