@@ -19,10 +19,11 @@ jobs:
       - name: Install link checker
         run: pip install linkchecker
       - name: Create config
-        run: echo -e "[csv]\nseparator=,\n[filtering]\nignore=example.com\nus.i.posthog.com\nc.vialoops.com/CL0\n[output]\nignoreerrors=\n  ^http ^403 Forbidden" > lcconfig
+        run: echo -e "[csv]\nseparator=,\n[filtering]\nignore=\n\texample.com\n\tus.i.posthog.com\n\tc.vialoops.com/CL0\n[output]\nignoreerrors=\n  ^http ^403 Forbidden" > lcconfig
       - name: Check ${{ matrix.site.name }} Links
         run: |
           set +e
+          cat lcconfig
           linkchecker https://${{ matrix.site.url }} --check-extern --no-status --no-warnings --config lcconfig -F csv/utf-8/link_report.csv
 
           if [ $? -ne 0 ]; then
