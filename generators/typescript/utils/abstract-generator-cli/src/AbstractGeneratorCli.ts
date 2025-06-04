@@ -8,6 +8,7 @@ import {
     parseGeneratorConfig,
     parseIR
 } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, LogLevel, Logger, createLogger } from "@fern-api/logger";
 
@@ -89,16 +90,18 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 _other: () => undefined
             });
 
+            const ir = await parseIR({
+                absolutePathToIR: AbsoluteFilePath.of(config.irFilepath),
+                parse: serializers.IntermediateRepresentation.parse
+            });
+
             const generatorContext = new GeneratorContextImpl(logger, version);
             const typescriptProject = await this.generateTypescriptProject({
                 config,
                 customConfig,
                 npmPackage,
                 generatorContext,
-                intermediateRepresentation: await parseIR({
-                    absolutePathToIR: AbsoluteFilePath.of(config.irFilepath),
-                    parse: serializers.IntermediateRepresentation.parse
-                })
+                intermediateRepresentation: ir
             });
             if (!generatorContext.didSucceed()) {
                 throw new Error("Failed to generate TypeScript project.");
@@ -145,7 +148,15 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     });
                 },
                 downloadFiles: async () => {
-                    if (this.outputSourceFiles(customConfig)) {
+                    if (this.shouldGenerateFullProject(ir)) {
+                        await typescriptProject.format(logger);
+                        await typescriptProject.copyProjectTo({
+                            destinationPath,
+                            zipFilename: OUTPUT_ZIP_FILENAME,
+                            unzipOutput: options?.unzipOutput,
+                            logger
+                        });
+                    } else if (this.outputSourceFiles(customConfig)) {
                         await typescriptProject.copySrcTo({
                             destinationPath,
                             zipFilename: OUTPUT_ZIP_FILENAME,
@@ -204,6 +215,22 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     protected abstract publishToJsr(customConfig: CustomConfig): boolean;
     protected abstract outputSourceFiles(customConfig: CustomConfig): boolean;
     protected abstract shouldTolerateRepublish(customConfig: CustomConfig): boolean;
+
+    private shouldGenerateFullProject(ir: IntermediateRepresentation): boolean {
+        const publishConfig = ir.publishConfig;
+        if (publishConfig == null) {
+            return false;
+        }
+        switch (publishConfig.type) {
+            case "filesystem":
+                return publishConfig.generateFullProject;
+            case "github":
+            case "direct":
+                return false;
+            default:
+                assertNever(publishConfig);
+        }
+    }
 }
 
 class GeneratorContextImpl implements GeneratorContext {

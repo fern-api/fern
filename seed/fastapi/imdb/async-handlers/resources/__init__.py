@@ -3,5 +3,6 @@
 # isort: skip_file
 
 from . import imdb
-from .imdb import CreateMovieRequest, Movie, MovieId
-__all__ = ["CreateMovieRequest", "Movie", "MovieId", "imdb"]
+from .imdb import CreateMovieRequest, Movie, MovieDoesNotExistError, MovieId
+
+__all__ = ["CreateMovieRequest", "Movie", "MovieDoesNotExistError", "MovieId", "imdb"]

@@ -2,5 +2,7 @@
 
 # isort: skip_file
 
-from .resources import CreateMovieRequest, Movie, MovieId, imdb
-__all__ = ["CreateMovieRequest", "Movie", "MovieId", "imdb"]
+from .resources import CreateMovieRequest, Movie, MovieDoesNotExistError, MovieId, imdb
+from .security import ApiAuth
+
+__all__ = ["ApiAuth", "CreateMovieRequest", "Movie", "MovieDoesNotExistError", "MovieId", "imdb"]

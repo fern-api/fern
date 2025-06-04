@@ -19,7 +19,7 @@ public class Example {
             .builder()
             .build();
 
-        client.service().post("serviceParam", "resourceParam", 1);
+        client.service().post("pathParam", "serviceParam", "resourceParam", 1);
     }
 }
 ```

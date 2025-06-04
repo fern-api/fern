@@ -5,4 +5,5 @@
 from .alias_type import AliasType
 from .child import Child
 from .parent import Parent
+
 __all__ = ["AliasType", "Child", "Parent"]

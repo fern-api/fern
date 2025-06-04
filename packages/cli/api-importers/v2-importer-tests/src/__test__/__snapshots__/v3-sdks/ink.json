@@ -36065,6 +36065,7 @@
       "pathParameters": [],
       "endpoints": [
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "eth_blockNumber",
@@ -36195,6 +36196,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "eth_call",
@@ -37702,6 +37704,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "eth_chainId",
@@ -37832,6 +37835,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "eth_estimateGas",
@@ -39339,6 +39343,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "eth_gasPrice",
@@ -39469,6 +39474,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "eth_getBalance",
@@ -39849,6 +39855,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "eth_getBlockByHash",
@@ -42850,6 +42857,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "eth_getBlockByNumber",
@@ -45903,6 +45911,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "eth_getBlockTransactionCountByHash",
@@ -46177,6 +46186,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "eth_getBlockTransactionCountByNumber",
@@ -46503,6 +46513,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "eth_getCode",
@@ -46883,6 +46894,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "eth_getLogs",
@@ -47628,6 +47640,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "eth_getProof",
@@ -49297,6 +49310,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "eth_getStorageAt",
@@ -49758,6 +49772,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "eth_getTransactionByBlockHashAndIndex",
@@ -52297,6 +52312,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "eth_getTransactionByBlockNumberAndIndex",
@@ -54888,6 +54904,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "eth_getTransactionByHash",
@@ -57346,6 +57363,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "eth_getTransactionCount",
@@ -57726,6 +57744,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "eth_getTransactionReceipt",
@@ -61113,6 +61132,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "eth_sendRawTransaction",
@@ -61361,6 +61381,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "eth_syncing",
@@ -61559,6 +61580,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "net_version",
@@ -61687,6 +61709,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "web3_clientVersion",
@@ -61815,6 +61838,7 @@
           }
         },
         {
+          "baseUrl": "Ink Mainnet",
           "auth": false,
           "method": "POST",
           "id": "web3_sha3",
@@ -62078,51 +62102,51 @@
     "typesReferencedOnlyByService": {}
   },
   "environments": {
-    "defaultEnvironment": "https://ink-mainnet.g.alchemy.com/v2/",
+    "defaultEnvironment": "Ink Mainnet",
     "environments": {
       "environments": [
         {
-          "id": "https://ink-mainnet.g.alchemy.com/v2/",
+          "id": "Ink Mainnet",
           "name": {
-            "originalName": "https://ink-mainnet.g.alchemy.com/v2/",
+            "originalName": "Ink Mainnet",
             "camelCase": {
-              "unsafeName": "httpsInkMainnetGAlchemyComV2",
-              "safeName": "httpsInkMainnetGAlchemyComV2"
+              "unsafeName": "inkMainnet",
+              "safeName": "inkMainnet"
             },
             "snakeCase": {
-              "unsafeName": "https_ink_mainnet_g_alchemy_com_v_2",
-              "safeName": "https_ink_mainnet_g_alchemy_com_v_2"
+              "unsafeName": "ink_mainnet",
+              "safeName": "ink_mainnet"
             },
             "screamingSnakeCase": {
-              "unsafeName": "HTTPS_INK_MAINNET_G_ALCHEMY_COM_V_2",
-              "safeName": "HTTPS_INK_MAINNET_G_ALCHEMY_COM_V_2"
+              "unsafeName": "INK_MAINNET",
+              "safeName": "INK_MAINNET"
             },
             "pascalCase": {
-              "unsafeName": "HttpsInkMainnetGAlchemyComV2",
-              "safeName": "HttpsInkMainnetGAlchemyComV2"
+              "unsafeName": "InkMainnet",
+              "safeName": "InkMainnet"
             }
           },
           "url": "https://ink-mainnet.g.alchemy.com/v2"
         },
         {
-          "id": "https://ink-sepolia.g.alchemy.com/v2/",
+          "id": "Ink Sepolia",
           "name": {
-            "originalName": "https://ink-sepolia.g.alchemy.com/v2/",
+            "originalName": "Ink Sepolia",
             "camelCase": {
-              "unsafeName": "httpsInkSepoliaGAlchemyComV2",
-              "safeName": "httpsInkSepoliaGAlchemyComV2"
+              "unsafeName": "inkSepolia",
+              "safeName": "inkSepolia"
             },
             "snakeCase": {
-              "unsafeName": "https_ink_sepolia_g_alchemy_com_v_2",
-              "safeName": "https_ink_sepolia_g_alchemy_com_v_2"
+              "unsafeName": "ink_sepolia",
+              "safeName": "ink_sepolia"
             },
             "screamingSnakeCase": {
-              "unsafeName": "HTTPS_INK_SEPOLIA_G_ALCHEMY_COM_V_2",
-              "safeName": "HTTPS_INK_SEPOLIA_G_ALCHEMY_COM_V_2"
+              "unsafeName": "INK_SEPOLIA",
+              "safeName": "INK_SEPOLIA"
             },
             "pascalCase": {
-              "unsafeName": "HttpsInkSepoliaGAlchemyComV2",
-              "safeName": "HttpsInkSepoliaGAlchemyComV2"
+              "unsafeName": "InkSepolia",
+              "safeName": "InkSepolia"
             }
           },
           "url": "https://ink-sepolia.g.alchemy.com/v2"

@@ -140,6 +140,7 @@ export declare namespace SdkGenerator {
         packageJson: Record<string, unknown> | undefined;
         useBigInt: boolean;
         useLegacyExports: boolean;
+        generateWireTests: boolean;
     }
 }
 
@@ -409,7 +410,10 @@ export class SdkGenerator {
             dependencyManager: this.dependencyManager,
             rootDirectory: this.rootDirectory,
             writeUnitTests: this.config.writeUnitTests,
-            includeSerdeLayer: config.includeSerdeLayer
+            includeSerdeLayer: config.includeSerdeLayer,
+            generateWireTests: config.generateWireTests,
+            useBigInt: config.useBigInt,
+            retainOriginalCasing: config.retainOriginalCasing
         });
         this.referenceConfigBuilder = new ReferenceConfigBuilder();
         this.generatorAgent = new TypeScriptGeneratorAgent({
@@ -432,7 +436,8 @@ export class SdkGenerator {
                 : undefined;
 
         this.asIsManager = new AsIsManager({
-            useBigInt: config.useBigInt
+            useBigInt: config.useBigInt,
+            generateWireTests: config.generateWireTests
         });
 
         this.websocketTypeSchemaDeclarationReferencer = new WebsocketTypeSchemaDeclarationReferencer({
@@ -876,16 +881,19 @@ export class SdkGenerator {
             }
 
             this.withSourceFile({
-                filepath: this.jestTestGenerator.getTestFile(packageId.isRoot ? "" : packageId.subpackageId, service),
+                filepath: this.jestTestGenerator.getTestFile(service),
                 run: ({ sourceFile, importsManager }) => {
                     const context = this.generateSdkContext({ sourceFile, importsManager });
                     const file = this.jestTestGenerator.buildFile(
                         this.sdkClientClassDeclarationReferencer.getExportedName(packageId),
                         service,
+                        packageId,
                         context.sdkClientClass.getGeneratedSdkClientClass(packageId),
                         context
                     );
-                    sourceFile.replaceWithText(file.toString({ dprintOptions: { indentWidth: 4 } }));
+                    if (file) {
+                        sourceFile.replaceWithText(file.toString({ dprintOptions: { indentWidth: 4 } }));
+                    }
                 }
             });
         });

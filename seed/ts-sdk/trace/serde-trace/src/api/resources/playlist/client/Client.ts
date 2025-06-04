@@ -45,8 +45,8 @@ export class Playlist {
      *
      * @example
      *     await client.playlist.createPlaylist(1, {
-     *         datetime: "2024-01-15T09:30:00Z",
-     *         optionalDatetime: "2024-01-15T09:30:00Z",
+     *         datetime: new Date("2024-01-15T09:30:00.000Z"),
+     *         optionalDatetime: new Date("2024-01-15T09:30:00.000Z"),
      *         body: {
      *             name: "name",
      *             problems: ["problems", "problems"]

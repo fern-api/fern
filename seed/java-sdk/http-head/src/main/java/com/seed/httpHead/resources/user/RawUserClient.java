@@ -29,6 +29,40 @@ public class RawUserClient {
         this.clientOptions = clientOptions;
     }
 
+    public SeedHttpHeadHttpResponse<Void> head() {
+        return head(null);
+    }
+
+    public SeedHttpHeadHttpResponse<Void> head(RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users")
+                .build();
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("HEAD", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return new SeedHttpHeadHttpResponse<>(null, response);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedHttpHeadApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
+                    response);
+        } catch (IOException e) {
+            throw new SeedHttpHeadException("Network error executing HTTP request", e);
+        }
+    }
+
     public SeedHttpHeadHttpResponse<List<User>> list(ListUsersRequest request) {
         return list(request, null);
     }

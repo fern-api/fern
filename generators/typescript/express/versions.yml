@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+  - summary: Update the IR to v58.
+    type: internal
+  irVersion: 58
+  createdAt: '2025-06-03'
+  version: 0.18.1
+
+- changelogEntry:
   - summary: | 
       Re-release `0.18.0-rc1`
     type: fix

@@ -419,11 +419,14 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     }
 
     private getReferenceToOption(option: string): ts.Expression {
-        return ts.factory.createPropertyAccessExpression(this.getReferenceToOptions(), option);
+        return ts.factory.createElementAccessExpression(
+            this.getReferenceToOptions(),
+            ts.factory.createStringLiteral(option)
+        );
     }
 
     private getReferenceToArg(arg: string): ts.Expression {
-        return ts.factory.createPropertyAccessExpression(this.getReferenceToArgs(), arg);
+        return ts.factory.createElementAccessExpression(this.getReferenceToArgs(), ts.factory.createStringLiteral(arg));
     }
 
     public getSocketTypeNode(context: SdkContext): ts.TypeNode {

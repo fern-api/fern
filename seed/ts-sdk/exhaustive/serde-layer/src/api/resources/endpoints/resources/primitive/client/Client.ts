@@ -450,7 +450,7 @@ export class Primitive {
      * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z")
+     *     await client.endpoints.primitive.getAndReturnDatetime(new Date("2024-01-15T09:30:00.000Z"))
      */
     public getAndReturnDatetime(
         request: Date,

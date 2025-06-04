@@ -1,4 +1,4 @@
-irVersion: v57
+irVersion: v58
 displayName: C# Model
 image: fernapi/fern-csharp-model
 changelogLocation: ../../generators/csharp/model/versions.yml

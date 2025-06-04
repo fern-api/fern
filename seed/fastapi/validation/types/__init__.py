@@ -9,4 +9,5 @@ from .shape import Shape
 from .small_integer import SmallInteger
 from .type import Type
 from .word import Word
+
 __all__ = ["Double", "LargeInteger", "Sentence", "Shape", "SmallInteger", "Type", "Word"]

@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.21.3
+  changelogEntry:
+    - summary: |
+        Fix an issue where the websocket connect method did not correctly yield the websocket client.
+      type: fix
+  createdAt: '2025-06-04'
+  irVersion: 58
+
 - version: 4.21.2
   changelogEntry:
     - summary: |

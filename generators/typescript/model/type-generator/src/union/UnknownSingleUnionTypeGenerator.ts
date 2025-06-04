@@ -1,3 +1,4 @@
+import { getPropertyKey } from "@fern-typescript/commons";
 import { BaseContext } from "@fern-typescript/contexts";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
 import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
@@ -40,7 +41,7 @@ export class UnknownSingleUnionTypeGenerator implements SingleUnionTypeGenerator
         return ts.factory.createTypeLiteralNode([
             ts.factory.createPropertySignature(
                 undefined,
-                ts.factory.createIdentifier(discriminant),
+                ts.factory.createIdentifier(getPropertyKey(discriminant)),
                 undefined,
                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
             )
@@ -61,7 +62,7 @@ export class UnknownSingleUnionTypeGenerator implements SingleUnionTypeGenerator
                 ts.factory.createTypeLiteralNode([
                     ts.factory.createPropertySignature(
                         undefined,
-                        ts.factory.createIdentifier(discriminant),
+                        ts.factory.createIdentifier(getPropertyKey(discriminant)),
                         undefined,
                         ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                     )

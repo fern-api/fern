@@ -2,5 +2,7 @@
 
 # isort: skip_file
 
+from .service import CreateUserRequest
 from .types import User
-__all__ = ["User"]
+
+__all__ = ["CreateUserRequest", "User"]

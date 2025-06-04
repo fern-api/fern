@@ -13,4 +13,17 @@ from .problem_files import ProblemFiles
 from .problem_info import ProblemInfo
 from .update_problem_response import UpdateProblemResponse
 from .variable_type_and_name import VariableTypeAndName
-__all__ = ["CreateProblemError", "CreateProblemRequest", "CreateProblemResponse", "GenericCreateProblemError", "GetDefaultStarterFilesResponse", "ProblemDescription", "ProblemDescriptionBoard", "ProblemFiles", "ProblemInfo", "UpdateProblemResponse", "VariableTypeAndName"]
+
+__all__ = [
+    "CreateProblemError",
+    "CreateProblemRequest",
+    "CreateProblemResponse",
+    "GenericCreateProblemError",
+    "GetDefaultStarterFilesResponse",
+    "ProblemDescription",
+    "ProblemDescriptionBoard",
+    "ProblemFiles",
+    "ProblemInfo",
+    "UpdateProblemResponse",
+    "VariableTypeAndName",
+]

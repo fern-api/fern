@@ -236,18 +236,26 @@ export abstract class AbstractSpecConverter<
 
     protected shouldAddServerToCollectedServers({
         server,
-        currentServers
+        currentServers,
+        specType = "openapi"
     }: {
         server: OpenAPIV3_1.ServerObject;
         currentServers: OpenAPIV3_1.ServerObject[];
+        specType?: "openapi" | "openrpc";
     }): boolean {
-        return !currentServers.some(
-            (s) =>
-                s.url === server.url &&
-                "x-fern-server-name" in s &&
-                "x-fern-server-name" in server &&
-                s["x-fern-server-name"] === server["x-fern-server-name"]
-        );
+        if (specType === "openapi") {
+            return !currentServers.some(
+                (s) =>
+                    s.url === server.url &&
+                    "x-fern-server-name" in s &&
+                    "x-fern-server-name" in server &&
+                    s["x-fern-server-name"] === server["x-fern-server-name"]
+            );
+        } else {
+            return !currentServers.some(
+                (s) => s.url === server.url && "name" in s && "name" in server && s["name"] === server["name"]
+            );
+        }
     }
 
     protected addEndpointToIr({
