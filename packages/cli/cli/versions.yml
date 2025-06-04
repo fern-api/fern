@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: | 
+        Support endpoint-level servers in OpenRPC.
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-04"
+  version: 0.63.30
+
+- changelogEntry:
+    - summary: | 
         The v3 OpenAPI parser now appropriately creates inlined types for references to 
         inlined schemas like `$ref: /components/schemas/MySchema/properties/foo`
       type: fix
