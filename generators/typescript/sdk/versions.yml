@@ -1,11 +1,19 @@
 
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.1.1
+  changelogEntry:
+    - summary: Fix an issue where attempting to access a property with an invalid property name would lead to a broken output SDK.
+      type: fix
+  createdAt: '2025-06-04'
+  irVersion: 58
+
 - version: 1.1.0
   changelogEntry:
     - summary: Add support for HEAD HTTP method.
       type: feat
   createdAt: '2025-06-03'
   irVersion: 58
+
 - version: 1.0.1
   changelogEntry:
     - summary: Fix property lookup in inherited schemas during snippet generation for object schemas.
