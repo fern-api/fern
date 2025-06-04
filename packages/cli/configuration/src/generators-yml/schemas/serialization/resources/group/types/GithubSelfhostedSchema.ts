@@ -12,11 +12,13 @@ export const GithubSelfhostedSchema: core.serialization.ObjectSchema<
 > = core.serialization.object({
     uri: core.serialization.string(),
     token: core.serialization.string(),
+    path: core.serialization.string().optional(),
 });
 
 export declare namespace GithubSelfhostedSchema {
     export interface Raw {
         uri: string;
         token: string;
+        path?: string | null;
     }
 }

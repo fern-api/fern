@@ -2426,6 +2426,16 @@
         },
         "token": {
           "type": "string"
+        },
+        "path": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -2594,6 +2604,16 @@
               "type": "null"
             }
           ]
+        },
+        "path": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -2622,6 +2642,16 @@
           "const": "push"
         },
         "branch": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "path": {
           "oneOf": [
             {
               "type": "string"

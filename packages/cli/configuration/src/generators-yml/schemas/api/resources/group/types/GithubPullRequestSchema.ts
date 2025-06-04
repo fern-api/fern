@@ -10,4 +10,5 @@ export interface GithubPullRequestSchema {
     license?: FernDefinition.GithubLicenseSchema;
     mode: "pull-request";
     reviewers?: FernDefinition.ReviewersSchema;
+    path?: string;
 }

@@ -9,4 +9,5 @@ export interface GithubPushSchema {
     license?: FernDefinition.GithubLicenseSchema;
     mode: "push";
     branch?: string;
+    path?: string;
 }

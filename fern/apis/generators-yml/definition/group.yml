@@ -74,6 +74,7 @@ types:
     properties: 
       uri: string
       token: string
+      path: optional<string>
 
   GeneratorSnippetsSchema:
     properties:
@@ -109,6 +110,7 @@ types:
       license: optional<license.GithubLicenseSchema>
       mode: literal<"pull-request">
       reviewers: optional<reviewers.ReviewersSchema>
+      path: optional<string>
       # Add properties for pull request configuration
 
   GithubPushSchema:
@@ -117,6 +119,7 @@ types:
       license: optional<license.GithubLicenseSchema>
       mode: literal<"push">
       branch: optional<string>
+      path: optional<string>
       # Add properties for push configuration
   
   NpmOutputLocationSchema:
