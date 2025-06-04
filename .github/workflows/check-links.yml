@@ -49,10 +49,10 @@ jobs:
             
             IFS=',' read -r -a array <<< "$p"
 
-            ret=$(curl -I -s "${array[10]}" -o /dev/null -w "%{http_code}\n")
-            echo $ret
+            ret=$(curl -I -s "${array[0]}" -o /dev/null -w "%{http_code}\n")
             if [[ $ret == 200 ]]; then
               echo "Site now seems to be working, we should continue here"
+              continue
             else
               echo "There is still an issue with ${array[0]}"
             fi
