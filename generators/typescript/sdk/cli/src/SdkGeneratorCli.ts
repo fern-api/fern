@@ -104,7 +104,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             intermediateRepresentation,
             context: generatorContext,
             npmPackage,
-            generateJestTests: config.output.mode.type === "github",
+            generateJestTests: this.shouldGenerateJestTests({ ir: intermediateRepresentation, config }),
             rawConfig: config,
             config: {
                 runScripts: !customConfig.noScripts,
@@ -216,7 +216,27 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
               ? "dev"
               : "prod";
     }
+
     private customConfigWithOverrides(customConfig: SdkCustomConfig): SdkCustomConfig {
         return { ...customConfig, ...this.configOverrides };
+    }
+
+    private shouldGenerateJestTests({
+        ir,
+        config
+    }: {
+        ir: IntermediateRepresentation;
+        config: FernGeneratorExec.GeneratorConfig;
+    }): boolean {
+        const hasGitHubOutputMode = config.output.mode.type === "github";
+        const publishConfig = ir.publishConfig;
+        switch (publishConfig?.type) {
+            case "filesystem":
+                return publishConfig.generateFullProject || hasGitHubOutputMode;
+            case "github":
+            case "direct":
+            default:
+                return hasGitHubOutputMode;
+        }
     }
 }
