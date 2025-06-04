@@ -1,5 +1,6 @@
 from fern_python.codegen import AST
-from fern_python.codegen.ast.dependency.dependency import DependencyCompatibility
+from fern_python.codegen.ast.dependency.dependency import \
+    DependencyCompatibility
 
 WEBSOCKETS_MODULE = AST.Module.external(
     module_path=("websockets",),
@@ -69,27 +70,25 @@ class Websockets:
     @staticmethod
     def async_connect(url: str, headers: str) -> AST.Expression:
         def write(writer: AST.NodeWriter) -> None:
-            writer.write("async with ")
             writer.write_reference(
                 AST.Reference(
                     import_=AST.ReferenceImport(module=WEBSOCKETS_MODULE),
                     qualified_name_excluding_import=("connect",),
                 )
             )
-            writer.write(f"({url}, extra_headers={headers}) as protocol:")
+            writer.write(f"({url}, extra_headers={headers})")
 
         return AST.Expression(AST.CodeWriter(write))
 
     @staticmethod
     def sync_connect(url: str, headers: str) -> AST.Expression:
         def write(writer: AST.NodeWriter) -> None:
-            writer.write("with ")
             writer.write_reference(
                 AST.Reference(
                     import_=AST.ReferenceImport(module=WEBSOCKETS_SYNC_CLIENT_MODULE, alias="websockets_sync_client"),
                     qualified_name_excluding_import=("connect",),
                 )
             )
-            writer.write(f"({url}, additional_headers={headers}) as protocol:")
+            writer.write(f"({url}, additional_headers={headers})")
 
         return AST.Expression(AST.CodeWriter(write))
