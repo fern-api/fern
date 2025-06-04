@@ -1,8 +1,7 @@
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { FernIr, TypeReference } from "@fern-api/ir-sdk";
-import { AbstractConverterContext, DisplayNameOverrideSource } from "@fern-api/v2-importer-commons";
-import { SchemaConverter } from "@fern-api/v2-importer-commons/src/converters/schema";
+import { AbstractConverterContext, DisplayNameOverrideSource, Converters } from "@fern-api/v2-importer-commons";
 
 /**
  * Context class for converting OpenAPI 3.1 specifications
@@ -63,7 +62,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
         // an inlined schema ($ref: /components/schemas/MySchema/properties/foo). 
         // In this case we want to create an inlined type for the schema of the property foo.
         if (typeId.includes("/")) {
-            const schemaConverter = new SchemaConverter({
+            const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
                 context: this,
                 breadcrumbs: breadcrumbs ?? [],
                 schema: resolvedReference.value,
