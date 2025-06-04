@@ -1,4 +1,4 @@
-irVersion: v53
+irVersion: v58
 displayName: TypeScript Express
 changelogLocation: ../../generators/typescript/express/versions.yml
 image: fernapi/fern-typescript-express

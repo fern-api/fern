@@ -4,16 +4,11 @@
         The v3 OpenAPI parser now appropriately creates inlined types for references to 
         inlined schemas like `$ref: /components/schemas/MySchema/properties/foo`
       type: fix
+    - summary: Bump all generators to IR v58.
+      type: internal
   irVersion: 58
-  createdAt: "2025-06-04"
-  version: 0.63.27
-
-- changelogEntry:
-    - summary: Implicitly interpert a request body as a multipart-form if it contains a property with a file, list of files, and optional file.
-      type: fix
-  irVersion: 58
-  createdAt: "2025-05-30"
-  version: 0.63.26
+  createdAt: "2025-06-03"
+  version: 0.63.29
 
 - changelogEntry:
     - summary: |
@@ -32,6 +27,8 @@
   version: 0.63.27
 
 - changelogEntry:
+    - summary: Implicitly interpert a request body as a multipart-form if it contains a property with a file, list of files, and optional file.
+      type: fix
     - summary: |
         Multiple auth schemes in the same API from difference spec files will be merged and deduplicated.
       type: fix

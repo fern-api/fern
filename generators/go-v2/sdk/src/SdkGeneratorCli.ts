@@ -53,10 +53,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        // TODO: Enable wire tests, when available.
-        // this.generateWireTests(context);
-
-        if (context.config.output.snippetFilepath != null) {
+        if (this.shouldGenerateReadme(context)) {
             try {
                 const endpointSnippets = this.generateSnippets({ context });
                 await this.generateReadme({
@@ -67,7 +64,6 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
                 context.logger.warn("Failed to generate README.md, this is OK.");
             }
         }
-
         await context.project.persist();
     }
 
@@ -128,6 +124,19 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         context.project.addRawFiles(
             new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)
         );
+    }
+
+    private shouldGenerateReadme(context: SdkGeneratorContext): boolean {
+        const hasSnippetFilepath = context.config.output.snippetFilepath != null;
+        const publishConfig = context.ir.publishConfig;
+        switch (publishConfig?.type) {
+            case "filesystem":
+                return publishConfig.generateFullProject || hasSnippetFilepath;
+            case "github":
+            case "direct":
+            default:
+                return hasSnippetFilepath;
+        }
     }
 
     private generateWireTests(context: SdkGeneratorContext) {
