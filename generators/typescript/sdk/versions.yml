@@ -7,7 +7,7 @@
   createdAt: '2025-06-04'
   irVersion: 58
 
-- version: 1.2.3
+- version: 1.2.4
   changelogEntry:
     - summary: |
         Generate tests to verify the SDK sends and receives HTTP requests as expected.
