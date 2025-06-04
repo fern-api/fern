@@ -1,6 +1,19 @@
 {
     "endpoints": [
         {
+            "example_identifier": "82444d62",
+            "id": {
+                "method": "HEAD",
+                "path": "/users",
+                "identifier_override": "endpoint_user.head"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.httpHead.SeedHttpHeadClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedHttpHeadClient client = SeedHttpHeadClient\n            .builder()\n            .build();\n\n        client.user().head();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.httpHead.SeedHttpHeadClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedHttpHeadClient client = SeedHttpHeadClient\n            .builder()\n            .build();\n\n        client.user().head();\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "d5ee06",
             "id": {
                 "method": "GET",

@@ -2,5 +2,6 @@
 
 # isort: skip_file
 
-from . import a
-__all__ = ["a"]
+from . import a, folder
+
+__all__ = ["a", "folder"]

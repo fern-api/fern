@@ -2,5 +2,28 @@
 
 # isort: skip_file
 
-from .resources import Key, KeyType, Metadata, MetadataUnion, MyUnion, NamedMetadata, OptionalMetadata, Request, TypeWithOptionalUnion, union
-__all__ = ["Key", "KeyType", "Metadata", "MetadataUnion", "MyUnion", "NamedMetadata", "OptionalMetadata", "Request", "TypeWithOptionalUnion", "union"]
+from .resources import (
+    Key,
+    KeyType,
+    Metadata,
+    MetadataUnion,
+    MyUnion,
+    NamedMetadata,
+    OptionalMetadata,
+    Request,
+    TypeWithOptionalUnion,
+    union,
+)
+
+__all__ = [
+    "Key",
+    "KeyType",
+    "Metadata",
+    "MetadataUnion",
+    "MyUnion",
+    "NamedMetadata",
+    "OptionalMetadata",
+    "Request",
+    "TypeWithOptionalUnion",
+    "union",
+]

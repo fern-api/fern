@@ -26,6 +26,14 @@ public class UserClient {
         return this.rawClient;
     }
 
+    public void head() {
+        this.rawClient.head().body();
+    }
+
+    public void head(RequestOptions requestOptions) {
+        this.rawClient.head(requestOptions).body();
+    }
+
     public List<User> list(ListUsersRequest request) {
         return this.rawClient.list(request).body();
     }

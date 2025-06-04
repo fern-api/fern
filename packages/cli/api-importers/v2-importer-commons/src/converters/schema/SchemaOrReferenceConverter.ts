@@ -72,7 +72,7 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
             if (response.ok) {
                 return {
                     type: this.wrapTypeReference(response.reference),
-                    inlinedTypes: {}
+                    inlinedTypes: response.inlinedTypes ?? {}
                 };
             }
         }

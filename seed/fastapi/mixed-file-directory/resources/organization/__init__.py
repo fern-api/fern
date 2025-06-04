@@ -3,4 +3,5 @@
 # isort: skip_file
 
 from .types import CreateOrganizationRequest, Organization
+
 __all__ = ["CreateOrganizationRequest", "Organization"]

@@ -2,5 +2,7 @@
 
 # isort: skip_file
 
+from .service import FindRequest
 from .types import ImportingType, OptionalString
-__all__ = ["ImportingType", "OptionalString"]
+
+__all__ = ["FindRequest", "ImportingType", "OptionalString"]

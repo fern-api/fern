@@ -4,4 +4,5 @@
 
 from . import types
 from .types import Data, EventInfo, Metadata, Tag
+
 __all__ = ["Data", "EventInfo", "Metadata", "Tag", "types"]

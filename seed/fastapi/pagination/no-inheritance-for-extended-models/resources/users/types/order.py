@@ -2,15 +2,16 @@
 
 import enum
 import typing
+
 T_Result = typing.TypeVar("T_Result")
+
+
 class Order(str, enum.Enum):
     ASC = "asc"
     DESC = "desc"
-    
+
     def visit(self, asc: typing.Callable[[], T_Result], desc: typing.Callable[[], T_Result]) -> T_Result:
         if self is Order.ASC:
-            return asc(
-            )
+            return asc()
         if self is Order.DESC:
-            return desc(
-            )
+            return desc()

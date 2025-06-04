@@ -2,6 +2,7 @@
 
 # isort: skip_file
 
-from . import unknown
+from . import inlined_request, unknown
+from .inlined_request import SendEnumInlinedRequest
 from .unknown import Status
-__all__ = ["Status", "unknown"]
+__all__ = ["SendEnumInlinedRequest", "Status", "inlined_request", "unknown"]

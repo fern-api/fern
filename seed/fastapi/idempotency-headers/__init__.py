@@ -2,5 +2,7 @@
 
 # isort: skip_file
 
-from .resources import Currency, payment
-__all__ = ["Currency", "payment"]
+from .resources import CreatePaymentRequest, Currency, payment
+from .security import ApiAuth
+
+__all__ = ["ApiAuth", "CreatePaymentRequest", "Currency", "payment"]

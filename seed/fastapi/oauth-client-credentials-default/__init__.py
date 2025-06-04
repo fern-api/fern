@@ -2,5 +2,7 @@
 
 # isort: skip_file
 
-from .resources import TokenResponse, auth
-__all__ = ["TokenResponse", "auth"]
+from .resources import GetTokenRequest, TokenResponse, auth
+from .security import ApiAuth
+
+__all__ = ["ApiAuth", "GetTokenRequest", "TokenResponse", "auth"]

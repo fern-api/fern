@@ -2,5 +2,41 @@
 
 # isort: skip_file
 
-from .types import ListUsersExtendedOptionalListResponse, ListUsersExtendedResponse, ListUsersMixedTypePaginationResponse, ListUsersPaginationResponse, NextPage, Order, Page, User, UserListContainer, UserOptionalListContainer, UserOptionalListPage, UserPage, UsernameContainer, WithCursor, WithPage
-__all__ = ["ListUsersExtendedOptionalListResponse", "ListUsersExtendedResponse", "ListUsersMixedTypePaginationResponse", "ListUsersPaginationResponse", "NextPage", "Order", "Page", "User", "UserListContainer", "UserOptionalListContainer", "UserOptionalListPage", "UserPage", "UsernameContainer", "WithCursor", "WithPage"]
+from .service import ListUsersBodyCursorPaginationRequest, ListUsersBodyOffsetPaginationRequest
+from .types import (
+    ListUsersExtendedOptionalListResponse,
+    ListUsersExtendedResponse,
+    ListUsersMixedTypePaginationResponse,
+    ListUsersPaginationResponse,
+    NextPage,
+    Order,
+    Page,
+    User,
+    UserListContainer,
+    UserOptionalListContainer,
+    UserOptionalListPage,
+    UserPage,
+    UsernameContainer,
+    WithCursor,
+    WithPage,
+)
+
+__all__ = [
+    "ListUsersBodyCursorPaginationRequest",
+    "ListUsersBodyOffsetPaginationRequest",
+    "ListUsersExtendedOptionalListResponse",
+    "ListUsersExtendedResponse",
+    "ListUsersMixedTypePaginationResponse",
+    "ListUsersPaginationResponse",
+    "NextPage",
+    "Order",
+    "Page",
+    "User",
+    "UserListContainer",
+    "UserOptionalListContainer",
+    "UserOptionalListPage",
+    "UserPage",
+    "UsernameContainer",
+    "WithCursor",
+    "WithPage",
+]

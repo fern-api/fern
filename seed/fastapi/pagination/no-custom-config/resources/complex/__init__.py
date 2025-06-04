@@ -2,5 +2,30 @@
 
 # isort: skip_file
 
-from .types import Conversation, CursorPages, MultipleFilterSearchRequest, MultipleFilterSearchRequestOperator, MultipleFilterSearchRequestValue, PaginatedConversationResponse, SearchRequest, SearchRequestQuery, SingleFilterSearchRequest, SingleFilterSearchRequestOperator, StartingAfterPaging
-__all__ = ["Conversation", "CursorPages", "MultipleFilterSearchRequest", "MultipleFilterSearchRequestOperator", "MultipleFilterSearchRequestValue", "PaginatedConversationResponse", "SearchRequest", "SearchRequestQuery", "SingleFilterSearchRequest", "SingleFilterSearchRequestOperator", "StartingAfterPaging"]
+from .types import (
+    Conversation,
+    CursorPages,
+    MultipleFilterSearchRequest,
+    MultipleFilterSearchRequestOperator,
+    MultipleFilterSearchRequestValue,
+    PaginatedConversationResponse,
+    SearchRequest,
+    SearchRequestQuery,
+    SingleFilterSearchRequest,
+    SingleFilterSearchRequestOperator,
+    StartingAfterPaging,
+)
+
+__all__ = [
+    "Conversation",
+    "CursorPages",
+    "MultipleFilterSearchRequest",
+    "MultipleFilterSearchRequestOperator",
+    "MultipleFilterSearchRequestValue",
+    "PaginatedConversationResponse",
+    "SearchRequest",
+    "SearchRequestQuery",
+    "SingleFilterSearchRequest",
+    "SingleFilterSearchRequestOperator",
+    "StartingAfterPaging",
+]

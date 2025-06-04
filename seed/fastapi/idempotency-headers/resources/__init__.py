@@ -3,5 +3,6 @@
 # isort: skip_file
 
 from . import payment
-from .payment import Currency
-__all__ = ["Currency", "payment"]
+from .payment import CreatePaymentRequest, Currency
+
+__all__ = ["CreatePaymentRequest", "Currency", "payment"]

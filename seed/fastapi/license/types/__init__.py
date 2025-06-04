@@ -3,4 +3,5 @@
 # isort: skip_file
 
 from .type import Type
+
 __all__ = ["Type"]
