@@ -7,5 +7,4 @@ from . import user
 from .client import AsyncSeedExtraProperties, SeedExtraProperties
 from .user import User
 from .version import __version__
-
 __all__ = ["AsyncSeedExtraProperties", "Failure", "SeedExtraProperties", "User", "__version__", "user"]
