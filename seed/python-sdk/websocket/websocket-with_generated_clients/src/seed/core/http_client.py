@@ -201,7 +201,7 @@ class HttpClient:
 
         json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
 
-        request_files: typing.Optional[RequestFiles] =  (
+        request_files: typing.Optional[RequestFiles] = (
             convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
             if (files is not None and files is not omit and isinstance(files, dict))
             else None
@@ -296,7 +296,7 @@ class HttpClient:
             else self.base_timeout()
         )
 
-        request_files: typing.Optional[RequestFiles] =  (
+        request_files: typing.Optional[RequestFiles] = (
             convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
             if (files is not None and files is not omit and isinstance(files, dict))
             else None
@@ -397,7 +397,7 @@ class AsyncHttpClient:
             else self.base_timeout()
         )
 
-        request_files: typing.Optional[RequestFiles] =  (
+        request_files: typing.Optional[RequestFiles] = (
             convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
             if (files is not None and files is not omit and isinstance(files, dict))
             else None
@@ -494,7 +494,7 @@ class AsyncHttpClient:
             else self.base_timeout()
         )
 
-        request_files: typing.Optional[RequestFiles] =  (
+        request_files: typing.Optional[RequestFiles] = (
             convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
             if (files is not None and files is not omit and isinstance(files, dict))
             else None
