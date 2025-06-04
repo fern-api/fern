@@ -1,7 +1,7 @@
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { FernIr, TypeReference } from "@fern-api/ir-sdk";
-import { AbstractConverterContext, DisplayNameOverrideSource, Converters } from "@fern-api/v2-importer-commons";
+import { AbstractConverterContext, Converters, DisplayNameOverrideSource } from "@fern-api/v2-importer-commons";
 
 /**
  * Context class for converting OpenAPI 3.1 specifications
@@ -35,7 +35,13 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
         breadcrumbs?: string[];
         displayNameOverride?: string | undefined;
         displayNameOverrideSource?: DisplayNameOverrideSource;
-    }): { ok: true; reference: TypeReference; inlinedTypes?: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> } | { ok: false } {
+    }):
+        | {
+              ok: true;
+              reference: TypeReference;
+              inlinedTypes?: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>;
+          }
+        | { ok: false } {
         const typeId = this.getTypeIdFromSchemaReference(reference);
         if (typeId == null) {
             return { ok: false };
@@ -58,15 +64,15 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
 
         let inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> | undefined;
 
-        // If the typeId has a "/" then we can assume that it is actually a reference to 
-        // an inlined schema ($ref: /components/schemas/MySchema/properties/foo). 
+        // If the typeId has a "/" then we can assume that it is actually a reference to
+        // an inlined schema ($ref: /components/schemas/MySchema/properties/foo).
         // In this case we want to create an inlined type for the schema of the property foo.
         if (typeId.includes("/")) {
             const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
                 context: this,
                 breadcrumbs: breadcrumbs ?? [],
                 schema: resolvedReference.value,
-                id: typeId,
+                id: typeId
             });
             const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
