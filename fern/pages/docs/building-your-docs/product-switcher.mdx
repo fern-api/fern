@@ -159,7 +159,7 @@ You can directly customize the appearance of the product and version selectors b
 Use `transform: translateY(Npx)` to adjust the vertical positioning of the selectors. This ensures that the product and version selectors match the line height of your logo for better visual alignment.
 
 **Enhancing visual prominence:**
-You can modify the border radius and add borders to make the selectors more prominent and better integrated with your site's design aesthetic with `border: 1px solid var(--border);`.
+You can modify the border radius and add borders to make the selectors more prominent and better integrated with your site's design aesthetic.
 
 ```css
 .fern-product-selector {
@@ -187,6 +187,17 @@ You can directly customize the appearance of the product and version selectors b
     <Frame>
       <img src="webflow-product-selector.avif" alt="Example of a styled product selector" />
     </Frame>
+
+    ### Common Styling Adjustments
+
+    **Enable a grid layout for the dropdown:**
+    ```css
+    .fern-product-selector-radio-group {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }  
+    ```
   </Tab>
   <Tab title="Version Selector">
     <Frame>
@@ -194,17 +205,3 @@ You can directly customize the appearance of the product and version selectors b
     </Frame>
   </Tab>
 </Tabs>
-
-
-### Common Styling Adjustments
-
-**Enable a grid layout for the dropdown**
-Use `display: grid;` to enable a grid layout with `grid-template-columns: repeat(N, 1fr);` where `N` is the number of columns in the grid.
-
-```css
-.fern-product-selector-radio-group {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-}  
-```
