@@ -35,7 +35,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
         breadcrumbs?: string[];
         displayNameOverride?: string | undefined;
         displayNameOverrideSource?: DisplayNameOverrideSource;
-    }): { ok: true; reference: TypeReference; inlinedTypes?: Record<string, SchemaConverter.ConvertedSchema> } | { ok: false } {
+    }): { ok: true; reference: TypeReference; inlinedTypes?: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> } | { ok: false } {
         const typeId = this.getTypeIdFromSchemaReference(reference);
         if (typeId == null) {
             return { ok: false };
@@ -56,7 +56,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
             displayName = resolvedReference.value.title ?? displayNameOverride;
         }
 
-        let inlinedTypes: Record<string, SchemaConverter.ConvertedSchema> | undefined;
+        let inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> | undefined;
 
         // If the typeId has a "/" then we can assume that it is actually a reference to 
         // an inlined schema ($ref: /components/schemas/MySchema/properties/foo). 
