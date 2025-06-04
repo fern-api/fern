@@ -2,5 +2,6 @@
 
 # isort: skip_file
 
-from .resources import PropertyBasedErrorTestBody, errors
-__all__ = ["PropertyBasedErrorTestBody", "errors"]
+from .resources import PropertyBasedErrorTest, PropertyBasedErrorTestBody, errors
+
+__all__ = ["PropertyBasedErrorTest", "PropertyBasedErrorTestBody", "errors"]

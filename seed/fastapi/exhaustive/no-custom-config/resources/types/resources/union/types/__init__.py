@@ -5,4 +5,5 @@
 from .animal import Animal
 from .cat import Cat
 from .dog import Dog
+
 __all__ = ["Animal", "Cat", "Dog"]

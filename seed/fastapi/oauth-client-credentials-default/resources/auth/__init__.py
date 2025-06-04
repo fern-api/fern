@@ -2,5 +2,7 @@
 
 # isort: skip_file
 
+from .service import GetTokenRequest
 from .types import TokenResponse
-__all__ = ["TokenResponse"]
+
+__all__ = ["GetTokenRequest", "TokenResponse"]

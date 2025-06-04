@@ -2,15 +2,16 @@
 
 import enum
 import typing
+
 T_Result = typing.TypeVar("T_Result")
+
+
 class ObjectType(str, enum.Enum):
     FOO = "FOO"
     BAR = "BAR"
-    
+
     def visit(self, foo: typing.Callable[[], T_Result], bar: typing.Callable[[], T_Result]) -> T_Result:
         if self is ObjectType.FOO:
-            return foo(
-            )
+            return foo()
         if self is ObjectType.BAR:
-            return bar(
-            )
+            return bar()

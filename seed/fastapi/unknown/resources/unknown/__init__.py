@@ -3,4 +3,5 @@
 # isort: skip_file
 
 from .types import MyAlias, MyObject
+
 __all__ = ["MyAlias", "MyObject"]

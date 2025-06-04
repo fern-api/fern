@@ -3,4 +3,5 @@
 # isort: skip_file
 
 from .failure import Failure
+
 __all__ = ["Failure"]

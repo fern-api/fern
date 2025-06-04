@@ -4,4 +4,5 @@
 
 from .resources import Metadata, metadata
 from .types import Event
+
 __all__ = ["Event", "Metadata", "metadata"]
