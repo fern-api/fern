@@ -173,7 +173,7 @@ types:
 
 service:
   auth: false
-  base-path: /big-union
+  base-path: /
   endpoints:
     get:
       path: /{id}

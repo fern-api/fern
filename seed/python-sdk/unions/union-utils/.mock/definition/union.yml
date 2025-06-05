@@ -35,7 +35,7 @@ types:
 
 service:
   auth: false
-  base-path: /union
+  base-path: /
   endpoints:
     get:
       path: /{id}

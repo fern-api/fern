@@ -6,4 +6,10 @@ from .nested_object_with_optional_field_error import NestedObjectWithOptionalFie
 from .nested_object_with_required_field_error import NestedObjectWithRequiredFieldError
 from .object_with_optional_field_error import ObjectWithOptionalFieldError
 from .object_with_required_field_error import ObjectWithRequiredFieldError
-__all__ = ["NestedObjectWithOptionalFieldError", "NestedObjectWithRequiredFieldError", "ObjectWithOptionalFieldError", "ObjectWithRequiredFieldError"]
+
+__all__ = [
+    "NestedObjectWithOptionalFieldError",
+    "NestedObjectWithRequiredFieldError",
+    "ObjectWithOptionalFieldError",
+    "ObjectWithRequiredFieldError",
+]

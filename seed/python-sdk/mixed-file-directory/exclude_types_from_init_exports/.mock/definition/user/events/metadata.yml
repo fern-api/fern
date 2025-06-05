@@ -1,0 +1,23 @@
+imports:
+  root: ../../__package__.yml
+
+types:
+  Metadata:
+    properties:
+      id: root.Id
+      value: unknown
+
+service:
+  auth: false
+  base-path: /users/events/metadata
+  endpoints:
+    getMetadata:
+      path: /
+      method: GET
+      auth: false
+      docs: Get event metadata.
+      request:
+        name: GetEventMetadataRequest
+        query-parameters:
+          id: root.Id
+      response: Metadata

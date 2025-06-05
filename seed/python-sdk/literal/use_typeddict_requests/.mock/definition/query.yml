@@ -1,0 +1,43 @@
+imports:
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    send:
+      path: /query
+      method: POST
+      request:
+        name: SendLiteralsInQueryRequest
+        query-parameters:
+          prompt: literal<"You are a helpful assistant">
+          optional_prompt: optional<literal<"You are a helpful assistant">>
+          alias_prompt: AliasToPrompt
+          alias_optional_prompt: optional<AliasToPrompt>
+          query: string
+          stream: literal<false>
+          optional_stream: optional<literal<false>>
+          alias_stream: AliasToStream
+          alias_optional_stream: optional<AliasToStream>
+      response: root.SendResponse
+      examples:
+        - query-parameters:
+            prompt: "You are a helpful assistant"
+            optional_prompt: "You are a helpful assistant"
+            alias_prompt: "You are a helpful assistant"
+            alias_optional_prompt: "You are a helpful assistant"
+            stream: false
+            optional_stream: false
+            alias_stream: false
+            alias_optional_stream: false
+            query: "What is the weather today"
+          response:
+            body:
+              message: "The weather is sunny"
+              status: 200
+              success: true
+
+types:
+  AliasToPrompt: literal<"You are a helpful assistant">
+  AliasToStream: literal<false>

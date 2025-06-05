@@ -3,4 +3,5 @@
 # isort: skip_file
 
 from .error_with_union_body import ErrorWithUnionBody
+
 __all__ = ["ErrorWithUnionBody"]
