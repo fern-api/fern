@@ -4,6 +4,7 @@ from seed.complex_ import StartingAfterPaging
 
 client = SeedPagination(base_url="https://yourhost.com/path/to/api", token="YOUR_TOKEN", )        
 client.complex_.search(
+	index="index",
 	pagination=StartingAfterPaging(
 		per_page=1,
 		starting_after="starting_after"
