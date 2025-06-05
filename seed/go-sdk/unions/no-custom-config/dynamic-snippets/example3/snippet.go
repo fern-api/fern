@@ -12,7 +12,7 @@ func do() () {
             "https://api.fern.com",
         ),
     )
-    client.Bigunion.Get(
+    client.Union.Get(
         context.TODO(),
         "id",
     )

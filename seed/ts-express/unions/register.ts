@@ -13,6 +13,6 @@ export function register(
         union: UnionService;
     },
 ): void {
-    (expressApp as any).use("/", services.bigunion.toRouter());
-    (expressApp as any).use("/", services.union.toRouter());
+    (expressApp as any).use("/big-union", services.bigunion.toRouter());
+    (expressApp as any).use("/union", services.union.toRouter());
 }

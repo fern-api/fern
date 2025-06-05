@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .types import Error, ErrorCategory, ErrorCode, PutResponse
-
 __all__ = ["Error", "ErrorCategory", "ErrorCode", "PutResponse"]

@@ -4,7 +4,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/{id}",
+                "path": "/big-union/{id}",
                 "method": "GET",
                 "identifier_override": "endpoint_bigunion.get"
             },
@@ -16,7 +16,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/",
+                "path": "/big-union",
                 "method": "PATCH",
                 "identifier_override": "endpoint_bigunion.update"
             },
@@ -28,7 +28,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/many",
+                "path": "/big-union/many",
                 "method": "PATCH",
                 "identifier_override": "endpoint_bigunion.update-many"
             },
@@ -40,7 +40,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/{id}",
+                "path": "/union/{id}",
                 "method": "GET",
                 "identifier_override": "endpoint_union.get"
             },
@@ -52,7 +52,7 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/",
+                "path": "/union",
                 "method": "PATCH",
                 "identifier_override": "endpoint_union.update"
             },

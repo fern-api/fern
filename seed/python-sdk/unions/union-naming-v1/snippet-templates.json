@@ -6,7 +6,7 @@
             "type": "python"
         },
         "endpointId": {
-            "path": "/{id}",
+            "path": "/big-union/{id}",
             "method": "GET",
             "identifierOverride": "endpoint_bigunion.get"
         },
@@ -96,7 +96,7 @@
             "type": "python"
         },
         "endpointId": {
-            "path": "/",
+            "path": "/big-union",
             "method": "PATCH",
             "identifierOverride": "endpoint_bigunion.update"
         },
@@ -1692,7 +1692,7 @@
             "type": "python"
         },
         "endpointId": {
-            "path": "/many",
+            "path": "/big-union/many",
             "method": "PATCH",
             "identifierOverride": "endpoint_bigunion.update-many"
         },
@@ -3310,7 +3310,7 @@
             "type": "python"
         },
         "endpointId": {
-            "path": "/{id}",
+            "path": "/union/{id}",
             "method": "GET",
             "identifierOverride": "endpoint_union.get"
         },
@@ -3400,7 +3400,7 @@
             "type": "python"
         },
         "endpointId": {
-            "path": "/",
+            "path": "/union",
             "method": "PATCH",
             "identifierOverride": "endpoint_union.update"
         },

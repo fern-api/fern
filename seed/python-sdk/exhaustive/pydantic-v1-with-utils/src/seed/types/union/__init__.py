@@ -4,5 +4,4 @@
 
 from .types import Animal, Cat, Dog
 from .errors import ErrorWithUnionBody
-
 __all__ = ["Animal", "Cat", "Dog", "ErrorWithUnionBody"]

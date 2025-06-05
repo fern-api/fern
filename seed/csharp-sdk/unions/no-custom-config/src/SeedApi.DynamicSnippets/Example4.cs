@@ -12,7 +12,7 @@ public class Example4
             }
         );
 
-        await client.Bigunion.UpdateAsync(
+        await client.Union.UpdateAsync(
             new Dictionary<string, object>() {
                 ["type"] = "circle",
                 ["radius"] = 1.1,

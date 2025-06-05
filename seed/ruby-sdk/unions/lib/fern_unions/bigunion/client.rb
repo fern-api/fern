@@ -36,7 +36,7 @@ module SeedUnionsClient
         unless request_options.nil? || request_options&.additional_body_parameters.nil?
           req.body = { **(request_options&.additional_body_parameters || {}) }.compact
         end
-        req.url "#{@request_client.get_url(request_options: request_options)}/#{id}"
+        req.url "#{@request_client.get_url(request_options: request_options)}/big-union/#{id}"
       end
       SeedUnionsClient::Bigunion::BigUnion.from_json(json_object: response.body)
     end
@@ -59,7 +59,7 @@ module SeedUnionsClient
           req.params = { **(request_options&.additional_query_parameters || {}) }.compact
         end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
-        req.url "#{@request_client.get_url(request_options: request_options)}/"
+        req.url "#{@request_client.get_url(request_options: request_options)}/big-union"
       end
       JSON.parse(response.body)
     end
@@ -85,7 +85,7 @@ module SeedUnionsClient
           req.params = { **(request_options&.additional_query_parameters || {}) }.compact
         end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
-        req.url "#{@request_client.get_url(request_options: request_options)}/many"
+        req.url "#{@request_client.get_url(request_options: request_options)}/big-union/many"
       end
       JSON.parse(response.body)
     end
@@ -122,7 +122,7 @@ module SeedUnionsClient
           unless request_options.nil? || request_options&.additional_body_parameters.nil?
             req.body = { **(request_options&.additional_body_parameters || {}) }.compact
           end
-          req.url "#{@request_client.get_url(request_options: request_options)}/#{id}"
+          req.url "#{@request_client.get_url(request_options: request_options)}/big-union/#{id}"
         end
         SeedUnionsClient::Bigunion::BigUnion.from_json(json_object: response.body)
       end
@@ -147,7 +147,7 @@ module SeedUnionsClient
             req.params = { **(request_options&.additional_query_parameters || {}) }.compact
           end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
-          req.url "#{@request_client.get_url(request_options: request_options)}/"
+          req.url "#{@request_client.get_url(request_options: request_options)}/big-union"
         end
         parsed_json = JSON.parse(response.body)
         parsed_json
@@ -176,7 +176,7 @@ module SeedUnionsClient
             req.params = { **(request_options&.additional_query_parameters || {}) }.compact
           end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
-          req.url "#{@request_client.get_url(request_options: request_options)}/many"
+          req.url "#{@request_client.get_url(request_options: request_options)}/big-union/many"
         end
         parsed_json = JSON.parse(response.body)
         parsed_json

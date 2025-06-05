@@ -34,7 +34,7 @@ class RawBigunionClient:
         HttpResponse[BigUnion]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(id)}",
+            f"big-union/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -69,6 +69,7 @@ class RawBigunionClient:
         HttpResponse[bool]
         """
         _response = self._client_wrapper.httpx_client.request(
+            "big-union",
             method="PATCH",
             json=convert_and_respect_annotation_metadata(object_=request, annotation=BigUnion, direction="write"),
             request_options=request_options,
@@ -105,7 +106,7 @@ class RawBigunionClient:
         HttpResponse[typing.Dict[str, bool]]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "many",
+            "big-union/many",
             method="PATCH",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=typing.Sequence[BigUnion], direction="write"
@@ -149,7 +150,7 @@ class AsyncRawBigunionClient:
         AsyncHttpResponse[BigUnion]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(id)}",
+            f"big-union/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
@@ -184,6 +185,7 @@ class AsyncRawBigunionClient:
         AsyncHttpResponse[bool]
         """
         _response = await self._client_wrapper.httpx_client.request(
+            "big-union",
             method="PATCH",
             json=convert_and_respect_annotation_metadata(object_=request, annotation=BigUnion, direction="write"),
             request_options=request_options,
@@ -220,7 +222,7 @@ class AsyncRawBigunionClient:
         AsyncHttpResponse[typing.Dict[str, bool]]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "many",
+            "big-union/many",
             method="PATCH",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=typing.Sequence[BigUnion], direction="write"

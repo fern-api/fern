@@ -29,7 +29,7 @@ public partial class BigunionClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = string.Format("/{0}", ValueConvert.ToPathParameterString(id)),
+                    Path = string.Format("/big-union/{0}", ValueConvert.ToPathParameterString(id)),
                     Options = options,
                 },
                 cancellationToken
@@ -75,7 +75,7 @@ public partial class BigunionClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethodExtensions.Patch,
-                    Path = "",
+                    Path = "/big-union",
                     Body = request,
                     Options = options,
                 },
@@ -126,7 +126,7 @@ public partial class BigunionClient
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethodExtensions.Patch,
-                    Path = "/many",
+                    Path = "/big-union/many",
                     Body = request,
                     Options = options,
                 },

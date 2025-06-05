@@ -2,7 +2,7 @@
     "endpoints": [
         {
             "id": {
-                "path": "/{id}",
+                "path": "/big-union/{id}",
                 "method": "GET",
                 "identifierOverride": "endpoint_bigunion.get"
             },
@@ -13,7 +13,7 @@
         },
         {
             "id": {
-                "path": "/",
+                "path": "/big-union",
                 "method": "PATCH",
                 "identifierOverride": "endpoint_bigunion.update"
             },
@@ -24,7 +24,7 @@
         },
         {
             "id": {
-                "path": "/many",
+                "path": "/big-union/many",
                 "method": "PATCH",
                 "identifierOverride": "endpoint_bigunion.update-many"
             },
@@ -35,7 +35,7 @@
         },
         {
             "id": {
-                "path": "/{id}",
+                "path": "/big-union/{id}",
                 "method": "GET",
                 "identifierOverride": "endpoint_bigunion.get"
             },
@@ -46,7 +46,7 @@
         },
         {
             "id": {
-                "path": "/",
+                "path": "/big-union",
                 "method": "PATCH",
                 "identifierOverride": "endpoint_bigunion.update"
             },
@@ -57,7 +57,7 @@
         },
         {
             "id": {
-                "path": "/many",
+                "path": "/big-union/many",
                 "method": "PATCH",
                 "identifierOverride": "endpoint_bigunion.update-many"
             },
@@ -68,7 +68,7 @@
         },
         {
             "id": {
-                "path": "/{id}",
+                "path": "/union/{id}",
                 "method": "GET",
                 "identifierOverride": "endpoint_union.get"
             },
@@ -79,7 +79,7 @@
         },
         {
             "id": {
-                "path": "/",
+                "path": "/union",
                 "method": "PATCH",
                 "identifierOverride": "endpoint_union.update"
             },
@@ -90,7 +90,7 @@
         },
         {
             "id": {
-                "path": "/{id}",
+                "path": "/union/{id}",
                 "method": "GET",
                 "identifierOverride": "endpoint_union.get"
             },
@@ -101,7 +101,7 @@
         },
         {
             "id": {
-                "path": "/",
+                "path": "/union",
                 "method": "PATCH",
                 "identifierOverride": "endpoint_union.update"
             },

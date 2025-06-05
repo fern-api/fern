@@ -72,7 +72,7 @@ class AbstractBigunionService(AbstractFernService):
         wrapper.__globals__.update(cls.get.__globals__)
 
         router.get(
-            path="/{id}",
+            path="/big-union/{id}",
             response_model=BigUnion,
             description=AbstractBigunionService.get.__doc__,
             **get_route_args(cls.get, default_tag="bigunion"),
@@ -108,7 +108,7 @@ class AbstractBigunionService(AbstractFernService):
         wrapper.__globals__.update(cls.update.__globals__)
 
         router.patch(
-            path="/",
+            path="/big-union",
             response_model=bool,
             description=AbstractBigunionService.update.__doc__,
             **get_route_args(cls.update, default_tag="bigunion"),
@@ -144,7 +144,7 @@ class AbstractBigunionService(AbstractFernService):
         wrapper.__globals__.update(cls.update_many.__globals__)
 
         router.patch(
-            path="/many",
+            path="/big-union/many",
             response_model=typing.Dict[str, bool],
             description=AbstractBigunionService.update_many.__doc__,
             **get_route_args(cls.update_many, default_tag="bigunion"),
