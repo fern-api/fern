@@ -76,9 +76,8 @@ class MockServerPool {
     }
 
     public listen(): void {
-        mswServer.listen({
-            onUnhandledRequest: "error",
-        });
+        const onUnhandledRequest = process.env.LOG_LEVEL === "debug" ? "warn" : "bypass";
+        mswServer.listen({ onUnhandledRequest });
 
         if (process.env.LOG_LEVEL === "debug") {
             mswServer.events.on("request:start", async ({ request, requestId }) => {
