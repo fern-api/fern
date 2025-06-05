@@ -23,11 +23,6 @@ inputs:
     description: PW for fernapi dockerhub user
     required: true
 
-
-env:
-  DOCKER_BUILDKIT: 1
-  DOCKER_USERNAME: fernapi
-
 runs:
   using: "composite"
   steps:
@@ -41,6 +36,8 @@ runs:
       if: inputs.manual-trigger == 'false'
       shell: bash
       env:
+        DOCKER_BUILDKIT: 1
+        DOCKER_USERNAME: fernapi
         FERN_TOKEN: ${{ inputs.fern-token }}
         DOCKER_PASSWORD: ${{ inputs.docker-pwd }}
         VERSIONS_FILE: ${{ inputs.version-file }}
@@ -72,6 +69,8 @@ runs:
       if: inputs.manual-trigger == 'true'
       shell: bash
       env:
+        DOCKER_BUILDKIT: 1
+        DOCKER_USERNAME: fernapi
         FERN_TOKEN: ${{ inputs.fern-token }}
         DOCKER_PASSWORD: ${{ inputs.docker-pwd }}
       run: |
