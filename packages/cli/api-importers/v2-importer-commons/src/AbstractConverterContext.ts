@@ -39,6 +39,7 @@ export declare namespace Spec {
         environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
         globalHeaderOverrides?: RawSchemas.WithHeadersSchema;
         enableUniqueErrorsPerEndpoint: boolean;
+        skipV1ExampleGeneration: boolean;
     }
 }
 
@@ -60,6 +61,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     public readonly environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
     public readonly globalHeaderOverrides?: RawSchemas.WithHeadersSchema;
     public readonly enableUniqueErrorsPerEndpoint: boolean;
+    public readonly skipV1ExampleGeneration: boolean;
 
     constructor(protected readonly args: Spec.Args<Spec>) {
         this.spec = args.spec;
@@ -79,6 +81,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         this.environmentOverrides = args.environmentOverrides;
         this.globalHeaderOverrides = args.globalHeaderOverrides;
         this.enableUniqueErrorsPerEndpoint = args.enableUniqueErrorsPerEndpoint;
+        this.skipV1ExampleGeneration = args.skipV1ExampleGeneration;
     }
 
     private static BREADCRUMBS_TO_IGNORE = ["properties", "allOf", "anyOf"];

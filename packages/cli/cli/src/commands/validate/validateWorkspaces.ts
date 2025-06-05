@@ -50,7 +50,8 @@ export async function validateWorkspaces({
                     await workspace.getIntermediateRepresentation({
                         context,
                         audiences: { type: "all" },
-                        enableUniqueErrorsPerEndpoint: false
+                        enableUniqueErrorsPerEndpoint: false,
+                        skipV1ExampleGeneration: true
                     });
                     return;
                 }

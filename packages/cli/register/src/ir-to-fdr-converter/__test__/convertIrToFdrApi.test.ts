@@ -131,7 +131,8 @@ describe("oas-ir-fdr", async () => {
                     const intermediateRepresentation = await ossWorkspace.getIntermediateRepresentation({
                         context,
                         audiences: { type: "all" },
-                        enableUniqueErrorsPerEndpoint: true
+                        enableUniqueErrorsPerEndpoint: true,
+                        skipV1ExampleGeneration: true
                     });
 
                     const fdr = convertIrToFdrApi({

@@ -36,7 +36,8 @@ describe("openapi-v2-sdks", async () => {
                     const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
                         context,
                         audiences: { type: "all" },
-                        enableUniqueErrorsPerEndpoint: false
+                        enableUniqueErrorsPerEndpoint: false,
+                        skipV1ExampleGeneration: false
                     });
                     // eslint-disable-next-line jest/no-standalone-expect
                     await expect(JSON.stringify(intermediateRepresentation, undefined, 2)).toMatchFileSnapshot(
