@@ -28,6 +28,8 @@ jobs:
         with:
           generator-name: "go-fiber"
           version-file: "generators/go/fiber/versions.yml"
+          fern-token: ${{ secrets.FERN_TOKEN }}
+          docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
       - name: manual publish
         if: ${{ github.event_name == 'workflow_dispatch' }}
         uses: ./.github/actions/publish-generator
@@ -35,3 +37,5 @@ jobs:
           generator-name: "go-fiber"
           version: ${{ inputs.version }}
           manual-trigger: "true"
+          fern-token: ${{ secrets.FERN_TOKEN }}
+          docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
