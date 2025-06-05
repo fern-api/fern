@@ -57,7 +57,10 @@ runs:
         echo "Preview of the current file (${current_commit})"
         head ${VERSIONS_FILE}
 
-        if [ $? -eq 0 ]; then
+        git show ${previous_commit}:${VERSIONS_FILE} > tmp_previous_versions.yml
+        GIT_SHOW_STATUS=$?
+        
+        if [ $GIT_SHOW_STATUS -eq 0 ]; then
           pnpm seed:local publish generator ${{ inputs.generator-name }} --changelog $VERSIONS_FILE --previous-changelog tmp_previous_versions.yml --log-level debug
         else
           echo "No previous versions found, skipping publish."
