@@ -2,7 +2,7 @@
 - changelogEntry:
     - summary: | 
         Manual redeployment to release changes from 0.63.29 and 0.63.30
-      type: feat
+      type: chore
   irVersion: 58
   createdAt: "2025-06-05"
   version: 0.63.31
