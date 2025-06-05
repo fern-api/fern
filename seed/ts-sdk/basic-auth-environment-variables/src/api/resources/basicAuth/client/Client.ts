@@ -216,7 +216,7 @@ export class BasicAuth {
         }
 
         return core.BasicAuth.toAuthorizationHeader({
-            username,
+            username: username,
             password: accessToken,
         });
     }
