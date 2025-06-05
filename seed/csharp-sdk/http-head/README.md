@@ -19,7 +19,7 @@ Instantiate and use the client with the following:
 using SeedHttpHead;
 
 var client = new SeedHttpHeadClient();
-await client.User.ListAsync(new ListUsersRequest { Limit = 1 });
+await client.User.HeadAsync();
 ```
 
 ## Exception Handling
@@ -31,7 +31,7 @@ will be thrown.
 using SeedHttpHead;
 
 try {
-    var response = await client.User.ListAsync(...);
+    var response = await client.User.HeadAsync(...);
 } catch (SeedHttpHeadApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
@@ -55,7 +55,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.User.ListAsync(
+var response = await client.User.HeadAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -68,7 +68,7 @@ var response = await client.User.ListAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.User.ListAsync(
+var response = await client.User.HeadAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s

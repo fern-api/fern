@@ -53,7 +53,7 @@ public class SearchTest : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/conversations/search")
+                    .WithPath("/index/conversations/search")
                     .WithHeader("Content-Type", "application/json")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
@@ -66,6 +66,7 @@ public class SearchTest : BaseMockServerTest
             );
 
         var pager = await Client.Complex.SearchAsync(
+            "index",
             new SearchRequest
             {
                 Pagination = new StartingAfterPaging
