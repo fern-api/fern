@@ -26,10 +26,7 @@ inputs:
 
 env:
   DOCKER_BUILDKIT: 1
-  FERN_TOKEN: ${{ inputs.fern-token }}
   DOCKER_USERNAME: fernapi
-  DOCKER_PASSWORD: ${{ inputs.docker-pwd }}
-  VERSIONS_FILE: ${{ inputs.version-file }}
 
 runs:
   using: "composite"
@@ -43,6 +40,10 @@ runs:
     - name: Run publish (auto)
       if: inputs.manual-trigger == 'false'
       shell: bash
+      env:
+        FERN_TOKEN: ${{ inputs.fern-token }}
+        DOCKER_PASSWORD: ${{ inputs.docker-pwd }}
+        VERSIONS_FILE: ${{ inputs.version-file }}
       run: |
         echo $VERSIONS_FILE
         echo ${{ inputs.generator-name }}
@@ -70,6 +71,9 @@ runs:
     - name: Run publish (manual)
       if: inputs.manual-trigger == 'true'
       shell: bash
+      env:
+        FERN_TOKEN: ${{ inputs.fern-token }}
+        DOCKER_PASSWORD: ${{ inputs.docker-pwd }}
       run: |
         pnpm seed:local publish generator ${{ inputs.generator-name }} --ver ${{ inputs.version }} --log-level debug
         pnpm seed:local register generator --generators ${{ inputs.generator-name }}
