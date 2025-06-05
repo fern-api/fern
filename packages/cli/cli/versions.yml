@@ -9,6 +9,15 @@
 
 - changelogEntry:
     - summary: | 
+        Disable v1 example generation for v3 docs IR generation.
+        Correctly handle `x-fern-availability` extension in v3 parsing.
+      type: fix
+  irVersion: 58
+  createdAt: "2025-06-05"
+  version: 0.63.32
+
+- changelogEntry:
+    - summary: | 
         Manual redeployment to release changes from 0.63.29 and 0.63.30
       type: chore
   irVersion: 58

@@ -8177,6 +8177,7 @@
   "rootPackage": {
     "endpoints": [
       {
+        "availability": "GenerallyAvailable",
         "auth": true,
         "description": "Executes a deployed Prompt and streams back the results.",
         "method": "POST",

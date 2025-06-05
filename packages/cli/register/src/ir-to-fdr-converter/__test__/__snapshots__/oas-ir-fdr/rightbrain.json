@@ -6826,7 +6826,8 @@
                   "value": "TaskRAG"
                 }
               }
-            }
+            },
+            "availability": "Beta"
           },
           {
             "description": "When `true` it requires an image to be sent in the Task Run request.",
@@ -7531,7 +7532,8 @@
                   "value": "TaskRAG"
                 }
               }
-            }
+            },
+            "availability": "Beta"
           },
           {
             "description": "When `true` it requires an image to be sent in the Task Run request.",
@@ -7833,7 +7835,8 @@
                   "value": "TaskRAG"
                 }
               }
-            }
+            },
+            "availability": "Beta"
           },
           {
             "description": "When `true` it requires an image to be sent in the Task Run request.",
