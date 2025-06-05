@@ -1,8 +1,25 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Bump CLI version.
+      type: internal
+  irVersion: 58
+  createdAt: "2025-06-05"
+  version: 0.63.34
+
+- changelogEntry:
+    - summary: |
         Add support for Anthropic Claude Sonnet 4.0.
       type: feat
+  irVersion: 58
+  createdAt: "2025-06-05"
+  version: 0.63.33
+
+- changelogEntry:
+    - summary: | 
+        Disable v1 example generation for v3 docs IR generation.
+        Correctly handle `x-fern-availability` extension in v3 parsing.
+      type: fix
   irVersion: 58
   createdAt: "2025-06-05"
   version: 0.63.32

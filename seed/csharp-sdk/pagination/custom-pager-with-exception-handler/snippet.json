@@ -4,13 +4,13 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/conversations/search",
+                "path": "/{index}/conversations/search",
                 "method": "POST",
                 "identifier_override": "endpoint_complex.search"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar pager = await client.Complex.SearchAsync(\n    new SearchRequest\n    {\n        Pagination = new StartingAfterPaging { PerPage = 1, StartingAfter = \"starting_after\" },\n        Query = new SingleFilterSearchRequest\n        {\n            Field = \"field\",\n            Operator = SingleFilterSearchRequestOperator.Equals,\n            Value = \"value\",\n        },\n    }\n);\n\nawait foreach (var item in pager)\n{\n    // do something with item\n}\n"
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar pager = await client.Complex.SearchAsync(\n    \"index\",\n    new SearchRequest\n    {\n        Pagination = new StartingAfterPaging { PerPage = 1, StartingAfter = \"starting_after\" },\n        Query = new SingleFilterSearchRequest\n        {\n            Field = \"field\",\n            Operator = SingleFilterSearchRequestOperator.Equals,\n            Value = \"value\",\n        },\n    }\n);\n\nawait foreach (var item in pager)\n{\n    // do something with item\n}\n"
             }
         },
         {

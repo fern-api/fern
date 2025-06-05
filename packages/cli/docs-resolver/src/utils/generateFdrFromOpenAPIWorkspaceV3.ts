@@ -21,7 +21,8 @@ export async function generateFdrFromOpenApiWorkspaceV3(
     const intermediateRepresentation = await workspace.getIntermediateRepresentation({
         context,
         audiences,
-        enableUniqueErrorsPerEndpoint: true
+        enableUniqueErrorsPerEndpoint: true,
+        generateV1Examples: false
     });
 
     return convertIrToFdrApi({

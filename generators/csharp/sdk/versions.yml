@@ -13,6 +13,12 @@
       type: feat
   createdAt: '2025-06-05'
   irVersion: 58
+- version: 1.17.6
+  changelogEntry:
+    - summary: Fix generated pagination endpoints that include path parameters.
+      type: fix
+  createdAt: '2025-06-05'
+  irVersion: 58
 - version: 1.17.5
   changelogEntry:
     - summary: Update the IR to v58.
