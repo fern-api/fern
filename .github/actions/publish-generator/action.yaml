@@ -50,15 +50,13 @@ runs:
         
         # Get the previous version of the file using the specific commit that last changed it
         git show ${previous_commit}:${VERSIONS_FILE} > tmp_previous_versions.yml
+        GIT_SHOW_STATUS=$?
         
         echo "Preview of the previous file (${previous_commit})"
         head tmp_previous_versions.yml
 
         echo "Preview of the current file (${current_commit})"
         head ${VERSIONS_FILE}
-
-        git show ${previous_commit}:${VERSIONS_FILE} > tmp_previous_versions.yml
-        GIT_SHOW_STATUS=$?
         
         if [ $GIT_SHOW_STATUS -eq 0 ]; then
           pnpm seed:local publish generator ${{ inputs.generator-name }} --changelog $VERSIONS_FILE --previous-changelog tmp_previous_versions.yml --log-level debug
