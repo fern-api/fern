@@ -10,9 +10,12 @@ const filePathOnDockerContainer = AbsoluteFilePath.of("/assets/asIs");
  * A map containing the original source path and the target path in the generated project
  */
 const asIsFiles = {
-    json: {
-        vanilla: { "json/json.vanilla.ts": "src/core/json.ts" },
-        bigint: { "json/json.bigint.ts": "src/core/json.ts" }
+    core: {
+        mergeHeaders: { "core/headers.ts": "src/core/headers.ts" },
+        json: {
+            vanilla: { "core/json.vanilla.ts": "src/core/json.ts" },
+            bigint: { "core/json.bigint.ts": "src/core/json.ts" }
+        }
     },
     tests: {
         mockServer: {
@@ -45,13 +48,13 @@ export class AsIsManager {
     public async AddToTsProject({ project }: { project: Project }): Promise<void> {
         const filesToCopy: Record<string, string>[] = [];
 
-        filesToCopy.push(this.useBigInt ? asIsFiles.json.bigint : asIsFiles.json.vanilla);
+        filesToCopy.push(asIsFiles.core.mergeHeaders);
         filesToCopy.push(asIsFiles.scripts.renameToEsmFiles);
         if (this.useBigInt) {
             filesToCopy.push(asIsFiles.tests.bigintSetup);
-            filesToCopy.push(asIsFiles.json.bigint);
+            filesToCopy.push(asIsFiles.core.json.bigint);
         } else {
-            filesToCopy.push(asIsFiles.json.vanilla);
+            filesToCopy.push(asIsFiles.core.json.vanilla);
         }
         if (this.generateWireTests) {
             filesToCopy.push(asIsFiles.tests.mockServer);

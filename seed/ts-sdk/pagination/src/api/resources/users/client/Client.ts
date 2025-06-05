@@ -4,6 +4,7 @@
 
 import * as core from "../../../../core/index.js";
 import * as SeedPagination from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 
@@ -13,6 +14,8 @@ export declare namespace Users {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -23,12 +26,16 @@ export declare namespace Users {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class Users {
-    constructor(protected readonly _options: Users.Options) {}
+    protected readonly _options: Users.Options;
+
+    constructor(_options: Users.Options) {
+        this._options = _options;
+    }
 
     /**
      * @param {SeedPagination.ListUsersCursorPaginationRequest} request
@@ -71,16 +78,11 @@ export class Users {
                         "/users",
                     ),
                     method: "GET",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/pagination",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/pagination/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
+                    headers: mergeHeaders(
+                        this._options?.headers,
+                        mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                        requestOptions?.headers,
+                    ),
                     queryParameters: _queryParams,
                     timeoutMs:
                         requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -158,16 +160,11 @@ export class Users {
                         "/users",
                     ),
                     method: "POST",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/pagination",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/pagination/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
+                    headers: mergeHeaders(
+                        this._options?.headers,
+                        mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                        requestOptions?.headers,
+                    ),
                     queryParameters: _queryParams,
                     timeoutMs:
                         requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -242,16 +239,11 @@ export class Users {
                         "/users",
                     ),
                     method: "POST",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/pagination",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/pagination/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
+                    headers: mergeHeaders(
+                        this._options?.headers,
+                        mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                        requestOptions?.headers,
+                    ),
                     contentType: "application/json",
                     requestType: "json",
                     body: request,
@@ -343,16 +335,11 @@ export class Users {
                         "/users",
                     ),
                     method: "GET",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/pagination",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/pagination/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
+                    headers: mergeHeaders(
+                        this._options?.headers,
+                        mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                        requestOptions?.headers,
+                    ),
                     queryParameters: _queryParams,
                     timeoutMs:
                         requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -444,16 +431,11 @@ export class Users {
                         "/users",
                     ),
                     method: "GET",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/pagination",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/pagination/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
+                    headers: mergeHeaders(
+                        this._options?.headers,
+                        mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                        requestOptions?.headers,
+                    ),
                     queryParameters: _queryParams,
                     timeoutMs:
                         requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -530,16 +512,11 @@ export class Users {
                         "/users",
                     ),
                     method: "POST",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/pagination",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/pagination/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
+                    headers: mergeHeaders(
+                        this._options?.headers,
+                        mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                        requestOptions?.headers,
+                    ),
                     contentType: "application/json",
                     requestType: "json",
                     body: request,
@@ -629,16 +606,11 @@ export class Users {
                         "/users",
                     ),
                     method: "GET",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/pagination",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/pagination/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
+                    headers: mergeHeaders(
+                        this._options?.headers,
+                        mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                        requestOptions?.headers,
+                    ),
                     queryParameters: _queryParams,
                     timeoutMs:
                         requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -726,16 +698,11 @@ export class Users {
                         "/users",
                     ),
                     method: "GET",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/pagination",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/pagination/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
+                    headers: mergeHeaders(
+                        this._options?.headers,
+                        mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                        requestOptions?.headers,
+                    ),
                     queryParameters: _queryParams,
                     timeoutMs:
                         requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -815,16 +782,11 @@ export class Users {
                         "/users",
                     ),
                     method: "GET",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/pagination",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/pagination/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
+                    headers: mergeHeaders(
+                        this._options?.headers,
+                        mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                        requestOptions?.headers,
+                    ),
                     queryParameters: _queryParams,
                     timeoutMs:
                         requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -902,16 +864,11 @@ export class Users {
                         "/users",
                     ),
                     method: "GET",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/pagination",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/pagination/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
+                    headers: mergeHeaders(
+                        this._options?.headers,
+                        mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                        requestOptions?.headers,
+                    ),
                     queryParameters: _queryParams,
                     timeoutMs:
                         requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -989,16 +946,11 @@ export class Users {
                         "/users",
                     ),
                     method: "GET",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/pagination",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/pagination/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
+                    headers: mergeHeaders(
+                        this._options?.headers,
+                        mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                        requestOptions?.headers,
+                    ),
                     queryParameters: _queryParams,
                     timeoutMs:
                         requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -1076,16 +1028,11 @@ export class Users {
                         "/users",
                     ),
                     method: "GET",
-                    headers: {
-                        Authorization: await this._getAuthorizationHeader(),
-                        "X-Fern-Language": "JavaScript",
-                        "X-Fern-SDK-Name": "@fern/pagination",
-                        "X-Fern-SDK-Version": "0.0.1",
-                        "User-Agent": "@fern/pagination/0.0.1",
-                        "X-Fern-Runtime": core.RUNTIME.type,
-                        "X-Fern-Runtime-Version": core.RUNTIME.version,
-                        ...requestOptions?.headers,
-                    },
+                    headers: mergeHeaders(
+                        this._options?.headers,
+                        mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                        requestOptions?.headers,
+                    ),
                     queryParameters: _queryParams,
                     timeoutMs:
                         requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

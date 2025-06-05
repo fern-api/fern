@@ -5,6 +5,7 @@
 import * as environments from "../../../../environments.js";
 import * as core from "../../../../core/index.js";
 import * as SeedTrace from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import urlJoin from "url-join";
 
 export declare namespace Migration {
@@ -15,6 +16,8 @@ export declare namespace Migration {
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -27,12 +30,16 @@ export declare namespace Migration {
         /** Override the X-Random-Header header */
         xRandomHeader?: string | undefined;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class Migration {
-    constructor(protected readonly _options: Migration.Options = {}) {}
+    protected readonly _options: Migration.Options;
+
+    constructor(_options: Migration.Options = {}) {
+        this._options = _options;
+    }
 
     /**
      * @param {SeedTrace.GetAttemptedMigrationsRequest} request
@@ -67,21 +74,15 @@ export class Migration {
                 "/migration-info/all",
             ),
             method: "GET",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header":
-                    (await core.Supplier.get(this._options.xRandomHeader)) != null
-                        ? await core.Supplier.get(this._options.xRandomHeader)
-                        : undefined,
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/trace",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/trace/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                "admin-key-header": adminKeyHeader,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({
+                    Authorization: await this._getAuthorizationHeader(),
+                    "admin-key-header": adminKeyHeader,
+                    "X-Random-Header": requestOptions?.xRandomHeader,
+                }),
+                requestOptions?.headers,
+            ),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,

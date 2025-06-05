@@ -6,6 +6,7 @@ import * as core from "../../../../core/index.js";
 import * as SeedFileUpload from "../../../index.js";
 import * as serializers from "../../../../serialization/index.js";
 import { toJson } from "../../../../core/json.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
 import urlJoin from "url-join";
 
@@ -14,6 +15,8 @@ export declare namespace Service {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -24,12 +27,16 @@ export declare namespace Service {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class Service {
-    constructor(protected readonly _options: Service.Options) {}
+    protected readonly _options: Service.Options;
+
+    constructor(_options: Service.Options) {
+        this._options = _options;
+    }
 
     /**
      * @param {SeedFileUpload.MyRequest} request
@@ -149,16 +156,11 @@ export class Service {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                 (await core.Supplier.get(this._options.environment)),
             method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/file-upload",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/file-upload/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ..._maybeEncodedRequest.headers,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
+                requestOptions?.headers,
+            ),
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
@@ -220,16 +222,11 @@ export class Service {
                 "/just-file",
             ),
             method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/file-upload",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/file-upload/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ..._maybeEncodedRequest.headers,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
+                requestOptions?.headers,
+            ),
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
@@ -315,16 +312,11 @@ export class Service {
                 "/just-file-with-query-params",
             ),
             method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/file-upload",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/file-upload/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ..._maybeEncodedRequest.headers,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
+                requestOptions?.headers,
+            ),
             queryParameters: _queryParams,
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
@@ -408,16 +400,11 @@ export class Service {
                 "/with-content-type",
             ),
             method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/file-upload",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/file-upload/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ..._maybeEncodedRequest.headers,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
+                requestOptions?.headers,
+            ),
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
@@ -487,16 +474,11 @@ export class Service {
                 "/with-form-encoding",
             ),
             method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/file-upload",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/file-upload/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ..._maybeEncodedRequest.headers,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
+                requestOptions?.headers,
+            ),
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
@@ -650,16 +632,11 @@ export class Service {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                 (await core.Supplier.get(this._options.environment)),
             method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/file-upload",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/file-upload/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ..._maybeEncodedRequest.headers,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
+                requestOptions?.headers,
+            ),
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,
@@ -731,16 +708,11 @@ export class Service {
                 "/optional-args",
             ),
             method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/file-upload",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/file-upload/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ..._maybeEncodedRequest.headers,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
+                requestOptions?.headers,
+            ),
             requestType: "file",
             duplex: _maybeEncodedRequest.duplex,
             body: _maybeEncodedRequest.body,

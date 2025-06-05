@@ -1,6 +1,7 @@
 import { toJson } from "../json";
 import { APIResponse } from "./APIResponse";
 import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse";
+import { Supplier } from "./Supplier";
 import { createRequestUrl } from "./createRequestUrl";
 import { getFetchFn } from "./getFetchFn";
 import { getRequestBody } from "./getRequestBody";
@@ -15,7 +16,7 @@ export declare namespace Fetcher {
         url: string;
         method: string;
         contentType?: string;
-        headers?: Record<string, string | undefined>;
+        headers?: Record<string, string | Supplier<string | undefined> | undefined>;
         queryParameters?: Record<string, string | string[] | object | object[] | null>;
         body?: unknown;
         timeoutMs?: number;
@@ -51,20 +52,31 @@ export declare namespace Fetcher {
     }
 }
 
-export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>> {
-    const headers: Record<string, string> = {};
+async function getHeaders(args: Fetcher.Args): Promise<Record<string, string>> {
+    const newHeaders: Record<string, string> = {};
     if (args.body !== undefined && args.contentType != null) {
-        headers["Content-Type"] = args.contentType;
+        newHeaders["Content-Type"] = args.contentType;
     }
 
-    if (args.headers != null) {
-        for (const [key, value] of Object.entries(args.headers)) {
-            if (value != null) {
-                headers[key] = value;
-            }
+    if (args.headers == null) {
+        return newHeaders;
+    }
+
+    for (const [key, value] of Object.entries(args.headers)) {
+        const result = await Supplier.get(value);
+        if (typeof result === "string") {
+            newHeaders[key] = result;
+            continue;
         }
+        if (result == null) {
+            continue;
+        }
+        newHeaders[key] = `${result}`;
     }
+    return newHeaders;
+}
 
+export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>> {
     const url = createRequestUrl(args.url, args.queryParameters);
     const requestBody: BodyInit | undefined = await getRequestBody({
         body: args.body,
@@ -79,7 +91,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     fetchFn,
                     url,
                     args.method,
-                    headers,
+                    await getHeaders(args),
                     requestBody,
                     args.timeoutMs,
                     args.abortSignal,

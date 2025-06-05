@@ -13,14 +13,19 @@ export declare namespace File_ {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class File_ {
+    protected readonly _options: File_.Options;
     protected _notification: Notification | undefined;
     protected _service: Service | undefined;
 
-    constructor(protected readonly _options: File_.Options) {}
+    constructor(_options: File_.Options) {
+        this._options = _options;
+    }
 
     public get notification(): Notification {
         return (this._notification ??= new Notification(this._options));

@@ -14,13 +14,18 @@ export declare namespace V3 {
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class V3 {
+    protected readonly _options: V3.Options;
     protected _problem: Problem | undefined;
 
-    constructor(protected readonly _options: V3.Options = {}) {}
+    constructor(_options: V3.Options = {}) {
+        this._options = _options;
+    }
 
     public get problem(): Problem {
         return (this._problem ??= new Problem(this._options));
