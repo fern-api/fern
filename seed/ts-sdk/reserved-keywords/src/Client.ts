@@ -3,6 +3,7 @@
  */
 
 import * as core from "./core/index.js";
+import { mergeHeaders } from "./core/headers.js";
 import { Package } from "./api/resources/package/client/Client.js";
 
 export declare namespace SeedNurseryApiClient {
@@ -10,6 +11,8 @@ export declare namespace SeedNurseryApiClient {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -20,14 +23,30 @@ export declare namespace SeedNurseryApiClient {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class SeedNurseryApiClient {
+    protected readonly _options: SeedNurseryApiClient.Options;
     protected _package: Package | undefined;
 
-    constructor(protected readonly _options: SeedNurseryApiClient.Options) {}
+    constructor(_options: SeedNurseryApiClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/reserved-keywords",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/reserved-keywords/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
     public get package(): Package {
         return (this._package ??= new Package(this._options));

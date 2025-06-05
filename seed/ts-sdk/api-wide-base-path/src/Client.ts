@@ -3,6 +3,7 @@
  */
 
 import * as core from "./core/index.js";
+import { mergeHeaders } from "./core/headers.js";
 import { Service } from "./api/resources/service/client/Client.js";
 
 export declare namespace SeedApiWideBasePathClient {
@@ -11,6 +12,8 @@ export declare namespace SeedApiWideBasePathClient {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         pathParam: string;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -21,14 +24,30 @@ export declare namespace SeedApiWideBasePathClient {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class SeedApiWideBasePathClient {
+    protected readonly _options: SeedApiWideBasePathClient.Options;
     protected _service: Service | undefined;
 
-    constructor(protected readonly _options: SeedApiWideBasePathClient.Options) {}
+    constructor(_options: SeedApiWideBasePathClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/api-wide-base-path",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/api-wide-base-path/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
     public get service(): Service {
         return (this._service ??= new Service(this._options));

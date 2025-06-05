@@ -11,14 +11,19 @@ export declare namespace A {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class A {
+    protected readonly _options: A.Options;
     protected _b: B | undefined;
     protected _c: C | undefined;
 
-    constructor(protected readonly _options: A.Options) {}
+    constructor(_options: A.Options) {
+        this._options = _options;
+    }
 
     public get b(): B {
         return (this._b ??= new B(this._options));

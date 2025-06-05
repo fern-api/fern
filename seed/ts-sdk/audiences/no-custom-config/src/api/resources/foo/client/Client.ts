@@ -5,6 +5,7 @@
 import * as environments from "../../../../environments.js";
 import * as core from "../../../../core/index.js";
 import * as SeedAudiences from "../../../index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace Foo {
@@ -12,6 +13,8 @@ export declare namespace Foo {
         environment: core.Supplier<environments.SeedAudiencesEnvironment | string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -22,12 +25,16 @@ export declare namespace Foo {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class Foo {
-    constructor(protected readonly _options: Foo.Options) {}
+    protected readonly _options: Foo.Options;
+
+    constructor(_options: Foo.Options) {
+        this._options = _options;
+    }
 
     /**
      * @param {SeedAudiences.FindRequest} request
@@ -62,15 +69,7 @@ export class Foo {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                 (await core.Supplier.get(this._options.environment)),
             method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/audiences",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/audiences/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             contentType: "application/json",
             queryParameters: _queryParams,
             requestType: "json",

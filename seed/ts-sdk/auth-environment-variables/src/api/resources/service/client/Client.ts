@@ -3,6 +3,7 @@
  */
 
 import * as core from "../../../../core/index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 import * as SeedAuthEnvironmentVariables from "../../../index.js";
@@ -17,6 +18,8 @@ export declare namespace Service {
         xAnotherHeader: core.Supplier<string>;
         /** Override the X-API-Version header */
         xApiVersion?: "01-01-2000";
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -31,12 +34,16 @@ export declare namespace Service {
         /** Override the X-API-Version header */
         xApiVersion?: "01-01-2000";
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class Service {
-    constructor(protected readonly _options: Service.Options) {}
+    protected readonly _options: Service.Options;
+
+    constructor(_options: Service.Options) {
+        this._options = _options;
+    }
 
     /**
      * GET request with custom api key
@@ -58,18 +65,15 @@ export class Service {
                 "apiKey",
             ),
             method: "GET",
-            headers: {
-                "X-Another-Header": await core.Supplier.get(this._options.xAnotherHeader),
-                "X-API-Version": requestOptions?.xApiVersion ?? this._options?.xApiVersion ?? "01-01-2000",
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/auth-environment-variables",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/auth-environment-variables/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...(await this._getCustomAuthorizationHeaders()),
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({
+                    "X-Another-Header": requestOptions?.xAnotherHeader,
+                    "X-API-Version": requestOptions?.xApiVersion ?? "01-01-2000",
+                    ...(await this._getCustomAuthorizationHeaders()),
+                }),
+                requestOptions?.headers,
+            ),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -133,19 +137,16 @@ export class Service {
                 "apiKeyInHeader",
             ),
             method: "GET",
-            headers: {
-                "X-Another-Header": await core.Supplier.get(this._options.xAnotherHeader),
-                "X-API-Version": requestOptions?.xApiVersion ?? this._options?.xApiVersion ?? "01-01-2000",
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/auth-environment-variables",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/auth-environment-variables/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                "X-Endpoint-Header": xEndpointHeader,
-                ...(await this._getCustomAuthorizationHeaders()),
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({
+                    "X-Endpoint-Header": xEndpointHeader,
+                    "X-Another-Header": requestOptions?.xAnotherHeader,
+                    "X-API-Version": requestOptions?.xApiVersion ?? "01-01-2000",
+                    ...(await this._getCustomAuthorizationHeaders()),
+                }),
+                requestOptions?.headers,
+            ),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

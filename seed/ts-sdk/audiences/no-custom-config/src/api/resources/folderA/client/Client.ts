@@ -11,13 +11,18 @@ export declare namespace FolderA {
         environment: core.Supplier<environments.SeedAudiencesEnvironment | string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class FolderA {
+    protected readonly _options: FolderA.Options;
     protected _service: Service | undefined;
 
-    constructor(protected readonly _options: FolderA.Options) {}
+    constructor(_options: FolderA.Options) {
+        this._options = _options;
+    }
 
     public get service(): Service {
         return (this._service ??= new Service(this._options));

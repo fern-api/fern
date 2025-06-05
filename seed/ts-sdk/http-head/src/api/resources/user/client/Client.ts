@@ -3,17 +3,18 @@
  */
 
 import * as core from "../../../../core/index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 import * as SeedHttpHead from "../../../index.js";
-import { mergeHeaders } from "core/mergeHeaders.js";
 
 export declare namespace User {
     export interface Options {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
-        headers?: Record<string, string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -24,27 +25,15 @@ export declare namespace User {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class User {
-    private _options: User.Options;
+    protected readonly _options: User.Options;
+
     constructor(_options: User.Options) {
-        this._options = {
-            ..._options,
-            headers: mergeHeaders(
-                {
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/http-head",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/http-head/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                _options.headers,
-            ),
-        };
+        this._options = _options;
     }
 
     /**
@@ -65,7 +54,7 @@ export class User {
                 "/users",
             ),
             method: "HEAD",
-            headers: mergeHeaders(this._options.headers, requestOptions?.headers),
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -129,15 +118,7 @@ export class User {
                 "/users",
             ),
             method: "GET",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/http-head",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/http-head/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,

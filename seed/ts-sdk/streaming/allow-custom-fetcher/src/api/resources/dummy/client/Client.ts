@@ -4,6 +4,7 @@
 
 import * as core from "../../../../core/index.js";
 import * as SeedStreaming from "../../../index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import urlJoin from "url-join";
 import * as stream from "stream";
 import * as errors from "../../../../errors/index.js";
@@ -13,6 +14,8 @@ export declare namespace Dummy {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
         fetcher?: core.FetchFunction;
     }
 
@@ -24,12 +27,16 @@ export declare namespace Dummy {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class Dummy {
-    constructor(protected readonly _options: Dummy.Options) {}
+    protected readonly _options: Dummy.Options;
+
+    constructor(_options: Dummy.Options) {
+        this._options = _options;
+    }
 
     public generateStream(
         request: SeedStreaming.GenerateStreamRequest,
@@ -49,15 +56,7 @@ export class Dummy {
                 "generate-stream",
             ),
             method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/streaming",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/streaming/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             contentType: "application/json",
             requestType: "json",
             body: { ...request, stream: true },
@@ -133,15 +132,7 @@ export class Dummy {
                 "generate",
             ),
             method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/streaming",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/streaming/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             contentType: "application/json",
             requestType: "json",
             body: { ...request, stream: false },

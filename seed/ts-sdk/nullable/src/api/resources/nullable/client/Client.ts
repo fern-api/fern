@@ -4,6 +4,7 @@
 
 import * as core from "../../../../core/index.js";
 import * as SeedNullable from "../../../index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index.js";
 
@@ -12,6 +13,8 @@ export declare namespace Nullable {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -22,12 +25,16 @@ export declare namespace Nullable {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class Nullable {
-    constructor(protected readonly _options: Nullable.Options) {}
+    protected readonly _options: Nullable.Options;
+
+    constructor(_options: Nullable.Options) {
+        this._options = _options;
+    }
 
     /**
      * @param {SeedNullable.GetUsersRequest} request
@@ -94,15 +101,7 @@ export class Nullable {
                 "/users",
             ),
             method: "GET",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/nullable",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/nullable/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -178,15 +177,7 @@ export class Nullable {
                 "/users",
             ),
             method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/nullable",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/nullable/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             contentType: "application/json",
             requestType: "json",
             body: request,
@@ -250,15 +241,7 @@ export class Nullable {
                 "/users",
             ),
             method: "DELETE",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/nullable",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/nullable/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             contentType: "application/json",
             requestType: "json",
             body: request,

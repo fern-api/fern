@@ -4,6 +4,7 @@
 
 import * as environments from "./environments.js";
 import * as core from "./core/index.js";
+import { mergeHeaders } from "./core/headers.js";
 import { Ec2 } from "./api/resources/ec2/client/Client.js";
 import { S3 } from "./api/resources/s3/client/Client.js";
 
@@ -16,6 +17,8 @@ export declare namespace SeedMultiUrlEnvironmentNoDefaultClient {
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -26,15 +29,31 @@ export declare namespace SeedMultiUrlEnvironmentNoDefaultClient {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class SeedMultiUrlEnvironmentNoDefaultClient {
+    protected readonly _options: SeedMultiUrlEnvironmentNoDefaultClient.Options;
     protected _ec2: Ec2 | undefined;
     protected _s3: S3 | undefined;
 
-    constructor(protected readonly _options: SeedMultiUrlEnvironmentNoDefaultClient.Options) {}
+    constructor(_options: SeedMultiUrlEnvironmentNoDefaultClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/multi-url-environment-no-default",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/multi-url-environment-no-default/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
     public get ec2(): Ec2 {
         return (this._ec2 ??= new Ec2(this._options));
