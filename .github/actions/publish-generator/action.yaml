@@ -19,17 +19,10 @@ inputs:
 
 env:
   DOCKER_BUILDKIT: 1
-  
+
 runs:
   using: "composite"
   steps:
-    - name: Checkout repo at current ref
-      shell: bash
-      uses: actions/checkout@v4
-      with:
-        ref: main
-        fetch-depth: 2
-
     - name: Install
       shell: bash
       uses: ./.github/actions/install
