@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: | 
+        Manual redeployment to release changes from 0.63.29 and 0.63.30
+      type: feat
+  irVersion: 58
+  createdAt: "2025-06-05"
+  version: 0.63.31
+  
+- changelogEntry:
+    - summary: | 
         Support endpoint-level servers in OpenRPC.
       type: feat
   irVersion: 58
