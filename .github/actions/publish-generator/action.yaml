@@ -17,6 +17,9 @@ inputs:
     description: Name of the generator being published (i.e. 'csharp-model')
     required: true
 
+env:
+  DOCKER_BUILDKIT: 1
+  
 runs:
   using: "composite"
   steps:
