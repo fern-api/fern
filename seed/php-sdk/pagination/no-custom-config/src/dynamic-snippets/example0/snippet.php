@@ -15,6 +15,7 @@ $client = new SeedClient(
     ],
 );
 $client->complex->search(
+    'index',
     new SearchRequest([
         'pagination' => new StartingAfterPaging([
             'perPage' => 1,
