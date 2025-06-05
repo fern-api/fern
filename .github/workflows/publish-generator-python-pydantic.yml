@@ -14,9 +14,6 @@ on:
         required: true
         type: string
 
-env:
-  DOCKER_BUILDKIT: 1
-
 jobs:
   publish:
     runs-on: ubuntu-latest
