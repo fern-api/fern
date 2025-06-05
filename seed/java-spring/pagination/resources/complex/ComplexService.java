@@ -5,7 +5,9 @@
 package resources.complex;
 
 import core.BearerAuth;
+import java.lang.String;
 import java.security.Principal;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -18,10 +20,10 @@ import resources.complex.types.SearchRequest;
 )
 public interface ComplexService {
   @PostMapping(
-      value = "/conversations/search",
+      value = "/{index}/conversations/search",
       produces = "application/json",
       consumes = "application/json"
   )
   PaginatedConversationResponse search(@RequestHeader("Authorization") BearerAuth auth,
-      Principal principal, @RequestBody SearchRequest body);
+      Principal principal, @PathVariable("index") String index, @RequestBody SearchRequest body);
 }
