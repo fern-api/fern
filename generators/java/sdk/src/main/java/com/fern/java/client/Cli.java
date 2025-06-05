@@ -157,8 +157,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         }
 
         ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
-                sdkCustomConfig.packagePrefix().map(List::of).orElseGet(Collections::emptyList),
-                sdkCustomConfig.packageLayout());
+                customConfig.packagePrefix().map(List::of).orElseGet(Collections::emptyList),
+                customConfig.packageLayout());
         ClientGeneratorContext context = new ClientGeneratorContext(
                 ir,
                 generatorConfig,
