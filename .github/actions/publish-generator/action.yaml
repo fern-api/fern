@@ -1,0 +1,79 @@
+name: Publish Generator
+description: Shared action that can be used to publish any generator
+
+inputs:
+  version:
+    description: "The version of the generator to publish. (only needed when manually triggered)"
+    required: false
+    type: string
+  manual-trigger:
+    description: Whether this action was triggered manually via 'workflow_dispatch'
+    required: false
+    default: 'false'
+  version-file:
+    description: Path to the version file describing this generator (i.e. 'generators/csharp/model/versions.yml')
+    required: false
+  generator-name:
+    description: Name of the generator being published (i.e. 'csharp-model')
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout repo at current ref
+      shell: bash
+      uses: actions/checkout@v4
+      with:
+        ref: main
+        fetch-depth: 2
+
+    - name: Install
+      shell: bash
+      uses: ./.github/actions/install
+
+    - name: Set up Docker Buildx
+      shell: bash
+      uses: docker/setup-buildx-action@v1
+
+    - name: Run publish (auto)
+      if: inputs.manual-trigger == 'false'
+      shell: bash
+      env:
+        FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        DOCKER_USERNAME: fernapi
+        DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+        VERSIONS_FILE: ${{ inputs.version-file }}
+      run: |
+        echo $VERSIONS_FILE
+        echo ${{ inputs.generator-name }}
+        
+        previous_commit=$(git log -n 2 --pretty=format:"%h" -- ${VERSIONS_FILE} | tail -n 1)
+        current_commit=$(git log -n 1 --pretty=format:"%h" -- ${VERSIONS_FILE})
+        
+        # Get the previous version of the file using the specific commit that last changed it
+        git show ${previous_commit}:${VERSIONS_FILE} > tmp_previous_versions.yml
+        
+        echo "Preview of the previous file (${previous_commit})"
+        head tmp_previous_versions.yml
+
+        echo "Preview of the current file (${current_commit})"
+        head ${VERSIONS_FILE}
+
+        if [ $? -eq 0 ]; then
+          pnpm seed:local publish generator ${{ inputs.generator-name }} --changelog $VERSIONS_FILE --previous-changelog tmp_previous_versions.yml --log-level debug
+        else
+          echo "No previous versions found, skipping publish."
+        fi
+
+        pnpm seed:local register generator --generators ${{ inputs.generator-name }}
+
+    - name: Run publish (manual)
+      if: inputs.manual-trigger == 'true'
+      shell: bash
+      env:
+        FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        DOCKER_USERNAME: fernapi
+        DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+      run: |
+        pnpm seed:local publish generator ${{ inputs.generator-name }} --ver ${{ inputs.version }} --log-level debug
+        pnpm seed:local register generator --generators ${{ inputs.generator-name }}
