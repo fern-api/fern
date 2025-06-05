@@ -1,21 +1,21 @@
 from dataclasses import dataclass
 from typing import List, Optional, Set, Tuple, Union
 
-from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
+import fern.ir.resources as ir_types
+
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies import Contextlib, HttpX, Websockets
-from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
-from fern_python.generators.sdk.client_generator.endpoint_function_generator import (
-    EndpointFunctionGenerator,
-)
-from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
+from fern_python.generators.pydantic_model.model_utilities import \
+    can_tr_be_fern_model
+from fern_python.generators.sdk.client_generator.endpoint_function_generator import \
+    EndpointFunctionGenerator
+from fern_python.generators.sdk.context.sdk_generator_context import \
+    SdkGeneratorContext
 from fern_python.generators.sdk.environment_generators.multiple_base_urls_environment_generator import (
-    get_base_url,
-    get_base_url_property_name,
-)
+    get_base_url, get_base_url_property_name)
 
-import fern.ir.resources as ir_types
+from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
 
 HTTPX_PRIMITIVE_DATA_TYPES = set(
     [
@@ -302,23 +302,37 @@ class WebsocketConnectMethodGenerator:
 
             if is_async:
                 body = [
-                    Websockets.async_connect(url=self.WS_URL_VARIABLE, headers="headers"),
-                    AST.YieldStatement(
-                        value=AST.Expression(
-                            f"{self._context.get_async_socket_client_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)}"
-                            f"({WebsocketConnectMethodGenerator.SOCKET_CONSTRUCTOR_PARAMETER_NAME} = protocol)"
-                        )
-                    ),
+                    AST.WithStatement(
+                        context_managers=[
+                            AST.WithContextManager(expression=Websockets.async_connect(url=self.WS_URL_VARIABLE, headers="headers"), as_variable="protocol")
+                        ],
+                        body=[
+                            AST.YieldStatement(
+                                value=AST.Expression(
+                                    f"{self._context.get_async_socket_client_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)}"
+                                    f"({WebsocketConnectMethodGenerator.SOCKET_CONSTRUCTOR_PARAMETER_NAME} = protocol)"
+                                )
+                            )
+                        ],
+                        is_async=True,
+                    )
                 ]
             else:
                 body = [
-                    Websockets.sync_connect(url=self.WS_URL_VARIABLE, headers="headers"),
-                    AST.YieldStatement(
-                        value=AST.Expression(
-                            f"{self._context.get_socket_client_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)}"
-                            f"({WebsocketConnectMethodGenerator.SOCKET_CONSTRUCTOR_PARAMETER_NAME} = protocol)"
-                        )
-                    ),
+                    AST.WithStatement(
+                        context_managers=[
+                            AST.WithContextManager(expression=Websockets.sync_connect(url=self.WS_URL_VARIABLE, headers="headers"), as_variable="protocol")
+                        ],
+                        body=[
+                            AST.YieldStatement(
+                                value=AST.Expression(
+                                    f"{self._context.get_socket_client_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)}"
+                                    f"({WebsocketConnectMethodGenerator.SOCKET_CONSTRUCTOR_PARAMETER_NAME} = protocol)"
+                                )
+                            )
+                        ],
+                        is_async=False,
+                    )
                 ]
 
             writer.write_node(

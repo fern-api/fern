@@ -4,12 +4,10 @@ image: fernapi/fern-typescript-node-sdk
 changelogLocation: ../../generators/typescript/sdk/versions.yml
 publish:
   workingDirectory: generators/typescript
-  versionSubstitution: "$VERSION"
+  versionSubstitution: $VERSION
   command:
-    - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:browser "$VERSION"
-    - docker push fernapi/fern-typescript-browser-sdk:"$VERSION"
-    - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:node "$VERSION"
-    - docker push fernapi/fern-typescript-node-sdk:"$VERSION"
+    - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:node $VERSION
+    - docker push fernapi/fern-typescript-node-sdk:$VERSION
 test:
   docker:
     image: fernapi/fern-typescript-node-sdk:local
