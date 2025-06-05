@@ -23,7 +23,7 @@ class UserClient:
         """
         return self._raw_client
 
-    def head(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def head(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Dict[str, str]:
         """
         Parameters
         ----------
@@ -44,7 +44,7 @@ class UserClient:
         client.user.head()
         """
         _response = self._raw_client.head(request_options=request_options)
-        return _response.data
+        return _response.headers
 
     def list(self, *, limit: int, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
         """
@@ -89,7 +89,7 @@ class AsyncUserClient:
         """
         return self._raw_client
 
-    async def head(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def head(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Dict[str, str]:
         """
         Parameters
         ----------
@@ -118,7 +118,7 @@ class AsyncUserClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.head(request_options=request_options)
-        return _response.data
+        return _response.headers
 
     async def list(self, *, limit: int, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
         """
