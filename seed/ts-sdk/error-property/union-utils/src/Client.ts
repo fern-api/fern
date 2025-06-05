@@ -3,6 +3,7 @@
  */
 
 import * as core from "./core/index.js";
+import { mergeHeaders } from "./core/headers.js";
 import { PropertyBasedError } from "./api/resources/propertyBasedError/client/Client.js";
 
 export declare namespace SeedErrorPropertyClient {
@@ -10,6 +11,8 @@ export declare namespace SeedErrorPropertyClient {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -20,14 +23,30 @@ export declare namespace SeedErrorPropertyClient {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class SeedErrorPropertyClient {
+    protected readonly _options: SeedErrorPropertyClient.Options;
     protected _propertyBasedError: PropertyBasedError | undefined;
 
-    constructor(protected readonly _options: SeedErrorPropertyClient.Options) {}
+    constructor(_options: SeedErrorPropertyClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/error-property",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/error-property/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
     public get propertyBasedError(): PropertyBasedError {
         return (this._propertyBasedError ??= new PropertyBasedError(this._options));

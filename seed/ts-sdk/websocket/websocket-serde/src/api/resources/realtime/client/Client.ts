@@ -11,6 +11,8 @@ export declare namespace Realtime {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface ConnectArgs {
@@ -26,7 +28,11 @@ export declare namespace Realtime {
 }
 
 export class Realtime {
-    constructor(protected readonly _options: Realtime.Options) {}
+    protected readonly _options: Realtime.Options;
+
+    constructor(_options: Realtime.Options) {
+        this._options = _options;
+    }
 
     public async connect(args: Realtime.ConnectArgs = {}): Promise<RealtimeSocket> {
         const queryParams: Record<string, unknown> = {};

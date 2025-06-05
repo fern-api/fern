@@ -3,6 +3,7 @@
  */
 
 import * as core from "./core/index.js";
+import { mergeHeaders } from "./core/headers.js";
 import { Service } from "./api/resources/service/client/Client.js";
 
 export declare namespace SeedMixedCaseClient {
@@ -10,6 +11,8 @@ export declare namespace SeedMixedCaseClient {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -20,14 +23,30 @@ export declare namespace SeedMixedCaseClient {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class SeedMixedCaseClient {
+    protected readonly _options: SeedMixedCaseClient.Options;
     protected _service: Service | undefined;
 
-    constructor(protected readonly _options: SeedMixedCaseClient.Options) {}
+    constructor(_options: SeedMixedCaseClient.Options) {
+        this._options = {
+            ..._options,
+            headers: mergeHeaders(
+                {
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/mixed-case",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/mixed-case/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                _options?.headers,
+            ),
+        };
+    }
 
     public get service(): Service {
         return (this._service ??= new Service(this._options));

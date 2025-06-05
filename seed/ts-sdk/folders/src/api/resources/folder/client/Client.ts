@@ -3,6 +3,7 @@
  */
 
 import * as core from "../../../../core/index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
 import { Service } from "../resources/service/client/Client.js";
 
@@ -11,6 +12,8 @@ export declare namespace Folder {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
+        /** Additional headers to include in requests. */
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 
     export interface RequestOptions {
@@ -21,14 +24,17 @@ export declare namespace Folder {
         /** A hook to abort the request. */
         abortSignal?: AbortSignal;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string>;
+        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
     }
 }
 
 export class Folder {
+    protected readonly _options: Folder.Options;
     protected _service: Service | undefined;
 
-    constructor(protected readonly _options: Folder.Options) {}
+    constructor(_options: Folder.Options) {
+        this._options = _options;
+    }
 
     public get service(): Service {
         return (this._service ??= new Service(this._options));
@@ -50,15 +56,7 @@ export class Folder {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                 (await core.Supplier.get(this._options.environment)),
             method: "POST",
-            headers: {
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "@fern/folders",
-                "X-Fern-SDK-Version": "0.0.1",
-                "User-Agent": "@fern/folders/0.0.1",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
+            headers: mergeHeaders(this._options?.headers, requestOptions?.headers),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
