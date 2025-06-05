@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .bad_request_body import BadRequestBody
-
 __all__ = ["BadRequestBody"]

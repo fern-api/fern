@@ -76,7 +76,8 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
             skip_resources_module=custom_config.improved_imports
         )
         self._environments_enum_declaration_referencer = EnvironmentsEnumDeclarationReferencer(
-            client_class_name=exported_client_class_name, skip_resources_module=custom_config.improved_imports
+            client_class_name=exported_client_class_name,
+            skip_resources_module=custom_config.improved_imports,
         )
         self._subpackage_client_declaration_referencer = SubpackageClientDeclarationReferencer(
             skip_resources_module=custom_config.improved_imports
@@ -187,7 +188,9 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
     def get_raw_client_class_reference_for_root_client(self) -> AST.ClassReference:
         return self._root_generated_raw_client_declaration_referencer.get_class_reference(name=None, as_request=False)
 
-    def get_async_raw_client_class_reference_for_root_client(self) -> AST.ClassReference:
+    def get_async_raw_client_class_reference_for_root_client(
+        self,
+    ) -> AST.ClassReference:
         return self._root_generated_async_raw_client_declaration_referencer.get_class_reference(
             name=None, as_request=False
         )
@@ -313,7 +316,9 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
 
     def resolved_schema_is_optional_or_unknown(self, reference: ir_types.TypeReference) -> bool:
         reference_union = reference.get_as_union()
-        while reference_union.type == "container" or reference_union.type == "named" or reference_union.type == "unknown":
+        while (
+            reference_union.type == "container" or reference_union.type == "named" or reference_union.type == "unknown"
+        ):
             if reference_union.type == "unknown":
                 return True
             elif reference_union.type == "container":
@@ -332,3 +337,6 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
                 else:
                     break
         return False
+
+    def get_head_method_return_type(self) -> AST.TypeHint:
+        return AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_())
