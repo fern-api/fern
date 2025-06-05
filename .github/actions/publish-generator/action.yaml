@@ -76,7 +76,3 @@ runs:
       run: |
         pnpm seed:local publish generator ${{ inputs.generator-name }} --ver ${{ inputs.version }} --log-level debug
         pnpm seed:local register generator --generators ${{ inputs.generator-name }}
-
-    - name: List images
-      shell: bash
-      run: docker image ls
