@@ -430,23 +430,25 @@ class EndpointResponseCodeWriter:
             return "aiter_bytes"
         else:
             return "iter_bytes"
-    
+
     def is_json_response_optional(self, response: ir_types.JsonResponse) -> bool:
         return response.visit(
             response=lambda response: self._context.resolved_schema_is_optional_or_unknown(response.response_body_type),
-            nested_property_as_response=lambda response: self._context.resolved_schema_is_optional_or_unknown(response.response_body_type)
+            nested_property_as_response=lambda response: self._context.resolved_schema_is_optional_or_unknown(
+                response.response_body_type
+            ),
         )
 
     def _write_status_code_discriminated_response_handler(self, *, writer: AST.NodeWriter) -> None:
         def handle_endpoint_response(writer: AST.NodeWriter) -> None:
             if self._response is not None and self._response.body is not None:
                 is_optional = self._response.body.visit(
-                    json= lambda json_response: self.is_json_response_optional(json_response),
-                    file_download = lambda _: False,
-                    text= lambda _: False,
-                    bytes= lambda _: False,
-                    stream_parameter= lambda _: False,
-                    streaming= lambda _: False,
+                    json=lambda json_response: self.is_json_response_optional(json_response),
+                    file_download=lambda _: False,
+                    text=lambda _: False,
+                    bytes=lambda _: False,
+                    stream_parameter=lambda _: False,
+                    streaming=lambda _: False,
                 )
                 if is_optional:
                     writer.write_line(f"if {RESPONSE_VARIABLE} is None or not {RESPONSE_VARIABLE}.text.strip():")
