@@ -25,7 +25,7 @@ class AbstractComplexService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def search(self, *, body: SearchRequest, auth: ApiAuth) -> PaginatedConversationResponse: ...
+    def search(self, *, body: SearchRequest, index: str, auth: ApiAuth) -> PaginatedConversationResponse: ...
 
     """
     Below are internal methods used by Fern to register your implementation.
@@ -45,6 +45,8 @@ class AbstractComplexService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "index":
+                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "auth":
                 new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
@@ -68,7 +70,7 @@ class AbstractComplexService(AbstractFernService):
         wrapper.__globals__.update(cls.search.__globals__)
 
         router.post(
-            path="/conversations/search",
+            path="/{index}/conversations/search",
             response_model=PaginatedConversationResponse,
             description=AbstractComplexService.search.__doc__,
             **get_route_args(cls.search, default_tag="complex_"),
