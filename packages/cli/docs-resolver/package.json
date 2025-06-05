@@ -42,7 +42,7 @@
     "@fern-api/project-loader": "workspace:*",
     "@fern-api/register": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.136.13-2333528dc",
+    "@fern-fern/fdr-cjs-sdk": "0.137.1-eb5c35733",
     "dayjs": "^1.11.11",
     "gray-matter": "^4.0.3",
     "lodash-es": "^4.17.21",

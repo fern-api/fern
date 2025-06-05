@@ -6704,8 +6704,8 @@ importers:
         specifier: 0.129.4-b6c699ad2
         version: 0.129.4-b6c699ad2
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.136.13-2333528dc
-        version: 0.136.13-2333528dc(encoding@0.1.13)
+        specifier: 0.137.1-eb5c35733
+        version: 0.137.1-eb5c35733(encoding@0.1.13)
       '@open-rpc/meta-schema':
         specifier: ^1.14.9
         version: 1.14.9
@@ -11034,6 +11034,9 @@ packages:
 
   '@fern-fern/fdr-cjs-sdk@0.136.13-2333528dc':
     resolution: {integrity: sha512-ATtzX9OPjtBmOIPCe8lqXWH4nQ40pWNwuQm1uMDoljmOZ6uBnctb5NrAIA2L38KlIz1d5qWdRDNVsrMuapvXtQ==}
+
+  '@fern-fern/fdr-cjs-sdk@0.137.1-eb5c35733':
+    resolution: {integrity: sha512-95nGXUw5KJjkQWacBPaLP5EOM9oiKGdJEluetYx7W3D1XdCztmwwF8j/UBWAC5VwGRYYcQgKw8jKSjGFir4+7A==}
 
   '@fern-fern/fdr-test-sdk@0.0.5297':
     resolution: {integrity: sha512-jrZUZ6oIA64LHtrv77xEq0X7qJhT9xRMGWhKcLjIUArMsD7h6KMWUHVdoB/1MP0Mz/uL/E2xmM31SOgJicpIcA==}
@@ -19348,6 +19351,18 @@ snapshots:
   '@fern-fern/docs-config@0.0.80': {}
 
   '@fern-fern/fdr-cjs-sdk@0.136.13-2333528dc(encoding@0.1.13)':
+    dependencies:
+      form-data: 4.0.1
+      formdata-node: 6.0.3
+      js-base64: 3.7.7
+      node-fetch: 2.7.0(encoding@0.1.13)
+      qs: 6.14.0
+      readable-stream: 4.5.2
+      url-join: 4.0.1
+    transitivePeerDependencies:
+      - encoding
+
+  '@fern-fern/fdr-cjs-sdk@0.137.1-eb5c35733(encoding@0.1.13)':
     dependencies:
       form-data: 4.0.1
       formdata-node: 6.0.3
