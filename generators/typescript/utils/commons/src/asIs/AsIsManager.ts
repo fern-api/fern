@@ -11,7 +11,7 @@ const filePathOnDockerContainer = AbsoluteFilePath.of("/assets/asIs");
  */
 const asIsFiles = {
     core: {
-        mergeHeaders: { "core/mergeHeaders.ts": "src/core/mergeHeaders.ts" },
+        mergeHeaders: { "core/headers.ts": "src/core/headers.ts" },
         json: {
             vanilla: { "core/json.vanilla.ts": "src/core/json.ts" },
             bigint: { "core/json.bigint.ts": "src/core/json.ts" }

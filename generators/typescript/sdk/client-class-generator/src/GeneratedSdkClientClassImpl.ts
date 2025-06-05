@@ -61,7 +61,6 @@ import { GeneratedNonThrowingEndpointResponse } from "./endpoints/default/endpoi
 import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedThrowingEndpointResponse";
 import { getNonVariablePathParameters } from "./endpoints/utils/getNonVariablePathParameters";
 import { getLiteralValueForHeader, isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
-import { REQUEST_OPTIONS_PARAMETER_NAME } from "./endpoints/utils/requestOptionsParameter";
 import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
 import { GeneratedDefaultWebsocketImplementation } from "./websocket/GeneratedDefaultWebsocketImplementation";
 
@@ -861,24 +860,22 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private getHeadersStatements(context: SdkContext): Code {
         const rootHeaders = this.isRoot ? this.getRootHeaders(context) : [];
         const shouldGenerateRootHeaders = this.isRoot && rootHeaders.length > 0;
-        return code`
-                ${
-                    shouldGenerateRootHeaders
-                        ? code`this._options = {
-                                    ..._options,
-                                    headers: mergeHeaders(${getTextOfTsNode(
-                                        ts.factory.createObjectLiteralExpression(
-                                            rootHeaders.map(({ header, value }) =>
-                                                ts.factory.createPropertyAssignment(
-                                                    ts.factory.createStringLiteral(header),
-                                                    value
-                                                )
-                                            )
-                                        )
-                                    )}, _options.headers ?? {}),
-                                };`
-                        : code`this._options = _options;`
-                }`;
+        if (shouldGenerateRootHeaders) {
+            context.importsManager.addImportFromRoot("src/core/headers.js", {
+                namedImports: ["mergeHeaders"]
+            });
+            return code`this._options = {
+                    ..._options,
+                    headers: mergeHeaders(${getTextOfTsNode(
+                        ts.factory.createObjectLiteralExpression(
+                            rootHeaders.map(({ header, value }) =>
+                                ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(header), value)
+                            )
+                        )
+                    )}, _options?.headers),
+                };`;
+        }
+        return code`this._options = _options;`;
     }
 
     public shouldGenerateAuthorizationHeaderHelperMethod(): boolean {
@@ -986,21 +983,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 ts.factory.createPropertyAccessExpression(
                                     ts.factory.createParenthesizedExpression(
                                         ts.factory.createBinaryExpression(
-                                            ts.factory.createBinaryExpression(
-                                                ts.factory.createPropertyAccessChain(
-                                                    ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
-                                                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                                    ts.factory.createIdentifier(headerName)
+                                            ts.factory.createPropertyAccessChain(
+                                                ts.factory.createIdentifier(
+                                                    GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
                                                 ),
-                                                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                                ts.factory.createPropertyAccessChain(
-                                                    ts.factory.createPropertyAccessExpression(
-                                                        ts.factory.createThis(),
-                                                        GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
-                                                    ),
-                                                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                                    ts.factory.createIdentifier(headerName)
-                                                )
+                                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                ts.factory.createIdentifier(headerName)
                                             ),
                                             ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
                                             booleanLiteral
@@ -1014,32 +1002,19 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         } else {
                             value = ts.factory.createBinaryExpression(
                                 ts.factory.createPropertyAccessChain(
-                                    ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                                    ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER),
                                     ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
                                     ts.factory.createIdentifier(headerName)
                                 ),
                                 ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                ts.factory.createBinaryExpression(
-                                    ts.factory.createPropertyAccessChain(
-                                        ts.factory.createPropertyAccessExpression(
-                                            ts.factory.createThis(),
-                                            GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
-                                        ),
-                                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                        ts.factory.createIdentifier(headerName)
-                                    ),
-                                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                    ts.factory.createStringLiteral(literalValue.toString())
-                                )
+                                ts.factory.createStringLiteral(literalValue.toString())
                             );
                         }
                     } else {
-                        value = context.type.stringify(
-                            context.coreUtilities.fetcher.Supplier.get(
-                                this.getReferenceToOption(this.getOptionKeyForHeader(header))
-                            ),
-                            header.valueType,
-                            { includeNullCheckIfOptional: true }
+                        value = ts.factory.createPropertyAccessChain(
+                            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER),
+                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                            ts.factory.createIdentifier(this.getOptionKeyForHeader(header))
                         );
                     }
 
@@ -1084,39 +1059,17 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             if (defaultVersion != null) {
                 value = ts.factory.createBinaryExpression(
                     ts.factory.createPropertyAccessChain(
-                        ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                        ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER),
                         ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
                         ts.factory.createIdentifier(headerName)
                     ),
                     ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                    ts.factory.createBinaryExpression(
-                        ts.factory.createPropertyAccessChain(
-                            ts.factory.createPropertyAccessExpression(
-                                ts.factory.createThis(),
-                                GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
-                            ),
-                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                            ts.factory.createIdentifier(headerName)
-                        ),
-                        ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                        ts.factory.createStringLiteral(defaultVersion)
-                    )
+                    ts.factory.createStringLiteral(defaultVersion)
                 );
             } else {
-                value = ts.factory.createBinaryExpression(
-                    ts.factory.createPropertyAccessChain(
-                        ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
-                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                        ts.factory.createIdentifier(headerName)
-                    ),
-                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                    ts.factory.createPropertyAccessExpression(
-                        ts.factory.createPropertyAccessExpression(
-                            ts.factory.createThis(),
-                            GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
-                        ),
-                        ts.factory.createIdentifier(headerName)
-                    )
+                value = ts.factory.createPropertyAccessExpression(
+                    ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER),
+                    ts.factory.createIdentifier(headerName)
                 );
             }
             headers.push({
@@ -1137,27 +1090,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         );
 
         return headers;
-    }
-
-    private getServiceHeaders(context: SdkContext): GeneratedHeader[] {
-        if (!this.service?.headers) {
-            return [];
-        }
-        return this.service.headers
-            .filter((header) => isLiteralHeader(header, context))
-            .map((header): GeneratedHeader | undefined => {
-                const literalValue = getLiteralValueForHeader(header, context);
-
-                if (literalValue != null) {
-                    return {
-                        header: header.name.wireValue,
-                        value: ts.factory.createStringLiteral(literalValue.toString())
-                    };
-                } else {
-                    return undefined;
-                }
-            })
-            .filter((header): header is GeneratedHeader => header != null);
     }
 
     /*******************
@@ -1203,7 +1135,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 }),
                 {
                     name: "headers",
-                    type: "Record<string, string>",
+                    type: "Record<string, string | core.Supplier<string | undefined> | undefined>",
                     hasQuestionToken: true,
                     docs: ["Additional headers to include in the request."]
                 }
@@ -1553,7 +1485,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         properties.push({
             docs: ["Additional headers to include in requests."],
             name: "headers",
-            type: "Record<string, string>",
+            type: "Record<string, string | core.Supplier<string | undefined> | undefined>",
             hasQuestionToken: true
         });
 
@@ -1683,7 +1615,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
     }
 
-    private getReferenceToOption(option: string): ts.Expression {
+    public getReferenceToOption(option: string): ts.Expression {
         return ts.factory.createPropertyAccessExpression(this.getReferenceToOptions(), option);
     }
 
