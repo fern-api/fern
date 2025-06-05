@@ -38,16 +38,23 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/conversations/search",
+              "raw": "{{baseUrl}}/:index/conversations/search",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
+                ":index",
                 "conversations",
                 "search"
               ],
               "query": [],
-              "variable": []
+              "variable": [
+                {
+                  "key": "index",
+                  "description": null,
+                  "value": "index"
+                }
+              ]
             },
             "header": [
               {
@@ -76,16 +83,23 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/conversations/search",
+                  "raw": "{{baseUrl}}/:index/conversations/search",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
+                    ":index",
                     "conversations",
                     "search"
                   ],
                   "query": [],
-                  "variable": []
+                  "variable": [
+                    {
+                      "key": "index",
+                      "description": null,
+                      "value": "index"
+                    }
+                  ]
                 },
                 "header": [
                   {
